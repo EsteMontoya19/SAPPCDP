@@ -1,0 +1,33 @@
+.encabezado {
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.btn-sy01 {
+    color: #fff;
+    background-color: #6E6702;
+    border-color: #6E6702;
+}
+
+.btn-sy01:hover {
+    color: #fff;
+    background-color: #DB9501;
+    border-color: #DB9501;
+}
+
+.table-home {
+    background: #fff;
+}
+
+.footer-pro {
+    position:fixed;
+    left:0px;
+    bottom:0px;
+    height:30px;
+    width:100%;
+}
+
+.card-title {
+    color: orange;
+}
