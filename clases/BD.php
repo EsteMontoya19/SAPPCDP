@@ -13,7 +13,7 @@ error_reporting(E_ALL);
 		public $cadena_conexion;
 		public $imagen;
 
-		function BD($strBD = "")
+		function __construct($strBD = "")
 		{
 			//    require('../include/Configuracion.php');
 
@@ -52,7 +52,7 @@ error_reporting(E_ALL);
 		public $oid;
 		public $imagen;
 
-		function Transaccion($conexion)
+		function __construct($conexion)
 		{
 			$this->conexion = $conexion;
 		}

@@ -3,7 +3,7 @@
 
   	class ControlAcceso
   	{
-    	function ControlAcceso()
+    	function __construct()
     	{
 			include_once('../clases/Valida.php');
 			include_once('../clases/Acceder.php');
