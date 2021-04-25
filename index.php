@@ -44,6 +44,18 @@
     <!-- Direcciones del sistema-->
     <script src="sistema/recursos/body.js"></script>
 
+    <script>
+    // ! Mostrar contraseña en index.php
+    function hideOrShowPassword() {
+    var x = document.getElementById('strContrasena');
+    if (x.type === 'password') {
+      x.type = 'text';
+    } else {
+      x.type = 'password';
+    }
+    }
+    </script>
+
   </head>
 
   <body style="background:#DB9501">
