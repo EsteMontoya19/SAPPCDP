@@ -176,7 +176,7 @@
 
 
                     <div class="form-group row">
-                      <label for="rfc" class="col-sm-6 col-form-label">Coordinación Academica</label>
+                      <label for="rfc" class="col-sm-6 col-form-label">Coordinación Académica</label>
                       <div class="col-sm-6">
                         <select id="inputState" class="form-control">
                           <option selected>Seleccionar...</option>
@@ -207,7 +207,7 @@
                       <div class="col-sm-6" style="padding-left: 40px">
                          <input class="form-check-input" type="checkbox" id="gridCheck3">
                           <label class="form-check-label" for="gridCheck3">
-                            Escololarizado
+                            Escolarizado
                           </label>
                           <br>
                           <input class="form-check-input" type="checkbox" id="gridCheck4">
