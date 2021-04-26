@@ -4,9 +4,9 @@
         function buscarUsuarioSistema($usuario, $contrasena)
 		{
 			$SQL_Bus_Usuario = 
-			"	SELECT usua_id_usua, pers_id_pers, pers_nombre, pers_primer_ape, rol_nombre,rol_id_rol
-				FROM usuario, persona, rol
-				WHERE usua_id_pers = pers_id_pers AND usua_id_rol = rol_id_rol AND usua_nombre = '$usuario' AND usua_contra = '$contrasena';
+			"	SELECT U.usua_id_usuario, U.pers_id_persona, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno, R.rol_nombre,R.rol_id_rol
+				FROM Usuario U, Persona P, Rol R
+				WHERE U.pers_id_persona = P.pers_id_persona AND U.rol_id_rol = R.rol_id_rol AND U.usua_num_usuario = '$usuario' AND U.usua_contrasena = '$contrasena';
 			";
 
 			$bd = new BD();

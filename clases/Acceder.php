@@ -11,9 +11,10 @@
 		function buscar($strUsuario, $strContrasena)
   		{
 			$SQL_Busq_Usuario =
-			" 	SELECT usua_id_usua, usua_nombre, usua_contra, usua_id_rol, rol_nombre, usua_id_pers, usua_estado
-      			FROM usuario, rol
-      			WHERE rol_id_rol = usua_id_rol AND usua_nombre = '$strUsuario' AND usua_contra = '$strContrasena';
+			" 	SELECT U.usua_id_usuario, U.pers_id_persona, U.rol_id_rol, R.rol_nombre, U.preg_id_pregunta, U.usua_num_usuario,
+					   U.usua_contrasena, U.usua_respuesta, U.usua_activo
+      			FROM Usuario U, Rol R
+      			WHERE R.rol_id_rol = U.rol_id_rol AND U.usua_num_usuario = '$strUsuario' AND usua_contrasena = '$strContrasena';
 			";
 
 			$bd = new BD();
@@ -29,12 +30,12 @@
 
     		$obj_Usuario = $transaccion_1->traerObjeto(0);
 			$bd->cerrarBD();
-
-			$this->id_usuario = $obj_Usuario->usua_nombre;
-			$this->id_contrasena = $obj_Usuario->usua_contra;
-			$this->id_rol = $obj_Usuario->usua_id_rol;
-			$this->id_persona = $obj_Usuario->usua_id_pers;
-			$this->estado = $obj_Usuario->usua_estado;
+			
+			$this->id_usuario = $obj_Usuario->usua_num_usuario;
+			$this->id_contrasena = $obj_Usuario->usua_contrasena;
+			$this->id_rol = $obj_Usuario->rol_id_rol;
+			$this->id_persona = $obj_Usuario->pers_id_persona;
+			$this->estado = $obj_Usuario->usua_activo;
 
 			 return true;
 		}
@@ -42,9 +43,11 @@
 		function validarEstado($strUsuario, $strContrasena)
   		{
 			$SQL_Busq_Usuario =
-			" 	SELECT usua_id_usua, usua_nombre, usua_contra, usua_id_rol, rol_nombre, usua_id_pers, usua_estado
-      			FROM usuario, rol
-      			WHERE rol_id_rol = usua_id_rol AND usua_nombre = '$strUsuario' AND usua_contra = '$strContrasena'AND usua_estado = TRUE;
+			" 	SELECT U.usua_id_usuario, U.pers_id_persona, U.rol_id_rol, R.rol_nombre, U.preg_id_pregunta, U.usua_num_usuario,
+					   U.usua_contrasena, U.usua_respuesta, U.usua_activo
+	   			FROM Usuario U, Rol R
+	   			WHERE R.rol_id_rol = U.rol_id_rol AND U.usua_num_usuario = '$strUsuario' AND usua_contrasena = '$strContrasena'
+				   	  AND U.usua_activo = true;
 			";
 
 			$bd = new BD();
@@ -61,11 +64,11 @@
     		$obj_Usuario = $transaccion_1->traerObjeto(0);
 			$bd->cerrarBD();
 
-			$this->id_usuario = $obj_Usuario->usua_nombre;
-			$this->id_contrasena = $obj_Usuario->usua_contra;
-			$this->id_rol = $obj_Usuario->usua_id_rol;
-			$this->id_persona = $obj_Usuario->usua_id_pers;
-			$this->estado = $obj_Usuario->usua_estado;
+			$this->id_usuario = $obj_Usuario->usua_num_usuario;
+			$this->id_contrasena = $obj_Usuario->usua_contrasena;
+			$this->id_rol = $obj_Usuario->rol_id_rol;
+			$this->id_persona = $obj_Usuario->pers_id_persona;
+			$this->estado = $obj_Usuario->usua_activo;
 
 			 return true;
 		}

@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="Sistema de Inscripciones de CENAPyME" content="">
+    <meta name="Sistema de gestión de inscricpiones a grupos PPCDP" content="">
     <meta name="CIFCA" content="">
 
     <title>PPDCP</title>
@@ -85,12 +85,12 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
                 <i class="fas fa-user-circle"></i>
-                &nbsp; <?php echo isset($cuenta) ? $cuenta->pers_nombre : ""; ?> <?php echo isset($cuenta) ? $cuenta->pers_primer_ape : ""; ?>
+                &nbsp; <?php echo isset($cuenta) ? $cuenta->pers_nombre : ""; ?> <?php echo isset($cuenta) ? $cuenta->pers_apellido_paterno : ""; ?> <?php echo isset($cuenta) ? $cuenta->pers_apellido_materno: ""; ?>
               </a>
               <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarUser">
                 <a class="dropdown-item disabled" href="*"><?php echo isset($cuenta) ? $cuenta->rol_nombre : ""; ?></a>
-                <a class="dropdown-item" href="#" onclick="miCuenta(<?php echo isset($cuenta) ? $cuenta->usua_id_usua : ""; ?>, <?php echo isset($cuenta) ? $cuenta->pers_id_pers : ""; ?>)" > Mi cuenta</a>
-                <a class="dropdown-item" href="#" onclick="cambiarContraseña(<?php echo isset($cuenta) ? $cuenta->usua_id_usua : ""; ?>, <?php echo isset($cuenta) ? $cuenta->pers_id_pers : ""; ?>)" >Cambiar contraseña</a>
+                <a class="dropdown-item" href="#" onclick="miCuenta(<?php echo isset($cuenta) ? $cuenta->usua_id_usuario : "";?>, <?php echo isset($cuenta) ? $cuenta->pers_id_persona : ""; ?>)" > Mi cuenta</a>
+                <a class="dropdown-item" href="#" onclick="cambiarContraseña(<?php echo isset($cuenta) ? $cuenta->usua_id_usuario : ""; ?>, <?php echo isset($cuenta) ? $cuenta->pers_id_persona : ""; ?>)" >Cambiar contraseña</a>
                 <a class="dropdown-item" href="../modulos/Cerrar_Sesion.php">Cerrar sesión</a>
               </div>
             </li>
