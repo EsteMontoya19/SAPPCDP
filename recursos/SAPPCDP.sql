@@ -7,16 +7,16 @@
 /*      Inserción de datos en tablas                            */
 /*==============================================================*/
 
-INSERT INTO Persona (pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono)
-	VALUES ('Esteban', 'Montoya', 'Maya', 'estemontoya99@gmail.com', '5548364465'),
-          ('Karen', 'Fuentez', 'Aguilar', 'ftzkaren21@gmail.com', '5620589315'),
-          ('Samuel', 'Alcantara', 'Chavez', 'samuelunam3151@gmail.com', '5564164687');
+INSERT INTO Persona (pers_id_persona,pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono)
+	VALUES (1,'Esteban', 'Montoya', 'Maya', 'estemontoya99@gmail.com', '5548364465'),
+          (2,'Karen', 'Fuentez', 'Aguilar', 'ftzkaren21@gmail.com', '5620589315'),
+          (3,'Samuel', 'Alcantara', 'Chavez', 'samuelunam3151@gmail.com', '5564164687');
 
 INSERT INTO Rol (rol_id_rol, rol_nombre) VALUES (1, 'Administrador del sistema'), (2, 'Profesor'), 
             (3, 'Monitor');
 
-INSERT INTO Pregunta (preg_pregunta) VALUES ('Como se llamaba tu primer mascota'), ('Pelicula de acción favorita'),
-			('Superherore favorito');
+INSERT INTO Pregunta (preg_id_pregunta, preg_pregunta) VALUES (1,'Como se llamaba tu primer mascota'), (2,'Pelicula de acción favorita'),
+			(3, 'Superherore favorito');
 
 INSERT INTO Usuario (pers_id_persona, rol_id_rol, preg_id_pregunta, usua_num_usuario, usua_contrasena, usua_respuesta, usua_activo)
 		VALUES (1, 1, 3, 'Esteban', '1234', 'Linterna Verde', true), (2, 2, 3, 'Karen', '1234', 'Flash', true), 
@@ -27,10 +27,10 @@ INSERT INTO Administrador (pers_id_persona, admin_num_trabajador, admin_rfc) VAL
 INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza, prof_rfc) 
       VALUES (2, '123457890', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber','KAFA12345');
 
-INSERT INTO Monitor (pers_id_persona, moni_num_cuenta, moni_fecha_inicio, moni_fecha_fin, moni_hora_inicio, moni_hora_fin) 
-		VALUES (3, '123457890', '2021/02/23', '2021/09/08','07:00:00', '21:00:00');
+INSERT INTO Monitor (moni_id_monitor, pers_id_persona, moni_num_cuenta, moni_fecha_inicio, moni_fecha_fin, moni_hora_inicio, moni_hora_fin) 
+		VALUES (1, 3, '123457890', '2021/02/23', '2021/09/08','07:00:00', '21:00:00');
 
-INSERT INTO Dia (dia_nombre) VALUES ('Lunes'), ('Martes'), ('Miercoles'), ('Jueves'), ('Viernes'), ('Sabado');
+INSERT INTO Dia (dia_id_dia, dia_nombre) VALUES (1, 'Lunes'), (2, 'Martes'), (3, 'Miercoles'), (4, 'Jueves'), (5, 'Viernes'), (6, 'Sabado');
 
 INSERT INTO Monitor_Dia (moni_id_monitor, dia_id_dia) VALUES (1,1), (1,2), (1,3), (1,4), (1,5);
 
@@ -38,11 +38,11 @@ INSERT INTO Nivel (nive_id_nivel, nive_nombre) VALUES (1, 'Licenciatura'), (2, '
 
 INSERT INTO Modalidad (moda_id_modalidad, moda_nombre) VALUES (1,'Presencial'), (2,'Abierta'), (3,'A distancia');
 
-INSERT INTO Coordinacion (coor_nombre) VALUES ('Informática'), ('Fiscal'), ('Contabilidad'), ('Finanzas'), ('Administración básica'), ('Matemáticas'), ('Auditoría'), ('Economía'), 
-('Derecho'), ('Costos y Presupuestos'), ('Contabilidad básica'), ('Recursos humanos'), ('Mercadotecnia'),('Maestrías en línea'), 
-('Maestrías en administración de sistemas de salud'), ('Maestría en finanzas'),('Especialidades de alta dirección'), ('RH y mercadotecnia'), 
-('Maestría en auditoria'), ('Especialidad en administración gerontológica'), ('Maestría negocios internacionales'), ('Maestría en turismo'), 
-('Maestría en alta dirección'), ('Maestría en informática administrativa');
+INSERT INTO Coordinacion (coor_id_coordinacion, coor_nombre) VALUES (1, 'Informática'), (2, 'Fiscal'), (3, 'Contabilidad'), (4, 'Finanzas'), (5, 'Administración básica'), (6, 'Matemáticas'), (7, 'Auditoría'), (8, 'Economía'), 
+(9, 'Derecho'), (10, 'Costos y Presupuestos'), (11, 'Contabilidad básica'), (12, 'Recursos humanos'), (13, 'Mercadotecnia'),(14, 'Maestrías en línea'), 
+(15, 'Maestrías en administración de sistemas de salud'), (16, 'Maestría en finanzas'),(17, 'Especialidades de alta dirección'), (18, 'RH y mercadotecnia'), 
+(19, 'Maestría en auditoria'), (20, 'Especialidad en administración gerontológica'), (21, 'Maestría negocios internacionales'), (22, 'Maestría en turismo'), 
+(23, 'Maestría en alta dirección'), (24, 'Maestría en informática administrativa');
 
 INSERT INTO Profesor_Nivel (prof_id_profesor, nive_id_nivel) VALUES (1, 1), (1, 2);
 
@@ -355,7 +355,7 @@ create table MONITOR (
    MONI_NUM_CUENTA      CHAR(15)             not null,
    MONI_FECHA_INICIO    DATE                 not null,
    MONI_FECHA_FIN       DATE                 not null,
-   MONI_HORA_INCIO      TIME                 not null,
+   moni_hora_inicio      TIME                 not null,
    MONI_HORA_FIN        TIME                 not null,
    constraint PK_MONITOR primary key (MONI_ID_MONITOR)
 );
@@ -375,18 +375,18 @@ PERS_ID_PERSONA
 );
 
 /*==============================================================*/
-/* Table: MMONITOR_DIA                                          */
+/* Table: MONITOR_DIA                                          */
 /*==============================================================*/
-create table MMONITOR_DIA (
+create table MONITOR_DIA (
    MONI_ID_MONITOR      INT4                 not null,
    DIA_ID_DIA           INT4                 not null,
-   constraint PK_MMONITOR_DIA primary key (MONI_ID_MONITOR, DIA_ID_DIA)
+   constraint PK_MONITOR_DIA primary key (MONI_ID_MONITOR, DIA_ID_DIA)
 );
 
 /*==============================================================*/
-/* Index: MMONITOR_DIA_PK                                       */
+/* Index: MONITOR_DIA_PK                                       */
 /*==============================================================*/
-create unique index MMONITOR_DIA_PK on MMONITOR_DIA (
+create unique index MONITOR_DIA_PK on MONITOR_DIA (
 MONI_ID_MONITOR,
 DIA_ID_DIA
 );
@@ -712,12 +712,12 @@ alter table MONITOR
       references PERSONA (PERS_ID_PERSONA)
       on delete restrict on update restrict;
 
-alter table MMONITOR_DIA
+alter table MONITOR_DIA
    add constraint FK_MONITOR__MONITOR_D_MONITOR foreign key (MONI_ID_MONITOR)
       references MONITOR (MONI_ID_MONITOR)
       on delete restrict on update restrict;
 
-alter table MMONITOR_DIA
+alter table MONITOR_DIA
    add constraint FK_MONITOR__MONITOR_D_DIA foreign key (DIA_ID_DIA)
       references DIA (DIA_ID_DIA)
       on delete restrict on update restrict;
