@@ -15,10 +15,10 @@ INSERT INTO Persona (pers_id_persona,pers_nombre, pers_apellido_paterno, pers_ap
 INSERT INTO Rol (rol_id_rol, rol_nombre) VALUES (1, 'Administrador del sistema'), (2, 'Profesor'), 
             (3, 'Monitor');
 
-INSERT INTO Pregunta (preg_id_pregunta, preg_pregunta) VALUES (1,'Como se llamaba tu primer mascota'), (2,'Pelicula de acción favorita'),
+INSERT INTO PREGUNTA_SEGURIDAD (prse_id_pregunta, prse_pregunta) VALUES (1,'Como se llamaba tu primer mascota'), (2,'Pelicula de acción favorita'),
 			(3, 'Superherore favorito');
 
-INSERT INTO Usuario (pers_id_persona, rol_id_rol, preg_id_pregunta, usua_num_usuario, usua_contrasena, usua_respuesta, usua_activo)
+INSERT INTO Usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usuario, usua_contrasena, usua_respuesta, usua_activo)
 		VALUES (1, 1, 3, 'Esteban', '1234', 'Linterna Verde', true), (2, 2, 3, 'Karen', '1234', 'Flash', true), 
 			    (3, 3, 3, 'Samuel', '1234', 'Batman', true);
 
@@ -104,27 +104,27 @@ INSC_ID_INSCRIPCION
 /* Table: CALENDARIO                                            */
 /*==============================================================*/
 create table CALENDARIO (
-   CAL_ID_CALENDARIO    INT4                 not null,
+   CALE_ID_CALENDARIO    INT4                 not null,
    GRUP_ID_GRUPO        INT4                 null,
-   CAL_SEMESTRE         DATE                 not null,
-   CAL_INCIO_CICLO      DATE                 not null,
-   CAL_FIN_CICLO        DATE                 not null,
-   CAL_INCIO_EXAMNES    DATE                 not null,
-   CAL_FIN_EXAMENES     DATE                 not null,
-   CAL_INCIO_ASUETO     DATE                 not null,
-   CAL_FIN_ASUETO       DATE                 not null,
-   CAL__INCIO_INTERSEMESTRAL DATE                 not null,
-   CAL_FIN_INTERSEMESTRAL DATE                 not null,
-   CAL_INCIO_ADMIN      DATE                 not null,
-   CAL_FIN_ADMIN        DATE                 not null,
-   constraint PK_CALENDARIO primary key (CAL_ID_CALENDARIO)
+   CALE_SEMESTRE         DATE                 not null,
+   CALE_INICIO_CICLO      DATE                 not null,
+   CALE_FIN_CICLO        DATE                 not null,
+   CALE_INICIO_EXAMNES    DATE                 not null,
+   CALE_FIN_EXAMENES     DATE                 not null,
+   CALE_INICIO_ASUETO     DATE                 not null,
+   CALE_FIN_ASUETO       DATE                 not null,
+   CALE_INICIO_INTERSEMESTRAL DATE                 not null,
+   CALE_FIN_INTERSEMESTRAL DATE                 not null,
+   CALE_INICIO_ADMIN      DATE                 not null,
+   CALE_FIN_ADMIN        DATE                 not null,
+   constraint PK_CALENDARIO primary key (CALE_ID_CALENDARIO)
 );
 
 /*==============================================================*/
 /* Index: CALENDARIO_PK                                         */
 /*==============================================================*/
 create unique index CALENDARIO_PK on CALENDARIO (
-CAL_ID_CALENDARIO
+CALE_ID_CALENDARIO
 );
 
 /*==============================================================*/
@@ -242,7 +242,9 @@ create table GRUPO (
    MONI_ID_MONITOR      INT4                 null,
    PROF_ID_PROFESOR     INT4                 null,
    CURS_ID_CURSOS       INT4                 not null,
-   SALO_ID              INT4                 null,
+   SALO_ID_SALON              INT4                 null,
+   CALE_ID_CALENDARIO   INT4                 not null,
+   PLAT_ID_PLATAFORMA   INT4                 not null,
    GRUP_REUNION         CHAR(50)             null,
    GRUP_ACCESO          CHAR(100)            null,
    GRUP_CLAVE_ACCESO    CHAR(10)             null,
@@ -288,7 +290,7 @@ MONI_ID_MONITOR
 /* Index: RELATIONSHIP_34_FK                                    */
 /*==============================================================*/
 create  index RELATIONSHIP_34_FK on GRUPO (
-SALO_ID
+SALO_ID_SALON
 );
 
 /*==============================================================*/
@@ -452,19 +454,19 @@ GRUP_ID_GRUPO
 );
 
 /*==============================================================*/
-/* Table: PREGUNTA                                              */
+/* Table: PREGUNTA_SEGURIDAD                                              */
 /*==============================================================*/
-create table PREGUNTA (
-   PREG_ID_PREGUNTA     SERIAL               not null,
-   PREG_PREGUNTA        CHAR(100)            not null,
-   constraint PK_PREGUNTA primary key (PREG_ID_PREGUNTA)
+create table PREGUNTA_SEGURIDAD (
+   prse_id_pregunta     SERIAL               not null,
+   prse_pregunta        CHAR(100)            not null,
+   constraint PK_PREGUNTA primary key (prse_id_pregunta)
 );
 
 /*==============================================================*/
-/* Index: PREGUNTAS_PK                                          */
+/* Index: PREGUNTA_SEGURIDADS_PK                                          */
 /*==============================================================*/
-create unique index PREGUNTAS_PK on PREGUNTA (
-PREG_ID_PREGUNTA
+create unique index PREGUNTAS_PK on PREGUNTA_SEGURIDAD (
+prse_id_pregunta
 );
 
 /*==============================================================*/
@@ -564,17 +566,17 @@ ROL_ID_ROL
 /* Table: SALON                                                 */
 /*==============================================================*/
 create table SALON (
-   SALO_ID              SERIAL               not null,
+   SALO_ID_SALON              SERIAL               not null,
    EDIF_ID_EDIFICIO     INT4                 not null,
    SALO_NOMBRE          CHAR(10)             not null,
-   constraint PK_SALON primary key (SALO_ID)
+   constraint PK_SALON primary key (SALO_ID_SALON)
 );
 
 /*==============================================================*/
 /* Index: SALONES_PK                                            */
 /*==============================================================*/
 create unique index SALONES_PK on SALON (
-SALO_ID
+SALO_ID_SALON
 );
 
 /*==============================================================*/
@@ -616,7 +618,7 @@ create table USUARIO (
    USUA_ID_USUARIO      SERIAL               not null,
    PERS_ID_PERSONA      INT4                 null,
    ROL_ID_ROL           INT4                 null,
-   PREG_ID_PREGUNTA     INT4                 not null,
+   prse_id_pregunta     INT4                 not null,
    USUA_NUM_USUARIO     CHAR(15)             not null,
    USUA_CONTRASENA      CHAR(20)             not null,
    USUA_RESPUESTA       CHAR(30)             not null,
@@ -649,7 +651,82 @@ ROL_ID_ROL
 /* Index: RELATIONSHIP_36_FK                                    */
 /*==============================================================*/
 create  index RELATIONSHIP_36_FK on USUARIO (
-PREG_ID_PREGUNTA
+prse_id_pregunta
+);
+
+/*==============================================================*/
+/* Table: Encuesta                                              */
+/*==============================================================*/
+
+CREATE TABLE ENCUESTA (
+   ENCU_ID_ENCUESTA       SERIAL       not null,
+   ENCU_ACTIVO            BOOL         not null,
+   constraint PK_ENCUESTA primary key (ENCU_ID_ENCUESTA)  
+);
+
+/*==============================================================*/
+/* Index: ENCUESTA_PK                                            */
+/*==============================================================*/
+create unique index ENCUESTA_PK on ENCUESTA (
+ENCU_ID_ENCUESTA
+);
+
+/*==============================================================*/
+/* Table: Pregunta_Encuesta                                     */
+/*==============================================================*/
+
+CREATE TABLE Pregunta_Encuesta (
+   PREN_ID_PREGUNTA     SERIAL           not null,
+   ENCU_ID_ENCUESTA     INT4             not null,
+   PREN_TIPO            CHAR(15)         not null,
+   constraint PK_PREGUNTA_ENCUESTA primary key (PREN_ID_PREGUNTA)  
+);
+
+/*==============================================================*/
+/* Index: PREGUNTA_ENCUESTA_PK                                  */
+/*==============================================================*/
+create unique index PREGUNTA_ENCUESTA_PK on Pregunta_Encuesta (
+PREN_ID_PREGUNTA
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_40_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_40_FK on PREGUNTA_ENCUESTA (
+ENCU_ID_ENCUESTA
+);
+
+/*==============================================================*/
+/* Table: Resultado_Encuesta                                   */
+/*==============================================================*/
+
+CREATE TABLE Resultado_Encuesta (
+   REEN_ID_PREGUNTA     SERIAL           not null,
+   ENCU_ID_ENCUESTA     INT4             not null,
+   INSC_ID_INSCRIPCION  INT4             not null,
+   REEN_RESULTADO       CHAR(50)         not null,
+   constraint PK_RESULTADO_ENCUESTA primary key (REEN_ID_PREGUNTA)  
+);
+
+/*==============================================================*/
+/* Index: RESULTADOS_ENCUESTA_PK                                */
+/*==============================================================*/
+create unique index RESULTADO_ENCUESTA_PK on RESULTADO_Encuesta (
+REEN_ID_PREGUNTA
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_41_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_41_FK on RESULTADO_ENCUESTA (
+ENCU_ID_ENCUESTA
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_42_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_42_FK on RESULTADO_ENCUESTA (
+INSC_ID_INSCRIPCION
 );
 
 alter table ADMINISTRADOR
@@ -688,9 +765,19 @@ alter table GRUPO
       on delete restrict on update restrict;
 
 alter table GRUPO
-   add constraint FK_GRUPO_RELATIONS_SALON foreign key (SALO_ID)
-      references SALON (SALO_ID)
+   add constraint FK_GRUPO_RELATIONS_SALON foreign key (SALO_ID_SALON)
+      references SALON (SALO_ID_SALON)
       on delete restrict on update restrict;
+
+alter table GRUPO
+   add constraint FK_GRUPO_RELATIONS_CALENDARIO foreign key (CALE_ID_CALENDARIO)
+      references CALENDARIO (CALE_ID_CALENDARIO)
+      on delete restrict on update restrict; 
+
+alter table GRUPO
+   add constraint FK_GRUPO_RELATIONS_PLATAFORMA foreign key (PLAT_ID_PLATAFORMA)
+      references PLATAFORMA (PLAT_ID_PLATAFORMA)
+      on delete restrict on update restrict; 
 
 alter table INSCRIPCION
    add constraint FK_INSCRIPC_RELATIONS_GRUPO foreign key (GRUP_ID_GRUPO)
@@ -778,8 +865,8 @@ alter table USUARIO
       on delete restrict on update restrict;
 
 alter table USUARIO
-   add constraint FK_USUARIO_RELATIONS_PREGUNTA foreign key (PREG_ID_PREGUNTA)
-      references PREGUNTA (PREG_ID_PREGUNTA)
+   add constraint FK_USUARIO_RELATIONS_PREGUNTA foreign key (prse_id_pregunta)
+      references PREGUNTA_SEGURIDAD (prse_id_pregunta)
       on delete restrict on update restrict;
 
 alter table USUARIO
@@ -787,3 +874,104 @@ alter table USUARIO
       references PERSONA (PERS_ID_PERSONA)
       on delete restrict on update restrict;
 
+alter table Pregunta_Encuesta
+   add constraint FK_PREGUNTA_ENCUESTA_RELATIONS_ENCUESTA foreign key (ENCU_ID_ENCUESTA)
+      references ENCUESTA (ENCU_ID_ENCUESTA)
+      on delete restrict on update restrict; 
+
+alter table Resultado_Encuesta
+   add constraint FK_RESULTADO_ENCUESTA_RELATIONS_ENCUESTA foreign key (ENCU_ID_ENCUESTA)
+      references ENCUESTA (ENCU_ID_ENCUESTA)
+      on delete restrict on update restrict; 
+
+alter table Resultado_Encuesta
+   add constraint FK_RESULTADO_ENCUESTA_RELATIONS_INSCRIPCION foreign key (INSC_ID_INSCRIPCION)
+      references INSCRIPCION (INSC_ID_INSCRIPCION)
+      on delete restrict on update restrict; 
+
+
+/*  Actualizaciones
+alter table GRUPO
+   add constraint FK_GRUPO_RELATIONS_CALENDARIO foreign key (CALE_ID_CALENDARIO)
+      references CALENDARIO (CALE_ID_CALENDARIO)
+      on delete restrict on update restrict;
+	  
+alter table GRUPO
+   add constraint FK_GRUPO_RELATIONS_PLATAFORMA foreign key (PLAT_ID_PLATAFORMA)
+      references PLATAFORMA (PLAT_ID_PLATAFORMA)
+      on delete restrict on update restrict; 
+	  
+ALTER TABLE Calendario RENAME COLUMN cal_semestre TO cale_semestre;
+ALTER TABLE Calendario RENAME COLUMN cal_incio_ciclo TO cale_inicio_ciclo;
+ALTER TABLE Calendario RENAME COLUMN cal_fin_ciclo TO cale_fin_ciclo;
+ALTER TABLE Calendario RENAME COLUMN cal_incio_asueto TO cale_inicio_asueto;
+ALTER TABLE Calendario RENAME COLUMN cal_fin_asueto TO cale_fin_asueto;
+ALTER TABLE Calendario RENAME COLUMN cal__incio_intersemestral TO cale_inicio_intersemestral;
+ALTER TABLE Calendario RENAME COLUMN cal_fin_intersemestral TO cale_fin_intersemestral;
+ALTER TABLE Calendario RENAME COLUMN cal_incio_admin TO cale_inicio_admin;
+ALTER TABLE Calendario RENAME COLUMN cal_fin_admin TO cale_fin_admin;
+
+ALTER TABLE Pregunta RENAME TO Pregunta_Seguridad;
+
+ALTER TABLE Pregunta_Seguridad RENAME COLUMN preg_id_pregunta TO prse_id_pregunta;
+ALTER TABLE Pregunta_Seguridad RENAME COLUMN preg_pregunta TO prse_pregunta;
+
+CREATE TABLE ENCUESTA (
+   ENCU_ID_ENCUESTA       SERIAL       not null,
+   ENCU_ACTIVO            BOOL         not null,
+   constraint PK_ENCUESTA primary key (ENCU_ID_ENCUESTA)  
+);
+create unique index ENCUESTA_PK on ENCUESTA (
+ENCU_ID_ENCUESTA
+);
+
+CREATE TABLE Pregunta_Encuesta (
+   PREN_ID_PREGUNTA     SERIAL           not null,
+   ENCU_ID_ENCUESTA     INT4             not null,
+   PREN_TIPO            CHAR(15)         not null,
+   constraint PK_PREGUNTA_ENCUESTA primary key (PREN_ID_PREGUNTA)  
+);
+
+alter table Pregunta_Encuesta
+   add constraint FK_PREGUNTA_ENCUESTA_RELATIONS_ENCUESTA foreign key (ENCU_ID_ENCUESTA)
+      references ENCUESTA (ENCU_ID_ENCUESTA)
+      on delete restrict on update restrict; 
+
+create unique index PREGUNTA_ENCUESTA_PK on Pregunta_Encuesta (
+PREN_ID_PREGUNTA
+);
+
+create  index RELATIONSHIP_40_FK on PREGUNTA_ENCUESTA (
+ENCU_ID_ENCUESTA
+);
+
+CREATE TABLE Resultado_Encuesta (
+   REEN_ID_PREGUNTA     SERIAL           not null,
+   ENCU_ID_ENCUESTA     INT4             not null,
+   INSC_ID_INSCRIPCION  INT4             not null,
+   REEN_RESULTADO       CHAR(50)         not null,
+   constraint PK_RESULTADO_ENCUESTA primary key (REEN_ID_PREGUNTA)  
+);
+
+create unique index RESULTADO_ENCUESTA_PK on RESULTADO_Encuesta (
+REEN_ID_PREGUNTA
+);
+
+create  index RELATIONSHIP_41_FK on RESULTADO_ENCUESTA (
+ENCU_ID_ENCUESTA
+);
+
+create  index RELATIONSHIP_42_FK on RESULTADO_ENCUESTA (
+INSC_ID_INSCRIPCION
+);
+
+alter table Resultado_Encuesta
+   add constraint FK_RESULTADO_ENCUESTA_RELATIONS_ENCUESTA foreign key (ENCU_ID_ENCUESTA)
+      references ENCUESTA (ENCU_ID_ENCUESTA)
+      on delete restrict on update restrict; 
+	  
+alter table Resultado_Encuesta
+   add constraint FK_RESULTADO_ENCUESTA_RELATIONS_INSCRIPCION foreign key (INSC_ID_INSCRIPCION)
+      references INSCRIPCION (INSC_ID_INSCRIPCION)
+      on delete restrict on update restrict; 
+*/
