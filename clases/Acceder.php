@@ -11,7 +11,7 @@
 		function buscar($strUsuario, $strContrasena)
   		{
 			$SQL_Busq_Usuario =
-			" 	SELECT U.usua_id_usuario, U.pers_id_persona, U.rol_id_rol, R.rol_nombre, U.preg_id_pregunta, U.usua_num_usuario,
+			" 	SELECT U.usua_id_usuario, U.pers_id_persona, U.rol_id_rol, R.rol_nombre, U.prse_id_pregunta, U.usua_num_usuario,
 					   U.usua_contrasena, U.usua_respuesta, U.usua_activo
       			FROM Usuario U, Rol R
       			WHERE R.rol_id_rol = U.rol_id_rol AND U.usua_num_usuario = '$strUsuario' AND usua_contrasena = '$strContrasena';
@@ -43,7 +43,7 @@
 		function validarEstado($strUsuario, $strContrasena)
   		{
 			$SQL_Busq_Usuario =
-			" 	SELECT U.usua_id_usuario, U.pers_id_persona, U.rol_id_rol, R.rol_nombre, U.preg_id_pregunta, U.usua_num_usuario,
+			" 	SELECT U.usua_id_usuario, U.pers_id_persona, U.rol_id_rol, R.rol_nombre, U.prse_id_pregunta, U.usua_num_usuario,
 					   U.usua_contrasena, U.usua_respuesta, U.usua_activo
 	   			FROM Usuario U, Rol R
 	   			WHERE R.rol_id_rol = U.rol_id_rol AND U.usua_num_usuario = '$strUsuario' AND usua_contrasena = '$strContrasena'
