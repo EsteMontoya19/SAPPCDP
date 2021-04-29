@@ -109,7 +109,7 @@ create table CALENDARIO (
    CALE_SEMESTRE         DATE                 not null,
    CALE_INICIO_CICLO      DATE                 not null,
    CALE_FIN_CICLO        DATE                 not null,
-   CALE_INICIO_EXAMNES    DATE                 not null,
+   CALE_INICIO_EXAMENES    DATE                 not null,
    CALE_FIN_EXAMENES     DATE                 not null,
    CALE_INICIO_ASUETO     DATE                 not null,
    CALE_FIN_ASUETO       DATE                 not null,
