@@ -12,8 +12,8 @@ INSERT INTO Persona (pers_id_persona,pers_nombre, pers_apellido_paterno, pers_ap
           (2,'Karen', 'Fuentez', 'Aguilar', 'ftzkaren21@gmail.com', '5620589315'),
           (3,'Samuel', 'Alcantara', 'Chavez', 'samuelunam3151@gmail.com', '5564164687');
 
-INSERT INTO Rol (rol_id_rol, rol_nombre) VALUES (1, 'Administrador del sistema'), (2, 'Profesor'), 
-            (3, 'Monitor');
+INSERT INTO Rol (rol_id_rol, rol_nombre) VALUES (1, 'Administrador del sistema'), (3, 'Profesor'), 
+            (2, 'Monitor');
 
 INSERT INTO PREGUNTA_SEGURIDAD (prse_id_pregunta, prse_pregunta) VALUES (1,'Como se llamaba tu primer mascota'), (2,'Pelicula de acción favorita'),
 			(3, 'Superherore favorito');
