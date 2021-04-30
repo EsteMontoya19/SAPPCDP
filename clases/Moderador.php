@@ -1,7 +1,29 @@
 <?php
-
-  class Telefono
+  class Moderador
   {
+
+    function eliminarModerador($persona)
+    {
+      
+      $SQL_Eli_Moderador = 
+        "DELETE FROM Monitor_Dia
+        WHERE moni_id_monitor = (SELECT moni_id_monitor
+                                 FROM Monitor
+                                 WHERE pers_id_persona = $persona);
+        DELETE FROM Monitor
+        WHERE pers_id_persona = $persona;
+        ";
+
+
+      $bd = new BD();
+      $bd->abrirBD();
+      $transaccion_1 = new Transaccion($bd->conexion);
+      $transaccion_1->enviarQuery($SQL_Eli_Moderador);
+      $bd->cerrarBD();
+    }
+  }
+  
+    /*
     function agregarTelefono($persona, $tipo, $telefono)
     {
       $SQL_Ins_Telefono =
@@ -31,20 +53,6 @@
       $bd->cerrarBD();
     }
 
-    function eliminarTelefono($persona)
-    {
-      $SQL_Eli_Telefono= 
-			" DELETE FROM telefono
-				WHERE tele_id_pers = $persona;
-			";
-
-      $bd = new BD();
-      $bd->abrirBD();
-      $transaccion_1 = new Transaccion($bd->conexion);
-      $transaccion_1->enviarQuery($SQL_Eli_Telefono);
-      $bd->cerrarBD();
-    }
-
     function buscarTelefono($persona, $tipo)
 		{
 			$SQL_Bus_Telefono = 
@@ -60,6 +68,8 @@
 			$obj_Telefono = $transaccion_1->traerObjeto(0);
 			$bd->cerrarBD();
 			return ($transaccion_1->traerObjeto(0));
-		}
-  }
-?>
+		}*/ 
+    ?>
+
+  
+

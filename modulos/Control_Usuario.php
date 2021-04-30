@@ -3,12 +3,13 @@
   include('../clases/BD.php');
   include('../clases/Usuario.php');
   include('../clases/Persona.php');
-  include('../clases/Telefono.php');
+  include('../clases/Moderador.php');
+  //Aqui debo crear clases para cada rol que tengo
   include('../clases/Correo.php');
 
   $obj_Persona = new Persona();
   $obj_Usuario = new Usuario();
-  $obj_Telefono = new Telefono();
+  $obj_Moderador = new Moderador();
   $obj_Correo = new Correo();
 
   if($_POST['dml'] == 'insert')
@@ -38,7 +39,7 @@
 
       $obj_Telefono->agregarTelefono($persona, $tipo, $telefono);
       $obj_Correo->agregarCorreo($persona, $tipo, $correo);
-      $obj_Usuario->agregarUsuario(, $persona, $pregunta, $nombreUsu, $contrasenia, $recuperacion);
+      $obj_Usuario->agregarUsuario($persona, $pregunta, $nombreUsu, $contrasenia, $recuperacion);
 
       echo 1;
     } else {
@@ -81,10 +82,9 @@
   {
     $usuario = $_POST['id'];
     $persona = $_POST['persona'];
-
-    $obj_Usuario->eliminarUsuario($usuario);
-    $obj_Telefono->eliminarTelefono($persona);
-    $obj_Correo->eliminarCorreo($persona);
+    
+    $obj_Usuario->eliminarUsuario($usuario); 
+    $obj_Moderador->eliminarModerador($persona);
     $obj_Persona->eliminarPersona($persona);
 
     echo 1;

@@ -75,7 +75,7 @@
                       <button type="button" class="btn btn-info btn-table" title="Detalles" onclick="buscarUsuario(<?php echo $usuario['usua_id_usuario'] ?>">
                         <i class="fas fa-search-plus"></i>
                       </button>
-                      <button type="button" class="btn btn-danger btn-table" title="Eliminar" onclick="eliminarUsuario(<?php echo $usuario['usua_id_usuario'] ?>,  <?php echo $usuario['pers_id_persona'] ?>, '<?php echo $usuario['pers_nombre']; ?>', '<?php echo $usuario['pers_primer_ape']; ?>')">
+                      <button type="button" class="btn btn-danger btn-table" title="Eliminar" onclick="eliminarUsuario(<?php echo $usuario['usua_id_usuario'] ?>,  <?php echo $usuario['pers_id_persona'] ?>, '<?php echo $usuario['pers_nombre']; ?>', '<?php echo $usuario['pers_apellido_paterno']; ?>')">
                         <i class="fas fa-trash-alt"></i>
                       </button>
                     </td>
@@ -90,4 +90,4 @@
   </div>
 </div>
 
-<script src="../sistema/usuarios/usuarios.js"></script>
+<script src="../sistema/usuarios/usuario.js"></script>
