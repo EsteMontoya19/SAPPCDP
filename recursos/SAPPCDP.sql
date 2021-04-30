@@ -50,6 +50,31 @@ INSERT INTO Profesor_Modalidad (prof_id_profesor, moda_id_modalidad) VALUES (1,1
 
 INSERT INTO Profesor_Coordinacion(prof_id_profesor, coor_id_coordinacion) VALUES (1,1),(1,24), (1,14);
 
+INSERT INTO Curso (CURS_ID_CURSOS, CURS_TIPO, CUSR_NOMBRE, CURS_NUM_SESIONES, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, CURS_NIVEL, CURS_OBJETIVOS, CURS_TEMARIO, CURS_ACTIVO)
+			VALUES (1, 'Curso', 'Zoom: Cuestionarios', 2, 'Nada', 'Nada', 'Basico', 'Aprender', '/nose.pdf', 'TRUE');
+
+INSERT INTO EDIFICIO (EDIF_NOMBRE)
+			VALUES ('A');
+
+INSERT INTO SALON (SALO_ID_salon, EDIF_ID_EDIFICIO, SALO_NOMBRE)
+			VALUES (1, 1, '05');
+
+INSERT INTO CALENDARIO (cale_id_calendario, CALE_SEMESTRE, CALE_INICIO_CICLO, CALE_FIN_CICLO, CALE_INICIO_EXAMENES, CALE_FIN_EXAMENES, CALE_INICIO_ASUETO,
+						CALE_FIN_ASUETO, CALE_INICIO_INTERSEMESTRAL, CALE_FIN_INTERSEMESTRAL, CALE_INICIO_ADMIN, CALE_FIN_ADMIN)
+   			VALUES(1, '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23');
+
+INSERT INTO PLATAFORMA (PLAT_NOMBRE)
+			VALUES ('Zoom');
+
+INSERT INTO Grupo (GRUP_ID_GRUPO, MONI_ID_MONITOR, PROF_ID_PROFESOR, CURS_ID_CURSOS, SALO_ID_salon, CALE_ID_CALENDARIO,
+				   PLAT_ID_PLATAFORMA, GRUP_REUNION, GRUP_ACCESO, GRUP_CLAVE_ACCESO, GRUP_CUPO, GRUP_ESTADO, GRUP_ACTIVO, 
+				   GRUP_MODALIDAD, GRUP_TIPO, GRUP_INICIO_INSC, GRUP_FIN_INSC)
+			VALUES (1, 1, 1, 1, 1, 1, 1,
+					'grupo reunion', 'grupo acceso', 'clave', 50, 'Privado', 'true', 'en linea', 'taller', '2021/02/23', '2021/09/08');
+
+
+INSERT INTO Sesion (SESI_ID_SESIONES, grup_id_grupo, sesi_fecha, sesi_hora)
+			VALUES (1, 1, '2021/09/08','07:00:00'), (2, 1, '2021/09/09','07:00:00');
 
 /*==============================================================*/
 /* Table: ADMINISTRADOR                                          */
@@ -174,7 +199,7 @@ COOR_ID_COORDINACION
 /* Table: CURSO                                                 */
 /*==============================================================*/
 create table CURSO (
-   CURS_ID_CURSOS       INT4                 not null,
+   CURS_ID_CURSOS       SERIAL                 not null,
    CURS_TIPO            CHAR(10)             not null,
    CURS_NOMBRE          CHAR(50)             not null,
    CURS_NUM_SESIONES    INT4                 null,
@@ -230,7 +255,7 @@ EDIF_ID_EDIFICIO
 /* Table: GRUPO                                                 */
 /*==============================================================*/
 create table GRUPO (
-   GRUP_ID_GRUPO        INT4                 not null,
+   GRUP_ID_GRUPO        SERIAL                 not null,
    MONI_ID_MONITOR      INT4                 null,
    PROF_ID_PROFESOR     INT4                 null,
    CURS_ID_CURSOS       INT4                 not null,
@@ -558,7 +583,7 @@ ROL_ID_ROL
 /* Table: SALON                                                 */
 /*==============================================================*/
 create table SALON (
-   SALO_ID_SALON              SERIAL               not null,
+   SALO_ID_SALON        SERIAL               not null,
    EDIF_ID_EDIFICIO     INT4                 not null,
    SALO_NOMBRE          CHAR(10)             not null,
    constraint PK_SALON primary key (SALO_ID_SALON)
@@ -582,7 +607,7 @@ EDIF_ID_EDIFICIO
 /* Table: SESION                                                */
 /*==============================================================*/
 create table SESION (
-   SESI_ID_SESIONES     INT4                 not null,
+   SESI_ID_SESIONES     SERIAL                 not null,
    GRUP_ID_GRUPO        INT4                 null,
    SESI_FECHA           DATE                 not null,
    SESI_HORA            TIME                 not null,
