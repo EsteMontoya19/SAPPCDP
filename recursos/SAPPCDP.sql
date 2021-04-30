@@ -104,8 +104,7 @@ INSC_ID_INSCRIPCION
 /* Table: CALENDARIO                                            */
 /*==============================================================*/
 create table CALENDARIO (
-   CALE_ID_CALENDARIO    INT4                 not null,
-   GRUP_ID_GRUPO        INT4                 null,
+   CALE_ID_CALENDARIO    SERIAL                 not null,
    CALE_SEMESTRE         DATE                 not null,
    CALE_INICIO_CICLO      DATE                 not null,
    CALE_FIN_CICLO        DATE                 not null,
@@ -125,13 +124,6 @@ create table CALENDARIO (
 /*==============================================================*/
 create unique index CALENDARIO_PK on CALENDARIO (
 CALE_ID_CALENDARIO
-);
-
-/*==============================================================*/
-/* Index: RELATIONSHIP_23_FK                                    */
-/*==============================================================*/
-create  index RELATIONSHIP_23_FK on CALENDARIO (
-GRUP_ID_GRUPO
 );
 
 /*==============================================================*/
@@ -184,7 +176,7 @@ COOR_ID_COORDINACION
 create table CURSO (
    CURS_ID_CURSOS       INT4                 not null,
    CURS_TIPO            CHAR(10)             not null,
-   CUSR_NOMBRE          CHAR(50)             not null,
+   CURS_NOMBRE          CHAR(50)             not null,
    CURS_NUM_SESIONES    INT4                 null,
    CURS_REQ_TECNICOS    CHAR(150)            null,
    CURS_CONOCIMIENTOS   CHAR(150)            null,
@@ -701,25 +693,25 @@ ENCU_ID_ENCUESTA
 /*==============================================================*/
 
 CREATE TABLE Resultado_Encuesta (
-   REEN_ID_PREGUNTA     SERIAL           not null,
-   ENCU_ID_ENCUESTA     INT4             not null,
+   REEN_ID_RESULTADO    SERIAL         not null,
+   PREN_ID_PREGUNTA     INT4           not null,
    INSC_ID_INSCRIPCION  INT4             not null,
    REEN_RESULTADO       CHAR(50)         not null,
-   constraint PK_RESULTADO_ENCUESTA primary key (REEN_ID_PREGUNTA)  
+   constraint PK_REEN_ID_RESULTADO primary key (REEN_ID_RESULTADO)
 );
 
 /*==============================================================*/
-/* Index: RESULTADOS_ENCUESTA_PK                                */
+/* Index: PREGUNTA_ENCUESTA_PK                                  */
 /*==============================================================*/
-create unique index RESULTADO_ENCUESTA_PK on RESULTADO_Encuesta (
-REEN_ID_PREGUNTA
+create unique index REEN_ID_RESULTADO_PK on Resultado_Encuesta (
+REEN_ID_RESULTADO
 );
 
 /*==============================================================*/
 /* Index: RELATIONSHIP_41_FK                                    */
 /*==============================================================*/
 create  index RELATIONSHIP_41_FK on RESULTADO_ENCUESTA (
-ENCU_ID_ENCUESTA
+PREN_ID_PREGUNTA
 );
 
 /*==============================================================*/
@@ -739,10 +731,6 @@ alter table ASISTENCIA
       references INSCRIPCION (INSC_ID_INSCRIPCION)
       on delete restrict on update restrict;
 
-alter table CALENDARIO
-   add constraint FK_CALENDAR_RELATIONS_GRUPO foreign key (GRUP_ID_GRUPO)
-      references GRUPO (GRUP_ID_GRUPO)
-      on delete restrict on update restrict;
 
 alter table CONSTANCIA
    add constraint FK_CONSTANC_RELATIONS_INSCRIPC foreign key (INSC_ID_INSCRIPCION)
@@ -880,8 +868,8 @@ alter table Pregunta_Encuesta
       on delete restrict on update restrict; 
 
 alter table Resultado_Encuesta
-   add constraint FK_RESULTADO_ENCUESTA_RELATIONS_ENCUESTA foreign key (ENCU_ID_ENCUESTA)
-      references ENCUESTA (ENCU_ID_ENCUESTA)
+   add constraint FK_RESULTADO_ENCUESTA_RELATIONS_ENCUESTA foreign key (PREN_ID_PREGUNTA)
+      references PREGUNTA_ENCUESTA (PREN_ID_PREGUNTA)
       on delete restrict on update restrict; 
 
 alter table Resultado_Encuesta
