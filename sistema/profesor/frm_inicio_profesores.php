@@ -82,7 +82,7 @@
                         </button>
 
 
-                        <button type="button" class="btn btn-danger btn-table" title="Contancia" style="margin-top: 5px;background: #20560a">
+                        <button type="button" class="btn btn-danger btn-table" title="Constancia" style="margin-top: 5px;background: #20560a">
                           <i class="fas fa-file"></i>
                         </button>
 
