@@ -49,8 +49,19 @@
       <!-- Navbar Search -->
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav ml-auto">
-            <li id="btn_cursos" class="nav-item">
+            <!-- <li id="btn_cursos" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-graduate"></i>&nbsp; Cursos</a>
+            </li> -->
+            <li id="btn_cursos" class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
+                <i class="fas fa-user-graduate"><div style="width: 20px;"></div></i>Cursos
+              </a>
+              <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarUser">
+                <a class="dropdown-item disabled" href="#"></a>
+                <a class="dropdown-item" type="button"  id="btn_vigentes">Vigentes</a>
+                <a class="dropdown-item" type="button"  id="btn_historicos">Históricos</a>
+                <a class="dropdown-item" type="button"  id="btn_constancias">Constancias</a>
+              </div>
             </li>
             <li id="btn_grupos" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-users"></i>&nbsp; Grupos</a>
@@ -65,14 +76,14 @@
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-shield"></i>&nbsp; Usuarios</a>
             </li>
 
-             <li id="btn_asist" class="nav-item">
+            <li id="btn_asist" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-graduate"></i>&nbsp; Asistencia</a>
             </li>
 
 
-             <li class="nav-item dropdown">
+            <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
-                <i class="fas fa-user-circle"></i>Catalogos
+                <i class="fas fa-user-circle"><div style="width: 20px;"></div></i>Catalogos
               </a>
               <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarUser">
                 <a class="dropdown-item disabled" href="#"></a>
