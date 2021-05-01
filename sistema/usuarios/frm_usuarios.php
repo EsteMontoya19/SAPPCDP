@@ -111,7 +111,7 @@
               </div>
               <div class="col-lg-6 form-group">
                 <label for="intUsuarioRol"><b>Rol:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
-                <select class="custom-select" id="intUsuarioRol" name="intUsuarioRol">
+                <select class="custom-select" id="intUsuarioRol" name="intUsuarioRol" onChange="mostrar(this.value)">
                   <option value="0">Seleccionar rol</option>
                   <?php foreach ($arr_roles as $rol) { ?>
                     <option value="<?php echo $rol['rol_id_rol']; ?>" <?php if(isset($usuario)) { if ($usuario->rol_id_rol == $rol['rol_id_rol']) { ?> selected <?php } }?>>
@@ -234,7 +234,7 @@
                     <?php } ?>
                   </select>
                 </div>
-                <div class="col-lg-6 form-group">
+                <div class="col-lg-6 form-group"> 
                   <label for="UsuarioRespuesta"><b><?php if (isset($_POST['CRUD']) == false) { echo "Proporcione la respuesta: *"; } else { echo "Respuesta";}?></b></label>
                   <input type="text" class="form-control" id="UsuarioRespuesta" name="UsuarioRespuesta" 
                       <?php if (isset($_POST['CRUD']) == false){echo('placeholder=""');} else {echo('value= "' . $usuario->usua_respuesta . '"');} ?>>
@@ -305,4 +305,4 @@
   </div>
 </div>
 
-<script src="../sistema/usuarios/usuario.js"></script>
+<script src="../sistema/usuarios/control_usuario.js"></script>

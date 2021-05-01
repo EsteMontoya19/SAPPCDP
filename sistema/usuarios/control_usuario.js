@@ -386,7 +386,7 @@ function mostrar(id) {
         $('#coordinaciones').hide();
     }
 
-    if (id == '2') {
+    if (id == '3') {
         $('#num_trabajador').show();
         $('#rfc').show();
         $('#numCuenta').hide();
@@ -401,7 +401,7 @@ function mostrar(id) {
         $('#coordinaciones').show();
     }
 
-    if (id == '3') {
+    if (id == '2') {
         $('#num_trabajador').hide();
         $('#rfc').hide();
         $('#numCuenta').show();
