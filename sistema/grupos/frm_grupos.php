@@ -98,6 +98,8 @@
                         <?php echo $modalidad['mogr_nombre']; ?>
                       </option>
                     <?php } ?>
+                    <option value="">En línea</option>
+                    <option value="">Presencial</option>
                   </select>
                 </div>
                 <div class="col-lg-4 form-group">
@@ -124,11 +126,8 @@
                   <label for="GrupoCurso" style="color:#0C4590"><b>Evento: *</b></label>
                   <select class="custom-select" id="GrupoCurso" name="GrupoCurso" onchange="mostrarFormulario()">
                     <option value="0">Seleccione una opción</option>
-                    <?php foreach ($arr_eventos as $evento) { ?>
-                      <option value="<?php echo $evento['even_id_tiev'] . '-' . $evento['even_id_even']; ?>" <?php if(isset($grupo)) { if ($grupo->grup_id_even == $evento['even_id_even']) { ?> selected <?php } }?>>
-                        <?php echo $evento['even_nombre']; ?>
-                      </option>
-                    <?php } ?>
+                    <option value="1">En línea</option>
+                    <option value="2">Presencial</option>
                   </select>
                   <?php if (isset($_POST['CRUD'])) { ?>
                     </fieldset>

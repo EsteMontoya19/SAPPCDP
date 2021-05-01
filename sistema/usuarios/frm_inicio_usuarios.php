@@ -90,4 +90,4 @@
   </div>
 </div>
 
-<script src="../sistema/usuarios/usuario.js"></script>
+<script src="../sistema/usuarios/control_usuario.js"></script>
