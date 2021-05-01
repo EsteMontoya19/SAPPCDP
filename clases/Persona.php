@@ -1,33 +1,14 @@
 <?php
   class Persona
   {
-    function agregarPersona($estudio, $domicilio, $nombre, $primerApellido, $segundoApellido, $nacimiento, $genero)
+    function agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono)
     {
-      if($estudio == NULL)
-      {
-        $SQL_Ins_Persona =
-        " INSERT INTO persona(pers_nombre, pers_primer_ape, pers_segundo_ape)
-          VALUES ('$nombre', '$primerApellido', '$segundoApellido');
-        ";
-      }
-      else
-      {
-        if($domicilio == NULL)
-        {
-          $SQL_Ins_Persona =
-          " INSERT INTO persona(pers_id_estu, pers_nombre, pers_primer_ape, pers_segundo_ape, pers_nacimiento, pers_genero)
-    	      VALUES ($estudio, '$nombre', '$primerApellido', '$segundoApellido', '$nacimiento', $genero);
-          ";
-        }
-        else
-        {
-          $SQL_Ins_Persona =
-          " INSERT INTO persona(pers_id_estu, pers_id_domi, pers_nombre, pers_primer_ape, pers_segundo_ape, pers_nacimiento, pers_genero)
-    	      VALUES ($estudio, $domicilio, '$nombre', '$primerApellido', '$segundoApellido', '$nacimiento', $genero);
-          ";
-        }
-      }
-
+      //Aquí iría una validación pero puede ser que ya se esté haciendo en otra parte
+      $SQL_Ins_Persona =
+      " INSERT INTO Persona (pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono)
+        VALUES ('$nombre', '$apellidoPaterno', '$apellidoMaterno', '$correo', '$telefono');
+      ";
+      
       $bd = new BD();
   		$bd->abrirBD();
   		$transaccion_1 = new Transaccion($bd->conexion);
@@ -39,7 +20,7 @@
     function buscarUltimo()
     {
       $bd = new BD();
-      $SQL_Bus_Persona_Seq = "SELECT last_value FROM persona_pers_id_pers_seq;";
+      $SQL_Bus_Persona_Seq = "SELECT last_value FROM persona_pers_id_persona_seq;"; //Que hace este last_value
 
       $bd->abrirBD();
       $transaccion_1 = new Transaccion($bd->conexion);
@@ -51,35 +32,15 @@
       return $Persona_Seq;
     }
 
-    function actualizarPersona($persona, $domicilio, $estudio, $nombre, $primerApellido, $segundoApellido, $nacimiento, $genero)
+    function actualizarPersona($persona, $nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono)
     {
-      if($estudio == NULL)
-      {
-        $SQL_Act_Persona =
-        " UPDATE persona
-          SET pers_nombre = '$nombre', pers_primer_ape = '$primerApellido', pers_segundo_ape = '$segundoApellido'
-          WHERE pers_id_pers = $persona;
-        ";
-      }
-      else
-      {
-        if($domicilio == NULL)
-        {
-          $SQL_Act_Persona =
-          " UPDATE persona
-            SET pers_id_estu = $estudio, pers_nombre = '$nombre', pers_primer_ape = '$primerApellido', pers_segundo_ape = '$segundoApellido', pers_nacimiento = '$nacimiento', pers_genero = $genero
-            WHERE pers_id_pers = $persona;
-          ";
-        }
-        else
-        {
-          $SQL_Act_Persona =
-          " UPDATE persona
-            SET pers_id_domi = $domicilio, pers_id_estu = $estudio, pers_nombre = '$nombre', pers_primer_ape = '$primerApellido', pers_segundo_ape = '$segundoApellido', pers_nacimiento = '$nacimiento', pers_genero = $genero
-            WHERE pers_id_pers = $persona;
-          ";
-        }
-      }
+
+      $SQL_Act_Persona =
+      " UPDATE persona
+        SET pers_nombre = '$nombre', pers_apellido_paterno = '$apellidoPaterno', pers_apellido_materno = '$apellidoMaterno', pers_correo = '$correo', pers_telefono = '$telefono'
+        WHERE pers_id_persona = $persona;
+      ";
+    
       
       $bd = new BD();
   		$bd->abrirBD();
@@ -93,7 +54,7 @@
     {
       $SQL_Eli_Persona= 
 			" DELETE FROM persona
-				WHERE pers_id_pers = $persona;
+				WHERE pers_id_persona = $persona;
 			";
 
       $bd = new BD();
@@ -106,9 +67,9 @@
     function buscarPersona($persona)
 		{
 			$SQL_Bus_Persona = 
-			"	SELECT pers_id_pers, pers_id_estu, pers_nombre, pers_primer_ape, pers_segundo_ape, pers_nacimiento, pers_genero
+			"	SELECT pers_id_persona, pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono
 				FROM persona
-				WHERE pers_id_pers = $persona;
+				WHERE pers_id_persona = $persona;
 			";
 
 			$bd = new BD();

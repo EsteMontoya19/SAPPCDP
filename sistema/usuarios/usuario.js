@@ -319,7 +319,7 @@ function cambioEstatus(id, estatus, nombre, apellido) {
             }, 1500);
           } else {
             alertify.error(
-              "Hubo un problema al cambiar el estatus del usuario usuario"
+              "Hubo un problema al cambiar el estatus del usuario PRUEBAS"
             );
           }
         },

@@ -4,7 +4,7 @@
     	function agregarUsuario($rol, $persona, $pregunta, $nombreUsu, $contrasenia, $recuperacion)
     	{
 			$SQL_Ins_Usuario =
-			"	INSERT INTO usuario (usua_id_rol, usua_id_pers, usua_id_preg, usua_nombre, usua_contra, usua_respuesta, usua_estado)
+			"	INSERT INTO usuario (usua_id_rol, usua_id_pers, usua_id_preg, usua_num_usuario, usua_contra, usua_respuesta, usua_estado)
 				VALUES ($rol, $persona, $pregunta, '$nombreUsu', '$contrasenia', '$recuperacion', TRUE);
 			";
 
@@ -18,9 +18,9 @@
 		function actualizarUsuario($rol, $usuario, $nombreUsu)
 		{
 			$SQL_Act_Usuario= 
-			" 	UPDATE usuario
-				SET usua_nombre = '$nombreUsu', usua_id_rol = $rol
-				WHERE usua_id_usua = $usuario;
+			" 	UPDATE Usuario
+				SET usua_num_usuario= '$nombreUsu', usua_id_rol = $rol
+				WHERE usua_id_usuario = $usuario;
 			";
 
 			$bd = new BD();
@@ -35,7 +35,7 @@
 			$SQL_Act_Usuario= 
 			" 	UPDATE usuario
 				SET usua_contra = '$contra'
-				WHERE usua_id_usua = $usuario;
+				WHERE usua_id_usuario = $usuario;
 			";
 
 			$bd = new BD();
@@ -49,7 +49,7 @@
 		{
 			$SQL_Eli_Usuario= 
 			" 	DELETE FROM usuario
-				WHERE usua_id_usua = $usuario;
+				WHERE usua_id_usuario = $usuario;
 			";
 
 			$bd = new BD();
@@ -62,10 +62,10 @@
 		function buscarTodosUsuarios()
 		{
 			$SQL_Bus_usuarios =
-			"	SELECT pers_id_pers, usua_id_usua, pers_nombre, pers_primer_ape, pers_segundo_ape, usua_estado, rol_nombre
-				FROM persona, usuario , rol r
-				WHERE pers_id_pers = usua_id_pers AND rol_id_rol = usua_id_rol AND rol_id_rol <> 6
-				ORDER BY usua_id_usua ASC;
+			"	SELECT U.usua_id_usuario,P.pers_id_persona, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno,U.rol_id_rol, U.usua_num_usuario, R.rol_nombre, U.usua_activo
+				FROM persona P, usuario U , rol R
+				WHERE P.pers_id_persona = U.pers_id_persona AND R.rol_id_rol = U.rol_id_rol
+				ORDER BY U.usua_activo, P.pers_id_persona DESC, R.rol_id_rol
 			";
 
 			$bd = new BD();
@@ -79,9 +79,9 @@
 		function buscarUsuario($intIdUsuario)
 		{
 			$SQL_Bus_Usuario = 
-			"	SELECT usua_id_usua, usua_id_rol, usua_id_preg, usua_nombre, usua_contra, usua_respuesta
+			"	SELECT usua_id_usuario, usua_id_rol, usua_id_preg, usua_num_usuario, usua_contra, usua_respuesta
 				FROM rol, usuario
-				WHERE rol_id_rol = usua_id_rol AND usua_id_usua = $intIdUsuario;
+				WHERE rol_id_rol = usua_id_rol AND usua_id_usuario = $intIdUsuario;
 			";
 
 			$bd = new BD();
@@ -96,9 +96,9 @@
 		function buscarNombreUsuario($nombreUsu)
 		{
 			$SQL_Bus_Usuario = 
-			"	SELECT usua_id_usua, usua_id_rol, usua_id_preg, usua_nombre, usua_contra, usua_respuesta
+			"	SELECT usua_id_usuario, usua_id_rol, usua_id_preg, usua_num_usuario, usua_contra, usua_respuesta
 				FROM rol, usuario
-				WHERE rol_id_rol = usua_id_rol AND usua_nombre = '$nombreUsu';
+				WHERE rol_id_rol = usua_id_rol AND usua_num_usuario = '$nombreUsu';
 			";
 
 			$bd = new BD();
@@ -115,7 +115,7 @@
 			$SQL_Persona_Est="
 			UPDATE usuario
 			SET usua_estado = $estatus
-			WHERE usua_id_usua = $usuario";
+			WHERE usua_id_usuario = $usuario";
 
 
 			$bd = new BD();
