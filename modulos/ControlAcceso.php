@@ -1,10 +1,9 @@
 <?php
 	session_start();
 
-  	class ControlAcceso
-  	{
-    	function __construct()
-    	{
+	class ControlAcceso {
+		function __construct()
+		{
 			include_once('../clases/Valida.php');
 			include_once('../clases/Acceder.php');
 
@@ -32,7 +31,6 @@
 			$_strContrasena = $_strContrasena;
 
 			$blnUsuario = $Acceder_1->buscar($_strUsuario, $_strContrasena);
-
 			if(!$blnUsuario)
 			{
 				$ban1 = false;
@@ -58,5 +56,5 @@
 			}
 		}
 	}
-  $ControlAcceso_1 = new ControlAcceso();
+	$ControlAcceso_1 = new ControlAcceso();
 ?>
