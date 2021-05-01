@@ -24,7 +24,7 @@ INSERT INTO Usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usu
 
 INSERT INTO Administrador (pers_id_persona, admin_num_trabajador, admin_rfc) VALUES (1, '315067596', 'MOME990905134');
 
-INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza, prof_rfc) 
+INSERT INTO Profesor (prof_id_profesor, pers_id_persona, prof_num_trabajador, prof_semblanza, prof_rfc) 
       VALUES (2, '123457890', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber','KAFA12345');
 
 INSERT INTO Monitor (moni_id_monitor, pers_id_persona, moni_num_cuenta, moni_fecha_inicio, moni_fecha_fin, moni_hora_inicio, moni_hora_fin) 
@@ -50,7 +50,7 @@ INSERT INTO Profesor_Modalidad (prof_id_profesor, moda_id_modalidad) VALUES (1,1
 
 INSERT INTO Profesor_Coordinacion(prof_id_profesor, coor_id_coordinacion) VALUES (1,1),(1,24), (1,14);
 
-INSERT INTO Curso (CURS_ID_CURSOS, CURS_TIPO, CUSR_NOMBRE, CURS_NUM_SESIONES, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, CURS_NIVEL, CURS_OBJETIVOS, CURS_TEMARIO, CURS_ACTIVO)
+INSERT INTO Curso (CURS_ID_CURSOS, CURS_TIPO, CURS_NOMBRE, CURS_NUM_SESIONES, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, CURS_NIVEL, CURS_OBJETIVOS, CURS_TEMARIO, CURS_ACTIVO)
 			VALUES (1, 'Curso', 'Zoom: Cuestionarios', 2, 'Nada', 'Nada', 'Basico', 'Aprender', '/nose.pdf', 'TRUE');
 
 INSERT INTO EDIFICIO (EDIF_NOMBRE)

@@ -3,9 +3,8 @@
   // Clases
   include('../../clases/BD.php');
   include('../../clases/Busqueda.php');
-  include('../../clases/Correo.php');
   include('../../clases/Persona.php');
-  include('../../clases/Telefono.php');
+  include('../../clases/Rol.php');
   include('../../clases/Usuario.php');
   
   // Catálogo
@@ -17,17 +16,14 @@
   if (isset($_POST['persona']) && isset($_POST['id'])) {
 
     // Recuperar información
-    $obj_Correo = new Correo();
-    $correo = $obj_Correo->buscarCorreo($_POST['persona'], 1);
-
     $obj_Persona = new Persona();
     $persona = $obj_Persona->buscarPersona($_POST['persona']);
 
-    $obj_Telefono = new Telefono();
-    $telefono = $obj_Telefono->buscarTelefono($_POST['persona'], 1);
-
     $objUsuario = new Usuario();
     $usuario = $objUsuario->buscarUsuario($_POST['id']);
+
+    $objRol = new Rol();
+    $rol = $objRol->rolUsuario($_POST['id']);
 
   }
 ?>
@@ -76,26 +72,26 @@
             </div>
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
               <div class="col-lg-4 form-group">
-                <label for="strUsuarioNombre"><b>Nombre(s): *</b></label>
+                <label for="strUsuarioNombre"><b>Nombre(s):<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
                 <input type="text" class="form-control" id="strUsuarioNombre" name="strUsuarioNombre" value="<?php echo isset($persona) ? $persona->pers_nombre : ""; ?>">
               </div>
               <div class="col-lg-4 form-group">
-                <label for="strUsuarioPrimerApe"><b>Primer apellido: *</b></label>
-                <input type="text" class="form-control" id="strUsuarioPrimerApe" name="strUsuarioPrimerApe" value="<?php echo isset($persona) ? $persona->pers_primer_ape : ""; ?>">
+                <label for="strUsuarioPrimerApe"><b>Apellido Paterno:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                <input type="text" class="form-control" id="strUsuarioPrimerApe" name="strUsuarioPrimerApe" value="<?php echo isset($persona) ? $persona->pers_apellido_paterno : ""; ?>">
               </div>
               <div class="col-lg-4 form-group">
-                <label for="strUsuarioSegundoApe"><b>Segundo apellido:</b></label>
-                <input type="text" class="form-control" id="strUsuarioSegundoApe" name="strUsuarioSegundoApe" value="<?php echo isset($persona) ? $persona->pers_segundo_ape : ""; ?>">
+                <label for="strUsuarioSegundoApe"><b>Apellido Materno:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                <input type="text" class="form-control" id="strUsuarioSegundoApe" name="strUsuarioSegundoApe" value="<?php echo isset($persona) ? $persona->pers_apellido_materno : ""; ?>">
               </div>
             </div>
             <div class="col-lg-12 form-row">
               <div class="col-lg-6 form-group">
-                <label for="strUsuarioCorreo"><b>Correo electrónico: *</b></label>
-                <input type="text" class="form-control" id="strUsuarioCorreo" name="strUsuarioCorreo" placeholder="ej. ejemplo@dominio.com" value="<?php echo isset($correo) ? $correo->corr_direccion : ""; ?>">
+                <label for="strUsuarioCorreo"><b>Correo electrónico:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                <input type="text" class="form-control" id="strUsuarioCorreo" name="strUsuarioCorreo" placeholder="ej. ejemplo@dominio.com" value="<?php echo isset($persona) ? $persona->pers_correo : ""; ?>">
               </div>
               <div class="col-lg-6 form-group">
-                <label for="strUsuarioTelefono"><b>Teléfono: *</b></label>
-                <input type="text" class="form-control" id="strUsuarioTelefono" name="strUsuarioTelefono" placeholder="ej. 5511223344" value="<?php echo isset($telefono) ? $telefono->tele_numero : ""; ?>">
+                <label for="strUsuarioTelefono"><b>Teléfono:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                <input type="text" class="form-control" id="strUsuarioTelefono" name="strUsuarioTelefono" placeholder="ej. 5511223344" value="<?php echo isset($persona) ? $persona->pers_telefono : ""; ?>">
               </div>
             </div>
           </div>
@@ -110,46 +106,51 @@
             </div>
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
               <div class="col-lg-6 form-group">
-                <label for="strNombreUsuario"><b>Nombre de usuario: *</b></label>
-                <input type="text" class="form-control" id="strNombreUsuario" name="strNombreUsuario" value="<?php echo isset($usuario) ? $usuario->usua_nombre : ""; ?>">
+                <label for="strNombreUsuario"><b>Nombre de usuario:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                <input type="text" class="form-control" id="strNombreUsuario" name="strNombreUsuario" value="<?php echo isset($usuario) ? $usuario->usua_num_usuario : ""; ?>">
               </div>
               <div class="col-lg-6 form-group">
-                <label for="intUsuarioRol"><b>Rol: *</b></label>
+                <label for="intUsuarioRol"><b>Rol:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
                 <select class="custom-select" id="intUsuarioRol" name="intUsuarioRol">
-                  <option value="0">Seleccione una opción</option>
+                  <option value="0">Seleccionar rol</option>
                   <?php foreach ($arr_roles as $rol) { ?>
-                    <option value="<?php echo $rol['rol_id_rol']; ?>" <?php if(isset($usuario)) { if ($usuario->usua_id_rol == $rol['rol_id_rol']) { ?> selected <?php } }?>>
+                    <option value="<?php echo $rol['rol_id_rol']; ?>" <?php if(isset($usuario)) { if ($usuario->rol_id_rol == $rol['rol_id_rol']) { ?> selected <?php } }?>>
                       <?php echo $rol['rol_nombre']; ?>
                     </option>
                   <?php } ?>
                 </select>
               </div>
-            </div>
-            <?php if (isset($_POST['CRUD']) == false) { ?>
               <div class="col-lg-12 form-row">
                 <div class="col-lg-6 form-group">
-                  <label for="UsuarioPregunta"><b>Pregunta de seguridad: *</b></label>
+                  <label for="UsuarioPregunta"><b>Pregunta de seguridad:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
                   <select class="custom-select" id="UsuarioPregunta" name="UsuarioPregunta">
                     <option value="0">Seleccione una pregunta</option>
                     <?php foreach ($arr_preguntas as $pregunta) { ?>
-                      <option value="<?php echo $pregunta['preg_id_preg']; ?>"><?php echo $pregunta['preg_nombre']; ?></option>
+                      <option value="<?php echo $pregunta['prse_id_pregunta']; ?>" <?php if(isset($usuario)) { if ($usuario->prse_id_pregunta == $pregunta['prse_id_pregunta']) { ?> selected <?php } }?>>
+                        <?php echo $pregunta['prse_pregunta']; ?>
+                      </option>
                     <?php } ?>
                   </select>
                 </div>
                 <div class="col-lg-6 form-group">
-                  <label for="UsuarioRespuesta"><b>Proporcione la respuesta: *</b></label>
-                  <input type="text" class="form-control" id="UsuarioRespuesta" name="UsuarioRespuesta" placeholder="">
+                  <label for="UsuarioRespuesta"><b><?php if (isset($_POST['CRUD']) == false) { echo "Proporcione la respuesta: *"; } else { echo "Respuesta";}?></b></label>
+                  <input type="text" class="form-control" id="UsuarioRespuesta" name="UsuarioRespuesta" 
+                      <?php if (isset($_POST['CRUD']) == false){echo('placeholder=""');} else {echo('value= "' . $usuario->usua_respuesta . '"');} ?>>
                 </div>
               </div>
               <div class="col-lg-12 form-row">
                 <div class="col-lg-6 form-group">
-                  <label for="strContrasenia01"><b>Ingrese la contraseña: *</b></label>
-                  <input type="password" class="form-control" id="strContrasenia01" name="strContrasenia01" placeholder="Contraseña">
+                  <label for="strContrasenia01"><b><?php if (isset($_POST['CRUD']) == false)  {echo "Ingrese contraseña:*";} else {echo "Contraseña: ";} ?></b></label>
+                  <input type="password" class="form-control" id="strContrasenia01" name="strContrasenia01" 
+                    	<?php if (isset($_POST['CRUD']) == false){echo('placeholder=""');} else {echo('value= "' . $usuario->usua_contrasena . '"');} ?>>
                   <div style="text-align: center; margin-top:5px">
-                    <input type="checkbox" id="ver1" class="ver" onChange="hideOrShowPassword1()" />
+                    <input type="checkbox" id="ver1" class="ver" onChange="hideOrShowPassword1()"/>
                     <label class="text" style="color:#0C4590"><i class="fas fa-eye"></i>&nbsp; Mostrar contraseña</label>
                   </div>
                 </div>
+            </div>
+            
+            <?php if (isset($_POST['CRUD']) == false) { ?>
                 <div class="col-lg-6 form-group">
                   <label for="strContrasenia02"><b>Confirme la contraseña: *</b></label>
                   <input type="password" class="form-control" id="strContrasenia02" name="strContrasenia02" placeholder="Contraseña">
@@ -200,4 +201,4 @@
   </div>
 </div>
 
-<script src="../sistema/usuarios/usuarios.js"></script>
+<script src="../sistema/usuarios/usuario.js"></script>

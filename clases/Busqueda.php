@@ -85,7 +85,7 @@
         {
             $SQL_Bus_Rol = 
             "   SELECT rol_id_rol, rol_nombre
-                FROM rol;
+                FROM Rol;
             ";
 
             $bd = new BD();
@@ -114,8 +114,8 @@
         function selectPregunta()
         {
             $SQL_Bus_Preg = 
-            "   SELECT preg_id_preg, preg_nombre
-                FROM pregunta;
+            "   SELECT prse_id_pregunta, prse_pregunta
+                FROM Pregunta_Seguridad;
             ";
 
             $bd = new BD();

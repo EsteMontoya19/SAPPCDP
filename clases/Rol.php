@@ -15,5 +15,21 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }
+
+        function rolUsuario ($usuario) {
+
+            $SQL_Rol_Usuario = 
+            "   SELECT R.rol_id_rol, R.rol_nombre
+                FROM Rol R, Usuario U
+                WHERE U.rol_id_rol = R.rol_id_rol AND U.usua_id_usuario = $usuario
+            ";
+            $bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Rol_Usuario);
+			$obj_Usuario = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerObjeto(0));
+        }
     }
 ?>

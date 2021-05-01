@@ -4,7 +4,7 @@
     	function agregarUsuario($rol, $persona, $pregunta, $nombreUsu, $contrasenia, $recuperacion)
     	{
 			$SQL_Ins_Usuario =
-			"	INSERT INTO usuario (usua_id_rol, usua_id_pers, usua_id_preg, usua_num_usuario, usua_contra, usua_respuesta, usua_estado)
+			"	INSERT INTO usuario (rol_id_rol, usua_id_pers, prse_id_pregunta, usua_num_usuario, U.usua_contrasena, usua_respuesta, usua_estado)
 				VALUES ($rol, $persona, $pregunta, '$nombreUsu', '$contrasenia', '$recuperacion', TRUE);
 			";
 
@@ -19,7 +19,7 @@
 		{
 			$SQL_Act_Usuario= 
 			" 	UPDATE Usuario
-				SET usua_num_usuario= '$nombreUsu', usua_id_rol = $rol
+				SET usua_num_usuario= '$nombreUsu', rol_id_rol = $rol
 				WHERE usua_id_usuario = $usuario;
 			";
 
@@ -34,7 +34,7 @@
 		{
 			$SQL_Act_Usuario= 
 			" 	UPDATE usuario
-				SET usua_contra = '$contra'
+				SET U.usua_contrasena = '$contra'
 				WHERE usua_id_usuario = $usuario;
 			";
 
@@ -79,9 +79,9 @@
 		function buscarUsuario($intIdUsuario)
 		{
 			$SQL_Bus_Usuario = 
-			"	SELECT usua_id_usuario, usua_id_rol, usua_id_preg, usua_num_usuario, usua_contra, usua_respuesta
-				FROM rol, usuario
-				WHERE rol_id_rol = usua_id_rol AND usua_id_usuario = $intIdUsuario;
+			"	SELECT U.usua_id_usuario, U.rol_id_rol, R.rol_nombre, U.prse_id_pregunta, PS.prse_pregunta, U.usua_num_usuario, U.usua_contrasena, U.usua_respuesta, U.usua_activo
+				FROM Rol R, Usuario U, Pregunta_Seguridad PS
+				WHERE R.rol_id_rol = U.rol_id_rol AND U.prse_id_pregunta = PS.prse_id_pregunta AND U.usua_id_usuario = $intIdUsuario;
 			";
 
 			$bd = new BD();
@@ -96,9 +96,9 @@
 		function buscarNombreUsuario($nombreUsu)
 		{
 			$SQL_Bus_Usuario = 
-			"	SELECT usua_id_usuario, usua_id_rol, usua_id_preg, usua_num_usuario, usua_contra, usua_respuesta
+			"	SELECT usua_id_usuario, rol_id_rol, prse_id_pregunta, usua_num_usuario, U.usua_contrasena, usua_respuesta
 				FROM rol, usuario
-				WHERE rol_id_rol = usua_id_rol AND usua_num_usuario = '$nombreUsu';
+				WHERE rol_id_rol = rol_id_rol AND usua_num_usuario = '$nombreUsu';
 			";
 
 			$bd = new BD();

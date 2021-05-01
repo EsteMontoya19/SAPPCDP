@@ -72,7 +72,7 @@
                       <button type="button" class="btn btn-primary btn-table" title="Actualizar" onclick="actualizarUsuario(<?php echo $usuario['rol_id_rol'] ?>, <?php echo $usuario['usua_id_usuario'] ?>, <?php echo $usuario['usua_num_usuario'] ?>)">
                         <i class="fas fa-edit"></i>
                       </button>
-                      <button type="button" class="btn btn-info btn-table" title="Detalles" onclick="buscarUsuario(<?php echo $usuario['usua_id_usuario'] ?>">
+                      <button type="button" class="btn btn-info btn-table" title="Detalles" onclick="consultarUsuario(<?php echo $usuario['usua_id_usuario'] ?>, <?php echo $usuario['pers_id_persona'] ?>)">
                         <i class="fas fa-search-plus"></i>
                       </button>
                       <button type="button" class="btn btn-danger btn-table" title="Eliminar" onclick="eliminarUsuario(<?php echo $usuario['usua_id_usuario'] ?>,  <?php echo $usuario['pers_id_persona'] ?>, '<?php echo $usuario['pers_nombre']; ?>', '<?php echo $usuario['pers_apellido_paterno']; ?>')">
