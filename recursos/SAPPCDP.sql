@@ -261,7 +261,7 @@ create table GRUPO (
    CURS_ID_CURSOS       INT4                 not null,
    SALO_ID_SALON              INT4                 null,
    CALE_ID_CALENDARIO   INT4                 not null,
-   PLAT_ID_PLATAFORMA   INT4                 not null,
+   PLAT_ID_PLATAFORMA   INT4                 null,
    GRUP_REUNION         CHAR(50)             null,
    GRUP_ACCESO          CHAR(100)            null,
    GRUP_CLAVE_ACCESO    CHAR(10)             null,
