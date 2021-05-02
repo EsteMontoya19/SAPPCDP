@@ -1,11 +1,13 @@
 <?php
     class Grupo
     {
-        function agregarGrupo($estatus_grupo, $evento, $modalidad, $profesor, $clave, $cupo)
+        //Permite agregar un grupo presencial
+        function agregarGrupo($monitor, $profesor, $curso, $salon, $calendario, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc)
         {
             $SQL_Ins_Grupo =
-            "   INSERT INTO grupo(grup_id_esgr, grup_id_even, grup_id_mogr, grup_id_prof, grup_clave, grup_cupo)
-                VALUES ($estatus_grupo, $evento, $modalidad, $profesor, '$clave', $cupo);
+            "   INSERT INTO Grupo (moni_id_monitor, prof_id_profesor, curs_id_cursos, salo_id_salon, cale_id_calendario, 
+                    grup_cupo, grup_estado, grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc)
+                VALUES ($monitor, $profesor, $curso, $salon, $calendario, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc);
             ";
 
             $bd = new BD();
@@ -16,11 +18,13 @@
             $this->id_grupo = Grupo::buscarUltimo();
         }
 
-        function agregarGrupoWebinar($estatus_grupo, $evento, $modalidad, $tipo_grupo, $clave, $cupo, $costo, $descuento)
+        //Permite agregar un grupo en línea
+        function agregarGrupoWebinar($monitor, $profesor, $curso, $plataforma, $calendario, $reunion, $acceso, $clave, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc)
         {
             $SQL_Ins_Grupo =
-            "   INSERT INTO grupo(grup_id_esgr, grup_id_even, grup_id_mogr, grup_id_tigr, grup_clave, grup_cupo, grup_costo, grup_descuento)
-                VALUES ($estatus_grupo, $evento, $modalidad, $tipo_grupo, '$clave', $cupo, $costo, $descuento);
+            "   INSERT INTO Grupo (moni_id_monitor, prof_id_profesor, curs_id_cursos,  plat_id_plataforma, cale_id_calendario, grup_reunion, grup_acceso, grup_clave_acceso,  
+                    grup_cupo, grup_estado, grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc)
+                VALUES ($monitor, $profesor, $curso, $plataforma, $calendario, $reunion, $acceso, $clave, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc);
             ";
 
             $bd = new BD();
@@ -31,12 +35,14 @@
             $this->id_grupo = Grupo::buscarUltimo();
         }
 
-        function actualizarGrupo($grupo, $estatus_grupo, $evento, $modalidad, $profesor, $clave, $cupo)
+        //Permite actualizar un grupo presencial
+        function actualizarGrupo($grupo, $monitor, $profesor, $salon, $cupo, $estado, $activo, $inicio_insc, $fin_insc)
         {
             $SQL_Actua_Grupo =
             "   UPDATE grupo
-                SET grup_id_esgr = $estatus_grupo, grup_id_even = $evento, grup_id_mogr = $modalidad, grup_id_prof = $profesor, grup_clave = '$clave', grup_cupo = $cupo
-                WHERE grup_id_grup = $grupo;
+                SET moni_id_monitor = $monitor, prof_id_profesor = $profesor, salo_id_salon = $salon, grup_cupo = $cupo, 
+                    grup_estado = $estado, grup_activo = $activo, grup_inicio_insc = $inicio_insc, grup_fin_insc = $fin_insc
+                WHERE grup_id_grupo = $grupo;
             ";
 
             $bd = new BD();
@@ -46,12 +52,14 @@
             $bd->cerrarBD();
         }
 
-        function actualizarGrupoWeb($grupo, $estatus_grupo, $evento, $modalidad, $clave, $cupo)
+        //Permite actualizar un grupo en linea
+        function actualizarGrupoWeb($grupo, $monitor, $profesor, $plataforma, $reunion, $acceso, $clave, $cupo, $estado, $activo, $inicio_insc, $fin_insc)
         {
             $SQL_Actua_Grupo =
             "   UPDATE grupo
-                SET grup_id_esgr = $estatus_grupo, grup_id_even = $evento, grup_id_mogr = $modalidad, grup_clave = '$clave', grup_cupo = $cupo
-                WHERE grup_id_grup = $grupo;
+                SET moni_id_monitor = $monitor, prof_id_profesor = $profesor, plat_id_plataforma = $plataforma, grup_reunion = $reunion, grup_acceso = $acceso, grup_clave_acceso = $clave,
+                grup_cupo = $cupo, grup_estado = $estado, grup_activo = $activo, grup_inicio_insc = $inicio_insc, grup_fin_insc = $fin_insc
+                WHERE grup_id_grupo = $grupo;
             ";
 
             $bd = new BD();
@@ -61,11 +69,12 @@
             $bd->cerrarBD();
         }
 
+        //Permite eliminar un grupo independientemente de si es en modo presencial o en linea
         function eliminarGrupo($grupo)
         {
             $SQL_Eli_Grupo = 
             " DELETE FROM grupo
-              WHERE grup_id_grup = $grupo;
+              WHERE grup_id_grupo = $grupo;
             ";
 
             $bd = new BD();
@@ -90,13 +99,18 @@
             return $Grupo_Seq;
         }
 
-        function buscarTodosGrupos()
+        //Permite obtener todos los grupos de modalidad Presencial
+        function buscarTodosGruposPresencial()
         {
             $SQL_Bus_Cursos = 
-            "   SELECT grup_id_grup, grup_clave, tigr_nombre, esgr_nombre, grup_cupo, pers_nombre, pers_primer_ape, pers_segundo_ape, even_nombre, mogr_nombre
-                FROM grupo, tipo_grupo, estatus_grupo, persona, profesor, evento, modalidad_grupo
-                WHERE esgr_id_esgr = grup_id_esgr AND prof_id_prof = grup_id_prof AND pers_id_pers = prof_id_pers AND even_id_even = grup_id_even AND grup_id_mogr = mogr_id_mogr
-                ORDER BY grup_id_grup ASC;
+            "   SELECT g.grup_id_grupo id_grupo, g.prof_id_profesor id_profesor, (pers_nombre|| ' '|| pers_apellido_paterno || ' ' || pers_apellido_materno) profesor,
+                    g. curs_id_cursos, curs_nombre, grup_cupo,  grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, 
+                    (edif_nombre || '/' ||salo_nombre) salon
+                FROM grupo g, profesor p, persona pr, curso c, plataforma pl, calendario ca, salon s, edificio e 
+                WHERE g.prof_id_profesor = p.prof_id_profesor AND p.pers_id_persona = pr.pers_id_persona AND g.curs_id_cursos = c.curs_id_cursos 
+                    AND g.cale_id_calendario = ca.cale_id_calendario AND g.salo_id_salon = s.salo_id_salon AND s.edif_id_edificio = e.edif_id_edificio
+                    AND lower(grup_modalidad) NOT LIKE '%linea%'
+                ORDER BY g.grup_id_grupo DESC;
             ";
 
             $bd = new BD();
@@ -107,13 +121,19 @@
             return ($transaccion_1->traerRegistros());
         }
 
+        //Permite obtener todos los grupos de modalidad en Linea
         function buscarTodosWebinar()
         {
             $SQL_Bus_Cursos = 
-            "   SELECT grup_id_grup, grup_clave, tigr_nombre, esgr_nombre, grup_cupo, even_nombre, mogr_nombre
-                FROM grupo, tipo_grupo, estatus_grupo, evento, modalidad_grupo
-                WHERE tigr_id_tigr = grup_id_tigr AND esgr_id_esgr = grup_id_esgr AND even_id_even = grup_id_even AND grup_id_mogr = mogr_id_mogr AND even_id_tiev = 4
-                ORDER BY grup_id_grup ASC;
+            "   SELECT g.grup_id_grupo, g.prof_id_profesor, (pers_nombre|| ' '|| pers_apellido_paterno || ' ' || pers_apellido_materno) profesor,
+                    g.curs_id_cursos, curs_nombre, 
+                    g.plat_id_plataforma id_plataforma, plat_nombre plataforma, grup_reunion, grup_acceso, grup_clave_acceso, grup_cupo,  
+                    grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc
+                FROM grupo g, profesor p, persona pr, curso c, plataforma pl, calendario ca
+                WHERE g.prof_id_profesor = p.prof_id_profesor AND p.pers_id_persona = pr.pers_id_persona AND g.curs_id_cursos = c.curs_id_cursos 
+                    AND g.plat_id_plataforma = pl.plat_id_plataforma AND g.cale_id_calendario = ca.cale_id_calendario 
+                    AND lower(grup_modalidad) LIKE '%linea%'
+                ORDER BY g.grup_id_grupo DESC;
             ";
 
             $bd = new BD();
@@ -124,13 +144,17 @@
             return ($transaccion_1->traerRegistros());
         }
 
+        //permite obtener un grupo presencial por id
         function buscarGrupo($id)
         {
             $SQL_Bus_Curso = 
-            "   SELECT grup_id_grup, grup_id_tigr, grup_id_mogr, grup_id_esgr, grup_cupo, grup_id_even, grup_id_prof, grup_costo, grup_descuento
-                FROM grupo, tipo_grupo, estatus_grupo, persona, profesor, evento, modalidad_grupo
-                WHERE  esgr_id_esgr = grup_id_esgr AND prof_id_prof = grup_id_prof AND pers_id_pers = prof_id_pers AND even_id_even = grup_id_even AND mogr_id_mogr = grup_id_mogr AND grup_id_grup = $id
-                ORDER BY grup_id_grup ASC;
+            "   SELECT g.grup_id_grupo id_grupo, g.prof_id_profesor id_profesor, (pers_nombre|| ' '|| pers_apellido_paterno || ' ' || pers_apellido_materno) profesor,
+                    g. curs_id_cursos, curs_nombre, grup_cupo,  grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, 
+                    (edif_nombre || '/' ||salo_nombre) salon
+                FROM grupo g, profesor p, persona pr, curso c, plataforma pl, calendario ca, salon s, edificio e 
+                WHERE g.prof_id_profesor = p.prof_id_profesor AND p.pers_id_persona = pr.pers_id_persona AND g.curs_id_cursos = c.curs_id_cursos 
+                    AND g.cale_id_calendario = ca.cale_id_calendario AND g.salo_id_salon = s.salo_id_salon AND s.edif_id_edificio = e.edif_id_edificio
+                    AND lower(grup_modalidad) NOT LIKE '%linea%' AND g.grup_id_grupo = $id;
             ";
 
             $bd = new BD();
@@ -159,13 +183,18 @@
             return ($transaccion_1->traerObjeto(0));
         }
 
+        //permite obtener un grupo en linea por id
         function buscarGrupoWeb($id)
         {
             $SQL_Bus_Curso = 
-            "   SELECT grup_id_grup, grup_id_tigr, grup_id_mogr, grup_id_esgr, grup_cupo, grup_id_even, grup_costo, grup_descuento
-                FROM grupo, tipo_grupo, estatus_grupo, evento, modalidad_grupo
-                WHERE tigr_id_tigr = grup_id_tigr AND esgr_id_esgr = grup_id_esgr AND even_id_even = grup_id_even AND mogr_id_mogr = grup_id_mogr AND grup_id_grup = $id
-                ORDER BY grup_id_grup ASC;
+            "   SELECT g.grup_id_grupo id_grupo, g.prof_id_profesor id_profesor, (pers_nombre|| ' '|| pers_apellido_paterno || ' ' || pers_apellido_materno) profesor,
+                    g. curs_id_cursos, curs_nombre, 
+                    g.plat_id_plataforma id_plataforma, plat_nombre plataforma, grup_reunion, grup_acceso, grup_clave_acceso, grup_cupo,  
+                    grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc
+                FROM grupo g, profesor p, persona pr, curso c, plataforma pl, calendario ca
+                WHERE g.prof_id_profesor = p.prof_id_profesor AND p.pers_id_persona = pr.pers_id_persona AND g.curs_id_cursos = c.curs_id_cursos 
+                    AND g.plat_id_plataforma = pl.plat_id_plataforma AND g.cale_id_calendario = ca.cale_id_calendario 
+                    AND lower(grup_modalidad) LIKE '%linea%' AND g.grup_id_grupo = $id;
             ";
 
             $bd = new BD();
