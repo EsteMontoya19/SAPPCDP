@@ -8,6 +8,7 @@
   include('../../clases/Persona.php');
   include('../../clases/Administrador.php');
   include('../../clases/Moderador.php');
+  include('../../clases/Profesor.php');
  
  
   
@@ -40,6 +41,11 @@
         $obj_Moderador = new Moderador();
         $moderador = $obj_Moderador->buscarModerador($_POST['persona']);
         $moderador_dia = $obj_Moderador->buscarModeradorDias($moderador->mode_id_moderador);
+      break;
+
+      case 3: //Profesor
+        $obj_Profesor = new Profesor();
+        $profesor = $obj_Profesor->buscarProfesor($_POST['persona']);
       break;
 
     }
@@ -78,7 +84,7 @@
         <!-- Desactivar formulario INICIO en caso de no ser un registro--> 
         <?php if (isset($_POST['CRUD'])) { ?>
           <?php if ($_POST['CRUD'] == 0) { ?>
-            <fieldset disabled>
+            <fieldset disable>
           <?php } ?>
         <?php } ?>
 
@@ -165,25 +171,40 @@
                 <b>&nbsp;Datos de la cuenta</b>
               </div>
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                <?php if (isset($usuario) && $usuario->rol_id_rol == 1) { ?>
+                <?php if (isset($usuario) && $usuario->rol_id_rol == 1 || $usuario->rol_id_rol == 3) { ?>
                   <div id="num_trabajador" class="col-lg-6 form-group">
                 <?php }  else { ?>
                   <div id="num_trabajador" class="col-lg-6 form-group" style="display: none;">
                 <?php } ?>
                     <label for="num_trabajador"><b>Número de trabajador:*</b></label>
-                    <input value="<?php echo isset($administrador) ? $administrador-> admi_num_trabajador : ""; ?> " type="text"
-                      class="form-control" name="lbNum_trabajador">
+                    <input value="<?php if (isset($administrador)) { 
+                                          echo($administrador-> admi_num_trabajador);
+                                        } else {
+                                          if(isset($profesor)){ 
+                                            echo($profesor-> prof_num_trabajador);
+                                          } else {
+                                            echo("");
+                                          }
+                                        } ?>" type="text" class="form-control" name="lbNum_trabajador">
                   </div> 
-                  <?php if (isset($usuario) && $usuario->rol_id_rol == 1) { ?>
+                  <?php if (isset($usuario) && $usuario->rol_id_rol == 1 || $usuario->rol_id_rol == 3) { ?>
                     <div id="rfc" class="col-lg-6 form-group">
                   <?php }  else { ?>
                     <div id="rfc" class="col-lg-6 form-group" style="display: none;">
                   <?php } ?>
                     <label for="rfc"><b>RFC: *</b></label>
-                    <input value="<?php echo isset($administrador) ? $administrador-> admi_rfc : ""; ?> " type="text"
+                    <input value="<?php if (isset($administrador)) { 
+                                          echo($administrador-> admi_rfc);
+                                        } else {
+                                          if(isset($profesor)){ 
+                                            echo($profesor-> prof_rfc);
+                                          } else {
+                                            echo("");
+                                          }
+                                        }?>"  type="text"
                         class="form-control" name="lbRfc">
                     </div>
-              </div>
+              </div> <!-- Cierre div de datos row -->
               
               <div class="col-lg-12 form-row" style="margin-top: 15px;"> 
                 <?php if (isset($usuario) && $usuario->rol_id_rol == 2) { ?>
@@ -192,7 +213,7 @@
                   <div id="numCuenta" class="col-lg-6 form-group" style="display: none;">
                 <?php } ?>
                     <label for="numCuenta"><b>Número de cuenta:*</b></label>
-                      <input value="<?php echo isset($moderador) ? $moderador-> mode_num_cuenta : ""; ?> " type="text" 
+                      <input value="<?php echo isset($moderador) ? $moderador-> mode_num_cuenta : ""; ?>" type="text" 
                         class="form-control" name="lbNumCuenta">
                   </div> 
                 <?php if (isset($usuario) && $usuario->rol_id_rol == 2) { ?>
@@ -214,7 +235,7 @@
                         <label class="form-check-label" for="inlineCheckbox1"><?php echo ($dia['dia_nombre']);?></label>
                       </div>
                     <?php } ?>
-              </div>
+              </div>  <!-- Cierre div de datos row -->
 
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <?php if (isset($usuario) && $usuario->rol_id_rol == 2) { ?>
@@ -223,7 +244,7 @@
                   <div id="fechaInicio" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="fechaInicio"><b>Fecha de inicio del servicio: *</b></label>
-                    <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_inicio: ""; ?> " type="text" class="form-control" name="lbFechaInicio">
+                    <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_inicio: ""; ?>" type="text" class="form-control" name="lbFechaInicio">
                   </div>
                 <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="fechaFin" class="col-lg-3 form-group">
@@ -231,7 +252,7 @@
                   <div id="fechaFin" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="fechaFin"><b>Fecha de fin del servicio:*</b></label>
-                    <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_fin: ""; ?> " type="text" class="form-control" name="lbFechaFin">
+                    <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_fin: ""; ?>" type="text" class="form-control" name="lbFechaFin">
                   </div>
                 <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="horaInicio" class="col-lg-3 form-group">
@@ -239,7 +260,7 @@
                   <div id="horaInicio" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="horaInicio"><b>Hora de inicio del servicio: *</b></label>
-                    <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_inicio: ""; ?> " type="text" class="form-control" name="lbHoraFin">
+                    <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_inicio: ""; ?>" type="text" class="form-control" name="lbHoraFin">
                   </div>
                 <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="horaInicio" class="col-lg-3 form-group">
@@ -247,33 +268,23 @@
                   <div id="horaInicio" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="horaInicio"><b>Hora de fin del servicio: *</b></label>
-                    <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_fin: ""; ?> " type="text" class="form-control" name="lbHoraFin">
+                    <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_fin: ""; ?>" type="text" class="form-control" name="lbHoraFin">
                   </div>
-              </div>
+              </div>  <!-- Cierre div de datos row -->
+              
+              <div class="col-lg-12 form-row" style="margin-top: 15px;">  
+                <?php if ($usuario->rol_id_rol == 3) { ?>
+                  <div id="semblanza" class="col-lg-12 form-group">
+                <?php }  else { ?>
+                  <div id="semblanza" class="col-lg-12 form-group" style="display: none;">
+                <?php } ?>
+                  <label for="strSemblanza"><b>Semblanza:*</b></label>
+                  <textarea type="text" class="form-control" id="strSemblanza" name="strReqTec"><?php echo isset($profesor) ? $profesor-> prof_semblanza: ""; ?></textarea>
+              
+              
+              </div> <!-- Cierre div de datos row -->
 
-                              
-
-                                  
-                                    
-
-                                  
-
-                                      
-\
-
-                                              <?php if ($usuario->rol_id_rol == 2) { ?>
-                                              <div id="semblanza" class="col-lg-6 form-group">
-                                                <?php }  else { ?>
-                                                <div id="semblanza" class="col-lg-6 form-group" style="display: none;">
-                                                  <?php } ?>
-
-                                                  <div id="semblanza" class="col-lg-6 form-group"
-                                                    style="display: none;">
-                                                    <label for="strSemblanza"><b>Semblanza:
-                                                        *</b></label>
-                                                    <textarea type="text" class="form-control" id="strSemblanza"
-                                                      name="strReqTec"></textarea>
-                                                  </div>
+          </div>  <!-- Este es cierra todo el grupo de Datos de cuenata -->                              
 
                                                   <?php if ($usuario->rol_id_rol == 2) { ?>
                                                   <div id="nivelImparticion" class="col-lg-6 form-group">

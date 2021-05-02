@@ -1,6 +1,26 @@
 <?php
     class Profesor
     {
+		function buscarProfesor($persona)
+		{
+			$SQL_Bus_Profesor = 
+			"SELECT P.prof_id_profesor, P.pers_id_persona, P.prof_num_trabajador, P.prof_semblanza, P.prof_rfc
+			 FROM Profesor P, Persona PE
+			 WHERE P.pers_id_persona = PE.pers_id_persona AND P.pers_id_persona = $persona
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Profesor);
+			$obj_Profesor = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerObjeto(0));
+        }
+
+		//*TODO: Falta mdificar las clases siguientes
+
+
         function agregarProfesor($persona, $numero, $semblanza, $constancia, $cv, $cedula, $titulo, $ine, $curp, $banco)
         {
             $SQL_Ins_Profesor = 
@@ -43,23 +63,6 @@
 			$transaccion_1->enviarQuery($SQL_Eli_Profesor);
 			$bd->cerrarBD();
 		}
-
-        function buscarProfesor($profesor)
-		{
-			$SQL_Bus_Profesor = 
-			"	SELECT prof_id_prof, prof_id_pers, prof_numero, prof_semblanza, prof_constancia, prof_cv, prof_cedula, prof_titulo, prof_ine, prof_curp, prof_banco
-				FROM profesor
-				WHERE prof_id_prof = $profesor;
-			";
-
-			$bd = new BD();
-			$bd->abrirBD();
-			$transaccion_1 = new Transaccion($bd->conexion);
-			$transaccion_1->enviarQuery($SQL_Bus_Profesor);
-			$obj_Profesor = $transaccion_1->traerObjeto(0);
-			$bd->cerrarBD();
-			return ($transaccion_1->traerObjeto(0));
-        }
         
         function buscarGruposProfesor($profesor)
 		{
