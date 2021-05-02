@@ -22,7 +22,7 @@ INSERT INTO Usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usu
 		VALUES (1, 1, 3, 'Esteban', '1234', 'Linterna Verde', true), (2, 2, 3, 'Karen', '1234', 'Flash', true), 
 			    (3, 3, 3, 'Samuel', '1234', 'Batman', true);
 
-INSERT INTO Administrador (pers_id_persona, admin_num_trabajador, admin_rfc) VALUES (1, '315067596', 'MOME990905134');
+INSERT INTO Administrador (pers_id_persona, admi_num_trabajador, admi_rfc) VALUES (1, '315067596', 'MOME990905134');
 
 INSERT INTO Profesor (prof_id_profesor, pers_id_persona, prof_num_trabajador, prof_semblanza, prof_rfc) 
       VALUES (1, 2, '123457890', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber','KAFA12345');
@@ -82,8 +82,8 @@ INSERT INTO Sesion (SESI_ID_SESIONES, grup_id_grupo, sesi_fecha, sesi_hora)
 create table ADMINISTRADOR (
    admi_id_administrador  SERIAL               not null,
    PERS_ID_PERSONA      INT4                 not null,
-   ADMIN_NUM_TRABAJADOR CHAR(10)             not null,
-   ADMIN_RFC            CHAR(15)             not null,
+   admi_num_trabajador CHAR(10)             not null,
+   admi_rfc            CHAR(15)             not null,
    constraint PK_ADMINISTRADOR primary key (admi_id_administrador)
 );
 
@@ -1005,7 +1005,7 @@ INSERT INTO Usuario (rol_id_rol, prse_id_pregunta, usua_num_usuario, usua_contra
 		VALUES (1, 3, 'Esteban', '1234', 'Linterna Verde', true), (2, 3, 'Karen', '1234', 'Flash', true), 
 			    (3, 3, 'Samuel', '1234', 'Batman', true);
 
-INSERT INTO Administrador (pers_id_persona, admin_num_trabajador, admin_rfc) VALUES (1, '315067596', 'MOME990905134');
+INSERT INTO Administrador (pers_id_persona, admi_num_trabajador, admi_rfc) VALUES (1, '315067596', 'MOME990905134');
 
 INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza, prof_rfc) 
       VALUES (2, '123457890', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber','KAFA12345');
