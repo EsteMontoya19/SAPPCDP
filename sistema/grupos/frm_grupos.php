@@ -2,21 +2,21 @@
   include('../../clases/BD.php');
   include('../../clases/Busqueda.php');
   include('../../clases/Grupo.php');
-  include('../../clases/Horario.php');
+  include('../../clases/Sesion.php');
   include('../../clases/Periodo.php');
+  include('../../clases/Moderador.php');
   include('../../clases/Profesor.php');
 
 
   $obj_Busqueda = new Busqueda();
-  $arr_eventos = $obj_Busqueda->selectEventos();
-  $arr_modalidades = $obj_Busqueda->selectModalidadGrupo();
-  $arr_estatus = $obj_Busqueda->selectEstatusGrupo();
-  $arr_dias = $obj_Busqueda->selectDias();
-  $arr_salones = $obj_Busqueda->selectSalones();
-
+  $arr_Cursos = $obj_Busqueda->selectCursos();
+  $arr_Plataformas = $obj_Busqueda->selectPlataformas();
+  $obj_Moderador = new Moderador();
+  $arr_Moderadores = $obj_Moderador->buscarModeradoresActivos();
   $obj_Profesor = new Profesor();
-  $arr_profesores = $obj_Profesor->buscarTodosProfesores();
-
+  $arr_Profesores = $obj_Profesor->buscarProfesoresActivos();
+  $objeto_Sesion= new Sesion();
+  
   if (isset($_POST['id'])) {
 
     $obj_Grupo = new Grupo();
@@ -49,6 +49,7 @@
 
   $i = 0;
   $i_pon = 0;
+
 ?>
 
   <div id="wrapper">
@@ -85,458 +86,146 @@
             <div class="card lg-12">
               <div class="card-header">
                 <i class="fas fa-chalkboard fa-lg" style="color:orange"></i>
+                <b style="color:orange">&nbsp;Selecciona un Curso</b>
+              </div>
+            <div class="col-lg-12 form-row" style="margin-top: 20px;">    
+            <div class="col-lg-4 form-group">
+              <label for="ID_Curso" style="color:#0C4590"><b>Cursos: *</b></label>
+              <select class="custom-select" id="ID_Curso" name="ID_Curso">
+                <option value="0">Seleccione una opción</option>
+                <?php foreach ($arr_Cursos as $Cursos) { ?>
+                <option value="<?php echo $Cursos['curs_id_cursos'];?>"><?php echo $Cursos['curs_nombre'];?>
+                </option><?php } ?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="card lg-12">
+              <div class="card-header">
+                <i class="fas fa-chalkboard fa-lg" style="color:orange"></i>
                 <b style="color:orange">&nbsp;Datos generales</b>
               </div>
-              <div class="col-lg-12 form-row" style="margin-top: 20px;">
-               
-                <div class="col-lg-4 form-group">
-                  <label for="GrupoModalidad" style="color:#0C4590"><b>Modalidad: *</b></label>
-                  <select class="custom-select" id="GrupoModalidad" name="GrupoModalidad">
-                    <option>Seleccione una opción</option>
-                    <?php foreach ($arr_modalidades as $modalidad) { ?>
-                      <option value="<?php echo $modalidad['mogr_id_mogr']; ?>" <?php if(isset($grupo)) { if ($grupo->grup_id_mogr == $modalidad['mogr_id_mogr']) { ?> selected <?php } }?>>
-                        <?php echo $modalidad['mogr_nombre']; ?>
-                      </option>
-                    <?php } ?>
+            </div>
+            <div class="col-lg-12 form-row" style="margin-top: 20px;">
+              <div class="col-lg-4 form-group">
+                  <label for="GrupoTipo" style="color:#0C4590"><b>Tipo: *</b></label>
+                  <select class="custom-select" id="GrupoTipo" name="GrupoTipo">
+                      <option value="0">Seleccione una opción</option>
+                      <option value="Público">Público</option>
+                      <option value="Privado">Privado</option>
                   </select>
-                </div>
-                <div class="col-lg-4 form-group">
-                  <label for="GrupoEstatus" style="color:#0C4590"><b>Estatus del grupo: *</b></label>
-                  <select class="custom-select" id="GrupoEstatus" name="GrupoEstatus">
-                    <option>Seleccione una opción</option>
-                    <?php foreach ($arr_estatus as $estatu) { ?>
-                      <option value="<?php echo $estatu['esgr_id_esgr']; ?>" <?php if(isset($grupo)) { if ($grupo->grup_id_esgr == $estatu['esgr_id_esgr']) { ?> selected <?php } }?>>
-                        <?php echo $estatu['esgr_nombre']; ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </div>
-                <div class="col-lg-2 form-group">
-                  <label for="GrupoCupo" style="color:#0C4590"><b>Cupo: *</b></label>
-                  <input type="number" class="form-control" id="GrupoCupo" name="GrupoCupo" placeholder="0" min="0" value="<?php echo isset($grupo)?$grupo->grup_cupo:"";?>">
-                </div>
               </div>
-              <div class="col-lg-12 form-row">
-                <div class="col-lg-4 form-group">
-                  <?php if (isset($_POST['CRUD'])) { ?>
-                    <fieldset disabled>
-                  <?php } ?>
-                  <label for="GrupoCurso" style="color:#0C4590"><b>Evento: *</b></label>
-                  <select class="custom-select" id="GrupoCurso" name="GrupoCurso" onchange="mostrarFormulario()">
+              <div class="col-lg-4 form-group">
+                <label for="GrupoModalidad" style="color:#0C4590"><b>Modalidad: *</b></label>
+                <select class="custom-select" id="GrupoModalidad" name="GrupoModalidad">
                     <option value="0">Seleccione una opción</option>
-                    <?php foreach ($arr_eventos as $evento) { ?>
-                      <option value="<?php echo $evento['even_id_tiev'] . '-' . $evento['even_id_even']; ?>" <?php if(isset($grupo)) { if ($grupo->grup_id_even == $evento['even_id_even']) { ?> selected <?php } }?>>
-                        <?php echo $evento['even_nombre']; ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                  <?php if (isset($_POST['CRUD'])) { ?>
-                    </fieldset>
-                  <?php } ?>
-                </div>
-                <input type="hidden" name="id_evento" value="<?php echo isset($grupo)?$grupo->grup_id_even:"";?>"/>
-               
-               
-                <div class="col-lg-4 form-group" id="div_profesor" style="display: none;">
-                  <label for="GrupoProfesores" style="color:#0C4590"><b>Profesor: *</b></label>
-                  <select class="custom-select" id="GrupoProfesores" name="GrupoProfesores">
+                    <option value="En línea">En línea</option>
+                    <option value="Presencial">Presencial</option>
+                </select>
+              </div>
+              <div class="col-lg-4 form-group">
+                <label for="GrupoEstatus" style="color:#0C4590"><b>Estatus del grupo: *</b></label>
+                <select class="custom-select" id="GrupoEstatus" name="GrupoEstatus">
                     <option value="0">Seleccione una opción</option>
-                    <?php foreach ($arr_profesores as $profesor) { ?>
-                      <option value="<?php echo $profesor['prof_id_prof']; ?>" <?php if(isset($grupo)) { if ($grupo->grup_id_prof == $profesor['prof_id_prof']) { ?> selected <?php } }?>>
-                        <?php echo $profesor['pers_nombre'] . ' ' . $profesor['pers_primer_ape'] . ' ' . $profesor['pers_segundo_ape']; ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </div>
+                    <option value="1">Aprobado</option>
+                    <option value="2">Pendiente</option>
+                    <option value="3">Rechazado</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-12 form-row" style="margin-top: 20px;">
+              <div class="col-lg-6 form-group">
+                <label for="ID_Moderador" style="color:#0C4590"><b>Moderador: *</b></label>
+                <select class="custom-select" id="ID_Moderador" name="ID_Moderador">
+                  <option value="0">Seleccione una opción</option>
+                  <?php foreach ($arr_Moderadores as $Moderadores) { ?>
+                  <option value="<?php echo $Moderadores['mode_id_moderador'];?>"><?php echo $Moderadores['pers_nombre'].$Moderadores['pers_apellido_paterno'].$Moderadores['pers_apellido_materno'];?>
+                  </option><?php } ?>
+                </select>
+              </div>
+              <div class="col-lg-6 form-group">
+                <label for="ID_Profesor" style="color:#0C4590"><b>Profesor: *</b></label>
+                <select class="custom-select" id="ID_Profesor" name="ID_Profesor">
+                  <option value="0">Seleccione una opción</option>
+                  <?php foreach ($arr_Profesores as $Profesores) { ?>
+                  <option value="<?php echo $Profesores['prof_id_profesor'];?>"><?php echo $Profesores['pers_nombre'].$Profesores['pers_apellido_paterno'].$Profesores['pers_apellido_materno'];?>
+                  </option><?php } ?>
+                </select>
               </div>
             </div>
           </div>
-          
-          <!-- Formulario para la mayoria de los eventos -->
-          <div class="form-group" id="eventos" style="display: none;">
-            <div class="card-deck">
-              <div class="card lg-6">
-                <div class="card-header">
-                  <i class="fas fa-calendar-alt fa-lg" style="color:orange"></i>
-                  <b style="color:orange">&nbsp;Periodo de inscripción</b>
-                </div>
-                <div class="col-lg-12 form-row" style="margin-top: 20px;">
-                  <div class="col-lg-6 form-group">
-                    <label for="GrupoInsInicio" style="color:#0C4590"><b>Fecha de inicio: *</b></label>
-                    <input type="date" class="form-control" id="GrupoInsInicio" name="GrupoInsInicio" value="<?php echo isset($periodoIns)?$periodoIns->peri_inicio:"";?>">
-                  </div>
-                  <div class="col-lg-6 form-group">
-                    <label for="GrupoInsFin" style="color:#0C4590"><b>Fecha de termino: *</b></label>
-                    <input type="date" class="form-control" id="GrupoInsFin" name="GrupoInsFin" value="<?php echo isset($periodoIns)?$periodoIns->peri_fin:"";?>">
-                  </div>
-                </div>
-                <?php if(isset($_POST['id'])) { ?>
-                  <input type="hidden" name="idPeriodo1" value="<?php echo isset($periodoIns)?$periodoIns->peri_id_peri:"";?>"/>
-                <?php } ?>
-              </div>
-              <div class="card lg-6">
-                <div class="card-header">
-                  <i class="fas fa-calendar-alt fa-lg" style="color:orange"></i>
-                  <b style="color:orange">&nbsp;Periodo del curso</b>
-                </div>
-                <div class="col-lg-12 form-row" style="margin-top: 20px;">
-                  <div class="col-lg-6 form-group">
-                    <label for="GrupoCurInicio" style="color:#0C4590"><b>Inicio del curso: *</b></label>
-                    <input type="date" class="form-control" id="GrupoCurInicio" name="GrupoCurInicio" value="<?php echo isset($periodoCur)?$periodoCur->peri_inicio:"";?>">
-                  </div>
-                  <div class="col-lg-6 form-group">
-                    <label for="GrupoCurFin" style="color:#0C4590"><b>Fin del curso: *</b></label>
-                    <input type="date" class="form-control" id="GrupoCurFin" name="GrupoCurFin" value="<?php echo isset($periodoCur)?$periodoCur->peri_fin:"";?>">
-                  </div>
-                </div>
-                <?php if(isset($_POST['id'])) { ?>
-                  <input type="hidden" name="idPeriodo2" value="<?php echo isset($periodoCur)?$periodoCur->peri_id_peri:"";?>"/>
-                <?php } ?>
-              </div>
+        </div>
+        <div class="form-group">
+          <div class="card lg-12">
+            <div class="card-header">
+              <i class="fas fa-chalkboard fa-lg" style="color:orange"></i>
+              <b style="color:orange">&nbsp;Inscripciones</b>
+            </div>
+          </div>     
+          <div class="col-lg-12 form-row" style="margin-top: 20px;">
+            <div class="col-lg-2 form-group">
+              <label for="GrupoCupo" style="color:#0C4590"><b>Cupo: *</b></label>
+              <input type="number" class="form-control" id="GrupoCupo" name="GrupoCupo" placeholder="0" min="0" value="<?php echo isset($grupo)?$grupo->grup_cupo:"";?>">
+            </div>
+            <div class="col-lg-5 form-group">
+              <label for="GrupoInicioInscripcion" style="color:#0C4590"><b>Iniciar Inscripciones en la Fecha:</b></label>
+              <input type="date" class="form-control" id="GrupoInicioInscripcion" name="GrupoInicioInscripcion" placeholder="0" min="0" value="<?php echo isset($grupo)?$grupo->grup_inicio_insc:"";?>">
+            </div>
+            <div class="col-lg-5 form-group">
+              <label for="GrupoFinInscripcion" style="color:#0C4590"><b>Finalizar Inscripciones en la Fecha:</b></label>
+              <input type="date" class="form-control" id="GrupoFinInscripcion" name="GrupoFinInscripcion" placeholder="0" min="0" value="<?php echo isset($grupo)?$grupo->grup_fin_insc:"";?>">
             </div>
           </div>
-          
-          <!-- Días y horarios del evento -->
-          <!-- Actualización y consulta -->
-          <?php if(isset($_POST['CRUD']) && $tipo_evento->even_id_tiev != 4) { ?>
-            <?php foreach ($arr_horarios as $horario) { ?>
-            <?php $i++; ?>
-              <div id="UDTDia<?php echo $i ?>" style="margin-bottom: 30px;" class="form-group">
-                <input type="hidden" name="idHorario<?php echo $i ?>" value="<?php echo $horario['hogr_id_hogr'];?>"/>
-                <div class="card lg-12">
-                  <div class="card-header">
-                    <i class="fas fa-clock fa-lg" style="color:orange"></i>
-                    <b style="color:orange">&nbsp;Horario <?php echo $i ?></b>
-                    <a href="#" style="margin: 5px">
-                      <button style="float: right;" id="btn-eliminar-dia" type="button" class="btn btn-danger" title="Quitar" onclick="eliminarHorario(<?php echo $horario['hogr_id_hogr'];?>, <?php echo isset($grupo)?$grupo->grup_id_grup:"";?>)">
-                        <i class="fas fa-minus"></i>  
-                      </button>
-                    </a>
-                  </div>
-                  <div class="col-lg-12 form-row" style="margin-bottom: 20px;">
-                    <div class="col-lg-3 form-group">
-                      <label for="UDTGrupoDia<?php echo $i ?>" style="color:#0C4590"><b>Día:</b></label>
-                      <select class="custom-select my-1 mr-sm-2" id="UDTGrupoDia<?php echo $i ?>" name="UDTGrupoDia<?php echo $i ?>">
-                        <option>Seleccione una opción</option>
-                        <?php foreach ($arr_dias as $dia) { ?>
-                          <option value="<?php echo $dia['dia_id_dia']; ?>" <?php if($horario['hogr_id_dia'] == $dia['dia_id_dia']) {?>selected<?php } ?> ><?php echo $dia['dia_nombre']; ?></option>
-                        <?php } ?>
-                      </select>
-                    </div>
-                    <div class="col-lg-3 form-group">
-                      <label for="UDTGrupoSalon<?php echo $i ?>" style="color:#0C4590"><b>Salón:</b></label>
-                      <select class="custom-select my-1 mr-sm-2" id="UDTGrupoSalon<?php echo $i ?>" name="UDTGrupoSalon<?php echo $i ?>" >
-                        <option>Seleccione una opción</option>
-                        <?php foreach ($arr_salones as $salon) { ?>
-                          <option value="<?php echo $salon['salo_id_salo']; ?>" <?php if($horario['hogr_id_salo'] == $salon['salo_id_salo']) {?>selected<?php } ?> ><?php echo $salon['salo_nombre']; ?></option>
-                        <?php } ?>
-                      </select>
-                    </div>
-                    <div class="col-lg-2 form-group">
-                      <label for="UDTGrupoHoraInicio<?php echo $i ?>" style="color:#0C4590"><b>Hora de inicio:</b></label>
-                      <input type="time" class="form-control" id="UDTGrupoHoraInicio<?php echo $i ?>" name="UDTGrupoHoraInicio<?php echo $i ?>" style="margin-top: 5px;" value="<?php echo $horario['hogr_hora_inicio'];?>">
-                    </div>
-                    <div class="col-lg-2 form-group">
-                      <label for="UDTGrupoHoraFin<?php echo $i ?>" style="color:#0C4590"><b>Hora final:</b></label>
-                      <input type="time" class="form-control" id="UDTGrupoHoraFin<?php echo $i ?>" name="UDTGrupoHoraFin<?php echo $i ?>" style="margin-top: 5px;" value="<?php echo $horario['hogr_hora_fin'];?>">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <?php } $n = $i + 1;?>
-            <?php for ($i = 1; $i <= 7; $i++) { ?>
-              <div id="Dia<?php echo $i ?>" style="display: none; margin-bottom: 30px;" class="form-group">
-                <div class="card lg-12">
-                  <div class="card-header">
-                    <i class="fas fa-clock fa-lg" style="color:orange"></i>
-                    <b style="color:orange">&nbsp;Horario <?php echo $i ?></b>
-                  </div>
-                  <div class="col-lg-12 form-row" style="margin-bottom: 20px;">
-                    <div class="col-lg-3 form-group">
-                      <label for="GrupoDia<?php echo $i ?>" style="color:#0C4590"><b>Día:</b></label>
-                      <select class="custom-select my-1 mr-sm-2" id="GrupoDia<?php echo $i ?>" name="GrupoDia<?php echo $i ?>">
-                        <option value="0">Seleccione una opción</option>
-                        <?php foreach ($arr_dias as $dia) { ?>
-                          <option value="<?php echo $dia['dia_id_dia']; ?>"><?php echo $dia['dia_nombre']; ?></option>
-                        <?php } ?>
-                      </select>
-                    </div>
-                    <div class="col-lg-3 form-group">
-                      <label for="GrupoSalon<?php echo $i ?>" style="color:#0C4590"><b>Salón:</b></label>
-                      <select class="custom-select my-1 mr-sm-2" id="GrupoSalon<?php echo $i ?>" name="GrupoSalon<?php echo $i ?>" >
-                        <option value="0">Seleccione una opción</option>
-                        <?php foreach ($arr_salones as $salon) { ?>
-                          <option value="<?php echo $salon['salo_id_salo']; ?>"><?php echo $salon['salo_nombre']; ?></option>
-                        <?php } ?>
-                      </select>
-                    </div>
-                    <div class="col-lg-2 form-group">
-                      <label for="GrupoHoraInicio<?php echo $i ?>" style="color:#0C4590"><b>Hora de inicio:</b></label>
-                      <input type="time" class="form-control" id="GrupoHoraInicio<?php echo $i ?>" name="GrupoHoraInicio<?php echo $i ?>" style="margin-top: 5px;">
-                    </div>
-                    <div class="col-lg-2 form-group">
-                      <label for="GrupoHoraFin<?php echo $i ?>" style="color:#0C4590"><b>Hora final:</b></label>
-                      <input type="time" class="form-control" id="GrupoHoraFin<?php echo $i ?>" name="GrupoHoraFin<?php echo $i ?>" style="margin-top: 5px;">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <?php }?>
-            <!-- Botones de los eventos -->
-            <?php if($_POST['CRUD'] == 1) { ?> 
-              <div class="col-lg-12" id="botones_eventos" style="text-align: center; display: none;">
-                <button id="btn-borrar-horario" type="button" class="btn btn-danger btn-footer" title="Quitar" onclick="ocultarDiaUPD(<?php echo $n?>)">Borrar nuevo día</i></i></button>
-                <button id="btn-agregar-horario"  style="display: none;"  type="button" class="btn btn-info btn-footer" onclick="mostrarDia()">Agregar nuevo día</button>
-                <button id="btn-agregar-horarioAct" type="button" class="btn btn-info btn-footer" onclick="mostrarDiaUPD(<?php echo $n?>)">Agregar nuevo día</button>
-              </div>
-              <hr>
-            <?php } ?>
-          <!-- Registro -->
-          <?php } else { ?>
-            <?php for ($i = 1; $i <= 7; $i++) { ?>
-              <div id="Dia<?php echo $i ?>" style="display: none; margin-top: 20px;" class="form-group">
-                <div class="card lg-12">
-                  <div class="card-header">
-                    <i class="fas fa-clock fa-lg" style="color:orange"></i>
-                    <b style="color:orange">&nbsp;Horario <?php echo $i ?></b>
-                  </div>
-                  <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                    <div class="col-lg-4 form-group">
-                      <label for="GrupoDia<?php echo $i ?>" style="color:#0C4590"><b>Día:</b></label>
-                      <select class="custom-select my-1 mr-sm-2" id="GrupoDia<?php echo $i ?>" name="GrupoDia<?php echo $i ?>">
-                        <option value="0">Seleccione una opción</option>
-                        <?php foreach ($arr_dias as $dia) { ?>
-                          <option value="<?php echo $dia['dia_id_dia']; ?>"><?php echo $dia['dia_nombre']; ?></option>
-                        <?php } ?>
-                      </select>
-                    </div>
-                    <div class="col-lg-4 form-group">
-                      <label for="GrupoSalon<?php echo $i ?>" style="color:#0C4590"><b>Salón:</b></label>
-                      <select class="custom-select my-1 mr-sm-2" id="GrupoSalon<?php echo $i ?>" name="GrupoSalon<?php echo $i ?>">
-                        <option value="0">Seleccione una opción</option>
-                        <?php foreach ($arr_salones as $salon) { ?>
-                          <option value="<?php echo $salon['salo_id_salo']; ?>"><?php echo $salon['salo_nombre']; ?></option>
-                        <?php } ?>
-                      </select>
-                    </div>
-                    <div class="col-lg-2 form-group">
-                      <label for="GrupoHoraInicio<?php echo $i ?>" style="color:#0C4590"><b>Hora de inicio:</b></label>
-                      <input type="time" class="form-control" id="GrupoHoraInicio<?php echo $i ?>" name="GrupoHoraInicio<?php echo $i ?>" style="margin-top: 5px;">
-                    </div>
-                    <div class="col-lg-2 form-group">
-                      <label for="GrupoHoraFin<?php echo $i ?>" style="color:#0C4590"><b>Hora final:</b></label>
-                      <input type="time" class="form-control" id="GrupoHoraFin<?php echo $i ?>" name="GrupoHoraFin<?php echo $i ?>" style="margin-top: 5px;">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <?php } ?>
-            <?php if(!isset($_POST['CRUD']) || $_POST['CRUD'] == 1) { ?> 
-              <!-- Botones de los eventos -->
-              <div class="col-lg-12" id="botones_eventos" style="text-align: center; margin-bottom: 20px; display: none;">
-                <button id="btn-borrar-horario"  type="button" class="btn btn-danger btn-footer" title="Quitar" onclick="ocultarDia()">Borrar día</i></i></button>
-                <button id="btn-agregar-horario" type="button" class="btn btn-info btn-footer" onclick="mostrarDia()">Agregar día</button>
-              </div>
-              <hr>
-            <?php } ?>
-          <?php } ?>
-
-          <!-- Formulario webinar -->
-          <!-- SOLO Registro -->
-          <div class="form-group" id="webinar" style="display: none;">
-            <div class="card-deck">
-              <div class="card lg-6">
-                <div class="card-header">
-                  <i class="fas fa-calendar-alt fa-lg" style="color:orange"></i>
-                  <b style="color:orange">&nbsp;Datos del webinar</b>
-                </div>
-                <div class="col-lg-12 form-row" style="margin-top: 20px;">
-                  <div class="col-lg-6 form-group">
-                    <label for="GrupoInsInicioWeb" style="color:#0C4590"><b>Inicio de la inscripción: *</b></label>
-                    <input type="date" class="form-control" id="GrupoInsInicioWeb" style="margin-top: 5px;" name="GrupoInsInicioWeb" value="<?php echo isset($periodoIns)?$periodoIns->peri_inicio:"";?>">
-                  </div>
-                  <div class="col-lg-6 form-group">
-                    <label for="GrupoInsFinWeb" style="color:#0C4590"><b>Fin de la inscripción: *</b></label>
-                    <input type="date" class="form-control" id="GrupoInsFinWeb" style="margin-top: 5px;" name="GrupoInsFinWeb" value="<?php echo isset($periodoIns)?$periodoIns->peri_fin:"";?>">
-                  </div>
-                </div>
-                <div class="col-lg-12 form-row">
-                  <div class="col-lg-4 form-group">
-                    <label for="GrupoCurInicioWeb" style="color:#0C4590"><b>Día del evento: *</b></label>
-                    <input type="date" class="form-control" id="GrupoCurInicioWeb" name="GrupoCurInicioWeb" value="<?php echo isset($periodoWeb)?$periodoWeb->peri_inicio:"";?>">
-                    </div>
-                  <div class="col-lg-4 form-group">
-                    <label for="UDTGrupoSalonWeb" style="color:#0C4590"><b>Salón:</b></label>
-                    <select class="custom-select" id="UDTGrupoSalonWeb" name="UDTGrupoSalonWeb" >
-                      <option>Seleccione una opción</option>
-                      <?php foreach ($arr_salones as $salon) { ?>
-                        <option value="<?php echo $salon['salo_id_salo']; ?>" <?php if(isset($horario_web)) { if($horario_web->hogr_id_salo == $salon['salo_id_salo']) {?>selected<?php } } ?> >
-                          <?php echo $salon['salo_nombre']; ?>
-                        </option>
-                      <?php } ?>
-                    </select>
-                  </div>
-                  <div class="col-lg-2 form-group">
-                    <label for="UDTGrupoHoraInicioWeb" style="color:#0C4590"><b>Hora de inicio: *</b></label>
-                    <input type="time" class="form-control" id="UDTGrupoHoraInicioWeb" name="UDTGrupoHoraInicioWeb" value="<?php if(isset($horario_web)) { echo $horario_web->hogr_hora_inicio; } ?>">
-                  </div>
-                  <div class="col-lg-2 form-group">
-                    <label for="UDTGrupoHoraFinWeb" style="color:#0C4590"><b>Hora final: *</b></label>
-                    <input type="time" class="form-control" id="UDTGrupoHoraFinWeb" name="UDTGrupoHoraFinWeb" value="<?php if(isset($horario_web)) { echo $horario_web->hogr_hora_fin; } ?>">
-                  </div>
-                  <?php if(isset($_POST['id'])) { ?>
-                    <input type="hidden" name="ID_HorarioWeb" value="<?php echo isset($horario_web)?$horario_web->hogr_id_hogr:"";?>"/>
-                    <input type="hidden" name="idPeriodo1" value="<?php echo isset($periodoIns)?$periodoIns->peri_id_peri:"";?>"/>
-                    <input type="hidden" name="idPeriodo2" value="<?php echo isset($periodoWeb)?$periodoWeb->peri_id_peri:"";?>"/>
-                  <?php } ?>
-                </div>
-              </div>
+        </div>
+        <div class="form-group">
+          <div class="card lg-12">
+            <div class="card-header">
+              <i class="fas fa-chalkboard fa-lg" style="color:orange"></i>
+              <b style="color:orange">&nbsp;En línea</b>
+            </div>
+          <div class="col-lg-12 form-row" style="margin-top: 20px;">    
+          <div class="col-lg-6 form-group">
+            <label for="ID_Curso" style="color:#0C4590"><b>Plataforma: *</b></label>
+            <select class="custom-select" id="ID_Curso" name="ID_Curso">
+              <option value="0">Seleccione una opción</option>
+              <?php foreach ($arr_Plataformas as $Plataformas) { ?>
+              <option value="<?php echo $Plataformas['plat_id_plataforma'];?>"><?php echo $Plataformas['plat_nombre'];?>
+              </option><?php } ?>
+            </select>
+          </div>
+          <div class="col-lg-6 form-group">
+            <label for="URL_Acceso"><b>Link de acceso: *</b></label>
+              <input type="text" class="form-control" id="URL_Acceso" name="URL_Acceso" value="">
+          </div>
+          <div class="col-lg-12 form-row" style="margin-top: 20px;">    
+            <div class="col-lg-6 form-group">
+              <label for="ID_Reunion"><b>ID de la Renunón: *</b></label>
+                <input type="text" class="form-control" id="ID_Reunion" name="ID_Reunion" value="">
+            </div>
+            <div class="col-lg-6 form-group">
+              <label for="Clave_Acceso"><b>Clave de Acceso: *</b></label>
+                <input type="text" class="form-control" id="Clave_Acceso" name="Clave_Acceso" value="">
             </div>
           </div>
-          <?php if (!isset($_POST['id'])) {?>
-            <div class="form-group" id="ponente1" style="display: none;">
-              <div class="card lg-12">
-                <div class="card-header">
-                  <i class="fas fa-id-card fa-lg" style="color:orange"></i>
-                  <b style="color:orange">&nbsp;Ponente 1</b>
-                </div>
-                <div class="col-lg-12 form-row" style="margin-top: 10px;">
-                  <div class="col-lg-6 form-group">
-                    <label for="PonenteNombre1" style="color:#0C4590"><b>Nombre completo: *</b></label>
-                    <input type="text" class="form-control" id="PonenteNombre1" name="PonenteNombre1" value="<?php echo isset($grupo) ? $persona->pers_nombre : ""; ?>">
-                  </div>
-                  <div class="col-lg-6 form-group">
-                    <label for="PonenteCargo1" style="color:#0C4590"><b>Cargo: *</b></label>
-                    <input type="text" class="form-control" id="PonenteCargo1" name="PonenteCargo1" value="<?php echo isset($grupo) ? $persona->pers_primer_ape : ""; ?>">
-                  </div>
-                </div>
-                <div class="col-lg-12 form-row">
-                  <div class="form-group col-lg-12">
-                    <label for="PonenteSemblanza1" style="color:#0C4590"><b>Semblanza: *</b></label>
-                    <textarea class="form-control formulario" rows="3" style="width: 100%" id="PonenteSemblanza1" name="PonenteSemblanza1"><?php echo isset($grupo) ? $profesor->prof_semblanza : ""; ?></textarea>
-                  </div>
-                </div>
+        </div>
+        <div class="form-group">
+            <div class="card lg-12">
+              <div class="card-header">
+                <i class="fas fa-chalkboard fa-lg" style="color:orange"></i>
+                <b style="color:orange">&nbsp;Sesión #</b>
               </div>
+            <div class="col-lg-12 form-row" style="margin-top: 20px;">    
+            <div class="col-lg-6 form-group">
+              <label for="SesionFecha" style="color:#0C4590"><b>Fecha</b></label>
+              <input type="date" class="form-control" id="SesionFecha" name="SesionFecha" placeholder="0" min="0" value="<?php echo isset($sesion)?$sesion->sesi_fecha:"";?>">
             </div>
-            <!-- Resto de los ponente -->
-            <?php for ($p = 2; $p <= 3; $p++) { ?>
-              <div class="form-group" id="ponente<?php echo $p ?>" style="display: none;">
-                <div class="card lg-12">
-                  <div class="card-header">
-                    <i class="fas fa-id-card fa-lg" style="color:orange"></i>
-                    <b style="color:orange">&nbsp;Ponente <?php echo $p ?></b>
-                  </div>
-                  <div class="col-lg-12 form-row" style="margin-top: 10px;">
-                    <div class="col-lg-6 form-group">
-                      <label for="PonenteNombre<?php echo $p ?>" style="color:#0C4590"><b>Nombre completo: *</b></label>
-                      <input type="text" class="form-control" id="PonenteNombre<?php echo $p ?>" name="PonenteNombre<?php echo $p ?>" value="<?php echo isset($grupo) ? $persona->pers_nombre : ""; ?>">
-                    </div>
-                    <div class="col-lg-6 form-group">
-                      <label for="PonenteCargo<?php echo $p ?>" style="color:#0C4590"><b>Cargo: *</b></label>
-                      <input type="text" class="form-control" id="PonenteCargo<?php echo $p ?>" name="PonenteCargo<?php echo $p ?>" value="<?php echo isset($grupo) ? $persona->pers_primer_ape : ""; ?>">
-                    </div>
-                  </div>
-                  <div class="col-lg-12 form-row">
-                    <div class="form-group col-lg-12">
-                      <label for="PonenteSemblanza<?php echo $p ?>" style="color:#0C4590"><b>Semblanza: *</b></label>
-                      <textarea class="form-control formulario" rows="3" style="width: 100%" id="PonenteSemblanza<?php echo $p ?>" name="PonenteSemblanza<?php echo $p ?>"><?php echo isset($grupo) ? $profesor->prof_semblanza : ""; ?></textarea>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <?php } ?>
-
-            <?php if(!isset($_POST['CRUD']) || $_POST['CRUD'] == 1) { ?> 
-              <!-- Botones de los eventos -->
-              <div class="col-lg-12" id="botones_ponentes" style="text-align: center; margin-bottom: 20px; display: none;">
-                <button id="btn-borrar-horario"  type="button" class="btn btn-danger btn-footer" title="Quitar" onclick="ocultarPonente()">Borrar ponente</i></i></button>
-                <button id="btn-agregar-horario" type="button" class="btn btn-info btn-footer" onclick="mostrarPonente()">Agregar ponente</button>
-              </div>
-              <hr>
-            <?php } ?>
-          <?php } else { ?>
-            <?php if(isset($_POST['CRUD']) && $tipo_evento->even_id_tiev == 4) { ?>
-              <?php foreach ($arr_ponentes as $ponente) { ?>
-                <?php $i_pon++; ?>
-                <div class="form-group" id="ponente<?php echo $i_pon ?>" >
-                  <div class="card lg-12">
-                    <div class="card-header">
-                      <i class="fas fa-id-card fa-lg" style="color:orange"></i>
-                      <b style="color:orange">&nbsp;Ponente <?php echo $i_pon ?></b>
-                      <a href="#" style="margin: 5px">
-                        <button style="float: right;" id="btn-eliminar-dia" type="button" class="btn btn-danger" title="Quitar" onclick="eliminarPonente(<?php echo $ponente['pone_id_pone'];?>, <?php echo isset($grupo)?$grupo->grup_id_grup:"";?>)">
-                          <i class="fas fa-minus"></i>  
-                        </button>
-                      </a>
-                    </div>
-                    <div class="col-lg-12 form-row" style="margin-top: 10px;">
-                      <div class="col-lg-6 form-group">
-                        <label for="PonenteNombreCRUD<?php echo $i_pon ?>" style="color:#0C4590"><b>Nombre completo: *</b></label>
-                        <input type="text" class="form-control" id="PonenteNombreCRUD<?php echo $i_pon ?>" name="PonenteNombreCRUD<?php echo $i_pon ?>" value="<?php echo isset($ponente) ? $ponente['pone_nombre'] : ""; ?>">
-                      </div>
-                      <div class="col-lg-6 form-group">
-                        <label for="PonenteCargoCRUD<?php echo $i_pon ?>" style="color:#0C4590"><b>Cargo: *</b></label>
-                        <input type="text" class="form-control" id="PonenteCargoCRUD<?php echo $i_pon ?>" name="PonenteCargoCRUD<?php echo $i_pon ?>" value="<?php echo isset($ponente) ?  $ponente['pone_cargo'] : ""; ?>">
-                      </div>
-                    </div>
-                    <div class="col-lg-12 form-row">
-                      <div class="form-group col-lg-12">
-                        <label for="PonenteSemblanzaCRUD<?php echo $i_pon ?>" style="color:#0C4590"><b>Semblanza: *</b></label>
-                        <textarea class="form-control formulario" rows="3" style="width: 100%" id="PonenteSemblanzaCRUD<?php echo $i_pon ?>" name="PonenteSemblanzaCRUD<?php echo $i_pon ?>"><?php echo isset($ponente) ? $ponente['pone_descripcion'] : ""; ?></textarea>
-                      </div>
-                    </div>
-                    <input type="hidden" name="id_Ponente<?php echo $i_pon ?>" value="<?php echo isset($ponente)?$ponente['pone_id_pone']:"";?>"/>
-                  </div>
-                </div>
-              <?php } $n = $i_pon + 1; ?>
-              <?php for ($i = 2; $i <= 3; $i++) { ?>
-                <div class="form-group" id="ponente<?php echo $i ?>" style="display: none;">
-                  <div class="card lg-12">
-                    <div class="card-header">
-                      <i class="fas fa-id-card fa-lg" style="color:orange"></i>
-                      <b style="color:orange">&nbsp;Ponente <?php echo $i ?></b>
-                    </div>
-                    <div class="col-lg-12 form-row" style="margin-top: 10px;">
-                      <div class="col-lg-6 form-group">
-                        <label for="PonenteNombre<?php echo $i ?>" style="color:#0C4590"><b>Nombre completo: *</b></label>
-                        <input type="text" class="form-control" id="PonenteNombre<?php echo $i ?>" name="PonenteNombre<?php echo $i ?>" value="">
-                      </div>
-                      <div class="col-lg-6 form-group">
-                        <label for="PonenteCargo<?php echo $i ?>" style="color:#0C4590"><b>Cargo: *</b></label>
-                        <input type="text" class="form-control" id="PonenteCargo<?php echo $i ?>" name="PonenteCargo<?php echo $i ?>" value="">
-                      </div>
-                    </div>
-                    <div class="col-lg-12 form-row">
-                      <div class="form-group col-lg-12">
-                        <label for="PonenteSemblanza<?php echo $i ?>" style="color:#0C4590"><b>Semblanza: *</b></label>
-                        <textarea class="form-control formulario" rows="3" style="width: 100%" id="PonenteSemblanza<?php echo $i ?>" name="PonenteSemblanza<?php echo $i ?>"></textarea>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              <?php }?>
-            <?php } ?>
-            <?php if($_POST['CRUD'] == 1) { ?> 
-              <div class="col-lg-12" id="botones_ponentes" style="text-align: center; ">
-                <button id="btn-borrar-ponente" type="button" class="btn btn-danger btn-footer" title="Quitar" onclick="ocultarPonenteUPD(<?php echo $n?>)">Borrar nuevo ponente</i></i></button>
-                <button id="btn-agregar-ponente"  style="display: none;"  type="button" class="btn btn-info btn-footer" onclick="mostrarPonente()">Agregar nuevo ponente</button>
-                <button id="btn-agregar-ponenteAct" type="button" class="btn btn-info btn-footer" onclick="mostrarPonenteUPD(<?php echo $n?>)">Agregar nuevo ponente</button>
-              </div>
-              <hr>
-            <?php } ?>
-          <?php } ?>
-
-          <!-- ID e Instrucciones -->
-          <?php if (isset($_POST['CRUD'])) { ?>
-            <?php if ($_POST['CRUD'] == 1) { ?>
-              <input type="hidden" name="dml" value="update"/>
-              <input type="hidden" name="idGrupo" value="<?php echo isset($grupo)?$grupo->grup_id_grup:"";?>"/>
-            <?php } elseif ($_POST['CRUD'] == 0) { ?>
-              <input type="hidden" name="dml" value="select"/>
-            <?php } ?>
-          <?php } else { ?>
-            <input type="hidden" name="dml" value="insert"/>
-          <?php } ?>
+            <div class="col-lg-6 form-group">
+              <label for="SesionHora" style="color:#0C4590"><b>Fecha</b></label>
+              <input type="time" class="form-control" id="SesionHora" name="SesionHora" placeholder="0" min="0" value="<?php echo isset($sesion)?$sesion->sesi_hora:"";?>">
+            </div>
+          </div>
+        </div>
+      </div>
 
         <!-- Desactivar formulario FIN -->
         <?php if (isset($_POST['CRUD']) && $_POST['CRUD'] == 0) { ?>
