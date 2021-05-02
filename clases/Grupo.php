@@ -2,12 +2,12 @@
     class Grupo
     {
         //Permite agregar un grupo presencial
-        function agregarGrupo($monitor, $profesor, $curso, $salon, $calendario, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc)
+        function agregarGrupo($moderador, $profesor, $curso, $salon, $calendario, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc)
         {
             $SQL_Ins_Grupo =
-            "   INSERT INTO Grupo (moni_id_monitor, prof_id_profesor, curs_id_cursos, salo_id_salon, cale_id_calendario, 
+            "   INSERT INTO Grupo (mode_id_moderador, prof_id_profesor, curs_id_cursos, salo_id_salon, cale_id_calendario, 
                     grup_cupo, grup_estado, grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc)
-                VALUES ($monitor, $profesor, $curso, $salon, $calendario, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc);
+                VALUES ($moderador, $profesor, $curso, $salon, $calendario, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc);
             ";
 
             $bd = new BD();
@@ -19,12 +19,12 @@
         }
 
         //Permite agregar un grupo en línea
-        function agregarGrupoWebinar($monitor, $profesor, $curso, $plataforma, $calendario, $reunion, $acceso, $clave, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc)
+        function agregarGrupoWebinar($moderador, $profesor, $curso, $plataforma, $calendario, $reunion, $acceso, $clave, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc)
         {
             $SQL_Ins_Grupo =
-            "   INSERT INTO Grupo (moni_id_monitor, prof_id_profesor, curs_id_cursos,  plat_id_plataforma, cale_id_calendario, grup_reunion, grup_acceso, grup_clave_acceso,  
+            "   INSERT INTO Grupo (mode_id_moderador, prof_id_profesor, curs_id_cursos,  plat_id_plataforma, cale_id_calendario, grup_reunion, grup_acceso, grup_clave_acceso,  
                     grup_cupo, grup_estado, grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc)
-                VALUES ($monitor, $profesor, $curso, $plataforma, $calendario, $reunion, $acceso, $clave, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc);
+                VALUES ($moderador, $profesor, $curso, $plataforma, $calendario, $reunion, $acceso, $clave, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc);
             ";
 
             $bd = new BD();
@@ -36,11 +36,11 @@
         }
 
         //Permite actualizar un grupo presencial
-        function actualizarGrupo($grupo, $monitor, $profesor, $salon, $cupo, $estado, $activo, $inicio_insc, $fin_insc)
+        function actualizarGrupo($grupo, $moderador, $profesor, $salon, $cupo, $estado, $activo, $inicio_insc, $fin_insc)
         {
             $SQL_Actua_Grupo =
             "   UPDATE grupo
-                SET moni_id_monitor = $monitor, prof_id_profesor = $profesor, salo_id_salon = $salon, grup_cupo = $cupo, 
+                SET mode_id_moderador = $moderador, prof_id_profesor = $profesor, salo_id_salon = $salon, grup_cupo = $cupo, 
                     grup_estado = $estado, grup_activo = $activo, grup_inicio_insc = $inicio_insc, grup_fin_insc = $fin_insc
                 WHERE grup_id_grupo = $grupo;
             ";
@@ -53,11 +53,11 @@
         }
 
         //Permite actualizar un grupo en linea
-        function actualizarGrupoWeb($grupo, $monitor, $profesor, $plataforma, $reunion, $acceso, $clave, $cupo, $estado, $activo, $inicio_insc, $fin_insc)
+        function actualizarGrupoWeb($grupo, $moderador, $profesor, $plataforma, $reunion, $acceso, $clave, $cupo, $estado, $activo, $inicio_insc, $fin_insc)
         {
             $SQL_Actua_Grupo =
             "   UPDATE grupo
-                SET moni_id_monitor = $monitor, prof_id_profesor = $profesor, plat_id_plataforma = $plataforma, grup_reunion = $reunion, grup_acceso = $acceso, grup_clave_acceso = $clave,
+                SET mode_id_moderador = $moderador, prof_id_profesor = $profesor, plat_id_plataforma = $plataforma, grup_reunion = $reunion, grup_acceso = $acceso, grup_clave_acceso = $clave,
                 grup_cupo = $cupo, grup_estado = $estado, grup_activo = $activo, grup_inicio_insc = $inicio_insc, grup_fin_insc = $fin_insc
                 WHERE grup_id_grupo = $grupo;
             ";
