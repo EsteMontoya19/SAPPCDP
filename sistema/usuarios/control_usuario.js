@@ -231,6 +231,25 @@ function consultarUsuario(id, persona) {
     });
 }
 
+function consultarUsuarioDirecto(id, persona, rol) {
+    var datos = {
+        id: id,
+        persona: persona,
+        CRUD: 0,
+        rol: rol,
+    };
+
+    $.ajax({
+        data: datos,
+        type: 'POST',
+        url: '../sistema/usuarios/frm_usuarios.php',
+        success: function (data) {
+            $('html, body').animate({ scrollTop: 0 }, 0);
+            $('#container').html(data);
+        },
+    });
+}
+
 // Eliminar usuario
 function eliminarUsuario(id, persona, nombre, apellido) {
     var mensaje = '¿Esta seguro de elimnar el usuario de ';
@@ -368,9 +387,11 @@ $(document).ready(function () {
     });
 });
 
-function mostrar(id) {
-    // Todo: Si se cambian los roles en la BD también se ben cambiar
-    if (id == '1') {
+// var variable = $('#intUsuarioRol').val($('#intUsuarioRol option:selected').text());
+
+$(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
+    var tipo_evento = $('#intUsuarioRol').val();
+    if (tipo_evento.startsWith('1')) {
         $('#num_trabajador').show();
         $('#rfc').show();
         $('#numCuenta').hide();
@@ -384,9 +405,9 @@ function mostrar(id) {
         $('#nivelImparticion').hide();
         $('#modalidadImparticion').hide();
         $('#coordinaciones').hide();
+        alert(tipo_evento);
     }
-
-    if (id == '3') {
+    if (tipo_evento.startsWith('2')) {
         $('#num_trabajador').show();
         $('#rfc').show();
         $('#numCuenta').hide();
@@ -400,8 +421,7 @@ function mostrar(id) {
         $('#modalidadImparticion').show();
         $('#coordinaciones').show();
     }
-
-    if (id == '2') {
+    if (tipo_evento.startsWith('3')) {
         $('#num_trabajador').hide();
         $('#rfc').hide();
         $('#numCuenta').show();
@@ -416,4 +436,4 @@ function mostrar(id) {
         $('#modalidadImparticion').hide();
         $('#coordinaciones').hide();
     }
-}
+});

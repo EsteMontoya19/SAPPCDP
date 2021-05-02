@@ -118,6 +118,8 @@
                   <input type="number" class="form-control" id="GrupoCupo" name="GrupoCupo" placeholder="0" min="0" value="<?php echo isset($grupo)?$grupo->grup_cupo:"";?>">
                 </div>
               </div>
+
+              
               <div class="col-lg-12 form-row">
                 <div class="col-lg-4 form-group">
                   <?php if (isset($_POST['CRUD'])) { ?>
