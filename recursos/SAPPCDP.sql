@@ -25,7 +25,7 @@ INSERT INTO Usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usu
 INSERT INTO Administrador (pers_id_persona, admi_num_trabajador, admi_rfc) VALUES (1, '315067596', 'MOME990905134');
 
 INSERT INTO Profesor (prof_id_profesor, pers_id_persona, prof_num_trabajador, prof_semblanza, prof_rfc) 
-      VALUES (1, 2, '123457890', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber','KAFA12345');
+      VALUES (1, 3, '123457890', 'Profesor con amplio conocimeinto en todas las ramas habidas y por haber','SAC12345');
 
 INSERT INTO Moderador (mode_id_moderador, pers_id_persona, mode_num_cuenta, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin) 
 		VALUES (1, 2, '123457890', '2021/02/23', '2021/09/08','07:00:00', '21:00:00');
@@ -82,8 +82,8 @@ INSERT INTO Sesion (SESI_ID_SESIONES, grup_id_grupo, sesi_fecha, sesi_hora)
 create table ADMINISTRADOR (
    admi_id_administrador  SERIAL               not null,
    PERS_ID_PERSONA      INT4                 not null,
-   admi_num_trabajador CHAR(10)             not null,
-   admi_rfc            CHAR(15)             not null,
+   admi_num_trabajador VARCHAR(10)             not null,
+   admi_rfc            VARCHAR(15)             not null,
    constraint PK_ADMINISTRADOR primary key (admi_id_administrador)
 );
 
@@ -157,9 +157,9 @@ CALE_ID_CALENDARIO
 create table CONSTANCIA (
    CONS_ID_CONSTANCIAS  SERIAL               not null,
    INSC_ID_INSCRIPCION  INT4                 not null,
-   CONS_URL             CHAR(200)            not null,
-   CONS_ESTADO          CHAR(15)             not null,
-   CONS_FOLIO           CHAR(30)             not null,
+   CONS_URL             VARCHAR(200)            not null,
+   CONS_ESTADO          VARCHAR(15)             not null,
+   CONS_FOLIO           VARCHAR(30)             not null,
    CONS_FECHA           DATE                 not null,
    CONS_HORA            DATE                 not null,
    constraint PK_CONSTANCIA primary key (CONS_ID_CONSTANCIAS)
@@ -184,7 +184,7 @@ INSC_ID_INSCRIPCION
 /*==============================================================*/
 create table COORDINACION (
    COOR_ID_COORDINACION SERIAL               not null,
-   COOR_NOMBRE          CHAR(50)             not null,
+   COOR_NOMBRE          VARCHAR(50)             not null,
    constraint PK_COORDINACION primary key (COOR_ID_COORDINACION)
 );
 
@@ -200,14 +200,14 @@ COOR_ID_COORDINACION
 /*==============================================================*/
 create table CURSO (
    CURS_ID_CURSOS       SERIAL                 not null,
-   CURS_TIPO            CHAR(10)             not null,
-   CURS_NOMBRE          CHAR(50)             not null,
+   CURS_TIPO            VARCHAR(10)             not null,
+   CURS_NOMBRE          VARCHAR(50)             not null,
    CURS_NUM_SESIONES    INT4                 null,
-   CURS_REQ_TECNICOS    CHAR(150)            null,
-   CURS_CONOCIMIENTOS   CHAR(150)            null,
-   CURS_NIVEL           CHAR(15)             not null,
-   CURS_OBJETIVOS       CHAR(150)            not null,
-   CURS_TEMARIO         CHAR(50)             null,
+   CURS_REQ_TECNICOS    VARCHAR(150)            null,
+   CURS_CONOCIMIENTOS   VARCHAR(150)            null,
+   CURS_NIVEL           VARCHAR(15)             not null,
+   CURS_OBJETIVOS       VARCHAR(150)            not null,
+   CURS_TEMARIO         VARCHAR(50)             null,
    CURS_ACTIVO          BOOL                 not null,
    constraint PK_CURSO primary key (CURS_ID_CURSOS)
 );
@@ -224,7 +224,7 @@ CURS_ID_CURSOS
 /*==============================================================*/
 create table DIA (
    DIA_ID_DIA           SERIAL               not null,
-   DIA_NOMBRE           CHAR(10)             not null,
+   DIA_NOMBRE           VARCHAR(10)             not null,
    constraint PK_DIA primary key (DIA_ID_DIA)
 );
 
@@ -240,7 +240,7 @@ DIA_ID_DIA
 /*==============================================================*/
 create table EDIFICIO (
    EDIF_ID_EDIFICIO     SERIAL               not null,
-   EDIF_NOMBRE          CHAR(15)             not null,
+   EDIF_NOMBRE          VARCHAR(15)             not null,
    constraint PK_EDIFICIO primary key (EDIF_ID_EDIFICIO)
 );
 
@@ -262,14 +262,14 @@ create table GRUPO (
    SALO_ID_SALON              INT4                 null,
    CALE_ID_CALENDARIO   INT4                 not null,
    PLAT_ID_PLATAFORMA   INT4                 not null,
-   GRUP_REUNION         CHAR(50)             null,
-   GRUP_ACCESO          CHAR(100)            null,
-   GRUP_CLAVE_ACCESO    CHAR(10)             null,
+   GRUP_REUNION         VARCHAR(50)             null,
+   GRUP_ACCESO          VARCHAR(100)            null,
+   GRUP_CLAVE_ACCESO    VARCHAR(10)             null,
    GRUP_CUPO            INT4                 not null,
-   GRUP_ESTADO          CHAR(10)             not null,
+   GRUP_ESTADO          VARCHAR(10)             not null,
    GRUP_ACTIVO          BOOL                 not null,
-   GRUP_MODALIDAD       CHAR(15)             not null,
-   GRUP_TIPO            CHAR(10)             not null,
+   GRUP_MODALIDAD       VARCHAR(15)             not null,
+   GRUP_TIPO            VARCHAR(10)             not null,
    GRUP_INICIO_INSC     DATE                 not null,
    GRUP_FIN_INSC        DATE                 not null,
    constraint PK_GRUPO primary key (GRUP_ID_GRUPO)
@@ -354,7 +354,7 @@ CONS_ID_CONSTANCIAS
 /*==============================================================*/
 create table MODALIDAD (
    MODA_ID_MODALIDAD    SERIAL               not null,
-   MODA_NOMBRE          CHAR(30)             not null,
+   MODA_NOMBRE          VARCHAR(30)             not null,
    constraint PK_MODALIDAD primary key (MODA_ID_MODALIDAD)
 );
 
@@ -371,7 +371,7 @@ MODA_ID_MODALIDAD
 create table MODERADOR (
    mode_id_moderador      SERIAL               not null,
    PERS_ID_PERSONA      INT4                 not null,
-   mode_num_cuenta      CHAR(15)             not null,
+   mode_num_cuenta      VARCHAR(15)             not null,
    mode_fecha_inicio    DATE                 not null,
    mode_fecha_fin       DATE                 not null,
    mode_hora_inicio      TIME                 not null,
@@ -415,7 +415,7 @@ DIA_ID_DIA
 /*==============================================================*/
 create table NIVEL (
    NIVE_ID_NIVEL        SERIAL               not null,
-   NIVE_NOMBRE          CHAR(15)             not null,
+   NIVE_NOMBRE          VARCHAR(15)             not null,
    constraint PK_NIVEL primary key (NIVE_ID_NIVEL)
 );
 
@@ -431,11 +431,11 @@ NIVE_ID_NIVEL
 /*==============================================================*/
 create table PERSONA (
    PERS_ID_PERSONA      SERIAL               not null,
-   PERS_NOMBRE          CHAR(50)             not null,
-   PERS_APELLIDO_PATERNO CHAR(30)             not null,
-   PERS_APELLIDO_MATERNO CHAR(30)             null,
-   PERS_CORREO          CHAR(30)             not null,
-   PERS_TELEFONO        CHAR(10)             not null,
+   PERS_NOMBRE          VARCHAR(50)             not null,
+   PERS_APELLIDO_PATERNO VARCHAR(30)             not null,
+   PERS_APELLIDO_MATERNO VARCHAR(30)             null,
+   PERS_CORREO          VARCHAR(30)             not null,
+   PERS_TELEFONO        VARCHAR(10)             not null,
    constraint PK_PERSONA primary key (PERS_ID_PERSONA)
 );
 
@@ -452,7 +452,7 @@ PERS_ID_PERSONA
 create table PLATAFORMA (
    PLAT_ID_PLATAFORMA   SERIAL               not null,
    GRUP_ID_GRUPO        INT4                 null,
-   PLAT_NOMBRE          CHAR(30)             not null,
+   PLAT_NOMBRE          VARCHAR(30)             not null,
    constraint PK_PLATAFORMA primary key (PLAT_ID_PLATAFORMA)
 );
 
@@ -475,7 +475,7 @@ GRUP_ID_GRUPO
 /*==============================================================*/
 create table PREGUNTA_SEGURIDAD (
    prse_id_pregunta     SERIAL               not null,
-   prse_pregunta        CHAR(100)            not null,
+   prse_pregunta        VARCHAR(100)            not null,
    constraint PK_PREGUNTA primary key (prse_id_pregunta)
 );
 
@@ -492,9 +492,9 @@ prse_id_pregunta
 create table PROFESOR (
    PROF_ID_PROFESOR     SERIAL               not null,
    PERS_ID_PERSONA      INT4                 not null,
-   PROF_NUM_TRABAJADOR  CHAR(15)             not null,
-   PROF_SEMBLANZA       CHAR(500)            not null,
-   PROF_RFC             CHAR(15)             not null,
+   PROF_NUM_TRABAJADOR  VARCHAR(15)             not null,
+   PROF_SEMBLANZA       VARCHAR(500)            not null,
+   PROF_RFC             VARCHAR(15)             not null,
    constraint PK_PROFESOR primary key (PROF_ID_PROFESOR)
 );
 
@@ -568,7 +568,7 @@ NIVE_ID_NIVEL
 /*==============================================================*/
 create table ROL (
    ROL_ID_ROL           SERIAL               not null,
-   ROL_NOMBRE           CHAR(30)             not null,
+   ROL_NOMBRE           VARCHAR(30)             not null,
    constraint PK_ROL primary key (ROL_ID_ROL)
 );
 
@@ -585,7 +585,7 @@ ROL_ID_ROL
 create table SALON (
    SALO_ID_SALON        SERIAL               not null,
    EDIF_ID_EDIFICIO     INT4                 not null,
-   SALO_NOMBRE          CHAR(10)             not null,
+   SALO_NOMBRE          VARCHAR(10)             not null,
    constraint PK_SALON primary key (SALO_ID_SALON)
 );
 
@@ -636,9 +636,9 @@ create table USUARIO (
    PERS_ID_PERSONA      INT4                 null,
    ROL_ID_ROL           INT4                 null,
    prse_id_pregunta     INT4                 not null,
-   USUA_NUM_USUARIO     CHAR(15)             not null,
-   USUA_CONTRASENA      CHAR(20)             not null,
-   USUA_RESPUESTA       CHAR(30)             not null,
+   USUA_NUM_USUARIO     VARCHAR(15)             not null,
+   USUA_CONTRASENA      VARCHAR(20)             not null,
+   USUA_RESPUESTA       VARCHAR(30)             not null,
    USUA_ACTIVO          BOOL                 not null,
    constraint PK_USUARIO primary key (USUA_ID_USUARIO)
 );
@@ -695,7 +695,7 @@ ENCU_ID_ENCUESTA
 CREATE TABLE Pregunta_Encuesta (
    PREN_ID_PREGUNTA     SERIAL           not null,
    ENCU_ID_ENCUESTA     INT4             not null,
-   PREN_TIPO            CHAR(15)         not null,
+   PREN_TIPO            VARCHAR(15)         not null,
    constraint PK_PREGUNTA_ENCUESTA primary key (PREN_ID_PREGUNTA)  
 );
 
@@ -721,7 +721,7 @@ CREATE TABLE Resultado_Encuesta (
    REEN_ID_RESULTADO    SERIAL         not null,
    PREN_ID_PREGUNTA     INT4           not null,
    INSC_ID_INSCRIPCION  INT4             not null,
-   REEN_RESULTADO       CHAR(50)         not null,
+   REEN_RESULTADO       VARCHAR(50)         not null,
    constraint PK_REEN_ID_RESULTADO primary key (REEN_ID_RESULTADO)
 );
 
@@ -940,7 +940,7 @@ ENCU_ID_ENCUESTA
 CREATE TABLE Pregunta_Encuesta (
    PREN_ID_PREGUNTA     SERIAL           not null,
    ENCU_ID_ENCUESTA     INT4             not null,
-   PREN_TIPO            CHAR(15)         not null,
+   PREN_TIPO            VARCHAR(15)         not null,
    constraint PK_PREGUNTA_ENCUESTA primary key (PREN_ID_PREGUNTA)  
 );
 
@@ -961,7 +961,7 @@ CREATE TABLE Resultado_Encuesta (
    REEN_ID_PREGUNTA     SERIAL           not null,
    ENCU_ID_ENCUESTA     INT4             not null,
    INSC_ID_INSCRIPCION  INT4             not null,
-   REEN_RESULTADO       CHAR(50)         not null,
+   REEN_RESULTADO       VARCHAR(50)         not null,
    constraint PK_RESULTADO_ENCUESTA primary key (REEN_ID_PREGUNTA)  
 );
 
