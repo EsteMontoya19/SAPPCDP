@@ -28,7 +28,7 @@ INSERT INTO Profesor (prof_id_profesor, pers_id_persona, prof_num_trabajador, pr
       VALUES (1, 2, '123457890', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber','KAFA12345');
 
 INSERT INTO Moderador (mode_id_moderador, pers_id_persona, mode_num_cuenta, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin) 
-		VALUES (1, 3, '123457890', '2021/02/23', '2021/09/08','07:00:00', '21:00:00');
+		VALUES (1, 2, '123457890', '2021/02/23', '2021/09/08','07:00:00', '21:00:00');
 
 INSERT INTO Dia (dia_id_dia, dia_nombre) VALUES (1, 'Lunes'), (2, 'Martes'), (3, 'Miercoles'), (4, 'Jueves'), (5, 'Viernes'), (6, 'Sabado');
 

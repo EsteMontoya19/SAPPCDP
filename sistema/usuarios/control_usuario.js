@@ -405,7 +405,7 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
         $('#modalidadImparticion').hide();
         $('#coordinaciones').hide();
     }
-    if (tipo_evento.startsWith('2')) {
+    if (tipo_evento.startsWith('3')) {
         $('#num_trabajador').show();
         $('#rfc').show();
         $('#numCuenta').hide();
@@ -419,7 +419,7 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
         $('#modalidadImparticion').show();
         $('#coordinaciones').show();
     }
-    if (tipo_evento.startsWith('3')) {
+    if (tipo_evento.startsWith('2')) {
         $('#num_trabajador').hide();
         $('#rfc').hide();
         $('#numCuenta').show();
