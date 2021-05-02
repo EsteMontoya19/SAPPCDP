@@ -401,11 +401,9 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
         $('#horaFin').hide();
         $('#diasServicio').hide();
         $('#semblanza').hide();
-        $('#semblanza').hide();
         $('#nivelImparticion').hide();
         $('#modalidadImparticion').hide();
         $('#coordinaciones').hide();
-        alert(tipo_evento);
     }
     if (tipo_evento.startsWith('2')) {
         $('#num_trabajador').show();
@@ -430,7 +428,6 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
         $('#horaInicio').show();
         $('#horaFin').show();
         $('#diasServicio').show();
-        $('#semblanza').hide();
         $('#semblanza').hide();
         $('#nivelImparticion').hide();
         $('#modalidadImparticion').hide();
