@@ -7,7 +7,7 @@
   include('../../clases/Moderador.php');
   include('../../clases/Profesor.php');
 
-
+  // Objeto y Arreglo para Mostrar los Cursos
   $obj_Busqueda = new Busqueda();
   $arr_Cursos = $obj_Busqueda->selectCursos();
   $arr_Plataformas = $obj_Busqueda->selectPlataformas();
@@ -74,14 +74,14 @@
         <p>
           <hr>
         </p>
-
+        
+        <!-- FORMULARIO -->
         <form name="frm_registro_grupo" id="formAjaxGrupo" method="POST">
 
         <!-- Desactivar formulario INICIO -->
         <?php if (isset($_POST['CRUD']) && $_POST['CRUD'] == 0) { ?>
           <fieldset disabled>
         <?php } ?>
-
           <div class="form-group">
             <div class="card lg-12">
               <div class="card-header">
@@ -232,6 +232,7 @@
           </fieldset>
         <?php } ?>
         </form>
+        
 
         <!-- Botones -->
         <div class="col-lg-12" style="text-align: center;">
