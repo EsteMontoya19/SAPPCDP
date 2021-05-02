@@ -25,14 +25,14 @@ INSERT INTO Usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usu
 INSERT INTO Administrador (pers_id_persona, admin_num_trabajador, admin_rfc) VALUES (1, '315067596', 'MOME990905134');
 
 INSERT INTO Profesor (prof_id_profesor, pers_id_persona, prof_num_trabajador, prof_semblanza, prof_rfc) 
-      VALUES (2, '123457890', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber','KAFA12345');
+      VALUES (1, 2, '123457890', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber','KAFA12345');
 
-INSERT INTO Monitor (moni_id_monitor, pers_id_persona, moni_num_cuenta, moni_fecha_inicio, moni_fecha_fin, moni_hora_inicio, moni_hora_fin) 
+INSERT INTO Moderador (mode_id_moderador, pers_id_persona, mode_num_cuenta, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin) 
 		VALUES (1, 3, '123457890', '2021/02/23', '2021/09/08','07:00:00', '21:00:00');
 
 INSERT INTO Dia (dia_id_dia, dia_nombre) VALUES (1, 'Lunes'), (2, 'Martes'), (3, 'Miercoles'), (4, 'Jueves'), (5, 'Viernes'), (6, 'Sabado');
 
-INSERT INTO Monitor_Dia (moni_id_monitor, dia_id_dia) VALUES (1,1), (1,2), (1,3), (1,4), (1,5);
+INSERT INTO Moderador_Dia (mode_id_moderador, dia_id_dia) VALUES (1,1), (1,2), (1,3), (1,4), (1,5);
 
 INSERT INTO Nivel (nive_id_nivel, nive_nombre) VALUES (1, 'Licenciatura'), (2, 'Postgrado');
 
@@ -66,7 +66,7 @@ INSERT INTO CALENDARIO (cale_id_calendario, CALE_SEMESTRE, CALE_INICIO_CICLO, CA
 INSERT INTO PLATAFORMA (PLAT_NOMBRE)
 			VALUES ('Zoom');
 
-INSERT INTO Grupo (GRUP_ID_GRUPO, MONI_ID_MONITOR, PROF_ID_PROFESOR, CURS_ID_CURSOS, SALO_ID_salon, CALE_ID_CALENDARIO,
+INSERT INTO Grupo (GRUP_ID_GRUPO, mode_id_moderador, PROF_ID_PROFESOR, CURS_ID_CURSOS, SALO_ID_salon, CALE_ID_CALENDARIO,
 				   PLAT_ID_PLATAFORMA, GRUP_REUNION, GRUP_ACCESO, GRUP_CLAVE_ACCESO, GRUP_CUPO, GRUP_ESTADO, GRUP_ACTIVO, 
 				   GRUP_MODALIDAD, GRUP_TIPO, GRUP_INICIO_INSC, GRUP_FIN_INSC)
 			VALUES (1, 1, 1, 1, 1, 1, 1,
@@ -80,18 +80,18 @@ INSERT INTO Sesion (SESI_ID_SESIONES, grup_id_grupo, sesi_fecha, sesi_hora)
 /* Table: ADMINISTRADOR                                          */
 /*==============================================================*/
 create table ADMINISTRADOR (
-   ADMI_ID_COORDINADOR  SERIAL               not null,
+   admi_id_administrador  SERIAL               not null,
    PERS_ID_PERSONA      INT4                 not null,
    ADMIN_NUM_TRABAJADOR CHAR(10)             not null,
    ADMIN_RFC            CHAR(15)             not null,
-   constraint PK_ADMINISTRADOR primary key (ADMI_ID_COORDINADOR)
+   constraint PK_ADMINISTRADOR primary key (admi_id_administrador)
 );
 
 /*==============================================================*/
 /* Index: ADMINISTRADORES_PK                                     */
 /*==============================================================*/
 create unique index ADMINISTRADORES_PK on ADMINISTRADOR (
-ADMI_ID_COORDINADOR
+admi_id_administrador
 );
 
 /*==============================================================*/
@@ -256,7 +256,7 @@ EDIF_ID_EDIFICIO
 /*==============================================================*/
 create table GRUPO (
    GRUP_ID_GRUPO        SERIAL                 not null,
-   MONI_ID_MONITOR      INT4                 null,
+   mode_id_moderador      INT4                 null,
    PROF_ID_PROFESOR     INT4                 null,
    CURS_ID_CURSOS       INT4                 not null,
    SALO_ID_SALON              INT4                 null,
@@ -300,7 +300,7 @@ PROF_ID_PROFESOR
 /* Index: RELATIONSHIP_27_FK                                    */
 /*==============================================================*/
 create  index RELATIONSHIP_27_FK on GRUPO (
-MONI_ID_MONITOR
+mode_id_moderador
 );
 
 /*==============================================================*/
@@ -366,47 +366,47 @@ MODA_ID_MODALIDAD
 );
 
 /*==============================================================*/
-/* Table: MONITOR                                               */
+/* Table: MODERADOR                                               */
 /*==============================================================*/
-create table MONITOR (
-   MONI_ID_MONITOR      SERIAL               not null,
+create table MODERADOR (
+   mode_id_moderador      SERIAL               not null,
    PERS_ID_PERSONA      INT4                 not null,
-   MONI_NUM_CUENTA      CHAR(15)             not null,
-   MONI_FECHA_INICIO    DATE                 not null,
-   MONI_FECHA_FIN       DATE                 not null,
-   moni_hora_inicio      TIME                 not null,
-   MONI_HORA_FIN        TIME                 not null,
-   constraint PK_MONITOR primary key (MONI_ID_MONITOR)
+   mode_num_cuenta      CHAR(15)             not null,
+   mode_fecha_inicio    DATE                 not null,
+   mode_fecha_fin       DATE                 not null,
+   mode_hora_inicio      TIME                 not null,
+   mode_hora_fin        TIME                 not null,
+   constraint PK_MODERADOR primary key (mode_id_moderador)
 );
 
 /*==============================================================*/
-/* Index: MONITORES_PK                                          */
+/* Index: MODERADORES_PK                                          */
 /*==============================================================*/
-create unique index MONITORES_PK on MONITOR (
-MONI_ID_MONITOR
+create unique index MODERADORES_PK on MODERADOR (
+mode_id_moderador
 );
 
 /*==============================================================*/
 /* Index: RELATIONSHIP_15_FK                                    */
 /*==============================================================*/
-create  index RELATIONSHIP_15_FK on MONITOR (
+create  index RELATIONSHIP_15_FK on MODERADOR (
 PERS_ID_PERSONA
 );
 
 /*==============================================================*/
-/* Table: MONITOR_DIA                                          */
+/* Table: MODERADOR_DIA                                          */
 /*==============================================================*/
-create table MONITOR_DIA (
-   MONI_ID_MONITOR      INT4                 not null,
+create table MODERADOR_DIA (
+   mode_id_moderador      INT4                 not null,
    DIA_ID_DIA           INT4                 not null,
-   constraint PK_MONITOR_DIA primary key (MONI_ID_MONITOR, DIA_ID_DIA)
+   constraint PK_MODERADOR_DIA primary key (mode_id_moderador, DIA_ID_DIA)
 );
 
 /*==============================================================*/
-/* Index: MONITOR_DIA_PK                                       */
+/* Index: MODERADOR_DIA_PK                                       */
 /*==============================================================*/
-create unique index MONITOR_DIA_PK on MONITOR_DIA (
-MONI_ID_MONITOR,
+create unique index MODERADOR_DIA_PK on MODERADOR_DIA (
+mode_id_moderador,
 DIA_ID_DIA
 );
 
@@ -773,8 +773,8 @@ alter table GRUPO
       on delete restrict on update restrict;
 
 alter table GRUPO
-   add constraint FK_GRUPO_RELATIONS_MONITOR foreign key (MONI_ID_MONITOR)
-      references MONITOR (MONI_ID_MONITOR)
+   add constraint FK_GRUPO_RELATIONS_MODERADOR foreign key (mode_id_moderador)
+      references MODERADOR (mode_id_moderador)
       on delete restrict on update restrict;
 
 alter table GRUPO
@@ -807,18 +807,18 @@ alter table INSCRIPCION
       references CONSTANCIA (CONS_ID_CONSTANCIAS)
       on delete restrict on update restrict;
 
-alter table MONITOR
-   add constraint FK_MONITOR_RELATIONS_PERSONA foreign key (PERS_ID_PERSONA)
+alter table MODERADOR
+   add constraint FK_MODERADOR_RELATIONS_PERSONA foreign key (PERS_ID_PERSONA)
       references PERSONA (PERS_ID_PERSONA)
       on delete restrict on update restrict;
 
-alter table MONITOR_DIA
-   add constraint FK_MONITOR__MONITOR_D_MONITOR foreign key (MONI_ID_MONITOR)
-      references MONITOR (MONI_ID_MONITOR)
+alter table MODERADOR_DIA
+   add constraint FK_MODERADOR__MODERADOR_D_MODERADOR foreign key (mode_id_moderador)
+      references MODERADOR (mode_id_moderador)
       on delete restrict on update restrict;
 
-alter table MONITOR_DIA
-   add constraint FK_MONITOR__MONITOR_D_DIA foreign key (DIA_ID_DIA)
+alter table MODERADOR_DIA
+   add constraint FK_MODERADOR__MODERADOR_D_DIA foreign key (DIA_ID_DIA)
       references DIA (DIA_ID_DIA)
       on delete restrict on update restrict;
 
@@ -901,7 +901,6 @@ alter table Resultado_Encuesta
    add constraint FK_RESULTADO_ENCUESTA_RELATIONS_INSCRIPCION foreign key (INSC_ID_INSCRIPCION)
       references INSCRIPCION (INSC_ID_INSCRIPCION)
       on delete restrict on update restrict; 
-
 
 /*  Actualizaciones
 alter table GRUPO
@@ -1058,5 +1057,3 @@ INSERT INTO Grupo (MONI_ID_MONITOR, PROF_ID_PROFESOR, CURS_ID_CURSOS, SALO_ID_sa
 
 INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora)
 			VALUES (1, '2021/09/08','07:00:00'), (1, '2021/09/09','07:00:00');
-
-*/
