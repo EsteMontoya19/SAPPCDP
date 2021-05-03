@@ -55,7 +55,22 @@
       return ($transaccion_1->traerRegistros());
 		}
 
+    function buscarModeradoresActivos(){
+      $SQL_Buscar_Moderador = 
+        "
+          SELECT DISTINCT MODE_ID_MODERADOR, PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
+          FROM Moderador M, Persona P, Usuario U
+          WHERE M.PERS_ID_PERSONA=P.PERS_ID_PERSONA AND USUA_ACTIVO = 'TRUE'
+          ORDER BY PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
+        ";
 
+      $bd = new BD();
+      $bd->abrirBD();
+      $transaccion_1 = new Transaccion($bd->conexion);
+      $transaccion_1->enviarQuery($SQL_Buscar_Moderador);
+      $bd->cerrarBD();
+      return ($transaccion_1->traerRegistros());
+    }
     
     //TODO: Adaptar demas funciones a Moderador
   }
@@ -106,6 +121,10 @@
 			$bd->cerrarBD();
 			return ($transaccion_1->traerObjeto(0));
 		}*/ 
+
+    
+    
+
     ?>
 
   

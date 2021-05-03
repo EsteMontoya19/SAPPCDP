@@ -110,5 +110,22 @@
 
 			return $Profesor_Seq;
 		}
+
+		function buscarProfesoresActivos(){
+			$SQL_Bus_Profesores =
+            "	
+				SELECT PROF_ID_PROFESOR, PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
+				FROM Profesor P, Persona A
+				WHERE A.PERS_ID_PERSONA=P.PERS_ID_PERSONA
+				ORDER BY PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
+            ";
+    
+                $bd = new BD();
+                $bd->abrirBD();
+                $transaccion_1 = new Transaccion($bd->conexion);
+                $transaccion_1->enviarQuery($SQL_Bus_Profesores);
+                $bd->cerrarBD();
+                return ($transaccion_1->traerRegistros());
+		}
     }
 ?>

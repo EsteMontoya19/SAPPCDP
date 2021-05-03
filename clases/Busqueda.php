@@ -1,18 +1,36 @@
 <?php
     class Busqueda
     {
-        function selectEventos()
+        function selectCursos()
         {
-            $SQL_Bus_Eventos =
-            "   SELECT even_id_even, even_id_tiev, even_nombre
-                FROM evento
-                ORDER BY even_nombre ASC;
+            $SQL_Bus_Cursos =
+            "   
+                SELECT CURS_ID_CURSOS, CURS_NOMBRE, CURS_TIPO, CURS_NUM_SESIONES
+                FROM CURSO
+                ORDER BY CURS_NOMBRE ASC;
             ";
 
             $bd = new BD();
             $bd->abrirBD();
             $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Bus_Eventos);
+            $transaccion_1->enviarQuery($SQL_Bus_Cursos);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+        }
+
+        function selectPlataformas()
+        {
+            $SQL_Bus_Plataformas =
+            "   
+                SELECT PLAT_ID_PLATAFORMA, PLAT_NOMBRE
+                FROM PLATAFORMA
+                ORDER BY PLAT_NOMBRE
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Plataformas);
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }
