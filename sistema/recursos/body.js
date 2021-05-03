@@ -4,12 +4,8 @@ $(document).ready(function () {
         $('#container').load('../sistema/inicio/frm_inicio.php');
     });
 
-    $('#btn_cursos').click(function () {
-        $('#container').load('../sistema/cursos/frm_inicio_cursos.php');
-    });
-
-    $('#btn_grupos').click(function () {
-        $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
+    $('#btn_vigentes').click(function () {
+        $('#container').load('../sistema/cursos/frm_cursos_vigentes.php');
     });
 
     $('#btn_propuestas').click(function () {
@@ -38,6 +34,10 @@ $(document).ready(function () {
 
     $('#btn_horario').click(function () {
         $('#container').load('../sistema/horarios/frm_inicio_horarios.php');
+    });
+
+    $('#btn_historicos').click(function () {
+        $('#container').load('../sistema/cursos/frm_cursos_historicos.php');
     });
 
     $('#btn_plataforma').click(function () {
