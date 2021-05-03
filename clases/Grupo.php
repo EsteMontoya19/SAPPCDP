@@ -103,9 +103,13 @@
         function buscarTodosGruposPresencial()
         {
             $SQL_Bus_Cursos = 
-            "   SELECT g.grup_id_grupo id_grupo, g.prof_id_profesor id_profesor, (pers_nombre|| ' '|| pers_apellido_paterno || ' ' || pers_apellido_materno) profesor,
-                    g. curs_id_cursos, curs_nombre, grup_cupo,  grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, 
-                    (edif_nombre || '/' ||salo_nombre) salon
+            "   SELECT g.grup_id_grupo id_grupo, g.prof_id_profesor id_profesor, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
+                    g. curs_id_cursos, curs_nombre, grup_cupo,  grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, grup_estado,
+                    (edif_nombre || '/' ||salo_nombre) salon, 
+                    (SELECT pers_nombre || ' ' || pers_apellido_paterno || ' ' || pers_apellido_materno
+					 FROM grupo g, moderador m, persona p
+					 WHERE g.mode_id_moderador = m.mode_id_moderador AND m.pers_id_persona = p.pers_id_persona
+					) as moderador
                 FROM grupo g, profesor p, persona pr, curso c, plataforma pl, calendario ca, salon s, edificio e 
                 WHERE g.prof_id_profesor = p.prof_id_profesor AND p.pers_id_persona = pr.pers_id_persona AND g.curs_id_cursos = c.curs_id_cursos 
                     AND g.cale_id_calendario = ca.cale_id_calendario AND g.salo_id_salon = s.salo_id_salon AND s.edif_id_edificio = e.edif_id_edificio
@@ -125,10 +129,14 @@
         function buscarTodosWebinar()
         {
             $SQL_Bus_Cursos = 
-            "   SELECT g.grup_id_grupo, g.prof_id_profesor, (pers_nombre|| ' '|| pers_apellido_paterno || ' ' || pers_apellido_materno) profesor,
+            "   SELECT g.grup_id_grupo, g.prof_id_profesor, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
                     g.curs_id_cursos, curs_nombre, 
                     g.plat_id_plataforma id_plataforma, plat_nombre plataforma, grup_reunion, grup_acceso, grup_clave_acceso, grup_cupo,  
-                    grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc
+                    grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, grup_estado,
+                    (SELECT pers_nombre || ' ' || pers_apellido_paterno || ' ' || pers_apellido_materno
+					 FROM grupo g, moderador m, persona p
+					 WHERE g.mode_id_moderador = m.mode_id_moderador AND m.pers_id_persona = p.pers_id_persona
+					) as moderador
                 FROM grupo g, profesor p, persona pr, curso c, plataforma pl, calendario ca
                 WHERE g.prof_id_profesor = p.prof_id_profesor AND p.pers_id_persona = pr.pers_id_persona AND g.curs_id_cursos = c.curs_id_cursos 
                     AND g.plat_id_plataforma = pl.plat_id_plataforma AND g.cale_id_calendario = ca.cale_id_calendario 
@@ -148,9 +156,14 @@
         function buscarGrupo($id)
         {
             $SQL_Bus_Curso = 
-            "   SELECT g.grup_id_grupo id_grupo, g.prof_id_profesor id_profesor, (pers_nombre|| ' '|| pers_apellido_paterno || ' ' || pers_apellido_materno) profesor,
-                    g. curs_id_cursos, curs_nombre, grup_cupo,  grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, 
-                    (edif_nombre || '/' ||salo_nombre) salon
+            "   SELECT g.grup_id_grupo id_grupo, g.prof_id_profesor id_profesor, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
+                    g. curs_id_cursos, curs_nombre, grup_cupo,  grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, grup_estado,
+                    (edif_nombre || '/' ||salo_nombre) salon,
+                    (SELECT pers_nombre || ' ' || pers_apellido_paterno || ' ' || pers_apellido_materno
+					 FROM grupo g, moderador m, persona p
+					 WHERE g.mode_id_moderador = m.mode_id_moderador AND m.pers_id_persona = p.pers_id_persona
+                        AND g.grup_id_grupo = $id;
+					) as moderador
                 FROM grupo g, profesor p, persona pr, curso c, plataforma pl, calendario ca, salon s, edificio e 
                 WHERE g.prof_id_profesor = p.prof_id_profesor AND p.pers_id_persona = pr.pers_id_persona AND g.curs_id_cursos = c.curs_id_cursos 
                     AND g.cale_id_calendario = ca.cale_id_calendario AND g.salo_id_salon = s.salo_id_salon AND s.edif_id_edificio = e.edif_id_edificio
@@ -187,10 +200,15 @@
         function buscarGrupoWeb($id)
         {
             $SQL_Bus_Curso = 
-            "   SELECT g.grup_id_grupo id_grupo, g.prof_id_profesor id_profesor, (pers_nombre|| ' '|| pers_apellido_paterno || ' ' || pers_apellido_materno) profesor,
+            "   SELECT g.grup_id_grupo id_grupo, g.prof_id_profesor id_profesor, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
                     g. curs_id_cursos, curs_nombre, 
                     g.plat_id_plataforma id_plataforma, plat_nombre plataforma, grup_reunion, grup_acceso, grup_clave_acceso, grup_cupo,  
-                    grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc
+                    grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, grup_estado,
+                    (SELECT pers_nombre || ' ' || pers_apellido_paterno || ' ' || pers_apellido_materno
+					 FROM grupo g, moderador m, persona p
+					 WHERE g.mode_id_moderador = m.mode_id_moderador AND m.pers_id_persona = p.pers_id_persona
+                        AND g.grup_id_grupo = $id;
+					) as moderador
                 FROM grupo g, profesor p, persona pr, curso c, plataforma pl, calendario ca
                 WHERE g.prof_id_profesor = p.prof_id_profesor AND p.pers_id_persona = pr.pers_id_persona AND g.curs_id_cursos = c.curs_id_cursos 
                     AND g.plat_id_plataforma = pl.plat_id_plataforma AND g.cale_id_calendario = ca.cale_id_calendario 

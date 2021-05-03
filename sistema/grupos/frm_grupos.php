@@ -610,5 +610,5 @@
   }
   </script>
 
-<script src="../sistema/grupos/grupos.js"></script>
+<script src="../sistema/grupos/control_grupos.js"></script>
 <script src="../sistema/grupos/ponentes.js"></script>
