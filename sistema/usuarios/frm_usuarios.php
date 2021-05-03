@@ -226,7 +226,7 @@
                 <b>&nbsp;Datos de la cuenta</b>
               </div>
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                <?php if (isset($usuario) && isset($usuario->rol_id_rol) == 1 || isset($usuario->rol_id_rol) == 3) { ?>
+                <?php if (isset($usuario) && $usuario->rol_id_rol == 1 || $usuario->rol_id_rol == 3) { ?>
                   <div id="num_trabajador" class="col-lg-6 form-group">
                 <?php }  else { ?>
                   <div id="num_trabajador" class="col-lg-6 form-group" style="display: none;">
@@ -242,7 +242,7 @@
                                           }
                                         } ?>" id="intNum_Trabajador" type="text" class="form-control" name="intNum_Trabajador">
                   </div> 
-                  <?php if (isset($usuario) && isset($usuario->rol_id_rol) == 1 || isset($usuario->rol_id_rol) == 3) { ?>
+                  <?php if (isset($usuario) && $usuario->rol_id_rol == 1 || $usuario->rol_id_rol == 3) { ?>
                     <div id="rfc" class="col-lg-6 form-group">
                   <?php }  else { ?>
                     <div id="rfc" class="col-lg-6 form-group" style="display: none;">
@@ -299,7 +299,7 @@
                     <label for="fechaInicio"><b>Fecha de inicio del servicio: *</b></label>
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_inicio: ""; ?>" type="text" class="form-control" name="lbFechaInicio" id="strFechaInicio">
                   </div>
-                <?php if (isset($usuario->rol_id_rol) == 2) { ?>
+                <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="fechaFin" class="col-lg-3 form-group">
                 <?php }  else { ?>
                   <div id="fechaFin" class="col-lg-3 form-group" style="display: none;">
@@ -307,7 +307,7 @@
                     <label for="fechaFin"><b>Fecha de fin del servicio:*</b></label>
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_fin: ""; ?>" type="text" class="form-control" name="lbFechaFin" id="strFechaFin">
                   </div>
-                <?php if (isset($usuario->rol_id_rol) == 2) { ?>
+                <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="horaInicio" class="col-lg-3 form-group">
                 <?php }  else { ?>
                   <div id="horaInicio" class="col-lg-3 form-group" style="display: none;">
@@ -315,7 +315,7 @@
                     <label for="horaInicio"><b>Hora de inicio del servicio: *</b></label>
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_inicio: ""; ?>" type="text" class="form-control" name="lbHoraFin" id="strHoraInicio">
                   </div>
-                <?php if (isset($usuario->rol_id_rol) == 2) { ?>
+                <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="horaFin" class="col-lg-3 form-group">
                 <?php }  else { ?>
                   <div id="horaFin" class="col-lg-3 form-group" style="display: none;">
@@ -325,7 +325,7 @@
               </div>  <!-- Cierre div de datos row -->
               
               <div class="col-lg-12 form-row" style="margin-top: 15px;">  
-                <?php if (isset($usuario->rol_id_rol) == 3) { ?>
+                <?php if ($usuario->rol_id_rol == 3) { ?>
                   <div id="semblanza" class="col-lg-12 form-group">
                 <?php }  else { ?>
                   <div id="semblanza" class="col-lg-12 form-group" style="display: none;">
@@ -336,7 +336,7 @@
               </div> <!-- Cierre div de datos row -->
               
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                <?php if (isset($usuario->rol_id_rol) == 3) { ?>
+                <?php if ($usuario->rol_id_rol == 3) { ?>
                   <div id="nivelImparticion" class="col-lg-6 form-group">
                 <?php }  else { ?>
                   <div id="nivelImparticion" class="col-lg-6 form-group" style="display: none;">
@@ -357,7 +357,7 @@
                       </div>
                     <?php } ?>
                   </div> 
-              <?php if (isset($usuario->rol_id_rol) == 3) { ?>
+              <?php if ($usuario->rol_id_rol == 3) { ?>
                   <div id="modalidadImparticion" class="col-lg-6 form-group">
                 <?php }  else { ?>
                   <div id="modalidadImparticion" class="col-lg-6 form-group" style="display: none;">
@@ -380,7 +380,7 @@
               </div> <!-- Fin del row-->
 
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                <?php if (isset($usuario->rol_id_rol) == 3) { ?>
+                <?php if ($usuario->rol_id_rol == 3) { ?>
                   <div id="coordinaciones" class="col-lg-12 form-group">
                 <?php }  else { ?>
                   <div id="coordinaciones" class="col-lg-12 form-group" style="display: none;">
@@ -448,7 +448,6 @@
         <?php } ?>
 
       </form>
-      <?php //*TODO: Debo de habilitar y verificar botnes*//?>
       <!-- Botones -->
       <div class="col-lg-12" style="text-align: center;">
         <button id="btn-regresar-usuario" type="button" class="btn btn-success btn-footer">Regresar</button>
