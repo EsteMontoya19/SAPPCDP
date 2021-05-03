@@ -18,6 +18,52 @@
 			return ($transaccion_1->traerObjeto(0));
         }
 
+		function buscarProfesorNiveles ($profesor) {
+			$SQL_Bus_Niveles = 
+			"SELECT N.nive_id_nivel, N.nive_nombre
+			 FROM Nivel N, Profesor P, Profesor_Nivel PN
+			 WHERE PN.prof_id_profesor = $profesor AND N.nive_id_nivel = PN.nive_id_nivel
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Niveles);
+			$obj_Profesor = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerRegistros());
+		}
+		function buscarProfesorModalidades ($profesor) {
+			$SQL_Bus_Niveles = 
+			"SELECT M.moda_id_modalidad, M.moda_nombre
+			 FROM Modalidad M, Profesor P, Profesor_Modalidad PM
+			 WHERE PM.prof_id_profesor = $profesor AND M.moda_id_modalidad = PM.moda_id_modalidad
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Niveles);
+			$obj_Profesor = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerRegistros());
+		}
+		function buscarProfesorCoordinaciones ($profesor) {
+			$SQL_Bus_Niveles = 
+			"SELECT C.coor_id_coordinacion, C.coor_nombre
+			 FROM Coordinacion C, Profesor P, Profesor_Coordinacion PC
+			 WHERE PC.prof_id_profesor = $profesor AND C.coor_id_coordinacion = PC.coor_id_coordinacion
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Niveles);
+			$obj_Profesor = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerRegistros());
+		}
+
 		//*TODO: Falta mdificar las clases siguientes
 
 
