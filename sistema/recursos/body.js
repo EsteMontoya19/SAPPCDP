@@ -8,6 +8,10 @@ $(document).ready(function () {
         $('#container').load('../sistema/cursos/frm_cursos_vigentes.php');
     });
 
+    $('#btn_grupos').click(function () {
+        $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
+    });
+
     $('#btn_propuestas').click(function () {
         $('#container').load('../sistema/propuestas/frm_inicio_propuestas.php');
     });
