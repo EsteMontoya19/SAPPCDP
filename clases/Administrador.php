@@ -19,24 +19,25 @@
 			$bd->cerrarBD();
 			return ($transaccion_1->traerObjeto(0));
 		}
-    
-    //TODO: Adaptar demas funciones a Administrador
-    function agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono)
+
+    function agregarAdministrador($persona, $num_trabajador, $rfc)
     {
       //Aquí iría una validación pero puede ser que ya se esté haciendo en otra parte
-      $SQL_Ins_Persona =
-      " INSERT INTO Persona (pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono)
-        VALUES ('$nombre', '$apellidoPaterno', '$apellidoMaterno', '$correo', '$telefono');
+      $SQL_Ins_Administrador =
+      " INSERT INTO Administrador (pers_id_persona, admi_num_trabajador, admi_rfc)
+        VALUES ($persona, '$num_trabajador', '$rfc');
       ";
       
       $bd = new BD();
   		$bd->abrirBD();
   		$transaccion_1 = new Transaccion($bd->conexion);
-  		$transaccion_1->enviarQuery($SQL_Ins_Persona);
+  		$transaccion_1->enviarQuery($SQL_Ins_Administrador);
   		$bd->cerrarBD();
-  		$this->id_persona = Persona::buscarUltimo();
     }
+    
+    //TODO: Adaptar demas funciones a Administrador
 
+    /*
     function buscarUltimo()
     {
       $bd = new BD();
@@ -82,6 +83,6 @@
       $transaccion_1 = new Transaccion($bd->conexion);
       $transaccion_1->enviarQuery($SQL_Eli_Persona);
       $bd->cerrarBD();
-    }
+    }*/
   }
 ?>

@@ -1,23 +1,4 @@
 <?php
-  //*! Se inicializan variables para evitar el Notice en PHP en caso de afectar en algo eliminar
-  $usuario = null;
-  $usuario->pers_id_persona = null;
-  $usuario->rol_id_rol = null;
-  $usuario->prse_id_pregunta = null;
-  $usuario->usua_num_usuario = null;
-  $usuario->usua_contrasena = null;
-  $usuario->usua_respuesta = null;
-  $usuario->usua_activo = null;
-  
-  $persona = null;
-  $persona->pers_id_persona = null;
-  $persona->pers_nombre = null;
-  $persona->pers_apellido_materno = null;
-  $persona->pers_apellido_paterno = null;
-  $persona->pers_correo = null;
-  $persona->pers_telefono = null;
- 
-
   // Clases
   include('../../clases/BD.php');
   include('../../clases/Busqueda.php');
@@ -27,8 +8,27 @@
   include('../../clases/Administrador.php');
   include('../../clases/Moderador.php');
   include('../../clases/Profesor.php');
- 
- 
+  
+  //*! Se inicializan variables para evitar el Notice en PHP en caso de afectar en algo eliminar
+  $usuario = new Usuario();
+  $usuario->pers_id_persona = null;
+  $usuario->rol_id_rol = null;
+  $usuario->prse_id_pregunta = null;
+  $usuario->usua_num_usuario = null;
+  $usuario->usua_contrasena = null;
+  $usuario->usua_respuesta = null;
+  $usuario->usua_activo = null;
+  //$usuario = null;
+  
+  $persona = new Persona();
+  $persona->pers_id_persona = null;
+  $persona->pers_nombre = null;
+  $persona->pers_apellido_materno = null;
+  $persona->pers_apellido_paterno = null;
+  $persona->pers_correo = null;
+  $persona->pers_telefono = null;
+  //$persona = null;
+  
   
   // Catálogos
   $obj_Busqueda = new Busqueda();

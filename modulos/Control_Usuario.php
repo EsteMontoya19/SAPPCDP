@@ -4,6 +4,7 @@
   include('../clases/Usuario.php');
   include('../clases/Persona.php');
   include('../clases/Moderador.php');
+  include('../clases/Administrador.php');
   include('../clases/Busqueda.php');
   //*TODO: Aqui debo crear clases para cada rol que tengo
 
@@ -11,6 +12,10 @@
   $obj_Usuario = new Usuario();
   $obj_Moderador = new Moderador();
   $obj_Busqueda = new Busqueda();
+  $obj_Administrador = new Administrador();
+
+  /*$obj_Administrador->agregarAdministrador(5, '12', 'Maya');
+  print($obj_Persona->buscarUltimo());*/
         
   
   if($_POST['dml'] == 'insert')
@@ -32,8 +37,6 @@
       $nombreUsuario = $_POST['strNombreUsuario'];
       $rol = (integer) $_POST['intUsuarioRol'];
       $pregunta = (integer) $_POST['UsuarioPregunta'];
-      var_dump($rol);
-      var_dump($pregunta);
       $recuperacion = $_POST['UsuarioRespuesta'];
       $contrasenia = $_POST['strContrasenia01'];
       $estado = isset($_POST['bEstado']) ? $_POST['bEstado'] : TRUE; //? El admin los crea en activo, debo poner en profesor el estado como false
@@ -77,9 +80,16 @@
       }
 
       $obj_Persona->agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono);
-      $persona = $obj_Persona->id_persona;
+      $persona = $obj_Persona->buscarUltimo();
 
       $obj_Usuario->agregarUsuario($persona, $rol, $pregunta, $nombreUsuario, $contrasenia, $recuperacion, $estado);
+
+      switch($rol){
+        case 1: 
+          $obj_Administrador->agregarAdministrador($persona, $num_trabajador, $rfc);
+        break;
+      }
+      
 
       echo 1;
     } else {
