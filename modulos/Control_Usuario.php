@@ -14,6 +14,9 @@
   $obj_Busqueda = new Busqueda();
   $obj_Administrador = new Administrador();
 
+  //Arreglos necesarios
+  $arr_dias = $obj_Busqueda->selectDias();
+
   /*$obj_Administrador->agregarAdministrador(5, '12', 'Maya');
   print($obj_Persona->buscarUltimo());*/
         
@@ -53,16 +56,21 @@
         break;  
 
         case 2:
+          //*? Creado para guardar los inputs. Solo guarda los que tienen algo
+          $diasModerador=array();
           $num_cuenta = $_POST['intNumCuenta'];
-          //! Por probar
-          //*? Consulto el valor del la consulta la cual esta contenida en un arreglo.
-          //*?Fuerzo el casteo por que regresan un string y ocupo int */
-          $numDias = (integer) $obj_Busqueda->numeroDias(1)[0]['count']; 
-          $diasModerador = array();
-          for ($bandera = 1; $bandera <= $numDias ; $bandera = $bandera + 1){
-            $diasModerador[$bandera] = $_POST['strDiaServicio'.$bandera];
-            var_dump($diasModerador);
+          
+          foreach($arr_dias as $dia){
+            static $bandera =  1; 
+
+            if(isset($_POST['strDiaServicio'.$bandera]) && $_POST['strDiaServicio'.$bandera] != "" ) {
+              $diasModerador[$bandera] = $_POST['strDiaServicio'.$bandera];
+            } 
+            $bandera++;
           }
+
+
+
 
           $fechaInicio = $_POST['strFechaInicio'];
           $fechaFin = $_POST['strFechaFin']; 
@@ -78,12 +86,12 @@
           //TODO: Código profesor
         break; 
       }
-
+      /*
       $obj_Persona->agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono);
       $persona = $obj_Persona->buscarUltimo();
 
       $obj_Usuario->agregarUsuario($persona, $rol, $pregunta, $nombreUsuario, $contrasenia, $recuperacion, $estado);
-
+      */
       switch($rol){
         case 1: 
           $obj_Administrador->agregarAdministrador($persona, $num_trabajador, $rfc);
@@ -91,7 +99,7 @@
       }
       
 
-      echo 1;
+      echo 2;
     } else {
       echo 2;
     }

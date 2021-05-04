@@ -1,4 +1,48 @@
 <?php
+
+// Desactivar toda notificación de error
+
+error_reporting(0);
+
+ 
+
+// Notificar solamente errores de ejecución
+
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
+ 
+
+// Notificar E_NOTICE también puede ser bueno (para informar de variables
+
+// no inicializadas o capturar errores en nombres de variables ...)
+
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+
+ 
+
+// Notificar todos los errores excepto E_NOTICE
+
+// Este es el valor predeterminado establecido en php.ini
+
+error_reporting(E_ALL ^ E_NOTICE);
+
+ 
+
+// Notificar todos los errores de PHP (ver el registro de cambios)
+
+error_reporting(E_ALL);
+
+ 
+
+// Notificar todos los errores de PHP
+
+error_reporting(-1);
+
+ 
+
+// Lo mismo que error_reporting(E_ALL);
+
+ini_set('error_reporting', E_ALL);
   // Clases
   include('../../clases/BD.php');
   include('../../clases/Busqueda.php');
@@ -297,7 +341,7 @@
                     <label for="diasServicio"><b>Dias del servicio:*</b></label><br>
                     <?php foreach ($arr_dias as $dia) { ?>
                       <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="strDiaServicio<?php echo ($dia['dia_id_dia']);?>" value="<?php echo ($dia['dia_id_dia']);?>" 
+                        <input class="form-check-input" type="checkbox" id="strDiaServicio<?php echo ($dia['dia_id_dia']);?>" value="<?php echo ($dia['dia_id_dia']);?>" name="strDiaServicio<?php echo ($dia['dia_id_dia']);?>" 
                           <?php if(isset($moderador_dia)) { 
                             foreach ($moderador_dia as $diaModerador) {
                               if ($diaModerador['dia_id_dia'] == $dia['dia_id_dia']) { ?> checked <?php } 
