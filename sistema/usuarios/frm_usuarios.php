@@ -1,4 +1,8 @@
 <?php
+  //*! Se inicializan variables para evitar el Notice en PHP en caso de afectar en algo eliminar
+  $usuario = null;
+  $usuario->rol_id_rol = null;
+  $usuario->usua_num_usuario = null;
 
   // Clases
   include('../../clases/BD.php');
@@ -54,6 +58,7 @@
         $profesor_coordinacion = $obj_Profesor->buscarProfesorCoordinaciones($profesor->prof_id_profesor);
 
       break;
+      
 
     }
     
