@@ -19,7 +19,7 @@
 		function agregarUsuario($persona, $rol, $pregunta, $nombreUsuario, $contrasenia, $recuperacion, $estado)
     	{
 			$SQL_Ins_Usuario =
-			"	INSERT INTO usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usuario, U.usua_contrasena, usua_respuesta, usua_estado)
+			"	INSERT INTO usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usuario, usua_contrasena, usua_respuesta, usua_activo)
 				VALUES ($persona, $rol, $pregunta, '$nombreUsuario', '$contrasenia', '$recuperacion', '$estado');
 			";
 
