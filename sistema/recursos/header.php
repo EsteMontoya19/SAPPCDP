@@ -49,10 +49,7 @@
       <!-- Navbar Search -->
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav ml-auto">
-            <!-- <li id="btn_cursos" class="nav-item">
-                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-graduate"></i>&nbsp; Cursos</a>
-            </li> -->
-            <li id="btn_cursos" class="nav-item dropdown">
+            <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
                 <i class="fas fa-user-graduate"><div style="width: 20px;"></div></i>Cursos
               </a>

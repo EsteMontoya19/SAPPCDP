@@ -1,5 +1,3 @@
-
-
 <div id="wrapper">
   <div id="content-wrapper">
     <div class="container-fluid">
@@ -74,4 +72,4 @@
   </div>
 </div>
 
-<script src="../sistema/cursos/cursos.js"></script>
+<script src="../sistema/cursos/control_cursos.js"></script>
