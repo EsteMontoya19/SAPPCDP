@@ -109,7 +109,7 @@
         function selectSalones()
         {
             $SQL_Bus_Eventos =
-            "   SELECT salo_id_salo, salo_nombre
+            "   SELECT salo_id_salon, salo_nombre
                 FROM salon
                 ORDER BY salo_nombre ASC;
             ";

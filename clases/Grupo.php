@@ -140,7 +140,7 @@
                 FROM grupo g, profesor p, persona pr, curso c, plataforma pl, calendario ca
                 WHERE g.prof_id_profesor = p.prof_id_profesor AND p.pers_id_persona = pr.pers_id_persona AND g.curs_id_cursos = c.curs_id_cursos 
                     AND g.plat_id_plataforma = pl.plat_id_plataforma AND g.cale_id_calendario = ca.cale_id_calendario 
-                    AND lower(grup_modalidad) LIKE '%linea%'
+                    AND lower(grup_modalidad) LIKE '%línea%'
                 ORDER BY g.grup_id_grupo DESC;
             ";
 
@@ -162,7 +162,7 @@
                     (SELECT pers_nombre || ' ' || pers_apellido_paterno || ' ' || pers_apellido_materno
 					 FROM grupo g, moderador m, persona p
 					 WHERE g.mode_id_moderador = m.mode_id_moderador AND m.pers_id_persona = p.pers_id_persona
-                        AND g.grup_id_grupo = $id;
+                        AND g.grup_id_grupo = $id
 					) as moderador
                 FROM grupo g, profesor p, persona pr, curso c, plataforma pl, calendario ca, salon s, edificio e 
                 WHERE g.prof_id_profesor = p.prof_id_profesor AND p.pers_id_persona = pr.pers_id_persona AND g.curs_id_cursos = c.curs_id_cursos 
@@ -207,7 +207,7 @@
                     (SELECT pers_nombre || ' ' || pers_apellido_paterno || ' ' || pers_apellido_materno
 					 FROM grupo g, moderador m, persona p
 					 WHERE g.mode_id_moderador = m.mode_id_moderador AND m.pers_id_persona = p.pers_id_persona
-                        AND g.grup_id_grupo = $id;
+                        AND g.grup_id_grupo = $id
 					) as moderador
                 FROM grupo g, profesor p, persona pr, curso c, plataforma pl, calendario ca
                 WHERE g.prof_id_profesor = p.prof_id_profesor AND p.pers_id_persona = pr.pers_id_persona AND g.curs_id_cursos = c.curs_id_cursos 
