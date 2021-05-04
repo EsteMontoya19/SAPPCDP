@@ -19,7 +19,7 @@
             $SQL_Bus_Horario =
             "   SELECT hogr_id_hogr, hogr_id_dia, hogr_id_salo, hogr_hora_inicio, hogr_hora_fin
                 FROM dia, salon, horario_grupo, grupo 
-                WHERE dia_id_dia = hogr_id_dia AND salo_id_salo = hogr_id_salo AND hogr_id_grup = $id
+                WHERE dia_id_dia = hogr_id_dia AND salo_id_salon = hogr_id_salon AND hogr_id_grup = $id
                 GROUP BY hogr_id_hogr, hogr_id_dia, hogr_id_salo, hogr_hora_inicio, hogr_hora_fin
                 ORDER BY hogr_id_dia;
             ";
@@ -37,7 +37,7 @@
             $SQL_Bus_Horario =
             "   SELECT hogr_id_hogr, hogr_id_dia, hogr_id_salo, hogr_hora_inicio, hogr_hora_fin
                 FROM dia, salon, horario_grupo, grupo 
-                WHERE dia_id_dia = hogr_id_dia AND salo_id_salo = hogr_id_salo AND hogr_id_grup = $id
+                WHERE dia_id_dia = hogr_id_dia AND salo_id_salon = hogr_id_salon AND hogr_id_grup = $id
                 GROUP BY hogr_id_hogr, hogr_id_dia, hogr_id_salo, hogr_hora_inicio, hogr_hora_fin
                 ORDER BY hogr_id_dia;
             ";
