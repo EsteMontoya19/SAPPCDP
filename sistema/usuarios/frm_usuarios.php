@@ -1,8 +1,22 @@
 <?php
   //*! Se inicializan variables para evitar el Notice en PHP en caso de afectar en algo eliminar
   $usuario = null;
+  $usuario->pers_id_persona = null;
   $usuario->rol_id_rol = null;
+  $usuario->prse_id_pregunta = null;
   $usuario->usua_num_usuario = null;
+  $usuario->usua_contrasena = null;
+  $usuario->usua_respuesta = null;
+  $usuario->usua_activo = null;
+  
+  $persona = null;
+  $persona->pers_id_persona = null;
+  $persona->pers_nombre = null;
+  $persona->pers_apellido_materno = null;
+  $persona->pers_apellido_paterno = null;
+  $persona->pers_correo = null;
+  $persona->pers_telefono = null;
+ 
 
   // Clases
   include('../../clases/BD.php');
@@ -183,8 +197,7 @@
                   <select class="custom-select" id="UsuarioPregunta"name="UsuarioPregunta">
                     <option value="0">Seleccione una pregunta</option>
                     <?php foreach ($arr_preguntas as $pregunta) { ?>
-                      <option
-                        value="<?php echo $pregunta['prse_id_pregunta']; ?>"
+                      <option value="<?php echo $pregunta['prse_id_pregunta']; ?>"
                         <?php if(isset($usuario)) { if ($usuario->prse_id_pregunta == $pregunta['prse_id_pregunta']) { ?>
                         selected <?php } }?>>
                         <?php echo $pregunta['prse_pregunta']; ?>

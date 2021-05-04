@@ -14,13 +14,13 @@
   		$transaccion_1 = new Transaccion($bd->conexion);
   		$transaccion_1->enviarQuery($SQL_Ins_Persona);
   		$bd->cerrarBD();
-  		$this->id_persona = Persona::buscarUltimo();
+  		$this->id_persona = Persona::buscarUltimo(); //? Supongo aqui asigna un atributo
     }
 
     function buscarUltimo()
     {
       $bd = new BD();
-      $SQL_Bus_Persona_Seq = "SELECT last_value FROM persona_pers_id_persona_seq;"; //Que hace este last_value
+      $SQL_Bus_Persona_Seq = "SELECT last_value FROM persona_pers_id_persona_seq;"; //Que hace este last_value : Muestra el ultimo valor ingresado
 
       $bd->abrirBD();
       $transaccion_1 = new Transaccion($bd->conexion);

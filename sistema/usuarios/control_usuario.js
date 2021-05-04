@@ -137,6 +137,7 @@ $(document).ready(function () {
         if (validarFormularioUsuario()) {
             datos = $('#form_usuario').serialize();
 
+            
             $.ajax({
                 type: 'POST',
                 url: '../modulos/Control_Usuario.php',
@@ -156,7 +157,7 @@ $(document).ready(function () {
                     } else {
                         alertify.error('Hubo un problema al registrar al usuario');
                     }
-                },
+                }, 
             });
             return false;
         }

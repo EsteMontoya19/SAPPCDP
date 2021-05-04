@@ -4,42 +4,82 @@
   include('../clases/Usuario.php');
   include('../clases/Persona.php');
   include('../clases/Moderador.php');
-  //Aqui debo crear clases para cada rol que tengo
-  include('../clases/Correo.php');
+  include('../clases/Busqueda.php');
+  //*TODO: Aqui debo crear clases para cada rol que tengo
 
   $obj_Persona = new Persona();
   $obj_Usuario = new Usuario();
   $obj_Moderador = new Moderador();
-  $obj_Correo = new Correo();
-
+  $obj_Busqueda = new Busqueda();
+        
+  
   if($_POST['dml'] == 'insert')
   {
     $nombreUsu = $_POST['strNombreUsuario'];
     $usuario_existente = $obj_Usuario->buscarNombreUsuario($nombreUsu);
-
+    
     if(!isset($usuario_existente->usua_nombre)) {
+      
+      //?Datos de persona
       $nombre = $_POST['strUsuarioNombre'];
-      $primerApellido = $_POST['strUsuarioPrimerApe'];
-      $segundoApellido = $_POST['strUsuarioSegundoApe'];
+      $apellidoPaterno = $_POST['strUsuarioPrimerApe'];
+      $apellidoMaterno = $_POST['strUsuarioSegundoApe'];
       $correo = $_POST['strUsuarioCorreo'];
       $telefono = $_POST['strUsuarioTelefono'];
-      $nombreUsu = $_POST['strNombreUsuario'];
-      $rol = $_POST['intUsuarioRol'];
-      $pregunta = $_POST['UsuarioPregunta'];
+      //TODO: Aqui se tiene que conseguir el id de la persona.
+      
+      //? Datos de usuario
+      $nombreUsuario = $_POST['strNombreUsuario'];
+      $rol = (integer) $_POST['intUsuarioRol'];
+      $pregunta = (integer) $_POST['UsuarioPregunta'];
+      var_dump($rol);
+      var_dump($pregunta);
       $recuperacion = $_POST['UsuarioRespuesta'];
       $contrasenia = $_POST['strContrasenia01'];
-      $tipo = 1;
-      $domicilio = NULL;
-      $estudio = NULL;
-      $nacimiento = NULL;
-      $genero = NULL;
+      $estado = isset($_POST['bEstado']) ? $_POST['bEstado'] : TRUE; //? El admin los crea en activo, debo poner en profesor el estado como false
+      
+      //?Datos según rol
+      
+      switch($rol){
+        case 1:
+          $num_trabajador = $_POST['intNum_Trabajador'];
+          $rfc = $_POST['lbRfc'];
+          
+          $NumeroDías = $obj_Busqueda->numeroDias(1);
+          //TODO: Falta probar
+        break;  
 
-      $obj_Persona->agregarPersona($estudio, $domicilio, $nombre, $primerApellido, $segundoApellido, $nacimiento, $genero);
+        case 2:
+          $num_cuenta = $_POST['intNumCuenta'];
+          //! Por probar
+          //*? Consulto el valor del la consulta la cual esta contenida en un arreglo.
+          //*?Fuerzo el casteo por que regresan un string y ocupo int */
+          $numDias = (integer) $obj_Busqueda->numeroDias(1)[0]['count']; 
+          $diasModerador = array();
+          for ($bandera = 1; $bandera <= $numDias ; $bandera = $bandera + 1){
+            $diasModerador[$bandera] = $_POST['strDiaServicio'.$bandera];
+            var_dump($diasModerador);
+          }
+
+          $fechaInicio = $_POST['strFechaInicio'];
+          $fechaFin = $_POST['strFechaFin']; 
+          $horaInicio = $_POST['strHoraInicio']; 
+          $horaFin = $_POST['strHoraFin'];
+
+          //TODO: Falta probar
+        break; 
+
+        case 3:
+          $num_trabajador = $_POST['intNum_Trabajador'];
+          $rfc = $_POST['lbRfc'];
+          //TODO: Código profesor
+        break; 
+      }
+
+      $obj_Persona->agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono);
       $persona = $obj_Persona->id_persona;
 
-      $obj_Telefono->agregarTelefono($persona, $tipo, $telefono);
-      $obj_Correo->agregarCorreo($persona, $tipo, $correo);
-      $obj_Usuario->agregarUsuario($persona, $pregunta, $nombreUsu, $contrasenia, $recuperacion);
+      $obj_Usuario->agregarUsuario($persona, $rol, $pregunta, $nombreUsuario, $contrasenia, $recuperacion, $estado);
 
       echo 1;
     } else {

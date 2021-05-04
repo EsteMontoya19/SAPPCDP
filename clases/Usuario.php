@@ -1,11 +1,26 @@
 <?php
 	class Usuario
   	{
-    	function agregarUsuario($rol, $persona, $pregunta, $nombreUsu, $contrasenia, $recuperacion)
+		function modificarEstatus($usuario, $estatus)
+		{
+			$SQL_Persona_Est="
+			UPDATE Usuario
+			SET usua_activo = $estatus
+			WHERE usua_id_usuario = $usuario";
+
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Persona_Est);
+			$bd->cerrarBD();
+		}
+
+		function agregarUsuario($persona, $rol, $pregunta, $nombreUsuario, $contrasenia, $recuperacion, $estado)
     	{
 			$SQL_Ins_Usuario =
-			"	INSERT INTO usuario (rol_id_rol, usua_id_pers, prse_id_pregunta, usua_num_usuario, U.usua_contrasena, usua_respuesta, usua_estado)
-				VALUES ($rol, $persona, $pregunta, '$nombreUsu', '$contrasenia', '$recuperacion', TRUE);
+			"	INSERT INTO usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usuario, U.usua_contrasena, usua_respuesta, usua_estado)
+				VALUES ($persona, $rol, $pregunta, '$nombreUsuario', '$contrasenia', '$recuperacion', '$estado');
 			";
 
 			$bd = new BD();
@@ -76,6 +91,7 @@
 			return ($transaccion_1->traerRegistros());
 		}
 
+
 		function buscarUsuario($intIdUsuario)
 		{
 			$SQL_Bus_Usuario = 
@@ -110,22 +126,6 @@
 			return ($transaccion_1->traerObjeto(0));
 		}
 
-		function modificarEstatus($usuario, $estatus)
-		{
-			$SQL_Persona_Est="
-			UPDATE usuario
-			SET usua_estado = $estatus
-			WHERE usua_id_usuario = $usuario";
-
-
-			$bd = new BD();
-			$bd->abrirBD();
-			$transaccion_1 = new Transaccion($bd->conexion);
-			$transaccion_1->enviarQuery($SQL_Persona_Est);
-			$bd->cerrarBD();
-		}
-
-
 		function eliminarPersonaRol($intIdPersonaRol){
 			$SQLDEL_PersonaRol = "DELETE FROM usuario
 				WHERE usua_id_usuario =  $intIdPersonaRol";
@@ -135,5 +135,7 @@
 			$transaccion_1->enviarQuery($SQLDEL_PersonaRol);
 			$bd->cerrarBD();
 		}
+
+		//*CLASE ACTUALIZADA
 	}
 ?>

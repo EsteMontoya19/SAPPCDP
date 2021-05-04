@@ -90,6 +90,20 @@
             return ($transaccion_1->traerRegistros());
         }
 
+        function numeroDias (){
+            $SQL_Bus_Eventos =
+            "SELECT COUNT (dia_id_dia)
+             FROM Dia
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Eventos);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+        }
+
         //*TODO: Modificar clases siguientes
 
         function selectSalones()
