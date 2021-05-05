@@ -4,8 +4,7 @@
  
   
   $obj_Grupo = new Grupo();
-  $arr_grupos = $obj_Grupo ->buscarTodosGruposPresencial();
-  $arr_webs = $obj_Grupo->buscarTodosWebinar();
+  $arr_grupos = $obj_Grupo ->buscarTodosGrupos();
 
 ?>
 
@@ -55,7 +54,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach ($arr_webs as $grupo) { ?>
+
+                  <?php foreach ($arr_grupos as $grupo) { ?>
                     <tr>
                       <td><?php echo $grupo['grup_id_grupo'];?></td>
                       <td><?php echo $grupo['grup_tipo'];?></td>
@@ -100,7 +100,7 @@
                       </td>
                     </tr>
                   <?php } ?>
-                  
+
                 </tbody>
               </table>
             </div>

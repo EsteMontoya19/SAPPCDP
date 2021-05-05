@@ -58,7 +58,7 @@
       $fin_insc = $_POST[''];
 
       $obj_Grupo->agregarGrupo($moderador, $profesor, $curso, $salon, $calendario, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc);
-      $id_grupo = $obj_Grupo->buscarIDGrupo($moderador, $profesor, $curso, $salon, $calendario, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc)
+      $id_grupo = $obj_Grupo->buscarIDGrupo($moderador, $profesor, $curso, $salon, $calendario, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc);
         
       foreach ($arr_Sesiones as $clave -> $valor) {
         $id_grupo = $_POST[''];
@@ -87,7 +87,7 @@
 
 
       echo 1;
-    } elseif($grupo_existente->_VARIABLEIDGRUPO_) & $modalidad == 'Presencial'){
+    } elseif($grupo_existente->_VARIABLEIDGRUPO_) & $modalidad == 'Presencial') {
 
 
 
