@@ -4,6 +4,7 @@
   include('../clases/Usuario.php');
   include('../clases/Persona.php');
   include('../clases/Moderador.php');
+  include('../clases/Profesor.php');
   include('../clases/Administrador.php');
   include('../clases/Busqueda.php');
   //*TODO: Aqui debo crear clases para cada rol que tengo
@@ -11,11 +12,15 @@
   $obj_Persona = new Persona();
   $obj_Usuario = new Usuario();
   $obj_Moderador = new Moderador();
+  $obj_Profesor = new Profesor();
   $obj_Busqueda = new Busqueda();
   $obj_Administrador = new Administrador();
 
   //Arreglos necesarios
-  $arr_dias = $obj_Busqueda->selectDias();      
+  $arr_dias = $obj_Busqueda->selectDias();  
+  $arr_niveles = $obj_Busqueda->selectNiveles();   
+  $arr_modalidades = $obj_Busqueda->selectModalidades();
+  $arr_coordinaciones = $obj_Busqueda->selectCoordinaciones();
   
   if($_POST['dml'] == 'insert')
   {
@@ -43,14 +48,12 @@
       //?Datos según rol
       
       switch($rol){
-        case 1:
+        case 1: //Administrador
           $num_trabajador = $_POST['intNum_Trabajador'];
-          $rfc = $_POST['lbRfc'];
-        
-          //TODO: Falta probar
+          $rfc = $_POST['strRFC'];
         break;  
 
-        case 2:
+        case 2: //Moderador
           //*? Creado para guardar los inputs. Solo guarda los que tienen algo
           $diasModerador=array();
           foreach($arr_dias as $dia){
@@ -67,14 +70,39 @@
           $fechaFin = $_POST['strFechaFin']; 
           $horaInicio = $_POST['strHoraInicio']; 
           $horaFin = $_POST['strHoraFin'];
-
-          //TODO: Falta probar
         break; 
 
-        case 3:
+        case 3: //Profesor
           $num_trabajador = $_POST['intNum_Trabajador'];
-          $rfc = $_POST['lbRfc'];
-          //TODO: Código profesor
+          $rfc = $_POST['strRFC'];
+          $semblanza = $_POST['strSemblanza'];
+          //*? Creado para guardar los inputs. Solo guarda los que tienen algo
+          $nivelesProfesor=array();
+          $bandera =  1; 
+          foreach($arr_niveles as $nivel){
+            if(isset($_POST['strNivel'.$bandera]) && $_POST['strNivel'.$bandera] != "" ) {
+              $nivelesProfesor[$bandera] = $_POST['strNivel'.$bandera];
+            } 
+            $bandera++;
+          }
+
+          $modalidadesProfesor=array();
+          $bandera =  1; 
+          foreach($arr_modalidades as $modalidad){
+            if(isset($_POST['strModalidad'.$bandera]) && $_POST['strModalidad'.$bandera] != "" ) {
+              $modalidadesProfesor[$bandera] = $_POST['strModalidad'.$bandera];
+            } 
+            $bandera++;
+          }
+
+          $coordinacionesProfesor=array();
+          $bandera =  1; 
+          foreach($arr_coordinaciones as $coordinacion){
+            if(isset($_POST['strCoordinacion'.$bandera]) && $_POST['strCoordinacion'.$bandera] != "" ) {
+              $coordinacionesProfesor[$bandera] = $_POST['strCoordinacion'.$bandera];
+            } 
+            $bandera++;
+          }
         break; 
       }
 
@@ -84,14 +112,29 @@
       $obj_Usuario->agregarUsuario($persona, $rol, $pregunta, $nombreUsuario, $contrasenia, $recuperacion, $estado);
       
       switch($rol){
-        case 1: 
+        case 1: //Administrador
           $obj_Administrador->agregarAdministrador($persona, $num_trabajador, $rfc);
         break;
 
-        case 2:
+        case 2: //Moderador
           $obj_Moderador->agregarModerador($persona, $num_cuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin, $diasModerador );
           foreach($diasModerador as $id){
             $obj_Moderador->agregarDiasModerador($id);
+          }
+        break;
+
+        case 3: //Profesor
+          $obj_Profesor->agregarProfesor($persona, $num_trabajador, $semblanza, $rfc);
+          
+          foreach($nivelesProfesor as $id){
+            $obj_Profesor->agregarNivelesProfesor($id);
+            $file = fopen("Mensaje.txt", "a");
+          }
+          foreach($modalidadesProfesor as $id){
+            $obj_Profesor->agregarModalidadesProfesor($id);
+          }
+          foreach($coordinacionesProfesor as $id){
+            $obj_Profesor->agregarCoordinacionesProfesor($id);
           }
         break;
       }

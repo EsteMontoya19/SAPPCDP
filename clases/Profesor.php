@@ -64,22 +64,94 @@
 			return ($transaccion_1->traerRegistros());
 		}
 
+		function agregarProfesor($persona, $numTrabajador, $semblanza, $rfc)
+		{
+		//Aquí iría una validación pero puede ser que ya se esté haciendo en otra parte
+		$SQL_Ins_Profesor =
+		" INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza, prof_rfc) VALUES 
+			($persona,'$numTrabajador', '$semblanza', '$rfc');
+		";
+		
+		$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Ins_Profesor);
+			$bd->cerrarBD();
+		}
+
+		function agregarNivelesProfesor($nivel) {
+        
+			$ULTIMO_PROFESOR = 
+			  "SELECT last_value FROM profesor_prof_id_profesor_seq
+			  "; 
+	
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($ULTIMO_PROFESOR);
+			$obj_Profesor_Seq = $transaccion_1->traerObjeto(0);
+			$id_profesor = $obj_Profesor_Seq->last_value;
+			$bd->cerrarBD();
+	
+			$SQL_REGISTRO_NIVEL_PROFESOR = 
+			  "INSERT INTO Profesor_Nivel (prof_id_profesor, nive_id_nivel) VALUES ($id_profesor, $nivel)
+			  ";
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_REGISTRO_NIVEL_PROFESOR);
+			$bd->cerrarBD();
+		}
+
+		function agregarModalidadesProfesor($modalidad) {
+        
+			$ULTIMO_PROFESOR = 
+			  "SELECT last_value FROM profesor_prof_id_profesor_seq
+			  "; 
+	
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($ULTIMO_PROFESOR);
+			$obj_Profesor_Seq = $transaccion_1->traerObjeto(0);
+			$id_profesor = $obj_Profesor_Seq->last_value;
+			$bd->cerrarBD();
+	
+			$SQL_REGISTRO_MODALIDAD_PROFESOR = 
+			  "INSERT INTO Profesor_Modalidad (prof_id_profesor, moda_id_modalidad) VALUES ($id_profesor, $modalidad)
+			  ";
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_REGISTRO_MODALIDAD_PROFESOR);
+			$bd->cerrarBD();
+		}
+
+		function agregarCoordinacionesProfesor($coordinacion) {
+        
+			$ULTIMO_PROFESOR = 
+			  "SELECT last_value FROM profesor_prof_id_profesor_seq
+			  "; 
+	
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($ULTIMO_PROFESOR);
+			$obj_Profesor_Seq = $transaccion_1->traerObjeto(0);
+			$id_profesor = $obj_Profesor_Seq->last_value;
+			$bd->cerrarBD();
+	
+			$SQL_REGISTRO_COORDINACION_PROFESOR = 
+			  "INSERT INTO Profesor_Coordinacion (prof_id_profesor, coor_id_coordinacion) VALUES ($id_profesor, $coordinacion)
+			  ";
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_REGISTRO_COORDINACION_PROFESOR);
+			$bd->cerrarBD();
+		}
+
 		//*TODO: Falta mdificar las clases siguientes
-
-
-        function agregarProfesor($persona, $numero, $semblanza, $constancia, $cv, $cedula, $titulo, $ine, $curp, $banco)
-        {
-            $SQL_Ins_Profesor = 
-            "   INSERT INTO profesor (prof_id_pers, prof_numero, prof_semblanza, prof_constancia, prof_cv, prof_cedula, prof_titulo, prof_ine, prof_curp, prof_banco)
-                VALUES($persona, '$numero', '$semblanza', '$constancia', '$cv', '$cedula', '$titulo', '$ine', '$curp', '$banco');
-            ";
-
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Ins_Profesor);
-            $bd->cerrarBD();
-        }
 
         function actualizarProfesor($profesor, $numero, $semblanza, $constancia, $cv, $cedula, $titulo, $ine, $curp, $banco)
 		{

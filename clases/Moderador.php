@@ -88,14 +88,14 @@
 
       function agregarDiasModerador($dia) {
         
-        $ULTIMO_DIA = 
+        $ULTIMA_PERSONA = 
           "SELECT last_value FROM moderador_mode_id_moderador_seq
           "; 
 
         $bd = new BD();
         $bd->abrirBD();
         $transaccion_1 = new Transaccion($bd->conexion);
-        $transaccion_1->enviarQuery($ULTIMO_DIA);
+        $transaccion_1->enviarQuery($ULTIMA_PERSONA);
         $obj_Moderador_Seq = $transaccion_1->traerObjeto(0);
         $id_moderador = $obj_Moderador_Seq->last_value;
         $bd->cerrarBD();

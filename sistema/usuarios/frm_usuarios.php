@@ -1,48 +1,4 @@
 <?php
-
-// Desactivar toda notificación de error
-
-error_reporting(0);
-
- 
-
-// Notificar solamente errores de ejecución
-
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
-
- 
-
-// Notificar E_NOTICE también puede ser bueno (para informar de variables
-
-// no inicializadas o capturar errores en nombres de variables ...)
-
-error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
-
- 
-
-// Notificar todos los errores excepto E_NOTICE
-
-// Este es el valor predeterminado establecido en php.ini
-
-error_reporting(E_ALL ^ E_NOTICE);
-
- 
-
-// Notificar todos los errores de PHP (ver el registro de cambios)
-
-error_reporting(E_ALL);
-
- 
-
-// Notificar todos los errores de PHP
-
-error_reporting(-1);
-
- 
-
-// Lo mismo que error_reporting(E_ALL);
-
-ini_set('error_reporting', E_ALL);
   // Clases
   include('../../clases/BD.php');
   include('../../clases/Busqueda.php');
@@ -62,7 +18,6 @@ ini_set('error_reporting', E_ALL);
   $usuario->usua_contrasena = null;
   $usuario->usua_respuesta = null;
   $usuario->usua_activo = null;
-  //$usuario = null;
   
   $persona = new Persona();
   $persona->pers_id_persona = null;
@@ -71,7 +26,10 @@ ini_set('error_reporting', E_ALL);
   $persona->pers_apellido_paterno = null;
   $persona->pers_correo = null;
   $persona->pers_telefono = null;
-  //$persona = null;
+
+  $profesor = null;
+  $profesor_coordinacion = null;
+
   
   
   // Catálogos
@@ -114,7 +72,6 @@ ini_set('error_reporting', E_ALL);
         $profesor_nivel = $obj_Profesor->buscarProfesorNiveles($profesor->prof_id_profesor);
         $profesor_modalidad = $obj_Profesor->buscarProfesorModalidades($profesor->prof_id_profesor);
         $profesor_coordinacion = $obj_Profesor->buscarProfesorCoordinaciones($profesor->prof_id_profesor);
-
       break;
       
 
@@ -319,7 +276,7 @@ ini_set('error_reporting', E_ALL);
                                             echo("");
                                           }
                                         }?>"  type="text"
-                        class="form-control" name="lbRfc" id="strRFC">
+                        class="form-control" name="strRFC" id="strRFC">
                     </div>
               </div> <!-- Cierre div de datos row -->
               
@@ -393,7 +350,7 @@ ini_set('error_reporting', E_ALL);
                   <div id="semblanza" class="col-lg-12 form-group" style="display: none;">
                 <?php } ?>
                   <label for="strSemblanza"><b>Semblanza:*</b></label>
-                  <textarea type="text" class="form-control" id="strSemblanza" name="strReqTec"><?php echo isset($profesor) ? $profesor-> prof_semblanza: ""; ?></textarea>           
+                  <textarea type="text" class="form-control" id="strSemblanza" name="strSemblanza"><?php echo isset($profesor) ? $profesor-> prof_semblanza: ""; ?></textarea>           
                   </div>
               </div> <!-- Cierre div de datos row -->
               
@@ -406,8 +363,9 @@ ini_set('error_reporting', E_ALL);
                   <label for="nivelImparticion"><b>Nivel de impartición:*</b></label><br>
                     <?php foreach ($arr_niveles as $nivel) { ?>
                       <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="strNivel<?php echo ($nivel['nive_id_nivel']);?>" value="<?php echo ($nivel['nive_id_nivel']);?>" 
-                          <?php if(isset($nivel) && isset($usuario)) { 
+                        <input class="form-check-input" type="checkbox" id="strNivel<?php echo ($nivel['nive_id_nivel']);?>" name="strNivel<?php echo ($nivel['nive_id_nivel']);?>"
+                                value="<?php echo ($nivel['nive_id_nivel']);?>" 
+                          <?php if(isset($nivel) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) { 
                             foreach ($profesor_nivel as $nivelProfesor) 
                             {
                               if ($nivelProfesor['nive_id_nivel'] == $nivel['nive_id_nivel']) { ?> 
@@ -427,8 +385,9 @@ ini_set('error_reporting', E_ALL);
                   <label for="modalidadImparticion"><b>Modalidad en la que imparte clases : * </b></label><br>
                   <?php foreach ($arr_modalidades as $modalidad) { ?>
                       <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="strModalidad<?php echo ($modalidad['moda_id_modalidad']);?>" value="<?php echo ($modalidad['moda_id_modalidad']);?>" 
-                          <?php if(isset($modalidad) && isset($usuario)) { 
+                        <input class="form-check-input" type="checkbox" id="strModalidad<?php echo ($modalidad['moda_id_modalidad']);?>" name="strModalidad<?php echo ($modalidad['moda_id_modalidad']);?>"
+                                value="<?php echo ($modalidad['moda_id_modalidad']);?>" 
+                          <?php if(isset($modalidad) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) { 
                             foreach ($profesor_modalidad as $modalidadProfesor) {
                               if ($modalidadProfesor['moda_id_modalidad'] == $modalidad['moda_id_modalidad']) { ?> 
                                 checked 
@@ -453,8 +412,10 @@ ini_set('error_reporting', E_ALL);
                     <td>               
                       <?php foreach ($arr_coordinaciones as $coordinacion) { ?> 
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="strCoordinacion<?php echo ($coordinacion['coor_id_coordinacion']);?>" value="<?php echo ($coordinacion['coor_id_coordinacion']);?>" 
-                                <?php if(isset($coordinacion) && isset($usuario)) { 
+                              <input class="form-check-input" type="checkbox" id="strCoordinacion<?php echo ($coordinacion['coor_id_coordinacion']);?>" name="strCoordinacion<?php echo ($coordinacion['coor_id_coordinacion']);?>"
+                                      value="<?php echo ($coordinacion['coor_id_coordinacion']);?>" 
+                                <?php //? Lo de is_array e is_object es para eliminar warnings
+                                if(isset($coordinacion) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) { 
                                   foreach ($profesor_coordinacion as $coordinacionProfesor) {
                                     if ($coordinacionProfesor['coor_id_coordinacion'] == $coordinacion['coor_id_coordinacion']) { ?> 
                                       checked 
