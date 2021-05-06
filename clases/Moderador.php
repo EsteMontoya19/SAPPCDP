@@ -71,9 +71,48 @@
       $bd->cerrarBD();
       return ($transaccion_1->traerRegistros());
     }
+
+      function agregarModerador ($persona, $numCuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin, $dias) {
+
+        $SQL_REGISTRO_MODERADOR = 
+          "INSERT INTO Moderador (pers_id_persona, mode_num_cuenta, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin)
+          VALUES ($persona, '$numCuenta', '$fechaInicio', '$fechaFin', '$horaInicio', '$horaFin');
+          ";
+
+          $bd = new BD();
+          $bd->abrirBD();
+          $transaccion_1 = new Transaccion($bd->conexion);
+          $transaccion_1->enviarQuery($SQL_REGISTRO_MODERADOR);
+          $bd->cerrarBD();
+      }
+
+      function agregarDiasModerador($dia) {
+        
+        $ULTIMO_DIA = 
+          "SELECT last_value FROM moderador_mode_id_moderador_seq
+          "; 
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($ULTIMO_DIA);
+        $obj_Moderador_Seq = $transaccion_1->traerObjeto(0);
+        $id_moderador = $obj_Moderador_Seq->last_value;
+        $bd->cerrarBD();
+
+        $SQL_REGISTRO_DIA_MODERADOR = 
+          "INSERT INTO Moderador_Dia (mode_id_moderador, dia_id_dia) VALUES ($id_moderador, $dia)
+          ";
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_REGISTRO_DIA_MODERADOR);
+        $bd->cerrarBD();
+      }
+    }
     
     //TODO: Adaptar demas funciones a Moderador
-  }
+  
   
     /*
     function agregarTelefono($persona, $tipo, $telefono)

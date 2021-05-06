@@ -359,7 +359,7 @@ ini_set('error_reporting', E_ALL);
                   <div id="fechaInicio" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="fechaInicio"><b>Fecha de inicio del servicio: *</b></label>
-                    <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_inicio: ""; ?>" type="text" class="form-control" name="lbFechaInicio" id="strFechaInicio">
+                    <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_inicio: ""; ?>" type="date" class="form-control" name="strFechaInicio" id="strFechaInicio">
                   </div>
                 <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="fechaFin" class="col-lg-3 form-group">
@@ -367,7 +367,7 @@ ini_set('error_reporting', E_ALL);
                   <div id="fechaFin" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="fechaFin"><b>Fecha de fin del servicio:*</b></label>
-                    <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_fin: ""; ?>" type="text" class="form-control" name="lbFechaFin" id="strFechaFin">
+                    <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_fin: ""; ?>" type="date" class="form-control" name="strFechaFin" id="strFechaFin">
                   </div>
                 <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="horaInicio" class="col-lg-3 form-group">
@@ -375,7 +375,7 @@ ini_set('error_reporting', E_ALL);
                   <div id="horaInicio" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="horaInicio"><b>Hora de inicio del servicio: *</b></label>
-                    <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_inicio: ""; ?>" type="text" class="form-control" name="lbHoraFin" id="strHoraInicio">
+                    <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_inicio: ""; ?>" type="time" class="form-control" name="strHoraInicio" id="strHoraInicio">
                   </div>
                 <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="horaFin" class="col-lg-3 form-group">
@@ -383,7 +383,7 @@ ini_set('error_reporting', E_ALL);
                   <div id="horaFin" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="horaFin"><b>Hora de fin del servicio: *</b></label>
-                    <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_fin: ""; ?>" type="text" class="form-control" name="lbHoraFin" id="strHoraFin"> 
+                    <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_fin: ""; ?>" type="time" class="form-control" name="strHoraFin" id="strHoraFin"> 
               </div>  <!-- Cierre div de datos row -->
               
               <div class="col-lg-12 form-row" style="margin-top: 15px;">  

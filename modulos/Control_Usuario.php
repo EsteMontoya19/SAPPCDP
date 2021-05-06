@@ -15,11 +15,7 @@
   $obj_Administrador = new Administrador();
 
   //Arreglos necesarios
-  $arr_dias = $obj_Busqueda->selectDias();
-
-  /*$obj_Administrador->agregarAdministrador(5, '12', 'Maya');
-  print($obj_Persona->buscarUltimo());*/
-        
+  $arr_dias = $obj_Busqueda->selectDias();      
   
   if($_POST['dml'] == 'insert')
   {
@@ -50,28 +46,23 @@
         case 1:
           $num_trabajador = $_POST['intNum_Trabajador'];
           $rfc = $_POST['lbRfc'];
-          
-          $NumeroDías = $obj_Busqueda->numeroDias(1);
+        
           //TODO: Falta probar
         break;  
 
         case 2:
           //*? Creado para guardar los inputs. Solo guarda los que tienen algo
           $diasModerador=array();
-          $num_cuenta = $_POST['intNumCuenta'];
-          
           foreach($arr_dias as $dia){
             static $bandera =  1; 
-
+            
             if(isset($_POST['strDiaServicio'.$bandera]) && $_POST['strDiaServicio'.$bandera] != "" ) {
               $diasModerador[$bandera] = $_POST['strDiaServicio'.$bandera];
             } 
             $bandera++;
           }
 
-
-
-
+          $num_cuenta = $_POST['lbNumCuenta'];
           $fechaInicio = $_POST['strFechaInicio'];
           $fechaFin = $_POST['strFechaFin']; 
           $horaInicio = $_POST['strHoraInicio']; 
@@ -86,20 +77,27 @@
           //TODO: Código profesor
         break; 
       }
-      /*
+
       $obj_Persona->agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono);
       $persona = $obj_Persona->buscarUltimo();
 
       $obj_Usuario->agregarUsuario($persona, $rol, $pregunta, $nombreUsuario, $contrasenia, $recuperacion, $estado);
-      */
+      
       switch($rol){
         case 1: 
           $obj_Administrador->agregarAdministrador($persona, $num_trabajador, $rfc);
         break;
+
+        case 2:
+          $obj_Moderador->agregarModerador($persona, $num_cuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin, $diasModerador );
+          foreach($diasModerador as $id){
+            $obj_Moderador->agregarDiasModerador($id);
+          }
+        break;
       }
       
 
-      echo 2;
+      echo 1;
     } else {
       echo 2;
     }
