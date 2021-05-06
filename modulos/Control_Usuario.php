@@ -247,16 +247,19 @@
       break;
 
       case 3: //Profesor
-        $obj_Profesor->agregarProfesor($persona, $num_trabajador, $semblanza, $rfc);
+        $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, $semblanza, $rfc);
         
+        $obj_Profesor->eliminarNivelesProfesor($idPersona);
         foreach($nivelesProfesor as $id){
-          $obj_Profesor->agregarNivelesProfesor($id);
+          $obj_Profesor->agregarNivelesProfesor($idPersona, $id);
         }
+        $obj_Profesor->eliminarModalidadesProfesor($idPersona);
         foreach($modalidadesProfesor as $id){
-          $obj_Profesor->agregarModalidadesProfesor($id);
+          $obj_Profesor->agregarModalidadesProfesor($idPersona, $id);
         }
+        $obj_Profesor->eliminarCoordinacionesProfesor($idPersona);
         foreach($coordinacionesProfesor as $id){
-          $obj_Profesor->agregarCoordinacionesProfesor($id);
+          $obj_Profesor->agregarCoordinacionesProfesor($idPersona, $id);
         }
       break;
     }

@@ -30,6 +30,8 @@
   $profesor = null;
   $profesor_coordinacion = null;
 
+  $moderador_dia = null;
+
   
   
   // Catálogos
