@@ -34,6 +34,38 @@
   		$transaccion_1->enviarQuery($SQL_Ins_Administrador);
   		$bd->cerrarBD();
     }
+
+    function actualizarAdministrador($persona, $num_trabajador, $rfc)
+		{
+      //? Validamos si ya tiene otro registro
+      $SQL_VALIDACION_ADMINISTRADOR = 
+      "SELECT *
+       FROM administrador
+       WHERE pers_id_persona = $persona";
+
+      $bd = new BD();
+      $bd->abrirBD();
+      $transaccion_1 = new Transaccion($bd->conexion);
+      $transaccion_1->enviarQuery($SQL_VALIDACION_ADMINISTRADOR);
+      $existe = $transaccion_1->traerObjeto(0);
+      $bd->cerrarBD();
+
+      if(isset($existe)) {
+        $SQL_Act_Usuario= 
+        " UPDATE Administrador
+          SET admi_num_trabajador = '$num_trabajador' , admi_rfc= '$rfc'
+          WHERE pers_id_persona = $persona;
+        ";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Act_Usuario);
+        $bd->cerrarBD();
+      } else {
+        $this->agregarAdministrador($persona, $num_trabajador, $rfc);
+      }
+		}
     
     //TODO: Adaptar demas funciones a Administrador
 

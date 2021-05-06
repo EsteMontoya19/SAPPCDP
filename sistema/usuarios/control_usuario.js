@@ -165,11 +165,12 @@ $(document).ready(function () {
 });
 
 // Actualizar usuario
-function actualizarUsuario(id, persona) {
+function actualizarUsuario(id, persona, rol) {
     var datos = {
         id: id,
         persona: persona,
         CRUD: 1,
+        rol: rol
     };
 
     $.ajax({

@@ -30,27 +30,12 @@
 			$bd->cerrarBD();
 		}
 
-		function actualizarUsuario($rol, $usuario, $nombreUsu)
+		function actualizarUsuario($idPersona, $rol, $pregunta, $nombreUsuario, $contrasenia, $recuperacion)
 		{
 			$SQL_Act_Usuario= 
 			" 	UPDATE Usuario
-				SET usua_num_usuario= '$nombreUsu', rol_id_rol = $rol
-				WHERE usua_id_usuario = $usuario;
-			";
-
-			$bd = new BD();
-			$bd->abrirBD();
-			$transaccion_1 = new Transaccion($bd->conexion);
-			$transaccion_1->enviarQuery($SQL_Act_Usuario);
-			$bd->cerrarBD();
-		}
-
-		function actualizarContrasena($usuario, $contra)
-		{
-			$SQL_Act_Usuario= 
-			" 	UPDATE usuario
-				SET U.usua_contrasena = '$contra'
-				WHERE usua_id_usuario = $usuario;
+				SET rol_id_rol = $rol , prse_id_pregunta= $pregunta, usua_num_usuario= '$nombreUsuario', usua_contrasena= '$contrasenia', usua_respuesta= '$recuperacion'
+				WHERE pers_id_persona = $idPersona;
 			";
 
 			$bd = new BD();

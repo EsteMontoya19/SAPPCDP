@@ -36,7 +36,7 @@
     {
 
       $SQL_Act_Persona =
-      " UPDATE persona
+      " UPDATE Persona
         SET pers_nombre = '$nombre', pers_apellido_paterno = '$apellidoPaterno', pers_apellido_materno = '$apellidoMaterno', pers_correo = '$correo', pers_telefono = '$telefono'
         WHERE pers_id_persona = $persona;
       ";

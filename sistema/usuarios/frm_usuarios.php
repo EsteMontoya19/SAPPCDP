@@ -51,9 +51,6 @@
     $obj_Usuario = new Usuario();
     $usuario = $obj_Usuario->buscarUsuario($_POST['id']);
 
-    $obj_Rol = new Rol();
-    $rol = $obj_Rol->rolUsuario($_POST['id']);
-
     switch ($usuario->rol_id_rol) {
       case 1: //Administrador
         $obj_Administrador = new Administrador();
@@ -90,15 +87,15 @@
         <li id="btn-inicio-usuario" class="breadcrumb-item">
           <a href="#"><i class="fas fa-user-shield"></i>&nbsp; Usuarios</a>
         </li>
-        <!-- Validación de la ruta -->
+        <!-- Validación de la ruta (cinta de la pantalla) -->
         <?php if (isset($_POST['CRUD'])) { ?>
-        <?php if ($_POST['CRUD'] == 1) { ?>
-        <li class="breadcrumb-item active"><i class="fas fa-edit"></i>&nbsp; Actualizar registro</li>
-        <?php } elseif ($_POST['CRUD'] == 0) { ?>
-        <li class="breadcrumb-item active"><i class="fas fa-search-plus"></i>&nbsp; Consultar registro</li>
-        <?php } ?>
+          <?php if ($_POST['CRUD'] == 1) { ?>
+            <li class="breadcrumb-item active"><i class="fas fa-edit"></i>&nbsp; Actualizar registro</li>
+          <?php } elseif ($_POST['CRUD'] == 0) { ?>
+            <li class="breadcrumb-item active"><i class="fas fa-search-plus"></i>&nbsp; Consultar registro</li>
+          <?php } ?>
         <?php } else { ?>
-        <li class="breadcrumb-item active"><i class="fas fa-folder-plus"></i>&nbsp; Nuevo registro</li>
+          <li class="breadcrumb-item active"><i class="fas fa-folder-plus"></i>&nbsp; Nuevo registro</li>
         <?php } ?>
       </ol>
       <p>
@@ -110,10 +107,10 @@
 
         <!-- Desactivar formulario INICIO en caso de no ser un registro-->
         <?php if (isset($_POST['CRUD'])) { ?>
-        <?php if ($_POST['CRUD'] == 0) { ?>
-        <fieldset disabled>
+          <?php if ($_POST['CRUD'] == 0) { ?>
+            <fieldset disabled>
           <?php } ?>
-          <?php } ?>
+        <?php } ?>
 
 
           <!-- Datos generales -->
@@ -172,8 +169,7 @@
               </div>
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <div class="col-lg-6 form-group">
-                  <label for="strNombreUsuario"><b>Nombre de
-                      usuario:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                  <label for="strNombreUsuario"><b>Nombre de usuario:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
                   <input type="text" class="form-control" id="strNombreUsuario" name="strNombreUsuario"
                     value="<?php echo isset($usuario) ? $usuario->usua_num_usuario : ""; ?>">
                 </div>
@@ -223,7 +219,7 @@
                         class="fas fa-eye"></i>&nbsp; Mostrar contraseña</label>
                   </div>
                 </div>
-                <?php if (isset($_POST['CRUD']) == false) { ?>
+                <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1) { ?>
                   <div class="col-lg-6 form-group">
                     <label for="strContrasenia02"><b>Confirme la contraseña: *</b></label>
                     <input type="password" class="form-control" id="strContrasenia02" name="strContrasenia02" placeholder="Contraseña">
@@ -299,7 +295,7 @@
                     <?php foreach ($arr_dias as $dia) { ?>
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="strDiaServicio<?php echo ($dia['dia_id_dia']);?>" value="<?php echo ($dia['dia_id_dia']);?>" name="strDiaServicio<?php echo ($dia['dia_id_dia']);?>" 
-                          <?php if(isset($moderador_dia)) { 
+                          <?php if(isset($moderador_dia) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) { 
                             foreach ($moderador_dia as $diaModerador) {
                               if ($diaModerador['dia_id_dia'] == $dia['dia_id_dia']) { ?> checked <?php } 
                             }
@@ -455,7 +451,7 @@
           <?php if ($_POST['CRUD'] == 1) { ?>
             <input type="hidden" name="dml" value="update" />
             <input type="hidden" id="idUsuario" name="idUsuario" value="<?php echo $_POST['id']; ?>">
-            <input type="hidden" id="idPersona" name="idPersona" value="<?php echo $persona->pers_id_pers; ?>">
+            <input type="hidden" id="idPersona" name="idPersona" value="<?php echo $persona->pers_id_persona; ?>">
           <?php } elseif ($_POST['CRUD'] == 0) { ?>
             <input type="hidden" name="dml" value="select" />
           <?php } ?>
