@@ -295,7 +295,7 @@
                     <?php foreach ($arr_dias as $dia) { ?>
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="strDiaServicio<?php echo ($dia['dia_id_dia']);?>" value="<?php echo ($dia['dia_id_dia']);?>" name="strDiaServicio<?php echo ($dia['dia_id_dia']);?>" 
-                          <?php if(isset($moderador_dia) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) { 
+                          <?php if(isset($moderador_dia) && is_array($moderador_dia) || is_object($moderador_dia)) { 
                             foreach ($moderador_dia as $diaModerador) {
                               if ($diaModerador['dia_id_dia'] == $dia['dia_id_dia']) { ?> checked <?php } 
                             }

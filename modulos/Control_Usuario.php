@@ -115,9 +115,9 @@
         break;
 
         case 2: //Moderador
-          $obj_Moderador->agregarModerador($persona, $num_cuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin, $diasModerador );
+          $obj_Moderador->agregarModerador($persona, $num_cuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin );
           foreach($diasModerador as $id){
-            $obj_Moderador->agregarDiasModerador($id);
+            $obj_Moderador->agregarDiasModerador($persona, $id);
           }
         break;
 
@@ -239,9 +239,10 @@
       break;
 
       case 2: //Moderador
-        $obj_Moderador->agregarModerador($persona, $num_cuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin, $diasModerador );
+        $obj_Moderador->actualizarModerador($idPersona, $num_cuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin);
+        $obj_Moderador->eliminarDiasModerador($idPersona);
         foreach($diasModerador as $id){
-          $obj_Moderador->agregarDiasModerador($id);
+          $obj_Moderador->agregarDiasModerador($idPersona, $id);
         }
       break;
 
