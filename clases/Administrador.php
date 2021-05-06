@@ -50,7 +50,7 @@
       $existe = $transaccion_1->traerObjeto(0);
       $bd->cerrarBD();
 
-      if(isset($existe != null)) {
+      if($existe != null) {
         $SQL_Act_Usuario= 
         " UPDATE Administrador
           SET admi_num_trabajador = '$num_trabajador' , admi_rfc= '$rfc'

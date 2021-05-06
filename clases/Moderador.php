@@ -114,7 +114,7 @@
         $existe = $transaccion_1->traerObjeto(0);
         $bd->cerrarBD();
 
-        if(isset($existe != null)) {
+        if($existe != null) {
 
         $SQL_ACTUALIZACION_MODERADOR = 
           "UPDATE Moderador 

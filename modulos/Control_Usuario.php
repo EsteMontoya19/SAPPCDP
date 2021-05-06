@@ -125,14 +125,13 @@
           $obj_Profesor->agregarProfesor($persona, $num_trabajador, $semblanza, $rfc);
           
           foreach($nivelesProfesor as $id){
-            $obj_Profesor->agregarNivelesProfesor($id);
-            $file = fopen("Mensaje.txt", "a");
+            $obj_Profesor->agregarNivelesProfesor($persona, $id);
           }
           foreach($modalidadesProfesor as $id){
-            $obj_Profesor->agregarModalidadesProfesor($id);
+            $obj_Profesor->agregarModalidadesProfesor($persona, $id);
           }
           foreach($coordinacionesProfesor as $id){
-            $obj_Profesor->agregarCoordinacionesProfesor($id);
+            $obj_Profesor->agregarCoordinacionesProfesor($persona, $id);
           }
         break;
       }
