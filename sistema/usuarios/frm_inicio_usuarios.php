@@ -70,7 +70,7 @@
                       </div>
                     </td>
                     <td>
-                      <button type="button" class="btn btn-primary btn-table" title="Actualizar" onclick="actualizarUsuario(<?php echo $usuario['rol_id_rol'] ?>, <?php echo $usuario['usua_id_usuario'] ?>, <?php echo $usuario['usua_num_usuario'] ?>)">
+                      <button type="button" class="btn btn-primary btn-table" title="Actualizar" onclick="actualizarUsuario(<?php echo $usuario['usua_id_usuario'] ?>, <?php echo $usuario['pers_id_persona'] ?> , <?php echo $usuario['rol_id_rol'] ?>)">
                         <i class="fas fa-edit"></i>
                       </button>
                       <button type="button" class="btn btn-info btn-table" title="Detalles" onclick="consultarUsuarioDirecto(<?php echo $usuario['usua_id_usuario'] ?>, <?php echo $usuario['pers_id_persona'] ?> , <?php echo $usuario['rol_id_rol'] ?>)">
