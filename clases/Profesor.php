@@ -64,37 +64,139 @@
 			return ($transaccion_1->traerRegistros());
 		}
 
-		//*TODO: Falta mdificar las clases siguientes
-
-
-        function agregarProfesor($persona, $numero, $semblanza, $constancia, $cv, $cedula, $titulo, $ine, $curp, $banco)
-        {
-            $SQL_Ins_Profesor = 
-            "   INSERT INTO profesor (prof_id_pers, prof_numero, prof_semblanza, prof_constancia, prof_cv, prof_cedula, prof_titulo, prof_ine, prof_curp, prof_banco)
-                VALUES($persona, '$numero', '$semblanza', '$constancia', '$cv', '$cedula', '$titulo', '$ine', '$curp', '$banco');
-            ";
-
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Ins_Profesor);
-            $bd->cerrarBD();
-        }
-
-        function actualizarProfesor($profesor, $numero, $semblanza, $constancia, $cv, $cedula, $titulo, $ine, $curp, $banco)
+		function agregarProfesor($persona, $numTrabajador, $semblanza, $rfc)
 		{
-			$SQL_Act_Profesor = 
-			" 	UPDATE profesor
-				SET prof_numero = $numero, prof_semblanza = '$semblanza', prof_constancia = '$constancia', prof_cv = '$cv', prof_cedula = '$cedula', prof_titulo = '$titulo', prof_ine = '$ine', prof_curp = '$curp', prof_banco = '$banco'
-			 	WHERE prof_id_prof = $profesor;
-			";
+		//Aquí iría una validación pero puede ser que ya se esté haciendo en otra parte
+		$SQL_Ins_Profesor =
+		" INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza, prof_rfc) VALUES 
+			($persona,'$numTrabajador', '$semblanza', '$rfc');
+		";
+		
+		$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Ins_Profesor);
+			$bd->cerrarBD();
+		}
 
+		function agregarNivelesProfesor($persona, $nivel) {
+	
+			$SQL_REGISTRO_NIVEL_PROFESOR = 
+			  "INSERT INTO Profesor_Nivel (prof_id_profesor, nive_id_nivel) VALUES ((SELECT prof_id_profesor
+																					FROM Profesor
+																					WHERE pers_id_persona = $persona), $nivel)
+			  ";
 			$bd = new BD();
 			$bd->abrirBD();
 			$transaccion_1 = new Transaccion($bd->conexion);
-			$transaccion_1->enviarQuery($SQL_Act_Profesor);
+			$transaccion_1->enviarQuery($SQL_REGISTRO_NIVEL_PROFESOR);
 			$bd->cerrarBD();
+		}
+
+		function agregarModalidadesProfesor($persona, $modalidad) {
+			$SQL_REGISTRO_MODALIDAD_PROFESOR = 
+			  "INSERT INTO Profesor_Modalidad (prof_id_profesor, moda_id_modalidad) VALUES ((SELECT prof_id_profesor
+																							FROM Profesor
+																							WHERE pers_id_persona = $persona), $modalidad)
+			  ";
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_REGISTRO_MODALIDAD_PROFESOR);
+			$bd->cerrarBD();
+		}
+
+		function agregarCoordinacionesProfesor($persona, $coordinacion) {
+			$SQL_REGISTRO_COORDINACION_PROFESOR = 
+			  "INSERT INTO Profesor_Coordinacion (prof_id_profesor, coor_id_coordinacion) VALUES ((SELECT prof_id_profesor
+																									FROM Profesor
+																									WHERE pers_id_persona = $persona), $coordinacion)
+			  ";
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_REGISTRO_COORDINACION_PROFESOR);
+			$bd->cerrarBD();
+		}
+
+		function actualizarProfesor($persona, $num_trabajador, $semblanza, $rfc)
+		{
+			//? Validamos si ya tiene otro registro
+			$SQL_VALIDACION_PROFESOR = 
+			"SELECT *
+			FROM Profesor
+			WHERE pers_id_persona = $persona";
+	
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_VALIDACION_PROFESOR);
+			$existe = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+
+			if($existe != null) {
+
+
+				$SQL_Act_Profesor = 
+				" 	UPDATE Profesor
+					SET prof_num_trabajador = '$num_trabajador', prof_semblanza = '$semblanza', prof_rfc = '$rfc'
+					WHERE pers_id_persona = $persona;
+				";
+
+				$bd = new BD();
+				$bd->abrirBD();
+				$transaccion_1 = new Transaccion($bd->conexion);
+				$transaccion_1->enviarQuery($SQL_Act_Profesor);
+				$bd->cerrarBD();
+			} else {
+				$this->agregarProfesor($persona, $num_trabajador, $semblanza, $rfc);
+			}
         }
+
+		function eliminarNivelesProfesor ($persona) {
+        
+			$SQL_BORRAR_NIVELES_PROFESOR= 
+			"DELETE FROM Profesor_Nivel
+			 WHERE prof_id_profesor = (SELECT prof_id_profesor
+										FROM Profesor
+										WHERE pers_id_persona = $persona);
+			";
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_BORRAR_NIVELES_PROFESOR);
+			$bd->cerrarBD();
+		}
+		function eliminarModalidadesProfesor ($persona) {
+        
+			$SQL_BORRAR_MODALIDADES_PROFESOR= 
+			"DELETE FROM Profesor_Modalidad
+			 WHERE prof_id_profesor = (SELECT prof_id_profesor
+										FROM Profesor
+										WHERE pers_id_persona = $persona);
+			";
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_BORRAR_MODALIDADES_PROFESOR);
+			$bd->cerrarBD();
+		}
+		function eliminarCoordinacionesProfesor ($persona) {
+        
+			$SQL_BORRAR_COORDINACIONES_PROFESOR= 
+			"DELETE FROM Profesor_Coordinacion
+			 WHERE prof_id_profesor = (SELECT prof_id_profesor
+										FROM Profesor
+										WHERE pers_id_persona = $persona);
+			";
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_BORRAR_COORDINACIONES_PROFESOR);
+			$bd->cerrarBD();
+		}
+
+		//*TODO: Falta mdificar las clases siguientes
 
         function eliminarProfesor($profesor)
 		{
