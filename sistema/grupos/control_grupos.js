@@ -519,35 +519,22 @@ $(document).ready( function () {
   });
 });
 
-function mostrarFormulario() {
-  var tipo_evento;
+$(document).on('change', '#GrupoModalidad', function mostrarCampos() {
+  var grupo_modalidad= $("#GrupoModalidad").val();
 
-  tipo_evento = $("#GrupoCurso").val();
-
-  if (tipo_evento.startsWith('4')) {
-    // Si la checkbox de mostrar contraseña está activada
-    $("#webinar").show();
-    $("#ponente1").show();
-    $("#botones_ponentes").show();
-    $("#eventos").hide();
-    $("#botones_eventos").hide();
-    $("#div_profesor").hide();
-  } // Si no está activada
-  else if (tipo_evento.startsWith('0')) {
-    $("#webinar").hide();
-    $("#ponente1").hide();
-    $("#botones_ponentes").hide();
-    $("#eventos").hide();
-    $("#botones_eventos").hide();
-    $("#div_profesor").hide();
+  if (grupo_modalidad.startsWith('1')) {
+    $("#ID_Plataforma").hiden();
+    $("#URL_Acceso").hiden();
+    $("#ID_Reunion").hiden();
+    $("#Clave_Acceso").hiden();
+    $("#GrupoSalon").show();
   } else {
-    $("#webinar").hide();
-    $("#ponente1").hide();
-    $("#botones_ponentes").hide();
-    $("#eventos").show();
-    $("#botones_eventos").show();
-    $("#div_profesor").show();
+    $("#ID_Plataforma").show();
+    $("#URL_Acceso").show();
+    $("#ID_Reunion").show();
+    $("#Clave_Acceso").show();
+    $("#GrupoSalon").hiden();
   }
-}
+});
 
 
