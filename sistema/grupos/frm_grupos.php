@@ -125,13 +125,13 @@
                   <label for="lbGrupoModalidad"><b>Modalidad:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
                     <select required='required' class="custom-select" id="GrupoModalidad" name="GrupoModalidad">
                       <option value="0">Seleccione una opción</option>
-                      <option value="1" <?php if(isset($Grupo)) {
+                      <option value="En línea" <?php if(isset($Grupo)) {
                         if($Grupo['grup_modalidad'] == 'En línea') {
                           //? Puede ser el string o el value
                           echo (selected); 
                         }
                       } ?>> En línea </option>
-                      <option value="2" <?php if(isset($Grupo)) {
+                      <option value="Presencial" <?php if(isset($Grupo)) {
                         if($Grupo['grup_modalidad'] == 'Presencial') {
                           //? Puede ser el string o el value
                           echo (selected); 
@@ -218,11 +218,10 @@
             </div>
           </div>
           <!-- Formulario Modalidad-->
-          <?php if (isset($Grupo) && $Grupo->grup_id_grupo == 1 || $Grupo->grup_id_grupo == 2) { ?>
+          
+          
+          
           <div class="form-group">
-          <?php } else {?> 
-          <div class="form-group" style="display: none;">
-          <?php }?>
             <div class="card lg-12">
               <div class="card-header">
                 <i class="fas fa-id-card fa-lg"></i>
@@ -230,8 +229,11 @@
                   elseif (isset($Grupo) && $Grupo->grup_id_grupo == 'En línea')  {echo "presencial";} else { echo "";} ?></b>
               </div>
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                
-                <div class="col-lg-6 form-group"> 
+              <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
+                <div id="ID_Plataforma" class="col-lg-6 form-group"> 
+                <?php } else {?> 
+                  <div id="ID_Plataforma" class="col-lg-6 form-group" style="display: none;">
+                <?php }?>
                   <label for="lbID_Plataforma"><b>Plataforma:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
                   <select class="custom-select" id="ID_Plataforma" name="ID_Plataforma">
                     <option value="0">Seleccione una opción</option>  
