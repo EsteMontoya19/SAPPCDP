@@ -26,7 +26,7 @@
     $nombreUsu = $_POST['strNombreUsuario'];
     $usuario_existente = $obj_Usuario->buscarNombreUsuario($nombreUsu);
     
-    if(!isset($usuario_existente->usua_nombre)) {
+    if(!isset($usuario_existente->usua_num_usuario)) {
       
       //?Datos de persona
       $nombre = $_POST['strUsuarioNombre'];
@@ -148,9 +148,9 @@
     $nombreUsu = $_POST['strNombreUsuario'];
     $usuario_existente = $obj_Usuario->buscarNombreUsuario($nombreUsu);
     $idPersona = $_POST['idPersona'];
-    $idUsuario = $_POST['id'];
+    $idUsuario = $_POST['idUsuario'];
 
-    if(!isset($usuario_existente->usua_nombre)) {
+    if(!isset($usuario_existente->usua_num_usuario) || $usuario_existente->usua_num_usuario == $nombreUsu) {
      //?Datos de persona
      $nombre = $_POST['strUsuarioNombre'];
      $apellidoPaterno = $_POST['strUsuarioPrimerApe'];

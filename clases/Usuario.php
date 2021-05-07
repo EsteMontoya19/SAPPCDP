@@ -97,9 +97,9 @@
 		function buscarNombreUsuario($nombreUsu)
 		{
 			$SQL_Bus_Usuario = 
-			"	SELECT usua_id_usuario, rol_id_rol, prse_id_pregunta, usua_num_usuario, U.usua_contrasena, usua_respuesta
-				FROM rol, usuario
-				WHERE rol_id_rol = rol_id_rol AND usua_num_usuario = '$nombreUsu';
+			"	SELECT U.usua_id_usuario, U.rol_id_rol, U.prse_id_pregunta, U.usua_num_usuario, U.usua_contrasena, U.usua_respuesta
+				FROM Rol R, Usuario U
+				WHERE R.rol_id_rol = U.rol_id_rol AND U.usua_num_usuario = '$nombreUsu';
 			";
 
 			$bd = new BD();
