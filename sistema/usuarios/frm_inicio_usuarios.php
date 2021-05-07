@@ -75,10 +75,10 @@
                       </button>
                       <button type="button" class="btn btn-info btn-table" title="Detalles" onclick="consultarUsuarioDirecto(<?php echo $usuario['usua_id_usuario'] ?>, <?php echo $usuario['pers_id_persona'] ?> , <?php echo $usuario['rol_id_rol'] ?>)">
                         <i class="fas fa-search-plus"></i>
-                      </button>
+                      </button><!--
                       <button type="button" class="btn btn-danger btn-table" title="Eliminar" onclick="eliminarUsuario(<?php echo $usuario['usua_id_usuario'] ?>,  <?php echo $usuario['pers_id_persona'] ?>, '<?php echo $usuario['pers_nombre']; ?>', '<?php echo $usuario['pers_apellido_paterno']; ?>')">
                         <i class="fas fa-trash-alt"></i>
-                      </button>
+                      </button>-->
                     </td>
                   </tr>
                 <?php } ?>
