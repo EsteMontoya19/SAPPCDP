@@ -30,27 +30,12 @@
 			$bd->cerrarBD();
 		}
 
-		function actualizarUsuario($rol, $usuario, $nombreUsu)
+		function actualizarUsuario($idPersona, $rol, $pregunta, $nombreUsuario, $contrasenia, $recuperacion)
 		{
 			$SQL_Act_Usuario= 
 			" 	UPDATE Usuario
-				SET usua_num_usuario= '$nombreUsu', rol_id_rol = $rol
-				WHERE usua_id_usuario = $usuario;
-			";
-
-			$bd = new BD();
-			$bd->abrirBD();
-			$transaccion_1 = new Transaccion($bd->conexion);
-			$transaccion_1->enviarQuery($SQL_Act_Usuario);
-			$bd->cerrarBD();
-		}
-
-		function actualizarContrasena($usuario, $contra)
-		{
-			$SQL_Act_Usuario= 
-			" 	UPDATE usuario
-				SET U.usua_contrasena = '$contra'
-				WHERE usua_id_usuario = $usuario;
+				SET rol_id_rol = $rol , prse_id_pregunta= $pregunta, usua_num_usuario= '$nombreUsuario', usua_contrasena= '$contrasenia', usua_respuesta= '$recuperacion'
+				WHERE pers_id_persona = $idPersona;
 			";
 
 			$bd = new BD();
@@ -112,9 +97,9 @@
 		function buscarNombreUsuario($nombreUsu)
 		{
 			$SQL_Bus_Usuario = 
-			"	SELECT usua_id_usuario, rol_id_rol, prse_id_pregunta, usua_num_usuario, U.usua_contrasena, usua_respuesta
-				FROM rol, usuario
-				WHERE rol_id_rol = rol_id_rol AND usua_num_usuario = '$nombreUsu';
+			"	SELECT U.usua_id_usuario, U.rol_id_rol, U.prse_id_pregunta, U.usua_num_usuario, U.usua_contrasena, U.usua_respuesta
+				FROM Rol R, Usuario U
+				WHERE R.rol_id_rol = U.rol_id_rol AND U.usua_num_usuario = '$nombreUsu';
 			";
 
 			$bd = new BD();

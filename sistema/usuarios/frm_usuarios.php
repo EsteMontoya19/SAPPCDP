@@ -1,48 +1,4 @@
 <?php
-
-// Desactivar toda notificación de error
-
-error_reporting(0);
-
- 
-
-// Notificar solamente errores de ejecución
-
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
-
- 
-
-// Notificar E_NOTICE también puede ser bueno (para informar de variables
-
-// no inicializadas o capturar errores en nombres de variables ...)
-
-error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
-
- 
-
-// Notificar todos los errores excepto E_NOTICE
-
-// Este es el valor predeterminado establecido en php.ini
-
-error_reporting(E_ALL ^ E_NOTICE);
-
- 
-
-// Notificar todos los errores de PHP (ver el registro de cambios)
-
-error_reporting(E_ALL);
-
- 
-
-// Notificar todos los errores de PHP
-
-error_reporting(-1);
-
- 
-
-// Lo mismo que error_reporting(E_ALL);
-
-ini_set('error_reporting', E_ALL);
   // Clases
   include('../../clases/BD.php');
   include('../../clases/Busqueda.php');
@@ -62,7 +18,6 @@ ini_set('error_reporting', E_ALL);
   $usuario->usua_contrasena = null;
   $usuario->usua_respuesta = null;
   $usuario->usua_activo = null;
-  //$usuario = null;
   
   $persona = new Persona();
   $persona->pers_id_persona = null;
@@ -71,7 +26,12 @@ ini_set('error_reporting', E_ALL);
   $persona->pers_apellido_paterno = null;
   $persona->pers_correo = null;
   $persona->pers_telefono = null;
-  //$persona = null;
+
+  $profesor = null;
+  $profesor_coordinacion = null;
+
+  $moderador_dia = null;
+
   
   
   // Catálogos
@@ -93,9 +53,6 @@ ini_set('error_reporting', E_ALL);
     $obj_Usuario = new Usuario();
     $usuario = $obj_Usuario->buscarUsuario($_POST['id']);
 
-    $obj_Rol = new Rol();
-    $rol = $obj_Rol->rolUsuario($_POST['id']);
-
     switch ($usuario->rol_id_rol) {
       case 1: //Administrador
         $obj_Administrador = new Administrador();
@@ -114,7 +71,6 @@ ini_set('error_reporting', E_ALL);
         $profesor_nivel = $obj_Profesor->buscarProfesorNiveles($profesor->prof_id_profesor);
         $profesor_modalidad = $obj_Profesor->buscarProfesorModalidades($profesor->prof_id_profesor);
         $profesor_coordinacion = $obj_Profesor->buscarProfesorCoordinaciones($profesor->prof_id_profesor);
-
       break;
       
 
@@ -133,15 +89,15 @@ ini_set('error_reporting', E_ALL);
         <li id="btn-inicio-usuario" class="breadcrumb-item">
           <a href="#"><i class="fas fa-user-shield"></i>&nbsp; Usuarios</a>
         </li>
-        <!-- Validación de la ruta -->
+        <!-- Validación de la ruta (cinta de la pantalla) -->
         <?php if (isset($_POST['CRUD'])) { ?>
-        <?php if ($_POST['CRUD'] == 1) { ?>
-        <li class="breadcrumb-item active"><i class="fas fa-edit"></i>&nbsp; Actualizar registro</li>
-        <?php } elseif ($_POST['CRUD'] == 0) { ?>
-        <li class="breadcrumb-item active"><i class="fas fa-search-plus"></i>&nbsp; Consultar registro</li>
-        <?php } ?>
+          <?php if ($_POST['CRUD'] == 1) { ?>
+            <li class="breadcrumb-item active"><i class="fas fa-edit"></i>&nbsp; Actualizar registro</li>
+          <?php } elseif ($_POST['CRUD'] == 0) { ?>
+            <li class="breadcrumb-item active"><i class="fas fa-search-plus"></i>&nbsp; Consultar registro</li>
+          <?php } ?>
         <?php } else { ?>
-        <li class="breadcrumb-item active"><i class="fas fa-folder-plus"></i>&nbsp; Nuevo registro</li>
+          <li class="breadcrumb-item active"><i class="fas fa-folder-plus"></i>&nbsp; Nuevo registro</li>
         <?php } ?>
       </ol>
       <p>
@@ -153,10 +109,10 @@ ini_set('error_reporting', E_ALL);
 
         <!-- Desactivar formulario INICIO en caso de no ser un registro-->
         <?php if (isset($_POST['CRUD'])) { ?>
-        <?php if ($_POST['CRUD'] == 0) { ?>
-        <fieldset disabled>
+          <?php if ($_POST['CRUD'] == 0) { ?>
+            <fieldset disabled>
           <?php } ?>
-          <?php } ?>
+        <?php } ?>
 
 
           <!-- Datos generales -->
@@ -215,8 +171,7 @@ ini_set('error_reporting', E_ALL);
               </div>
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <div class="col-lg-6 form-group">
-                  <label for="strNombreUsuario"><b>Nombre de
-                      usuario:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                  <label for="strNombreUsuario"><b>Nombre de usuario:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
                   <input type="text" class="form-control" id="strNombreUsuario" name="strNombreUsuario"
                     value="<?php echo isset($usuario) ? $usuario->usua_num_usuario : ""; ?>">
                 </div>
@@ -266,7 +221,7 @@ ini_set('error_reporting', E_ALL);
                         class="fas fa-eye"></i>&nbsp; Mostrar contraseña</label>
                   </div>
                 </div>
-                <?php if (isset($_POST['CRUD']) == false) { ?>
+                <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1) { ?>
                   <div class="col-lg-6 form-group">
                     <label for="strContrasenia02"><b>Confirme la contraseña: *</b></label>
                     <input type="password" class="form-control" id="strContrasenia02" name="strContrasenia02" placeholder="Contraseña">
@@ -319,7 +274,7 @@ ini_set('error_reporting', E_ALL);
                                             echo("");
                                           }
                                         }?>"  type="text"
-                        class="form-control" name="lbRfc" id="strRFC">
+                        class="form-control" name="strRFC" id="strRFC">
                     </div>
               </div> <!-- Cierre div de datos row -->
               
@@ -342,7 +297,7 @@ ini_set('error_reporting', E_ALL);
                     <?php foreach ($arr_dias as $dia) { ?>
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="strDiaServicio<?php echo ($dia['dia_id_dia']);?>" value="<?php echo ($dia['dia_id_dia']);?>" name="strDiaServicio<?php echo ($dia['dia_id_dia']);?>" 
-                          <?php if(isset($moderador_dia)) { 
+                          <?php if(isset($moderador_dia) && is_array($moderador_dia) || is_object($moderador_dia)) { 
                             foreach ($moderador_dia as $diaModerador) {
                               if ($diaModerador['dia_id_dia'] == $dia['dia_id_dia']) { ?> checked <?php } 
                             }
@@ -359,7 +314,7 @@ ini_set('error_reporting', E_ALL);
                   <div id="fechaInicio" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="fechaInicio"><b>Fecha de inicio del servicio: *</b></label>
-                    <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_inicio: ""; ?>" type="text" class="form-control" name="lbFechaInicio" id="strFechaInicio">
+                    <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_inicio: ""; ?>" type="date" class="form-control" name="strFechaInicio" id="strFechaInicio">
                   </div>
                 <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="fechaFin" class="col-lg-3 form-group">
@@ -367,7 +322,7 @@ ini_set('error_reporting', E_ALL);
                   <div id="fechaFin" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="fechaFin"><b>Fecha de fin del servicio:*</b></label>
-                    <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_fin: ""; ?>" type="text" class="form-control" name="lbFechaFin" id="strFechaFin">
+                    <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_fin: ""; ?>" type="date" class="form-control" name="strFechaFin" id="strFechaFin">
                   </div>
                 <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="horaInicio" class="col-lg-3 form-group">
@@ -375,7 +330,7 @@ ini_set('error_reporting', E_ALL);
                   <div id="horaInicio" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="horaInicio"><b>Hora de inicio del servicio: *</b></label>
-                    <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_inicio: ""; ?>" type="text" class="form-control" name="lbHoraFin" id="strHoraInicio">
+                    <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_inicio: ""; ?>" type="time" class="form-control" name="strHoraInicio" id="strHoraInicio">
                   </div>
                 <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="horaFin" class="col-lg-3 form-group">
@@ -383,7 +338,7 @@ ini_set('error_reporting', E_ALL);
                   <div id="horaFin" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="horaFin"><b>Hora de fin del servicio: *</b></label>
-                    <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_fin: ""; ?>" type="text" class="form-control" name="lbHoraFin" id="strHoraFin"> 
+                    <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_fin: ""; ?>" type="time" class="form-control" name="strHoraFin" id="strHoraFin"> 
               </div>  <!-- Cierre div de datos row -->
               
               <div class="col-lg-12 form-row" style="margin-top: 15px;">  
@@ -393,7 +348,7 @@ ini_set('error_reporting', E_ALL);
                   <div id="semblanza" class="col-lg-12 form-group" style="display: none;">
                 <?php } ?>
                   <label for="strSemblanza"><b>Semblanza:*</b></label>
-                  <textarea type="text" class="form-control" id="strSemblanza" name="strReqTec"><?php echo isset($profesor) ? $profesor-> prof_semblanza: ""; ?></textarea>           
+                  <textarea type="text" class="form-control" id="strSemblanza" name="strSemblanza"><?php echo isset($profesor) ? $profesor-> prof_semblanza: ""; ?></textarea>           
                   </div>
               </div> <!-- Cierre div de datos row -->
               
@@ -406,8 +361,9 @@ ini_set('error_reporting', E_ALL);
                   <label for="nivelImparticion"><b>Nivel de impartición:*</b></label><br>
                     <?php foreach ($arr_niveles as $nivel) { ?>
                       <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="strNivel<?php echo ($nivel['nive_id_nivel']);?>" value="<?php echo ($nivel['nive_id_nivel']);?>" 
-                          <?php if(isset($nivel) && isset($usuario)) { 
+                        <input class="form-check-input" type="checkbox" id="strNivel<?php echo ($nivel['nive_id_nivel']);?>" name="strNivel<?php echo ($nivel['nive_id_nivel']);?>"
+                                value="<?php echo ($nivel['nive_id_nivel']);?>" 
+                          <?php if(isset($nivel) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) { 
                             foreach ($profesor_nivel as $nivelProfesor) 
                             {
                               if ($nivelProfesor['nive_id_nivel'] == $nivel['nive_id_nivel']) { ?> 
@@ -427,8 +383,9 @@ ini_set('error_reporting', E_ALL);
                   <label for="modalidadImparticion"><b>Modalidad en la que imparte clases : * </b></label><br>
                   <?php foreach ($arr_modalidades as $modalidad) { ?>
                       <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="strModalidad<?php echo ($modalidad['moda_id_modalidad']);?>" value="<?php echo ($modalidad['moda_id_modalidad']);?>" 
-                          <?php if(isset($modalidad) && isset($usuario)) { 
+                        <input class="form-check-input" type="checkbox" id="strModalidad<?php echo ($modalidad['moda_id_modalidad']);?>" name="strModalidad<?php echo ($modalidad['moda_id_modalidad']);?>"
+                                value="<?php echo ($modalidad['moda_id_modalidad']);?>" 
+                          <?php if(isset($modalidad) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) { 
                             foreach ($profesor_modalidad as $modalidadProfesor) {
                               if ($modalidadProfesor['moda_id_modalidad'] == $modalidad['moda_id_modalidad']) { ?> 
                                 checked 
@@ -453,8 +410,10 @@ ini_set('error_reporting', E_ALL);
                     <td>               
                       <?php foreach ($arr_coordinaciones as $coordinacion) { ?> 
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="strCoordinacion<?php echo ($coordinacion['coor_id_coordinacion']);?>" value="<?php echo ($coordinacion['coor_id_coordinacion']);?>" 
-                                <?php if(isset($coordinacion) && isset($usuario)) { 
+                              <input class="form-check-input" type="checkbox" id="strCoordinacion<?php echo ($coordinacion['coor_id_coordinacion']);?>" name="strCoordinacion<?php echo ($coordinacion['coor_id_coordinacion']);?>"
+                                      value="<?php echo ($coordinacion['coor_id_coordinacion']);?>" 
+                                <?php //? Lo de is_array e is_object es para eliminar warnings
+                                if(isset($coordinacion) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) { 
                                   foreach ($profesor_coordinacion as $coordinacionProfesor) {
                                     if ($coordinacionProfesor['coor_id_coordinacion'] == $coordinacion['coor_id_coordinacion']) { ?> 
                                       checked 
@@ -494,7 +453,7 @@ ini_set('error_reporting', E_ALL);
           <?php if ($_POST['CRUD'] == 1) { ?>
             <input type="hidden" name="dml" value="update" />
             <input type="hidden" id="idUsuario" name="idUsuario" value="<?php echo $_POST['id']; ?>">
-            <input type="hidden" id="idPersona" name="idPersona" value="<?php echo $persona->pers_id_pers; ?>">
+            <input type="hidden" id="idPersona" name="idPersona" value="<?php echo $persona->pers_id_persona; ?>">
           <?php } elseif ($_POST['CRUD'] == 0) { ?>
             <input type="hidden" name="dml" value="select" />
           <?php } ?>
