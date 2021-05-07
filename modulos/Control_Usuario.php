@@ -150,7 +150,12 @@
     $idPersona = $_POST['idPersona'];
     $idUsuario = $_POST['idUsuario'];
 
-    if(!isset($usuario_existente->usua_num_usuario) || $usuario_existente->usua_num_usuario == $nombreUsu) {
+    $esElMismo = 0;
+    if($nombreUsu == $usuario_existente->usua_num_usuario && $idUsuario == $usuario_existente->usua_id_usuario){
+      $esElMismo = 1;
+    }
+
+    if(!isset($usuario_existente->usua_num_usuario) || $esElMismo == 1) {
      //?Datos de persona
      $nombre = $_POST['strUsuarioNombre'];
      $apellidoPaterno = $_POST['strUsuarioPrimerApe'];
