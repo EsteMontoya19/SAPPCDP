@@ -81,7 +81,7 @@ INSERT INTO Grupo (mode_id_moderador, PROF_ID_PROFESOR, CURS_ID_CURSOS, CALE_ID_
 			VALUES ( 1, 1, 1, 1, 1, 'grupo reunion2', 'grupo acceso2', 'clave2', 60, 'En Espera', false, 'en linea', 'público', '2021/02/23', '2021/09/08');
 
 INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora)
-			VALUES (1, '2021/09/08','07:00:00'), (2, 1, '2021/09/09','07:00:00');
+			VALUES (1, '2021/09/08','07:00:00'), (1, '2021/09/09','07:00:00');
 
 /*==============================================================*/
 /* Table: ADMINISTRADOR                                          */
