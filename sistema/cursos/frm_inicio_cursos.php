@@ -58,9 +58,9 @@
                       <button type="button" class="btn btn-primary btn-table" title="Editar">
                         <i class="fas fa-edit"></i>
                       </button>
-                      <button type="button" class="btn btn-danger btn-table" title="Cancelar">
+                      <!-- <button type="button" class="btn btn-danger btn-table" title="Cancelar">
                         <i class="fas fa-trash-alt"></i>
-                      </button>
+                      </button> -->
                     </td>
                   </tr>
               </tbody>

@@ -23,8 +23,8 @@
                 <label for="intTipoCurso"><b>Tipo de curso: *</b></label>
                 <select class="custom-select" id="intTipoCurso" name="intTipoCurso" onchange="ocultar(this.value)">
                   <option value='0'>Seleccione una opción</option>
-                  <option value='1'>Presencial</option>
-                  <option value='2'>En línea</option>
+                  <option value='1'>Curso</option>
+                  <option value='2'>Taller</option>
                 </select>
               </div>
 

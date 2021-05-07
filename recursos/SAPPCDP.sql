@@ -25,7 +25,7 @@ INSERT INTO Usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usu
 INSERT INTO Administrador (pers_id_persona, admi_num_trabajador, admi_rfc) VALUES (1, '315067596', 'MOME990905134');
 
 INSERT INTO Profesor (prof_id_profesor, pers_id_persona, prof_num_trabajador, prof_semblanza, prof_rfc) 
-      VALUES (1, 3, '123457890', 'Profesor con amplio conocimeinto en todas las ramas habidas y por haber','SAC12345');
+      VALUES (1, 3, '123457890', 'Profesor con amplio conocimiento en todas las ramas habidas y por haber','SAC12345');
 
 INSERT INTO Moderador (mode_id_moderador, pers_id_persona, mode_num_cuenta, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin) 
 		VALUES (1, 2, '123457890', '2021/02/23', '2021/09/08','07:00:00', '21:00:00');
