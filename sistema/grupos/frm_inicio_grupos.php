@@ -5,6 +5,7 @@
   
   $obj_Grupo = new Grupo();
   $arr_grupos = $obj_Grupo ->buscarTodosGrupos();
+  $activo = 0;
 
 ?>
 
@@ -50,6 +51,7 @@
                     <th>Estatus</th>
                     <th>Lugares disponibles</th>
                     <th>Profesor</th>
+                    <th>Activo</th>
                     <th>Opciones</th>
                   </tr>
                 </thead>
@@ -57,6 +59,7 @@
 
                   <?php foreach ($arr_grupos as $grupo) { ?>
                     <tr>
+                      <?php $activo++; ?>
                       <td><?php echo $grupo['grup_id_grupo'];?></td>
                       <td><?php echo $grupo['grup_tipo'];?></td>
                       <td><?php echo $grupo['curs_nombre'];?></td>
@@ -78,6 +81,12 @@
                       </td>
                       <td><?php echo $grupo['grup_cupo'];?></td>
                       <td><small><?php echo $grupo['pers_nombre'];?> <?php echo $grupo['pers_apellido_paterno'];?> <?php echo $grupo['pers_apellido_materno'];?></small></td>
+                      <td>
+                        <div class="custom-control custom-switch">                          
+                          <input type="checkbox" class="custom-control-input" id="estatusGrupo<?php echo $activo ?>" <?php if ($grupo['grup_activo'] == 't') { ?> checked <?php } ?> onclick="cambioEstatus(<?php echo $grupo['grup_id_grupo'] ?> , '<?php echo $grupo['grup_activo']; ?>', '<?php echo $grupo['curs_nombre']; ?>', '<?php echo $grupo['grup_modalidad']; ?>')">
+                          <label class="custom-control-label" for="estatusGrupo<?php echo $activo ?>"></label>
+                        </div>
+                      </td>
                       <td>
                         <button type="button" class="btn btn-primary btn-table" title="Actualizar" style="margin-top: 5px;" onclick="actualizarGrupo(<?php echo $grupo['grup_id_grupo']?>)">
                           <i class="fas fa-edit"></i>

@@ -7,6 +7,10 @@
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
 
+  $file = fopen("mensaje.txt", "a"); 
+      fwrite($file, $_POST['dml'].PHP_EOL);
+      fclose($file);
+
   if($_POST['dml'] == 'insert')
   {
     $curso = $_POST['ID_Curso'];
@@ -111,5 +115,17 @@
     }
 
     echo 1;
+  }
+  elseif($_POST['dml'] == 'actualizarEstatus'){
+    $grupo = $_POST['id'];
+    $estatus = $_POST['estatus'];
+
+    if ($estatus == 't'){
+      $estatus = 'FALSE'; 
+      $obj_Grupo->cambiarEstatus($grupo, $estatus);
+    } elseif ($estatus == 'f') {
+      $estatus = 'TRUE';
+      $obj_Grupo->cambiarEstatus($grupo, $estatus);
+    }
   }
 ?>
