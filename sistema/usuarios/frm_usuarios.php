@@ -123,7 +123,7 @@
                 <b>&nbsp;&nbsp;Datos generales</b>
               </div>
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                <!-- Define los campos que estaran en una fila -->
+                <!-- Define los campos que estarán en una fila -->
                 <div class="col-lg-4 form-group">
                   <label
                     for="strUsuarioNombre"><b>Nombre(s):<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
