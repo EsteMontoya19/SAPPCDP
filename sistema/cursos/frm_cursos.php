@@ -14,35 +14,13 @@ $curso -> curs_nivel=null;
 $curso -> curs_objetivos=null;
 $curso -> curs_temario=null;
 
-  if (isset($_POST['curso']) && isset($_POST['id'])) { 
-  // TODO: Modificar de acuerdo a Cursos
+  if (isset($_POST['id'])) {
     // Recuperar información de consulta
     $obj_Curso = new Curso();
-    $curso = $obj_Curso->buscarCurso($_POST['curso']);
-
-    switch ($curso->rol_id_rol) {
-      case 1: //Administrador
-        $obj_Administrador = new Administrador();
-        $administrador = $obj_Administrador->buscarAdministrador($_POST['persona']);
-      break;
-
-      case 2: //Moderador
-        $obj_Moderador = new Moderador();
-        $moderador = $obj_Moderador->buscarModerador($_POST['persona']);
-        $moderador_dia = $obj_Moderador->buscarModeradorDias($moderador->mode_id_moderador);
-      break;
-
-      case 3: //Profesor
-        $obj_Profesor = new Profesor();
-        $profesor = $obj_Profesor->buscarProfesor($_POST['persona']);
-        $profesor_nivel = $obj_Profesor->buscarProfesorNiveles($profesor->prof_id_profesor);
-        $profesor_modalidad = $obj_Profesor->buscarProfesorModalidades($profesor->prof_id_profesor);
-        $profesor_coordinacion = $obj_Profesor->buscarProfesorCoordinaciones($profesor->prof_id_profesor);
-      break;
-      
-    }
+    $curso = $obj_Curso->buscarCurso($_POST['id']);
   }
 ?>
+
 
 <div id="wrapper">
   <div id="content-wrapper">
@@ -84,52 +62,70 @@ $curso -> curs_temario=null;
               <div class="col-lg-12 form-row">
 
                 <div id="nombre" class="col-lg-6 form-group">
-                  <label for="strNombreCurso"><b>Nombre: *</b></label>
+                  <label for="strNombreCurso"><b>Nombre:
+                      <?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
                   <input type="text" class="form-control" id="strNombreCurso" name="strNombreCurso"
                     value="<?php echo isset($curso) ? $curso->curs_nombre : ""; ?>">
                 </div>
 
                 <div class="col-lg-3 form-group">
-                  <label for="intTipoCurso"><b>Tipo de curso: *</b></label>
+                  <label for="intTipoCurso"><b>Tipo de curso:
+                      <?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
                   <select class="custom-select" id="intTipoCurso" name="intTipoCurso" onchange="ocultar(this.value)">
                     <option value='0'>Seleccione una opción</option>
-                    <option value='1'>Curso</option>
-                    <option value='2'>Taller</option>
+                    <option value='Curso'
+                      <?php if (isset($curso) && $curso->curs_tipo == "Curso") { echo "selected"; }?>>Curso</option>
+                    <option value='Taller'
+                      <?php if (isset($curso) && $curso->curs_tipo == "Taller") { echo "selected"; }?>>Taller</option>
+                    <!-- TODO: Ingresar php para selected option value-->
                   </select>
                 </div>
 
-                <div id="nivel" class="col-lg-3 form-group">
-                  <label for="intTipoCurso"><b>Nivel: *</b></label>
-                  <select class="custom-select" id="intTipoCurso" name="intTipoCurso">
+                <div class="col-lg-3 form-group">
+                  <label for="intNivel"><b>Nivel: <?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                  <select class="custom-select" id="intNivel" name="intNivel" onchange="ocultar(this.value)">
                     <option value="0">Seleccione una opción</option>
-                    <option value="Basico">Básico</option>
-                    <option value="Intermedio">Intermedio</option>
-                    <option value="Avanzado">Avanzado</option>
+                    <option value='Basico'
+                      <?php if (isset($curso) && $curso->curs_nivel == "Basico") { echo "selected"; }?>>Básico</option>
+                    <option value='Intermedio'
+                      <?php if (isset($curso) && $curso->curs_nivel == "Intermedio") { echo "selected"; }?>>Intermedio
+                    </option>
+                    <option value='Avanzado'
+                      <?php if (isset($curso) && $curso->curs_nivel == "Avanzado") { echo "selected"; }?>>Avanzado
+                    </option>
                   </select>
                 </div>
 
 
 
                 <div class="col-lg-6 form-group">
-                  <label for="strReqTec"><b>Requisitos Técnicos: *</b></label>
-                  <textarea type="text" class="form-control" id="strReqTec" name="strReqTec"></textarea>
+                  <label for="strReqTec"><b>Requisitos Técnicos:
+                      <?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                  <textarea type="text" class="form-control" id="strReqTec"
+                    name="strReqTec"><?php echo isset($curso) ? $curso-> curs_req_tecnicos: ""; ?></textarea>
                 </div>
 
                 <div class="col-lg-6 form-group">
-                  <label for="strObjCurso"><b>Objetivos del curso: *</b></label>
-                  <textarea type="text" class="form-control" id="strObjCurso" name="strObjCurso"></textarea>
+                  <label for="strObjCurso"><b>Objetivos del curso:
+                      <?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                  <textarea type="text" class="form-control" id="strObjCurso"
+                    name="strObjCurso"><?php echo isset($curso) ? $curso -> curs_objetivos: ""; ?></textarea>
                 </div>
 
                 <div class="col-lg-6 form-group">
-                  <label for="strConNeces"><b>Conocimientos necesarios: *</b></label>
-                  <textarea type="text" class="form-control" id="strConNeces" name="strConNeces"></textarea>
+                  <label for="strConNeces"><b>Conocimientos necesarios:
+                      <?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                  <textarea type="text" class="form-control" id="strConNeces"
+                    name="strConNeces"><?php echo isset($curso) ? $curso -> curs_conocimientos: ""; ?></textarea>
                 </div>
 
 
                 <div id="numeroSesiones" class="col-lg-6 form-group" style="display:show;">
-                  <label for="strNumeroSesiones"><b>Número de sesiones: *</b></label>
+                  <label for="strNumeroSesiones"><b>Número de sesiones:
+                      <?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
                   <input class="form-control numeros_permitidos" type="number" min="0" max="20" class="form-control"
-                    id="strNumeroSesiones" name="strNumeroSesiones">
+                    id="strNumeroSesiones" name="strNumeroSesiones"
+                    value="<?php echo isset($curso) ? $curso->curs_num_sesiones : ""; ?>">
                 </div>
 
                 <div class="col-lg-6 form-group">
@@ -147,11 +143,15 @@ $curso -> curs_temario=null;
       <!-- Botones -->
       <div class="col-lg-12" style="text-align: center;">
         <button id="btn-regresar-curso" type="button" class="btn btn-success btn-footer">Regresar</button>
-        <button type="button" class="btn btn-success btn-footer">Guardar</button>
+        <?php if (isset($_POST['CRUD'])) { ?>
+        <?php if ($_POST['CRUD'] == 1) { ?>
+        <button id="btn-actualizar-curso" type="button" class="btn btn-success btn-footer">Actualizar</button>
+        <?php } ?>
+        <?php } else { ?>
+        <button id="btn-registrar-curso" type="button" class="btn btn-success btn-footer">Guardar</button>
+        <?php } ?>
       </div>
-
     </div>
   </div>
-</div>
 
-<script src="../sistema/cursos/control_cursos.js"></script>
+  <script src="../sistema/cursos/control_cursos.js"></script>
