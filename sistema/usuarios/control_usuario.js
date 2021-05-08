@@ -38,7 +38,7 @@ function validarFormularioUsuario() {
         alertify.error('Se debe ingresar el primer apellido del usuario');
         return false;
     } else {
-        if ($('#strUsuarioPrimerApe').val().length >50) {
+        if ($('#strUsuarioPrimerApe').val().length > 50) {
             $('html, body').animate({ scrollTop: 0 }, 'slow');
             document.getElementById('strUsuarioPrimerApe').focus();
             alertify.error('El apellido paterno debe tener máximo 50 caracteres');
@@ -60,7 +60,7 @@ function validarFormularioUsuario() {
             alertify.error('La direccion del correo es inválida');
             return false;
         }
-        if ($('#strUsuarioCorreo').val().length >30) {
+        if ($('#strUsuarioCorreo').val().length > 30) {
             $('html, body').animate({ scrollTop: 0 }, 'slow');
             document.getElementById('strUsuarioCorreo').focus();
             alertify.error('El correo electronico debe tener máximo 30 caracteres');
@@ -106,7 +106,7 @@ function validarFormularioUsuario() {
         document.getElementById('strNombreUsuario').focus();
         return false;
     } else {
-        if ($('#strNombreUsuario').val().length >15) {
+        if ($('#strNombreUsuario').val().length > 15) {
             $('html, body').animate({ scrollTop: 0 }, 'slow');
             document.getElementById('strNombreUsuario').focus();
             alertify.error('El nombre de usuario debe tener máximo 15 caracteres');
@@ -129,12 +129,12 @@ function validarFormularioUsuario() {
     }
 
     if ($('#UsuarioRespuesta').val() == '') {
-        alertify.error('Se debe ingresar uanrespuesta a la pregunta');
+        alertify.error('Se debe ingresar una respuesta a la pregunta');
         $('html, body').animate({ scrollTop: 200 }, 'slow');
         document.getElementById('UsuarioRespuesta').focus();
         return false;
     } else {
-        if ($('#UsuarioRespuesta').val().length >30) {
+        if ($('#UsuarioRespuesta').val().length > 30) {
             $('html, body').animate({ scrollTop: 0 }, 'slow');
             document.getElementById('UsuarioRespuesta').focus();
             alertify.error('La respuesta debe tener máximo 15 caracteres');
@@ -148,8 +148,7 @@ function validarFormularioUsuario() {
         document.getElementById('strContrasenia01').focus();
         return false;
     } else {
-
-        if ($('#strContrasenia01').val().length >20) {
+        if ($('#strContrasenia01').val().length > 20) {
             $('html, body').animate({ scrollTop: 0 }, 'slow');
             document.getElementById('strContrasenia01').focus();
             alertify.error('La contraseña debe tener máximo 20 caracteres.');
@@ -172,14 +171,13 @@ function validarFormularioUsuario() {
     }
 
     //? Validación datos de cuenta según rol
-    if( $('#intUsuarioRol').val() == 1) {
+    if ($('#intUsuarioRol').val() == 1) {
         if ($('#intNum_Trabajador').val() == '') {
             alertify.error('Debe ingresar un número de trabajador');
             $('html, body').animate({ scrollTop: 250 }, 'slow');
             document.getElementById('intNum_Trabajador').focus();
             return false;
         } else {
-    
             if ($('#intNum_Trabajador').val().length > 10) {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
                 document.getElementById('intNum_Trabajador').focus();
@@ -194,7 +192,6 @@ function validarFormularioUsuario() {
             document.getElementById('strRFC').focus();
             return false;
         } else {
-    
             if ($('#strRFC').val().length > 12) {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
                 document.getElementById('strRFC').focus();
@@ -202,21 +199,21 @@ function validarFormularioUsuario() {
                 return false;
             }
         }
-    } 
+    }
 
     //? Los de moderador
 
-    if( $('#intUsuarioRol').val() == 2) {   
-        var algunSeleccionado = 0; 
+    if ($('#intUsuarioRol').val() == 2) {
+        var algunSeleccionado = 0;
         var iCont = 1;
-        while (iCont <7){
-            var isChecked = document.getElementById('strDiaServicio'+iCont).checked;
-            if(isChecked){
+        while (iCont < 7) {
+            var isChecked = document.getElementById('strDiaServicio' + iCont).checked;
+            if (isChecked) {
                 algunSeleccionado++;
             }
             iCont++;
         }
-        if(algunSeleccionado == 0){
+        if (algunSeleccionado == 0) {
             alertify.error('Debe seleccionar al menos un día para realizar el servicio social.');
             return false;
         }
@@ -227,7 +224,6 @@ function validarFormularioUsuario() {
             document.getElementById('intNumCuenta').focus();
             return false;
         } else {
-    
             if ($('#intNumCuenta').val().length < 6) {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
                 document.getElementById('intNumCuenta').focus();
@@ -258,17 +254,15 @@ function validarFormularioUsuario() {
                 return false;
             }
         }
-    } 
-    
-    if ($('#intUsuarioRol').val() == 3) { 
-        
+    }
+
+    if ($('#intUsuarioRol').val() == 3) {
         if ($('#intNum_Trabajador').val() == '') {
             alertify.error('Debe ingresar un número de trabajador');
             $('html, body').animate({ scrollTop: 250 }, 'slow');
             document.getElementById('intNum_Trabajador').focus();
             return false;
         } else {
-    
             if ($('#intNum_Trabajador').val().length > 10) {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
                 document.getElementById('intNum_Trabajador').focus();
@@ -282,7 +276,6 @@ function validarFormularioUsuario() {
             document.getElementById('strRFC').focus();
             return false;
         } else {
-    
             if ($('#strRFC').val().length > 12) {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
                 document.getElementById('strRFC').focus();
@@ -290,14 +283,13 @@ function validarFormularioUsuario() {
                 return false;
             }
         }
-        
+
         if ($('#strSemblanza').val() == '') {
             alertify.error('Debe ingresar su semblanza');
             $('html, body').animate({ scrollTop: 250 }, 'slow');
             document.getElementById('strSemblanza').focus();
             return false;
         } else {
-    
             if ($('#strSemblanza').val().length > 500) {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
                 document.getElementById('strSemblanza').focus();
@@ -305,47 +297,47 @@ function validarFormularioUsuario() {
                 return false;
             }
         }
-        var algunSeleccionado = 0; 
+        var algunSeleccionado = 0;
         var iCont = 1;
-        while (iCont <= 2){
-            var isChecked = document.getElementById('strNivel'+iCont).checked;
-            if(isChecked){
+        while (iCont <= 2) {
+            var isChecked = document.getElementById('strNivel' + iCont).checked;
+            if (isChecked) {
                 algunSeleccionado++;
             }
             iCont++;
         }
-        if(algunSeleccionado == 0){
+        if (algunSeleccionado == 0) {
             alertify.error('Debe seleccionar al menos un nivel en el que se imparte clases.');
             return false;
         }
 
-        var algunSeleccionado = 0; 
+        var algunSeleccionado = 0;
         var iCont = 1;
-        while (iCont <= 3){
-            var isChecked = document.getElementById('strModalidad'+iCont).checked;
-            if(isChecked){
+        while (iCont <= 3) {
+            var isChecked = document.getElementById('strModalidad' + iCont).checked;
+            if (isChecked) {
                 algunSeleccionado++;
             }
             iCont++;
         }
-        if(algunSeleccionado == 0){
+        if (algunSeleccionado == 0) {
             alertify.error('Debe seleccionar al menos una modalidad en la que imparta clases.');
             return false;
         }
 
-        var algunSeleccionado = 0; 
+        var algunSeleccionado = 0;
         var iCont = 1;
-        while (iCont <= 24){
-            var isChecked = document.getElementById('strCoordinacion'+iCont).checked;
-            if(isChecked){
+        while (iCont <= 24) {
+            var isChecked = document.getElementById('strCoordinacion' + iCont).checked;
+            if (isChecked) {
                 algunSeleccionado++;
             }
             iCont++;
         }
-        if(algunSeleccionado == 0){
+        if (algunSeleccionado == 0) {
             alertify.error('Debe seleccionar al menos una coordinación en la que participe.');
             return false;
-        }        
+        }
     }
     return true;
 }
@@ -356,7 +348,6 @@ $(document).ready(function () {
         if (validarFormularioUsuario()) {
             datos = $('#form_usuario').serialize();
 
-            
             $.ajax({
                 type: 'POST',
                 url: '../modulos/Control_Usuario.php',
@@ -376,7 +367,7 @@ $(document).ready(function () {
                     } else {
                         alertify.error('Hubo un problema al registrar al usuario');
                     }
-                }, 
+                },
             });
             return false;
         }
@@ -389,7 +380,7 @@ function actualizarUsuario(id, persona, rol) {
         id: id,
         persona: persona,
         CRUD: 1,
-        rol: rol
+        rol: rol,
     };
 
     $.ajax({
@@ -473,7 +464,7 @@ function consultarUsuarioDirecto(id, persona, rol) {
 
 // Eliminar usuario
 function eliminarUsuario(id, persona, nombre, apellido) {
-    var mensaje = '¿Esta seguro de elimnar el usuario de ';
+    var mensaje = '¿Esta seguro de eliminar el usuario de ';
     mensaje = mensaje.concat(nombre);
     mensaje = mensaje.concat(' ');
     mensaje = mensaje.concat(apellido);

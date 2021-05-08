@@ -519,22 +519,5 @@ $(document).ready( function () {
   });
 });
 
-$(document).on('change', '#GrupoModalidad', function mostrarCampos() {
-  var grupo_modalidad= $("#GrupoModalidad").val();
-
-  if (grupo_modalidad.startsWith('1')) {
-    $("#ID_Plataforma").hiden();
-    $("#URL_Acceso").hiden();
-    $("#ID_Reunion").hiden();
-    $("#Clave_Acceso").hiden();
-    $("#GrupoSalon").show();
-  } else {
-    $("#ID_Plataforma").show();
-    $("#URL_Acceso").show();
-    $("#ID_Reunion").show();
-    $("#Clave_Acceso").show();
-    $("#GrupoSalon").hiden();
-  }
-});
 
 

@@ -9,93 +9,72 @@
 
   if($_POST['dml'] == 'insert')
   {
-    //Obtiene la modalidad del grupo
+    $curso = $_POST['ID_Curso'];
+    $tipo_grupo = $_POST['GrupoTipo'];
     $modalidad = $_POST['GrupoModalidad'];
+    $estado = $_POST['GrupoEstatus'];
+    $profesor = $_POST['ID_Profesor'];
+    $moderador = $_POST['ID_Moderador'];
+    $cupo = $_POST['GrupoCupo'];
+    $inicio_insc = $_POST['GrupoInicioInscripcion'];
+    $fin_insc = $_POST['GrupoFinInscripcion'];
+
+    $plataforma = $_POST['ID_Plataforma'];
+    $calendario = $_POST['']; //TODO Hace falta pasar el id del calendario
+    $reunion = $_POST['ID_Reunion'];
+    $acceso = $_POST['URL_Acceso'];
+    $clave = $_POST['Clave_Acceso'];
+    $salon = $_POST['ID_Salon']; 
     
-    if(!isset($modalidad == 'En línea')) {
+    $activo = $_POST['']; //TODO Hace falta El campo activo...?
 
-      $moderador = $_POST[''];
-      $profesor = $_POST[''];
-      $curso = $_POST[''];
-      $plataforma = $_POST[''];
-      $calendario = $_POST[''];
-      $reunion = $_POST[''];
-      $acceso = $_POST[''];
-      $clave = $_POST[''];
-      $cupo = $_POST[''];
-      $estado = $_POST[''];
-      $activo = $_POST[''];
-      $modalidad = $_POST[''];
-      $tipo_grupo = $_POST[''];
-      $inicio_insc = $_POST[''];
-      $fin_insc = $_POST[''];
+    $obj_Grupo->agregarGrupo($moderador, $profesor, $curso, $salon, $plataforma, $calendario, $reunion, $acceso, $clave, $cupo, $estado, $activo,
+    $modalidad, $tipo_grupo, $inicio_insc, $fin_insc);
+    //TODO Hace falta completar el metodo en la clase
+    $id_grupo_ultimo = $obj_Grupo->buscarUltimo();
 
-      $obj_Grupo->agregarGrupoWebinar($moderador, $profesor, $curso, $plataforma, $calendario, $reunion, $acceso, $clave, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc);
-      $id_grupo = $obj_Grupo->buscarIDGrupo($moderador, $profesor, $curso, $plataforma, $calendario, $reunion, $acceso, $clave, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc);
+    //TODO Buscar que funcione traer un arreglo e insertarlo en la BD
+    foreach ($arr_Sesiones as $valor) {
+      $id_grupo = $id_grupo_ultimo; //TODO Hace Falta buscar el ID Ultimo para enviar al registro de sesiones
+      $fecha_sesion = $_POST['SesionFecha'];
+      $hora_sesion = $_POST['SesionHora'];
 
-      foreach ($arr_Sesiones as $valor) {
-        $id_grupo = $_POST[''];
-        $fecha_sesion = $_POST[''];
-        $hora_sesion = $_POST[''];
-
-        $obj_Sesion -> agregarSesion($id_grupo, $fecha_sesion, $hora_sesion);
-      }
-      
-      echo 1;
-    } elseif($modalidad == 'Presencial') {
-
-      $moderador = $_POST[''];
-      $profesor = $_POST[''];
-      $curso = $_POST[''];
-      $salon = $_POST[''];
-      $calendario = $_POST[''];
-      $cupo = $_POST[''];
-      $estado = $_POST[''];
-      $activo = $_POST[''];
-      $modalidad = $_POST[''];
-      $tipo_grupo = $_POST[''];
-      $inicio_insc = $_POST[''];
-      $fin_insc = $_POST[''];
-
-      $obj_Grupo->agregarGrupo($moderador, $profesor, $curso, $salon, $calendario, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc);
-      $id_grupo = $obj_Grupo->buscarIDGrupo($moderador, $profesor, $curso, $salon, $calendario, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc);
-        
-      foreach ($arr_Sesiones as $clave -> $valor) {
-        $id_grupo = $_POST[''];
-        $fecha_sesion = $_POST[''];
-        $hora_sesion = $_POST[''];
-
-        $obj_Sesion -> agregarSesion($id_grupo, $fecha_sesion, $hora_sesion);
-      }
+      $obj_Sesion -> agregarSesion($id_grupo, $fecha_sesion, $hora_sesion);
 
       echo 1;
-
-    } else {
-
-      echo 2;
+    
     }
-      
+    echo 2; 
   }
   elseif($_POST['dml'] == 'update')
   {
 
-    $IDGrupo = $_POST[''];
-    $grupo_existente = $obj_Grupo->buscarIDGrupo($IDGrupo);
+    $grupo = $_POST['ID_Grupo'];
+    $curso = $_POST['ID_Curso'];
+    $tipo_grupo = $_POST['GrupoTipo'];
+    $modalidad = $_POST['GrupoModalidad'];
+    $estado = $_POST['GrupoEstatus'];
+    $profesor = $_POST['ID_Profesor'];
+    $moderador = $_POST['ID_Moderador'];
+    $cupo = $_POST['GrupoCupo'];
+    $inicio_insc = $_POST['GrupoInicioInscripcion'];
+    $fin_insc = $_POST['GrupoFinInscripcion'];
+    $plataforma = $_POST['ID_Plataforma'];
+    $calendario = $_POST['']; //TODO Hace falta pasar el id del calendario
+    $reunion = $_POST['ID_Reunion'];
+    $acceso = $_POST['URL_Acceso'];
+    $clave = $_POST['Clave_Acceso'];
+    $salon = $_POST['ID_Salon'];
+    $activo = $_POST['']; //TODO Hace falta El campo activo...?
 
-    if(!isset($grupo_existente->_VARIABLEIDGRUPO_) & $modalidad == 'En línea') {
-
-
-
+    $obj_Grupo->actualizarGrupo($grupo, $moderador, $profesor, $salon, $plataforma, $reunion, $acceso, $clave, 
+    $cupo, $estado, $activo, $inicio_insc, $fin_insc);
+    
+    
       echo 1;
-    } elseif($grupo_existente->_VARIABLEIDGRUPO_) & $modalidad == 'Presencial') {
 
-
-
-      echo 1;
-
-    } else {
+    
       echo 2;
-    }
   
   }
   elseif($_POST['dml'] == 'delete')

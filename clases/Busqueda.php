@@ -90,6 +90,8 @@
             return ($transaccion_1->traerRegistros());
         }
 
+        
+
         function numeroDias (){
             $SQL_Bus_Eventos =
             "SELECT COUNT (dia_id_dia)
@@ -108,16 +110,18 @@
 
         function selectSalones()
         {
-            $SQL_Bus_Eventos =
-            "   SELECT salo_id_salon, salo_nombre
-                FROM salon
-                ORDER BY salo_nombre ASC;
+            $SQL_Bus_Salones =
+            "   
+                SELECT SALO_ID_SALON, EDIF_NOMBRE, SALO_NOMBRE 
+                FROM SALON S, EDIFICIO E
+                WHERE S.EDIF_ID_EDIFICIO = E.EDIF_ID_EDIFICIO
+                ORDER BY EDIF_NOMBRE, SALO_NOMBRE;
             ";
 
             $bd = new BD();
             $bd->abrirBD();
             $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Bus_Eventos);
+            $transaccion_1->enviarQuery($SQL_Bus_Salones);
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }  
@@ -137,12 +141,13 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }      
-        function selectCursos()
+        function selectCursosActivos()
         {
             $SQL_Bus_Cursos =
             "   
-                SELECT CURS_ID_CURSOS, CURS_NOMBRE, CURS_TIPO, CURS_NUM_SESIONES
+                SELECT CURS_ID_CURSOS, CURS_NOMBRE, CURS_NUM_SESIONES
                 FROM CURSO
+                WHERE CURS_ACTIVO = TRUE
                 ORDER BY CURS_NOMBRE ASC;
             ";
 

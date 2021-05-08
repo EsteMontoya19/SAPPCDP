@@ -298,5 +298,23 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerObjeto(0));
         }
+
+        function buscarSoloGrupo($id){
+            $SQL_Bus_SoloGrupo = 
+            "
+                SELECT grup_id_grupo, mode_id_moderador, prof_id_profesor, curs_id_cursos,  salo_id_salon, plat_id_plataforma, cale_id_calendario, grup_reunion, grup_acceso, grup_clave_acceso,  
+                    grup_cupo, grup_estado, grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc
+                FROM Grupo
+                WHERE grup_id_grupo = $id
+                ";
+
+                $bd = new BD();
+                $bd->abrirBD();
+                $transaccion_1 = new Transaccion($bd->conexion);
+                $transaccion_1->enviarQuery($SQL_Bus_SoloGrupo);
+                $obj_Grupo = $transaccion_1->traerObjeto(0);
+                $bd->cerrarBD();
+                return ($transaccion_1->traerObjeto(0));
+        }
     }
 ?>

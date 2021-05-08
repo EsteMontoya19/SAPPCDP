@@ -37,6 +37,7 @@
                 <th>Duración</th>
                 <th>Nombre del instructor</th>
                 <th>Tipo</th>
+                <th>Estado</th>
                 <th>Opciones</th>
               </tr>
             </thead>
@@ -51,6 +52,13 @@
                 <td></td>
                 <td></td>
                 <td></td>
+                <td>
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="estatusUsuario1" checked=""
+                      onclick="cambioEstatus(2 , 't', 'Luis Eduardo', 'Magos')">
+                    <label class="custom-control-label" for="estatusUsuario1"></label>
+                  </div>
+                </td>
                 <td>
                   <button type="button" class="btn btn-info btn-table" title="Detalles">
                     <i class="fas fa-search-plus"></i>

@@ -51,7 +51,7 @@
 		}
 
         //Buscar sesión
-        function buscarSesion($id_grupo)
+        function buscarSesionesIDGrupo($id_grupo)
         {
 			$SQL_Bus_Sesion =
 			"	
@@ -69,7 +69,7 @@
         }
 
         //Buscar sesiones de un grupo
-        function buscarSesiones($id_sesion)
+        function buscarSesionIDSesion($id_sesion)
         {
 			$SQL_Bus_Sesion =
 			"	
@@ -82,8 +82,9 @@
 			$bd->abrirBD();
 			$transaccion_1 = new Transaccion($bd->conexion);
 			$transaccion_1->enviarQuery($SQL_Bus_Sesion);
+			$obj_Sesion = $transaccion_1->traerObjeto(0);
 			$bd->cerrarBD();
-            return ($transaccion_1->traerRegistros());
+			return ($transaccion_1->traerObjeto(0));
         }
     }
 ?>
