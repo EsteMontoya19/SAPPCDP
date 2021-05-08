@@ -100,9 +100,7 @@
             $bd->abrirBD();
             $transaccion_1 = new Transaccion($bd->conexion);
             $transaccion_1->enviarQuery($SQL_Act_Curso);
-            $obj_Grupo = $transaccion_1->traerObjeto(0);
             $bd->cerrarBD();
-            return ($transaccion_1->traerObjeto(0));
         }
 
         /*Los métodos a partir de aqui están diferenciados pero los de arriba estan creados para permitir un trato indiferente para los 2 tipos de cursos, para una facilidad de manejo*/

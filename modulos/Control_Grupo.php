@@ -1,15 +1,11 @@
 <?php
-
-  include('../../clases/BD.php');
-  include('../../clases/Grupo.php');
-  include('../../clases/Sesion.php');
+  include('../clases/BD.php');
+  include('../clases/Grupo.php');
+  include('../clases/Sesion.php');
 
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
 
-  $file = fopen("mensaje.txt", "a"); 
-      fwrite($file, $_POST['dml'].PHP_EOL);
-      fclose($file);
 
   if($_POST['dml'] == 'insert')
   {
@@ -120,6 +116,7 @@
     $grupo = $_POST['id'];
     $estatus = $_POST['estatus'];
 
+    
     if ($estatus == 't'){
       $estatus = 'FALSE'; 
       $obj_Grupo->cambiarEstatus($grupo, $estatus);
@@ -127,5 +124,6 @@
       $estatus = 'TRUE';
       $obj_Grupo->cambiarEstatus($grupo, $estatus);
     }
+    echo 1;
   }
 ?>
