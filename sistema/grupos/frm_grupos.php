@@ -43,7 +43,7 @@
     <div class="container-fluid">
 
       <ol class="breadcrumb">
-        <li id="btn-inicio-grupo" class="breadcrumb-item">
+        <li id="btn-inicio-curso" class="breadcrumb-item">
           <a href="#"><i class="fas fa-user-shield"></i>&nbsp; Grupos</a>
         </li>
         <!-- Validación de la ruta -->
