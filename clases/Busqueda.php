@@ -90,6 +90,8 @@
             return ($transaccion_1->traerRegistros());
         }
 
+        
+
         function numeroDias (){
             $SQL_Bus_Eventos =
             "SELECT COUNT (dia_id_dia)

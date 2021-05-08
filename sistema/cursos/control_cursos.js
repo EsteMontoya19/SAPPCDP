@@ -39,7 +39,7 @@ function consultarCursoDirecto(id) {
         },
     });
 }
-
+//TODO: Modificar
 function cambsioEstatus(id, estatus, nombre) {
     alert('Presionado');
 
