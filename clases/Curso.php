@@ -12,7 +12,7 @@
             $bd->abrirBD();
             $transaccion_1 = new Transaccion($bd->conexion);
             $transaccion_1->enviarQuery($SQL_Bus_Curso);
-            $obj_Grupo = $transaccion_1->traerObjeto(0);
+            $obj_Curso = $transaccion_1->traerObjeto(0);
             $bd->cerrarBD();
             return ($transaccion_1->traerObjeto(0));
         }
@@ -20,7 +20,7 @@
         function buscarTodosCursos()
 		{
 			$SQL_Bus_cursos =
-			"	SELECT DISTINCT curs_nombre, curs_tipo, curs_nivel, curs_num_sesiones, curs_activo
+			"	SELECT DISTINCT curs_id_cursos,curs_nombre, curs_tipo, curs_nivel, curs_num_sesiones, curs_activo
 				FROM curso;
 			";
 
@@ -30,6 +30,21 @@
 			$transaccion_1->enviarQuery($SQL_Bus_cursos);
 			$bd->cerrarBD();
 			return ($transaccion_1->traerRegistros());
+		}
+
+        function modificarEstatus($curso, $estatus)
+		{
+			$SQL_Curso_Est="
+			UPDATE Curso
+			SET curs_activo = $estatus
+			WHERE curs_id_cursos = $curso";
+
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Curso_Est);
+			$bd->cerrarBD();
 		}
     }
 ?>

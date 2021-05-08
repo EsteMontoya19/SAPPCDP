@@ -72,4 +72,4 @@
   </div>
 </div>
 
-<script src="../sistema/cursos/control_cursos.js"></script>
+<script src="../sistema/cursos/control_curso.js"></script>

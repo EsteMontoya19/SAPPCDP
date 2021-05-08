@@ -4,8 +4,18 @@
 
       <ol class="breadcrumb">
         <li id="btn-inicio-cursos" class="breadcrumb-item">
-          <a href="#"><i class="fas fa-user-shield"></i>&nbsp; Cursos/ Registro de propuesta</a>
+          <a href="#"><i class="fas fa-user-shield"></i>&nbsp; Cursos</a>
         </li>
+        <!-- Validación de la ruta -->
+        <?php if (isset($_POST['CRUD'])) { ?>
+        <?php if ($_POST['CRUD'] == 1) { ?>
+        <li class="breadcrumb-item active"><i class="fas fa-edit"></i>&nbsp; Actualizar registro</li>
+        <?php } elseif ($_POST['CRUD'] == 0) { ?>
+        <li class="breadcrumb-item active"><i class="fas fa-search-plus"></i>&nbsp; Consultar registro</li>
+        <?php } ?>
+        <?php } else { ?>
+        <li class="breadcrumb-item active"><i class="fas fa-folder-plus"></i>&nbsp; Nuevo registro</li>
+        <?php } ?>
       </ol>
 
       <p>
@@ -76,7 +86,7 @@
 
       <!-- Botones -->
       <div class="col-lg-12" style="text-align: center;">
-        <button type="button" class="btn btn-success btn-footer">Regresar</button>
+        <button id="btn-regresar-curso" type="button" class="btn btn-success btn-footer">Regresar</button>
         <button type="button" class="btn btn-success btn-footer">Guardar</button>
       </div>
 
