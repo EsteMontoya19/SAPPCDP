@@ -139,12 +139,13 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }      
-        function selectCursos()
+        function selectCursosActivos()
         {
             $SQL_Bus_Cursos =
             "   
                 SELECT CURS_ID_CURSOS, CURS_NOMBRE, CURS_NUM_SESIONES
                 FROM CURSO
+                WHERE CURS_ACTIVO = TRUE
                 ORDER BY CURS_NOMBRE ASC;
             ";
 

@@ -1063,3 +1063,38 @@ INSERT INTO Grupo (MONI_ID_MONITOR, PROF_ID_PROFESOR, CURS_ID_CURSOS, SALO_ID_sa
 
 INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora)
 			VALUES (1, '2021/09/08','07:00:00'), (1, '2021/09/09','07:00:00');
+
+*/
+
+
+
+/*Nuevos Inserts para Grupo y Sesiones Corregidos con ortografía y tal cuál serán nombrados en el front 
+especialmete GRUP_ESTADO, GRUP_ACTIVO, GRUP_MODALIDAD, GRUP_TIPO
+
+Hay que asegurarse de tener la ultima version de la base de datos, el salo_id_salon no sea not null, igual que 
+            PLAT_ID_PLATAFORMA, GRUP_REUNION, GRUP_ACCESO, GRUP_CLAVE_ACCESO,
+
+
+INSERT INTO Grupo (MODE_ID_MODERADOR, PROF_ID_PROFESOR, CURS_ID_CURSOS, SALO_ID_SALON, CALE_ID_CALENDARIO,
+               PLAT_ID_PLATAFORMA, GRUP_REUNION, GRUP_ACCESO, GRUP_CLAVE_ACCESO, 
+               GRUP_CUPO, GRUP_ESTADO, GRUP_ACTIVO, GRUP_MODALIDAD, GRUP_TIPO, 
+               GRUP_INICIO_INSC, GRUP_FIN_INSC)
+			VALUES (1, 1, 1, null, 1, 
+               1, 'grupo reunion1', 'grupo acceso1', 'clave1', 
+               50, 'Privado', 'true', 'En línea', 'Aprobado', 
+               '2021/02/23', '2021/09/08'),
+               (1, 1, 1, 1, 
+               1, null, null, null, null, 60, 
+               'Público', 'true', 'Presencial', 'Rechazado', 
+               '2021/02/25', '2021/09/07'),
+               (1, 1, 1, null, 1, 
+               1, 'grupo reunion3', 'grupo acceso3', 'clave3', 
+               25, 'Público', 'true', 'En línea', 'Rechazado', 
+               '2021/02/28', '2021/09/09');
+
+INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora)
+			VALUES   (1, '2021/09/08','07:00:00'), (1, '2021/09/09','10:00:00'),
+                  (2, '2021/09/10','08:00:00'), (2, '2021/09/11','11:00:00'),
+                  (3, '2021/09/08','12:00:00'), (3, '2021/09/13','12:00:00');
+
+*/
