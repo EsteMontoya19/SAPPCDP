@@ -49,16 +49,9 @@
       <!-- Navbar Search -->
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
-                <i class="fas fa-user-graduate"><div style="width: 20px;"></div></i>Cursos
-              </a>
-              <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarUser">
-                <a class="dropdown-item disabled" href="#"></a>
-                <a class="dropdown-item" type="button"  id="btn_vigentes">Vigentes</a>
-                <a class="dropdown-item" type="button"  id="btn_historicos">Históricos</a>
-                <a class="dropdown-item" type="button"  id="btn_constancias">Constancias</a>
-              </div>
+            
+            <li id="btn_cursos" class="nav-item">
+                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-book"></i>&nbsp; Cursos</a>
             </li>
             <li id="btn_grupos" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-users"></i>&nbsp; Grupos</a>

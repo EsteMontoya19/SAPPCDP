@@ -94,9 +94,9 @@
                         <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupo(<?php echo $grupo['grup_id_grupo']?>, '<?php echo $grupo['grup_modalidad']?>')">
                           <i class="fas fa-search-plus"></i>
                         </button>
-                        <button type="button" class="btn btn-danger btn-table" title="Eliminar" style="margin-top: 5px;" onclick="eliminarGrupo(<?php echo $grupo['grup_id_grupo']?>)">
+                        <!--<button type="button" class="btn btn-danger btn-table" title="Eliminar" style="margin-top: 5px;" onclick="eliminarGrupo(<?php echo $grupo['grup_id_grupo']?>)">
                           <i class="fas fa-trash-alt"></i>
-                        </button>
+                        </button>-->
 
                         <button type="button" class="btn btn-danger btn-table" title="Listas" style="margin-top: 5px;background: #20560a">
                           <i class="fas fa-list-alt"></i>

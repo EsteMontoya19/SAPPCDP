@@ -9,12 +9,12 @@
 $(document).ready(function () {
     $('#btn-inicio-cursos').click(function () {
         $('html, body').animate({ scrollTop: 0 }, 0);
-        $('#container').load('../sistema/cursos/frm_cursos_vigentes.php');
+        $('#container').load('../sistema/cursos/frm_inicio_cursos.php');
     });
 
     $('#btn-regresar-curso').click(function () {
         $('html, body').animate({ scrollTop: 0 }, 0);
-        $('#container').load('../sistema/cursos/frm_cursos_vigentes.php');
+        $('#container').load('../sistema/cursos/frm_inicio_cursos.php');
     });
 
     $('#btn-registro-curso').click(function () {
@@ -70,7 +70,7 @@ function cambioEstatus(id, estatus, nombre) {
                     if (respuesta == 1) {
                         alertify.success('Se cambio el estatus del curso');
                         setTimeout(function () {
-                            $('#container').load('../sistema/cursos/frm_cursos_vigentes.php');
+                            $('#container').load('../sistema/cursos/frm_inicio_cursos.php');
                         }, 1500);
                     } else {
                         alertify.error('Hubo un problema al cambiar el estatus del usuario PRUEBAS');
@@ -80,10 +80,10 @@ function cambioEstatus(id, estatus, nombre) {
         },
         function () {
             alertify.confirm().close();
-            //$('#container').load('../sistema/cursos/frm_cursos_vigentes.php');
+            //$('#container').load('../sistema/cursos/frm_inicio_cursos.php');
         }
     );
     setTimeout(function () {
-        $('#container').load('../sistema/cursos/frm_cursos_vigentes.php');
+        $('#container').load('../sistema/cursos/frm_inicio_cursos.php');
     }, 1500);
 }
