@@ -158,18 +158,18 @@
     if($curso == $curso_existente->curs_id_curso){
       $esElMismo = 1;
     }
-
+    
     if(!isset($curso_existente->curs_id_curso) || $esElMismo == 1) {
      //? Datos de curso
-      $curso = $_POST[''];
-      $tipo = $_POST[''];
-      $nombre = $_POST[''];
-      $num_sesiones = $_POST[''];
-      $req_tecnicos = $_POST[''];
-      $conocimientos = $_POST[''];
-      $nivel = $_POST['']; 
-      $objetivo = $_POST[''];
-      $temario = $_POST[''];
+      $curso = $_POST['idCurso'];
+      $tipo = $_POST['intTipoCurso'];
+      $nombre = $_POST['strNombreCurso'];
+      $num_sesiones = $_POST['strNumeroSesiones'];
+      $req_tecnicos = $_POST['strReqTec'];
+      $conocimientos = $_POST['strConNeces'];
+      $nivel = $_POST['intNivel']; 
+      $objetivo = $_POST['strObjCurso'];
+      $temario = $_POST['temario'];
       $activo = isset($_POST['bEstado']) ? $_POST['bEstado'] : TRUE; //TODO Ver como funciona este dato en el formulario
           
       $obj_Curso->modificarGrupo($curso, $tipo, $nombre, $num_sesiones, $req_tecnicos, $conocimientos, $nivel, $objetivo, $temario, $activo);
