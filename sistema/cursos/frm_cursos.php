@@ -63,14 +63,14 @@ $curso -> curs_temario=null;
 
                 <div id="nombre" class="col-lg-6 form-group">
                   <label for="strNombreCurso"><b>Nombre:
-                      <?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                      <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1)  echo "*"; ?></b></label>
                   <input type="text" class="form-control" id="strNombreCurso" name="strNombreCurso"
                     value="<?php echo isset($curso) ? $curso->curs_nombre : ""; ?>">
                 </div>
 
                 <div class="col-lg-3 form-group">
                   <label for="intTipoCurso"><b>Tipo de curso:
-                      <?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                      <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1)  echo "*"; ?></b></label>
                   <select class="custom-select" id="intTipoCurso" name="intTipoCurso" onchange="ocultar(this.value)">
                     <option value='0'>Seleccione una opción</option>
                     <option value='Curso'
@@ -82,7 +82,8 @@ $curso -> curs_temario=null;
                 </div>
 
                 <div class="col-lg-3 form-group">
-                  <label for="intNivel"><b>Nivel: <?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                  <label for="intNivel"><b>Nivel: 
+                      <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1)  echo "*"; ?></b></label>
                   <select class="custom-select" id="intNivel" name="intNivel" onchange="ocultar(this.value)">
                     <option value="0">Seleccione una opción</option>
                     <option value='Básico'
@@ -107,7 +108,7 @@ $curso -> curs_temario=null;
 
                 <div class="col-lg-6 form-group">
                   <label for="strObjCurso"><b>Objetivos del curso:
-                      <?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                      <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1)  echo "*"; ?></b></label>
                   <textarea type="text" class="form-control" id="strObjCurso"
                     name="strObjCurso"><?php echo isset($curso) ? $curso -> curs_objetivos: ""; ?></textarea>
                 </div>
@@ -122,7 +123,7 @@ $curso -> curs_temario=null;
 
                 <div id="numeroSesiones" class="col-lg-6 form-group" style="display:show;">
                   <label for="strNumeroSesiones"><b>Número de sesiones:
-                      <?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                      <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1)  echo "*"; ?></b></label>
                   <input class="form-control numeros_permitidos" type="number" min="0" max="20" class="form-control"
                     id="strNumeroSesiones" name="strNumeroSesiones"
                     value="<?php echo isset($curso) ? $curso->curs_num_sesiones : ""; ?>">
