@@ -63,7 +63,7 @@
 			$bd->cerrarBD();
 		}
 
-        function modificarGrupo($curso, $tipo, $nombre, $num_sesiones, $req_tecnicos, $conocimientos, $nivel, $objetivo, $temario, $activo)
+        function modificarCurso($curso, $tipo, $nombre, $num_sesiones, $req_tecnicos, $conocimientos, $nivel, $objetivo, $temario, $activo)
         {
             $SQL_Curso_Mod=
 			"
