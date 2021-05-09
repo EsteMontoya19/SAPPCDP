@@ -57,6 +57,36 @@ function actualizarCursoDirecto(id) {
     });
 }
 
+$(document).ready(function () {
+    $('#btn-actualizar-curso').click(function () {
+        if (validarFormularioCursos()) {
+            datos = $('#form_cursos').serialize();
+            $.ajax({
+                type: 'POST',
+                url: '../modulos/Control_Curso.php',
+                data: datos,
+                success: function (respuesta) {
+                    console.log(respuesta);
+                    if (respuesta.endsWith('1')) {
+                        alertify.success('El registro se actualizó correctamente');
+                        setTimeout(function () {
+                            $('html, body').animate({ scrollTop: 0 }, 0);
+                            $('#container').load('../sistema/cursos/frm_inicio_cursos.php');
+                        }, 0);
+                    } else if (respuesta.endsWith('2')) {
+                        $('html, body').animate({ scrollTop: 200 }, 'slow');
+                        document.getElementById('strNombreCurso').focus();
+                        alertify.error('El nombre del curso ya existe');
+                    } else {
+                        alertify.error('Hubo un problema al registrar el curso');
+                    }
+                },
+            });
+            return false;
+        }
+    });
+});
+
 //TODO: Modificar
 function cambioEstatus(id, estatus, nombre) {
     var mensaje = '¿Esta seguro de cambiar el estatus del curso ';
