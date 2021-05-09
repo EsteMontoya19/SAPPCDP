@@ -41,21 +41,21 @@ function consultarCursoDirecto(id) {
 }
 
 function actualizarCursoDirecto(id) {
-    var datos = { 
-      id: id,
-      CRUD: 1,
+    var datos = {
+        id: id,
+        CRUD: 1,
     };
-  
+
     $.ajax({
-      data: datos,
-      type: "POST",
-      url: "../sistema/cursos/frm_cursos.php",
-      success: function (data) {
-        $("html, body").animate({ scrollTop: 0 }, 0);
-        $("#container").html(data);
-      },
+        data: datos,
+        type: 'POST',
+        url: '../sistema/cursos/frm_cursos.php',
+        success: function (data) {
+            $('html, body').animate({ scrollTop: 0 }, 0);
+            $('#container').html(data);
+        },
     });
-  }
+}
 
 //TODO: Modificar
 function cambioEstatus(id, estatus, nombre) {
@@ -117,4 +117,9 @@ $(document).ready(function () {
             [5, 10, 20, 50, 'Todos'],
         ],
     });
+});
+
+$('.custom-file-input').on('change', function () {
+    var fileName = $(this).val().split('\\').pop();
+    $(this).siblings('.custom-file-label').addClass('selected').html(fileName);
 });
