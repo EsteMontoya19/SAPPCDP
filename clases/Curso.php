@@ -80,7 +80,7 @@
         }
 
         //Permite actualizar un registro en la base de datos
-        function agregarCurso($curso, $tipo, $nombre, $sesiones, $tecnicos, $conocimientos, $nivel, $objetivos, $temario, $activo)
+        function actualizarCurso($curso, $tipo, $nombre, $sesiones, $tecnicos, $conocimientos, $nivel, $objetivos, $temario, $activo)
         {
             $SQL_Act_Curso = 
             "   UPDATE Curso
