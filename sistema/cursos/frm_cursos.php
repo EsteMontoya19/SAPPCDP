@@ -141,13 +141,17 @@ $curso -> curs_temario=null;
           </div>
       </form>
 
-      <!-- <script>
-        // Add the following code if you want the name of the file appear on select
-        $(".custom-file-input").on("change", function () {
-          var fileName = $(this).val().split("\\").pop();
-          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-        });
-      </script> -->
+      <!-- ID e Instrucciones -->
+      <?php if (isset($_POST['CRUD'])) { ?>
+          <?php if ($_POST['CRUD'] == 1) { ?>
+            <input type="hidden" name="dml" value="update" />
+            <input type="hidden" id="idCurso" name="idCurso" value="<?php echo $_POST['id'];?>">
+          <?php } elseif ($_POST['CRUD'] == 0) { ?>
+            <input type="hidden" name="dml" value="select" />
+          <?php } ?>
+        <?php } else { ?>
+          <input type="hidden" name="dml" value="insert" />
+        <?php } ?>
 
       <!-- Desactivar formulario FIN -->
       <?php if (isset($_POST['CRUD'])) { ?>

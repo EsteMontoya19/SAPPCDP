@@ -25,7 +25,7 @@ $x = 0;
                         </li>
                     </ol>
                 </div>
-                <div class="col-sm-2" align="center">
+                <div class="col-sm-2" aligne="center">
                     <a href="#">
                         <button id="btn-registro-curso" type="button" class="btn btn-success">
                             <i class="fas fa-plus-circle"></i>&nbsp;&nbsp; Agregar Curso
