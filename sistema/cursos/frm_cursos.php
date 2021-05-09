@@ -51,10 +51,10 @@ $curso -> curs_temario=null;
 
         <!-- Desactivar formulario INICIO en caso de no ser un registro-->
         <?php if (isset($_POST['CRUD'])) { ?>
-        <?php if ($_POST['CRUD'] == 0) { ?>
-        <fieldset disabled>
+          <?php if ($_POST['CRUD'] == 0) { ?>
+            <fieldset disabled>
           <?php } ?>
-          <?php } ?>
+        <?php } ?>
 
           <div class="form-group">
             <!-- Datos generales -->
@@ -139,6 +139,13 @@ $curso -> curs_temario=null;
             </div>
           </div>
       </form>
+
+      <!-- Desactivar formulario FIN -->
+      <?php if (isset($_POST['CRUD'])) { ?>
+        <?php if ($_POST['CRUD'] == 0) { ?>
+          </fieldset>
+        <?php } ?>
+      <?php } ?>
 
       <!-- Botones -->
       <div class="col-lg-12" style="text-align: center;">
