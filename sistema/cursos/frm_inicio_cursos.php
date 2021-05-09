@@ -81,7 +81,8 @@ $x = 0;
                                             onclick="consultarCursoDirecto(<?php echo $cursos['curs_id_cursos'] ?>)">
                                             <i class="fas fa-search-plus"></i>
                                         </button>
-                                        <button type="button" class="btn btn-primary btn-table" title="Editar">
+                                        <button type="button" class="btn btn-primary btn-table" title="Editar"
+                                            onclick="actualizarCursoDirecto(<?php echo $cursos['curs_id_cursos'] ?>)">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                     </td>
