@@ -40,13 +40,16 @@ function consultarCursoDirecto(id) {
     });
 }
 //TODO: Modificar
-function cambsioEstatus(id, estatus, nombre) {
-    alert('Presionado');
-
+function cambioEstatus(id, estatus, nombre) {
     var mensaje = '¿Esta seguro de cambiar el estatus del curso ';
     mensaje = mensaje.concat(nombre);
-    mensaje = mensaje.concat('?');
-
+    mensaje = mensaje.concat('?<br>');
+    if(estatus == 't') {
+        mensaje = mensaje.concat('Esta acción no activara el estado de los grupos relacionados.');
+        
+    } else {
+        mensaje = mensaje.concat('Los grupos de este curso seguiran vigentes, esta acción solo impide la creación de nuevos grupos de este curso.');
+    }
     var titulo = 'Cambio de estatus del curso';
     alertify.confirm(
         titulo,
@@ -65,9 +68,9 @@ function cambsioEstatus(id, estatus, nombre) {
                 success: function (respuesta) {
                     console.log(respuesta);
                     if (respuesta == 1) {
-                        alertify.success('Se cambio el estatus del usuario');
+                        alertify.success('Se cambio el estatus del curso');
                         setTimeout(function () {
-                            $('#container').load('../sistema/usuarios/frm_cursos_vigentes.php');
+                            $('#container').load('../sistema/cursos/frm_cursos_vigentes.php');
                         }, 1500);
                     } else {
                         alertify.error('Hubo un problema al cambiar el estatus del usuario PRUEBAS');
@@ -77,9 +80,10 @@ function cambsioEstatus(id, estatus, nombre) {
         },
         function () {
             alertify.confirm().close();
+            //$('#container').load('../sistema/cursos/frm_cursos_vigentes.php');
         }
     );
     setTimeout(function () {
-        $('#container').load('../sistema/usuarios/frm_cursos_vigentes.php');
+        $('#container').load('../sistema/cursos/frm_cursos_vigentes.php');
     }, 1500);
 }

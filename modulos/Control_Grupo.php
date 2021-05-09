@@ -1,11 +1,11 @@
 <?php
-
-  include('../../clases/BD.php');
-  include('../../clases/Grupo.php');
-  include('../../clases/Sesion.php');
+  include('../clases/BD.php');
+  include('../clases/Grupo.php');
+  include('../clases/Sesion.php');
 
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
+
 
   if($_POST['dml'] == 'insert')
   {
@@ -110,6 +110,20 @@
       $obj_Usuario->modificarEstatus($usuario, $estatus);
     }
 
+    echo 1;
+  }
+  elseif($_POST['dml'] == 'actualizarEstatus'){
+    $grupo = $_POST['id'];
+    $estatus = $_POST['estatus'];
+
+    
+    if ($estatus == 't'){
+      $estatus = 'FALSE'; 
+      $obj_Grupo->cambiarEstatus($grupo, $estatus);
+    } elseif ($estatus == 'f') {
+      $estatus = 'TRUE';
+      $obj_Grupo->cambiarEstatus($grupo, $estatus);
+    }
     echo 1;
   }
 ?>

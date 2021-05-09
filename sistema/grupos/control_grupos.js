@@ -508,6 +508,53 @@ function listaAlumnos(id) {
   });
 }
 
+// Cambiar estatus_activo del grupo
+function cambioEstatus(id, estatus, nombreCurso, modalidad){
+  
+  var mensaje = '¿Está seguro que desea cambiar el estatus del grupo: ';
+  mensaje = mensaje.concat(id);
+  mensaje = mensaje.concat(' del curso: ');
+  mensaje = mensaje.concat(nombreCurso);
+  mensaje = mensaje.concat(' con modalidad ');
+  mensaje = mensaje.concat(modalidad);
+  mensaje = mensaje.concat('?');
+  
+  var titulo = 'Cambio de estatus de un grupo';
+  alertify.confirm(
+    titulo, 
+    mensaje,
+    function () {
+      var dml = 'actualizarEstatus';
+      var datos = {
+        id: id,
+        dml: dml,
+        estatus: estatus,
+      };
+      $.ajax({
+        data: datos,
+        type: 'POST',
+        url: '../modulos/Control_Grupo.php',
+        success: function (respuesta) {
+          console.log(respuesta);
+          if(respuesta == 1){
+            alertify.success('Se cambio el estatus del grupo');
+            setTimeout(function (){
+              $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
+            }, 1500);
+          } else {
+            alertify.error('Hubo un problema al cambiar el estatus del grupo');
+          }
+        },
+      });
+    }, function (){
+      alertify.confirm().close();
+    }
+  );
+  setTimeout(function (){
+    $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
+  }, 1500);
+}
+
 // Tabla dinámica
 $(document).ready( function () {
   $('#tabla_grupos').DataTable({

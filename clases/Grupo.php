@@ -87,6 +87,22 @@
             return ($transaccion_1->traerRegistros());
         }
 
+        // Permite Cambiar estatus_activo grupo
+        function cambiarEstatus($id, $activo)
+        {
+            $SQL_Act_Curso = 
+            "   UPDATE grupo
+                SET grup_activo = $activo
+                WHERE grup_id_grupo = $id;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Act_Curso);
+            $bd->cerrarBD();
+        }
+
         /*Los métodos a partir de aqui están diferenciados pero los de arriba estan creados para permitir un trato indiferente para los 2 tipos de cursos, para una facilidad de manejo*/
         //Permite agregar un grupo presencial
         function agregarGrupoPresencial($moderador, $profesor, $curso, $salon, $calendario, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc)
