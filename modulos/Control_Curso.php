@@ -148,12 +148,14 @@
       echo 2;
     }
       
-  } //TODO Cuando se complete Registrar, regresar al elseif
+  }
   else*/
   
   if($_POST['dml'] == 'update')
   {
+    $curso = $_POST['idCurso'];
     $curso_existente = $obj_Curso->buscarCurso($curso);
+
     $esElMismo = 0;
     if($curso == $curso_existente->curs_id_curso){
       $esElMismo = 1;
@@ -161,7 +163,6 @@
     
     if(!isset($curso_existente->curs_id_curso) || $esElMismo == 1) {
      //? Datos de curso
-      $curso = $_POST['idCurso'];
       $tipo = $_POST['intTipoCurso'];
       $nombre = $_POST['strNombreCurso'];
       $num_sesiones = $_POST['strNumeroSesiones'];
@@ -174,12 +175,15 @@
           
       $obj_Curso->modificarGrupo($curso, $tipo, $nombre, $num_sesiones, $req_tecnicos, $conocimientos, $nivel, $objetivo, $temario, $activo);
       
+    
+
       echo 1;
     } else {
       echo 2;
     }
   }
-  /*elseif($_POST['dml'] == 'delete')
+  /*
+  elseif($_POST['dml'] == 'delete')
   {
     $usuario = $_POST['id'];
     $persona = $_POST['persona'];
@@ -189,5 +193,5 @@
     $obj_Persona->eliminarPersona($persona);
 
     echo 1;
-  } */
+  }*/
 ?>
