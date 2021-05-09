@@ -100,9 +100,10 @@
         //Permite insertar un registro en la base de datos
         function agregarCurso($tipo, $nombre, $sesiones, $tecnicos, $conocimientos, $nivel, $objetivos, $temario, $activo)
         {
+
             $SQL_Ins_Curso = 
             "   INSERT INTO Curso (curs_tipo, curs_nombre, curs_num_sesiones, curs_req_tecnicos, curs_conocimientos, curs_nivel, curs_objetivos, curs_temario, curs_activo)
-                VALUES ($tipo, $nombre, $sesiones, $tecnicos, $conocimientos, $nivel, $objetivos, $temario, $activo);
+                VALUES ('$tipo', '$nombre', $sesiones, '$tecnicos', '$conocimientos', '$nivel', '$objetivos', '$temario', '$activo');
             ";
 
             $bd = new BD();

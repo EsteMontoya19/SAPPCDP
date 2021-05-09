@@ -41,8 +41,9 @@
       $conocimientos = $_POST['strConNeces'];
       $num_sesiones = $_POST['strNumeroSesiones'];
       $temario = null;//Funcional en lo que se logra crear el directorio para los archivos y guardar solo la url
+      
 
-      $obj_Curso->agregarCurso($tipo, $nombre, $num_sesiones, $req_tecnicos, $conocimientos, $nivel, $objetivos, );
+      $obj_Curso->agregarCurso($tipo, $nombre, $num_sesiones, $req_tecnicos, $conocimientos, $nivel, $objetivos, $temario, true);
       echo 1;
 
     } else {

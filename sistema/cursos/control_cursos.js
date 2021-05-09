@@ -130,7 +130,6 @@ function actualizarCursoDirecto(id) {
 //Actualizar Curso
 $(document).ready(function () {
     $('#btn-actualizar-curso').click(function () {
-        alert("Hola4");
         if (validarFormularioCurso()) {
             datos = $('#form_cursos').serialize();
 
@@ -164,9 +163,9 @@ $(document).ready(function () {
 //Insertar Curso
 $(document).ready(function () {
     $('#btn-registrar-curso').click(function () {
+        
         if (validarFormularioCurso()){
             datos = $('#form_cursos').serialize();
-
             $.ajax({
                 type: 'POST',
                 url: '../modulos/Control_Curso.php',
@@ -184,7 +183,7 @@ $(document).ready(function () {
                         document.getElementById('strNombreCurso').focus();
                         alertify.error('El nombre de curso ya existe');
                     } else {
-                        alertify.errpr('Hubo un problema al registrar el curso');
+                        alertify.error('Hubo un problema al registrar el curso');
                     }
                 },
             });
