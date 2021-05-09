@@ -62,5 +62,26 @@
 			$transaccion_1->enviarQuery($SQL_Curso_Est);
 			$bd->cerrarBD();
 		}
+
+        function modificarGrupo($curso, $tipo, $nombre, $num_sesiones, $req_tecnicos, $conocimientos, $nivel, $objetivo, $temario, $activo){
+
+            $SQL_Curso_Mod=
+			"
+                UPDATE Curso 
+                    
+                SET CURS_TIPO=$tipo, CURS_NOMBRE=$nombre, CURS_NUM_SESIONES=$num_sesiones, 
+                CURS_REQ_TECNICOS=$req_tecnicos, CURS_CONOCIMIENTOS=$conocimientos, CURS_NIVEL=$nivel, 
+                CURS_OBJETIVOS=$objetivo, CURS_TEMARIO=$temario, CURS_ACTIVO=$activo
+                WHERE curs_id_cursos = $curso;
+            ";
+			
+
+            $bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Curso_Mod);
+			$bd->cerrarBD();
+
+        }
     }
 ?>

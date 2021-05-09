@@ -140,6 +140,18 @@ $curso -> curs_temario=null;
           </div>
       </form>
 
+      <!-- ID e Instrucciones -->
+      <?php if (isset($_POST['CRUD'])) { ?>
+          <?php if ($_POST['CRUD'] == 1) { ?>
+            <input type="hidden" name="dml" value="update" />
+            <input type="hidden" id="idCurso" name="idCurso" value="<?php echo $_POST['id'];?>">
+          <?php } elseif ($_POST['CRUD'] == 0) { ?>
+            <input type="hidden" name="dml" value="select" />
+          <?php } ?>
+        <?php } else { ?>
+          <input type="hidden" name="dml" value="insert" />
+        <?php } ?>
+
       <!-- Desactivar formulario FIN -->
       <?php if (isset($_POST['CRUD'])) { ?>
         <?php if ($_POST['CRUD'] == 0) { ?>
