@@ -63,7 +63,8 @@
 			$bd->cerrarBD();
 		}
 
-        function modificarGrupo($curso, $tipo, $nombre, $num_sesiones, $req_tecnicos, $conocimientos, $nivel, $objetivo, $temario, $activo){
+        function modificarGrupo($curso, $tipo, $nombre, $num_sesiones, $req_tecnicos, $conocimientos, $nivel, $objetivo, $temario, $activo)
+        {
 
             $SQL_Curso_Mod=
 			"
@@ -81,6 +82,39 @@
 			$transaccion_1 = new Transaccion($bd->conexion);
 			$transaccion_1->enviarQuery($SQL_Curso_Mod);
 			$bd->cerrarBD();
+        }
+
+        //Permite insertar un registro en la base de datos
+        function agregarCurso($tipo, $nombre, $sesiones, $tecnicos, $conocimientos, $nivel, $objetivos, $temario, $activo)
+        {
+            $SQL_Ins_Curso = 
+            "   INSERT INTO Curso (curs_tipo, curs_nombre, curs_num_sesiones, curs_req_tecnicos, curs_conocimientos, curs_nivel, curs_objetivos, curs_temario, curs_activo)
+                VALUES ($tipo, $nombre, $sesiones, $tecnicos, $conocimientos, $nivel, $objetivos, $temario, $activo);
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Ins_Curso);
+            $bd->cerrarBD();
+
+        }
+
+        //Permite actualizar un registro en la base de datos
+        function agregarCurso($curso, $tipo, $nombre, $sesiones, $tecnicos, $conocimientos, $nivel, $objetivos, $temario, $activo)
+        {
+            $SQL_Act_Curso = 
+            "   UPDATE Curso
+                SET curs_tipo = $tipo, curs_nombre = $nombre, curs_num_sesiones = $sesiones, curs_req_tecnicos = $tecnicos, curs_conocimientos = $conocimientos, 
+                    curs_nivel = $nivel, curs_objetivos = $objetivos, curs_temario = $temario, curs_activo = $activo
+                WHERE curs_id_cursos = $curso;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Act_Curso);
+            $bd->cerrarBD();
 
         }
     }
