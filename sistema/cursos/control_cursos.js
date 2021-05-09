@@ -44,9 +44,8 @@ function cambioEstatus(id, estatus, nombre) {
     var mensaje = '¿Esta seguro de cambiar el estatus del curso ';
     mensaje = mensaje.concat(nombre);
     mensaje = mensaje.concat('?<br>');
-    if(estatus == 't') {
+    if (estatus == 't') {
         mensaje = mensaje.concat('Esta acción no activara el estado de los grupos relacionados.');
-        
     } else {
         mensaje = mensaje.concat('Los grupos de este curso seguiran vigentes, esta acción solo impide la creación de nuevos grupos de este curso.');
     }
@@ -87,3 +86,17 @@ function cambioEstatus(id, estatus, nombre) {
         $('#container').load('../sistema/cursos/frm_inicio_cursos.php');
     }, 1500);
 }
+
+// Tabla dinámica
+$(document).ready(function () {
+    $('#tabla_cursos').DataTable({
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json',
+        },
+        pageLength: 10,
+        lengthMenu: [
+            [5, 10, 20, 50, -1],
+            [5, 10, 20, 50, 'Todos'],
+        ],
+    });
+});

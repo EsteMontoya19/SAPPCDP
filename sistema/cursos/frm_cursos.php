@@ -51,10 +51,10 @@ $curso -> curs_temario=null;
 
         <!-- Desactivar formulario INICIO en caso de no ser un registro-->
         <?php if (isset($_POST['CRUD'])) { ?>
-          <?php if ($_POST['CRUD'] == 0) { ?>
-            <fieldset disabled>
+        <?php if ($_POST['CRUD'] == 0) { ?>
+        <fieldset disabled>
           <?php } ?>
-        <?php } ?>
+          <?php } ?>
 
           <div class="form-group">
             <!-- Datos generales -->
@@ -131,8 +131,9 @@ $curso -> curs_temario=null;
                 <div class="col-lg-6 form-group">
                   <label for="temario"><b>Temario:</b></label>
                   <div class="custom-file">
-                    <input type="file" accept="application/pdf" id="temario" name="temario" class="custom-file-input" />
-                    <label class="custom-file-label" for="temario">Selecciona un archivo</label>
+                    <input type="file" id="temario" name="temario" class="custom-file-input">
+                    <label class="custom-file-label"
+                      for="temario"><?php echo isset($curso) ? $curso -> curs_temario: ""; ?></label>
                   </div>
                 </div>
               </div>
@@ -140,11 +141,19 @@ $curso -> curs_temario=null;
           </div>
       </form>
 
+      <!-- <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+          var fileName = $(this).val().split("\\").pop();
+          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+      </script> -->
+
       <!-- Desactivar formulario FIN -->
       <?php if (isset($_POST['CRUD'])) { ?>
-        <?php if ($_POST['CRUD'] == 0) { ?>
-          </fieldset>
-        <?php } ?>
+      <?php if ($_POST['CRUD'] == 0) { ?>
+      </fieldset>
+      <?php } ?>
       <?php } ?>
 
       <!-- Botones -->
