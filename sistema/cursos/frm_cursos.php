@@ -85,8 +85,8 @@ $curso -> curs_temario=null;
                   <label for="intNivel"><b>Nivel: <?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
                   <select class="custom-select" id="intNivel" name="intNivel" onchange="ocultar(this.value)">
                     <option value="0">Seleccione una opción</option>
-                    <option value='Basico'
-                      <?php if (isset($curso) && $curso->curs_nivel == "Basico") { echo "selected"; }?>>Básico</option>
+                    <option value='Básico'
+                      <?php if (isset($curso) && $curso->curs_nivel == "Básico") { echo "selected"; }?>>Básico</option>
                     <option value='Intermedio'
                       <?php if (isset($curso) && $curso->curs_nivel == "Intermedio") { echo "selected"; }?>>Intermedio
                     </option>
@@ -139,7 +139,7 @@ $curso -> curs_temario=null;
               </div>
             </div>
           </div>
-      </form>
+
 
       <!-- ID e Instrucciones -->
       <?php if (isset($_POST['CRUD'])) { ?>
@@ -152,6 +152,8 @@ $curso -> curs_temario=null;
         <?php } else { ?>
           <input type="hidden" name="dml" value="insert" />
         <?php } ?>
+        
+
 
       <!-- Desactivar formulario FIN -->
       <?php if (isset($_POST['CRUD'])) { ?>
@@ -160,6 +162,7 @@ $curso -> curs_temario=null;
       <?php } ?>
       <?php } ?>
 
+</form>
       <!-- Botones -->
       <div class="col-lg-12" style="text-align: center;">
         <button id="btn-regresar-curso" type="button" class="btn btn-success btn-footer">Regresar</button>

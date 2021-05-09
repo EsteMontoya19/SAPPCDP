@@ -89,6 +89,8 @@ function validarFormularioCurso(){
         return false;
     }
 
+    return true; 
+
 }
 
 function consultarCursoDirecto(id) {
@@ -107,7 +109,7 @@ function consultarCursoDirecto(id) {
         },
     });
 }
-
+//Actualizar Curso
 function actualizarCursoDirecto(id) {
     var datos = {
         id: id,
@@ -128,7 +130,8 @@ function actualizarCursoDirecto(id) {
 //Actualizar Curso
 $(document).ready(function () {
     $('#btn-actualizar-curso').click(function () {
-        if (validarFormularioCursos()) {
+        alert("Hola4");
+        if (validarFormularioCurso()) {
             datos = $('#form_cursos').serialize();
 
             $.ajax({
@@ -149,7 +152,7 @@ $(document).ready(function () {
                         alertify.error('El nombre del curso ya existe');
                     } else {
                         alertify.error('Hubo un problema al registrar el curso');
-                    }
+                    };
                 },
             });
             return false;

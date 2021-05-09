@@ -154,29 +154,26 @@
   if($_POST['dml'] == 'update')
   {
     $curso = $_POST['idCurso'];
-    $curso_existente = $obj_Curso->buscarCurso($curso);
-
+    $nombre = $_POST['strNombreCurso'];
+    $curso_existente = $obj_Curso->buscarCursoNombre($nombre);
     $esElMismo = 0;
-    if($curso == $curso_existente->curs_id_curso){
+    if($curso == $curso_existente->curs_id_curso && $nombre == $curso_existente->curs_nombre){
       $esElMismo = 1;
     }
     
     if(!isset($curso_existente->curs_id_curso) || $esElMismo == 1) {
      //? Datos de curso
+       
       $tipo = $_POST['intTipoCurso'];
-      $nombre = $_POST['strNombreCurso'];
       $num_sesiones = $_POST['strNumeroSesiones'];
       $req_tecnicos = $_POST['strReqTec'];
       $conocimientos = $_POST['strConNeces'];
       $nivel = $_POST['intNivel']; 
       $objetivo = $_POST['strObjCurso'];
-      $temario = $_POST['temario'];
+      $temario = null; //!$_POST['temario'];
       $activo = isset($_POST['bEstado']) ? $_POST['bEstado'] : TRUE; //TODO Ver como funciona este dato en el formulario
-          
-      $obj_Curso->actualizarCurso($curso, $tipo, $nombre, $num_sesiones, $req_tecnicos, $conocimientos, $nivel, $objetivo, $temario, $activo);
-      
-    
 
+      $obj_Curso->actualizarCurso($curso, $tipo, $nombre, $num_sesiones, $req_tecnicos, $conocimientos, $nivel, $objetivo, $temario, $activo);
       echo 1;
     } else {
       echo 2;
@@ -194,4 +191,5 @@
 
     echo 1;
   }*/
+
 ?>
