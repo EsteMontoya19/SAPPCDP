@@ -23,6 +23,74 @@ $(document).ready(function () {
     });
 });
 
+//Validar el formulario de cursos
+function validarFormularioCurso(){
+
+    if ($('#strNombreCurso').val() == ''){
+        $('html, body').animate({scrollTop: 0}, 'slow');
+        document.getElementById('strNombreCurso').focus();
+        alertify.error('Se debe ingresar el nombre del curso');
+        return false;
+    } else {
+        if ($('#strNombreCurso').val().length > 50){
+            $('html, body').animate({scrollTop: 0}, 'slow');
+            document.getElementById('strNombreCurso').focus();
+            alertify.error('El nombre del curso debe tener máximo 50 caracteres');
+            return false;
+        }
+    }
+
+    if ($('#intTipoCurso').val() == 0){
+        alertify.error('Debe seleccionar un tipo: curso / taller');
+        $('html, body').animate({scrollTop: 0}, 'slow');
+        document.getElementById('intTipoCurso').focus();
+        return false;
+    }
+
+    if ($('#intNivel').val() == 0){
+        alertify.error('Debe seleccionar un nivel: Basico / Intermedio / Avanzado');
+        $('html, body').animate({scrollTop: 0}, 'slow');
+        document.getElementById('intNivel').focus();
+        return false;
+    }
+
+    if ($('#strReqTec').val().length > 150){
+        alertify.error('El campo de requisitos técnicos debe ser de máximo 150 caracteres');
+        $('html, body').animate({scrollTop: 150}, 'slow');
+        document.getElementById('strReqTec').focus();
+        return false;
+    }
+
+    if ($('#strConNeces').val().length > 150){
+        alertify.error('El campo de conocimientos necesarios debe ser de máximo 150 caracteres');
+        $('html, body').animate({scrollTop: 150}, 'slow');
+        document.getElementById('strConNeces').focus();
+        return false;
+    }
+
+    if ($('#strObjCurso').val() == ''){
+        $('html, body').animate({scrollTop: 150}, 'slow');
+        document.getElementById('strObjCurso').focus();
+        alertify.error('Se deben ingresar los objetivos del curso');
+        return false;
+    } else {
+        if ($('#strObjCurso').val().length > 150){
+            $('html, body').animate({scrollTop: 150}, 'slow');
+            document.getElementById('strObjCurso').focus();
+            alertify.error('Los objetivos del curso debe tener máximo 150 caracteres');
+            return false;
+        }
+    }
+
+    if ($('#strNumeroSesiones').val() == ''){
+        alertify.error('Debe ingresar un número de sesiones para el curso');
+        $('html, body').animate({scrollTop: 150}, 'slow');
+        document.getElementById('strNumeroSesiones').focus();
+        return false;
+    }
+
+}
+
 function consultarCursoDirecto(id) {
     var datos = {
         id: id,
@@ -57,10 +125,12 @@ function actualizarCursoDirecto(id) {
     });
 }
 
+//Actualizar Curso
 $(document).ready(function () {
     $('#btn-actualizar-curso').click(function () {
         if (validarFormularioCursos()) {
             datos = $('#form_cursos').serialize();
+
             $.ajax({
                 type: 'POST',
                 url: '../modulos/Control_Curso.php',
@@ -79,6 +149,39 @@ $(document).ready(function () {
                         alertify.error('El nombre del curso ya existe');
                     } else {
                         alertify.error('Hubo un problema al registrar el curso');
+                    }
+                },
+            });
+            return false;
+        }
+    });
+});
+
+
+//Insertar Curso
+$(document).ready(function () {
+    $('#btn-registrar-curso').click(function () {
+        if (validarFormularioCurso()){
+            datos = $('#form_cursos').serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: '../modulos/Control_Curso.php',
+                data: datos,
+                success: function (respuesta) {
+                    console.log(respuesta);
+                    if (respuesta.endsWith('1')){
+                        alertify.success('El registro se realizó correctamente');
+                        setTimeout(function () {
+                            $('html, body').animate({scrollTop: 0}, 0);
+                            $('#container').load('../sistema/cursos/frm_inicio_cursos.php');
+                        }, 1500);
+                    } else if (respuesta.endsWith('2')){
+                        $('html, body').animate({scrollTop: 200}, 'slow');
+                        document.getElementById('strNombreCurso').focus();
+                        alertify.error('El nombre de curso ya existe');
+                    } else {
+                        alertify.errpr('Hubo un problema al registrar el curso');
                     }
                 },
             });

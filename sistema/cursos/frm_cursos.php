@@ -47,7 +47,7 @@ $curso -> curs_temario=null;
       </p>
 
       <!-- Formulario -->
-      <form name="form_cursos" id="form_cursos" method="POST">
+      <form name="form_cursos" id="form_cursos" method="POST" enctype="multipart/form-data">
 
         <!-- Desactivar formulario INICIO en caso de no ser un registro-->
         <?php if (isset($_POST['CRUD'])) { ?>
@@ -100,7 +100,7 @@ $curso -> curs_temario=null;
 
                 <div class="col-lg-6 form-group">
                   <label for="strReqTec"><b>Requisitos Técnicos:
-                      <?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                      </b></label>
                   <textarea type="text" class="form-control" id="strReqTec"
                     name="strReqTec"><?php echo isset($curso) ? $curso-> curs_req_tecnicos: ""; ?></textarea>
                 </div>
@@ -114,7 +114,7 @@ $curso -> curs_temario=null;
 
                 <div class="col-lg-6 form-group">
                   <label for="strConNeces"><b>Conocimientos necesarios:
-                      <?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                      </b></label>
                   <textarea type="text" class="form-control" id="strConNeces"
                     name="strConNeces"><?php echo isset($curso) ? $curso -> curs_conocimientos: ""; ?></textarea>
                 </div>
