@@ -145,10 +145,6 @@ $(document).ready(function () {
                             $('html, body').animate({ scrollTop: 0 }, 0);
                             $('#container').load('../sistema/cursos/frm_inicio_cursos.php');
                         }, 0);
-                    } else if (respuesta.endsWith('2')) {
-                        $('html, body').animate({ scrollTop: 200 }, 'slow');
-                        document.getElementById('strNombreCurso').focus();
-                        alertify.error('El nombre del curso ya existe');
                     } else {
                         alertify.error('Hubo un problema al registrar el curso');
                     };

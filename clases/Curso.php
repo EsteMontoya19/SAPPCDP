@@ -84,9 +84,9 @@
             $SQL_Act_Curso=
 			"
                 UPDATE Curso   
-                SET CURS_TIPO=$tipo, CURS_NOMBRE=$nombre, CURS_NUM_SESIONES=$num_sesiones, 
-                CURS_REQ_TECNICOS=$req_tecnicos, CURS_CONOCIMIENTOS=$conocimientos, CURS_NIVEL=$nivel, 
-                CURS_OBJETIVOS=$objetivo, CURS_TEMARIO=$temario, CURS_ACTIVO=$activo
+                SET CURS_TIPO='$tipo', CURS_NOMBRE='$nombre', CURS_NUM_SESIONES=$num_sesiones, 
+                CURS_REQ_TECNICOS='$req_tecnicos', CURS_CONOCIMIENTOS='$conocimientos', CURS_NIVEL='$nivel', 
+                CURS_OBJETIVOS='$objetivo', CURS_TEMARIO='$temario', CURS_ACTIVO=$activo
                 WHERE curs_id_cursos = $curso;
             ";
 			
@@ -94,6 +94,11 @@
 			$bd->abrirBD();
 			$transaccion_1 = new Transaccion($bd->conexion);
 			$transaccion_1->enviarQuery($SQL_Act_Curso);
+
+            $file = fopen ("Mensajes.txt", "a");
+            fwrite($file, $SQL_Act_Curso.PHP_EOF);
+            fclose($file);
+
 			$bd->cerrarBD();
         }
 
