@@ -457,8 +457,7 @@ PERS_ID_PERSONA
 /*==============================================================*/
 create table PLATAFORMA (
    PLAT_ID_PLATAFORMA   SERIAL               not null,
-   GRUP_ID_GRUPO        INT4                 null,
-   PLAT_NOMBRE          VARCHAR(30)             not null,
+   PLAT_NOMBRE          VARCHAR(30)          not null,
    constraint PK_PLATAFORMA primary key (PLAT_ID_PLATAFORMA)
 );
 
@@ -467,13 +466,6 @@ create table PLATAFORMA (
 /*==============================================================*/
 create unique index PLATAFORMA_PK on PLATAFORMA (
 PLAT_ID_PLATAFORMA
-);
-
-/*==============================================================*/
-/* Index: RELATIONSHIP_22_FK                                    */
-/*==============================================================*/
-create  index RELATIONSHIP_22_FK on PLATAFORMA (
-GRUP_ID_GRUPO
 );
 
 /*==============================================================*/
@@ -828,11 +820,6 @@ alter table MODERADOR_DIA
       references DIA (DIA_ID_DIA)
       on delete restrict on update restrict;
 
-alter table PLATAFORMA
-   add constraint FK_PLATAFOR_RELATIONS_GRUPO foreign key (GRUP_ID_GRUPO)
-      references GRUPO (GRUP_ID_GRUPO)
-      on delete restrict on update restrict;
-
 alter table PROFESOR
    add constraint FK_PROFESOR_RELATIONS_PERSONA foreign key (PERS_ID_PERSONA)
       references PERSONA (PERS_ID_PERSONA)
@@ -1007,21 +994,21 @@ INSERT INTO Rol (rol_nombre) VALUES ('Administrador del sistema'), ('Profesor'),
 INSERT INTO PREGUNTA_SEGURIDAD (prse_pregunta) VALUES ('Como se llamaba tu primer mascota'), ('Pelicula de acción favorita'),
 			('Superherore favorito');
 
-INSERT INTO Usuario (rol_id_rol, prse_id_pregunta, usua_num_usuario, usua_contrasena, usua_respuesta, usua_activo)
-		VALUES (1, 3, 'Esteban', '1234', 'Linterna Verde', true), (2, 3, 'Karen', '1234', 'Flash', true), 
-			    (3, 3, 'Samuel', '1234', 'Batman', true);
+INSERT INTO Usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usuario, usua_contrasena, usua_respuesta, usua_activo)
+		VALUES (1, 1, 3, 'Esteban', '1234', 'Linterna Verde', true), (2, 2, 3, 'Karen', '1234', 'Flash', true), 
+			    (2, 3, 3, 'Samuel', '1234', 'Batman', true);
 
 INSERT INTO Administrador (pers_id_persona, admi_num_trabajador, admi_rfc) VALUES (1, '315067596', 'MOME990905134');
 
 INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza, prof_rfc) 
       VALUES (2, '123457890', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber','KAFA12345');
 	 
-INSERT INTO Monitor (pers_id_persona, moni_num_cuenta, moni_fecha_inicio, moni_fecha_fin, moni_hora_inicio, moni_hora_fin) 
+INSERT INTO Moderador (pers_id_persona, mode_num_cuenta, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin) 
 		VALUES (3, '123457890', '2021/02/23', '2021/09/08','07:00:00', '21:00:00');
 
 INSERT INTO Dia (dia_nombre) VALUES ('Lunes'), ('Martes'), ('Miercoles'), ('Jueves'), ('Viernes'), ('Sabado');
 
-INSERT INTO Monitor_Dia (moni_id_monitor, dia_id_dia) VALUES (1,1), (1,2), (1,3), (1,4), (1,5);
+INSERT INTO Moderador_Dia (mode_id_moderador, dia_id_dia) VALUES (1,1), (1,2), (1,3), (1,4), (1,5);
 
 INSERT INTO Nivel (nive_nombre) VALUES ('Licenciatura'), ('Postgrado');
 
@@ -1040,7 +1027,7 @@ INSERT INTO Profesor_Modalidad (prof_id_profesor, moda_id_modalidad) VALUES (1,1
 INSERT INTO Profesor_Coordinacion(prof_id_profesor, coor_id_coordinacion) VALUES (1,1),(1,24), (1,14);
 
 INSERT INTO Curso (CURS_TIPO, CURS_NOMBRE, CURS_NUM_SESIONES, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, CURS_NIVEL, CURS_OBJETIVOS, CURS_TEMARIO, CURS_ACTIVO)
-			VALUES ('Curso', 'Zoom: Cuestionarios', 2, 'Nada', 'Nada', 'Basico', 'Aprender', '/nose.pdf', 'TRUE');
+			VALUES ('Curso', 'Zoom: Cuestionarios', 2, 'Nada', 'Nada', 'Básico', 'Aprender', '/nose.pdf', 'TRUE');
 
 INSERT INTO EDIFICIO (EDIF_NOMBRE)
 			VALUES ('A');
@@ -1054,26 +1041,6 @@ INSERT INTO CALENDARIO (CALE_SEMESTRE, CALE_INICIO_CICLO, CALE_FIN_CICLO, CALE_I
 
 INSERT INTO PLATAFORMA (PLAT_NOMBRE)
 			VALUES ('Zoom');
-
-INSERT INTO Grupo (MONI_ID_MONITOR, PROF_ID_PROFESOR, CURS_ID_CURSOS, SALO_ID_salon, CALE_ID_CALENDARIO,
-				   PLAT_ID_PLATAFORMA, GRUP_REUNION, GRUP_ACCESO, GRUP_CLAVE_ACCESO, GRUP_CUPO, GRUP_ESTADO, GRUP_ACTIVO, 
-				   GRUP_MODALIDAD, GRUP_TIPO, GRUP_INICIO_INSC, GRUP_FIN_INSC)
-			VALUES (1, 1, 1, 1, 1, 1,
-					'grupo reunion', 'grupo acceso', 'clave', 50, 'Privado', 'true', 'en linea', 'taller', '2021/02/23', '2021/09/08');
-
-INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora)
-			VALUES (1, '2021/09/08','07:00:00'), (1, '2021/09/09','07:00:00');
-
-*/
-
-
-
-/*Nuevos Inserts para Grupo y Sesiones Corregidos con ortografía y tal cuál serán nombrados en el front 
-especialmete GRUP_ESTADO, GRUP_ACTIVO, GRUP_MODALIDAD, GRUP_TIPO
-
-Hay que asegurarse de tener la ultima version de la base de datos, el salo_id_salon no sea not null, igual que 
-            PLAT_ID_PLATAFORMA, GRUP_REUNION, GRUP_ACCESO, GRUP_CLAVE_ACCESO,
-
 
 INSERT INTO Grupo (MODE_ID_MODERADOR, PROF_ID_PROFESOR, CURS_ID_CURSOS, SALO_ID_SALON, CALE_ID_CALENDARIO,
                PLAT_ID_PLATAFORMA, GRUP_REUNION, GRUP_ACCESO, GRUP_CLAVE_ACCESO, 

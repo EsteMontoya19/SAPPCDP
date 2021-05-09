@@ -146,6 +146,7 @@ $curso -> curs_temario=null;
           <?php if ($_POST['CRUD'] == 1) { ?>
             <input type="hidden" name="dml" value="update" />
             <input type="hidden" id="idCurso" name="idCurso" value="<?php echo $_POST['id'];?>">
+            <input type="hidden" id="bEstado" name="bEstado" value="true">
           <?php } elseif ($_POST['CRUD'] == 0) { ?>
             <input type="hidden" name="dml" value="select" />
           <?php } ?>
