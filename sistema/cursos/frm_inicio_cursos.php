@@ -95,3 +95,5 @@ $x = 0;
         </div>
     </div>
 </div>
+
+<script src="../sistema/cursos/control_curso.js"></script>

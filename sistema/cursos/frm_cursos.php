@@ -47,7 +47,7 @@ $curso -> curs_temario=null;
       </p>
 
       <!-- Formulario -->
-      <form name="form_cursos" id="form_cursos" method="POST">
+      <form name="form_cursos" id="form_cursos" method="POST" enctype="multipart/form-data">
 
         <!-- Desactivar formulario INICIO en caso de no ser un registro-->
         <?php if (isset($_POST['CRUD'])) { ?>
