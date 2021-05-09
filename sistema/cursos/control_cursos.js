@@ -39,6 +39,24 @@ function consultarCursoDirecto(id) {
         },
     });
 }
+
+function actualizarCursoDirecto(id) {
+    var datos = { 
+      id: id,
+      CRUD: 1,
+    };
+  
+    $.ajax({
+      data: datos,
+      type: "POST",
+      url: "../sistema/cursos/frm_cursos.php",
+      success: function (data) {
+        $("html, body").animate({ scrollTop: 0 }, 0);
+        $("#container").html(data);
+      },
+    });
+  }
+
 //TODO: Modificar
 function cambioEstatus(id, estatus, nombre) {
     var mensaje = '¿Esta seguro de cambiar el estatus del curso ';
