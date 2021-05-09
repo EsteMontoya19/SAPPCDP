@@ -25,7 +25,7 @@ $x = 0;
                         </li>
                     </ol>
                 </div>
-                <div class="col-sm-2" align="center">
+                <div class="col-sm-2" aligne="center">
                     <a href="#">
                         <button id="btn-registro-curso" type="button" class="btn btn-success">
                             <i class="fas fa-plus-circle"></i>&nbsp;&nbsp; Agregar Curso
@@ -75,7 +75,7 @@ $x = 0;
                                     <button type="button" class="btn btn-info btn-table" title="Detalles" onclick="consultarCursoDirecto(<?php echo $cursos['curs_id_cursos'] ?>)">
                                         <i class="fas fa-search-plus"></i>
                                     </button>
-                                    <button type="button" class="btn btn-primary btn-table" title="Editar">
+                                    <button type="button" class="btn btn-primary btn-table" title="Editar" onclick="consultarCursoDirecto(<?php echo $cursos['curs_id_cursos'] ?>)">
                                         <i class="fas fa-edit"></i>
                                     </button>
                                 </td>
