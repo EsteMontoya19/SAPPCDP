@@ -63,9 +63,9 @@
 			$bd->cerrarBD();
 		}
 
-        function modificarCurso($curso, $tipo, $nombre, $num_sesiones, $req_tecnicos, $conocimientos, $nivel, $objetivo, $temario, $activo)
+        function actualizarCurso($curso, $tipo, $nombre, $num_sesiones, $req_tecnicos, $conocimientos, $nivel, $objetivo, $temario, $activo)
         {
-            $SQL_Curso_Mod=
+            $SQL_Act_Curso=
 			"
                 UPDATE Curso   
                 SET CURS_TIPO=$tipo, CURS_NOMBRE=$nombre, CURS_NUM_SESIONES=$num_sesiones, 
@@ -77,7 +77,7 @@
             $bd = new BD();
 			$bd->abrirBD();
 			$transaccion_1 = new Transaccion($bd->conexion);
-			$transaccion_1->enviarQuery($SQL_Curso_Mod);
+			$transaccion_1->enviarQuery($SQL_Act_Curso);
 			$bd->cerrarBD();
         }
 
