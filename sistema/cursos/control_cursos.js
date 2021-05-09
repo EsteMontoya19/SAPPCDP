@@ -25,6 +25,7 @@ $(document).ready(function () {
 
 //Validar el formulario de cursos
 function validarFormularioCurso(){
+
     if ($('#strNombreCurso').val() == ''){
         $('html, body').animate({scrollTop: 0}, 'slow');
         document.getElementById('strNombreCurso').focus();
@@ -53,14 +54,14 @@ function validarFormularioCurso(){
         return false;
     }
 
-    if ($('strReqTec').val().length > 150){
+    if ($('#strReqTec').val().length > 150){
         alertify.error('El campo de requisitos técnicos debe ser de máximo 150 caracteres');
         $('html, body').animate({scrollTop: 150}, 'slow');
         document.getElementById('strReqTec').focus();
         return false;
     }
 
-    if ($('strConNeces').val().length > 150){
+    if ($('#strConNeces').val().length > 150){
         alertify.error('El campo de conocimientos necesarios debe ser de máximo 150 caracteres');
         $('html, body').animate({scrollTop: 150}, 'slow');
         document.getElementById('strConNeces').focus();
@@ -81,10 +82,10 @@ function validarFormularioCurso(){
         }
     }
 
-    if ($('#strNumSesiones').val() == ''){
+    if ($('#strNumeroSesiones').val() == ''){
         alertify.error('Debe ingresar un número de sesiones para el curso');
-        $('html, body').animate({scrollTop: 0}, 'slow');
-        document.getElementById('strNumSesiones').focus();
+        $('html, body').animate({scrollTop: 150}, 'slow');
+        document.getElementById('strNumeroSesiones').focus();
         return false;
     }
 
@@ -145,9 +146,9 @@ $(document).ready(function () {
                     } else if (respuesta.endsWith('2')){
                         $('html, body').animate({scrollTop: 200}, 'slow');
                         document.getElementById('strNombreCurso').focus();
-                        alertify.error('El nombre de usuario ya existe');
+                        alertify.error('El nombre de curso ya existe');
                     } else {
-                        alertify.errpr('Hubo un problema al registrar el usuario');
+                        alertify.errpr('Hubo un problema al registrar el curso');
                     }
                 },
             });
