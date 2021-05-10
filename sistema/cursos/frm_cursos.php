@@ -47,7 +47,7 @@ $curso -> curs_temario=null;
       </p>
 
       <!-- Formulario -->
-      <form name="form_cursos" id="form_cursos" method="POST" >
+      <form name="form_cursos" id="form_cursos" method="POST">
 
         <!-- Desactivar formulario INICIO en caso de no ser un registro-->
         <?php if (isset($_POST['CRUD'])) { ?>
@@ -82,7 +82,7 @@ $curso -> curs_temario=null;
                 </div>
 
                 <div class="col-lg-3 form-group">
-                  <label for="intNivel"><b>Nivel: 
+                  <label for="intNivel"><b>Nivel:
                       <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1)  echo "*"; ?></b></label>
                   <select class="custom-select" id="intNivel" name="intNivel" onchange="ocultar(this.value)">
                     <option value="0">Seleccione una opción</option>
@@ -101,7 +101,7 @@ $curso -> curs_temario=null;
 
                 <div class="col-lg-6 form-group">
                   <label for="strReqTec"><b>Requisitos Técnicos:
-                      </b></label>
+                    </b></label>
                   <textarea type="text" class="form-control" id="strReqTec"
                     name="strReqTec"><?php echo isset($curso) ? $curso-> curs_req_tecnicos: ""; ?></textarea>
                 </div>
@@ -115,7 +115,7 @@ $curso -> curs_temario=null;
 
                 <div class="col-lg-6 form-group">
                   <label for="strConNeces"><b>Conocimientos necesarios:
-                      </b></label>
+                    </b></label>
                   <textarea type="text" class="form-control" id="strConNeces"
                     name="strConNeces"><?php echo isset($curso) ? $curso -> curs_conocimientos: ""; ?></textarea>
                 </div>
@@ -137,34 +137,50 @@ $curso -> curs_temario=null;
                       for="temario"><?php echo isset($curso) ? $curso -> curs_temario: ""; ?></label>
                   </div>
                 </div>
+
+                <!--! Este código lo descarga con el nombre del archivo original según el href que debes modificar con php -->
+                <div class="col-lg-6 form-group">
+                  <label for="temarioDW"><b>Temario:</b></label> <br>
+                  <a id="temarioDW" href="../recursos/PDF/clase.pdf" download class="btn btn-primary" role="button"><i
+                      class="fas fa-file-download" style="padding-right: 10px;"></i>
+                    Descargar</a>
+                </div>
+
+                <!--! Este código lo descarga con el nombre del archivo que quieras modificando con php-->
+                <!-- <div class="col-lg-6 form-group">
+                  <label for="temarioDW"><b>Temario:</b></label> <br>
+                  <a id="temarioDW" href="../recursos/PDF/clase.pdf" download="Nombre del archivo que quieras" class="btn btn-primary" role="button"><i
+                      class="fas fa-file-download" style="padding-right: 10px;"></i>
+                    Descargar</a>
+                </div> -->
               </div>
             </div>
           </div>
 
 
-      <!-- ID e Instrucciones -->
-      <?php if (isset($_POST['CRUD'])) { ?>
+          <!-- ID e Instrucciones -->
+          <?php if (isset($_POST['CRUD'])) { ?>
           <?php if ($_POST['CRUD'] == 1) { ?>
-            <input type="hidden" name="dml" value="update" />
-            <input type="hidden" id="idCurso" name="idCurso" value="<?php echo $_POST['id'];?>">
-            <input type="hidden" id="bEstado" name="bEstado" value="true">
+          <input type="hidden" name="dml" value="update" />
+          <input type="hidden" id="idCurso" name="idCurso" value="<?php echo $_POST['id'];?>">
+          <input type="hidden" id="bEstado" name="bEstado" value="true">
           <?php } elseif ($_POST['CRUD'] == 0) { ?>
-            <input type="hidden" name="dml" value="select" />
+          <input type="hidden" name="dml" value="select" />
           <?php } ?>
-        <?php } else { ?>
+          <?php } else { ?>
           <input type="hidden" name="dml" value="insert" />
+          <?php } ?>
+
+
+
+          <!-- Desactivar formulario FIN -->
+          <?php if (isset($_POST['CRUD'])) { ?>
+          <?php if ($_POST['CRUD'] == 0) { ?>
+        </fieldset>
         <?php } ?>
-        
+        <?php } ?>
 
-
-      <!-- Desactivar formulario FIN -->
-      <?php if (isset($_POST['CRUD'])) { ?>
-      <?php if ($_POST['CRUD'] == 0) { ?>
-      </fieldset>
-      <?php } ?>
-      <?php } ?>
-
-</form>
+      </form>
       <!-- Botones -->
       <div class="col-lg-12" style="text-align: center;">
         <button id="btn-regresar-curso" type="button" class="btn btn-success btn-footer">Regresar</button>
