@@ -101,17 +101,6 @@
         
         
         <!-- Inicio de Sección:  Datos del Grupo-->
-        <!-- <?php 
-          //? Codigo que debe ir para colocar el selected y muestre el dato. 
-          //? No lo muestra 
-          //? Va después del value="": <option value="0" selected>
-          //? Los que usan este son: Tipo, Modalidad y Estatus
-          /*if(isset($Grupo)) {
-          if($Grupo['grup_estado'] == 'Aprobado') {
-            echo (selected); 
-          }
-        } */?> En el Actualizar o Consultar hace que no muestre los datos 
-        -->
         <div class="form-group">
           <div class="card lg-12">
             <div class="card-header">
@@ -120,7 +109,7 @@
             </div>
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
               <div class="col-lg-4 form-group">
-                <label for="GrupoTipo"><b>Tipo:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*"; echo $Grupo->grup_tipo;}?></b></label>
+                <label for="GrupoTipo"><b>Tipo:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
                 <select class="custom-select" id="GrupoTipo" name="GrupoTipo">
                   <option value="0">Seleccione una opción</option>
                   <option value="Público" <?php if(isset($Grupo) && $Grupo->grup_tipo == "Público") { echo "selected"; }?>> Público</option>
@@ -128,7 +117,7 @@
                 </select>
               </div>
               <div class="col-lg-4 form-group">
-                <label for="lbGrupoModalidad"><b>Modalidad:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*"; echo $Grupo->grup_modalidad;} ?></b></label>
+                <label for="lbGrupoModalidad"><b>Modalidad:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";} ?></b></label>
                   <select required='required' class="custom-select" id="GrupoModalidad" name="GrupoModalidad">
                     <option value="0">Seleccione una opción</option>
                     <option value="En línea" <?php if(isset($Grupo) && $Grupo->grup_modalidad == "En línea") { echo "selected"; }?>> En línea </option>
@@ -136,7 +125,7 @@
                   </select>
               </div>
               <div class="col-lg-4 form-group">
-                <label for="GrupoEstatus"><b>Estatus:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*"; echo $Grupo->grup_estado;} ?></b></label>
+                <label for="GrupoEstatus"><b>Estatus:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";} ?></b></label>
                   <select class="custom-select" id="GrupoEstatus" name="GrupoEstatus">
                     <option value="0">Seleccione una opción</option>
                     <option value="Aprobado" <?php if(isset($Grupo) && $Grupo->grup_estado == "Aprobado") { echo "selected"; }?>>Aprobado</option>
@@ -154,19 +143,19 @@
                 <option value="<?php echo $Profesor['prof_id_profesor']; ?>"
                   <?php if(isset($Grupo)) { if ($Grupo->prof_id_profesor == $Profesor['prof_id_profesor']) 
                       { ?> selected <?php }}?>
-                  ><?php echo $Profesor['pers_nombre'].$Profesor['pers_apellido_paterno'].$Profesor['pers_apellido_materno']; ?> 
+                  ><?php echo $Profesor['pers_nombre']." ".$Profesor['pers_apellido_paterno']." ".$Profesor['pers_apellido_materno']; ?> 
                 </option> <?php } ?>
               </select>
             </div>
             <div class="col-lg-6 form-group">
-              <label for="ID_Moderador"><b>Moderador: <?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
+              <label for="ID_Moderador"><b>Moderador: <?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
               <select class="custom-select" id="ID_Moderador" name="ID_Moderador">
                 <option value="0">Seleccione una opción</option>  
                   <?php foreach ($arr_Moderadores as $Moderador) { ?>
                 <option value="<?php echo $Moderador['mode_id_moderador']; ?>"
                   <?php if(isset($Grupo)) { if ($Grupo->mode_id_moderador == $Moderador['mode_id_moderador']) 
                       { ?> selected <?php }}?>
-                  ><?php echo $Moderador['pers_nombre'].$Moderador['pers_apellido_paterno'].$Moderador['pers_apellido_materno']; ?> 
+                  ><?php echo $Moderador['pers_nombre']." ".$Moderador['pers_apellido_paterno']." ".$Moderador['pers_apellido_materno']; ?> 
                 </option> <?php } ?>
               </select>
             </div>
@@ -209,14 +198,33 @@
           <div class="card lg-12">
             <div class="card-header">
               <i class="fas fa-id-card fa-lg"></i>
-                <b>&nbsp;&nbsp; Datos de la Modalidad </b>
+                <b>&nbsp;&nbsp; <?php echo "Datos de la Modalidad"; if (isset($Grupo->grup_modalidad)) echo ": ".$Grupo->grup_modalidad;?></b>
             </div>
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
+              <!-- div de la modalidad presencial -->
+              <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'Presencial') { ?>
+              <div id="ID_Salon" class="col-lg-6 form-group"> 
+              <?php } else {?> 
+              <div id="ID_Salon" class="col-lg-6 form-group" style="display: none;">
+              <?php }?>
+                <label for="lbID_Salon"><b>Salon:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
+                <select class="custom-select" id="ID_Salon" name="ID_Salon" >
+                  <option value="0">Seleccione una opción</option>  
+                  <?php foreach ($arr_Salones as $Salon) { ?>
+                  <option value="<?php echo $Salon['salo_id_salon'];?>"
+                    <?php if(isset($Grupo)) { if ($Grupo->salo_id_salon == $Salon['salo_id_salon']) { ?> 
+                    selected
+                    <?php } }?>>
+                    <?php echo "Edificio: ".$Salon['edif_nombre']."Salon: ".$Salon['salo_nombre']; ?>
+                  </option>
+                  <?php } ?>
+                </select>
+              </div>
+              <!-- div de la modalidad en línea -->
               <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
               <div id="ID_Plataforma" class="col-lg-6 form-group"> 
               <?php } else {?> 
-                <div id="ID_Plataforma" class="col-lg-6 form-group"> 
-                <!--QUITE el NONDISPLAY en los de modalidad por que al consultar si se puede ver y si visualiza el selected-->
+                <div id="ID_Plataforma" class="col-lg-6 form-group" style="display: none;">
               <?php }?>
                 <label for="lbID_Plataforma"><b>Plataforma:<?php if (isset($_POST['CRUD']) == false) { echo "*";}?></b></label>
                 <select class="custom-select" id="ID_Plataforma" name="ID_Plataforma">
@@ -234,7 +242,7 @@
               <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
               <div id="URL_Acceso" class="col-lg-6 form-group"> 
               <?php } else {?> 
-                <div id="URL_Acceso" class="col-lg-6 form-group">
+                <div id="URL_Acceso" class="col-lg-6 form-group" style="display: none;">
               <?php }?>
               <label for="lbURL_Acceso"><b>Link de acceso:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
                 <input type="text" class="form-control" id="URL_Acceso" name="URL_Acceso"
@@ -245,7 +253,7 @@
               <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
               <div id="ID_Reunion" class="col-lg-6 form-group"> 
               <?php } else {?> 
-              <div id="ID_Reunion" class="col-lg-6 form-group">
+              <div id="ID_Reunion" class="col-lg-6 form-group" style="display: none;">
               <?php }?>
                 <label for="lbID_Reunion"><b>ID de la Renunón:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
                 <input type="text" class="form-control" id="ID_Reunion" name="ID_Reunion"
@@ -254,32 +262,11 @@
               <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
               <div id="Clave_Acceso" class="col-lg-6 form-group"> 
               <?php } else {?> 
-              <div id="Clave_Acceso" class="col-lg-6 form-group">
+              <div id="Clave_Acceso" class="col-lg-6 form-group" style="display: none;">
               <?php }?>
                 <label for="lbClave_Acceso"><b>Clave de Acceso:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
                 <input type="text" class="form-control" id="Clave_Acceso" name="Clave_Acceso"
                   value="<?php echo isset($Grupo) ? $Grupo->grup_clave_acceso : ""; ?>">
-              </div>
-            </div>
-            <!-- div de la modalidad presencial -->
-            <div class="col-lg-12 form-row" style="margin-top: 15px;">      
-              <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'Presencial') { ?>
-              <div id="ID_Salon" class="col-lg-6 form-group"> 
-              <?php } else {?> 
-              <div id="ID_Salon" class="col-lg-6 form-group">
-              <?php }?>
-                <label for="lbID_Salon"><b>Salon:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
-                <select class="custom-select" id="ID_Salon" name="ID_Salon">
-                  <option value="0">Seleccione una opción</option>  
-                  <?php foreach ($arr_Salones as $Salon) { ?>
-                  <option value="<?php echo $Salon['salo_id_salon'];?>"
-                    <?php if(isset($Grupo)) { if ($Grupo->salo_id_salon == $Salon['salo_id_salon']) { ?> 
-                    selected
-                    <?php } }?>>
-                    <?php echo "Edificio: ".$Salon['edif_nombre']."Salon: ".$Salon['salo_nombre']; ?>
-                  </option>
-                  <?php } ?>
-                </select>
               </div>
             </div>
           </div>
@@ -297,31 +284,24 @@
         <div id="Sesiones" class="form-group" style="display: none;">
         <?php } 
         $i = 1; 
-        foreach($arr_Sesiones as $Sesion){ ?>
+        foreach($arr_Sesiones as $Sesion){ 
+          $SesionFecha = "SesionFecha".$i;
+          $SesionHora = "SesionHora".$i; ?>
           <div class="card lg-12">
             <div class="card-header"> 
               <i class="fas fa-id-card fa-lg"></i>
-              <b>&nbsp;&nbsp; <?php echo "Sesión #".$i ?></b>
+              <b>&nbsp;&nbsp; <?php echo "Sesión #".$i; ?></b>
             </div>
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
-              <div id="<?php echo "SesionFecha".$i; ?>"class="col-lg-6 form-group">
-              
-                <label for="<?php echo "SesionFecha".$i; ?>"><b>Fecha:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
-                <?php 
-                //? Hay un problema pero no logro ver cual es, no muestra los datos, pero si imprime los datos
-                //TODO Revisar que moví - Tal vez sea la condición en el if?
-                echo $Sesion['sesi_fecha']; 
-                ?> 
-                  <input type="date" class="form-control" id="<?php echo "SesionFecha".$i; ?>" name="<?php echo "SesionFecha".$i; ?>" placeholder="0" min="0" value="
-                  <?php echo isset($Sesion)?$Sesion['sesi_fecha']:""; ?>">
+              <div id="<?php echo $SesionFecha;?>" class="col-lg-6 form-group">
+                <label for="<?php echo $SesionFecha;?>"><b>Fecha:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
+                  <input type="date" class="form-control" id="<?php echo $SesionFecha;?>" name="<?php echo $SesionFecha;?>" 
+                  placeholder="0" min="0" value="<?php echo isset($Sesion)?$Sesion['sesi_fecha']:""; ?>">
               </div>
-
-              <div id="<?php echo "SesionHora".$i; ?>"class="col-lg-6 form-group">
-                <label for="<?php echo "SesionHora".$i; ?>"><b>Hora:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
-                <?php echo $Sesion['sesi_hora']; ?> 
-                  <input type="time" class="form-control" id="<?php echo "SesionHora".$i; ?>" name="<?php echo "SesionHora".$i; ?>"
-                  placeholder="0" min="0" value="
-                  <?php echo isset($Sesion)?$Sesion['sesi_hora']:""; ?>">
+              <div id="<?php echo $SesionHora;?>"class="col-lg-6 form-group">
+                <label for="<?php echo $SesionHora;?>"><b>Hora:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
+                  <input type="time" class="form-control" id="<?php echo $SesionHora;?>" name="<?php echo $SesionHora;?>"
+                  placeholder="0" min="0" value="<?php echo isset($Sesion)?$Sesion['sesi_hora']:"";?>">
               </div>      
             </div>
           </div>

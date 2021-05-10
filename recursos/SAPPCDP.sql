@@ -996,7 +996,7 @@ INSERT INTO PREGUNTA_SEGURIDAD (prse_pregunta) VALUES ('Como se llamaba tu prime
 
 INSERT INTO Usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usuario, usua_contrasena, usua_respuesta, usua_activo)
 		VALUES (1, 1, 3, 'Esteban', '1234', 'Linterna Verde', true), (2, 2, 3, 'Karen', '1234', 'Flash', true), 
-			    (2, 3, 3, 'Samuel', '1234', 'Batman', true);
+			    (3, 3, 3, 'Samuel', '1234', 'Batman', true);
 
 INSERT INTO Administrador (pers_id_persona, admi_num_trabajador, admi_rfc) VALUES (1, '315067596', 'MOME990905134');
 
@@ -1044,15 +1044,15 @@ INSERT INTO PLATAFORMA (PLAT_NOMBRE)
 
 INSERT INTO Grupo (MODE_ID_MODERADOR, PROF_ID_PROFESOR, CURS_ID_CURSOS, SALO_ID_SALON, CALE_ID_CALENDARIO,
                PLAT_ID_PLATAFORMA, GRUP_REUNION, GRUP_ACCESO, GRUP_CLAVE_ACCESO, 
-               GRUP_CUPO, GRUP_ESTADO, GRUP_ACTIVO, GRUP_MODALIDAD, GRUP_TIPO, 
+               GRUP_CUPO, GRUP_TIPO, GRUP_ACTIVO, GRUP_MODALIDAD, GRUP_ESTADO,  
                GRUP_INICIO_INSC, GRUP_FIN_INSC)
 			VALUES (1, 1, 1, null, 1, 
                1, 'grupo reunion1', 'grupo acceso1', 'clave1', 
                50, 'Privado', 'true', 'En línea', 'Aprobado', 
                '2021/02/23', '2021/09/08'),
                (1, 1, 1, 1, 
-               1, null, null, null, null, 60, 
-               'Público', 'true', 'Presencial', 'Rechazado', 
+               1, null, null, null, null, 
+               60, 'Público', 'true', 'Presencial', 'Rechazado', 
                '2021/02/25', '2021/09/07'),
                (1, 1, 1, null, 1, 
                1, 'grupo reunion3', 'grupo acceso3', 'clave3', 
