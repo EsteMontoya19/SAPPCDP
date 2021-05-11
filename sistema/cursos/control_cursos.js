@@ -159,7 +159,7 @@ $(document).ready(function () {
 //Insertar Curso
 $(document).ready(function () {
     $('#btn-registrar-curso').click(function () {
-        
+        alert("validador 3");
         if (validarFormularioCurso()){
             datos = $('#form_cursos').serialize();
             $.ajax({

@@ -47,7 +47,7 @@ $curso -> curs_temario=null;
       </p>
 
       <!-- Formulario -->
-      <form name="form_cursos" id="form_cursos" method="POST">
+      <form name="form_cursos" id="form_cursos" method="POST" enctype="multipart/form-data" action="../modulos/Control_Curso.php">
 
         <!-- Desactivar formulario INICIO en caso de no ser un registro-->
         <?php if (isset($_POST['CRUD'])) { ?>
@@ -71,7 +71,7 @@ $curso -> curs_temario=null;
                 <div class="col-lg-3 form-group">
                   <label for="intTipoCurso"><b>Tipo de curso:
                       <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1)  echo "*"; ?></b></label>
-                  <select class="custom-select" id="intTipoCurso" name="intTipoCurso" onchange="ocultar(this.value)">
+                  <select class="custom-select" id="intTipoCurso" name="intTipoCurso">
                     <option value='0'>Seleccione una opción</option>
                     <option value='Curso'
                       <?php if (isset($curso) && $curso->curs_tipo == "Curso") { echo "selected"; }?>>Curso</option>
@@ -84,7 +84,7 @@ $curso -> curs_temario=null;
                 <div class="col-lg-3 form-group">
                   <label for="intNivel"><b>Nivel:
                       <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1)  echo "*"; ?></b></label>
-                  <select class="custom-select" id="intNivel" name="intNivel" onchange="ocultar(this.value)">
+                  <select class="custom-select" id="intNivel" name="intNivel">
                     <option value="0">Seleccione una opción</option>
                     <option value='Básico'
                       <?php if (isset($curso) && $curso->curs_nivel == "Básico") { echo "selected"; }?>>Básico</option>
@@ -189,7 +189,7 @@ $curso -> curs_temario=null;
         <button id="btn-actualizar-curso" type="button" class="btn btn-success btn-footer">Actualizar</button>
         <?php } ?>
         <?php } else { ?>
-        <button id="btn-registrar-curso" type="button" class="btn btn-success btn-footer">Guardar</button>
+        <button id="btn-registrar-curso" type="button"  form ="form_cursos" class="btn btn-success btn-footer">Guardar</button>
         <?php } ?>
       </div>
     </div>

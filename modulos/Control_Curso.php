@@ -27,7 +27,26 @@
   //! Todo lo siguiente viene de Usuarios, se debe cambiar conforme se avance a cursos
 
   if($_POST['dml'] == 'insert'){
-    $nombre = $_POST['strNombreCurso'];
+
+    print_r($_FILES);
+    var_dump($_FILES);
+
+    
+    $file = is_uploaded_file($_FILES[0]['tmp_name']);
+    $rutaTemporal = $file['tmp_name'];
+    $rutaNueva = "upload/";
+    $nuevoNombre = "El archivo feliz.pdf";
+    move_uploaded_file($_FILES['#temario']['tmp_name'], $rutaNueva.$nuevoNombre);
+    
+    $archivo = fopen("Mensajes.txt", "a");
+    fwrite($archivo, $_FILES['tmp_name'].PHP_EOL);
+    fwrite($archivo, $_FILES['temario']['name'].PHP_EOL);
+    fwrite($archivo, $_FILES['temario']['size'].PHP_EOL);
+    fclose($archivo);
+
+    echo 1;
+
+    /*$nombre = $_POST['strNombreCurso'];
     $cursoExistente = $obj_Curso->buscarCursoNombre($nombre);
 
     if(!isset($cursoExistente->curs_nombre)){
@@ -48,7 +67,7 @@
 
     } else {
       echo 2;
-    }
+    }*/
   }
   
   if($_POST['dml'] == 'update')
