@@ -101,7 +101,24 @@ function validarFormularioCurso(){
         $('html, body').animate({scrollTop: 150}, 'slow');
         document.getElementById('strNumeroSesiones').focus();
         return false;
+    } else {
+        if ($('#strNumeroSesiones').val() < 1){
+            alertify.error('El número de sesiones debe ser minimo 1');
+            $('html, body').animate({scrollTop: 150}, 'slow');
+            document.getElementById('strNumeroSesiones').focus();
+            return false;
+        }
+        var numExp = /^([0-9])*$/;
+        if (numExp.test($('#strNumeroSesiones').val())) {
+        } else {
+            $('html, body').animate({ scrollTop: 100 }, 'slow');
+            document.getElementById('strNumeroSesiones').focus();
+            alertify.error('Las sesiones solo pueden ser númericas');
+            return false;
+        }
     }
+
+
 
     return true; 
 
