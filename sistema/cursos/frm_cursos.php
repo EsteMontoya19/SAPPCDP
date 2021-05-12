@@ -132,7 +132,7 @@ $curso -> curs_temario=null;
                 <div class="col-lg-6 form-group">
                   <label for="temario"><b>Temario:</b></label>
                   <div class="custom-file">
-                    <input type="file" id="temario" name="temario" class="custom-file-input">
+                    <input type="file" id="temario" name="temario" class="custom-file-input" accept="application/pdf" <?php echo !isset($curso) ? "require": ""; ?> required>
                     <label class="custom-file-label"
                       for="temario"><?php echo isset($curso) ? $curso -> curs_temario: ""; ?></label>
                   </div>
@@ -141,7 +141,7 @@ $curso -> curs_temario=null;
                 <!--! Este código lo descarga con el nombre del archivo original según el href que debes modificar con php -->
                 <div class="col-lg-6 form-group">
                   <label for="temarioDW"><b>Temario:</b></label> <br>
-                  <a id="temarioDW" href="../recursos/PDF/clase.pdf" download class="btn btn-primary" role="button"><i
+                  <a id="temarioDW" href="<?php echo isset($curso) ? $curso -> curs_temario : "No subido"; ?>" download class="btn btn-primary" role="button"><i
                       class="fas fa-file-download" style="padding-right: 10px;"></i>
                     Descargar</a>
                 </div>

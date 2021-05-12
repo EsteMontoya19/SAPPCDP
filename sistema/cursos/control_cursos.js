@@ -24,8 +24,7 @@ $(document).ready(function () {
 });
 
 //Validar el formulario de cursos
-function validarFormularioCurso(){
-
+function validarFormularioCurso(){    
     if ($('#strNombreCurso').val() == ''){
         $('html, body').animate({scrollTop: 0}, 'slow');
         document.getElementById('strNombreCurso').focus();
@@ -36,6 +35,20 @@ function validarFormularioCurso(){
             $('html, body').animate({scrollTop: 0}, 'slow');
             document.getElementById('strNombreCurso').focus();
             alertify.error('El nombre del curso debe tener máximo 50 caracteres');
+            return false;
+        }
+
+        if($('#strNombreCurso').val().includes('@') || $('#strNombreCurso').val().includes('.') || 
+        $('#strNombreCurso').val().includes('/') || $('#strNombreCurso').val().includes('-') || 
+        $('#strNombreCurso').val().includes('*') || $('#strNombreCurso').val().includes('!') || 
+        $('#strNombreCurso').val().includes('#') || $('#strNombreCurso').val().includes('$') ||
+        $('#strNombreCurso').val().includes('%') || $('#strNombreCurso').val().includes('^') ||
+        $('#strNombreCurso').val().includes('&') || $('#strNombreCurso').val().includes('(') ||
+        $('#strNombreCurso').val().includes(')') || $('#strNombreCurso').val().includes('-') ||
+        $('#strNombreCurso').val().includes('=')|| $('#strNombreCurso').val().includes('+')){
+            $('html, body').animate({scrollTop: 0}, 'slow');
+            document.getElementById('strNombreCurso').focus();
+            alertify.error('El nombre del curso no debe incluir caracteres especiales @, ., /, *, -, !, #, $, %, ^, &, *, (, ), -, +, =');
             return false;
         }
     }
@@ -131,12 +144,15 @@ function actualizarCursoDirecto(id) {
 $(document).ready(function () {
     $('#btn-actualizar-curso').click(function () {
         if (validarFormularioCurso()) {
-            datos = $('#form_cursos').serialize();
+            datos =  new FormData ($('#form_cursos')[0]);
 
             $.ajax({
                 type: 'POST',
                 url: '../modulos/Control_Curso.php',
                 data: datos,
+                contentType: false,
+                processData: false,
+
                 success: function (respuesta) {
                     console.log(respuesta);
                     if (respuesta.endsWith('1')) {
@@ -145,6 +161,9 @@ $(document).ready(function () {
                             $('html, body').animate({ scrollTop: 0 }, 0);
                             $('#container').load('../sistema/cursos/frm_inicio_cursos.php');
                         }, 0);
+                    } else if (respuesta.endsWith('2')){
+                        $('html, body').animate({scrollTop: 0}, 'slow');
+                        alertify.error('El curso en ese nivel y tipo, ya exite');
                     } else {
                         alertify.error('Hubo un problema al registrar el curso');
                     };
@@ -159,13 +178,15 @@ $(document).ready(function () {
 //Insertar Curso
 $(document).ready(function () {
     $('#btn-registrar-curso').click(function () {
-        alert("validador 3");
         if (validarFormularioCurso()){
-            datos = $('#form_cursos').serialize();
+            datos =  new FormData ($('#form_cursos')[0]);
             $.ajax({
                 type: 'POST',
                 url: '../modulos/Control_Curso.php',
                 data: datos,
+                contentType: false,
+                processData: false,
+
                 success: function (respuesta) {
                     console.log(respuesta);
                     if (respuesta.endsWith('1')){
@@ -177,7 +198,11 @@ $(document).ready(function () {
                     } else if (respuesta.endsWith('2')){
                         $('html, body').animate({scrollTop: 200}, 'slow');
                         document.getElementById('strNombreCurso').focus();
-                        alertify.error('El nombre de curso ya existe');
+                        alertify.error('El curso en ese nivel y tipo, ya exite.');
+                    } else if (respuesta.endsWith('3')) {
+                        $('html, body').animate({scrollTop: 200}, 'slow');
+                        document.getElementById('temario').focus();
+                        alertify.error('Debe ingresar un temario del curso');
                     } else {
                         alertify.error('Hubo un problema al registrar el curso');
                     }
@@ -188,7 +213,6 @@ $(document).ready(function () {
     });
 });
 
-//TODO: Modificar
 function cambioEstatus(id, estatus, nombre) {
     var mensaje = '¿Esta seguro de cambiar el estatus del curso ';
     mensaje = mensaje.concat(nombre);

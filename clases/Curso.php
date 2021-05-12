@@ -37,7 +37,7 @@
             $SQL_Bus_Curso =
             "   SELECT CURS_ID_CURSOS, CURS_NOMBRE, CURS_TIPO, CURS_NUM_SESIONES, CURS_ACTIVO, CURS_NIVEL, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, CURS_OBJETIVOS,CURS_TEMARIO
                 FROM CURSO
-                WHERE LOWER(CURS_NOMBRE) = LOWER($curso);
+                WHERE LOWER(CURS_NOMBRE) = LOWER('$curso');
             ";
 
             $bd = new BD();
@@ -94,11 +94,6 @@
 			$bd->abrirBD();
 			$transaccion_1 = new Transaccion($bd->conexion);
 			$transaccion_1->enviarQuery($SQL_Act_Curso);
-
-            $file = fopen ("Mensajes.txt", "a");
-            fwrite($file, $SQL_Act_Curso.PHP_EOF);
-            fclose($file);
-
 			$bd->cerrarBD();
         }
 
