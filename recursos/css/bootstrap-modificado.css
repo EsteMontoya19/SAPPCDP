@@ -1,0 +1,28 @@
+.btn-descarga{
+    color: #fff;
+    background-color: #004c94;
+    border-color: #4d668b;
+  }
+  
+  .btn-descarga:hover{
+    color: #fff;
+    background-color: #4fd3d8;
+    border-color: #004c94;
+  }
+
+  .btn-aceptar{
+    color: #fff;
+    background-color: #db9806;
+    border-color: #2e230d;
+  }
+  
+  .btn-aceptar:hover{
+    color: #fff;
+    background-color: #07a01b;
+    border-color: #2b5f00;
+  }  
+  .btn-regresar:hover{
+    color: #fff;
+    background-color: #c91616;
+    border-color: #8f0202;
+  }

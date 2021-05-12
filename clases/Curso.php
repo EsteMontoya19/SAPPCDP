@@ -33,18 +33,17 @@
             return ($transaccion_1->traerObjeto(0));
         }
 
-        function buscarCursoNombre($curso) {
+        function buscarCursoNombre($curso, $tipo, $nivel) {
             $SQL_Bus_Curso =
             "   SELECT CURS_ID_CURSOS, CURS_NOMBRE, CURS_TIPO, CURS_NUM_SESIONES, CURS_ACTIVO, CURS_NIVEL, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, CURS_OBJETIVOS,CURS_TEMARIO
                 FROM CURSO
-                WHERE LOWER(CURS_NOMBRE) = LOWER('$curso');
+                WHERE LOWER(CURS_NOMBRE) = LOWER('$curso') AND LOWER(CURS_TIPO) = LOWER('$tipo') AND LOWER(CURS_NIVEL) = LOWER('$nivel');
             ";
 
             $bd = new BD();
             $bd->abrirBD();
             $transaccion_1 = new Transaccion($bd->conexion);
             $transaccion_1->enviarQuery($SQL_Bus_Curso);
-            $obj_Curso = $transaccion_1->traerObjeto(0);
             $bd->cerrarBD();
             return ($transaccion_1->traerObjeto(0));
         }

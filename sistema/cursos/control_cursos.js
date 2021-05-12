@@ -45,7 +45,8 @@ function validarFormularioCurso(){
         $('#strNombreCurso').val().includes('%') || $('#strNombreCurso').val().includes('^') ||
         $('#strNombreCurso').val().includes('&') || $('#strNombreCurso').val().includes('(') ||
         $('#strNombreCurso').val().includes(')') || $('#strNombreCurso').val().includes('-') ||
-        $('#strNombreCurso').val().includes('=')|| $('#strNombreCurso').val().includes('+')){
+        $('#strNombreCurso').val().includes('=') || $('#strNombreCurso').val().includes('+') || 
+        $('#strNombreCurso').val().includes(':') || $('#strNombreCurso').val().includes(';')){
             $('html, body').animate({scrollTop: 0}, 'slow');
             document.getElementById('strNombreCurso').focus();
             alertify.error('El nombre del curso no debe incluir caracteres especiales @, ., /, *, -, !, #, $, %, ^, &, *, (, ), -, +, =');

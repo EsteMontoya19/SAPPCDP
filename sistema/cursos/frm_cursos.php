@@ -137,22 +137,6 @@ $curso -> curs_temario=null;
                       for="temario"><?php echo isset($curso) ? $curso -> curs_temario: ""; ?></label>
                   </div>
                 </div>
-
-                <!--! Este código lo descarga con el nombre del archivo original según el href que debes modificar con php -->
-                <div class="col-lg-6 form-group">
-                  <label for="temarioDW"><b>Temario:</b></label> <br>
-                  <a id="temarioDW" href="<?php echo isset($curso) ? $curso -> curs_temario : "No subido"; ?>" download class="btn btn-primary" role="button"><i
-                      class="fas fa-file-download" style="padding-right: 10px;"></i>
-                    Descargar</a>
-                </div>
-
-                <!--! Este código lo descarga con el nombre del archivo que quieras modificando con php-->
-                <!-- <div class="col-lg-6 form-group">
-                  <label for="temarioDW"><b>Temario:</b></label> <br>
-                  <a id="temarioDW" href="../recursos/PDF/clase.pdf" download="Nombre del archivo que quieras" class="btn btn-primary" role="button"><i
-                      class="fas fa-file-download" style="padding-right: 10px;"></i>
-                    Descargar</a>
-                </div> -->
               </div>
             </div>
           </div>
@@ -181,15 +165,19 @@ $curso -> curs_temario=null;
         <?php } ?>
 
       </form>
+      <!--! Este código lo descarga con el nombre del archivo original según el href que debes modificar con php -->
+
       <!-- Botones -->
       <div class="col-lg-12" style="text-align: center;">
-        <button id="btn-regresar-curso" type="button" class="btn btn-success btn-footer">Regresar</button>
+        <button id="btn-regresar-curso" type="button" class="btn btn-success btn-footer btn-regresar">Regresar</button>
+      <a id="temarioDW" href="<?php echo isset($curso) ? $curso -> curs_temario : "No subido"; ?>" download class="btn btn-descarga" role="button"><i
+            class="fas fa-file-download" style="padding-right: 10px;"></i>Descargar temario</a>
         <?php if (isset($_POST['CRUD'])) { ?>
         <?php if ($_POST['CRUD'] == 1) { ?>
-        <button id="btn-actualizar-curso" type="button" class="btn btn-success btn-footer">Actualizar</button>
+        <button id="btn-actualizar-curso" type="button" class="btn btn-success btn-footer btn-aceptar">Actualizar</button>
         <?php } ?>
         <?php } else { ?>
-        <button id="btn-registrar-curso" type="button"  form ="form_cursos" class="btn btn-success btn-footer">Guardar</button>
+        <button id="btn-registrar-curso" type="button"  form ="form_cursos" class="btn btn-success btn-footer btn-aceptar">Guardar</button>
         <?php } ?>
       </div>
     </div>

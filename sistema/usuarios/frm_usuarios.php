@@ -471,13 +471,13 @@
       </form>
       <!-- Botones -->
       <div class="col-lg-12" style="text-align: center;">
-        <button id="btn-regresar-usuario" type="button" class="btn btn-success btn-footer">Regresar</button>
+        <button id="btn-regresar-usuario" type="button" class="btn btn-success btn-footer btn-regresar">Regresar</button>
         <?php if (isset($_POST['CRUD'])) { ?>
           <?php if ($_POST['CRUD'] == 1) { ?>
-            <button id="btn-actualizar-usuario" type="button" class="btn btn-success btn-footer">Actualizar</button>
+            <button id="btn-actualizar-usuario" type="button" class="btn btn-success btn-footer btn-aceptar">Actualizar</button>
           <?php } ?>
         <?php } else { ?>
-          <button id="btn-registrar-usuario" type="button" class="btn btn-success btn-footer">Guardar</button>
+          <button id="btn-registrar-usuario" type="button" class="btn btn-success btn-footer btn-aceptar">Guardar</button>
         <?php } ?>
       </div>
     </div>

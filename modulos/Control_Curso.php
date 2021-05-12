@@ -28,11 +28,12 @@
 
   if($_POST['dml'] == 'insert'){
     $nombre = $_POST['strNombreCurso'];
-    $cursoExistente = $obj_Curso->buscarCursoNombre($nombre);    
+    $tipo = $_POST['intTipoCurso'];
+    $nivel = $_POST['intNivel'];
+    $cursoExistente = $obj_Curso->buscarCursoNombre($nombre, $tipo, $nivel);  
+
     if(isset($cursoExistente->curs_nombre) ) { //? Si no es un  nombre nuevo
-      if (($cursoExistente->curs_nivel == $_POST['intNivel'] && $cursoExistente->curs_tipo == $_POST['intTipoCurso']) ){
-        exit("2");
-      }
+      exit("2");
     } 
 
     if (isset($_FILES['temario']['name']) && $_FILES['temario']['name'] != '') { //? Si lleno el temario
@@ -44,9 +45,6 @@
       $temario = $rutaNueva.$nuevoNombre;
 
       //Datos del curso
-      $nombre = $_POST['strNombreCurso'];
-      $tipo = $_POST['intTipoCurso'];
-      $nivel = $_POST['intNivel'];
       $req_tecnicos = $_POST['strReqTec'];
       $objetivos = $_POST['strObjCurso'];
       $conocimientos = $_POST['strConNeces'];
@@ -64,18 +62,20 @@
   {
 
     $nombre = $_POST['strNombreCurso'];
-    $cursoExistente = $obj_Curso->buscarCursoNombre($nombre);
+    $tipo = $_POST['intTipoCurso'];
+    $nivel = $_POST['intNivel']; 
+    $cursoExistente = $obj_Curso->buscarCursoNombre($nombre, $tipo, $nivel);
     $cursoActual = $obj_Curso->buscarCurso($_POST['idCurso']);
 
     if(!isset($cursoExistente->curs_nombre) || $cursoActual->curs_id_cursos == $cursoExistente->curs_id_cursos) { //? Si no hay curso con ese nombre o si es el mismo curso 
-      if (isset($_FILES['temario']['name']) || $_FILES['temario']['name'] != ''){ //? Si se actualizó el temario
+      if (isset($_FILES['temario']['name']) && $_FILES['temario']['name'] != ''){ //? Si se actualizó el temario
        
         $file = is_uploaded_file($_FILES['temario']['tmp_name']);
-        $rutaTemporal = $_FILES['temario']['tmp_name'];
         $rutaPasada = $cursoActual->curs_temario;
+        unlink("$rutaPasada");
+        $rutaTemporal = $_FILES['temario']['tmp_name'];
         $rutaNueva = "../recursos/PDF/Temarios/";
         $nuevoNombre = "Temario_".$_POST['intTipoCurso']."_".$_POST['strNombreCurso']."_".$_POST['intNivel'].".pdf";
-        unlink("$rutaPasada");
         move_uploaded_file($_FILES['temario']['tmp_name'], $rutaNueva.$nuevoNombre);
         $temario = $rutaNueva.$nuevoNombre;
 
@@ -88,25 +88,14 @@
       }
 
     } else { //? Si hay un curso con ese nombre o el que hay no es el mismo 
-      if ($cursoExistente->curs_nivel != $_POST['intNivel'] || $cursoExistente->curs_tipo != $_POST['intTipoCurso']) { //? Si cambia en tipo o nivel
-        $rutaPasada = $cursoActual->curs_temario;
-        $rutaNueva = "../recursos/PDF/Temarios/";
-        $nuevoNombre = "Temario_".$_POST['intTipoCurso']."_".$_POST['strNombreCurso']."_".$_POST['intNivel'].".pdf";
-        rename("$rutaPasada", "$rutaNueva"."$nuevoNombre");
-        $temario = $rutaNueva.$nuevoNombre;  
-      } else {  //? Si no cambia ni en nivel ni en tipo y no tiene el mimso ID esta totalmente igual
-
         exit('2');
-      }
     }
 
     $curso = $_POST['idCurso'];
     $nombre = $_POST['strNombreCurso'];
-    $tipo = $_POST['intTipoCurso'];
     $num_sesiones = $_POST['strNumeroSesiones'];
     $req_tecnicos = $_POST['strReqTec'];
     $conocimientos = $_POST['strConNeces'];
-    $nivel = $_POST['intNivel']; 
     $objetivo = $_POST['strObjCurso'];
     $activo = isset($_POST['bEstado']) ? $_POST['bEstado'] : TRUE; //TODO Ver como funciona este dato en el formulario
 
