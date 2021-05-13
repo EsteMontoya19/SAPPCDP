@@ -30,6 +30,16 @@ function validarFormularioUsuario() {
             alertify.error('El nombre de usuario debe tener máximo 50 caracteres');
             return false;
         }
+
+        var letExp = /^([a-zA-Z])*$/;
+        if (letExp.test($('#strUsuarioNombre').val())) {
+        } else {
+            $('html, body').animate({ scrollTop: 100 }, 'slow');
+            document.getElementById('strUsuarioNombre').focus();
+            alertify.error('El nombre debe estar compuesto unicamente por letras (a-z, A-Z).');
+            return false;
+        }
+
     }
 
     if ($('#strUsuarioPrimerApe').val() == '') {
@@ -44,7 +54,26 @@ function validarFormularioUsuario() {
             alertify.error('El apellido paterno debe tener máximo 50 caracteres');
             return false;
         }
+
+        var letExp = /^([a-zA-Z])*$/;
+        if (letExp.test($('#strUsuarioPrimerApe').val())) {
+        } else {
+            $('html, body').animate({ scrollTop: 100 }, 'slow');
+            document.getElementById('strUsuarioPrimerApe').focus();
+            alertify.error('El nombre debe estar compuesto unicamente por letras (a-z, A-Z).');
+            return false;
+        }
     }
+
+    var letExp = /^([a-zA-Z])*$/;
+    if (letExp.test($('#strUsuarioSegundoApe').val())) {
+    } else {
+        $('html, body').animate({ scrollTop: 100 }, 'slow');
+        document.getElementById('strUsuarioSegundoApe').focus();
+        alertify.error('El nombre debe estar compuesto unicamente por letras (a-z, A-Z).');
+        return false;
+    }
+    
 
     if ($('#strUsuarioCorreo').val() == '') {
         $('html, body').animate({ scrollTop: 100 }, 'slow');

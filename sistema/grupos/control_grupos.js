@@ -5,7 +5,6 @@ $(document).ready(function () {
     $("html, body").animate({ scrollTop: 0 }, 0);
     $("#container").load("../sistema/frm_inicio.php");
   });
-  
   $("#btn-inicio-grupo").click(function () {
     $("html, body").animate({ scrollTop: 0 }, 0);
     $("#container").load("../sistema/grupos/frm_inicio_grupos.php");
@@ -26,7 +25,6 @@ $(document).ready(function () {
     $("#container").load("../sistema/frm_inicio.php");
   });
 });
-
 // Validar el formulario
 
 function validarFormularioGrupo() {
@@ -566,5 +564,24 @@ $(document).ready( function () {
   });
 });
 
+alert("versión5");
 
+//! No eliminar, permite desplegar cuando es un nuevo registro de grupos
+$(document).on('change', '#GrupoModalidad', function mostrarCamposModalidad() {
+  var tipo_evento = $('#GrupoModalidad').val();
+  if (tipo_evento.startsWith('En línea')) {
+      $('#ID_Salon').hide();
+      $('#ID_Plataforma').show();
+      $('#URL_Acceso').show();
+      $('#ID_Reunion').show();
+      $('#Clave_Acceso').show();
+  }
+  if (tipo_evento.startsWith('Presencial')) {
+    $('#ID_Salon').show();
+    $('#ID_Plataforma').hide();
+    $('#URL_Acceso').hide();
+    $('#ID_Reunion').hide();
+    $('#Clave_Acceso').hide();
+  }
+});
 
