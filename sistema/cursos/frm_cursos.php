@@ -47,7 +47,13 @@ $curso -> curs_temario=null;
       </p>
 
       <!-- Formulario -->
-      <form name="form_cursos" id="form_cursos" method="POST" enctype="multipart/form-data" action="../modulos/Control_Curso.php">
+
+
+
+
+
+      <form name="form_cursos" id="form_cursos" method="POST" enctype="multipart/form-data"
+        action="../modulos/Control_Curso.php">
 
         <!-- Desactivar formulario INICIO en caso de no ser un registro-->
         <?php if (isset($_POST['CRUD'])) { ?>
@@ -56,10 +62,15 @@ $curso -> curs_temario=null;
           <?php } ?>
           <?php } ?>
 
+          <!-- Datos generales -->
           <div class="form-group">
-            <!-- Datos generales -->
+            <div class="card-header">
+              <i class="fas fa-id-card fa-lg"></i>
+              <b>&nbsp;&nbsp;Datos del curso</b>
+            </div>
             <div class="card lg-12" style="padding: 15px;">
-              <div class="col-lg-12 form-row">
+
+              <div class="col-lg-12 form-row" style="margin-top: 15px;">
 
                 <div id="nombre" class="col-lg-6 form-group">
                   <label for="strNombreCurso"><b>Nombre:
@@ -124,7 +135,7 @@ $curso -> curs_temario=null;
                 <div id="numeroSesiones" class="col-lg-6 form-group" style="display:show;">
                   <label for="strNumeroSesiones"><b>Número de sesiones:
                       <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1)  echo "*"; ?></b></label>
-                  <input class="form-control numeros_permitidos" type="number" min="0" max="20" class="form-control"
+                  <input class="form-control numeros_permitidos" type="number" min="1" max="20" class="form-control"
                     id="strNumeroSesiones" name="strNumeroSesiones"
                     value="<?php echo isset($curso) ? $curso->curs_num_sesiones : ""; ?>">
                 </div>
@@ -132,7 +143,8 @@ $curso -> curs_temario=null;
                 <div class="col-lg-6 form-group">
                   <label for="temario"><b>Temario:</b></label>
                   <div class="custom-file">
-                    <input type="file" id="temario" name="temario" class="custom-file-input" accept="application/pdf" <?php echo !isset($curso) ? "require": ""; ?> required>
+                    <input type="file" id="temario" name="temario" class="custom-file-input" accept="application/pdf"
+                      <?php echo !isset($curso) ? "require": ""; ?> required>
                     <label class="custom-file-label"
                       for="temario"><?php echo isset($curso) ? $curso -> curs_temario: ""; ?></label>
                   </div>
@@ -170,14 +182,17 @@ $curso -> curs_temario=null;
       <!-- Botones -->
       <div class="col-lg-12" style="text-align: center;">
         <button id="btn-regresar-curso" type="button" class="btn btn-success btn-footer btn-regresar">Regresar</button>
-      <a id="temarioDW" href="<?php echo isset($curso) ? $curso -> curs_temario : "No subido"; ?>" download class="btn btn-descarga" role="button"><i
-            class="fas fa-file-download" style="padding-right: 10px;"></i>Descargar temario</a>
+        <a id="temarioDW" href="<?php echo isset($curso) ? $curso -> curs_temario : "No subido"; ?>" download
+          class="btn btn-descarga" role="button"><i class="fas fa-file-download"
+            style="padding-right: 10px;"></i>Descargar temario</a>
         <?php if (isset($_POST['CRUD'])) { ?>
         <?php if ($_POST['CRUD'] == 1) { ?>
-        <button id="btn-actualizar-curso" type="button" class="btn btn-success btn-footer btn-aceptar">Actualizar</button>
+        <button id="btn-actualizar-curso" type="button"
+          class="btn btn-success btn-footer btn-aceptar">Actualizar</button>
         <?php } ?>
         <?php } else { ?>
-        <button id="btn-registrar-curso" type="button"  form ="form_cursos" class="btn btn-success btn-footer btn-aceptar">Guardar</button>
+        <button id="btn-registrar-curso" type="button" form="form_cursos"
+          class="btn btn-success btn-footer btn-aceptar">Guardar</button>
         <?php } ?>
       </div>
     </div>

@@ -24,87 +24,97 @@ $(document).ready(function () {
 });
 
 //Validar el formulario de cursos
-function validarFormularioCurso(){    
-    if ($('#strNombreCurso').val() == ''){
-        $('html, body').animate({scrollTop: 0}, 'slow');
+function validarFormularioCurso() {
+    if ($('#strNombreCurso').val() == '') {
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
         document.getElementById('strNombreCurso').focus();
         alertify.error('Se debe ingresar el nombre del curso');
         return false;
     } else {
-        if ($('#strNombreCurso').val().length > 50){
-            $('html, body').animate({scrollTop: 0}, 'slow');
+        if ($('#strNombreCurso').val().length > 50) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
             document.getElementById('strNombreCurso').focus();
             alertify.error('El nombre del curso debe tener máximo 50 caracteres');
             return false;
         }
 
-        if($('#strNombreCurso').val().includes('@') || $('#strNombreCurso').val().includes('.') || 
-        $('#strNombreCurso').val().includes('/') || $('#strNombreCurso').val().includes('-') || 
-        $('#strNombreCurso').val().includes('*') || $('#strNombreCurso').val().includes('!') || 
-        $('#strNombreCurso').val().includes('#') || $('#strNombreCurso').val().includes('$') ||
-        $('#strNombreCurso').val().includes('%') || $('#strNombreCurso').val().includes('^') ||
-        $('#strNombreCurso').val().includes('&') || $('#strNombreCurso').val().includes('(') ||
-        $('#strNombreCurso').val().includes(')') || $('#strNombreCurso').val().includes('-') ||
-        $('#strNombreCurso').val().includes('=') || $('#strNombreCurso').val().includes('+') || 
-        $('#strNombreCurso').val().includes(':') || $('#strNombreCurso').val().includes(';')){
-            $('html, body').animate({scrollTop: 0}, 'slow');
+        if (
+            $('#strNombreCurso').val().includes('@') ||
+            $('#strNombreCurso').val().includes('.') ||
+            $('#strNombreCurso').val().includes('/') ||
+            $('#strNombreCurso').val().includes('-') ||
+            $('#strNombreCurso').val().includes('*') ||
+            $('#strNombreCurso').val().includes('!') ||
+            $('#strNombreCurso').val().includes('#') ||
+            $('#strNombreCurso').val().includes('$') ||
+            $('#strNombreCurso').val().includes('%') ||
+            $('#strNombreCurso').val().includes('^') ||
+            $('#strNombreCurso').val().includes('&') ||
+            $('#strNombreCurso').val().includes('(') ||
+            $('#strNombreCurso').val().includes(')') ||
+            $('#strNombreCurso').val().includes('-') ||
+            $('#strNombreCurso').val().includes('=') ||
+            $('#strNombreCurso').val().includes('+') ||
+            $('#strNombreCurso').val().includes(':') ||
+            $('#strNombreCurso').val().includes(';')
+        ) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
             document.getElementById('strNombreCurso').focus();
             alertify.error('El nombre del curso no debe incluir caracteres especiales @, ., /, *, -, !, #, $, %, ^, &, *, (, ), -, +, =');
             return false;
         }
     }
 
-    if ($('#intTipoCurso').val() == 0){
+    if ($('#intTipoCurso').val() == 0) {
         alertify.error('Debe seleccionar un tipo: curso / taller');
-        $('html, body').animate({scrollTop: 0}, 'slow');
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
         document.getElementById('intTipoCurso').focus();
         return false;
     }
 
-    if ($('#intNivel').val() == 0){
+    if ($('#intNivel').val() == 0) {
         alertify.error('Debe seleccionar un nivel: Basico / Intermedio / Avanzado');
-        $('html, body').animate({scrollTop: 0}, 'slow');
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
         document.getElementById('intNivel').focus();
         return false;
     }
 
-    if ($('#strReqTec').val().length > 150){
+    if ($('#strReqTec').val().length > 150) {
         alertify.error('El campo de requisitos técnicos debe ser de máximo 150 caracteres');
-        $('html, body').animate({scrollTop: 150}, 'slow');
+        $('html, body').animate({ scrollTop: 150 }, 'slow');
         document.getElementById('strReqTec').focus();
         return false;
     }
 
-    if ($('#strConNeces').val().length > 150){
+    if ($('#strConNeces').val().length > 150) {
         alertify.error('El campo de conocimientos necesarios debe ser de máximo 150 caracteres');
-        $('html, body').animate({scrollTop: 150}, 'slow');
+        $('html, body').animate({ scrollTop: 150 }, 'slow');
         document.getElementById('strConNeces').focus();
         return false;
     }
 
-    if ($('#strObjCurso').val() == ''){
-        $('html, body').animate({scrollTop: 150}, 'slow');
+    if ($('#strObjCurso').val() == '') {
+        $('html, body').animate({ scrollTop: 150 }, 'slow');
         document.getElementById('strObjCurso').focus();
         alertify.error('Se deben ingresar los objetivos del curso');
         return false;
     } else {
-        if ($('#strObjCurso').val().length > 150){
-            $('html, body').animate({scrollTop: 150}, 'slow');
+        if ($('#strObjCurso').val().length > 150) {
+            $('html, body').animate({ scrollTop: 150 }, 'slow');
             document.getElementById('strObjCurso').focus();
             alertify.error('Los objetivos del curso debe tener máximo 150 caracteres');
             return false;
         }
     }
 
-    if ($('#strNumeroSesiones').val() == ''){
-        alertify.error('Debe ingresar un número de sesiones para el curso');
-        $('html, body').animate({scrollTop: 150}, 'slow');
+    if ($('#strNumeroSesiones').val() == '' || $('#strNumeroSesiones').val() < 1) {
+        alertify.error('Debe ingresar un número de sesiones válido para el curso');
+        $('html, body').animate({ scrollTop: 150 }, 'slow');
         document.getElementById('strNumeroSesiones').focus();
         return false;
     }
 
-    return true; 
-
+    return true;
 }
 
 function consultarCursoDirecto(id) {
@@ -145,7 +155,7 @@ function actualizarCursoDirecto(id) {
 $(document).ready(function () {
     $('#btn-actualizar-curso').click(function () {
         if (validarFormularioCurso()) {
-            datos =  new FormData ($('#form_cursos')[0]);
+            datos = new FormData($('#form_cursos')[0]);
 
             $.ajax({
                 type: 'POST',
@@ -162,12 +172,12 @@ $(document).ready(function () {
                             $('html, body').animate({ scrollTop: 0 }, 0);
                             $('#container').load('../sistema/cursos/frm_inicio_cursos.php');
                         }, 0);
-                    } else if (respuesta.endsWith('2')){
-                        $('html, body').animate({scrollTop: 0}, 'slow');
-                        alertify.error('El curso en ese nivel y tipo, ya exite');
+                    } else if (respuesta.endsWith('2')) {
+                        $('html, body').animate({ scrollTop: 0 }, 'slow');
+                        alertify.error('El curso en ese nivel y tipo, ya existe');
                     } else {
                         alertify.error('Hubo un problema al registrar el curso');
-                    };
+                    }
                 },
             });
             return false;
@@ -175,12 +185,11 @@ $(document).ready(function () {
     });
 });
 
-
 //Insertar Curso
 $(document).ready(function () {
     $('#btn-registrar-curso').click(function () {
-        if (validarFormularioCurso()){
-            datos =  new FormData ($('#form_cursos')[0]);
+        if (validarFormularioCurso()) {
+            datos = new FormData($('#form_cursos')[0]);
             $.ajax({
                 type: 'POST',
                 url: '../modulos/Control_Curso.php',
@@ -190,18 +199,18 @@ $(document).ready(function () {
 
                 success: function (respuesta) {
                     console.log(respuesta);
-                    if (respuesta.endsWith('1')){
+                    if (respuesta.endsWith('1')) {
                         alertify.success('El registro se realizó correctamente');
                         setTimeout(function () {
-                            $('html, body').animate({scrollTop: 0}, 0);
+                            $('html, body').animate({ scrollTop: 0 }, 0);
                             $('#container').load('../sistema/cursos/frm_inicio_cursos.php');
                         }, 1500);
-                    } else if (respuesta.endsWith('2')){
-                        $('html, body').animate({scrollTop: 200}, 'slow');
+                    } else if (respuesta.endsWith('2')) {
+                        $('html, body').animate({ scrollTop: 200 }, 'slow');
                         document.getElementById('strNombreCurso').focus();
-                        alertify.error('El curso en ese nivel y tipo, ya exite.');
+                        alertify.error('El curso en ese nivel y tipo, ya existe.');
                     } else if (respuesta.endsWith('3')) {
-                        $('html, body').animate({scrollTop: 200}, 'slow');
+                        $('html, body').animate({ scrollTop: 200 }, 'slow');
                         document.getElementById('temario').focus();
                         alertify.error('Debe ingresar un temario del curso');
                     } else {
@@ -221,7 +230,7 @@ function cambioEstatus(id, estatus, nombre) {
     if (estatus == 't') {
         mensaje = mensaje.concat('Esta acción no activara el estado de los grupos relacionados.');
     } else {
-        mensaje = mensaje.concat('Los grupos de este curso seguiran vigentes, esta acción solo impide la creación de nuevos grupos de este curso.');
+        mensaje = mensaje.concat('Los grupos de este curso seguirán vigentes, esta acción solo impide la creación de nuevos grupos de este curso.');
     }
     var titulo = 'Cambio de estatus del curso';
     alertify.confirm(
