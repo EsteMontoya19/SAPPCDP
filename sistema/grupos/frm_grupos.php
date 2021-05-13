@@ -9,15 +9,17 @@
   include('../../clases/Profesor.php');
   include('../../clases/Moderador.php');
    
-  // Catálogos
+  // Objetos
   $obj_Busqueda = new Busqueda();
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
   $obj_Curso = new Curso();
-  $arr_Cursos = $obj_Busqueda->selectCursosActivos();
   $obj_Profesor = new Profesor();
-  $arr_Profesores = $obj_Profesor->buscarProfesoresActivos();
   $obj_Moderador = new Moderador();
+
+  //Catálogos
+  $arr_Cursos = $obj_Busqueda->selectCursosActivos();
+  $arr_Profesores = $obj_Profesor->buscarProfesoresActivos();
   $arr_Moderadores = $obj_Moderador->buscarModeradoresActivos();
   $arr_Plataformas = $obj_Busqueda->selectPlataformas();
   $arr_Salones = $obj_Busqueda->selectSalones();
@@ -215,7 +217,7 @@
                     <?php if(isset($Grupo)) { if ($Grupo->salo_id_salon == $Salon['salo_id_salon']) { ?> 
                     selected
                     <?php } }?>>
-                    <?php echo "Edificio: ".$Salon['edif_nombre']."Salon: ".$Salon['salo_nombre']; ?>
+                    <?php echo "Edificio: ".$Salon['edif_nombre']." Salon: ".$Salon['salo_nombre']; ?>
                   </option>
                   <?php } ?>
                 </select>

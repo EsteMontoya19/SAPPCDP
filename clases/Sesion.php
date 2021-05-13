@@ -86,5 +86,23 @@
 			$bd->cerrarBD();
 			return ($transaccion_1->traerObjeto(0));
         }
+
+		function numSesionesGrupo($idGrupo) {
+
+			$SQL_Bus_Sesion =
+			"SELECT COUNT(grup_id_grupo)
+			 FROM sesion
+			 WHERE grup_id_grupo = $idGrupo
+			 GROUP BY grup_id_grupo 
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Sesion);
+			$obj_Sesion = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerObjeto(0));
+		}
     }
 ?>
