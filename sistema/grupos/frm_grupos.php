@@ -163,7 +163,11 @@
               </select>
             </div>
             <!-- Hasta aquí funciona -->
-            <div class="col-lg-4 form-group">
+            <?php if (isset($_POST['CRUD']) ){?>
+              <div class="col-lg-4 form-group" >
+            <?php } else {?>
+              <div class="col-lg-4 form-group" style="display: none;" >
+            <?php } ?>
               <label for="ID_Status"><b>Publicado: <?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
               <div class="custom-control custom-switch">                          
                 <input type="checkbox" class="custom-control-input" id="ID_Status" <?php if (isset($Grupo) && $Grupo->grup_activo == 'f') { ?>  <?php } else { echo "checked";} ?> 
@@ -171,7 +175,6 @@
                 <label class="custom-control-label" for="ID_Status"></label>
               </div>
             </div>
-
           </div>
         </div>
         <!-- Fin de Sección: Datos del Grupo-->
@@ -191,12 +194,12 @@
                   placeholder="0" min="0" value="<?php echo isset($Grupo)?$Grupo->grup_cupo : ""; ?>">
               </div>
               <div class="col-lg-5 form-group">
-                <label for="GrupoInicioInscripcion"><b>Iniciar Inscripciones en la Fecha:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*"; echo $Grupo->grup_inicio_insc; }; ?></b></label>
+                <label for="GrupoInicioInscripcion"><b>Iniciar Inscripciones en la Fecha:</b></label>
                   <input type="date" class="form-control" id="GrupoInicioInscripcion" name="GrupoInicioInscripcion"
                   placeholder="0" min="0" value="<?php echo isset($Grupo)?$Grupo->grup_inicio_insc : ""; ?>">
               </div>
               <div class="col-lg-5 form-group">
-                <label for="GrupoFinInscripcion"><b>Finalizar Inscripciones en la Fecha:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*"; echo $Grupo->grup_fin_insc; } ?></b></label>
+                <label for="GrupoFinInscripcion"><b>Finalizar Inscripciones en la Fecha:</b></label>
                   <input type="date" class="form-control" id="GrupoFinInscripcion" name="GrupoFinInscripcion"
                   placeholder="0" min="0" value="<?php echo isset($Grupo)?$Grupo->grup_fin_insc : ""; ?>">
               </div>
