@@ -21,7 +21,7 @@
       $obj_Curso->modificarEstatus($curso, $estatus);
     }
 
-    echo 1;
+    exit("1");
   }
 
   //! Todo lo siguiente viene de Usuarios, se debe cambiar conforme se avance a cursos

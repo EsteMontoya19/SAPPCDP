@@ -270,7 +270,7 @@ function cambioEstatus(id, estatus, nombre) {
                             $('#container').load('../sistema/cursos/frm_inicio_cursos.php');
                         }, 1500);
                     } else {
-                        alertify.error('Hubo un problema al cambiar el estatus del usuario PRUEBAS');
+                        alertify.error('Hubo un problema al cambiar el estatus del usuario');
                     }
                 },
             });
