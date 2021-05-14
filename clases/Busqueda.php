@@ -145,7 +145,7 @@
         {
             $SQL_Bus_Cursos =
             "   
-                SELECT CURS_ID_CURSOS, CURS_NOMBRE, CURS_NUM_SESIONES
+                SELECT CURS_ID_CURSOS, CURS_NOMBRE, CURS_NUM_SESIONES, CURS_TIPO, CURS_NIVEL
                 FROM CURSO
                 WHERE CURS_ACTIVO = TRUE
                 ORDER BY CURS_NOMBRE ASC;
