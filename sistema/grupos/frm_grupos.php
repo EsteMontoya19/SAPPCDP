@@ -80,11 +80,11 @@
           <div class="card lg-12">
             <div class="card-header">
               <i class="fas fa-id-card fa-lg"></i>
-              <b>&nbsp;&nbsp;<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "Selecciona un "; ?>Curso</b>
+              <b>&nbsp;&nbsp;<?php if (isset($_POST['CRUD']) == false)  echo "Selecciona un "; ?>Curso </b>
             </div>
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
               <div class="col-lg-6 form-group">
-                <label for="ID_Curso"><b>Curso:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
+                <label for="ID_Curso"><b>Curso:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
                 <select required='required'  class="custom-select" id="ID_Curso" name="ID_Curso" <?php if (isset($_POST['CRUD']) == 1) { echo "disabled";} ?>>
                   <option value="0">Seleccionar una opción</option>
                   <?php foreach ($arr_Cursos as $Curso) { ?>
@@ -112,7 +112,7 @@
             </div>
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
               <div class="col-lg-4 form-group">
-                <label for="GrupoTipo"><b>Tipo:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
+                <label for="GrupoTipo"><b>Tipo:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*"; }?></b></label>
                 <select class="custom-select" id="GrupoTipo" name="GrupoTipo">
                   <option value="0">Seleccione una opción</option>
                   <option value="Público" <?php if(isset($Grupo) && $Grupo->grup_tipo == "Público") { echo "selected"; }?>> Público</option>
@@ -120,7 +120,7 @@
                 </select>
               </div>
               <div class="col-lg-4 form-group">
-                <label for="lbGrupoModalidad"><b>Modalidad:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";} ?></b></label>
+                <label for="GrupoModalidad"><b>Modalidad:<?php if (isset($_POST['CRUD']) == false) { echo "*";} ?></b></label>
                   <select required='required' class="custom-select" id="GrupoModalidad" name="GrupoModalidad" <?php if (isset($_POST['CRUD']) == 1) { echo "disabled";} ?>>
                     <option value="0">Seleccione una opción</option>
                     <option value="En línea" <?php if(isset($Grupo) && $Grupo->grup_modalidad == "En línea") { echo "selected"; }?>> En línea </option>
@@ -139,7 +139,7 @@
           </div>
           <div class="col-lg-12 form-row" style="margin-top: 15px;">
             <div class="col-lg-4 form-group">
-              <label for="ID_Profesor"><b>Profesor: <?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*"; } ?></b></label>
+              <label for="ID_Profesor"><b>Profesor: <?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
               <select class="custom-select" id="ID_Profesor" name="ID_Profesor">
                 <option value="0">Seleccione una opción</option>  
                   <?php foreach ($arr_Profesores as $Profesor) { ?>
@@ -186,17 +186,17 @@
             </div>
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
               <div class="col-lg-2 form-group">
-                <label for="GrupoCupo"><b>Cupo:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                <label for="GrupoCupo"><b>Cupo:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
                   <input type="number" class="form-control" id="GrupoCupo" name="GrupoCupo"
                   placeholder="0" min="0" value="<?php echo isset($Grupo)?$Grupo->grup_cupo : ""; ?>">
               </div>
               <div class="col-lg-5 form-group">
-                <label for="GrupoInicioInscripcion"><b>Iniciar Inscripciones en la Fecha:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                <label for="GrupoInicioInscripcion"><b>Iniciar Inscripciones en la Fecha:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*"; echo $Grupo->grup_inicio_insc; }; ?></b></label>
                   <input type="date" class="form-control" id="GrupoInicioInscripcion" name="GrupoInicioInscripcion"
                   placeholder="0" min="0" value="<?php echo isset($Grupo)?$Grupo->grup_inicio_insc : ""; ?>">
               </div>
               <div class="col-lg-5 form-group">
-                <label for="GrupoFinInscripcion"><b>Finalizar Inscripciones en la Fecha:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                <label for="GrupoFinInscripcion"><b>Finalizar Inscripciones en la Fecha:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*"; echo $Grupo->grup_fin_insc; } ?></b></label>
                   <input type="date" class="form-control" id="GrupoFinInscripcion" name="GrupoFinInscripcion"
                   placeholder="0" min="0" value="<?php echo isset($Grupo)?$Grupo->grup_fin_insc : ""; ?>">
               </div>
@@ -220,7 +220,7 @@
               <?php } else {?> 
               <div id="ID_Salon" class="col-lg-6 form-group" style="display: none;">
               <?php }?>
-                <label for="lbID_Salon"><b>Salon:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
+                <label for="lbID_Salon"><b>Salon:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
                 <select class="custom-select" id="ID_Salon" name="ID_Salon" >
                   <option value="0">Seleccione una opción</option>  
                   <?php foreach ($arr_Salones as $Salon) { ?>
@@ -239,7 +239,7 @@
               <?php } else {?> 
                 <div id="ID_Plataforma" class="col-lg-6 form-group" style="display: none;">
               <?php }?>
-                <label for="lbID_Plataforma"><b>Plataforma:<?php if (isset($_POST['CRUD']) == false) { echo "*";}?></b></label>
+                <label for="lbID_Plataforma"><b>Plataforma:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
                 <select class="custom-select" id="ID_Plataforma" name="ID_Plataforma">
                   <option value="0">Seleccione una opción</option>  
                   <?php foreach ($arr_Plataformas as $Plataforma) { ?>
@@ -257,7 +257,7 @@
               <?php } else {?> 
                 <div id="URL_Acceso" class="col-lg-6 form-group" style="display: none;">
               <?php }?>
-              <label for="lbURL_Acceso"><b>Link de acceso:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+              <label for="lbURL_Acceso"><b>Link de acceso:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
                 <input type="text" class="form-control" id="URL_Acceso" name="URL_Acceso"
                   value="<?php echo isset($Grupo) ? $Grupo->grup_acceso : ""; ?>">
               </div>
@@ -268,7 +268,7 @@
               <?php } else {?> 
               <div id="ID_Reunion" class="col-lg-6 form-group" style="display: none;">
               <?php }?>
-                <label for="lbID_Reunion"><b>ID de la Renunón:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                <label for="lbID_Reunion"><b>ID de la Renunón:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
                 <input type="text" class="form-control" id="ID_Reunion" name="ID_Reunion"
                   value="<?php echo isset($Grupo) ? $Grupo->grup_reunion : ""; ?>">
               </div>
@@ -277,7 +277,7 @@
               <?php } else {?> 
               <div id="Clave_Acceso" class="col-lg-6 form-group" style="display: none;">
               <?php }?>
-                <label for="lbClave_Acceso"><b>Clave de Acceso:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                <label for="lbClave_Acceso"><b>Clave de Acceso:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
                 <input type="text" class="form-control" id="Clave_Acceso" name="Clave_Acceso"
                   value="<?php echo isset($Grupo) ? $Grupo->grup_clave_acceso : ""; ?>">
               </div>
@@ -311,12 +311,12 @@
               </div>
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <div id="<?php echo $SesionFecha;?>" class="col-lg-6 form-group">
-                  <label for="<?php echo $SesionFecha;?>"><b>Fecha:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
+                  <label for="<?php echo $SesionFecha;?>"><b>Fecha:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
                     <input type="date" class="form-control" id="<?php echo $SesionFecha;?>" name="SesionFecha[]" 
                     placeholder="0" min="0" value="<?php echo isset($Sesion)?$Sesion['sesi_fecha']:""; ?>">
                 </div>
                 <div id="<?php echo $SesionHora;?>"class="col-lg-6 form-group">
-                  <label for="<?php echo $SesionHora;?>"><b>Hora:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
+                  <label for="<?php echo $SesionHora;?>"><b>Hora:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}; ?></b></label>
                     <input type="time" class="form-control" id="<?php echo $SesionHora;?>" name="SesionHora[]>"
                     placeholder="0" min="0" value="<?php echo isset($Sesion)?$Sesion['sesi_hora']:"";?>">
                 </div>     
