@@ -8,7 +8,7 @@
   include('../../clases/Curso.php');
   include('../../clases/Profesor.php');
   include('../../clases/Moderador.php');
-   
+
   // Objetos
   $obj_Busqueda = new Busqueda();
   $obj_Grupo = new Grupo();
@@ -70,10 +70,10 @@
 
       <!-- Desactivar formulario INICIO en caso de no ser un registro-->
       <?php if (isset($_POST['CRUD'])) { ?>
-      <?php if ($_POST['CRUD'] == 0) { ?>
-      <fieldset disabled>
+        <?php if ($_POST['CRUD'] == 0) { ?>
+         <fieldset disabled>
         <?php } ?>
-        <?php } ?>
+      <?php } ?>
 
         <!-- Inicio de Sección: Curso -->
         <div class="form-group">
@@ -85,7 +85,7 @@
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
               <div class="col-lg-6 form-group">
                 <label for="ID_Curso"><b>Curso:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
-                <select required='required'  class="custom-select" id="ID_Curso" name="ID_Curso">
+                <select required='required'  class="custom-select" id="ID_Curso" name="ID_Curso" <?php if (isset($_POST['CRUD']) == 1) { echo "disabled";} ?>>
                   <option value="0">Seleccionar una opción</option>
                   <?php foreach ($arr_Cursos as $Curso) { ?>
                   <option value="<?php echo $Curso['curs_id_cursos']; ?>"
@@ -102,7 +102,7 @@
         </div>
         <!-- Fin de Sección: Curso -->
         
-        
+       
         <!-- Inicio de Sección:  Datos del Grupo-->
         <div class="form-group">
           <div class="card lg-12">
@@ -121,7 +121,7 @@
               </div>
               <div class="col-lg-4 form-group">
                 <label for="lbGrupoModalidad"><b>Modalidad:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";} ?></b></label>
-                  <select required='required' class="custom-select" id="GrupoModalidad" name="GrupoModalidad">
+                  <select required='required' class="custom-select" id="GrupoModalidad" name="GrupoModalidad" <?php if (isset($_POST['CRUD']) == 1) { echo "disabled";} ?>>
                     <option value="0">Seleccione una opción</option>
                     <option value="En línea" <?php if(isset($Grupo) && $Grupo->grup_modalidad == "En línea") { echo "selected"; }?>> En línea </option>
                     <option value="Presencial" <?php if(isset($Grupo) && $Grupo->grup_modalidad == "Presencial") { echo "selected"; }?>>Presencial</option>  
@@ -138,7 +138,7 @@
               </div>
           </div>
           <div class="col-lg-12 form-row" style="margin-top: 15px;">
-            <div class="col-lg-6 form-group">
+            <div class="col-lg-4 form-group">
               <label for="ID_Profesor"><b>Profesor: <?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*"; } ?></b></label>
               <select class="custom-select" id="ID_Profesor" name="ID_Profesor">
                 <option value="0">Seleccione una opción</option>  
@@ -150,7 +150,7 @@
                 </option> <?php } ?>
               </select>
             </div>
-            <div class="col-lg-6 form-group">
+            <div class="col-lg-4 form-group">
               <label for="ID_Moderador"><b>Moderador: <?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
               <select class="custom-select" id="ID_Moderador" name="ID_Moderador">
                 <option value="0">Seleccione una opción</option>  
@@ -162,6 +162,16 @@
                 </option> <?php } ?>
               </select>
             </div>
+            <!-- Hasta aquí funciona -->
+            <div class="col-lg-4 form-group">
+              <label for="ID_Status"><b>Publicado: <?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
+              <div class="custom-control custom-switch">                          
+                <input type="checkbox" class="custom-control-input" id="ID_Status" <?php if (isset($Grupo) && $Grupo->grup_activo == 'f') { ?>  <?php } else { echo "checked";} ?> 
+                  <?php if (isset($Grupo)) { ?> onclick="Publicar(<?php echo $Grupo->grup_id_grupo ?> , '<?php echo $Grupo->grup_activo; ?>')" <?php } else {?> value = "true" <?php } ?>>
+                <label class="custom-control-label" for="ID_Status"></label>
+              </div>
+            </div>
+
           </div>
         </div>
         <!-- Fin de Sección: Datos del Grupo-->
