@@ -47,7 +47,7 @@
     <div class="container-fluid">
 
       <ol class="breadcrumb">
-        <li id="btn-inicio-curso" class="breadcrumb-item">
+        <li id="btn-inicio-grupo" class="breadcrumb-item">
           <a href="#"><i class="fas fa-user-shield"></i>&nbsp; Grupos</a>
         </li>
         <!-- Validación de la ruta -->
@@ -66,7 +66,7 @@
       </p>
 
       <!-- Formulario -->
-      <form name="form_usuario" id="form_usuario" method="POST">
+      <form name="form_grupo" id="form_grupo" method="POST">
 
       <!-- Desactivar formulario INICIO en caso de no ser un registro-->
       <?php if (isset($_POST['CRUD'])) { ?>
@@ -290,24 +290,26 @@
           <?php } 
           $i = 1; 
           foreach($arr_Sesiones as $Sesion){ 
+            $idSesion = "idSesion".$i;
             $SesionFecha = "SesionFecha".$i;
             $SesionHora = "SesionHora".$i; ?>
             <div class="card lg-12">
               <div class="card-header"> 
                 <i class="fas fa-id-card fa-lg"></i>
                 <b>&nbsp;&nbsp; <?php echo "Sesión #".$i; ?></b>
+                <input type="hidden" id="<?php echo $idSesion;?>" name="idSesion[]" value="<?php echo $Sesion['sesi_id_sesiones'];?>">
               </div>
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <div id="<?php echo $SesionFecha;?>" class="col-lg-6 form-group">
                   <label for="<?php echo $SesionFecha;?>"><b>Fecha:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
-                    <input type="date" class="form-control" id="<?php echo $SesionFecha;?>" name="<?php echo $SesionFecha;?>" 
+                    <input type="date" class="form-control" id="<?php echo $SesionFecha;?>" name="SesionFecha[]" 
                     placeholder="0" min="0" value="<?php echo isset($Sesion)?$Sesion['sesi_fecha']:""; ?>">
                 </div>
                 <div id="<?php echo $SesionHora;?>"class="col-lg-6 form-group">
                   <label for="<?php echo $SesionHora;?>"><b>Hora:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
-                    <input type="time" class="form-control" id="<?php echo $SesionHora;?>" name="<?php echo $SesionHora;?>"
+                    <input type="time" class="form-control" id="<?php echo $SesionHora;?>" name="SesionHora[]>"
                     placeholder="0" min="0" value="<?php echo isset($Sesion)?$Sesion['sesi_hora']:"";?>">
-                </div>      
+                </div>     
               </div>
             </div>
           <?php $i++; } ?> 
@@ -327,6 +329,18 @@
           </fieldset>
         <?php } ?>
 
+         <!-- ID e Instrucciones -->
+          <?php if (isset($_POST['CRUD'])) { ?>
+            <?php if ($_POST['CRUD'] == 1) { ?>
+              <input type="hidden" name="dml" value="update" />
+              <input type="hidden" id="idGrupo" name="idGrupo" value="<?php echo $_POST['id'];?>">
+            <?php } elseif ($_POST['CRUD'] == 0) { ?>
+              <input type="hidden" name="dml" value="select" />
+            <?php } ?>
+          <?php } else { ?>
+            <input type="hidden" name="dml" value="insert" />
+          <?php } ?>
+
       </form>
     </div>  
         <!-- Botones -->
@@ -337,7 +351,7 @@
               <button id="btn-actualizar-grupo" type="button" class="btn btn-success btn-footer">Actualizar</button>            
             <?php } ?>
           <?php } else { ?>
-            <button id="btn-registar-grupo" type="button" class="btn btn-success btn-footer">Guardar</button>
+            <button id="btn-registrar-grupo" type="button" class="btn btn-success btn-footer">Guardar</button>
           <?php } ?>
         </div>
       </div>

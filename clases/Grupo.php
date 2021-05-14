@@ -22,11 +22,11 @@
 
         //Permite Actualizar Cualquier tipo de grupo
         function actualizarGrupo($grupo, $moderador, $profesor, $salon, $plataforma, $reunion, $acceso, $clave, $cupo, $estado, $activo, $inicio_insc, $fin_insc)
-        {
+        { 
             $SQL_Actua_Grupo =
             "   UPDATE grupo
-                SET mode_id_moderador = $moderador, prof_id_profesor = $profesor, plat_id_plataforma = $plataforma, grup_reunion = $reunion, grup_acceso = $acceso, grup_clave_acceso = $clave,
-                grup_cupo = $cupo, grup_estado = $estado, grup_activo = $activo, grup_inicio_insc = $inicio_insc, grup_fin_insc = $fin_insc, salo_id_salon = $salon
+                SET mode_id_moderador = $moderador, prof_id_profesor = $profesor, plat_id_plataforma = $plataforma, grup_reunion = '$reunion', grup_acceso = '$acceso', grup_clave_acceso = '$clave',
+                grup_cupo = $cupo, grup_estado = '$estado', grup_activo = $activo, grup_inicio_insc = '$inicio_insc', grup_fin_insc = '$fin_insc', salo_id_salon = $salon
                 WHERE grup_id_grupo = $grupo;
             ";
 

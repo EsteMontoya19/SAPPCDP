@@ -29,6 +29,7 @@ $(document).ready(function () {
 
 function validarFormularioGrupo() {
  
+/*
 
   if ($("#GrupoModalidad").val() == "0") {
     $("html, body").animate({ scrollTop: 0 }, "slow");
@@ -133,6 +134,7 @@ function validarFormularioGrupo() {
       }
     }
   }
+  */
   return true;
 }
 
@@ -254,9 +256,9 @@ function eliminarHorario(id, grupo) {
 // Registrar grupo
 
 $(document).ready(function () {
-  $("#btn-registar-grupo").click(function () {
+  $("#btn-registrar-grupo").click(function () {
     if (validarFormularioGrupo()) {
-      datos = $("#formAjaxGrupo").serialize();
+      datos = $("#form_grupo").serialize();
       console.log(datos);
 
       $.ajax({
@@ -302,25 +304,25 @@ function actualizarGrupo(id) {
 }
 
 $(document).ready(function () {
-  $("#btn-actualizar-grupo").click(function () {
+  $('#btn-actualizar-grupo').click(function () {
     if (validarFormularioGrupo()) {
-      datos = $("#formAjaxGrupo").serialize();
+      datos = $('#form_grupo').serialize();
       $.ajax({
-        type: "POST",
-        url: "../modulos/Control_Grupo.php",
+        type: 'POST',
+        url: '../modulos/Control_Grupo.php',
         data: datos,
         success: function (respuesta) {
           console.log(respuesta);
           if (respuesta == 1) {
-            alertify.success("El registro se actualizó correctamente");
+            alertify.success('El registro se actualizó correctamente');
             setTimeout(function () {
-              $("html, body").animate({ scrollTop: 0 }, 0);
-              $("#container").load(
-                "../sistema/grupos/frm_inicio_grupos.php"
+              $('html, body').animate({ scrollTop: 0 }, 0);
+              $('#container').load(
+                '../sistema/grupos/frm_inicio_grupos.php'
               );
             }, 0);
           } else {
-            alertify.error("Hubo un problema al actualizar al grupo");
+            alertify.error('Hubo un problema al actualizar al grupo');
           }
         },
       });

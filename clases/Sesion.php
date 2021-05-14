@@ -23,7 +23,7 @@
 			$SQL_Act_Sesion =
 			"	
 				UPDATE Sesion
-				SET sesi_fecha = $fecha_sesion, sesi_hora = $hora_sesion
+				SET sesi_fecha = '$fecha_sesion', sesi_hora = '$hora_sesion'
 				WHERE sesi_id_sesiones = $id_sesion AND grup_id_grupo = $id_grupo;
 			";
 

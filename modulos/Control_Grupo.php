@@ -7,7 +7,6 @@
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
 
-
   if($_POST['dml'] == 'insert')
   {
     $curso = $_POST['ID_Curso'];
@@ -50,7 +49,7 @@
   elseif($_POST['dml'] == 'update')
   {
 
-    $grupo = $_POST['ID_Grupo'];
+    $grupo = $_POST['idGrupo'];
     $curso = $_POST['ID_Curso'];
     $tipo_grupo = $_POST['GrupoTipo'];
     $modalidad = $_POST['GrupoModalidad'];
@@ -60,23 +59,40 @@
     $cupo = $_POST['GrupoCupo'];
     $inicio_insc = $_POST['GrupoInicioInscripcion'];
     $fin_insc = $_POST['GrupoFinInscripcion'];
-    $plataforma = $_POST['ID_Plataforma'];
-    $calendario = $_POST['']; //TODO Hace falta pasar el id del calendario
-    $reunion = $_POST['ID_Reunion'];
-    $acceso = $_POST['URL_Acceso'];
-    $clave = $_POST['Clave_Acceso'];
-    $salon = $_POST['ID_Salon'];
-    $activo = $_POST['']; //TODO Hace falta El campo activo...?
+    $calendario = 1; //TODO Hace falta pasar el id del calendario
+    
+    
+    $activo = 'TRUE'; //TODO Hace falta El campo activo...?
 
-    $obj_Grupo->actualizarGrupo($grupo, $moderador, $profesor, $salon, $plataforma, $reunion, $acceso, $clave, 
-    $cupo, $estado, $activo, $inicio_insc, $fin_insc);
-    
-    
-      echo 1;
+    if ($modalidad == 'En línea'){
+      $salon = 'NULL';
+      $plataforma = $_POST['ID_Plataforma'];
+      $reunion = $_POST['ID_Reunion'];
+      $acceso = $_POST['URL_Acceso'];
+      $clave = $_POST['Clave_Acceso'];
+    } else {
+      $salon = $_POST['ID_Salon'];
+      $plataforma = 'NULL';
+      $reunion = 'NULL';
+      $acceso = 'NULL';
+      $clave = 'NULL';
+    }
 
-    
-      echo 2;
-  
+    $obj_Grupo->actualizarGrupo($grupo, $moderador, $profesor, $salon, $plataforma, $reunion, $acceso, $clave, $cupo, $estado, $activo, $inicio_insc, $fin_insc);
+
+    $arr_idSesiones = $_POST['idSesion'];
+    $arr_FechasSesiones = $_POST['SesionFecha'];
+    $arr_HorasSesiones = $_POST['SesionHora'];
+
+    for ($i=0;$i<sizeof($arr_FechasSesiones);$i++) {
+      $sesion=$arr_idSesiones[$i];
+      $fecha_sesion = $arr_FechasSesiones[$i];
+      $hora_sesion = $arr_HorasSesiones[$i];
+      
+      $obj_Sesion -> actualizarSesion($sesion, $grupo, $fecha_sesion, $hora_sesion);
+    }
+
+    echo 1;
   }
   elseif($_POST['dml'] == 'delete')
   {
