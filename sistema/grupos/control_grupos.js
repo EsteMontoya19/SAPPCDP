@@ -507,7 +507,7 @@ function listaAlumnos(id) {
 }
 
 // Cambiar estatus_activo del grupo
-function cambioEstatus(id, estatus, nombreCurso, modalidad){
+function cambioPublicacion(id, estatus, nombreCurso, modalidad){
   
   var mensaje = '¿Está seguro que desea cambiar el estatus del grupo: ';
   mensaje = mensaje.concat(id);
@@ -552,6 +552,46 @@ function cambioEstatus(id, estatus, nombreCurso, modalidad){
     $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
   }, 1500);
 }
+
+
+// Cambiar estatus_activo del grupo
+function Publicar(id, estatus){
+  
+    var mensaje = '¿Está seguro que desea cambiar la publicación del grupo?';
+    mensaje = mensaje.concat('<br>Esto alterará la visibilidad del grupo ante los profesores');
+    mensaje = mensaje.concat('<br><br>NOTA: Si existen profesores inscritos en el Curso no podrán ver más su información.');
+
+  
+  var titulo = 'Cambio de estatus de un grupo';
+  alertify.confirm(
+    titulo, 
+    mensaje,
+    function () {
+      var dml = 'actualizarEstatus';
+      var datos = {
+        id: id,
+        dml: dml,
+        estatus: estatus,
+      };
+      $.ajax({
+        data: datos,
+        type: 'POST',
+        url: '../modulos/Control_Grupo.php',
+        success: function (respuesta) {
+          console.log(respuesta);
+          if(respuesta == 1){
+            alertify.success('Se cambio el estatus del grupo');
+          } else {
+            alertify.error('Hubo un problema al cambiar el estatus del grupo');
+          }
+        },
+      });
+    }, function (){
+      alertify.confirm().close();
+    }
+  );
+}
+
 
 // Tabla dinámica
 $(document).ready( function () {

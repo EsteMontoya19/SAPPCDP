@@ -83,7 +83,7 @@
                       <td><small><?php echo $grupo['pers_nombre'];?> <?php echo $grupo['pers_apellido_paterno'];?> <?php echo $grupo['pers_apellido_materno'];?></small></td>
                       <td>
                         <div class="custom-control custom-switch">                          
-                          <input type="checkbox" class="custom-control-input" id="estatusGrupo<?php echo $activo ?>" <?php if ($grupo['grup_activo'] == 't') { ?> checked <?php } ?> onclick="cambioEstatus(<?php echo $grupo['grup_id_grupo'] ?> , '<?php echo $grupo['grup_activo']; ?>', '<?php echo $grupo['curs_nombre']; ?>', '<?php echo $grupo['grup_modalidad']; ?>')">
+                          <input type="checkbox" class="custom-control-input" id="estatusGrupo<?php echo $activo ?>" <?php if ($grupo['grup_activo'] == 't') { ?> checked <?php } ?> onclick="cambioPublicacion(<?php echo $grupo['grup_id_grupo'] ?> , '<?php echo $grupo['grup_activo']; ?>', '<?php echo $grupo['curs_nombre']; ?>', '<?php echo $grupo['grup_modalidad']; ?>')">
                           <label class="custom-control-label" for="estatusGrupo<?php echo $activo ?>"></label>
                         </div>
                       </td>
