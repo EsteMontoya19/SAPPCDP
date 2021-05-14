@@ -12,6 +12,7 @@
   // Objetos
   $obj_Busqueda = new Busqueda();
   $obj_Grupo = new Grupo();
+
   $obj_Sesion = new Sesion();
   $obj_Curso = new Curso();
   $obj_Profesor = new Profesor();
@@ -277,39 +278,49 @@
 
         <!-- Fin de Sección: Modalidad -->
 
-        
-        <!-- Inicio de Sección: Sesiones -->
-        <?php
-        if (isset($Grupo)) { ?>
-        <div id="Sesiones" class="form-group">
-        <?php } else {?>
-        <div id="Sesiones" class="form-group" style="display: none;">
-        <?php } 
-        $i = 1; 
-        foreach($arr_Sesiones as $Sesion){ 
-          $SesionFecha = "SesionFecha".$i;
-          $SesionHora = "SesionHora".$i; ?>
-          <div class="card lg-12">
-            <div class="card-header"> 
-              <i class="fas fa-id-card fa-lg"></i>
-              <b>&nbsp;&nbsp; <?php echo "Sesión #".$i; ?></b>
-            </div>
-            <div class="col-lg-12 form-row" style="margin-top: 15px;">
-              <div id="<?php echo $SesionFecha;?>" class="col-lg-6 form-group">
-                <label for="<?php echo $SesionFecha;?>"><b>Fecha:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
-                  <input type="date" class="form-control" id="<?php echo $SesionFecha;?>" name="<?php echo $SesionFecha;?>" 
-                  placeholder="0" min="0" value="<?php echo isset($Sesion)?$Sesion['sesi_fecha']:""; ?>">
+        <?php 
+          if(isset($Grupo)) {
+        ?>
+          <!-- Inicio de Sección: Sesiones -->
+          <?php
+          if (isset($Grupo)) { ?>
+            <div id="Sesiones" class="form-group">
+          <?php } else {?>
+            <div id="Sesiones" class="form-group" style="display: none;">
+          <?php } 
+          $i = 1; 
+          foreach($arr_Sesiones as $Sesion){ 
+            $SesionFecha = "SesionFecha".$i;
+            $SesionHora = "SesionHora".$i; ?>
+            <div class="card lg-12">
+              <div class="card-header"> 
+                <i class="fas fa-id-card fa-lg"></i>
+                <b>&nbsp;&nbsp; <?php echo "Sesión #".$i; ?></b>
               </div>
-              <div id="<?php echo $SesionHora;?>"class="col-lg-6 form-group">
-                <label for="<?php echo $SesionHora;?>"><b>Hora:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
-                  <input type="time" class="form-control" id="<?php echo $SesionHora;?>" name="<?php echo $SesionHora;?>"
-                  placeholder="0" min="0" value="<?php echo isset($Sesion)?$Sesion['sesi_hora']:"";?>">
-              </div>      
+              <div class="col-lg-12 form-row" style="margin-top: 15px;">
+                <div id="<?php echo $SesionFecha;?>" class="col-lg-6 form-group">
+                  <label for="<?php echo $SesionFecha;?>"><b>Fecha:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
+                    <input type="date" class="form-control" id="<?php echo $SesionFecha;?>" name="<?php echo $SesionFecha;?>" 
+                    placeholder="0" min="0" value="<?php echo isset($Sesion)?$Sesion['sesi_fecha']:""; ?>">
+                </div>
+                <div id="<?php echo $SesionHora;?>"class="col-lg-6 form-group">
+                  <label for="<?php echo $SesionHora;?>"><b>Hora:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
+                    <input type="time" class="form-control" id="<?php echo $SesionHora;?>" name="<?php echo $SesionHora;?>"
+                    placeholder="0" min="0" value="<?php echo isset($Sesion)?$Sesion['sesi_hora']:"";?>">
+                </div>      
+              </div>
             </div>
+          <?php $i++; } ?> 
           </div>
-        <?php $i++; } ?> 
-        </div>
-        <!-- Fin de Sección: Sesiones -->
+          <!-- Fin de Sección: Sesiones -->
+        <?php 
+        } else { ?>
+          <section id="contenedorSesiones">
+
+            
+
+          </section>
+        <?php } ?>
 
         <!-- Desactivar formulario FIN -->
         <?php if (isset($_POST['CRUD']) && $_POST['CRUD'] == 0) { ?>

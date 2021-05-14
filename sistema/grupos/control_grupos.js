@@ -24,6 +24,11 @@ $(document).ready(function () {
     $("html, body").animate({ scrollTop: 0 }, 0);
     $("#container").load("../sistema/frm_inicio.php");
   });
+
+  $('#btn_sesiones').click(function () {
+    alert("Si reconoce el boton");
+    $('#contenedorSesiones').load('../sistema/grupos/frm_grupos_sesiones.php');
+});
 });
 // Validar el formulario
 
@@ -564,8 +569,6 @@ $(document).ready( function () {
   });
 });
 
-alert("versión5");
-
 //! No eliminar, permite desplegar cuando es un nuevo registro de grupos
 $(document).on('change', '#GrupoModalidad', function mostrarCamposModalidad() {
   var tipo_evento = $('#GrupoModalidad').val();
@@ -585,3 +588,22 @@ $(document).on('change', '#GrupoModalidad', function mostrarCamposModalidad() {
   }
 });
 
+
+$(document).on('change', '#ID_Curso', function SesionesCurso() {
+  var idCurso = $('#ID_Curso').val();
+
+  alert("Entra al seleccionar 3");
+
+  $.ajax({
+    data: idCurso,
+    type: "POST",
+    url: "../sistema/grupos/frm_grupos_sesiones.php",
+    success: function () {
+      $('#contenedorSesiones').load('../sistema/grupos/frm_grupos_sesiones.php', { "idCurso": idCurso });
+      
+    },
+    
+  });
+
+  
+});
