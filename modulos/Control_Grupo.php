@@ -2,6 +2,7 @@
   include('../clases/BD.php');
   include('../clases/Grupo.php');
   include('../clases/Sesion.php');
+  include('../clases/Curso.php');
 
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
@@ -126,4 +127,14 @@
     }
     echo 1;
   }
+
+  if ($_POST['dml'] == 'sesiones'){
+    $idCurso = $_POST['idCurso'];
+
+    $obj_Curso = new Curso ();
+    $sesiones = $obj_Curso->buscarNumSesiones($idCurso);
+
+    echo $sesiones->curs_num_sesiones;
+
+  } 
 ?>

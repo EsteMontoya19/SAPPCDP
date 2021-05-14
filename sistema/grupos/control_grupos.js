@@ -24,11 +24,6 @@ $(document).ready(function () {
     $("html, body").animate({ scrollTop: 0 }, 0);
     $("#container").load("../sistema/frm_inicio.php");
   });
-
-  $('#btn_sesiones').click(function () {
-    alert("Si reconoce el boton");
-    $('#contenedorSesiones').load('../sistema/grupos/frm_grupos_sesiones.php');
-});
 });
 // Validar el formulario
 
@@ -591,18 +586,20 @@ $(document).on('change', '#GrupoModalidad', function mostrarCamposModalidad() {
 
 $(document).on('change', '#ID_Curso', function SesionesCurso() {
   var idCurso = $('#ID_Curso').val();
-
-  alert("Entra al seleccionar 3");
+  var dml = "sesiones"
+  var datos = {
+    idCurso: idCurso,
+    dml: dml,
+  };
 
   $.ajax({
-    data: idCurso,
+    data: datos,
     type: "POST",
-    url: "../sistema/grupos/frm_grupos_sesiones.php",
-    success: function () {
-      $('#contenedorSesiones').load('../sistema/grupos/frm_grupos_sesiones.php', { "idCurso": idCurso });
-      
+    url: "../modulos/Control_Grupo.php",
+    success: function (respuesta) {
+
+      $('#contenedorSesiones').load('../sistema/grupos/frm_grupos_sesiones.php', { "idCurso": respuesta });
     },
-    
   });
 
   
