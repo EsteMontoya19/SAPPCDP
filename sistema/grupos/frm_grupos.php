@@ -138,7 +138,11 @@
               </div>
           </div>
           <div class="col-lg-12 form-row" style="margin-top: 15px;">
-            <div class="col-lg-4 form-group">
+              <?php if (isset($_POST['CRUD']) ){?>
+                <div class="col-lg-4 form-group" >
+              <?php } else {?>
+                <div class="col-lg-6 form-group">
+              <?php } ?>
               <label for="ID_Profesor"><b>Profesor: <?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
               <select class="custom-select" id="ID_Profesor" name="ID_Profesor">
                 <option value="0">Seleccione una opción</option>  
@@ -150,7 +154,12 @@
                 </option> <?php } ?>
               </select>
             </div>
-            <div class="col-lg-4 form-group">
+
+              <?php if (isset($_POST['CRUD']) ){?>
+                <div class="col-lg-4 form-group" >
+              <?php } else {?>
+                <div class="col-lg-6 form-group">
+              <?php } ?>
               <label for="ID_Moderador"><b>Moderador: <?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
               <select class="custom-select" id="ID_Moderador" name="ID_Moderador">
                 <option value="0">Seleccione una opción</option>  
