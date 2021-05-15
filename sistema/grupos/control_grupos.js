@@ -54,6 +54,41 @@ function validarFormularioGrupo() {
         document.getElementById('GrupoModalidad').focus();
         alertify.error('Debe ingresar la modalidad del grupo');
         return false;
+    } else if ($('#GrupoModalidad').val() == 'En línea') {
+        if ($('#ID_Plataforma').val() == '0') {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('ID_Plataforma').focus();
+            alertify.error('Debe ingresar la plataforma en la que se tomará la clase');
+            return false;
+        }
+
+        if ($('#URL_Acceso').val() == '') {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('URL_Acceso').focus();
+            alertify.error('Debe ingresar el link de acceso a la clase');
+            return false;
+        }
+
+        if ($('#ID_Reunion').val() == '') {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('ID_Reunion').focus();
+            alertify.error('Debe ingresar el ID de la reunión');
+            return false;
+        }
+
+        if ($('#Clave_Acceso').val() == '') {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('Clave_Acceso').focus();
+            alertify.error('Debe ingresar el ID de la reunión');
+            return false;
+        }
+    } else if ($('#GrupoModalidad').val() == 'Presencial') {
+        if ($('#ID_Salon').val() == '') {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('ID_Salon').focus();
+            alertify.error('Debe ingresar la plataforma en la que se tomará la clase');
+            return false;
+        }
     }
 
     if ($('#GrupoEstatus').val() == '0') {
@@ -83,6 +118,10 @@ function validarFormularioGrupo() {
         alertify.error('Debe asignar un cupo de al menos 5 inscritos');
         return false;
     } else if ($('#GrupoCupo').val() > '50') {
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+        document.getElementById('GrupoCupo').focus();
+        alertify.error('Debe asignar un cupo máximo de 50 inscritos');
+        return false;
     }
 
     /*

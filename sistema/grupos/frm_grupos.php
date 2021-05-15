@@ -304,7 +304,7 @@
                                 <div id="ID_Reunion" class="col-lg-6 form-group" style="display: none;">
                                   <?php }?>
                                   <label for="lbID_Reunion"><b>ID de la
-                                      Renunón:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
+                                      Reunión:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
                                   <input type="text" class="form-control" id="ID_Reunion" name="ID_Reunion"
                                     value="<?php echo isset($Grupo) ? $Grupo->grup_reunion : ""; ?>">
                                 </div>
