@@ -208,6 +208,7 @@ function validarFormularioGrupo() {
     }
   }
   */
+ return true;
 }
 
 function validarFormularioDocumento() {
