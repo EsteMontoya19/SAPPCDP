@@ -178,7 +178,7 @@
                 <div class="col-lg-6 form-group">
                   <label
                     for="lbintUsuarioRol"><b>Rol:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
-                  <select required='required' class="custom-select" id="intUsuarioRol" name="intUsuarioRol">
+                  <select required='required' class="custom-select" id="intUsuarioRol" name="intUsuarioRol" <?php if (isset($_POST['CRUD']) == 1)  echo "disabled"; ?>>
                     <option value="0">Seleccionar rol</option>
                     <?php foreach ($arr_roles as $rol) { ?>
                     <option value="<?php echo $rol['rol_id_rol']; ?>"
@@ -454,8 +454,9 @@
             <input type="hidden" name="dml" value="update" />
             <input type="hidden" id="idUsuario" name="idUsuario" value="<?php echo $_POST['id']; ?>">
             <input type="hidden" id="idPersona" name="idPersona" value="<?php echo $persona->pers_id_persona; ?>">
+            <input type="hidden" name="hideRol" id="hideRol" value="<?php echo $usuario->rol_id_rol; ?>">
           <?php } elseif ($_POST['CRUD'] == 0) { ?>
-            <input type="hidden" name="dml" value="select" />
+            <input type="hidden" name="dml" value="select">
           <?php } ?>
         <?php } else { ?>
           <input type="hidden" name="dml" value="insert" />
