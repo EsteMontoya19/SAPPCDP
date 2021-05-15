@@ -33,6 +33,20 @@ function validarFormularioGrupo() {
         document.getElementById('GrupoCupo').focus();
         alertify.error('Debe ingresar el cupo del grupo');
         return false;
+    } else {
+        if ($('#GrupoCupo').val() < 5) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('GrupoCupo').focus();
+            alertify.error('Debe ingresar un cupo del grupo mayor a 5');
+            return false;
+        } else {
+            if ($('#GrupoCupo').val() > 60) {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('GrupoCupo').focus();
+                alertify.error('Debe asignar un cupo de grupo máximo de 60');
+                return false;
+            } 
+        }
     }
 
     if ($('#ID_Curso').val() == '0') {
@@ -45,56 +59,14 @@ function validarFormularioGrupo() {
     if ($('#GrupoTipo').val() == '0') {
         $('html, body').animate({ scrollTop: 0 }, 'slow');
         document.getElementById('GrupoTipo').focus();
-        alertify.error('Debe ingresar el evento del grupo');
+        alertify.error('Debe ingresar el tipo del grupo: Público / Privado');
         return false;
-    }
-
-    if ($('#GrupoModalidad').val() == '0') {
-        $('html, body').animate({ scrollTop: 0 }, 'slow');
-        document.getElementById('GrupoModalidad').focus();
-        alertify.error('Debe ingresar la modalidad del grupo');
-        return false;
-    } else if ($('#GrupoModalidad').val() == 'En línea') {
-        if ($('#ID_Plataforma').val() == '0') {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-            document.getElementById('ID_Plataforma').focus();
-            alertify.error('Debe ingresar la plataforma en la que se tomará la clase');
-            return false;
-        }
-
-        if ($('#URL_Acceso').val() == '') {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-            document.getElementById('URL_Acceso').focus();
-            alertify.error('Debe ingresar el link de acceso a la clase');
-            return false;
-        }
-
-        if ($('#ID_Reunion').val() == '') {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-            document.getElementById('ID_Reunion').focus();
-            alertify.error('Debe ingresar el ID de la reunión');
-            return false;
-        }
-
-        if ($('#Clave_Acceso').val() == '') {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-            document.getElementById('Clave_Acceso').focus();
-            alertify.error('Debe ingresar el ID de la reunión');
-            return false;
-        }
-    } else if ($('#GrupoModalidad').val() == 'Presencial') {
-        if ($('#ID_Salon').val() == '') {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-            document.getElementById('ID_Salon').focus();
-            alertify.error('Debe ingresar la plataforma en la que se tomará la clase');
-            return false;
-        }
     }
 
     if ($('#GrupoEstatus').val() == '0') {
         $('html, body').animate({ scrollTop: 0 }, 'slow');
         document.getElementById('GrupoEstatus').focus();
-        alertify.error('Debe ingresar el estatus del grupo');
+        alertify.error('Debe ingresar el estatus del grupo: Aprobado / Rechazado / Pendiente');
         return false;
     }
 
@@ -112,17 +84,56 @@ function validarFormularioGrupo() {
         return false;
     }
 
-    if ($('#GrupoCupo').val() < '5') {
+    if ($('#GrupoModalidad').val() == '0') {
         $('html, body').animate({ scrollTop: 0 }, 'slow');
-        document.getElementById('GrupoCupo').focus();
-        alertify.error('Debe asignar un cupo de al menos 5 inscritos');
+        document.getElementById('GrupoModalidad').focus();
+        alertify.error('Debe ingresar la modalidad del grupo');
         return false;
-    } else if ($('#GrupoCupo').val() > '50') {
-        $('html, body').animate({ scrollTop: 0 }, 'slow');
-        document.getElementById('GrupoCupo').focus();
-        alertify.error('Debe asignar un cupo máximo de 50 inscritos');
-        return false;
+    } else {
+        if ($('#GrupoModalidad').val() == 'En línea') {
+            alert($('#ID_Plataforma').val());
+            if ($('#ID_Plataforma').val() == 0) {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('ID_Plataforma').focus();
+                alertify.error('Debe ingresar la plataforma en la que se tomará la clase');
+                return false;
+            }
+
+            if ($('#URL_Acceso').val() == '') {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('URL_Acceso').focus();
+                alertify.error('Debe ingresar el link de acceso a la clase');
+                return false;
+            }
+
+            if ($('#ID_Reunion').val() == '') {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('ID_Reunion').focus();
+                alertify.error('Debe ingresar el ID de la reunión');
+                return false;
+            }
+
+            if ($('#Clave_Acceso').val() == '') {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('Clave_Acceso').focus();
+                alertify.error('Debe ingresar la clave de la reunión');
+                return false;
+            }
+        } else {
+            if ($('#GrupoModalidad').val() == 'Presencial') {
+                if ($('#ID_Salon').val() == '') {
+                    $('html, body').animate({ scrollTop: 0 }, 'slow');
+                    document.getElementById('ID_Salon').focus();
+                    alertify.error('Debe ingresar el salon en el que se impartirá la clase');
+                    return false;
+                }
+            }
+        }
     }
+
+    
+
+    
 
     /*
   if ($("#GrupoCurso").val() == "0") {
