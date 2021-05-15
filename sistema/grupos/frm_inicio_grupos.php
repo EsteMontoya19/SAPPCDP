@@ -51,7 +51,7 @@
                     <th>Estatus</th>
                     <th>Lugares disponibles</th>
                     <th>Profesor</th>
-                    <th>Activo</th>
+                    <th>Publicado</th>
                     <th>Opciones</th>
                   </tr>
                 </thead>
@@ -79,7 +79,7 @@
                         -->
                       
                       </td>
-                      <td><?php echo $grupo['grup_cupo'];?></td>
+                      <td><?php echo ($grupo['grup_cupo'] - $grupo['grup_num_inscritos']);?></td>
                       <td><small><?php echo $grupo['pers_nombre'];?> <?php echo $grupo['pers_apellido_paterno'];?> <?php echo $grupo['pers_apellido_materno'];?></small></td>
                       <td>
                         <div class="custom-control custom-switch">                          
@@ -105,7 +105,6 @@
                         <button type="button" class="btn btn-danger btn-table" title="Constancias" style="margin-top: 5px">
                           <i class="fas fa-list-alt"></i>
                         </button>
-    
                       </td>
                     </tr>
                   <?php } ?>
