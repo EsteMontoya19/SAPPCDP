@@ -88,7 +88,7 @@
                         </div>
                       </td>
                       <td>
-                        <button type="button" class="btn btn-primary btn-table" title="Actualizar" style="margin-top: 5px;" onclick="actualizarGrupo(<?php echo $grupo['grup_id_grupo']?>)">
+                        <button type="button" class="btn btn-primary btn-table" title="Actualizar" <?php if ($grupo['grup_activo'] == 't') {?> style="display: none;" <?php } ?>style="margin-top: 5px;" onclick="actualizarGrupo(<?php echo $grupo['grup_id_grupo']?>)">
                           <i class="fas fa-edit"></i>
                         </button>
                         <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupo(<?php echo $grupo['grup_id_grupo']?>, '<?php echo $grupo['grup_modalidad']?>')">
