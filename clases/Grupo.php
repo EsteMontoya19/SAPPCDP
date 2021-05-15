@@ -6,7 +6,8 @@
          $modalidad, $tipo_grupo, $inicio_insc, $fin_insc)
         {
             $SQL_Ins_Grupo = 
-            "   INSERT INTO Grupo (mode_id_moderador, prof_id_profesor, curs_id_cursos,  salo_id_salon, plat_id_plataforma, cale_id_calendario, grup_reunion, grup_acceso, grup_clave_acceso,  
+            "   
+                INSERT INTO Grupo (mode_id_moderador, prof_id_profesor, curs_id_cursos,  salo_id_salon, plat_id_plataforma, cale_id_calendario, grup_reunion, grup_acceso, grup_clave_acceso,  
                     grup_cupo, grup_estado, grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc)
                 VALUES ($moderador, $profesor, $curso, $salon, $plataforma, $calendario, $reunion, $acceso, $clave, $cupo, $estado, $activo,
                     $modalidad, $tipo_grupo, $inicio_insc, $fin_insc)
@@ -21,12 +22,14 @@
         }
 
         //Permite Actualizar Cualquier tipo de grupo
-        function actualizarGrupo($grupo, $moderador, $profesor, $salon, $plataforma, $reunion, $acceso, $clave, $cupo, $estado, $activo, $inicio_insc, $fin_insc)
+        //No actualiza curs_id_cursos, grup_modalidad, grup_activo ni cale_id_calendario. Por los requerimientos del sistema.
+        function actualizarGrupo($grupo, $tipo_grupo, $estado, $profesor, $moderador, $cupo, $inicio_insc, $fin_insc, $salon, $plataforma, $reunion, $acceso, $clave)
         { 
             $SQL_Actua_Grupo =
             "   UPDATE grupo
-                SET mode_id_moderador = $moderador, prof_id_profesor = $profesor, plat_id_plataforma = $plataforma, grup_reunion = '$reunion', grup_acceso = '$acceso', grup_clave_acceso = '$clave',
-                grup_cupo = $cupo, grup_estado = '$estado', grup_activo = $activo, grup_inicio_insc = '$inicio_insc', grup_fin_insc = '$fin_insc', salo_id_salon = $salon
+                SET grup_tipo = '$tipo_grupo', grup_estado = '$estado', prof_id_profesor = $profesor, mode_id_moderador = $moderador,
+                grup_cupo = $cupo, grup_inicio_insc = '$inicio_insc', grup_fin_insc = '$fin_insc',
+                salo_id_salon = $salon, plat_id_plataforma = $plataforma, grup_reunion = '$reunion', grup_acceso = '$acceso', grup_clave_acceso = '$clave'
                 WHERE grup_id_grupo = $grupo;
             ";
 

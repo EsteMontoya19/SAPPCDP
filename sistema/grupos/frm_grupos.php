@@ -386,6 +386,7 @@
         <?php if ($_POST['CRUD'] == 1) { ?>
         <input type="hidden" name="dml" value="update" />
         <input type="hidden" id="idGrupo" name="idGrupo" value="<?php echo $_POST['id'];?>">
+        <input type="hidden" id="ifModalidad" name="ifModalidad" value="<?php echo $Grupo->grup_modalidad;?>">
         <?php } elseif ($_POST['CRUD'] == 0) { ?>
         <input type="hidden" name="dml" value="select" />
         <?php } ?>

@@ -50,19 +50,16 @@
   {
 
     $grupo = $_POST['idGrupo'];
-    $curso = $_POST['ID_Curso'];
+
     $tipo_grupo = $_POST['GrupoTipo'];
-    $modalidad = $_POST['GrupoModalidad'];
+    $modalidad = $_POST['ifModalidad'];
     $estado = $_POST['GrupoEstatus'];
     $profesor = $_POST['ID_Profesor'];
     $moderador = $_POST['ID_Moderador'];
+
     $cupo = $_POST['GrupoCupo'];
     $inicio_insc = $_POST['GrupoInicioInscripcion'];
     $fin_insc = $_POST['GrupoFinInscripcion'];
-    $calendario = 1; //TODO Hace falta pasar el id del calendario
-    
-    
-    $activo = 'TRUE'; //TODO Hace falta El campo activo...?
 
     if ($modalidad == 'En línea'){
       $salon = 'NULL';
@@ -78,7 +75,7 @@
       $clave = 'NULL';
     }
 
-    $obj_Grupo->actualizarGrupo($grupo, $moderador, $profesor, $salon, $plataforma, $reunion, $acceso, $clave, $cupo, $estado, $activo, $inicio_insc, $fin_insc);
+    $obj_Grupo->actualizarGrupo($grupo, $tipo_grupo, $estado, $profesor, $moderador, $cupo, $inicio_insc, $fin_insc, $salon, $plataforma, $reunion, $acceso, $clave);
 
     $arr_idSesiones = $_POST['idSesion'];
     $arr_FechasSesiones = $_POST['SesionFecha'];
