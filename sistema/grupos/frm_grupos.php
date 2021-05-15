@@ -249,9 +249,9 @@
                 <div class="col-lg-12 form-row" style="margin-top: 15px;">
                   <!-- div de la modalidad presencial -->
                   <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'Presencial') { ?>
-                    <div id="ID_Salon" class="col-lg-6 form-group">
+                    <div id="Salon" class="col-lg-6 form-group">
                   <?php } else {?>
-                    <div id="ID_Salon" class="col-lg-6 form-group" style="display: none;">
+                    <div id="Salon" class="col-lg-6 form-group" style="display: none;">
                   <?php }?>
                     <label for="lbID_Salon"><b>Salon:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { 
                           echo "*";} ?></b></label>
@@ -268,9 +268,9 @@
                   </div>
                     <!-- div de la modalidad en línea -->
                     <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
-                    <div id="ID_Plataforma" class="col-lg-6 form-group">
+                    <div id="Plataforma" class="col-lg-6 form-group">
                       <?php } else {?>
-                      <div id="ID_Plataforma" class="col-lg-6 form-group" style="display: none;">
+                      <div id="Plataforma" class="col-lg-6 form-group" style="display: none;">
                         <?php }?>
                         <label
                           for="lbID_Plataforma"><b>Plataforma:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
@@ -285,9 +285,9 @@
                         </select>
                       </div>
                       <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
-                      <div id="URL_Acceso" class="col-lg-6 form-group">
+                      <div id="Acceso" class="col-lg-6 form-group">
                         <?php } else {?>
-                        <div id="URL_Acceso" class="col-lg-6 form-group" style="display: none;">
+                        <div id="Acceso" class="col-lg-6 form-group" style="display: none;">
                           <?php }?>
                           <label for="lbURL_Acceso"><b>Link de
                               acceso:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
@@ -297,9 +297,9 @@
                       </div>
                       <div class="col-lg-12 form-row" style="margin-top: 15px;">
                         <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
-                        <div id="ID_Reunion" class="col-lg-6 form-group">
+                        <div id="Reunion" class="col-lg-6 form-group">
                           <?php } else {?>
-                          <div id="ID_Reunion" class="col-lg-6 form-group" style="display: none;">
+                          <div id="Reunion" class="col-lg-6 form-group" style="display: none;">
                             <?php }?>
                             <label for="lbID_Reunion"><b>ID de la
                                 Renunón:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
@@ -307,9 +307,9 @@
                               value="<?php echo isset($Grupo) ? $Grupo->grup_reunion : ""; ?>">
                           </div>
                           <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
-                          <div id="Clave_Acceso" class="col-lg-6 form-group">
+                          <div id="Clave" class="col-lg-6 form-group">
                             <?php } else {?>
-                            <div id="Clave_Acceso" class="col-lg-6 form-group" style="display: none;">
+                            <div id="Clave" class="col-lg-6 form-group" style="display: none;">
                               <?php }?>
                               <label for="lbClave_Acceso"><b>Clave de
                                   Acceso:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
