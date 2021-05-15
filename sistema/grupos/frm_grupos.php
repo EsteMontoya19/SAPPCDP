@@ -322,19 +322,19 @@
                               </div>
                             </div>
 
-
+                          
                             <!-- Fin de Sección: Modalidad -->
 
-                            <?php 
+          <?php 
           if(isset($Grupo)) {
-        ?>
-                            <!-- Inicio de Sección: Sesiones -->
-                            <?php
+          ?>
+          <!-- Inicio de Sección: Sesiones -->
+          <?php
           if (isset($Grupo)) { ?>
-                            <div id="Sesiones" class="form-group">
-                              <?php } else {?>
-                              <div id="Sesiones" class="form-group" style="display: none;">
-                                <?php } 
+            <div id="Sesiones" class="form-group">
+          <?php } else {?>
+            <div id="Sesiones" class="form-group" style="display: none;">
+          <?php } 
           $i = 1; 
           foreach($arr_Sesiones as $Sesion){ 
             $idSesion = "idSesion".$i;
