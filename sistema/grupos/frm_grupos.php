@@ -91,7 +91,7 @@
                     <?php foreach ($arr_Cursos as $Curso) { ?>
                     <option value="<?php echo $Curso['curs_id_cursos']; ?>" <?php if(isset($Grupo)) { 
                       if ($Grupo->curs_id_cursos == $Curso['curs_id_cursos']) { 
-                      ?> selected <?php } }?>> <?php echo $Curso['curs_nombre']; ?>
+                      ?> selected <?php } }?>> <?php echo ($Curso['curs_nombre']." (".$Curso['curs_tipo'].") ".$Curso['curs_nivel']); ?>
                     </option>
                     <?php } ?>
                   </select>
@@ -386,6 +386,7 @@
         <?php if ($_POST['CRUD'] == 1) { ?>
         <input type="hidden" name="dml" value="update" />
         <input type="hidden" id="idGrupo" name="idGrupo" value="<?php echo $_POST['id'];?>">
+        <input type="hidden" id="ifModalidad" name="ifModalidad" value="<?php echo $Grupo->grup_modalidad;?>">
         <?php } elseif ($_POST['CRUD'] == 0) { ?>
         <input type="hidden" name="dml" value="select" />
         <?php } ?>

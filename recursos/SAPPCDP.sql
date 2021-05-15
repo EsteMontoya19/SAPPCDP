@@ -50,7 +50,7 @@ INSERT INTO Profesor_Modalidad (prof_id_profesor, moda_id_modalidad) VALUES (1,1
 INSERT INTO Profesor_Coordinacion(prof_id_profesor, coor_id_coordinacion) VALUES (1,1),(1,24), (1,14);
 
 INSERT INTO Curso (CURS_TIPO, CURS_NOMBRE, CURS_NUM_SESIONES, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, CURS_NIVEL, CURS_OBJETIVOS, CURS_TEMARIO, CURS_ACTIVO)
-			VALUES ('Curso', 'Zoom: Cuestionarios', 2, 'Nada', 'Nada', 'Básico', 'Aprender', '/nose.pdf', 'TRUE');
+			VALUES ('Curso', 'Cuestionarios en Zoom', 2, 'Nada', 'Nada', 'Básico', 'Aprender', '/nose.pdf', 'TRUE');
 
 INSERT INTO EDIFICIO (EDIF_NOMBRE)
 			VALUES ('A');
@@ -152,6 +152,7 @@ create table CALENDARIO (
    CALE_FIN_INTERSEMESTRAL DATE                 not null,
    CALE_INICIO_ADMIN      DATE                 not null,
    CALE_FIN_ADMIN        DATE                 not null,
+   CALE_ACTIVO           BOOL                 not null DEFAULT 'FALSE',
    constraint PK_CALENDARIO primary key (CALE_ID_CALENDARIO)
 );
 
@@ -273,9 +274,9 @@ create table GRUPO (
    SALO_ID_SALON              INT4                 null,
    CALE_ID_CALENDARIO   INT4                 not null,
    PLAT_ID_PLATAFORMA   INT4                    null,
-   GRUP_REUNION         VARCHAR(50)             null,
-   GRUP_ACCESO          VARCHAR(100)            null,
-   GRUP_CLAVE_ACCESO    VARCHAR(10)             null,
+   GRUP_REUNION         VARCHAR(80)             null,
+   GRUP_ACCESO          VARCHAR(150)            null,
+   GRUP_CLAVE_ACCESO    VARCHAR(30)             null,
    GRUP_CUPO            INT4                 not null,
    GRUP_ESTADO          VARCHAR(10)             not null,
    GRUP_ACTIVO          BOOL                 not null,
@@ -283,6 +284,7 @@ create table GRUPO (
    GRUP_TIPO            VARCHAR(10)             not null,
    GRUP_INICIO_INSC     DATE                 not null,
    GRUP_FIN_INSC        DATE                 not null,
+   GRUP_NUM_INSCRITOS   INT4                 null DEFAULT 0,
    constraint PK_GRUPO primary key (GRUP_ID_GRUPO)
 );
 
