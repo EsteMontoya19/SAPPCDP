@@ -2,14 +2,16 @@
     class Grupo
     {
         //Permite agregar cualquier tipo de grupo
-        function agregarGrupo($moderador, $profesor, $curso, $salon, $plataforma, $calendario, $reunion, $acceso, $clave, $cupo, $estado, $activo,
+        function agregarGrupo($moderador, $profesor, $curso, $salon, $plataforma, $reunion, $acceso, $clave, $cupo, $estado, $activo,
          $modalidad, $tipo_grupo, $inicio_insc, $fin_insc)
         {
             $SQL_Ins_Grupo = 
-            "   INSERT INTO Grupo (mode_id_moderador, prof_id_profesor, curs_id_cursos,  salo_id_salon, plat_id_plataforma, cale_id_calendario, grup_reunion, grup_acceso, grup_clave_acceso,  
-                    grup_cupo, grup_estado, grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc)
-                VALUES ($moderador, $profesor, $curso, $salon, $plataforma, $calendario, $reunion, $acceso, $clave, $cupo, $estado, $activo,
-                    $modalidad, $tipo_grupo, $inicio_insc, $fin_insc)
+            "   INSERT INTO Grupo (mode_id_moderador, prof_id_profesor, curs_id_cursos, salo_id_salon, cale_id_calendario, plat_id_plataforma, grup_reunion, grup_acceso, grup_clave_acceso,  
+                            grup_cupo, grup_estado, grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc)
+                            VALUES ($moderador, $profesor, $curso, $salon, (SELECT cale_id_calendario
+                                                                            FROM Calendario
+                                                                            WHERE cale_activo = TRUE), 
+                                    $plataforma, '$reunion', '$acceso','$clave', $cupo, '$estado', $activo, '$modalidad', '$tipo_grupo', '$inicio_insc', '$fin_insc')
             ";
 
             $bd = new BD();
@@ -188,11 +190,10 @@
             $bd->cerrarBD();
         }
 
-        /*
         function buscarUltimo()
         {
             $bd = new BD();
-            $SQL_Bus_Grupo_Seq = "SELECT last_value FROM grupo_grup_id_grup_seq;";
+            $SQL_Bus_Grupo_Seq = "SELECT last_value FROM grupo_grup_id_grupo_seq;";
             //posible alternativa de solución para la tabla. SELECT last_value(grup_id_grupo) Over (partition by grup_id_grupo order by grup_id_grupo DESC) FROM grupo
 
             $bd->abrirBD();
@@ -204,7 +205,7 @@
 
             return $Grupo_Seq;
         }
-        */
+
 
         //Permite obtener todos los grupos de modalidad Presencial
         function buscarTodosGruposPresencial()

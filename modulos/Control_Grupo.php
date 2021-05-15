@@ -9,43 +9,64 @@
 
   if($_POST['dml'] == 'insert')
   {
+    
     $curso = $_POST['ID_Curso'];
-    $tipo_grupo = $_POST['GrupoTipo'];
-    $modalidad = $_POST['GrupoModalidad'];
+    $tipo = $_POST['GrupoTipo'];
     $estado = $_POST['GrupoEstatus'];
     $profesor = $_POST['ID_Profesor'];
     $moderador = $_POST['ID_Moderador'];
     $cupo = $_POST['GrupoCupo'];
     $inicio_insc = $_POST['GrupoInicioInscripcion'];
     $fin_insc = $_POST['GrupoFinInscripcion'];
-
-    $plataforma = $_POST['ID_Plataforma'];
-    $calendario = $_POST['']; //TODO Hace falta pasar el id del calendario
-    $reunion = $_POST['ID_Reunion'];
-    $acceso = $_POST['URL_Acceso'];
-    $clave = $_POST['Clave_Acceso'];
-    $salon = $_POST['ID_Salon']; 
+    $modalidad = $_POST['GrupoModalidad'];
     
-    $activo = $_POST['']; //TODO Hace falta El campo activo...?
-
-    $obj_Grupo->agregarGrupo($moderador, $profesor, $curso, $salon, $plataforma, $calendario, $reunion, $acceso, $clave, $cupo, $estado, $activo,
-    $modalidad, $tipo_grupo, $inicio_insc, $fin_insc);
-    //TODO Hace falta completar el metodo en la clase
-    $id_grupo_ultimo = $obj_Grupo->buscarUltimo();
-
-    //TODO Buscar que funcione traer un arreglo e insertarlo en la BD
-    foreach ($arr_Sesiones as $valor) {
-      $id_grupo = $id_grupo_ultimo; //TODO Hace Falta buscar el ID Ultimo para enviar al registro de sesiones
-      $fecha_sesion = $_POST['SesionFecha'];
-      $hora_sesion = $_POST['SesionHora'];
-
-      $obj_Sesion -> agregarSesion($id_grupo, $fecha_sesion, $hora_sesion);
-
-      echo 1;
-    
+    //? Esto es por que si esta desactivado no manda nada
+    if (isset($_POST['ID_Status'])) {       
+      $publicado = $_POST['ID_Status'];
+    } else {
+      $publicado = "false";
     }
-    echo 2; 
+    
+    //? Se crea un arreglo de sesiones
+    $numSesionesTotales= (integer) $_POST['numSesiones'];
+    $sesion = array();
+    $horas = array();
+    for ($iCont = 1 ; $iCont <= $numSesionesTotales ; $iCont++) {
+      $sesion[$iCont] = $_POST['SesionFecha'.$iCont];
+      $horas[$iCont] = $_POST['SesionHora'.$iCont];
+    }
+    
+    //? Se verifica la modalidad
+    if(isset($modalidad) && $modalidad == "Presencial"){
+      $salon = $_POST['ID_Salon']; 
+      $plataforma = "null";
+      $acceso = "null";
+      $reunion = "null";
+      $clave = "null";
+    } else if (isset($modalidad) && $modalidad == "En línea"){
+      $plataforma = $_POST['ID_Plataforma'];
+      $acceso = $_POST['URL_Acceso'];
+      $reunion = $_POST['ID_Reunion'];
+      $clave = $_POST['Clave_Acceso'];
+      $salon = "null";
+    } else {
+      exit('2');
+    }
+
+    
+    $obj_Grupo->agregarGrupo($moderador, $profesor, $curso, $salon, $plataforma, $reunion, $acceso, $clave, $cupo, $estado, $publicado,
+                              $modalidad, $tipo, $inicio_insc, $fin_insc);
+                              
+    $id_grupo = $obj_Grupo->buscarUltimo();
+
+    for ($iCont = 1 ; $iCont <= $numSesionesTotales ; $iCont++) {
+      $obj_Sesion -> agregarSesion($id_grupo, $sesion[$iCont], $horas[$iCont]);
+    }
+
+    exit('1');
   }
+
+
   elseif($_POST['dml'] == 'update')
   {
 

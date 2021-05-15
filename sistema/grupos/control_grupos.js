@@ -640,7 +640,7 @@ $(document).on('change', '#ID_Curso', function SesionesCurso() {
     url: "../modulos/Control_Grupo.php",
     success: function (respuesta) {
 
-      $('#contenedorSesiones').load('../sistema/grupos/frm_grupos_sesiones.php', { "idCurso": respuesta });
+      $('#contenedorSesiones').load('../sistema/grupos/frm_grupos_sesiones.php', { "curs_num_sesiones": respuesta });
     },
   });
 

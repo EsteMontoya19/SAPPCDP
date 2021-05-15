@@ -137,7 +137,7 @@
                 </div>
                 <div class="col-lg-4 form-group">
                   <label
-                    for="GrupoEstatus"><b>Estatus:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";} ?></b></label>
+                    for="GrupoEstatus"><b>Estado:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";} ?></b></label>
                   <select class="custom-select" id="GrupoEstatus" name="GrupoEstatus">
                     <option value="0">Seleccione una opción</option>
                     <option value="Aprobado"
@@ -152,6 +152,7 @@
                   </select>
                 </div>
               </div>
+
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <?php if (isset($_POST['CRUD']) ){?>
                 <div class="col-lg-6 form-group">
@@ -169,228 +170,218 @@
                       </option> <?php } ?>
                     </select>
                   </div>
-
-                  <?php if (isset($_POST['CRUD']) ){?>
+                <?php if (isset($_POST['CRUD']) ){?>
                   <div class="col-lg-6 form-group">
-                    <?php } else {?>
-                    <div class="col-lg-4 form-group">
+                <?php } else {?>
+                  <div class="col-lg-4 form-group">
+                <?php } ?>
+                <label for="ID_Moderador"><b>Moderador:
+                    <?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
+                <select class="custom-select" id="ID_Moderador" name="ID_Moderador">
+                  <option value="0">Seleccione una opción</option>
+                  <?php foreach ($arr_Moderadores as $Moderador) { ?>
+                  <option value="<?php echo $Moderador['mode_id_moderador']; ?>" <?php if(isset($Grupo)) { if ($Grupo->mode_id_moderador == $Moderador['mode_id_moderador']) 
+                { ?> selected <?php }}?>>
+                    <?php echo $Moderador['pers_nombre']." ".$Moderador['pers_apellido_paterno']." ".$Moderador['pers_apellido_materno']; ?>
+                  </option> <?php } ?>
+                </select>
+              </div>
+              <?php if (isset($_POST['CRUD']) ){?>
+              <div class="col-lg-4 form-group" style="display: none;">
+                <?php } else {?>
+                <div class="col-lg-4 form-group">
+                  <?php } ?>
+                  <label for="ID_Status"><b>Publicado:
+                      <?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="ID_Status" name="ID_Status"
+                      <?php if (isset($Grupo) && $Grupo->grup_activo == 'f') { ?>
+                      <?php } else { echo "checked";} ?> <?php if (isset($Grupo)) { ?>
+                      onclick="Publicar(<?php echo $Grupo->grup_id_grupo ?> , '<?php echo $Grupo->grup_activo; ?>')"
+                      <?php } else {?> value="true" <?php } ?>>
+                    <label class="custom-control-label" for="ID_Status"></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Fin de Sección: Datos del Grupo-->
+
+
+            <!-- Inicio de Sección: Limites de Inscripción  -->
+            <div class="form-group">
+              <div class="card lg-12">
+                <div class="card-header">
+                  <i class="fas fa-id-card fa-lg"></i>
+                  <b>&nbsp;&nbsp;Datos sobre las Inscripciones</b>
+                </div>
+                <div class="col-lg-12 form-row" style="margin-top: 15px;">
+                  <div class="col-lg-2 form-group">
+                    <label
+                      for="GrupoCupo"><b>Cupo:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
+                    <input type="number" class="form-control" id="GrupoCupo" name="GrupoCupo" placeholder="0"
+                      min="0" value="<?php echo isset($Grupo)?$Grupo->grup_cupo : ""; ?>">
+                  </div>
+                  <div class="col-lg-5 form-group">
+                    <label for="GrupoInicioInscripcion"><b>Iniciar Inscripciones en la Fecha:</b></label>
+                    <input type="date" class="form-control" id="GrupoInicioInscripcion"
+                      name="GrupoInicioInscripcion" placeholder="0" min="0"
+                      value="<?php echo isset($Grupo)?$Grupo->grup_inicio_insc : ""; ?>">
+                  </div>
+                  <div class="col-lg-5 form-group">
+                    <label for="GrupoFinInscripcion"><b>Finalizar Inscripciones en la Fecha:</b></label>
+                    <input type="date" class="form-control" id="GrupoFinInscripcion" name="GrupoFinInscripcion"
+                      placeholder="0" min="0" value="<?php echo isset($Grupo)?$Grupo->grup_fin_insc : ""; ?>">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Fin de Sección: Limites de Inscripción -->
+
+
+            <!-- Inicio de Sección: Modalidad -->
+            <div class="form-group">
+              <div class="card lg-12">
+                <div class="card-header">
+                  <i class="fas fa-id-card fa-lg"></i>
+                  <b>&nbsp;&nbsp; <?php echo "Datos de la Modalidad"; 
+                    if (isset($Grupo->grup_modalidad)) echo ": ".$Grupo->grup_modalidad;?></b>
+                </div>
+                <div class="col-lg-12 form-row" style="margin-top: 15px;">
+                  <!-- div de la modalidad presencial -->
+                  <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'Presencial') { ?>
+                    <div id="ID_Salon" class="col-lg-6 form-group">
+                  <?php } else {?>
+                    <div id="ID_Salon" class="col-lg-6 form-group" style="display: none;">
+                  <?php }?>
+                    <label for="lbID_Salon"><b>Salon:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { 
+                          echo "*";} ?></b></label>
+                    <select class="custom-select" id="ID_Salon" name="ID_Salon">
+                      <option value="0">Seleccione una opción</option>
+                      <?php foreach ($arr_Salones as $Salon) { ?>
+                        <option value="<?php echo $Salon['salo_id_salon'];?>"
+                          <?php if(isset($Grupo)) { if ($Grupo->salo_id_salon == $Salon['salo_id_salon']) { ?>
+                          selected <?php } }?>>
+                          <?php echo "Edificio: ".$Salon['edif_nombre']." Salon: ".$Salon['salo_nombre']; ?>
+                        </option>
                       <?php } ?>
-                      <label for="ID_Moderador"><b>Moderador:
-                          <?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
-                      <select class="custom-select" id="ID_Moderador" name="ID_Moderador">
-                        <option value="0">Seleccione una opción</option>
-                        <?php foreach ($arr_Moderadores as $Moderador) { ?>
-                        <option value="<?php echo $Moderador['mode_id_moderador']; ?>" <?php if(isset($Grupo)) { if ($Grupo->mode_id_moderador == $Moderador['mode_id_moderador']) 
-                      { ?> selected <?php }}?>>
-                          <?php echo $Moderador['pers_nombre']." ".$Moderador['pers_apellido_paterno']." ".$Moderador['pers_apellido_materno']; ?>
-                        </option> <?php } ?>
-                      </select>
-                    </div>
-                    <!-- Hasta aquí funciona -->
-                    <?php if (isset($_POST['CRUD']) ){?>
-                    <div class="col-lg-4 form-group" style="display: none;">
+                    </select>
+                  </div>
+                    <!-- div de la modalidad en línea -->
+                    <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
+                    <div id="ID_Plataforma" class="col-lg-6 form-group">
                       <?php } else {?>
-                      <div class="col-lg-4 form-group">
-                        <?php } ?>
-                        <label for="ID_Status"><b>Publicado:
-                            <?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
-                        <div class="custom-control custom-switch">
-                          <input type="checkbox" class="custom-control-input" id="ID_Status"
-                            <?php if (isset($Grupo) && $Grupo->grup_activo == 'f') { ?>
-                            <?php } else { echo "checked";} ?> <?php if (isset($Grupo)) { ?>
-                            onclick="Publicar(<?php echo $Grupo->grup_id_grupo ?> , '<?php echo $Grupo->grup_activo; ?>')"
-                            <?php } else {?> value="true" <?php } ?>>
-                          <label class="custom-control-label" for="ID_Status"></label>
-                        </div>
+                      <div id="ID_Plataforma" class="col-lg-6 form-group" style="display: none;">
+                        <?php }?>
+                        <label
+                          for="lbID_Plataforma"><b>Plataforma:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
+                        <select class="custom-select" id="ID_Plataforma" name="ID_Plataforma">
+                          <option value="0">Seleccione una opción</option>
+                          <?php foreach ($arr_Plataformas as $Plataforma) { ?>
+                            <option value="<?php echo $Plataforma['plat_id_plataforma'];?>"
+                              <?php if(isset($Grupo)) { if ($Grupo->plat_id_plataforma == $Plataforma['plat_id_plataforma']) { ?>selected <?php } }?>>
+                              <?php echo $Plataforma['plat_nombre']; ?>
+                            </option>
+                          <?php } ?>
+                        </select>
                       </div>
-                    </div>
-                  </div>
-                  <!-- Fin de Sección: Datos del Grupo-->
-
-
-                  <!-- Inicio de Sección: Limites de Inscripción  -->
-                  <div class="form-group">
-                    <div class="card lg-12">
-                      <div class="card-header">
-                        <i class="fas fa-id-card fa-lg"></i>
-                        <b>&nbsp;&nbsp;Datos sobre las Inscripciones</b>
+                      <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
+                      <div id="URL_Acceso" class="col-lg-6 form-group">
+                        <?php } else {?>
+                        <div id="URL_Acceso" class="col-lg-6 form-group" style="display: none;">
+                          <?php }?>
+                          <label for="lbURL_Acceso"><b>Link de
+                              acceso:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
+                          <input type="text" class="form-control" id="URL_Acceso" name="URL_Acceso"
+                            value="<?php echo isset($Grupo) ? $Grupo->grup_acceso : ""; ?>">
+                        </div>
                       </div>
                       <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                        <div class="col-lg-2 form-group">
-                          <label
-                            for="GrupoCupo"><b>Cupo:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
-                          <input type="number" class="form-control" id="GrupoCupo" name="GrupoCupo" placeholder="0"
-                            min="0" value="<?php echo isset($Grupo)?$Grupo->grup_cupo : ""; ?>">
-                        </div>
-                        <div class="col-lg-5 form-group">
-                          <label for="GrupoInicioInscripcion"><b>Iniciar Inscripciones en la Fecha:</b></label>
-                          <input type="date" class="form-control" id="GrupoInicioInscripcion"
-                            name="GrupoInicioInscripcion" placeholder="0" min="0"
-                            value="<?php echo isset($Grupo)?$Grupo->grup_inicio_insc : ""; ?>">
-                        </div>
-                        <div class="col-lg-5 form-group">
-                          <label for="GrupoFinInscripcion"><b>Finalizar Inscripciones en la Fecha:</b></label>
-                          <input type="date" class="form-control" id="GrupoFinInscripcion" name="GrupoFinInscripcion"
-                            placeholder="0" min="0" value="<?php echo isset($Grupo)?$Grupo->grup_fin_insc : ""; ?>">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Fin de Sección: Limites de Inscripción -->
-
-
-                  <!-- Inicio de Sección: Modalidad -->
-                  <div class="form-group">
-                    <div class="card lg-12">
-                      <div class="card-header">
-                        <i class="fas fa-id-card fa-lg"></i>
-                        <b>&nbsp;&nbsp;
-                          <?php echo "Datos de la Modalidad"; if (isset($Grupo->grup_modalidad)) echo ": ".$Grupo->grup_modalidad;?></b>
-                      </div>
-                      <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                        <!-- div de la modalidad presencial -->
-                        <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'Presencial') { ?>
-                        <div id="ID_Salon" class="col-lg-6 form-group">
+                        <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
+                        <div id="ID_Reunion" class="col-lg-6 form-group">
                           <?php } else {?>
-                          <div id="ID_Salon" class="col-lg-6 form-group" style="display: none;">
+                          <div id="ID_Reunion" class="col-lg-6 form-group" style="display: none;">
                             <?php }?>
-                            <label
-                              for="lbID_Salon"><b>Salon:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
-                            <select class="custom-select" id="ID_Salon" name="ID_Salon">
-                              <option value="0">Seleccione una opción</option>
-                              <?php foreach ($arr_Salones as $Salon) { ?>
-                              <option value="<?php echo $Salon['salo_id_salon'];?>"
-                                <?php if(isset($Grupo)) { if ($Grupo->salo_id_salon == $Salon['salo_id_salon']) { ?>
-                                selected <?php } }?>>
-                                <?php echo "Edificio: ".$Salon['edif_nombre']." Salon: ".$Salon['salo_nombre']; ?>
-                              </option>
-                              <?php } ?>
-                            </select>
+                            <label for="lbID_Reunion"><b>ID de la
+                                Renunón:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
+                            <input type="text" class="form-control" id="ID_Reunion" name="ID_Reunion"
+                              value="<?php echo isset($Grupo) ? $Grupo->grup_reunion : ""; ?>">
                           </div>
-                          <!-- div de la modalidad en línea -->
                           <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
-                          <div id="ID_Plataforma" class="col-lg-6 form-group">
+                          <div id="Clave_Acceso" class="col-lg-6 form-group">
                             <?php } else {?>
-                            <div id="ID_Plataforma" class="col-lg-6 form-group" style="display: none;">
+                            <div id="Clave_Acceso" class="col-lg-6 form-group" style="display: none;">
                               <?php }?>
-                              <label
-                                for="lbID_Plataforma"><b>Plataforma:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
-                              <select class="custom-select" id="ID_Plataforma" name="ID_Plataforma">
-                                <option value="0">Seleccione una opción</option>
-                                <?php foreach ($arr_Plataformas as $Plataforma) { ?>
-                                <option value="<?php echo $Plataforma['plat_id_plataforma'];?>"
-                                  <?php if(isset($Grupo)) { if ($Grupo->plat_id_plataforma == $Plataforma['plat_id_plataforma']) { ?>
-                                  selected <?php } }?>>
-                                  <?php echo $Plataforma['plat_nombre']; ?>
-                                </option>
-                                <?php } ?>
-                              </select>
+                              <label for="lbClave_Acceso"><b>Clave de
+                                  Acceso:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
+                              <input type="text" class="form-control" id="Clave_Acceso" name="Clave_Acceso"
+                                value="<?php echo isset($Grupo) ? $Grupo->grup_clave_acceso : ""; ?>">
                             </div>
-                            <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
-                            <div id="URL_Acceso" class="col-lg-6 form-group">
-                              <?php } else {?>
-                              <div id="URL_Acceso" class="col-lg-6 form-group" style="display: none;">
-                                <?php }?>
-                                <label for="lbURL_Acceso"><b>Link de
-                                    acceso:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
-                                <input type="text" class="form-control" id="URL_Acceso" name="URL_Acceso"
-                                  value="<?php echo isset($Grupo) ? $Grupo->grup_acceso : ""; ?>">
-                              </div>
-                            </div>
-                            <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                              <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
-                              <div id="ID_Reunion" class="col-lg-6 form-group">
-                                <?php } else {?>
-                                <div id="ID_Reunion" class="col-lg-6 form-group" style="display: none;">
-                                  <?php }?>
-                                  <label for="lbID_Reunion"><b>ID de la
-                                      Renunón:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
-                                  <input type="text" class="form-control" id="ID_Reunion" name="ID_Reunion"
-                                    value="<?php echo isset($Grupo) ? $Grupo->grup_reunion : ""; ?>">
-                                </div>
-                                <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
-                                <div id="Clave_Acceso" class="col-lg-6 form-group">
-                                  <?php } else {?>
-                                  <div id="Clave_Acceso" class="col-lg-6 form-group" style="display: none;">
-                                    <?php }?>
-                                    <label for="lbClave_Acceso"><b>Clave de
-                                        Acceso:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
-                                    <input type="text" class="form-control" id="Clave_Acceso" name="Clave_Acceso"
-                                      value="<?php echo isset($Grupo) ? $Grupo->grup_clave_acceso : ""; ?>">
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                          </div>
+                        </div>
+                      </div>
+            <!-- Fin de Sección: Modalidad -->
 
-
-                            <!-- Fin de Sección: Modalidad -->
-
-                            <?php 
-          if(isset($Grupo)) {
-        ?>
-                            <!-- Inicio de Sección: Sesiones -->
-                            <?php
-          if (isset($Grupo)) { ?>
-                            <div id="Sesiones" class="form-group">
-                              <?php } else {?>
-                              <div id="Sesiones" class="form-group" style="display: none;">
-                                <?php } 
-          $i = 1; 
-          foreach($arr_Sesiones as $Sesion){ 
-            $idSesion = "idSesion".$i;
-            $SesionFecha = "SesionFecha".$i;
-            $SesionHora = "SesionHora".$i; ?>
-                                <div class="card lg-12">
-                                  <div class="card-header">
-                                    <i class="fas fa-id-card fa-lg"></i>
-                                    <b>&nbsp;&nbsp; <?php echo "Sesión #".$i; ?></b>
-                                    <input type="hidden" id="<?php echo $idSesion;?>" name="idSesion[]"
-                                      value="<?php echo $Sesion['sesi_id_sesiones'];?>">
-                                  </div>
-                                  <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                                    <div id="<?php echo $SesionFecha;?>" class="col-lg-6 form-group">
-                                      <label
-                                        for="<?php echo $SesionFecha;?>"><b>Fecha:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
-                                      <input type="date" class="form-control" id="<?php echo $SesionFecha;?>"
-                                        name="SesionFecha[]" placeholder="0" min="0"
-                                        value="<?php echo isset($Sesion)?$Sesion['sesi_fecha']:""; ?>">
-                                    </div>
-                                    <div id="<?php echo $SesionHora;?>" class="col-lg-6 form-group">
-                                      <label
-                                        for="<?php echo $SesionHora;?>"><b>Hora:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}; ?></b></label>
-                                      <input type="time" class="form-control" id="<?php echo $SesionHora;?>"
-                                        name="SesionHora[]>" placeholder="0" min="0"
-                                        value="<?php echo isset($Sesion)?$Sesion['sesi_hora']:"";?>">
-                                    </div>
-                                  </div>
-                                </div>
-                                <?php $i++; } ?>
-                              </div>
-                              <!-- Fin de Sección: Sesiones -->
-                              <?php 
-        } else { ?>
-                              <section id="contenedorSesiones">
+          <?php if(isset($Grupo)) {?>
+          <!-- Inicio de Sección: Sesiones -->
+            <?php if (isset($Grupo)) { ?>
+              <div id="Sesiones" class="form-group">
+            <?php } else {?>
+              <div id="Sesiones" class="form-group" style="display: none;">
+            <?php } 
+              $i = 1; 
+              foreach($arr_Sesiones as $Sesion){ 
+                $idSesion = "idSesion".$i;
+                $SesionFecha = "SesionFecha".$i;
+                $SesionHora = "SesionHora".$i; ?>
+                <div class="card lg-12">
+                  <div class="card-header">
+                    <i class="fas fa-id-card fa-lg"></i>
+                    <b>&nbsp;&nbsp; <?php echo "Sesión #".$i; ?></b>
+                    <input type="hidden" id="<?php echo $idSesion;?>" name="idSesion[]" value="<?php echo $Sesion['sesi_id_sesiones'];?>">
+                  </div>
+                  <div class="col-lg-12 form-row" style="margin-top: 15px;">
+                    <div id="<?php echo $SesionFecha;?>" class="col-lg-6 form-group">
+                      <label
+                        for="<?php echo $SesionFecha;?>"><b>Fecha:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
+                      <input type="date" class="form-control" id="<?php echo $SesionFecha;?>"
+                        name="SesionFecha[]" placeholder="0" min="0"
+                        value="<?php echo isset($Sesion)?$Sesion['sesi_fecha']:""; ?>">
+                    </div>
+                    <div id="<?php echo $SesionHora;?>" class="col-lg-6 form-group">
+                      <label
+                        for="<?php echo $SesionHora;?>"><b>Hora:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}; ?></b></label>
+                      <input type="time" class="form-control" id="<?php echo $SesionHora;?>"
+                        name="SesionHora[]>" placeholder="0" min="0"
+                        value="<?php echo isset($Sesion)?$Sesion['sesi_hora']:"";?>">
+                    </div>
+                  </div>
+                </div>
+          <?php $i++; } ?>
+        </div>
+        <!-- Fin de Sección: Sesiones -->
+        <?php } else { ?>
+          <section id="contenedorSesiones">
 
 
 
-                              </section>
-                              <?php } ?>
+          </section>
+        <?php } ?>
 
-                              <!-- Desactivar formulario FIN -->
-                              <?php if (isset($_POST['CRUD']) && $_POST['CRUD'] == 0) { ?>
-        </fieldset>
+        <!-- Desactivar formulario FIN -->
+        <?php if (isset($_POST['CRUD']) && $_POST['CRUD'] == 0) { ?>
+            </fieldset>
         <?php } ?>
 
         <!-- ID e Instrucciones -->
         <?php if (isset($_POST['CRUD'])) { ?>
-        <?php if ($_POST['CRUD'] == 1) { ?>
-        <input type="hidden" name="dml" value="update" />
-        <input type="hidden" id="idGrupo" name="idGrupo" value="<?php echo $_POST['id'];?>">
-        <?php } elseif ($_POST['CRUD'] == 0) { ?>
-        <input type="hidden" name="dml" value="select" />
-        <?php } ?>
+          <?php if ($_POST['CRUD'] == 1) { ?>
+            <input type="hidden" name="dml" value="update" />
+            <input type="hidden" id="idGrupo" name="idGrupo" value="<?php echo $_POST['id'];?>">
+          <?php } elseif ($_POST['CRUD'] == 0) { ?>
+            <input type="hidden" name="dml" value="select" />
+          <?php } ?>
         <?php } else { ?>
-        <input type="hidden" name="dml" value="insert" />
+          <input type="hidden" name="dml" value="insert" />
         <?php } ?>
 
       </form>

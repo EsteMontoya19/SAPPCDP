@@ -5,9 +5,8 @@
         function agregarSesion($id_grupo, $fecha_sesion, $hora_sesion)
     	{
 			$SQL_Ins_Sesion =
-			"	
-				INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora)
-				VALUES ($id_grupo, );
+			"INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora)
+			 VALUES ($id_grupo, '$fecha_sesion', '$hora_sesion');
 			";
 
 			$bd = new BD();

@@ -1,7 +1,7 @@
 <!-- Inicio de Sección: Sesiones -->
 <?php
-if (isset($_POST['idCurso'])) { 
-    $numSesiones = $_POST['idCurso'];
+if (isset($_POST['curs_num_sesiones'])) { 
+    $numSesiones = $_POST['curs_num_sesiones'];
 } else {
     $numSesiones = 0;
 }?>
@@ -31,5 +31,6 @@ if (isset($_POST['idCurso'])) {
         </div>
     </div>
     <?php } ?> 
+    <input type="hidden" name="numSesiones" id="numSesiones" value= <?php echo ($numSesiones) ?>>
     
 <!-- Fin de Sección: Sesiones -->
