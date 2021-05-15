@@ -1,3 +1,13 @@
+<script>
+jQuery(document).ready(function () {
+    jQuery('.grupo-cupo').keypress(function (tecla) {
+        if (tecla.charCode < 48 || tecla.charCode > 57) {
+            return false;
+        }
+    });
+});
+</script>
+
 <?php
 
   // Clases BD, Grupo, Sesiones, Curso, Profesor, Moderador, Busqueda(Plataforma, Salón*, Calendario)
@@ -218,7 +228,7 @@
                   <div class="col-lg-2 form-group">
                     <label
                       for="GrupoCupo"><b>Cupo:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
-                    <input type="number" class="form-control" id="GrupoCupo" name="GrupoCupo" placeholder="0"
+                    <input type="number" class="form-control grupo-cupo" id="GrupoCupo" name="GrupoCupo" placeholder="0"
                       min="0" value="<?php echo isset($Grupo)?$Grupo->grup_cupo : ""; ?>">
                   </div>
                   <div class="col-lg-5 form-group">

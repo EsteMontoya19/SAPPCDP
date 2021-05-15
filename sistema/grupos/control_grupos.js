@@ -1,5 +1,3 @@
-// Enlace a los formularios
-
 $(document).ready(function () {
     $('#btn-inicio').click(function () {
         $('html, body').animate({ scrollTop: 0 }, 0);
@@ -50,7 +48,7 @@ function validarFormularioGrupo() {
                 document.getElementById('GrupoCupo').focus();
                 alertify.error('Debe asignar un cupo de grupo máximo de 60');
                 return false;
-            } 
+            }
         }
     }
 
@@ -97,7 +95,6 @@ function validarFormularioGrupo() {
         return false;
     } else {
         if ($('#GrupoModalidad').val() == 'En línea') {
-            
             if ($('#ID_Plataforma').val() == 0) {
                 $('html, body').animate({ scrollTop: 200 }, 'slow');
                 document.getElementById('ID_Plataforma').focus();
@@ -136,20 +133,20 @@ function validarFormularioGrupo() {
             }
         }
     }
-    
-    //Validaciones para las Fechas de inscripcion
-    if ($('#GrupoInicioInscripcion').val() == ''){
+
+    //Validaciones para las Fechas de inscripción
+    if ($('#GrupoInicioInscripcion').val() == '') {
         $('html, body').animate({ scrollTop: 200 }, 'slow');
         document.getElementById('GrupoInicioInscripcion').focus();
         alertify.error('Debe ingresar la fecha de inicio para el periodo de inscripciones al grupo');
-        return false;            
+        return false;
     } else {
         //Obtiene el valor de la fecha ingresada en el campo GrupoInicioInscripcion
         objFecha = new Date($('#GrupoInicioInscripcion').val());
         //Crea una nueva variable con estos valores, se agrega el +1 porque de lo contrario el valor es un día menor al ingresado en el input
         var objFecha2 = new Date(objFecha.getFullYear(), objFecha.getMonth(), objFecha.getDate() + 1);
         //Valida que la fecha ingresada en el periodo de inscripción sea minimamente igual al dia en que se registra el grupo.
-        if(objFecha2 < objFechaHoy){
+        if (objFecha2 < objFechaHoy) {
             $('html, body').animate({ scrollTop: 200 }, 'slow');
             document.getElementById('GrupoInicioInscripcion').focus();
             alertify.error('La fecha de inicio para el periodo de inscripciones al grupo debe ser minimo el día en que se registra el grupo');
@@ -157,41 +154,39 @@ function validarFormularioGrupo() {
         }
     }
 
-    if ($('#GrupoFinInscripcion').val() == ''){
+    if ($('#GrupoFinInscripcion').val() == '') {
         $('html, body').animate({ scrollTop: 200 }, 'slow');
         document.getElementById('GrupoFinInscripcion').focus();
         alertify.error('Debe ingresar la fecha de termino para el periodo de inscripciones al grupo');
-        return false;            
+        return false;
     }
 
-    if($('#GrupoInicioInscripcion').val() > $('#GrupoFinInscripcion').val()){
+    if ($('#GrupoInicioInscripcion').val() > $('#GrupoFinInscripcion').val()) {
         $('html, body').animate({ scrollTop: 200 }, 'slow');
         document.getElementById('GrupoInicioInscripcion').focus();
         alertify.error('La fecha de inicio del periodo de inscripciones al grupo debe ser menor a la de termino');
         return false;
     }
-    
+
     //Validaciones para las sesiones ingresadas acorde al grupo
-    for(var iCon = 1; iCon <= $('#numSesiones').val(); iCon++){
-        
-        if($('#SesionFecha' + iCon).val() == ''){
+    for (var iCon = 1; iCon <= $('#numSesiones').val(); iCon++) {
+        if ($('#SesionFecha' + iCon).val() == '') {
             $('html, body').animate({ scrollTop: 300 }, 'slow');
             document.getElementById('SesionFecha' + iCon).focus();
             alertify.error('La fecha de la sesión ' + iCon + ' no puede estar vacía, favor de ingresar una fecha');
             return false;
         } else {
-            if($('#SesionFecha' + iCon).val() < $('#GrupoFinInscripcion').val()){
+            if ($('#SesionFecha' + iCon).val() < $('#GrupoFinInscripcion').val()) {
                 $('html, body').animate({ scrollTop: 300 }, 'slow');
                 document.getElementById('SesionFecha' + iCon).focus();
                 alertify.error('La fecha de la sesión ' + iCon + ' no puede ser menor a la fecha de termino de inscripción');
                 return false;
-            }   
+            }
 
             //Se crea una variable de fecha con los datos de cada campo de fecha para validar que la sesión no esta siendo asignada en domingo
             objFecha = new Date($('#SesionFecha' + iCon).val());
             var objFecha2 = new Date(objFecha.getFullYear(), objFecha.getMonth(), objFecha.getDate() + 1);
-            alert(objFecha2.toLocaleDateString());
-            if(objFecha2.getDay() == 0){
+            if (objFecha2.getDay() == 0) {
                 $('html, body').animate({ scrollTop: 300 }, 'slow');
                 document.getElementById('SesionFecha' + iCon).focus();
                 alertify.error('La fecha de la sesión ' + iCon + ' no puede ser asignada a un día Domingo');
@@ -199,22 +194,21 @@ function validarFormularioGrupo() {
             }
         }
 
-        if($('#SesionHora' + iCon).val() == ''){
+        if ($('#SesionHora' + iCon).val() == '') {
             $('html, body').animate({ scrollTop: 300 }, 'slow');
             document.getElementById('SesionHora' + iCon).focus();
             alertify.error('El horario de la sesión ' + iCon + ' no puede estar vacío, favor de ingresar una hora de inicio');
             return false;
         }
-        
-        if(iCon > 1){
-            if($('#SesionFecha' + iCon).val() < $('#SesionFecha' + (iCon - 1)).val()){
+
+        if (iCon > 1) {
+            if ($('#SesionFecha' + iCon).val() < $('#SesionFecha' + (iCon - 1)).val()) {
                 $('html, body').animate({ scrollTop: 300 }, 'slow');
                 document.getElementById('SesionFecha' + iCon).focus();
                 alertify.error('La fecha de la sesión ' + iCon + ' no puede ser menor a la fecha de la sesión ' + (iCon - 1));
                 return false;
             }
         }
-
     }
 
     return true;
@@ -704,20 +698,19 @@ $(document).on('change', '#GrupoModalidad', function mostrarCamposModalidad() {
 });
 
 $(document).on('change', '#ID_Curso', function SesionesCurso() {
-  var idCurso = $('#ID_Curso').val();
-  var dml = "sesiones"
-  var datos = {
-    idCurso: idCurso,
-    dml: dml,
-  };
+    var idCurso = $('#ID_Curso').val();
+    var dml = 'sesiones';
+    var datos = {
+        idCurso: idCurso,
+        dml: dml,
+    };
 
-  $.ajax({
-    data: datos,
-    type: "POST",
-    url: "../modulos/Control_Grupo.php",
-    success: function (respuesta) {
-
-      $('#contenedorSesiones').load('../sistema/grupos/frm_grupos_sesiones.php', { "curs_num_sesiones": respuesta });
-    },
-  });
+    $.ajax({
+        data: datos,
+        type: 'POST',
+        url: '../modulos/Control_Grupo.php',
+        success: function (respuesta) {
+            $('#contenedorSesiones').load('../sistema/grupos/frm_grupos_sesiones.php', { curs_num_sesiones: respuesta });
+        },
+    });
 });
