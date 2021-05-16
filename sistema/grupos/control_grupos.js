@@ -612,8 +612,14 @@ function cambioPublicacion(id, estatus, nombreCurso, modalidad) {
                         setTimeout(function () {
                             $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
                         }, 1500);
+                    } else if (respuesta == 2) {
+                        alertify.error('El grupo debe tener un Moderador asignado.');
+                    } else if (respuesta == 3) {
+                        alertify.error('El grupo debe tener un Profesor asignado.');
+                    } else if (respuesta == 4) {
+                        alertify.error('El grupo debe estar Aprobado para ser publicado.');
                     } else {
-                        alertify.error('Hubo un problema al cambiar el estatus del grupo');
+                        alertify.error('Hubo un problema al registrar el grupo.');
                     }
                 },
             });

@@ -222,7 +222,7 @@ function validarFormularioUsuario() {
             if ($('#strRFC').val().length > 13) {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
                 document.getElementById('strRFC').focus();
-                alertify.error('El RFC debe tener máximo 12 caracteres.');
+                alertify.error('El RFC debe tener máximo 13 caracteres.');
                 return false;
             }
             var rfcExp = /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/;
@@ -311,10 +311,18 @@ function validarFormularioUsuario() {
             document.getElementById('strRFC').focus();
             return false;
         } else {
-            if ($('#strRFC').val().length > 12) {
+            if ($('#strRFC').val().length > 13) {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
                 document.getElementById('strRFC').focus();
-                alertify.error('El RFC debe tener máximo 12 caracteres.');
+                alertify.error('El RFC debe tener máximo 13 caracteres.');
+                return false;
+            }
+            var rfcExp = /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/;
+            if (rfcExp.test($('#strRFC').val())) {
+            } else {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('strRFC').focus();
+                alertify.error('El RFC de ser con homoclave y mayusculas <br> El formato es (NNNN000000XXX).');
                 return false;
             }
         }
