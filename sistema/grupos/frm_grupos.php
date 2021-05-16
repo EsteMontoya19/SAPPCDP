@@ -312,7 +312,7 @@ jQuery(document).ready(function () {
                           <div id="Reunion" class="col-lg-6 form-group" style="display: none;">
                             <?php }?>
                             <label for="lbID_Reunion"><b>ID de la
-                                Renunón:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
+                                Reunión:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
                             <input type="text" class="form-control" id="ID_Reunion" name="ID_Reunion"
                               value="<?php echo isset($Grupo) ? $Grupo->grup_reunion : ""; ?>">
                           </div>
@@ -342,7 +342,8 @@ jQuery(document).ready(function () {
               foreach($arr_Sesiones as $Sesion){ 
                 $idSesion = "idSesion".$i;
                 $SesionFecha = "SesionFecha".$i;
-                $SesionHora = "SesionHora".$i; ?>
+                $SesionHoraInicio = "SesionHoraInicio".$i;
+                $SesionHoraFin = "SesionHoraFin".$i; ?>
                 <div class="card lg-12">
                   <div class="card-header">
                     <i class="fas fa-id-card fa-lg"></i>
@@ -357,10 +358,17 @@ jQuery(document).ready(function () {
                         name="SesionFecha[]" placeholder="0" min="0"
                         value="<?php echo isset($Sesion)?$Sesion['sesi_fecha']:""; ?>">
                     </div>
-                    <div id="<?php echo $SesionHora;?>" class="col-lg-6 form-group">
+                    <div id="<?php echo $SesionHoraInicio;?>" class="col-lg-3 form-group">
                       <label
-                        for="<?php echo $SesionHora;?>"><b>Hora:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}; ?></b></label>
-                      <input type="time" class="form-control" id="<?php echo $SesionHora;?>"
+                        for="<?php echo $SesionHoraInicio;?>"><b>Hora de inicio:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}; ?></b></label>
+                      <input type="time" class="form-control" id="<?php echo $SesionHoraInicio;?>"
+                        name="SesionHora[]>" placeholder="0" min="0"
+                        value="<?php echo isset($Sesion)?$Sesion['sesi_hora']:"";?>">
+                    </div>
+                    <div id="<?php echo $SesionHoraFin;?>" class="col-lg-3 form-group">
+                      <label
+                        for="<?php echo $SesionHoraFin;?>"><b>Hora de fin:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}; ?></b></label>
+                      <input type="time" class="form-control" id="<?php echo $SesionHoraFin;?>"
                         name="SesionHora[]>" placeholder="0" min="0"
                         value="<?php echo isset($Sesion)?$Sesion['sesi_hora']:"";?>">
                     </div>

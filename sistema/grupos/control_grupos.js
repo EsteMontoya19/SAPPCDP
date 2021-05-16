@@ -194,7 +194,7 @@ function validarFormularioGrupo() {
             }
         }
 
-        if ($('#SesionHora' + iCon).val() == '') {
+        if ($('#SesionHoraInicio' + iCon).val() == '') {
             $('html, body').animate({ scrollTop: 300 }, 'slow');
             document.getElementById('SesionHora' + iCon).focus();
             alertify.error('El horario de la sesión ' + iCon + ' no puede estar vacío, favor de ingresar una hora de inicio');

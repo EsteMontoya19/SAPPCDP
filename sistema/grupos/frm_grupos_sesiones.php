@@ -11,7 +11,8 @@ if (isset($_POST['curs_num_sesiones'])) {
 
     for ($i = 1; $i <= $numSesiones; $i++){ 
         $SesionFecha = "SesionFecha".$i;
-        $SesionHora = "SesionHora".$i; 
+        $SesionHoraInicio = "SesionHoraInicio".$i;
+        $SesionHoraFin = "SesionHoraFin".$i; 
         $Sesion = "Sesion".$i;
         $Hora = "Hora".$i?>
 
@@ -21,15 +22,20 @@ if (isset($_POST['curs_num_sesiones'])) {
         </div>
         <div class="col-lg-12 form-row" style="margin-top: 15px;">
             <div id="<?php echo $Sesion;?>" class="col-lg-6 form-group">
-            <label for="<?php echo $SesionFecha;?>"><b>Fecha *:</b></label>
+            <label for="<?php echo $SesionFecha;?>"><b>Fecha: *</b></label>
                 <input type="date" class="form-control" id="<?php echo $SesionFecha;?>" name="<?php echo $SesionFecha;?>" 
                 placeholder="0" min="0">
             </div>
-            <div id="<?php echo $Hora;?>"class="col-lg-6 form-group">
-            <label for="<?php echo $SesionHora;?>"><b>Hora:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
-                <input type="time" class="form-control" id="<?php echo $SesionHora;?>" name="<?php echo $SesionHora;?>"
+            <div id="<?php echo $Hora;?>"class="col-lg-3 form-group">
+            <label for="<?php echo $SesionHoraInicio;?>"><b>Hora inicio:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
+                <input type="time" class="form-control" id="<?php echo $SesionHoraInicio;?>" name="<?php echo $SesionHoraInicio;?>"
                 placeholder="0" min="0">
-            </div>      
+            </div>
+            <div id="<?php echo $Hora;?>"class="col-lg-3 form-group">
+            <label for="<?php echo $SesionHoraFin;?>"><b>Hora fin:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
+                <input type="time" class="form-control" id="<?php echo $SesionHoraFin;?>" name="<?php echo $SesionHoraFin;?>"
+                placeholder="0" min="0">
+            </div>     
         </div>
     </div>
     <?php } ?> 

@@ -33,7 +33,7 @@
     $horas = array();
     for ($iCont = 1 ; $iCont <= $numSesionesTotales ; $iCont++) {
       $sesion[$iCont] = $_POST['SesionFecha'.$iCont];
-      $horas[$iCont] = $_POST['SesionHora'.$iCont];
+      $horas[$iCont] = $_POST['SesionHoraInicio'.$iCont];
     }
     
     //? Se verifica la modalidad
@@ -100,7 +100,7 @@
 
     $arr_idSesiones = $_POST['idSesion'];
     $arr_FechasSesiones = $_POST['SesionFecha'];
-    $arr_HorasSesiones = $_POST['SesionHora'];
+    $arr_HorasSesiones = $_POST['SesionHoraInicio'];
 
     for ($i=0;$i<sizeof($arr_FechasSesiones);$i++) {
       $sesion=$arr_idSesiones[$i];
