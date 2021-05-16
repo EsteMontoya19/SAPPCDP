@@ -165,7 +165,7 @@
      
      //? Datos de usuario
      $nombreUsuario = $_POST['strNombreUsuario'];
-     $rol = (integer) $_POST['intUsuarioRol'];
+     $rol = (integer) $_POST['hideRol'];
      $pregunta = (integer) $_POST['UsuarioPregunta'];
      $recuperacion = $_POST['UsuarioRespuesta'];
      $contrasenia = $_POST['strContrasenia01'];

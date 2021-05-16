@@ -127,26 +127,6 @@
     echo 1;
 
   }
-  elseif($_POST['dml'] == 'cambio')
-  {
-    // Aqui hay que cambiar por que si ya tiene historicos no se puede eliminar pero si dar de baja
-    // en el campo grup_activo que es booleano.
-    $usuario = $_POST['id'];
-    $estatus = $_POST['estatus'];
-
-    if ($estatus == 't')
-    {
-      $estatus = 'FALSE';
-      $obj_Usuario->modificarEstatus($usuario,$estatus);
-    }
-    elseif($estatus == 'f')
-    {
-      $estatus = 'TRUE';
-      $obj_Usuario->modificarEstatus($usuario, $estatus);
-    }
-
-    echo 1;
-  }
   elseif($_POST['dml'] == 'actualizarEstatus'){
     $grupo = $_POST['id'];
     $estatus = $_POST['estatus'];
@@ -156,10 +136,20 @@
       $estatus = 'FALSE'; 
       $obj_Grupo->cambiarEstatus($grupo, $estatus);
     } elseif ($estatus == 'f') {
+      
+      $grupoActual = $obj_Grupo->buscarSoloGrupo($grupo);
+
+      if (!isset($grupoActual->mode_id_moderador) ){
+        exit("2");
+      } else if (!isset($grupoActual->prof_id_profesor) ) {
+        exit("3");
+      } else if ($grupoActual->grup_estado != "Aprobado"){
+        exit("4");
+      }
       $estatus = 'TRUE';
       $obj_Grupo->cambiarEstatus($grupo, $estatus);
     }
-    echo 1;
+    exit("1");
   }
 
   if ($_POST['dml'] == 'sesiones'){
