@@ -399,13 +399,13 @@ jQuery(document).ready(function () {
     </div>
     <!-- Botones -->
     <div class="col-lg-12" style="text-align: center;">
-      <button id="btn-regresar-grupo" type="button" class="btn btn-primary btn-footer">Regresar</button>
+      <button id="btn-regresar-grupo" type="button" class="btn btn-primary btn-footer btn-regresar">Regresar</button>
       <?php if (isset($_POST['CRUD'])) { ?>
       <?php if ($_POST['CRUD'] == 1) { ?>
-      <button id="btn-actualizar-grupo" type="button" class="btn btn-success btn-footer">Actualizar</button>
+      <button id="btn-actualizar-grupo" type="button" class="btn btn-success btn-footer btn-aceptar">Actualizar</button>
       <?php } ?>
       <?php } else { ?>
-      <button id="btn-registrar-grupo" type="button" class="btn btn-success btn-footer">Guardar</button>
+      <button id="btn-registrar-grupo" type="button" class="btn btn-success btn-footer btn-aceptar">Guardar</button>
       <?php } ?>
     </div>
   </div>
