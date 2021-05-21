@@ -46,8 +46,8 @@
                 <tr>
                   <th>ID</th>
                   <th>Nombre(s)</th>
-                  <th>Primer apellido</th>
-                  <th>Segundo apellido</th>
+                  <th>Apellido Paterno</th>
+                  <th>Apellido Materno</th>
                   <th>Rol</th>
                   <th>Estatus</th>
                   <th>Opciones</th>
@@ -65,7 +65,7 @@
             
                     <td>
                       <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="estatusUsuario<?php echo $x ?>" <?php if ($usuario['usua_activo'] == 't') { ?> checked <?php } ?> onclick="cambioEstatus(<?php echo $usuario['usua_id_usuario'] ?> , '<?php echo $usuario['usua_activo']; ?>', '<?php echo $usuario['pers_nombre']; ?>', '<?php echo $usuario['pers_apellido_paterno']; ?>')">
+                        <input type="checkbox" class="custom-control-input" id="estatusUsuario<?php echo $x ?>" <?php if ($usuario['usua_activo'] == 't') { ?> checked <?php } ?> onclick="cambioEstatus(<?php echo $usuario['usua_id_usuario'] ?> , '<?php echo $usuario['usua_activo']; ?>', '<?php echo $usuario['pers_nombre']; ?>', '<?php echo $usuario['pers_apellido_paterno']; ?>', '<?php echo $usuario['rol_id_rol']; ?>')">
                         <label class="custom-control-label" for="estatusUsuario<?php echo $x ?>"></label>
                       </div>
                     </td>

@@ -105,9 +105,6 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }
-
-        //*TODO: Modificar clases siguientes
-
         function selectSalones()
         {
             $SQL_Bus_Salones =
@@ -155,128 +152,6 @@
             $bd->abrirBD();
             $transaccion_1 = new Transaccion($bd->conexion);
             $transaccion_1->enviarQuery($SQL_Bus_Cursos);
-            $bd->cerrarBD();
-            return ($transaccion_1->traerRegistros());
-        }
-        function selectModalidadGrupo()
-        {
-            $SQL_Bus_Eventos =
-            "   SELECT mogr_id_mogr, mogr_nombre
-                FROM modalidad_grupo
-                ORDER BY mogr_nombre ASC;
-            ";
-
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Bus_Eventos);
-            $bd->cerrarBD();
-            return ($transaccion_1->traerRegistros());
-        }
-        function selectEstatusGrupo()
-        {
-            $SQL_Bus_Eventos =
-            "   SELECT esgr_id_esgr, esgr_nombre
-                FROM estatus_grupo
-                ORDER BY esgr_nombre ASC;
-            ";
-
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Bus_Eventos);
-            $bd->cerrarBD();
-            return ($transaccion_1->traerRegistros());
-        }
-        function selectTipoEvento()
-        {
-            $SQL_Bus_Tipo_Evento = 
-            "   SELECT tiev_id_tiev, tiev_nombre
-                FROM tipo_evento;
-            ";
-
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Bus_Tipo_Evento);
-            $bd->cerrarBD();
-            return ($transaccion_1->traerRegistros());
-        }
-
-        
-
-        function selectProcedencia()
-        {
-            $SQL_Bus_Proc = 
-            "   SELECT proc_id_proc, proc_nombre
-                FROM procedencia;
-            ";
-
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Bus_Proc);
-            $bd->cerrarBD();
-            return ($transaccion_1->traerRegistros());
-        }
-
-        function selectSistema()
-        {
-            $SQL_Bus_Sist = 
-            "   SELECT sist_id_sist, sist_nombre 
-                FROM sistema;
-            ";
-
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Bus_Sist);
-            $bd->cerrarBD();
-            return ($transaccion_1->traerRegistros());
-        }
-
-        function selectGrado()
-        {
-            $SQL_Bus_Grad = 
-            "   SELECT grac_id_grac, grac_nombre 
-                FROM grado_academico;
-            ";
-
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Bus_Grad);
-            $bd->cerrarBD();
-            return ($transaccion_1->traerRegistros());
-        }
-
-        function selectEstatusEstudio()
-        {
-            $SQL_Bus_Sist = 
-            "   SELECT eses_id_eses, eses_nombre
-                FROM estatus_estudio
-                ORDER BY eses_nombre;
-            ";
-
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Bus_Sist);
-            $bd->cerrarBD();
-            return ($transaccion_1->traerRegistros());
-        }
-
-        function selectEmprendimientoEstado()
-        {
-            $SQL_Bus_EmpreEsta = 
-            "   SELECT esem_id_emes, esem_nombre
-                FROM estatus_emprendimiento;
-            ";
-
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Bus_EmpreEsta);
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }

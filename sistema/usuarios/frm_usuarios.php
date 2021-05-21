@@ -118,27 +118,25 @@
           <!-- Datos generales -->
           <div class="form-group">
             <div class="card lg-12">
-              <div class="card-header">
+              <div class="card-header negritas">
                 <i class="fas fa-id-card fa-lg"></i>
-                <b>&nbsp;&nbsp;Datos generales</b>
+                &nbsp;&nbsp;Datos generales
               </div>
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <!-- Define los campos que estarán en una fila -->
                 <div class="col-lg-4 form-group">
-                  <label
-                    for="strUsuarioNombre"><b>Nombre(s):<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                  <label for="strUsuarioNombre" class = "negritas">Nombre(s):<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></label>
                   <input type="text" class="form-control" id="strUsuarioNombre" name="strUsuarioNombre"
                     value="<?php echo isset($persona) ? $persona->pers_nombre : ""; ?>">
                 </div>
                 <div class="col-lg-4 form-group">
-                  <label for="strUsuarioPrimerApe"><b>Apellido
-                      Paterno:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                  <label for="strUsuarioPrimerApe" class = "negritas">Apellido
+                      Paterno:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></label>
                   <input type="text" class="form-control" id="strUsuarioPrimerApe" name="strUsuarioPrimerApe"
                     value="<?php echo isset($persona) ? $persona->pers_apellido_paterno : ""; ?>">
                 </div>
                 <div class="col-lg-4 form-group">
-                  <label for="strUsuarioSegundoApe"><b>Apellido
-                      Materno:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                  <label for="strUsuarioSegundoApe" class = "negritas">Apellido Materno:</label>
                   <input type="text" class="form-control" id="strUsuarioSegundoApe" name="strUsuarioSegundoApe"
                     value="<?php echo isset($persona) ? $persona->pers_apellido_materno : ""; ?>">
                 </div>
@@ -146,15 +144,15 @@
 
               <div class="col-lg-12 form-row">
                 <div class="col-lg-6 form-group">
-                  <label for="strUsuarioCorreo"><b>Correo
-                      electrónico:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                  <label for="strUsuarioCorreo" class = "negritas">Correo
+                      electrónico:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></label>
                   <input type="text" class="form-control" id="strUsuarioCorreo" name="strUsuarioCorreo"
                     placeholder="ej. ejemplo@dominio.com"
                     value="<?php echo isset($persona) ? $persona->pers_correo : ""; ?>">
                 </div>
                 <div class="col-lg-6 form-group">
                   <label
-                    for="strUsuarioTelefono"><b>Teléfono:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                    for="strUsuarioTelefono" class = "negritas">Teléfono:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></label>
                   <input type="text" class="form-control" id="strUsuarioTelefono" name="strUsuarioTelefono"
                     placeholder="ej. 5511223344" value="<?php echo isset($persona) ? $persona->pers_telefono : ""; ?>">
                 </div>
@@ -165,19 +163,19 @@
           <!-- Datos de la usuario -->
           <div class="form-group">
             <div class="card lg-12">
-              <div class="card-header">
+              <div class="card-header negritas">
                 <i class="fas fa-id-badge fa-lg"></i>
-                <b>&nbsp;Datos de usuario</b>
+                &nbsp;Datos de usuario
               </div>
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <div class="col-lg-6 form-group">
-                  <label for="strNombreUsuario"><b>Nombre de usuario:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                  <label for="strNombreUsuario" class = "negritas">Nombre de usuario:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></label>
                   <input type="text" class="form-control" id="strNombreUsuario" name="strNombreUsuario"
                     value="<?php echo isset($usuario) ? $usuario->usua_num_usuario : ""; ?>">
                 </div>
                 <div class="col-lg-6 form-group">
                   <label
-                    for="lbintUsuarioRol"><b>Rol:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                    for="lbintUsuarioRol" class = "negritas">Rol:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></label>
                   <select required='required' class="custom-select" id="intUsuarioRol" name="intUsuarioRol" <?php if (isset($_POST['CRUD']) == 1)  echo "disabled"; ?>>
                     <option value="0">Seleccionar rol</option>
                     <?php foreach ($arr_roles as $rol) { ?>
@@ -192,7 +190,7 @@
               </div>
               <div class="col-lg-12 form-row">
                 <div class="col-lg-6 form-group">
-                  <label for="UsuarioPregunta"><b>Pregunta de seguridad:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
+                  <label for="UsuarioPregunta" class = "negritas">Pregunta de seguridad:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></label>
                   <select class="custom-select" id="UsuarioPregunta"name="UsuarioPregunta">
                     <option value="0">Seleccione una pregunta</option>
                     <?php foreach ($arr_preguntas as $pregunta) { ?>
@@ -205,14 +203,14 @@
                   </select>
                 </div>
                 <div class="col-lg-6 form-group">
-                  <label for="UsuarioRespuesta"><b><?php if (isset($_POST['CRUD']) == false) { echo "Proporcione la respuesta: *"; } else { echo "Respuesta";}?></b></label>
+                  <label for="UsuarioRespuesta" class = "negritas"><?php if (isset($_POST['CRUD']) == false) { echo "Proporcione la respuesta: *"; } else { echo "Respuesta";}?></label>
                   <input type="text" class="form-control" id="UsuarioRespuesta" name="UsuarioRespuesta"
                     <?php if (isset($_POST['CRUD']) == false){echo('placeholder=""');} else {echo('value= "' . $usuario->usua_respuesta . '"');} ?>>
                 </div>
               </div>
               <div class="col-lg-12 form-row">
                 <div class="col-lg-6 form-group">
-                  <label for="strContrasenia01"><b><?php if (isset($_POST['CRUD']) == false)  {echo "Ingrese contraseña:*";} else {echo "Contraseña: ";} ?></b></label>
+                  <label for="strContrasenia01" class = "negritas"><?php if (isset($_POST['CRUD']) == false)  {echo "Ingrese contraseña:*";} else {echo "Contraseña: ";} ?></label>
                   <input type="password" class="form-control" id="strContrasenia01" name="strContrasenia01"
                     <?php if (isset($_POST['CRUD']) == false){echo('placeholder=""');} else {echo('value= "' . $usuario->usua_contrasena . '"');} ?>>
                   <div style="text-align: center; margin-top:5px">
@@ -223,7 +221,7 @@
                 </div>
                 <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1) { ?>
                   <div class="col-lg-6 form-group">
-                    <label for="strContrasenia02"><b>Confirme la contraseña: *</b></label>
+                    <label for="strContrasenia02" class = "negritas">Confirme la contraseña: *</label>
                     <input type="password" class="form-control" id="strContrasenia02" name="strContrasenia02" placeholder="Contraseña">
                     <div style="text-align: center; margin-top:5px">
                       <input type="checkbox" id="ver2" class="ver" onChange="hideOrShowPassword2()" />
@@ -238,9 +236,9 @@
           <!-- Datos de cuenta según rol -->
           <div class="form-group">
             <div class="card lg-12">
-              <div class="card-header">
+              <div class="card-header negritas">
                 <i class="fas fa-id-badge fa-lg"></i>
-                <b>&nbsp;Datos de la cuenta</b>
+                &nbsp;Datos de la cuenta
               </div>
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <?php if (isset($usuario) && $usuario->rol_id_rol == 1 || $usuario->rol_id_rol == 3) { ?>
@@ -248,7 +246,7 @@
                 <?php }  else { ?>
                   <div id="num_trabajador" class="col-lg-6 form-group" style="display: none;">
                     <?php } ?>
-                    <label for="num_trabajador"><b>Número de trabajador:*</b></label>
+                    <label for="num_trabajador" class = "negritas">Número de trabajador:*</label>
                     <input value="<?php if (isset($administrador)) { 
                                           echo($administrador-> admi_num_trabajador);
                                         } else {
@@ -264,7 +262,7 @@
                   <?php }  else { ?>
                     <div id="rfc" class="col-lg-6 form-group" style="display: none;">
                   <?php } ?>
-                    <label for="rfc"><b>RFC: *</b></label>
+                    <label for="rfc" class = "negritas">RFC: *</label>
                     <input value="<?php if (isset($administrador)) { 
                                           echo($administrador-> admi_rfc);
                                         } else {
@@ -285,7 +283,7 @@
                 <?php }  else { ?>
                   <div id="numCuenta" class="col-lg-6 form-group" style="display: none;">
                 <?php } ?>
-                    <label for="numCuenta"><b>Número de cuenta:*</b></label>
+                    <label for="numCuenta" class = "negritas">Número de cuenta:*</label>
                       <input value="<?php echo isset($moderador) ? $moderador-> mode_num_cuenta : ""; ?>" type="text" 
                         class="form-control" name="lbNumCuenta"  id="intNumCuenta">
                   </div> 
@@ -294,7 +292,7 @@
                 <?php }  else { ?>
                   <div id="diasServicio" class="col-lg-6 form-group" style="display: none;">
                 <?php } ?>
-                    <label for="diasServicio"><b>Dias del servicio:*</b></label><br>
+                    <label for="diasServicio" class = "negritas">Dias del servicio:*</label><br>
                     <?php foreach ($arr_dias as $dia) { ?>
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="strDiaServicio<?php echo ($dia['dia_id_dia']);?>" value="<?php echo ($dia['dia_id_dia']);?>" name="strDiaServicio<?php echo ($dia['dia_id_dia']);?>" 
@@ -314,7 +312,7 @@
                 <?php }  else { ?>
                   <div id="fechaInicio" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
-                    <label for="fechaInicio"><b>Fecha de inicio del servicio: *</b></label>
+                    <label for="fechaInicio" class = "negritas">Fecha de inicio del servicio: *</label>
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_inicio: ""; ?>" type="date" class="form-control" name="strFechaInicio" id="strFechaInicio">
                   </div>
                 <?php if ($usuario->rol_id_rol == 2) { ?>
@@ -322,7 +320,7 @@
                 <?php }  else { ?>
                   <div id="fechaFin" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
-                    <label for="fechaFin"><b>Fecha de fin del servicio:*</b></label>
+                    <label for="fechaFin" class = "negritas">Fecha de fin del servicio:*</label>
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_fin: ""; ?>" type="date" class="form-control" name="strFechaFin" id="strFechaFin">
                   </div>
                 <?php if ($usuario->rol_id_rol == 2) { ?>
@@ -330,7 +328,7 @@
                 <?php }  else { ?>
                   <div id="horaInicio" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
-                    <label for="horaInicio"><b>Hora de inicio del servicio: *</b></label>
+                    <label for="horaInicio" class = "negritas">Hora de inicio del servicio: *</label>
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_inicio: ""; ?>" type="time" class="form-control" name="strHoraInicio" id="strHoraInicio">
                   </div>
                 <?php if ($usuario->rol_id_rol == 2) { ?>
@@ -338,7 +336,7 @@
                 <?php }  else { ?>
                   <div id="horaFin" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
-                    <label for="horaFin"><b>Hora de fin del servicio: *</b></label>
+                    <label for="horaFin" class = "negritas">Hora de fin del servicio: *</label>
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_fin: ""; ?>" type="time" class="form-control" name="strHoraFin" id="strHoraFin"> 
               </div>  <!-- Cierre div de datos row -->
               
@@ -350,7 +348,7 @@
                 <?php }  else { ?>
                   <div id="semblanza" class="col-lg-12 form-group" style="display: none;">
                 <?php } ?>
-                  <label for="strSemblanza"><b>Semblanza:*</b></label>
+                  <label for="strSemblanza" class = "negritas">Semblanza:*</label>
                   <textarea type="text" class="form-control" id="strSemblanza" name="strSemblanza"><?php echo isset($profesor) ? $profesor-> prof_semblanza: ""; ?></textarea>           
                   </div>
               </div> <!-- Cierre div de datos row -->
@@ -361,7 +359,7 @@
                 <?php }  else { ?>
                   <div id="nivelImparticion" class="col-lg-6 form-group" style="display: none;">
                 <?php } ?>
-                  <label for="nivelImparticion"><b>Nivel de impartición:*</b></label><br>
+                  <label for="nivelImparticion" class = "negritas">Nivel de impartición:*</label><br>
                     <?php foreach ($arr_niveles as $nivel) { ?>
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="strNivel<?php echo ($nivel['nive_id_nivel']);?>" name="strNivel<?php echo ($nivel['nive_id_nivel']);?>"
@@ -383,7 +381,7 @@
                 <?php }  else { ?>
                   <div id="modalidadImparticion" class="col-lg-6 form-group" style="display: none;">
                 <?php } ?>
-                  <label for="modalidadImparticion"><b>Modalidad en la que imparte clases : * </b></label><br>
+                  <label for="modalidadImparticion" class = "negritas">Modalidad en la que imparte clases : * </label><br>
                   <?php foreach ($arr_modalidades as $modalidad) { ?>
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="strModalidad<?php echo ($modalidad['moda_id_modalidad']);?>" name="strModalidad<?php echo ($modalidad['moda_id_modalidad']);?>"
@@ -407,7 +405,7 @@
                 <?php }  else { ?>
                   <div id="coordinaciones" class="col-lg-12 form-group" style="display: none;">
                 <?php } ?>    
-                <label for="strCoordinacion"><b>Coordinaciones a las que pertenece: *</b></label><br>
+                <label for="strCoordinacion" class = "negritas">Coordinaciones a las que pertenece: *</label><br>
                 <table> <?php //*? Esto lo creo para hacer columnas con los checkbox?>
                   <tr>
                     <td>               

@@ -239,7 +239,6 @@
         break; 
       }
       
-      //TODO: Aqui esta todo a registar, debe cambiar a actualizar
       $obj_Persona->actualizarPersona($idPersona, $nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono);
       $obj_Usuario->actualizarUsuario($idPersona, $rol, $pregunta, $nombreUsuario, $contrasenia, $recuperacion);
       
@@ -295,19 +294,29 @@
     {
       $usuario = $_POST['id'];
       $estatus = $_POST['estatus'];
+      $rol = $_POST['rol'];
 
       if ($estatus == 't')
       {
         $estatus = 'FALSE';
+        
+        if($rol == 1) {
+          $administradoresActivos = $obj_Administrador->administradoresActivos();
+          if(isset($administradoresActivos) && $administradoresActivos <= 1 && !empty($administradoresActivos)) {
+            exit("2");
+          }
+        }
+        
         $obj_Usuario->modificarEstatus($usuario,$estatus);
       }
       elseif($estatus == 'f')
       {
+        
         $estatus = 'TRUE';
         $obj_Usuario->modificarEstatus($usuario, $estatus);
       }
 
-      echo 1;
+      exit("1");
     }
   } else {
     exit("5");

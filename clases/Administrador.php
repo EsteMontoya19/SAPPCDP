@@ -1,8 +1,6 @@
 <?php
   class Administrador
   {
-
-
     function buscarAdministrador($persona)
 		{
 			$SQL_Bus_Administrador = 
@@ -65,56 +63,23 @@
       } else {
         $this->agregarAdministrador($persona, $num_trabajador, $rfc);
       }
-		}
-    
-    //TODO: Adaptar demas funciones a Administrador
-
-    /*
-    function buscarUltimo()
-    {
-      $bd = new BD();
-      $SQL_Bus_Persona_Seq = "SELECT last_value FROM persona_pers_id_persona_seq;"; //Que hace este last_value
-
-      $bd->abrirBD();
-      $transaccion_1 = new Transaccion($bd->conexion);
-      $transaccion_1->enviarQuery($SQL_Bus_Persona_Seq);
-      $obj_Persona_Seq = $transaccion_1->traerObjeto(0);
-      $Persona_Seq = $obj_Persona_Seq->last_value;
-      $bd->cerrarBD();
-
-      return $Persona_Seq;
-    }
-
-    function actualizarPersona($persona, $nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono)
-    {
-
-      $SQL_Act_Persona =
-      " UPDATE persona
-        SET pers_nombre = '$nombre', pers_apellido_paterno = '$apellidoPaterno', pers_apellido_materno = '$apellidoMaterno', pers_correo = '$correo', pers_telefono = '$telefono'
-        WHERE pers_id_persona = $persona;
-      ";
-    
-      
-      $bd = new BD();
-  		$bd->abrirBD();
-  		$transaccion_1 = new Transaccion($bd->conexion);
-  		$transaccion_1->enviarQuery($SQL_Act_Persona);
-  		$bd->cerrarBD();
-  		$this->id_persona = Persona::buscarUltimo();
-    }
-
-    function eliminarPersona($persona)
-    {
-      $SQL_Eli_Persona= 
-			" DELETE FROM persona
-				WHERE pers_id_persona = $persona;
+		}    
+    function administradoresActivos () {
+      $SQL_Bus_Administrador = 
+			"SELECT COUNT (A.admi_id_administrador)
+       FROM Administrador A, Persona P, Usuario U
+       WHERE A.pers_id_persona = P.pers_id_persona AND P.pers_id_persona = U.pers_id_persona AND U.usua_activo = TRUE
+       GROUP BY A.admi_id_administrador
 			";
 
-      $bd = new BD();
-      $bd->abrirBD();
-      $transaccion_1 = new Transaccion($bd->conexion);
-      $transaccion_1->enviarQuery($SQL_Eli_Persona);
-      $bd->cerrarBD();
-    }*/
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Administrador);
+			$obj_Persona = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+
+			return ($obj_Persona->count);
+    }
   }
 ?>

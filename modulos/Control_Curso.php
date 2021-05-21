@@ -97,7 +97,7 @@
     $req_tecnicos = $_POST['strReqTec'];
     $conocimientos = $_POST['strConNeces'];
     $objetivo = $_POST['strObjCurso'];
-    $activo = isset($_POST['bEstado']) ? $_POST['bEstado'] : TRUE; //TODO Ver como funciona este dato en el formulario
+    $activo = isset($_POST['bEstado']) ? $_POST['bEstado'] : TRUE;
 
     $obj_Curso->actualizarCurso($curso, $tipo, $nombre, $num_sesiones, $req_tecnicos, $conocimientos, $nivel, $objetivo, $temario, $activo);
     

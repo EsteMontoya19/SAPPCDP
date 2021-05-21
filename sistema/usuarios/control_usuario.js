@@ -64,14 +64,23 @@ function validarFormularioUsuario() {
         }
     }
 
-    var letExp = /^([a-zA-Z])*$/;
-    if (letExp.test($('#strUsuarioSegundoApe').val())) {
-    } else {
-        $('html, body').animate({ scrollTop: 100 }, 'slow');
-        document.getElementById('strUsuarioSegundoApe').focus();
-        alertify.error('El apellido materno debe estar compuesto unicamente por letras (a-z, A-Z).');
-        return false;
+    if ($('#strUsuarioSegundoApe').val() != '') {
+        if ($('#strUsuarioSegundoApe').val().length > 50) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('strUsuarioSegundoApe').focus();
+            alertify.error('El apellido materno debe tener máximo 50 caracteres');
+            return false;
+        }
+        var letExp = /^([a-zA-Z])*$/;
+        if (letExp.test($('#strUsuarioSegundoApe').val())) {
+        } else {
+            $('html, body').animate({ scrollTop: 100 }, 'slow');
+            document.getElementById('strUsuarioSegundoApe').focus();
+            alertify.error('El apellido materno debe estar compuesto unicamente por letras (a-z, A-Z).');
+            return false;
+        }
     }
+
 
     if ($('#strUsuarioCorreo').val() == '') {
         $('html, body').animate({ scrollTop: 100 }, 'slow');
@@ -107,12 +116,12 @@ function validarFormularioUsuario() {
         if (total_numeros < 10) {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
             document.getElementById('strUsuarioTelefono').focus();
-            alertify.error('El teléfono debe ser de incluir mínimo 10 digitos.');
+            alertify.error('El teléfono incluir mínimo 10 dígitos.');
             return false;
         } else if (total_numeros > 10) {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
             document.getElementById('strUsuarioTelefono').focus();
-            alertify.error('El teléfono debe ser de incluir máximo 10 digitos.');
+            alertify.error('El teléfono debe incluir máximo 10 dígitos.');
             return false;
         } else if (total_numeros == 10) {
             var numExp = /^([0-9])*$/;
@@ -120,7 +129,7 @@ function validarFormularioUsuario() {
             } else {
                 $('html, body').animate({ scrollTop: 100 }, 'slow');
                 document.getElementById('strUsuarioTelefono').focus();
-                alertify.error('El teléfono debe ser de incluir solo números.');
+                alertify.error('El teléfono debe de incluir solo números.');
                 return false;
             }
         }
@@ -205,6 +214,14 @@ function validarFormularioUsuario() {
             document.getElementById('intNum_Trabajador').focus();
             return false;
         } else {
+            var numExp = /^([0-9])*$/;
+            if (numExp.test($('#intNum_Trabajador').val())) {
+            } else {
+                $('html, body').animate({ scrollTop: 100 }, 'slow');
+                document.getElementById('intNum_Trabajador').focus();
+                alertify.error('El numero de trabajador de incluir unicamente números.');
+                return false;
+            }
             if ($('#intNum_Trabajador').val().length > 10) {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
                 document.getElementById('intNum_Trabajador').focus();
@@ -289,6 +306,31 @@ function validarFormularioUsuario() {
                 return false;
             }
         }
+
+        if ($('#strFechaInicio').val() == '') {
+            $('html, body').animate({ scrollTop: 200 }, 'slow');
+            document.getElementById('strFechaInicio').focus();
+            alertify.error('Debe ingresar una fecha de inicio de servicio social');
+            return false;
+        }
+        if ($('#strFechaFin').val() == '') {
+            $('html, body').animate({ scrollTop: 200 }, 'slow');
+            document.getElementById('strFechaFin').focus();
+            alertify.error('Debe ingresar una fecha de fin de servicio social');
+            return false;
+        }
+        if ($('#strHoraInicio').val() == '') {
+            $('html, body').animate({ scrollTop: 200 }, 'slow');
+            document.getElementById('strHoraInicio').focus();
+            alertify.error('Debe ingresar una hora de inicio de servicio social');
+            return false;
+        }
+        if ($('#strHoraFin').val() == '') {
+            $('html, body').animate({ scrollTop: 200 }, 'slow');
+            document.getElementById('strHoraFin').focus();
+            alertify.error('Debe ingresar una hora de fin de servicio social');
+            return false;
+        }
     }
 
     if ($('#intUsuarioRol').val() == 3) {
@@ -298,6 +340,14 @@ function validarFormularioUsuario() {
             document.getElementById('intNum_Trabajador').focus();
             return false;
         } else {
+            var numExp = /^([0-9])*$/;
+            if (numExp.test($('#intNum_Trabajador').val())) {
+            } else {
+                $('html, body').animate({ scrollTop: 100 }, 'slow');
+                document.getElementById('intNum_Trabajador').focus();
+                alertify.error('El numero de trabajador de incluir unicamente números.');
+                return false;
+            }
             if ($('#intNum_Trabajador').val().length > 10) {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
                 document.getElementById('intNum_Trabajador').focus();
@@ -547,7 +597,7 @@ function consultarUsuarioDirecto(id, persona, rol) {
 
 // Eliminar usuario
 function eliminarUsuario(id, persona, nombre, apellido) {
-    var mensaje = '¿Esta seguro de eliminar el usuario de ';
+    var mensaje = '¿Está seguro de eliminar el usuario de ';
     mensaje = mensaje.concat(nombre);
     mensaje = mensaje.concat(' ');
     mensaje = mensaje.concat(apellido);
@@ -593,8 +643,8 @@ function eliminarUsuario(id, persona, nombre, apellido) {
 }
 
 // Cambiar Estatus
-function cambioEstatus(id, estatus, nombre, apellido) {
-    var mensaje = '¿Esta seguro de cambiar el estatus del usuario de ';
+function cambioEstatus(id, estatus, nombre, apellido, rol) {
+    var mensaje = '¿Está seguro de cambiar el estatus del usuario de ';
     mensaje = mensaje.concat(nombre);
     mensaje = mensaje.concat(' ');
     mensaje = mensaje.concat(apellido);
@@ -610,6 +660,7 @@ function cambioEstatus(id, estatus, nombre, apellido) {
                 id: id,
                 dml: dml,
                 estatus: estatus,
+                rol: rol,
             };
             $.ajax({
                 data: datos,
@@ -618,12 +669,14 @@ function cambioEstatus(id, estatus, nombre, apellido) {
                 success: function (respuesta) {
                     console.log(respuesta);
                     if (respuesta == 1) {
-                        alertify.success('Se cambio el estatus del usuario');
+                        alertify.success('Se cambió el estatus del usuario');
                         setTimeout(function () {
                             $('#container').load('../sistema/usuarios/frm_inicio_usuarios.php');
                         }, 1500);
+                    } else if (respuesta == 2) {
+                        alertify.error('No puede desactivar al único administrador activo.');
                     } else {
-                        alertify.error('Hubo un problema al cambiar el estatus del usuario PRUEBAS');
+                        alertify.error('Hubo un problema al cambiar el estatus del usuario.');
                     }
                 },
             });

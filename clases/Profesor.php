@@ -195,9 +195,6 @@
 			$transaccion_1->enviarQuery($SQL_BORRAR_COORDINACIONES_PROFESOR);
 			$bd->cerrarBD();
 		}
-
-		//*TODO: Falta mdificar las clases siguientes
-
         function eliminarProfesor($profesor)
 		{
 			$SQL_Eli_Profesor = 

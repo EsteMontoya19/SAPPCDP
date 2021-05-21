@@ -2,7 +2,6 @@
 include('../../clases/BD.php');
 include('../../clases/Curso.php');
 
-// TODO: Confirmar datos
 $curso = new Curso();
 $curso -> curs_id_curso=null;
 $curso -> curs_tipo=null;
@@ -88,7 +87,6 @@ $curso -> curs_temario=null;
                       <?php if (isset($curso) && $curso->curs_tipo == "Curso") { echo "selected"; }?>>Curso</option>
                     <option value='Taller'
                       <?php if (isset($curso) && $curso->curs_tipo == "Taller") { echo "selected"; }?>>Taller</option>
-                    <!-- TODO: Ingresar php para selected option value-->
                   </select>
                 </div>
 
