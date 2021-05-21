@@ -278,5 +278,22 @@
                 $bd->cerrarBD();
                 return ($transaccion_1->traerRegistros());
 		}
+
+		function buscarNumTrabajador ($numTrabajador) {
+
+			$SQL_Bus_Profesor = 
+			"SELECT prof_id_profesor, pers_id_persona, prof_num_trabajador, prof_semblanza, prof_rfc
+			 FROM Profesor
+			 WHERE prof_num_trabajador = '$numTrabajador'
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Profesor);
+			$obj_Usuario = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerObjeto(0));
+		}
     }
 ?>
