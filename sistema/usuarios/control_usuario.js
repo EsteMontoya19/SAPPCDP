@@ -31,7 +31,7 @@ function validarFormularioUsuario() {
             return false;
         }
 
-        var letExp = /^([a-zA-Z])*$/;
+        var letExp = /^([a-zA-Z\s])*$/;
         if (letExp.test($('#strUsuarioNombre').val())) {
         } else {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
@@ -385,6 +385,43 @@ function validarFormularioUsuario() {
     return true;
 }
 
+// Auto registro profesor
+$(document).ready(function () {
+    $('#btn-registrar-profesor').click(function () {
+        if (validarFormularioUsuario()) {
+            datos = $('#form_usuario').serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: 'modulos/Control_Usuario.php',
+                data: datos,
+                success: function (respuesta) {
+                    console.log(respuesta);
+                    if (respuesta.endsWith('1')) {
+                        alertify.success('El registro se realizó correctamente');
+                        setTimeout(function () {
+                            $('html, body').animate({ scrollTop: 0 }, 0);
+                            location.reload();
+                        }, 1500);
+                    } else if (respuesta.endsWith('2')) {
+                        $('html, body').animate({ scrollTop: 200 }, 'slow');
+                        document.getElementById('strNombreUsuario').focus();
+                        alertify.error('El nombre de usuario ya existe');
+                    } else  if (respuesta.endsWith('3')) {
+                        $('html, body').animate({ scrollTop: 200 }, 'slow');
+                        document.getElementById('intNum_Trabajador').focus();
+                        alertify.error('Ya existe un profesor con ese número de trabajador');
+                    } else {
+                        alertify.error('Hubo un problema al registrar al usuario');
+                    }
+                },
+            });
+            return false;
+        }
+    });
+});
+
+
 // Registrar usuario
 $(document).ready(function () {
     $('#btn-registrar-usuario').click(function () {
@@ -407,6 +444,10 @@ $(document).ready(function () {
                         $('html, body').animate({ scrollTop: 200 }, 'slow');
                         document.getElementById('strNombreUsuario').focus();
                         alertify.error('El nombre de usuario ya existe');
+                    } else  if (respuesta.endsWith('3')) {
+                        $('html, body').animate({ scrollTop: 200 }, 'slow');
+                        document.getElementById('intNum_Trabajador').focus();
+                        alertify.error('Ya existe un profesor con ese número de trabajador');
                     } else {
                         alertify.error('Hubo un problema al registrar al usuario');
                     }
@@ -595,6 +636,17 @@ function cambioEstatus(id, estatus, nombre, apellido) {
         $('#container').load('../sistema/usuarios/frm_inicio_usuarios.php');
     }, 1500);
 }
+
+//Mostrar contraseña index.php
+function hideOrShowPassword() {
+  var x = document.getElementById('strContrasena');
+  if (x.type === 'password') {
+    x.type = 'text';
+  } else {
+    x.type = 'password';
+  }
+}
+
 
 // Mostrar o ocultar contraseña
 function hideOrShowPassword1() {

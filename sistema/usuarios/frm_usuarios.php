@@ -278,6 +278,7 @@
                     </div>
               </div> <!-- Cierre div de datos row -->
               
+              <!-- Datos del Moderador -->
               <div class="col-lg-12 form-row" style="margin-top: 15px;"> 
                 <?php if (isset($usuario) && $usuario->rol_id_rol == 2) { ?>
                   <div id="numCuenta" class="col-lg-6 form-group">
@@ -341,6 +342,8 @@
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_fin: ""; ?>" type="time" class="form-control" name="strHoraFin" id="strHoraFin"> 
               </div>  <!-- Cierre div de datos row -->
               
+
+              <!-- Datos del Profesor -->
               <div class="col-lg-12 form-row" style="margin-top: 15px;">  
                 <?php if ($usuario->rol_id_rol == 3) { ?>
                   <div id="semblanza" class="col-lg-12 form-group">
@@ -404,7 +407,7 @@
                 <?php }  else { ?>
                   <div id="coordinaciones" class="col-lg-12 form-group" style="display: none;">
                 <?php } ?>    
-                <label for="coordinaciones"><b>Coordinaciones a las que pertenece: *</b></label><br>
+                <label for="strCoordinacion"><b>Coordinaciones a las que pertenece: *</b></label><br>
                 <table> <?php //*? Esto lo creo para hacer columnas con los checkbox?>
                   <tr>
                     <td>               
@@ -451,7 +454,7 @@
         <!-- ID e Instrucciones -->
         <?php if (isset($_POST['CRUD'])) { ?>
           <?php if ($_POST['CRUD'] == 1) { ?>
-            <input type="hidden" name="dml" value="update" />
+            <input type="hidden" name="dml" value="update">
             <input type="hidden" id="idUsuario" name="idUsuario" value="<?php echo $_POST['id']; ?>">
             <input type="hidden" id="idPersona" name="idPersona" value="<?php echo $persona->pers_id_persona; ?>">
             <input type="hidden" name="hideRol" id="hideRol" value="<?php echo $usuario->rol_id_rol; ?>">
@@ -459,7 +462,7 @@
             <input type="hidden" name="dml" value="select">
           <?php } ?>
         <?php } else { ?>
-          <input type="hidden" name="dml" value="insert" />
+          <input type="hidden" name="dml" value="insert">
         <?php } ?>
 
         <!-- Desactivar formulario FIN -->

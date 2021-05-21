@@ -26,3 +26,11 @@
     background-color: #c91616;
     border-color: #8f0202;
   }
+  .centrado{
+    text-align: center;
+    margin:auto;
+  }
+
+  .col-form-label, .negritas {
+    font-weight: bold;
+  }
