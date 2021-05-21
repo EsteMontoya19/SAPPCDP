@@ -80,12 +80,13 @@ function validarFormularioGrupo() {
         return false;
     }
 
+    /* //? Ya no es obligatorio que se asigne un moderador
     if ($('#ID_Moderador').val() == '0') {
         $('html, body').animate({ scrollTop: 0 }, 'slow');
         document.getElementById('ID_Moderador').focus();
         alertify.error('Debe asignar un moderador para el grupo');
         return false;
-    }
+    } */
 
     //Validaciones respectivas para los campos acorde a la modalidad
     if ($('#GrupoModalidad').val() == '0') {
@@ -124,6 +125,9 @@ function validarFormularioGrupo() {
             }
         } else {
             if ($('#GrupoModalidad').val() == 'Presencial') {
+                //! Bloque temporal de cursos preseciales por pandemia
+                alertify.error('Por el momento no se pueden registrar grupos para clases prescenciales.');
+                return false;
                 if ($('#ID_Salon').val() == 0) {
                     $('html, body').animate({ scrollTop: 100 }, 'slow');
                     document.getElementById('ID_Salon').focus();
@@ -356,6 +360,8 @@ $(document).ready(function () {
                             $('html, body').animate({ scrollTop: 0 }, 0);
                             $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
                         }, 1500);
+                    } else if (respuesta == 2){
+                        alertify.error('No se puede publicar un curso que no esta Aprobado.');
                     } else {
                         $('html, body').animate({ scrollTop: 0 }, 0);
                         alertify.error('Hubo un problema al registrar el grupo');

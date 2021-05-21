@@ -14,14 +14,24 @@
     $tipo = $_POST['GrupoTipo'];
     $estado = $_POST['GrupoEstatus'];
     $profesor = $_POST['ID_Profesor'];
-    $moderador = $_POST['ID_Moderador'];
     $cupo = $_POST['GrupoCupo'];
     $inicio_insc = $_POST['GrupoInicioInscripcion'];
     $fin_insc = $_POST['GrupoFinInscripcion'];
     $modalidad = $_POST['GrupoModalidad'];
     
+    //? Puede que un grupo no tenga moderador
+    if (!isset($_POST['ID_Moderador']) || $_POST['ID_Moderador'] == "" || $_POST['ID_Moderador'] == 0) {       
+      $moderador = "null";
+    } else {
+      $moderador = $_POST['ID_Moderador'];
+    }
+    
     //? Esto es por que si esta desactivado no manda nada
-    if (isset($_POST['ID_Status'])) {       
+    if (isset($_POST['ID_Status'])) { 
+      //? No se puede publicar un curso sin aprobar
+      if ($estado != "Aprobado"){
+        exit("2");
+      }
       $publicado = $_POST['ID_Status'];
     } else {
       $publicado = "false";
@@ -78,11 +88,16 @@
     $modalidad = $_POST['ifModalidad'];
     $estado = $_POST['GrupoEstatus'];
     $profesor = $_POST['ID_Profesor'];
-    $moderador = $_POST['ID_Moderador'];
-
     $cupo = $_POST['GrupoCupo'];
     $inicio_insc = $_POST['GrupoInicioInscripcion'];
     $fin_insc = $_POST['GrupoFinInscripcion'];
+    
+    //? Puede que un grupo no tenga moderador
+    if (!isset($_POST['ID_Moderador']) || $_POST['ID_Moderador'] == "" || $_POST['ID_Moderador'] == 0) {       
+      $moderador = "null";
+    } else {
+      $moderador = $_POST['ID_Moderador'];
+    }
 
     if ($modalidad == 'En línea'){
       $salon = 'NULL';
@@ -143,9 +158,12 @@
       
       $grupoActual = $obj_Grupo->buscarSoloGrupo($grupo);
 
+      /* //! Validación comentada ya que por ahora se uede registrar un curso sin moderador por falta de personal
       if (!isset($grupoActual->mode_id_moderador) ){
         exit("2");
-      } else if (!isset($grupoActual->prof_id_profesor) ) {
+      } */
+
+      if (!isset($grupoActual->prof_id_profesor) ) {
         exit("3");
       } else if ($grupoActual->grup_estado != "Aprobado"){
         exit("4");
