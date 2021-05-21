@@ -30,10 +30,12 @@
     //? Se crea un arreglo de sesiones
     $numSesionesTotales= (integer) $_POST['numSesiones'];
     $sesion = array();
-    $horas = array();
+    $hora_inicio = array();
+    $hora_fin = array();
     for ($iCont = 1 ; $iCont <= $numSesionesTotales ; $iCont++) {
       $sesion[$iCont] = $_POST['SesionFecha'.$iCont];
-      $horas[$iCont] = $_POST['SesionHoraInicio'.$iCont];
+      $hora_inicio[$iCont] = $_POST['SesionHoraInicio'.$iCont];
+      $hora_fin[$iCont] = $_POST['SesionHoraFin'.$iCont];
     }
     
     //? Se verifica la modalidad
@@ -60,7 +62,7 @@
     $id_grupo = $obj_Grupo->buscarUltimo();
 
     for ($iCont = 1 ; $iCont <= $numSesionesTotales ; $iCont++) {
-      $obj_Sesion -> agregarSesion($id_grupo, $sesion[$iCont], $horas[$iCont]);
+      $obj_Sesion -> agregarSesion($id_grupo, $sesion[$iCont], $hora_inicio[$iCont], $hora_fin[$iCont]);
     }
 
     exit('1');
@@ -100,14 +102,16 @@
 
     $arr_idSesiones = $_POST['idSesion'];
     $arr_FechasSesiones = $_POST['SesionFecha'];
-    $arr_HorasSesiones = $_POST['SesionHoraInicio'];
+    $arr_HorasSesionesI = $_POST['SesionHoraInicio'];
+    $arr_HorasSesionesF = $_POST['SesionHoraFin'];
 
     for ($i=0;$i<sizeof($arr_FechasSesiones);$i++) {
       $sesion=$arr_idSesiones[$i];
       $fecha_sesion = $arr_FechasSesiones[$i];
-      $hora_sesion = $arr_HorasSesiones[$i];
+      $hora_inicio = $arr_HorasSesionesI[$i];
+      $hora_fin = $arr_HorasSesionesF[$i];
       
-      $obj_Sesion -> actualizarSesion($sesion, $grupo, $fecha_sesion, $hora_sesion);
+      $obj_Sesion -> actualizarSesion($sesion, $grupo, $fecha_sesion, $hora_inicio,$hora_fin);
     }
 
     echo 1;

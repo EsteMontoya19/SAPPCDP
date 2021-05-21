@@ -82,10 +82,10 @@ INSERT INTO Grupo (MODE_ID_MODERADOR, PROF_ID_PROFESOR, CURS_ID_CURSOS, SALO_ID_
                25, 'Público', 'true', 'En línea', 'Rechazado', 
                '2021/02/28', '2021/09/09');
 
-INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora)
-			VALUES   (1, '2021/09/08','07:00:00'), (1, '2021/09/09','10:00:00'),
-                  (2, '2021/09/10','08:00:00'), (2, '2021/09/11','11:00:00'),
-                  (3, '2021/09/08','12:00:00'), (3, '2021/09/13','12:00:00');
+INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin)
+			VALUES   (1, '2021/09/08','07:00:00', '09:00:00'), (1, '2021/09/09','10:00:00', '12:00:00'),
+                  (2, '2021/09/10','08:00:00', '10:00:00'), (2, '2021/09/11','11:00:00', '13:00:00'),
+                  (3, '2021/09/08','12:00:00', '14:00:00'), (3, '2021/09/13','12:00:00', '14:00:00');
 
 /*==============================================================*/
 /* Table: ADMINISTRADOR                                          */
@@ -615,7 +615,8 @@ create table SESION (
    SESI_ID_SESIONES     SERIAL                 not null,
    GRUP_ID_GRUPO        INT4                 null,
    SESI_FECHA           DATE                 not null,
-   SESI_HORA            TIME                 not null,
+   SESI_HORA_INICIO     TIME                 not null,
+   SESI_HORA_FIN     TIME                 not null,
    constraint PK_SESION primary key (SESI_ID_SESIONES)
 );
 

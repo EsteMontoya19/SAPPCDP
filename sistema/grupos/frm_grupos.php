@@ -363,14 +363,14 @@ jQuery(document).ready(function () {
                         for="<?php echo $SesionHoraInicio;?>"><b>Hora de inicio:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}; ?></b></label>
                       <input type="time" class="form-control" id="<?php echo $SesionHoraInicio;?>"
                         name="SesionHora[]>" placeholder="0" min="0"
-                        value="<?php echo isset($Sesion)?$Sesion['sesi_hora']:"";?>">
+                        value="<?php echo isset($Sesion)?$Sesion['sesi_hora_inicio']:"";?>">
                     </div>
                     <div id="<?php echo $SesionHoraFin;?>" class="col-lg-3 form-group">
                       <label
                         for="<?php echo $SesionHoraFin;?>"><b>Hora de fin:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}; ?></b></label>
                       <input type="time" class="form-control" id="<?php echo $SesionHoraFin;?>"
                         name="SesionHora[]>" placeholder="0" min="0"
-                        value="<?php echo isset($Sesion)?$Sesion['sesi_hora']:"";?>">
+                        value="<?php echo isset($Sesion)?$Sesion['sesi_hora_fin']:"";?>">
                     </div>
                   </div>
                 </div>

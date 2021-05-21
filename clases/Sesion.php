@@ -2,11 +2,11 @@
 	class Sesion
   	{
         //Agregar sesión
-        function agregarSesion($id_grupo, $fecha_sesion, $hora_sesion)
+        function agregarSesion($id_grupo, $fecha_sesion, $hora_inicio_sesion, $hora_fin_sesion)
     	{
 			$SQL_Ins_Sesion =
-			"INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora)
-			 VALUES ($id_grupo, '$fecha_sesion', '$hora_sesion');
+			"INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora_inicio,sesi_hora_fin)
+			 VALUES ($id_grupo, '$fecha_sesion' , '$hora_inicio_sesion', '$hora_fin_sesion');
 			";
 
 			$bd = new BD();
@@ -17,12 +17,12 @@
 		}
 
         //Actualizar sesión
-        function actualizarSesion($id_sesion, $id_grupo, $fecha_sesion, $hora_sesion)
+        function actualizarSesion($id_sesion, $id_grupo, $fecha_sesion, $hora_inicio_sesion ,$hora_fin_sesion)
     	{
 			$SQL_Act_Sesion =
 			"	
 				UPDATE Sesion
-				SET sesi_fecha = '$fecha_sesion', sesi_hora = '$hora_sesion'
+				SET sesi_fecha = '$fecha_sesion', sesi_hora_inicio = '$hora_inicio_sesion', sesi_hora_fin = '$hora_fin_sesion'
 				WHERE sesi_id_sesiones = $id_sesion AND grup_id_grupo = $id_grupo;
 			";
 
@@ -54,7 +54,7 @@
         {
 			$SQL_Bus_Sesion =
 			"	
-			SELECT sesi_id_sesiones, grup_id_grupo, sesi_fecha, sesi_hora
+			SELECT sesi_id_sesiones, grup_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin
 			FROM sesion
 			WHERE grup_id_grupo = $id_grupo 
 			";
@@ -72,7 +72,7 @@
         {
 			$SQL_Bus_Sesion =
 			"	
-				SELECT sesi_id_sesiones, grup_id_grupo, sesi_fecha, sesi_hora
+				SELECT sesi_id_sesiones, grup_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin
 				FROM sesion
 				WHERE sesi_id_sesiones = $id_sesion; 
 			";
