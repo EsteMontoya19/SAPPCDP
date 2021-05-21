@@ -196,8 +196,15 @@ function validarFormularioGrupo() {
 
         if ($('#SesionHoraInicio' + iCon).val() == '') {
             $('html, body').animate({ scrollTop: 300 }, 'slow');
-            document.getElementById('SesionHora' + iCon).focus();
+            document.getElementById('SesionHoraInicio' + iCon).focus();
             alertify.error('El horario de la sesión ' + iCon + ' no puede estar vacío, favor de ingresar una hora de inicio');
+            return false;
+        }
+
+        if ($('#SesionHoraFin' + iCon).val() == '') {
+            $('html, body').animate({ scrollTop: 300 }, 'slow');
+            document.getElementById('SesionHoraFin' + iCon).focus();
+            alertify.error('El horario de la sesión ' + iCon + ' no puede estar vacío, favor de ingresar una hora de término');
             return false;
         }
 
