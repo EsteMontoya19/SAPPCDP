@@ -91,6 +91,30 @@
             return ($transaccion_1->traerRegistros());
         }
 
+        /*
+        Permite consultar todos los grupos que deben ser mostrados para 
+        los profesores, para ello deben estar publicados, aprobados y públicos
+        */
+        function buscarGruposProfesores()
+        {
+            $SQL_Bus_Cursos = 
+            "   SELECT g.grup_id_grupo, g.prof_id_profesor, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
+                    g. curs_id_cursos, curs_nombre, grup_num_inscritos,
+                    g.plat_id_plataforma, grup_reunion, grup_acceso, grup_clave_acceso, grup_cupo,  
+                    grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, grup_estado
+                FROM grupo g, profesor p, persona pr, curso c, calendario ca 
+                WHERE g.prof_id_profesor = p.prof_id_profesor AND p.pers_id_persona = pr.pers_id_persona AND g.curs_id_cursos = c.curs_id_cursos 
+                    AND g.cale_id_calendario = ca.cale_id_calendario AND grup_tipo = 'Público' AND grup_estado = 'Aprobado' AND grup_activo = true
+                ORDER BY g.grup_id_grupo DESC;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Cursos);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+        }
         // Permite Cambiar estatus_activo grupo
         function cambiarEstatus($id, $activo)
         {

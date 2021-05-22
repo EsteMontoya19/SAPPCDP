@@ -28,7 +28,7 @@ $(document).ready(function () {
         $('#container').load('../sistema/asistencia/frm_inicio_asistencia.php');
     });
 
-    $('#btn_profesor').click(function () {
+    $('#btn_profesor_grupos').click(function () {
         $('#container').load('../sistema/profesor/frm_inicio_profesores.php');
     });
 

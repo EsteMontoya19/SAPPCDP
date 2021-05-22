@@ -51,7 +51,7 @@
           <ul class="navbar-nav ml-auto">
          
 
-             <li id="btn_profesor" class="nav-item">
+             <li id="btn_profesor_grupos" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-graduate"></i>&nbsp; Grupos</a>
             </li>
 
