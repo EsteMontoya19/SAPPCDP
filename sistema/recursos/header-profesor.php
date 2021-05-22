@@ -30,6 +30,7 @@
     <link href="../recursos/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="../recursos/css/bootstrap.css.map" rel="stylesheet" type="text/css">
     <link href="../recursos/css/sb-admin.css" rel="stylesheet" type="text/css">
+    <link href="../recursos/css/bootstrap-modificado.css" rel="stylesheet" type="text/css">
 
     <!-- DataTables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">

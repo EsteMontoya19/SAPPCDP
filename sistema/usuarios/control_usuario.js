@@ -547,6 +547,13 @@ $(document).ready(function () {
                         $('html, body').animate({ scrollTop: 200 }, 'slow');
                         document.getElementById('strNombreUsuario').focus();
                         alertify.error('El nombre de usuario ya existe');
+
+                    } else if(respuesta.endsWith('10')) {
+                        alertify.success('El registro se actualizó correctamente');
+                        setTimeout(function () {
+                            $('html, body').animate({ scrollTop: 0 }, 0);
+                            location.reload();
+                        }, 1500);
                     } else {
                         alertify.error('Hubo un problema al registrar al usuario');
                     }
@@ -733,6 +740,7 @@ function hideOrShowPassword2() {
 }
 
 // Tabla dinámica
+/*
 $(document).ready(function () {
     $('#tabla_usuarios').DataTable({
         language: {
@@ -745,8 +753,7 @@ $(document).ready(function () {
         ],
     });
 });
-
-// var variable = $('#intUsuarioRol').val($('#intUsuarioRol option:selected').text());
+*/
 
 $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
     var tipo_evento = $('#intUsuarioRol').val();
