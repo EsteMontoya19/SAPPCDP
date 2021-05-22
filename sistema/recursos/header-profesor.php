@@ -50,18 +50,21 @@
       <!-- Navbar Search -->
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav ml-auto">
-         
-
-             <li id="btn_profesor_grupos" class="nav-item">
-                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-graduate"></i>&nbsp; Grupos</a>
+            <li id="btn_profesor_grupos" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarProf" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
+                <i class="fas fa-user-graduate"></i>
+                &nbsp; Grupos
+              </a>
+                <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarProf">
+                <a id="btn_profesor_grupos_publicados" class="dropdown-item enabled">Publicados</a>
+                <a class="dropdown-item disabled" >Impartidos</a>
+                <a class="dropdown-item disabled" >Mis Grupos</a>
+              </div>
             </li>
 
-
-             <li id="btn_regProp" class="nav-item">
+            <li id="btn_regProp" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-file"></i>&nbsp; Propuestas</a>
             </li>
-
-
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">

@@ -37,6 +37,7 @@
                   <tr>
                     <th>ID</th>
                     <th>Nombre</th>
+                    <th>Tipo</th>
                     <th>Modalidad</th>
                     <th>Lugares Disp</th>
                     <th>Profesor</th>
@@ -52,6 +53,7 @@
                       <tr>
                         <td><?php echo $grupo['grup_id_grupo'];?></td>
                         <td><?php echo $grupo['curs_nombre'];?></td>
+                        <td><?php echo $grupo['curs_tipo'];?></td>
                         <td><?php echo $grupo['grup_modalidad'];?></td>
                         <td><?php echo ($grupo['grup_cupo'] - $grupo['grup_num_inscritos']);?></td>
                         <td><?php echo $grupo['pers_nombre'];?> <?php echo $grupo['pers_apellido_paterno'];?> <?php echo $grupo['pers_apellido_materno'];?></td>
@@ -66,7 +68,7 @@
                           <button type="button" class="btn btn-primary btn-table" title="Inscribir" style="margin-top: 5px;">
                             <i class="fas fa-edit"></i>
                           </button>
-                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;">
+                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupo(<?php echo $grupo['grup_id_grupo']?>, '<?php echo $grupo['grup_modalidad']?>')">
                             <i class="fas fa-search-plus"></i>
                           </button>
                           <button type="button" class="btn btn-primary btn-table" title="Comprobante" style="margin-top: 5px;">
@@ -89,5 +91,5 @@
     </div>
   </div>
 
-  <script src="../sistema/profesor/profesores.js"></script>
+  <script src="../sistema/profesor/control_profesores.js"></script>
 
