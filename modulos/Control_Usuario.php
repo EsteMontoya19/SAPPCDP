@@ -274,7 +274,11 @@
         break;
       }
 
-        echo 1;
+        if (isset($_POST['procedencia']) && $_POST['procedencia'] = "mi_cuenta") {
+          exit ("10");
+        } else {
+          exit ("1");
+        }
       } else {
         echo 2;
       }

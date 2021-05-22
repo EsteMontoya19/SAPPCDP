@@ -57,8 +57,6 @@ $arr_coordinaciones = $obj_Busqueda->selectCoordinaciones();
 $arr_niveles = $obj_Busqueda->selectNiveles();
 $arr_modalidades = $obj_Busqueda->selectModalidades();
 $arr_preguntas = $obj_Busqueda->selectPregunta();
-
-//!Hasta aquí todo cool
 ?>
 
 
@@ -74,7 +72,7 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
           <form name="frm_acceso" method='POST' action='modulos/ControlAcceso.php'>
             <div class="form-group">
               <div class="form-label-group centrado">
-                <h4>Programa Permanente de Capacitación a Distancia para Profesores de la FCA(PPCDP)</h4>
+                <h4>Programa Permanente de Capacitación a Distancia para Profesores de la FCA (PPCDP)</h4>
               </div>
             </div>
             <hr>
