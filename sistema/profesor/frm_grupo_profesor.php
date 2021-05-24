@@ -405,4 +405,4 @@ jQuery(document).ready(function () {
 
 
 
-<script src="../sistema/grupos/control_profesores.js"></script>
+<script src="../sistema/profesor/control_profesores.js"></script>

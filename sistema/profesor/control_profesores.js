@@ -10,7 +10,7 @@ $(document).ready(function () {
 
     $('#btn-regresar-grupo').click(function () {
         $('html, body').animate({ scrollTop: 0 }, 0);
-        $('#container').load('../sistema/grupos/frm_inicio_profesores.php');
+        $('#container').load('../sistema/profesor/frm_inicio_profesores.php');
     });
 });
 
@@ -32,7 +32,7 @@ function consultarGrupo(id) {
         },
     });
 }
-
+/*
 $(document).ready(function () {
     $('#tabla_grupos').DataTable({
         language: {
@@ -44,4 +44,4 @@ $(document).ready(function () {
             [5, 10, 20, 50, 'Todos'],
         ],
     });
-});
+});*/
