@@ -49,7 +49,7 @@ jQuery(document).ready(function () {
 
       $Grupo = $obj_Grupo->buscarSoloGrupo($_POST['id']);
       $arr_Sesiones = $obj_Sesion->buscarSesionesIDGrupo($_POST['id']);
-      //$Curso=$obj_Curso->buscarCurso($Grupo->curs_id_cursos);
+      $Curso1=$obj_Curso->buscarCurso($Grupo->curs_id_cursos);
   }
 ?>
 <div id="wrapper">
@@ -105,6 +105,24 @@ jQuery(document).ready(function () {
                     </option>
                     <?php } ?>
                   </select>
+                </div>
+                <div class="col-lg-6 form-group">
+                  <label for="strObjCurso"><b>Objetivos:</b></label>
+                  <textarea type="text" class="form-control" id="strObjCurso" name="strObjCurso">
+                    <?php if (isset($Grupo)) { echo $Curso1->curs_objetivos; }?>
+                  </textarea>
+                </div>
+                <div class="col-lg-6 form-group">
+                  <label for="strReqTec"><b>Requisitos Técnicos:</b></label>
+                  <textarea type="text" class="form-control" id="strReqTec" name="strReqTec">
+                    <?php if (isset($Grupo)) { echo $Curso1->curs_req_tecnicos; }?>
+                  </textarea>
+                </div>
+                <div class="col-lg-6 form-group">
+                  <label for="strConNeces"><b>Conocimientos Necesarios:</b></label>
+                  <textarea type="text" class="form-control" id="strConNeces" name="strConNeces">
+                    <?php if (isset($Grupo)) { echo $Curso1->curs_conocimientos; }?>
+                  </textarea>
                 </div>
               </div>
             </div>
