@@ -160,8 +160,7 @@ jQuery(document).ready(function () {
                       <?php if(isset($Grupo) && $Grupo->grup_modalidad == "Presencial") { echo "selected"; }?>>
                       Presencial</option>
                   </select>
-                </div>
-                
+                </div>                
               </div>
 
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
@@ -413,6 +412,10 @@ jQuery(document).ready(function () {
       <button id="btn-regresar-grupo" type="button" class="btn btn-primary btn-footer btn-regresar">Regresar</button>
       <?php if (isset($_POST['CRUD'])) { ?>
       <?php if ($_POST['CRUD'] == 0) { ?>
+      <!-- TODO: Revisar la ruta que tiene el Href -->
+      <a id="temarioDW" href="<?php echo isset($curso) ? $curso -> curs_temario : "No subido"; ?>" download
+          class="btn btn-descarga" role="button"><i class="fas fa-file-download"
+            style="padding-right: 10px;"></i>Descargar temario</a>
       <button id="btn-inscripcion-grupo" type="button" class="btn btn-success btn-footer btn-aceptar">Inscribirse</button>
       <?php } ?>
       <?php } ?>
