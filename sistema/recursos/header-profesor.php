@@ -50,18 +50,22 @@
       <!-- Navbar Search -->
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav ml-auto">
-            <li id="btn_profesor_grupos" class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarProf" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
-                <i class="fas fa-user-graduate"></i>
-                &nbsp; Grupos
+            
+            <li id="btn_desplegable" class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarProf" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
+                <i class="fas fa-chalkboard"></i> &nbsp; Mis grupos
               </a>
                 <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarProf">
-                <a id="btn_profesor_grupos_publicados" class="dropdown-item enabled">Publicados</a>
-                <a class="dropdown-item disabled" >Impartidos</a>
-                <a class="dropdown-item disabled" >Mis Grupos</a>
-              </div>
+                  <a class="dropdown-item disabled" >Inscrito</a>
+                  <a class="dropdown-item disabled" >A impartir</a>
+                </div>
             </li>
 
+            <li id = "btn_profesor_grupos_publicados" class="nav-item">
+                <a id = "btn_profesor_grupos_publicados" class="nav-link" href="#" style="color:#FFFFFF" 
+                  onclick="gruposPublicados(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)">
+                  <i class="fas fa-chalkboard-teacher"></i>&nbsp; Cursos publicados</a>
+            </li>
             <li id="btn_regProp" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-file"></i>&nbsp; Propuestas</a>
             </li>

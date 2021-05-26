@@ -1,11 +1,17 @@
 <?php
     class Inscripcion
     {
-        function agregarInscripcion($persona, $grupo, $estatus_ins, $fecha)
+        function agregarInscripcion($grupo, $profesor)
         {
             $SQL_Ins_Ins =
-            "   INSERT INTO inscripcion(insc_id_grup, insc_id_esin, insc_id_pers, insc_fecha_inicio)
-                VALUES ($grupo, $estatus_ins, $persona, '$fecha');
+            "INSERT INTO Inscripcion(grup_id_grupo, prof_id_profesor)
+             VALUES ($grupo, $profesor);
+
+             UPDATE Grupo 
+             SET grup_num_inscritos = (SELECT grup_num_inscritos 
+						               FROM Grupo
+						               WHERE grup_id_grupo = $grupo) + 1
+             WHERE grup_id_grupo = $grupo
             ";
 
             $bd = new BD();
@@ -15,62 +21,21 @@
             $bd->cerrarBD();
         }
 
-        function actualizarInscripcion($inscripcion, $tipo)
+        function buscarInscripcion($grupo, $profesor)
         {
-            $SQL_Actu_Ins =
-            "   UPDATE inscripcion SET insc_id_esin = $tipo WHERE insc_id_insc = $inscripcion;
+            $SQL_Bus_Inscripcion = 
+			"SELECT insc_id_inscripcion, cons_id_constancias, grup_id_grupo, prof_id_profesor
+             FROM inscripcion
+             WHERE grup_id_grupo = $grupo AND prof_id_profesor = $profesor
             ";
 
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Actu_Ins);
-            $bd->cerrarBD();
-        }
-
-        function eliminarInscripcion($persona, $grupo)
-        {
-            $SQL_Eli_Ins = 
-            "   DELETE FROM inscripcion
-                WHERE insc_id_pers = $persona AND insc_id_grup = $grupo;
-            ";
-
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Eli_Ins);
-            $bd->cerrarBD();
-        }
-
-        function eliminarInscripciones($persona)
-        {
-            $SQL_Eli_Ins = 
-            " DELETE FROM inscripcion
-            WHERE insc_id_pers = $persona;
-            ";
-
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Eli_Ins);
-            $bd->cerrarBD();
-        }
-
-        function buscarInscripcion($persona, $grupo)
-        {
-            $SQL_Bus_Ins = 
-            "   SELECT insc_id_insc, insc_id_grup, insc_id_pers
-                FROM inscripcion
-                WHERE insc_id_pers = $persona AND insc_id_grup = $grupo;
-            ";
-
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Bus_Ins);
-            $obj_Usuario = $transaccion_1->traerObjeto(0);
-            $bd->cerrarBD();
-            return ($transaccion_1->traerObjeto(0));
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Inscripcion);
+			$obj_Inscripcion = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return $obj_Inscripcion;
         }
 
         function buscarGrupoPorInsc($inscripcion)

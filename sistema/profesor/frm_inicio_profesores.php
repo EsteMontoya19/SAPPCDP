@@ -4,6 +4,12 @@
   
   $obj_Grupo = new Grupo();
   $arr_grupos = $obj_Grupo ->buscarGruposProfesores();
+  
+  if (isset($_POST['persona'])){
+    $idPersona = $_POST['persona'];
+  } else {
+    $idPersona = 0;
+  }
 
 ?>
 
@@ -62,7 +68,7 @@
                         <td><?php echo $grupo['curs_num_sesiones'];?></td>
                         <td>
 
-                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupo(<?php echo $grupo['grup_id_grupo']?>, '<?php echo $grupo['grup_modalidad']?>')">
+                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupo(<?php echo $grupo['grup_id_grupo']?>,'<?php echo $idPersona?>')">
                             <i class="fas fa-search-plus"></i>
                           </button>
                          <!-- <button type="button" class="btn btn-primary btn-table" title="Inscribir" style="margin-top: 5px;">

@@ -18,15 +18,16 @@ jQuery(document).ready(function () {
   include('../../clases/Curso.php');
   include('../../clases/Profesor.php');
   include('../../clases/Moderador.php');
+  include('../../clases/Persona.php');
 
   // Objetos
   $obj_Busqueda = new Busqueda();
   $obj_Grupo = new Grupo();
-
   $obj_Sesion = new Sesion();
   $obj_Curso = new Curso();
   $obj_Profesor = new Profesor();
   $obj_Moderador = new Moderador();
+  $obj_Persona = new Persona();
 
   //Catálogos
   $arr_Cursos = $obj_Busqueda->selectCursosActivos();
@@ -51,6 +52,11 @@ jQuery(document).ready(function () {
       $arr_Sesiones = $obj_Sesion->buscarSesionesIDGrupo($_POST['id']);
       $Curso1=$obj_Curso->buscarCurso($Grupo->curs_id_cursos);
   }
+
+  if (isset($_POST['persona'])) { 
+    // Recuperar información la persona que consulta
+    $persona = $obj_Persona->buscarPersona($_POST['persona']);
+  }
 ?>
 <div id="wrapper">
   <div id="content-wrapper">
@@ -58,17 +64,17 @@ jQuery(document).ready(function () {
 
       <ol class="breadcrumb">
         <li id="btn-inicio-grupo" class="breadcrumb-item">
-          <a href="#"><i class="fas fa-user-shield"></i>&nbsp; Grupos</a>
+          <a href="#"><i class="fas fa-user-shield"></i>&nbsp; Grupos disponibles</a>
         </li>
         <!-- Validación de la ruta -->
         <?php if (isset($_POST['CRUD'])) { ?>
-        <?php if ($_POST['CRUD'] == 1) { ?>
-        <li class="breadcrumb-item active"><i class="fas fa-edit"></i>&nbsp; Actualizar registro</li>
-        <?php } elseif ($_POST['CRUD'] == 0) { ?>
-        <li class="breadcrumb-item active"><i class="fas fa-search-plus"></i>&nbsp; Detalles curso</li>
-        <?php } ?>
+          <?php if ($_POST['CRUD'] == 1) { ?>
+            <li class="breadcrumb-item active"><i class="fas fa-edit"></i>&nbsp; Actualizar registro</li>
+          <?php } elseif ($_POST['CRUD'] == 0) { ?>
+            <li class="breadcrumb-item active"><i class="fas fa-search-plus"></i>&nbsp; Detalles del curso</li>
+          <?php } ?>
         <?php } else { ?>
-        <li class="breadcrumb-item active"><i class="fas fa-folder-plus"></i>&nbsp; Nuevo registro</li>
+          <li class="breadcrumb-item active"><i class="fas fa-folder-plus"></i>&nbsp; Nuevo registro</li>
         <?php } ?>
       </ol>
       <p>
@@ -80,10 +86,10 @@ jQuery(document).ready(function () {
 
         <!-- Desactivar formulario INICIO en caso de no ser un registro-->
         <?php if (isset($_POST['CRUD'])) { ?>
-        <?php if ($_POST['CRUD'] == 0) { ?>
-        <fieldset disabled>
+          <?php if ($_POST['CRUD'] == 0) { ?>
+            <fieldset disabled>
           <?php } ?>
-          <?php } ?>
+        <?php } ?>
 
           <!-- Inicio de Sección: Curso -->
           <div class="form-group">
@@ -100,7 +106,7 @@ jQuery(document).ready(function () {
                     <?php foreach ($arr_Cursos as $Curso) { ?>
                     <option value="<?php echo $Curso['curs_id_cursos']; ?>" <?php if(isset($Grupo)) { 
                       if ($Grupo->curs_id_cursos == $Curso['curs_id_cursos']) { 
-                      ?> selected <?php } }?>> <?php echo ($Curso['curs_nombre']." (".$Curso['curs_tipo'].") ".$Curso['curs_nivel']); ?>
+                      ?> selected <?php } }?>> <?php echo ($Curso['curs_nombre'])?>
                     </option>
                     <?php } ?>
                   </select>
@@ -445,7 +451,8 @@ jQuery(document).ready(function () {
         <a id="temarioDW" href="<?php echo isset($Curso1) ? $Curso1 -> curs_temario : "No subido"; ?>" download
             class="btn btn-descarga" role="button"><i class="fas fa-file-download"
               style="padding-right: 10px;"></i>Descargar temario</a>
-        <button id="btn-inscripcion-grupo" type="button" class="btn btn-success btn-footer btn-aceptar">Inscribirse</button>
+        <button id="btn-inscripcion-grupo" type="button" class="btn btn-success btn-footer btn-aceptar" 
+          onclick="inscribirGrupo(<?php echo $Grupo->grup_id_grupo?>, <?php echo $Grupo->grup_num_inscritos?>, <?php echo $Grupo->grup_cupo?>, <?php echo $persona->pers_id_persona?>, '<?php echo $Curso1->curs_nombre?>', '<?php echo $Curso1->curs_tipo?>', '<?php echo $Curso1->curs_nivel?>')">Inscribirse</button>
         <?php } ?>
       <?php } ?>
     </div>

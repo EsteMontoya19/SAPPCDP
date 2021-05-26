@@ -329,8 +329,8 @@ SALO_ID_SALON
 create table INSCRIPCION (
    INSC_ID_INSCRIPCION  SERIAL               not null,
    CONS_ID_CONSTANCIAS  INT4                 null,
-   GRUP_ID_GRUPO        INT4                 null,
-   PROF_ID_PROFESOR     INT4                 null,
+   GRUP_ID_GRUPO        INT4                 not null,
+   PROF_ID_PROFESOR     INT4                 not null,
    constraint PK_INSCRIPCION primary key (INSC_ID_INSCRIPCION)
 );
 

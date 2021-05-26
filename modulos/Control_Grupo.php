@@ -3,9 +3,13 @@
   include('../clases/Grupo.php');
   include('../clases/Sesion.php');
   include('../clases/Curso.php');
+  include('../clases/Inscripcion.php');
+  include('../clases/Profesor.php');
 
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
+  $obj_Inscripcion = new Inscripcion();
+  $obj_Profesor = new Profesor();
 
   if($_POST['dml'] == 'insert')
   {
@@ -183,4 +187,20 @@
     echo $sesiones->curs_num_sesiones;
 
   } 
+
+  if ($_POST['dml'] == 'inscripcion') {
+    $grupo = $_POST['grupo'];
+    $persona = $_POST['persona'];
+
+    $profesor = $obj_Profesor->buscarProfesor($persona);
+    $inscrito =  $obj_Inscripcion->buscarInscripcion($grupo, $profesor->prof_id_profesor);
+
+    
+    if  (isset($inscrito) && $inscrito != "") {
+      exit("2");
+    } //else if (isset($obj_Inscripcion->buscarCupo($grupo))) {}
+    //TODO: Aqui podría ir la validación del translape en un else if, el código de salida sería el 3
+    $obj_Inscripcion->agregarInscripcion($grupo, $profesor->prof_id_profesor);
+    exit("1");
+  }
 ?>
