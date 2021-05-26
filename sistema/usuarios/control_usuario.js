@@ -739,8 +739,8 @@ function hideOrShowPassword2() {
     }
 }
 
-// Tabla dinámica
-/*
+//? Este código permite buscar y mostrar resultados en las tables
+
 $(document).ready(function () {
     $('#tabla_usuarios').DataTable({
         language: {
@@ -753,7 +753,7 @@ $(document).ready(function () {
         ],
     });
 });
-*/
+
 
 $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
     var tipo_evento = $('#intUsuarioRol').val();

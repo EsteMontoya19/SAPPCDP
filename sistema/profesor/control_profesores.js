@@ -32,7 +32,7 @@ function consultarGrupo(id) {
         },
     });
 }
-/*
+
 $(document).ready(function () {
     $('#tabla_grupos').DataTable({
         language: {
@@ -44,4 +44,4 @@ $(document).ready(function () {
             [5, 10, 20, 50, 'Todos'],
         ],
     });
-});*/
+});

@@ -65,7 +65,7 @@ jQuery(document).ready(function () {
         <?php if ($_POST['CRUD'] == 1) { ?>
         <li class="breadcrumb-item active"><i class="fas fa-edit"></i>&nbsp; Actualizar registro</li>
         <?php } elseif ($_POST['CRUD'] == 0) { ?>
-        <li class="breadcrumb-item active"><i class="fas fa-search-plus"></i>&nbsp; Consultar registro</li>
+        <li class="breadcrumb-item active"><i class="fas fa-search-plus"></i>&nbsp; Detalles curso</li>
         <?php } ?>
         <?php } else { ?>
         <li class="breadcrumb-item active"><i class="fas fa-folder-plus"></i>&nbsp; Nuevo registro</li>
@@ -93,10 +93,9 @@ jQuery(document).ready(function () {
                 <b>&nbsp;&nbsp;<?php if (isset($_POST['CRUD']) == false)  echo "Selecciona un "; ?>Curso </b>
               </div>
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                <div class="col-lg-6 form-group">
+                <div class="col-lg-4 form-group">
                   <label for="ID_Curso"><b>Curso:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></b></label>
-                  <select required='required' class="custom-select" id="ID_Curso" name="ID_Curso"
-                    <?php if (isset($_POST['CRUD']) == 1) { echo "disabled";} ?>>
+                  <select required='required' class="custom-select" id="ID_Curso" name="ID_Curso" disabled>
                     <option value="0">Seleccionar una opción</option>
                     <?php foreach ($arr_Cursos as $Curso) { ?>
                     <option value="<?php echo $Curso['curs_id_cursos']; ?>" <?php if(isset($Grupo)) { 
@@ -106,23 +105,54 @@ jQuery(document).ready(function () {
                     <?php } ?>
                   </select>
                 </div>
-                <div class="col-lg-6 form-group">
+              
+                <div class="col-lg-4 form-group">
+                  <label for="intTipoCurso"><b>Tipo de curso:</b></label>
+                  <select class="custom-select" id="intTipoCurso" name="intTipoCurso">
+                    <option value='0'>Seleccione una opción</option>
+                    <option value='Curso'
+                      <?php if (isset($Curso1) && $Curso1->curs_tipo == "Curso") { echo "selected"; }?>>Curso</option>
+                    <option value='Taller'
+                      <?php if (isset($Curso1) && $Curso1->curs_tipo == "Taller") { echo "selected"; }?>>Taller</option>
+                  </select>
+                </div>
+
+                <div class="col-lg-4 form-group">
+                  <label for="intNivel"><b>Nivel:</b></label>
+                  <select class="custom-select" id="intNivel" name="intNivel">
+                    <option value="0">Seleccione una opción</option>
+                    <option value='Básico'
+                      <?php if (isset($Curso1) && $Curso1->curs_nivel == "Básico") { echo "selected"; }?>>Básico</option>
+                    <option value='Intermedio'
+                      <?php if (isset($Curso1) && $Curso1->curs_nivel == "Intermedio") { echo "selected"; }?>>Intermedio
+                    </option>
+                    <option value='Avanzado'
+                      <?php if (isset($Curso1) && $Curso1->curs_nivel == "Avanzado") { echo "selected"; }?>>Avanzado
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-lg-12 form-row" style="margin-top: 15px;">
+                <div class="col-lg-12 form-group">
                   <label for="strObjCurso"><b>Objetivos:</b></label>
-                  <textarea type="text" class="form-control" id="strObjCurso" name="strObjCurso">
-                    <?php if (isset($Grupo)) { echo $Curso1->curs_objetivos; }?>
-                  </textarea>
-                </div>
-                <div class="col-lg-6 form-group">
+                  <textarea type="text" class="form-control" id="strObjCurso" 
+                  name="strObjCurso"><?php echo isset($Curso1) ? $Curso1 -> curs_objetivos: ""; ?></textarea>
+              </div>
+
+              <div class="col-lg-12 form-row" style="margin-top: 15px;">
+                <div class="col-lg-12 form-group">
                   <label for="strReqTec"><b>Requisitos Técnicos:</b></label>
-                  <textarea type="text" class="form-control" id="strReqTec" name="strReqTec">
-                    <?php if (isset($Grupo)) { echo $Curso1->curs_req_tecnicos; }?>
-                  </textarea>
+                  <textarea type="text" class="form-control" id="strReqTec" 
+                  name="strReqTec"> <?php if (isset($Grupo)) { echo $Curso1->curs_req_tecnicos; }?> </textarea>
                 </div>
-                <div class="col-lg-6 form-group">
+              </div>
+
+              <div class="col-lg-12 form-row" style="margin-top: 15px;">
+                <div class="col-lg-12 form-group">
                   <label for="strConNeces"><b>Conocimientos Necesarios:</b></label>
-                  <textarea type="text" class="form-control" id="strConNeces" name="strConNeces">
-                    <?php if (isset($Grupo)) { echo $Curso1->curs_conocimientos; }?>
-                  </textarea>
+                  <textarea type="text" class="form-control" id="strConNeces" 
+                  name="strConNeces"> <?php if (isset($Grupo)) { echo $Curso1->curs_conocimientos; }?></textarea>
                 </div>
               </div>
             </div>
@@ -340,42 +370,42 @@ jQuery(document).ready(function () {
             <?php } else {?>
               <div id="Sesiones" class="form-group" style="display: none;">
             <?php } 
-              $i = 1; 
-              foreach($arr_Sesiones as $Sesion){ 
-                $idSesion = "idSesion".$i;
-                $SesionFecha = "SesionFecha".$i;
-                $SesionHoraInicio = "SesionHoraInicio".$i;
-                $SesionHoraFin = "SesionHoraFin".$i; ?>
-                <div class="card lg-12">
-                  <div class="card-header">
-                    <i class="fas fa-id-card fa-lg"></i>
-                    <b>&nbsp;&nbsp; <?php echo "Sesión #".$i; ?></b>
-                    <input type="hidden" id="<?php echo $idSesion;?>" name="idSesion[]" value="<?php echo $Sesion['sesi_id_sesiones'];?>">
+            $i = 1; 
+            foreach($arr_Sesiones as $Sesion){ 
+              $idSesion = "idSesion".$i;
+              $SesionFecha = "SesionFecha".$i;
+              $SesionHoraInicio = "SesionHoraInicio".$i;
+              $SesionHoraFin = "SesionHoraFin".$i; ?>
+              <div class="card lg-12">
+                <div class="card-header">
+                  <i class="fas fa-id-card fa-lg"></i>
+                  <b>&nbsp;&nbsp; <?php echo "Sesión #".$i; ?></b>
+                  <input type="hidden" id="<?php echo $idSesion;?>" name="idSesion[]" value="<?php echo $Sesion['sesi_id_sesiones'];?>">
+                </div>
+                <div class="col-lg-12 form-row" style="margin-top: 15px;">
+                  <div id="<?php echo $SesionFecha;?>" class="col-lg-6 form-group">
+                    <label
+                      for="<?php echo $SesionFecha;?>"><b>Fecha:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
+                    <input type="date" class="form-control" id="<?php echo $SesionFecha;?>"
+                      name="SesionFecha[]" placeholder="0" min="0"
+                      value="<?php echo isset($Sesion)?$Sesion['sesi_fecha']:""; ?>">
                   </div>
-                  <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                    <div id="<?php echo $SesionFecha;?>" class="col-lg-6 form-group">
-                      <label
-                        for="<?php echo $SesionFecha;?>"><b>Fecha:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
-                      <input type="date" class="form-control" id="<?php echo $SesionFecha;?>"
-                        name="SesionFecha[]" placeholder="0" min="0"
-                        value="<?php echo isset($Sesion)?$Sesion['sesi_fecha']:""; ?>">
-                    </div>
-                    <div id="<?php echo $SesionHoraInicio;?>" class="col-lg-3 form-group">
-                      <label
-                        for="<?php echo $SesionHoraInicio;?>"><b>Hora de inicio:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}; ?></b></label>
-                      <input type="time" class="form-control" id="<?php echo $SesionHoraInicio;?>"
-                        name="SesionHoraInicio[]>" placeholder="0" min="0"
-                        value="<?php echo isset($Sesion)?$Sesion['sesi_hora_inicio']:"";?>">
-                    </div>
-                    <div id="<?php echo $SesionHoraFin;?>" class="col-lg-3 form-group">
-                      <label
-                        for="<?php echo $SesionHoraFin;?>"><b>Hora de fin:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}; ?></b></label>
-                      <input type="time" class="form-control" id="<?php echo $SesionHoraFin;?>"
-                        name="SesionHoraFin[]>" placeholder="0" min="0"
-                        value="<?php echo isset($Sesion)?$Sesion['sesi_hora_fin']:"";?>">
-                    </div>
+                  <div id="<?php echo $SesionHoraInicio;?>" class="col-lg-3 form-group">
+                    <label
+                      for="<?php echo $SesionHoraInicio;?>"><b>Hora de inicio:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}; ?></b></label>
+                    <input type="time" class="form-control" id="<?php echo $SesionHoraInicio;?>"
+                      name="SesionHoraInicio[]>" placeholder="0" min="0"
+                      value="<?php echo isset($Sesion)?$Sesion['sesi_hora_inicio']:"";?>">
+                  </div>
+                  <div id="<?php echo $SesionHoraFin;?>" class="col-lg-3 form-group">
+                    <label
+                      for="<?php echo $SesionHoraFin;?>"><b>Hora de fin:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}; ?></b></label>
+                    <input type="time" class="form-control" id="<?php echo $SesionHoraFin;?>"
+                      name="SesionHoraFin[]>" placeholder="0" min="0"
+                      value="<?php echo isset($Sesion)?$Sesion['sesi_hora_fin']:"";?>">
                   </div>
                 </div>
+              </div>
           <?php $i++; } ?>
         </div>
         <!-- Fin de Sección: Sesiones -->
@@ -411,13 +441,12 @@ jQuery(document).ready(function () {
     <div class="col-lg-12" style="text-align: center;">
       <button id="btn-regresar-grupo" type="button" class="btn btn-primary btn-footer btn-regresar">Regresar</button>
       <?php if (isset($_POST['CRUD'])) { ?>
-      <?php if ($_POST['CRUD'] == 0) { ?>
-      <!-- TODO: Revisar la ruta que tiene el Href -->
-      <a id="temarioDW" href="<?php echo isset($curso) ? $curso -> curs_temario : "No subido"; ?>" download
-          class="btn btn-descarga" role="button"><i class="fas fa-file-download"
-            style="padding-right: 10px;"></i>Descargar temario</a>
-      <button id="btn-inscripcion-grupo" type="button" class="btn btn-success btn-footer btn-aceptar">Inscribirse</button>
-      <?php } ?>
+        <?php if ($_POST['CRUD'] == 0) { ?>
+        <a id="temarioDW" href="<?php echo isset($Curso1) ? $Curso1 -> curs_temario : "No subido"; ?>" download
+            class="btn btn-descarga" role="button"><i class="fas fa-file-download"
+              style="padding-right: 10px;"></i>Descargar temario</a>
+        <button id="btn-inscripcion-grupo" type="button" class="btn btn-success btn-footer btn-aceptar">Inscribirse</button>
+        <?php } ?>
       <?php } ?>
     </div>
   </div>

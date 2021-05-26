@@ -16,7 +16,7 @@
           <div class="col-sm-12">
             <ol class="breadcrumb">
             <li class="breadcrumb-item active">
-              <i class="fas fa-users"></i>&nbsp; Grupos
+              <i class="fas fa-users"></i>&nbsp; Grupos publicados
             </li>
             </ol>
           </div>
@@ -43,7 +43,7 @@
                     <th>Profesor</th>
                     <th>Fecha Inicio</th>
                     <th>Fecha Fin</th>
-                    <th>Horario</th>
+                    <th>Número de sesiones</th>
                     <th>Opciones</th>
                   </tr>
                 </thead>
@@ -59,8 +59,7 @@
                         <td><?php echo $grupo['pers_nombre'];?> <?php echo $grupo['pers_apellido_paterno'];?> <?php echo $grupo['pers_apellido_materno'];?></td>
                         <td><?php echo $grupo['grup_inicio_insc'];?></td>
                         <td><?php echo $grupo['grup_fin_insc'];?></td>
-                        <td>
-                        </td>
+                        <td><?php echo $grupo['curs_num_sesiones'];?></td>
                         <td>
 
                           <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupo(<?php echo $grupo['grup_id_grupo']?>, '<?php echo $grupo['grup_modalidad']?>')">
@@ -75,7 +74,6 @@
                           <button type="button" class="btn btn-danger btn-table" title="Constancia" style="margin-top: 5px;background: #20560a">
                             <i class="fas fa-file"></i>
                           </button> -->
-
                         </td>
                       </tr>
                   <?php } ?>
