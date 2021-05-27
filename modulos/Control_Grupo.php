@@ -200,6 +200,7 @@
       exit("2");
     } //else if (isset($obj_Inscripcion->buscarCupo($grupo))) {}
     //TODO: Aqui podría ir la validación del translape en un else if, el código de salida sería el 3
+    //TODO: Validar que los periodos de inscripción sean correctos
     $obj_Inscripcion->agregarInscripcion($grupo, $profesor->prof_id_profesor);
     exit("1");
   }

@@ -138,7 +138,11 @@ error_reporting(E_ALL);
 		**************************************************************/
 		function traerObjeto($i)
 		{
-			return pg_fetch_object($this->query,$i);
+			if (pg_num_rows($this->query) == 0){
+				return NULL;
+			} else {
+				return pg_fetch_object($this->query,$i);
+			}
 		}
 
 	  /**************************************************************
