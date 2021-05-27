@@ -47,7 +47,7 @@
                     <th>Tipo</th>
                     <th>Curso</th>
                     <th>Modalidad</th>
-                    <th>Estatus</th>
+                    <th>Publicado</th>
                     <th>Lugares disponibles</th>
                     <th>Profesor</th>
                     <th>Publicado</th>

@@ -79,7 +79,7 @@ $curso -> curs_temario=null;
                 </div>
 
                 <div class="col-lg-3 form-group">
-                  <label for="intTipoCurso"><b>Tipo de curso:
+                  <label for="intTipoCurso"><b>Tipo:
                       <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1)  echo "*"; ?></b></label>
                   <select class="custom-select" id="intTipoCurso" name="intTipoCurso">
                     <option value='0'>Seleccione una opción</option>

@@ -212,6 +212,13 @@ function validarFormularioGrupo() {
             return false;
         }
 
+        if ($('#SesionHoraFin' + iCon).val() >= $('#SesionHoraInicio' + iCon).val() ) {
+            $('html, body').animate({ scrollTop: 300 }, 'slow');
+            document.getElementById('SesionHoraFin' + iCon).focus();
+            alertify.error('El horario de fin de la sesión ' + iCon + ' no puede ser mayor al horario de inicio de la sesión.');
+            return false;
+        }
+
         if (iCon > 1) {
             if ($('#SesionFecha' + iCon).val() < $('#SesionFecha' + (iCon - 1)).val()) {
                 $('html, body').animate({ scrollTop: 300 }, 'slow');

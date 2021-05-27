@@ -116,7 +116,7 @@ function validarFormularioUsuario() {
         if (total_numeros < 10) {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
             document.getElementById('strUsuarioTelefono').focus();
-            alertify.error('El teléfono incluir mínimo 10 dígitos.');
+            alertify.error('El teléfono debe incluir mínimo 10 dígitos.');
             return false;
         } else if (total_numeros > 10) {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
@@ -329,6 +329,13 @@ function validarFormularioUsuario() {
             $('html, body').animate({ scrollTop: 200 }, 'slow');
             document.getElementById('strHoraFin').focus();
             alertify.error('Debe ingresar una hora de fin de servicio social');
+            return false;
+        }
+
+        if ($('#strHoraFin').val() >= $('#strHoraInicio').val()) {
+            $('html, body').animate({ scrollTop: 200 }, 'slow');
+            document.getElementById('strHoraFin').focus();
+            alertify.error('La hora de fin no puede ser mayor o igual a la inicial.');
             return false;
         }
     }

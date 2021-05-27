@@ -243,7 +243,7 @@ function cambioEstatus(id, estatus, nombre) {
     mensaje = mensaje.concat(nombre);
     mensaje = mensaje.concat('?<br>');
     if (estatus == 't') {
-        mensaje = mensaje.concat('Esta acción no activara el estado de los grupos relacionados.');
+        mensaje = mensaje.concat('Esta acción no afectará el estado de los grupos relacionados, sin embargo no podrá crear más grupos para este curso.');
     } else {
         mensaje = mensaje.concat('Los grupos de este curso seguirán vigentes, esta acción solo impide la creación de nuevos grupos de este curso.');
     }
