@@ -5,7 +5,7 @@ $(document).ready(function () {
     });
     $('#btn-regresar-grupo').click(function () {
         $('html, body').animate({ scrollTop: 0 }, 0);
-        $('#container').load('../sistema/profesor/frm_inicio_profesores.php');
+        location.reload();
     });
 });
 

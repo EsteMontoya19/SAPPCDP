@@ -19,6 +19,7 @@ jQuery(document).ready(function () {
   include('../../clases/Profesor.php');
   include('../../clases/Moderador.php');
   include('../../clases/Persona.php');
+  include('../../clases/Inscripcion.php');
 
   // Objetos
   $obj_Busqueda = new Busqueda();
@@ -28,6 +29,7 @@ jQuery(document).ready(function () {
   $obj_Profesor = new Profesor();
   $obj_Moderador = new Moderador();
   $obj_Persona = new Persona();
+  $obj_Inscripcion = new Inscripcion();
 
   //Catálogos
   $arr_Cursos = $obj_Busqueda->selectCursosActivos();
@@ -448,11 +450,19 @@ jQuery(document).ready(function () {
       <button id="btn-regresar-grupo" type="button" class="btn btn-primary btn-footer btn-regresar">Regresar</button>
       <?php if (isset($_POST['CRUD'])) { ?>
         <?php if ($_POST['CRUD'] == 0) { ?>
-        <a id="temarioDW" href="<?php echo isset($Curso1) ? $Curso1 -> curs_temario : "No subido"; ?>" download
-            class="btn btn-descarga" role="button"><i class="fas fa-file-download"
-              style="padding-right: 10px;"></i>Descargar temario</a>
-        <button id="btn-inscripcion-grupo" type="button" class="btn btn-success btn-footer btn-aceptar" 
-          onclick="inscribirGrupo(<?php echo $Grupo->grup_id_grupo?>, <?php echo $Grupo->grup_num_inscritos?>, <?php echo $Grupo->grup_cupo?>, <?php echo $persona->pers_id_persona?>, '<?php echo $Curso1->curs_nombre?>', '<?php echo $Curso1->curs_tipo?>', '<?php echo $Curso1->curs_nivel?>')">Inscribirse</button>
+          <a id="temarioDW" href="<?php echo isset($Curso1) ? $Curso1 -> curs_temario : "No subido"; ?>" download
+              class="btn btn-descarga" role="button"><i class="fas fa-file-download"
+                style="padding-right: 10px;"></i>Descargar temario</a>
+
+          <?php 
+          if(isset($persona) && isset($persona) && isset($grupo)) {
+            $profesor = $obj_Profesor->buscarProfesor($persona->pers_id_persona);
+            $inscrito =  $obj_Inscripcion->buscarInscripcion($grupo, $profesor->prof_id_profesor);
+            if ($inscrito) { ?>
+              <button id="btn-inscripcion-grupo" type="button" class="btn btn-success btn-footer btn-aceptar" 
+                onclick="inscribirGrupo(<?php echo $Grupo->grup_id_grupo?>, <?php echo $Grupo->grup_num_inscritos?>, <?php echo $Grupo->grup_cupo?>, <?php echo $persona->pers_id_persona?>, '<?php echo $Curso1->curs_nombre?>', '<?php echo $Curso1->curs_tipo?>', '<?php echo $Curso1->curs_nivel?>')">Inscribirse</button>
+            <?php } ?>
+          <?php } ?>
         <?php } ?>
       <?php } ?>
     </div>
