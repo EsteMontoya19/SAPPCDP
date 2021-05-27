@@ -196,37 +196,42 @@ function validarFormularioGrupo() {
                 alertify.error('La fecha de la sesión ' + iCon + ' no puede ser asignada a un día Domingo');
                 return false;
             }
-        }
 
-        if ($('#SesionHoraInicio' + iCon).val() == '') {
-            $('html, body').animate({ scrollTop: 300 }, 'slow');
-            document.getElementById('SesionHoraInicio' + iCon).focus();
-            alertify.error('El horario de la sesión ' + iCon + ' no puede estar vacío, favor de ingresar una hora de inicio');
-            return false;
-        }
+            //Valida que una sesión posterior no pueda tener una fecha anterior a la sesión antecesora
+            if (iCon > 1) {
+                if ($('#SesionFecha' + iCon).val() < $('#SesionFecha' + (iCon - 1)).val()) {
+                    $('html, body').animate({ scrollTop: 300 }, 'slow');
+                    document.getElementById('SesionFecha' + iCon).focus();
+                    alertify.error('La fecha de la sesión ' + iCon + ' no puede ser menor a la fecha de la sesión ' + (iCon - 1));
+                    return false;
+                }
+            }
 
-        if ($('#SesionHoraFin' + iCon).val() == '') {
-            $('html, body').animate({ scrollTop: 300 }, 'slow');
-            document.getElementById('SesionHoraFin' + iCon).focus();
-            alertify.error('El horario de la sesión ' + iCon + ' no puede estar vacío, favor de ingresar una hora de término');
-            return false;
-        }
-
-        if ($('#SesionHoraFin' + iCon).val() >= $('#SesionHoraInicio' + iCon).val() ) {
-            $('html, body').animate({ scrollTop: 300 }, 'slow');
-            document.getElementById('SesionHoraFin' + iCon).focus();
-            alertify.error('El horario de fin de la sesión ' + iCon + ' no puede ser mayor al horario de inicio de la sesión.');
-            return false;
-        }
-
-        if (iCon > 1) {
-            if ($('#SesionFecha' + iCon).val() < $('#SesionFecha' + (iCon - 1)).val()) {
+            //Validaciones para las partes de las horas de inicio y fin de las sesiones
+            if ($('#SesionHoraInicio' + iCon).val() == '') {
                 $('html, body').animate({ scrollTop: 300 }, 'slow');
-                document.getElementById('SesionFecha' + iCon).focus();
-                alertify.error('La fecha de la sesión ' + iCon + ' no puede ser menor a la fecha de la sesión ' + (iCon - 1));
+                document.getElementById('SesionHoraInicio' + iCon).focus();
+                alertify.error('El horario de inicio de la sesión ' + iCon + ' no puede estar vacío, favor de ingresar una hora de inicio');
                 return false;
             }
+    
+            if ($('#SesionHoraFin' + iCon).val() == '') {
+                $('html, body').animate({ scrollTop: 300 }, 'slow');
+                document.getElementById('SesionHoraFin' + iCon).focus();
+                alertify.error('El horario de termino la sesión ' + iCon + ' no puede estar vacío, favor de ingresar una hora de término');
+                return false;
+            }
+            
+            //Valida que la hora de termino no pueda ser menor que la de inicio
+            if ($('#SesionHoraInicio' + iCon).val() >= $('#SesionHoraFin' + iCon).val() ) {
+                $('html, body').animate({ scrollTop: 300 }, 'slow');
+                document.getElementById('SesionHoraFin' + iCon).focus();
+                alertify.error('El horario de termino de la sesión ' + iCon + ' no puede ser menor ni igual al horario de inicio de la sesión.');
+                return false;
+            }
+    
         }
+
     }
 
     return true;
