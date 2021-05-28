@@ -131,6 +131,31 @@
             $bd->cerrarBD();
         }
 
+        //Permite obtener los grupos a los cuales se ha inscrito un profesor
+        function gruposInscritosxProfesor($idProfesor)
+        {
+            $SQL_Act_Curso = 
+            "   
+            SELECT i.prof_id_profesor, i.grup_id_grupo, grup_modalidad, cons_id_constancias,
+                curs_nombre, curs_tipo, curs_nivel, curs_num_sesiones, 
+                cale_semestre
+            FROM inscripcion i, grupo g, curso c, profesor p, calendario ca
+            WHERE i.prof_id_profesor = $idProfesor 
+                AND i.grup_id_grupo = g.grup_id_grupo 
+                AND g.curs_id_cursos = c.curs_id_cursos 
+                AND g.prof_id_profesor = p.prof_id_profesor 
+                AND g.cale_id_calendario = ca.cale_id_calendario 
+            ORDER BY i.grup_id_grupo DESC;
+            ";
+            
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Act_Curso);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+        }
+
         /*Los métodos a partir de aqui están diferenciados pero los de arriba estan creados para permitir un trato indiferente para los 2 tipos de cursos, para una facilidad de manejo*/
         //Permite agregar un grupo presencial
         function agregarGrupoPresencial($moderador, $profesor, $curso, $salon, $calendario, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc)

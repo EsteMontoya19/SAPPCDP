@@ -103,5 +103,27 @@
 			$bd->cerrarBD();
 			return ($transaccion_1->traerObjeto(0));
 		}
+
+
+		function buscarMinSesion($idGrupo){
+			$SQL_Bus_Sesion =
+			"
+			SELECT sesi_fecha, sesi_hora_inicio
+			FROM sesion
+			WHERE sesi_id_sesiones = (
+				SELECT MIN(sesi_id_sesiones) sesi_id_sesiones 
+				FROM sesion 
+				WHERE grup_id_grupo = $idGrupo
+				) 
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Sesion);
+			$obj_Sesion = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerObjeto(0));
+		}
     }
 ?>

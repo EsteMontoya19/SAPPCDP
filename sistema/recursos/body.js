@@ -86,6 +86,22 @@ function gruposPublicados(persona) {
     });
 }
 
+//Listar Grupos inscritos
+function gruposInscritos(persona) {
+    var datos = {
+        persona: persona,
+    };
+    
+    $.ajax({
+        data: datos,
+        type: 'POST',
+        url: '../sistema/profesor/frm_profesor_inscripciones.php',
+        success: function (data) {
+            $('#container').html(data);
+        },
+    });
+}
+
 // Cambiar contraseña
 function cambiarContraseña(id, persona) {
     var datos = {

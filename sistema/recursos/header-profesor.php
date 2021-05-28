@@ -56,7 +56,8 @@
                 <i class="fas fa-chalkboard"></i> &nbsp; Mis grupos
               </a>
                 <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarProf">
-                  <a class="dropdown-item" type="button"  id="btn_profesor_grupos_inscritos">Inscrito</a>
+                  <a class="dropdown-item" type="button"  id="btn_profesor_grupos_inscritos"
+                  onclick="gruposInscritos(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)"> Inscrito </a>
                   <a class="dropdown-item disabled" >A impartir</a>
                 </div>
             </li>
