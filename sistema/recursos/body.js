@@ -31,6 +31,10 @@ $(document).ready(function () {
     $('#btn_profesor_grupos').click(function () {
         $('#container').load('../sistema/profesor/frm_inicio_profesores.php');
     });
+
+    $('#btn_profesor_grupos_inscritos').click(function () {
+        $('#container').load('../sistema/profesor/frm_profesor_inscripciones.php');
+    });
     
     $('#btn_regProp').click(function () {
         $('#container').load('../sistema/propuestas/frm_propuestas.php');
