@@ -180,9 +180,15 @@ $curso -> curs_temario=null;
       <!-- Botones -->
       <div class="col-lg-12" style="text-align: center;">
         <button id="btn-regresar-curso" type="button" class="btn btn-success btn-footer btn-regresar">Regresar</button>
+        
+        
+        <?php //? Se hace esta valiación para que no aparezca el botón en registrar.
+          if (isset($_POST['CRUD'])) { ?>
         <a id="temarioDW" href="<?php echo isset($curso) ? $curso -> curs_temario : "No subido"; ?>" download
           class="btn btn-descarga" role="button"><i class="fas fa-file-download"
-            style="padding-right: 10px;"></i>Descargar temario</a>
+            style="padding-right: 10px;"></i>Descargar temario</a>          
+        <?php } ?>
+
         <?php if (isset($_POST['CRUD'])) { ?>
         <?php if ($_POST['CRUD'] == 1) { ?>
         <button id="btn-actualizar-curso" type="button"
