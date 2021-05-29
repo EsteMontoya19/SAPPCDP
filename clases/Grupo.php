@@ -136,16 +136,15 @@
         {
             $SQL_Act_Curso = 
             "   
-            SELECT i.prof_id_profesor, i.grup_id_grupo, grup_modalidad, cons_id_constancias,
-                curs_nombre, curs_tipo, curs_nivel, curs_num_sesiones, 
-                cale_semestre
-            FROM inscripcion i, grupo g, curso c, profesor p, calendario ca
-            WHERE i.prof_id_profesor = $idProfesor 
-                AND i.grup_id_grupo = g.grup_id_grupo 
-                AND g.curs_id_cursos = c.curs_id_cursos 
-                AND g.prof_id_profesor = p.prof_id_profesor 
-                AND g.cale_id_calendario = ca.cale_id_calendario 
-            ORDER BY i.grup_id_grupo DESC;
+            SELECT I.PROF_ID_PROFESOR, I.GRUP_ID_GRUPO, C.CURS_ID_CURSOS, GRUP_MODALIDAD, CONS_ID_CONSTANCIAS,
+                CURS_NOMBRE, CURS_NUM_SESIONES, G.PLAT_ID_PLATAFORMA, GRUP_REUNION, CALE_SEMESTRE
+            FROM INSCRIPCION I, GRUPO G, CURSO C, PROFESOR P, CALENDARIO CA
+            WHERE I.PROF_ID_PROFESOR = 2
+                AND I.GRUP_ID_GRUPO = G.GRUP_ID_GRUPO 
+                AND G.CURS_ID_CURSOS = C.CURS_ID_CURSOS 
+                AND G.PROF_ID_PROFESOR = P.PROF_ID_PROFESOR 
+                AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO 
+            ORDER BY I.GRUP_ID_GRUPO DESC;
             ";
             
             $bd = new BD();
@@ -155,6 +154,48 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }
+
+        function buscarDatosEnLinea($id)
+        {
+            $SQL_Bus_Grupo = 
+            "  
+                SELECT PLAT_NOMBRE, GRUP_ACCESO
+                FROM GRUPO G, PLATAFORMA PA
+                WHERE G.PLAT_ID_PLATAFORMA=PA.PLAT_ID_PLATAFORMA AND GRUP_MODALIDAD='En línea' 
+                AND GRUP_ID_GRUPO=$id 
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Grupo);
+            $obj_Grupo = $transaccion_1->traerObjeto(0);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
+        }
+
+        function buscarDatosPresencial($id)
+        {
+            $SQL_Bus_Grupo = 
+            "   
+                SELECT GRUP_MODALIDAD, SALO_NOMBRE, EDIF_NOMBRE 
+                FROM GRUPO G, PLATAFORMA PA, SALON S, EDIFICIO E
+                WHERE G.SALO_ID_SALON=S.SALO_ID_SALON AND S.EDIF_ID_EDIFICIO = E.EDIF_ID_EDIFICIO 
+                AND GRUP_MODALIDAD='Presencial' AND GRUP_ID_GRUPO=$id
+
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Grupo);
+            $obj_Grupo = $transaccion_1->traerObjeto(0);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
+        }
+
+        
+
 
         /*Los métodos a partir de aqui están diferenciados pero los de arriba estan creados para permitir un trato indiferente para los 2 tipos de cursos, para una facilidad de manejo*/
         //Permite agregar un grupo presencial
