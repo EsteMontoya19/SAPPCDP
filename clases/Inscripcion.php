@@ -3,14 +3,13 @@
     {
         function agregarInscripcion($grupo, $profesor)
         {
+            /*Se modifico esta función borrando la subconsulta para hacer más eficiente el programa y ahorrarse esa subconsulta por cada ejecución de la función*/
             $SQL_Ins_Ins =
             "INSERT INTO Inscripcion(grup_id_grupo, prof_id_profesor)
              VALUES ($grupo, $profesor);
 
              UPDATE Grupo 
-             SET grup_num_inscritos = (SELECT grup_num_inscritos 
-						               FROM Grupo
-						               WHERE grup_id_grupo = $grupo) + 1
+             SET grup_num_inscritos =  grup_num_inscritos + 1 
              WHERE grup_id_grupo = $grupo
             ";
 

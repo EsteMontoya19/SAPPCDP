@@ -155,6 +155,31 @@
             return ($transaccion_1->traerRegistros());
         }
 
+        //Permite obtener todos los grupos activos a los cuales se ha inscrito un profesor
+        function gruposInscritosActivosxProfesor($idProfesor)
+        {
+            $SQL_Act_Curso = 
+            "   
+            SELECT I.PROF_ID_PROFESOR, I.GRUP_ID_GRUPO, C.CURS_ID_CURSOS, GRUP_MODALIDAD, CONS_ID_CONSTANCIAS,
+                CURS_NOMBRE, CURS_NUM_SESIONES, G.PLAT_ID_PLATAFORMA, GRUP_REUNION, CALE_SEMESTRE
+            FROM INSCRIPCION I, GRUPO G, CURSO C, PROFESOR P, CALENDARIO CA
+            WHERE I.PROF_ID_PROFESOR = 2
+                AND I.GRUP_ID_GRUPO = G.GRUP_ID_GRUPO 
+                AND G.CURS_ID_CURSOS = C.CURS_ID_CURSOS 
+                AND G.PROF_ID_PROFESOR = P.PROF_ID_PROFESOR 
+                AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO 
+                AND grup_activo = true
+            ORDER BY I.GRUP_ID_GRUPO DESC;
+            ";
+            
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Act_Curso);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+        }
+
         function buscarDatosEnLinea($id)
         {
             $SQL_Bus_Grupo = 
