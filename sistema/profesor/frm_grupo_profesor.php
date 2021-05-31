@@ -318,9 +318,9 @@ jQuery(document).ready(function () {
                     <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
                     <div id="Plataforma" class="col-lg-12 form-group">
                       <?php } else if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 0){?>
-                        <div id="Plataforma" class="col-lg-6 form-group">
+                        <div id="Plataforma" class="col-lg-12 form-group">
                       <?php } else {?>
-                        <div id="Plataforma" class="col-lg-6 form-group" style="display: none;">
+                        <div id="Plataforma" class="col-lg-12 form-group" style="display: none;">
                         <?php }?>
                         <label 
                           for="lbID_Plataforma"><b>Plataforma:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
@@ -334,10 +334,10 @@ jQuery(document).ready(function () {
                           <?php } ?>
                         </select>
                       </div>
-                      <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea' && $Grupo-> grup_tipo != 'Público') { ?>
-                      <div id="Acceso" class="col-lg-6 form-group">
+                      <?php if ((isset($Grupo) && $Grupo->grup_modalidad == 'En línea' && $Grupo-> grup_tipo != 'Público') || ($_POST['CRUD']) == 5) { ?>
+                      <div id="Acceso" class="col-lg-12 form-group">
                         <?php } else {?>
-                        <div id="Acceso" class="col-lg-6 form-group" style="display: none;">
+                        <div id="Acceso" class="col-lg-12 form-group" style="display: none;">
                           <?php }?>
                           <label for="lbURL_Acceso"><b>Link de
                               acceso:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
@@ -346,7 +346,7 @@ jQuery(document).ready(function () {
                         </div>
                       </div>
                       <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                        <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea' && $Grupo-> grup_tipo != 'Público') { ?>
+                        <?php if ((isset($Grupo) && $Grupo->grup_modalidad == 'En línea' && $Grupo-> grup_tipo != 'Público') || ($_POST['CRUD']) == 5) { ?>
                         <div id="Reunion" class="col-lg-6 form-group">
                           <?php } else {?>
                           <div id="Reunion" class="col-lg-6 form-group" style="display: none;">
@@ -356,7 +356,7 @@ jQuery(document).ready(function () {
                             <input type="text" class="form-control" id="ID_Reunion" name="ID_Reunion" 
                               value="<?php echo isset($Grupo) ? $Grupo->grup_reunion : ""; ?>">
                           </div>
-                          <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea' && $Grupo-> grup_tipo != 'Público') { ?>
+                          <?php if ((isset($Grupo) && $Grupo->grup_modalidad == 'En línea' && $Grupo-> grup_tipo != 'Público') || ($_POST['CRUD']) == 5) { ?>
                           <div id="Clave" class="col-lg-6 form-group">
                             <?php } else {?>
                             <div id="Clave" class="col-lg-6 form-group" style="display: none;">
