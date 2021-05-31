@@ -184,7 +184,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
               <div class="col-lg-12 form-row">
                 <div class="col-lg-6 form-group">
                   <label for="strContrasenia01">Contraseña: *</label>
-                  <input type="password" class="form-control" id="strContrasenia01" name="strContrasenia01" <?php// echo('value= "' . $usuario->usua_contrasena . '"');?>>
+                  <input type="password" class="form-control" id="strContrasenia01" name="strContrasenia01" <? php// echo('value= "' . $usuario->usua_contrasena . '"');?>>
                   <div style="text-align: center; margin-top:5px">
                     <input type="checkbox" id="ver1" class="ver" onChange="hideOrShowPassword1()" />
                     <label class="text" style="color:#0C4590"><i
