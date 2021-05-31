@@ -428,7 +428,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
       <!-- Botones -->
       <div class="col-lg-12" style="text-align: center;">
         <button id="btn-regresar-usuario" type="button" class="btn btn-success btn-footer btn-regresar">Regresar</button>
-        <button id="btn-actualizar-usuario" type="button" class="btn btn-success btn-footer btn-aceptar">Guardar</button>
+        <button id="btn-actualizar-usuario-mi-cuenta" type="button" class="btn btn-success btn-footer btn-aceptar">Guardar</button>
       </div>
     </div>
   </div>
