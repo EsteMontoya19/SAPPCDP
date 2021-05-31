@@ -189,11 +189,19 @@
   } 
 
   if ($_POST['dml'] == 'inscripcion') {
-    $grupo = $_POST['grupo'];
     $persona = $_POST['persona'];
+    $grupo = $obj_Grupo->buscarGrupo($_POST['grupo']);
+    $sesiones = $obj_Sesion->buscarSesionesIDGrupo($grupo->grup_id_grupo);
+
+    //? Prueba para hacer las comparaciones
+    /*$file = fopen("Mensajes.txt", "a");
+    fwrite($file, $grupo->grup_id_grupo.PHP_EOL);
+    fwrite($file, sizeof($sesiones).PHP_EOL);
+    fwrite($file, $grupo->grup_id_grupo.PHP_EOL);
+    fclose($file);*/
 
     $profesor = $obj_Profesor->buscarProfesor($persona);
-    $inscrito =  $obj_Inscripcion->buscarInscripcion($grupo, $profesor->prof_id_profesor);
+    $inscrito =  $obj_Inscripcion->buscarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
 
     
     if  (isset($inscrito) && $inscrito != "") {
@@ -201,7 +209,7 @@
     } //else if (isset($obj_Inscripcion->buscarCupo($grupo))) {}
     //TODO: Aqui podría ir la validación del translape en un else if, el código de salida sería el 3
     //TODO: Validar que los periodos de inscripción sean correctos
-    $obj_Inscripcion->agregarInscripcion($grupo, $profesor->prof_id_profesor);
+    $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
     exit("1");
   }
 ?>

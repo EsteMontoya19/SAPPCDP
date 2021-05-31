@@ -332,10 +332,10 @@ function validarFormularioUsuario() {
             return false;
         }
 
-        if ($('#strHoraFin').val() >= $('#strHoraInicio').val()) {
+        if ($('#strHoraFin').val() <= $('#strHoraInicio').val()) {
             $('html, body').animate({ scrollTop: 200 }, 'slow');
             document.getElementById('strHoraFin').focus();
-            alertify.error('La hora de fin no puede ser mayor o igual a la inicial.');
+            alertify.error('La hora de fin no puede ser menor o igual a la inicial.');
             return false;
         }
     }

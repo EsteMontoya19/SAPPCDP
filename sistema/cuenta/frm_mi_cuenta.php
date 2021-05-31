@@ -256,7 +256,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                 <?php } ?>
                     <label for="numCuenta" class = "negritas">Número de cuenta:*</label>
                       <input value="<?php echo isset($moderador) ? $moderador-> mode_num_cuenta : ""; ?>" type="text" 
-                        class="form-control" name="lbNumCuenta"  id="intNumCuenta">
+                        class="form-control" name="lbNumCuenta"  id="intNumCuenta" disabled>
                   </div> 
                 <?php if (isset($usuario) && $usuario->rol_id_rol == 2) { ?>
                   <div id="diasServicio" class="col-lg-6 form-group">
@@ -269,9 +269,9 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                         <input class="form-check-input" type="checkbox" id="strDiaServicio<?php echo ($dia['dia_id_dia']);?>" value="<?php echo ($dia['dia_id_dia']);?>" name="strDiaServicio<?php echo ($dia['dia_id_dia']);?>" 
                           <?php if(isset($moderador_dia) && is_array($moderador_dia) || is_object($moderador_dia)) { 
                             foreach ($moderador_dia as $diaModerador) {
-                              if ($diaModerador['dia_id_dia'] == $dia['dia_id_dia']) { ?> checked <?php } 
+                              if ($diaModerador['dia_id_dia'] == $dia['dia_id_dia']) { ?> checked<?php } 
                             }
-                          }?>>
+                          }?> disabled>
                         <label class="form-check-label" for="inlineCheckbox1"><?php echo ($dia['dia_nombre']);?></label>
                       </div>
                     <?php } ?>
@@ -284,7 +284,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                   <div id="fechaInicio" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="fechaInicio" class = "negritas">Fecha de inicio del servicio: *</label>
-                    <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_inicio: ""; ?>" type="date" class="form-control" name="strFechaInicio" id="strFechaInicio">
+                    <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_inicio: ""; ?>" type="date" class="form-control" name="strFechaInicio" id="strFechaInicio" disabled>
                   </div>
                 <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="fechaFin" class="col-lg-3 form-group">
@@ -292,7 +292,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                   <div id="fechaFin" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="fechaFin" class = "negritas">Fecha de fin del servicio:*</label>
-                    <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_fin: ""; ?>" type="date" class="form-control" name="strFechaFin" id="strFechaFin">
+                    <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_fin: ""; ?>" type="date" class="form-control" name="strFechaFin" id="strFechaFin" disabled>
                   </div>
                 <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="horaInicio" class="col-lg-3 form-group">
@@ -300,7 +300,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                   <div id="horaInicio" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="horaInicio" class = "negritas">Hora de inicio del servicio: *</label>
-                    <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_inicio: ""; ?>" type="time" class="form-control" name="strHoraInicio" id="strHoraInicio">
+                    <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_inicio: ""; ?>" type="time" class="form-control" name="strHoraInicio" id="strHoraInicio" disabled>
                   </div>
                 <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="horaFin" class="col-lg-3 form-group">
@@ -308,7 +308,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                   <div id="horaFin" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="horaFin" class = "negritas">Hora de fin del servicio: *</label>
-                    <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_fin: ""; ?>" type="time" class="form-control" name="strHoraFin" id="strHoraFin"> 
+                    <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_fin: ""; ?>" type="time" class="form-control" name="strHoraFin" id="strHoraFin" disabled> 
               </div>  <!-- Cierre div de datos row -->
               
               <div class="col-lg-12 form-row" style="margin-top: 15px;">  

@@ -24,6 +24,22 @@ $(document).ready(function () {
 });
 
 //Validar el formulario de cursos
+$('input[type="file"]').on('change', function(){
+    var ext = $( this ).val().split('.').pop();
+    if ($( this ).val() != '') {
+      if(ext == "pdf"){
+        if($(this)[0].files[0].size > 1){      
+          $(this).val('');
+          alertify.error('El temario debe tener un peso maximo de 1 MB.');
+        }
+      }
+      else
+      {
+        $( this ).val('');
+        alertify.error('La extensión del archivo debe ser pdf. ');
+      }
+    }
+  });
 function validarFormularioCurso() {
     if ($('#strNombreCurso').val() == '') {
         $('html, body').animate({ scrollTop: 0 }, 'slow');
