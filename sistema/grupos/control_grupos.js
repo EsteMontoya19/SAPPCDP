@@ -607,7 +607,7 @@ function listaAlumnos(id) {
 
 // Cambiar estatus_activo del grupo
 function cambioPublicacion(id, estatus, nombreCurso, modalidad) {
-    var mensaje = '¿Está seguro que desea cambiar el estatus del grupo: ';
+    var mensaje = '¿Está seguro que desea cambiar el  estado de publicación del grupo: ';
     mensaje = mensaje.concat(id);
     mensaje = mensaje.concat(' del curso: ');
     mensaje = mensaje.concat(nombreCurso);
