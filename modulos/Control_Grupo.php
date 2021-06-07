@@ -190,127 +190,80 @@
 
   if ($_POST['dml'] == 'inscripcion') {
     $persona = $_POST['persona'];
-    
     $grupo = $obj_Grupo->buscarGrupo($_POST['grupo']);
-    $sesiones = $obj_Sesion->buscarSesionesIDGrupo($grupo->grup_id_grupo);
-
-    //? Prueba para hacer las comparaciones
-    /*$file = fopen("Mensajes.txt", "a");
-    fwrite($file, $grupo->grup_id_grupo.PHP_EOL);
-    fwrite($file, sizeof($sesiones).PHP_EOL);
-    fwrite($file, $grupo->grup_id_grupo.PHP_EOL);
-    fclose($file);*/
-
     $profesor = $obj_Profesor->buscarProfesor($persona);
     $inscrito =  $obj_Inscripcion->buscarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
 
-    
+    //? Prueba para hacer las comparaciones
+    /*$file = fopen("Mensajes.txt", "a");
+      fwrite($file, $grupo->grup_id_grupo.PHP_EOL);
+      fwrite($file, count($grupos_profesor).PHP_EOL);
+      fwrite($file, $inscrito.PHP_EOL);
+      fclose($file);*/
+
     if  (isset($inscrito) && $inscrito != "") {
       exit("2");
+    } else {
       $grupos_profesor = $obj_Grupo->gruposInscritosActivosxProfesor($profesor->prof_id_profesor);
-
       //Obtiene todas las sesiones del grupo al que se desea inscribir
-      $obj_Sesion = new Sesion();
-      $sesiones = $obj_Sesion->buscarSesionesIDGrupo($grupo);
+      $sesiones_nuevo = $obj_Sesion->buscarSesionesIDGrupo($grupo->grup_id_grupo);
 
       foreach ($grupos_profesor as $grupo_inscrito){
         //Obtiene todas las sesiones del $grupo_inscrito, que es uno de los grupos a los que actualmente esta inscrito
         $obj_Sesion2 = new Sesion();
-        $sesiones2 = $obj_Sesion2->buscarSesionesIDGrupo($grupo_inscrito->grup_id_grupo); //?hora_inicio[$iCont]
-            
-        foreach ($sesiones as $sesion_grupo_nuevo){
-          foreach($sesiones2 as $sesion_grupo_inscrito){
-            if($sesion_grupo_inscrito->sesi_hora_fin <= $sesion_grupo_nuevo->sesi_hora_inicio){
+        $sesiones_inscritas = $obj_Sesion2->buscarSesionesIDGrupo($grupo_inscrito['grup_id_grupo']);
+        
+        //Se crean variables primera sesion y ultima sesion para poder realizar las comparaciones pertinentes
+        $ultima_sesion = count($sesiones_inscritas) - 1;
+        $primera_sesion = 0;
+
+        /*si el grupo inscrito en su última sesion < grupo a inscribir en su primera sesion
+        no hay traslape porque todas las sesiones del grupo inscrito terminan antes de que comiencen las del grupo a inscribir*/
+        if($sesiones_inscritas[$ultima_sesion]['sesi_fecha'] < $sesiones_nuevo[$primera_sesion]['sesi_fecha']){
+          // TODO:Dejar inscribir
+        } else {
+          /*Si el grupo inscrito en su ultima sesión == grupo a inscribir en su primera sesion
+          Puede haber traslape si las horas son las mismas*/
+          if($sesiones_inscritas[$ultima_sesion]['sesi_fecha'] == $sesiones_nuevo[$primera_sesion]['sesi_fecha']){
+            /*Si la hora fin del grupo nuevo es menor o igual al inicio de la sesión del grupo inscrito:El usuario se puede inscribir (No hay traslape)*/
+            if($sesiones_inscritas[$ultima_sesion]['sesi_hora_fin'] <= $sesiones_nuevo[$primera_sesion]['sesi_hora_inicio']){
+              // TODO: Descubrir
             } else {
-              if($sesion_grupo_inscrito->sesi_hora_inicio >= $sesion_grupo_nuevo->sesi_hora_fin){
+              // TODO: Descubrir
+            }
+          } else{
+            /*si grupo inscrito en primera sesion > grupo a inscribir en ultima sesión 
+            no hay traslape porque el grupo a inscribir tiene todas sus sesiones antes que el grupo inscrito*/
+            if ($sesiones_inscritas[$primera_sesion]['sesi_fecha'] > $sesiones_nuevo[$ultima_sesion]['sesi_fecha']){
+              // TODO: Dejar inscribir
+            } else {
+              /*Si el grupo inscrito en su primera sesión es = al nuevo en su ultima sesión, solo se verifica que no haya traslape en las horas*/
+              if($sesiones_inscritas[$primera_sesion]['sesi_fecha'] == $sesiones_nuevo[$ultima_sesion]['sesi_fecha']){
+                //TODO: En construcción
+                
               } else {
-                exit("3");
+                
+                //Se tienen que comparar todas las sesiones porque puede existir traslape
+                foreach ($sesiones_nuevo as $sesion_grupo_nuevo){
+                  foreach($sesiones_inscritas as $sesion_grupo_inscrito){
+                    /*Si la sesion inscrita en hora fin es menor o igual a la nueva en su hora de inicio no hay traslape, 
+                    no se pone nada dentro de ese if porque debe validar todas las sesiones, para que en caso de ser correcto en la primera no lo inscriba inmediatamente*/
+                    if($sesion_grupo_inscrito['sesi_hora_fin'] <= $sesion_grupo_nuevo['sesi_hora_inicio']){
+                    } else {
+                      /*Si la sesion inscrita en su hora de inicio era mayor o igual a la nueva en su hora de fin, no hay traslape,
+                      no se pone nada dentro de ese if porque debe validar todas las sesiones, para que en caso de ser correcto en la primera no lo inscriba inmediatamente*/
+                      if($sesion_grupo_inscrito['sesi_hora_inicio'] >= $sesion_grupo_nuevo['sesi_hora_fin']){
+                      } else {
+                        exit("3");
+                      }
+                    }
+                  }
+                }
               }
             }
           }
         }
-        $obj_Inscripcion->agregarInscripcion($grupo, $profesor->prof_id_profesor);
-        exit("1");
-        /*
-          si el grupo inscrito en su última sesion < grupo a inscribir en su primera sesion
-          no hay traslape porque todas las sesiones del grupo inscrito terminan antes de que comiencen las del grupo a inscribir
-          */
-        // if($sesiones2[count($sesiones2) - 1]->sesi_fecha < $sesiones[0]->sesi_fecha){
-        //   $obj_Inscripcion->agregarInscripcion($grupo, $profesor->prof_id_profesor);
-        //   exit("1");
-        // } else {
-        //   /*
-        //   Si el grupo inscrito en su ultima sesión == grupo a inscribir en su primera sesion
-        //   Puede haber traslape si las horas son las mismas
-        //    */
-        //   if($sesiones2[count($sesiones2) - 1]->sesi_fecha == $sesiones[0]->sesi_fecha){
-        //     /*
-        //       Si la hora fin del grupo nuevo es menor o igual al inicio de la sesión del grupo inscrito:
-        //       El usuario se puede inscribir (No hay traslape)
-        //     */
-        //     if($sesiones2[count($sesiones2) - 1]->sesi_hora_fin <= $sesiones[0]->sesi_hora_inicio){
-        //       $obj_Inscripcion->agregarInscripcion($grupo, $profesor->prof_id_profesor);
-        //       exit("1");
-        //     } else {
-        //       /*
-        //         Si la hora inicio del grupo nuevo es mayor o igual a la hora fin de la sesión del grupo inscrito:
-        //         El usuario se puede inscribir (No hay traslape)
-        //       */
-        //       if($sesiones2[count($sesiones2)]->sesi_hora_inicio >= $sesiones[0]->sesi_hora_fin){
-        //         $obj_Inscripcion->agregarInscripcion($grupo, $profesor->prof_id_profesor);
-        //         exit("1");
-        //       } else {
-        //         // El usuario no se puede inscribir porque el 
-        //         exit("3");
-        //       }
-        //     }
-        //   } else {
-        //     /*
-        //     si grupo inscrito en primera sesion > grupo a inscribir en ultima sesión 
-        //     no hay traslape porque el grupo a inscribir tiene todas sus sesiones antes que el grupo inscrito
-        //     */
-        //     if ($sesiones2[0]->sesi_fecha > $sesiones[count($sesiones) - 1]->sesi_fecha){
-        //       $obj_Inscripcion->agregarInscripcion($grupo, $profesor->prof_id_profesor);
-        //       exit("1");
-        //     } else {
-        //       if($sesiones2[0]->sesi_fecha == $sesiones[count($sesiones) - 1]->sesi_fecha){
-        //         if($sesiones2[0]->sesi_hora_fin <= $sesiones[count($sesiones) - 1]->sesi_hora_inicio){
-        //           $obj_Inscripcion->agregarInscripcion($grupo, $profesor->prof_id_profesor);
-        //           exit("1");
-        //         } else {
-        //           if($sesiones2[0]->sesi_hora_inicio >= $sesiones[count($sesiones) - 1]->sesi_hora_fin){
-        //             $obj_Inscripcion->agregarInscripcion($grupo, $profesor->prof_id_profesor);
-        //             exit("1");
-        //           } else {
-        //             exit("3");
-        //           }
-        //         }
-        //       } else {
-        //         foreach ($sesiones as $sesion_grupo_nuevo){
-        //           foreach($sesiones2 as $sesion_grupo_inscrito){
-        //             if($sesion_grupo_inscrito->sesi_hora_fin <= $sesion_grupo_nuevo->sesi_hora_inicio){
-        //             } else {
-        //               if($sesion_grupo_inscrito->sesi_hora_inicio >= $sesion_grupo_nuevo->sesi_hora_fin){
-        //               } else {
-        //                 exit("3");
-        //               }
-        //             }
-        //           }
-        //         }
-        //         $obj_Inscripcion->agregarInscripcion($grupo, $profesor->prof_id_profesor);
-        //         exit("4");
-        //       }
-        //     }
-        //   }
-        // }
       }
     }
-    // //else if (isset($obj_Inscripcion->buscarCupo($grupo))) {}
-    // $obj_Inscripcion->agregarInscripcion($grupo, $profesor->prof_id_profesor);
-    // exit("1");
-    } //else if (isset($obj_Inscripcion->buscarCupo($grupo))) {}
-    //TODO: Validar que los periodos de inscripción sean correctos
-    $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
-    exit("1");
   }
 ?>

@@ -94,7 +94,7 @@ function inscribirGrupo (grupo,inscritos, cupo, persona, nombre, tipo, nivel) {
                         } else if (respuesta.endsWith('3')) {
                             alertify.error('Los horarios de las sesiones del grupo se contraponen con otro grupo previamente inscrito.');
                         } else if (respuesta.endsWith('4')) {
-                            alertify.error('Llegó al final de if');
+                            alertify.error('Llegó al pedazo del codigo que se queria');
                         } else {
                             alertify.error('Hubo un error al inscribirse al grupo');
                         }
