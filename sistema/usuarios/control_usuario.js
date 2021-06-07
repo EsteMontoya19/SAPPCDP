@@ -17,7 +17,7 @@ $(document).ready(function () {
 });
 
 // Validar el formulario alumnos
-function validarFormularioUsuario() {
+function validarFormularioUsuario($miCuenta) {
     if ($('#strUsuarioNombre').val() == '') {
         $('html, body').animate({ scrollTop: 0 }, 'slow');
         document.getElementById('strUsuarioNombre').focus();
@@ -136,74 +136,77 @@ function validarFormularioUsuario() {
     }
 
     //? Validación datos de usuario
-    if ($('#strNombreUsuario').val() == '') {
-        alertify.error('Se debe ingresar el identificador del usuario');
-        $('html, body').animate({ scrollTop: 200 }, 'slow');
-        document.getElementById('strNombreUsuario').focus();
-        return false;
-    } else {
-        if ($('#strNombreUsuario').val().length > 15) {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
+    if ($miCuenta == false) {
+        if ($('#strNombreUsuario').val() == '') {
+            alertify.error('Se debe ingresar el identificador del usuario');
+            $('html, body').animate({ scrollTop: 200 }, 'slow');
             document.getElementById('strNombreUsuario').focus();
-            alertify.error('El nombre de usuario debe tener máximo 15 caracteres');
+            return false;
+        } else {
+            if ($('#strNombreUsuario').val().length > 15) {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('strNombreUsuario').focus();
+                alertify.error('El nombre de usuario debe tener máximo 15 caracteres');
+                return false;
+            }
+        }
+    
+
+        if ($('#intUsuarioRol').val() == 0) {
+            alertify.error('Debe seleccionar un rol de usuario');
+            $('html, body').animate({ scrollTop: 200 }, 'slow');
+            document.getElementById('intUsuarioRol').focus();
             return false;
         }
-    }
 
-    if ($('#intUsuarioRol').val() == 0) {
-        alertify.error('Debe seleccionar un rol de usuario');
-        $('html, body').animate({ scrollTop: 200 }, 'slow');
-        document.getElementById('intUsuarioRol').focus();
-        return false;
-    }
+        if ($('#UsuarioPregunta').val() == 0) {
+            alertify.error('Debe seleccionar una pregunta de seguridad');
+            $('html, body').animate({ scrollTop: 250 }, 'slow');
+            document.getElementById('UsuarioPregunta').focus();
+            return false;
+        }
 
-    if ($('#UsuarioPregunta').val() == 0) {
-        alertify.error('Debe seleccionar una pregunta de seguridad');
-        $('html, body').animate({ scrollTop: 250 }, 'slow');
-        document.getElementById('UsuarioPregunta').focus();
-        return false;
-    }
-
-    if ($('#UsuarioRespuesta').val() == '') {
-        alertify.error('Se debe ingresar una respuesta a la pregunta');
-        $('html, body').animate({ scrollTop: 200 }, 'slow');
-        document.getElementById('UsuarioRespuesta').focus();
-        return false;
-    } else {
-        if ($('#UsuarioRespuesta').val().length > 30) {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
+        if ($('#UsuarioRespuesta').val() == '') {
+            alertify.error('Se debe ingresar una respuesta a la pregunta');
+            $('html, body').animate({ scrollTop: 200 }, 'slow');
             document.getElementById('UsuarioRespuesta').focus();
-            alertify.error('La respuesta debe tener máximo 15 caracteres');
             return false;
+        } else {
+            if ($('#UsuarioRespuesta').val().length > 30) {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('UsuarioRespuesta').focus();
+                alertify.error('La respuesta debe tener máximo 15 caracteres');
+                return false;
+            }
         }
-    }
 
-    if ($('#strContrasenia01').val() == '') {
-        alertify.error('Debe ingresar una contraseña');
-        $('html, body').animate({ scrollTop: 250 }, 'slow');
-        document.getElementById('strContrasenia01').focus();
-        return false;
-    } else {
-        if ($('#strContrasenia01').val().length > 20) {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
+        if ($('#strContrasenia01').val() == '') {
+            alertify.error('Debe ingresar una contraseña');
+            $('html, body').animate({ scrollTop: 250 }, 'slow');
             document.getElementById('strContrasenia01').focus();
-            alertify.error('La contraseña debe tener máximo 20 caracteres.');
+            return false;
+        } else {
+            if ($('#strContrasenia01').val().length > 20) {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('strContrasenia01').focus();
+                alertify.error('La contraseña debe tener máximo 20 caracteres.');
+                return false;
+            }
+        }
+
+        if ($('#strContrasenia02').val() == '') {
+            alertify.error('Debe ingresar la confirmación de la contraseña');
+            $('html, body').animate({ scrollTop: 250 }, 'slow');
+            document.getElementById('strContrasenia02').focus();
             return false;
         }
-    }
 
-    if ($('#strContrasenia02').val() == '') {
-        alertify.error('Debe ingresar la confirmación de la contraseña');
-        $('html, body').animate({ scrollTop: 250 }, 'slow');
-        document.getElementById('strContrasenia02').focus();
-        return false;
-    }
-
-    if ($('#strContrasenia01').val() != $('#strContrasenia02').val()) {
-        alertify.error('Las contraseña no coinciden en alguno de los campos');
-        $('html, body').animate({ scrollTop: 300 }, 'slow');
-        document.getElementById('strContrasenia01').focus();
-        return false;
+        if ($('#strContrasenia01').val() != $('#strContrasenia02').val()) {
+            alertify.error('Las contraseña no coinciden en alguno de los campos');
+            $('html, body').animate({ scrollTop: 300 }, 'slow');
+            document.getElementById('strContrasenia01').focus();
+            return false;
+        }
     }
 
     //? Validación datos de cuenta según rol
@@ -332,10 +335,10 @@ function validarFormularioUsuario() {
             return false;
         }
 
-        if ($('#strHoraFin').val() >= $('#strHoraInicio').val()) {
+        if ($('#strHoraFin').val() <= $('#strHoraInicio').val()) {
             $('html, body').animate({ scrollTop: 200 }, 'slow');
             document.getElementById('strHoraFin').focus();
-            alertify.error('La hora de fin no puede ser mayor o igual a la inicial.');
+            alertify.error('La hora de fin no puede ser menor o igual a la inicial.');
             return false;
         }
     }
@@ -442,6 +445,7 @@ function validarFormularioUsuario() {
     return true;
 }
 
+
 // Auto registro profesor
 $(document).ready(function () {
     $('#btn-registrar-profesor').click(function () {
@@ -536,7 +540,43 @@ function actualizarUsuario(id, persona, rol) {
 }
 $(document).ready(function () {
     $('#btn-actualizar-usuario').click(function () {
-        if (validarFormularioUsuario()) {
+        if (validarFormularioUsuario(false)) {
+            datos = $('#form_usuario').serialize();
+            $.ajax({
+                type: 'POST',
+                url: '../modulos/Control_Usuario.php',
+                data: datos,
+                success: function (respuesta) {
+                    console.log(respuesta);
+                    if (respuesta.endsWith('1')) {
+                        alertify.success('El registro se actualizó correctamente');
+                        setTimeout(function () {
+                            $('html, body').animate({ scrollTop: 0 }, 0);
+                            $('#container').load('../sistema/usuarios/frm_inicio_usuarios.php');
+                        }, 0);
+                    } else if (respuesta.endsWith('2')) {
+                        $('html, body').animate({ scrollTop: 200 }, 'slow');
+                        document.getElementById('strNombreUsuario').focus();
+                        alertify.error('El nombre de usuario ya existe');
+
+                    } else if(respuesta.endsWith('10')) {
+                        alertify.success('El registro se actualizó correctamente');
+                        setTimeout(function () {
+                            $('html, body').animate({ scrollTop: 0 }, 0);
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        alertify.error('Hubo un problema al registrar al usuario');
+                    }
+                },
+            });
+            return false;
+        }
+    });
+});
+$(document).ready(function () {
+    $('#btn-actualizar-usuario-mi-cuenta').click(function () {
+        if (validarFormularioUsuario(true)) {
             datos = $('#form_usuario').serialize();
             $.ajax({
                 type: 'POST',

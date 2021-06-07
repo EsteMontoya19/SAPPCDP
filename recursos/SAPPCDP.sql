@@ -141,7 +141,7 @@ INSC_ID_INSCRIPCION
 /*==============================================================*/
 create table CALENDARIO (
    CALE_ID_CALENDARIO    SERIAL                 not null,
-   CALE_SEMESTRE         DATE                 not null,
+   CALE_SEMESTRE         VARCHAR(20)                 not null,
    CALE_INICIO_CICLO      DATE                 not null,
    CALE_FIN_CICLO        DATE                 not null,
    CALE_INICIO_EXAMENES    DATE                 not null,

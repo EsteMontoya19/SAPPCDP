@@ -7,6 +7,8 @@
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
   $obj_Profesor = new Profesor();
+
+  $arr_grupos = null;
   
   if (isset($_POST['persona'])){
     $idPersona = $_POST['persona'];
@@ -56,14 +58,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($arr_grupos as $grupo) { 
-                  $idGrupo = $grupo['grup_id_grupo'];
-                  $sesion = $obj_Sesion->buscarMinSesion($idGrupo);
-                  if($grupo['grup_modalidad'] == 'En línea'){
-                    $modalidad=$obj_Grupo->buscarDatosEnLinea($idGrupo);
-                  } else {
-                    $modalidad=$obj_Grupo->buscarDatosPresencial($idGrupo);
-                  }
+                <?php
+                if (isset($arr_grupos)) {
+                  foreach ($arr_grupos as $grupo) { 
+                   $idGrupo = $grupo['grup_id_grupo'];
+                   $sesion = $obj_Sesion->buscarMinSesion($idGrupo);
+                   if($grupo['grup_modalidad'] == 'En línea'){
+                     $modalidad=$obj_Grupo->buscarDatosEnLinea($idGrupo);
+                   } else {
+                     $modalidad=$obj_Grupo->buscarDatosPresencial($idGrupo);
+                   }
+                }
                 ?>
 
                       <tr>
