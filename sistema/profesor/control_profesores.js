@@ -93,8 +93,13 @@ function inscribirGrupo (grupo,inscritos, cupo, persona, nombre, tipo, nivel) {
                             alertify.error('Usted ya esta inscrito a este grupo.');
                         } else if (respuesta.endsWith('3')) {
                             alertify.error('Los horarios de las sesiones del grupo se contraponen con otro grupo previamente inscrito.');
+                        } else if (respuesta.endsWith('4')) {
+                            alertify.error('Llegó al pedazo del codigo que se queria');
+                        } else if (respuesta.endsWith('5')) {
+                            alertify.error('Se ha inscrito adecuadamente');
                         } else {
-                            alertify.error('Hubo un error al inscribirse al grupo');
+                            alertify.error('Estoy ignorando todo');
+                            // alertify.error('Hubo un error al inscribirse al grupo');
                         }
                         /*setTimeout(function () {
                             $('#container').load('../sistema/profesor/frm_inicio_profesores.php');

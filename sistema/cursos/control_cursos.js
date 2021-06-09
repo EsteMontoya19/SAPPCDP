@@ -27,8 +27,10 @@ $(document).ready(function () {
 $('input[type="file"]').on('change', function(){
     var ext = $( this ).val().split('.').pop();
     if ($( this ).val() != '') {
-      if(ext == "pdf"){
-        if($(this)[0].files[0].size > 1){      
+        if (ext == "pdf") {
+        
+        if($(this)[0].files[0].size > 1000000){    
+            
           $(this).val('');
           alertify.error('El temario debe tener un peso maximo de 1 MB.');
         }

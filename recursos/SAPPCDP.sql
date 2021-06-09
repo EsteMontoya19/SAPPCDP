@@ -25,7 +25,7 @@ INSERT INTO Administrador (pers_id_persona, admi_num_trabajador, admi_rfc) VALUE
 
 INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza, prof_rfc) 
       VALUES (3, '123457890', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber','KAFA12345');
-	 
+
 INSERT INTO Moderador (pers_id_persona, mode_num_cuenta, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin) 
 		VALUES (2, '123457890', '2021/02/23', '2021/09/08','07:00:00', '21:00:00');
 
@@ -75,11 +75,11 @@ INSERT INTO Grupo (MODE_ID_MODERADOR, PROF_ID_PROFESOR, CURS_ID_CURSOS, SALO_ID_
                '2021/02/23', '2021/09/08'),
                (1, 1, 1, 1, 
                1, null, null, null, null, 
-               60, 'Público', 'true', 'Presencial', 'Rechazado', 
+               60, 'Público', 'true', 'Presencial', 'Aprobado', 
                '2021/02/25', '2021/09/07'),
                (1, 1, 1, null, 1, 
                1, 'grupo reunion3', 'grupo acceso3', 'clave3', 
-               25, 'Público', 'true', 'En línea', 'Rechazado', 
+               25, 'Público', 'true', 'En línea', 'Aprobado', 
                '2021/02/28', '2021/09/09');
 
 INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin)
