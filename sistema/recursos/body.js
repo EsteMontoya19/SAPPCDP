@@ -69,6 +69,22 @@ function miCuenta(id, persona) {
         },
     });
 }
+// Cambio de contraseña y datos de usuario
+function cambiarContrasena(id, persona) {
+    var datos = {
+        id: id,
+        persona: persona,
+    };
+
+    $.ajax({
+        data: datos,
+        type: 'POST',
+        url: '../sistema/cuenta/frm_validacion.php',
+        success: function (data) {
+            $('#container').html(data);
+        },
+    });
+}
 
 //Listar Grupos publicados
 function gruposPublicados(persona) {
@@ -102,19 +118,4 @@ function gruposInscritos(persona) {
     });
 }
 
-// Cambiar contraseña
-function cambiarContraseña(id, persona) {
-    var datos = {
-        id: id,
-        persona: persona,
-    };
 
-    $.ajax({
-        data: datos,
-        type: 'POST',
-        url: '../sistema/cuenta/frm_cambiar_contrasena.php',
-        success: function (data) {
-            $('#container').html(data);
-        },
-    });
-}
