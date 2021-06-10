@@ -14,8 +14,8 @@ INSERT INTO Persona (pers_nombre, pers_apellido_paterno, pers_apellido_materno, 
 
 INSERT INTO Rol (rol_nombre) VALUES ('Administrador del sistema'),('Moderador'),('Profesor');
 
-INSERT INTO PREGUNTA_SEGURIDAD (prse_pregunta) VALUES ('Como se llamaba tu primer mascota'), ('Pelicula de acción favorita'),
-			('Superherore favorito');
+INSERT INTO PREGUNTA_SEGURIDAD (prse_pregunta, prse_activo) VALUES ('Como se llamaba tu primer mascota', 'TRUE'), ('Pelicula de acción favorita', 'TRUE'),
+			('Superherore favorito', 'TRUE');
 
 INSERT INTO Usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usuario, usua_contrasena, usua_respuesta, usua_activo)
 		VALUES (1, 1, 3, 'Esteban', '1234', 'Linterna Verde', true), (2, 2, 3, 'Samuel', '1234', 'Batman', true),
@@ -62,8 +62,8 @@ INSERT INTO CALENDARIO (CALE_SEMESTRE, CALE_INICIO_CICLO, CALE_FIN_CICLO, CALE_I
 						CALE_FIN_ASUETO, CALE_INICIO_INTERSEMESTRAL, CALE_FIN_INTERSEMESTRAL, CALE_INICIO_ADMIN, CALE_FIN_ADMIN, CALE_ACTIVO)
    			VALUES('2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', TRUE);
 
-INSERT INTO PLATAFORMA (PLAT_NOMBRE)
-			VALUES ('Zoom');
+INSERT INTO PLATAFORMA (PLAT_NOMBRE, PLAT_ACTIVO)
+			VALUES ('Zoom', 'TRUE'), ('Google Meet', 'TRUE');
 
 INSERT INTO Grupo (MODE_ID_MODERADOR, PROF_ID_PROFESOR, CURS_ID_CURSOS, SALO_ID_SALON, CALE_ID_CALENDARIO,
                PLAT_ID_PLATAFORMA, GRUP_REUNION, GRUP_ACCESO, GRUP_CLAVE_ACCESO, 
@@ -465,6 +465,7 @@ PERS_ID_PERSONA
 create table PLATAFORMA (
    PLAT_ID_PLATAFORMA   SERIAL               not null,
    PLAT_NOMBRE          VARCHAR(30)          not null,
+   PLAT_ACTIVO          BOOL                 not null,
    constraint PK_PLATAFORMA primary key (PLAT_ID_PLATAFORMA)
 );
 
@@ -481,6 +482,7 @@ PLAT_ID_PLATAFORMA
 create table PREGUNTA_SEGURIDAD (
    prse_id_pregunta     SERIAL               not null,
    prse_pregunta        VARCHAR(100)            not null,
+   prse_ACTIVO          BOOL                 not null,
    constraint PK_PREGUNTA primary key (prse_id_pregunta)
 );
 
