@@ -44,6 +44,10 @@ $(document).ready(function () {
         $('#container').load('../sistema/horarios/frm_inicio_horarios.php');
     });
 
+    $('#btn_preguntaseguridad').click(function () {
+        $('#container').load('../sistema/preguntasseguridad/frm_inicio_preguntasseguridad.php');
+    });
+
     $('#btn_plataforma').click(function () {
         $('#container').load('../sistema/plataformas/frm_inicio_plataformas.php');
     });
