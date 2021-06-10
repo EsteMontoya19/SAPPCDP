@@ -44,7 +44,6 @@
                 <tr>
                   <th>ID</th>
                   <th>Pregunta de Seguridad</th>
-                  <th>Estatus</th>
                   <th>Opciones</th>
                 </tr>
               </thead>
