@@ -33,11 +33,6 @@ $obj_plataforma = new Plataforma();
       </p>
 
       <!-- Formulario -->
-
-
-
-
-
       <form name="form_plataformas" id="form_plataformas" method="POST" enctype="multipart/form-data"
         action="../modulos/Control_Plataforma.php">
 
@@ -74,7 +69,6 @@ $obj_plataforma = new Plataforma();
             <input type="hidden" id="id_Plataforma" name="id_Plataforma" value="<?php echo $_POST['id'];?>">
           <?php }} else { ?>
             <input type="hidden" name="dml" value="insert" />
-            <input type="hidden" id="EstatusPlataforma" name="EstatusPlataforma" value="true">
           <?php } ?>
 
 

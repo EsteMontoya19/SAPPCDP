@@ -146,54 +146,6 @@ $(document).ready(function () {
     });
 });
 
-// Cambiar Estatus Plataforma
-function cambioEstatus(id, estatus, nombre) {
-  var mensaje = '¿Esta seguro de cambiar el estatus de la plataforma ';
-  mensaje = mensaje.concat(nombre);
-  mensaje = mensaje.concat('?<br>');
-  if (estatus == 't') {
-      mensaje = mensaje.concat('Esta acción no afectará el estado de los grupos relacionados.');
-  } else {
-      mensaje = mensaje.concat('Los grupos con estas plataformas no se verán afectados, ésta acción solo impide la creación de nuevos grupos con esta plataforma.');
-  }
-  var titulo = 'Cambio de estatus de la plataforma';
-  alertify.confirm(
-      titulo,
-      mensaje,
-      function () {
-          var dml = 'cambio';
-          var datos = {
-              id: id,
-              dml: dml,
-              estatus: estatus,
-          };
-          $.ajax({
-              data: datos,
-              type: 'POST',
-              url: '../modulos/Control_Plataforma.php',
-              success: function (respuesta) {
-                  console.log(respuesta);
-                  if (respuesta == 1) {
-                      alertify.success('Se cambio el estatus de la plataforma');
-                      setTimeout(function () {
-                          $('#container').load('../sistema/plataformas/frm_inicio_plataformas.php');
-                      }, 1500);
-                  } else {
-                      alertify.error('Hubo un problema al cambiar el estatus de la plataforma');
-                  }
-              },
-          });
-      },
-      function () {
-          alertify.confirm().close();
-          //$('#container').load('../sistema/plataformas/frm_inicio_plataformas.php');
-      }
-  );
-  setTimeout(function () {
-      $('#container').load('../sistema/plataformas/frm_inicio_plataformas.php');
-  }, 1500);
-}
-
 // Tabla dinámica
 $(document).ready(function () {
   $('#tabla_plataformas').DataTable({

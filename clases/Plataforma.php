@@ -2,12 +2,12 @@
 	class Plataforma
   	{
         //Agregar Plataforma
-        function agregarPlataforma ($Nombre, $Activo)
+        function agregarPlataforma ($Nombre)
     	{
 			$SQL_Ins_Plataforma =
 			"
-                INSERT INTO Plataforma(plat_nombre, plat_activo)
-                VALUES ('$Nombre', '$Activo');
+                INSERT INTO Plataforma(plat_nombre)
+                VALUES ('$Nombre');
 			";
 			
 			$bd = new BD();
@@ -32,23 +32,6 @@
 			$transaccion_1 = new Transaccion($bd->conexion);
 			$transaccion_1->enviarQuery($SQL_Act_Plataforma);
 			$bd->cerrarBD();
-		}
-
-        //Cambiar Estado Plataforma
-        function cambiarEstatusPlataforma ($Activo, $id)
-    	{
-			$SQL_Act_Plataforma = 
-            "   
-                UPDATE Plataforma
-                SET plat_activo = '$Activo'
-                WHERE plat_id_plataforma = $id
-            ";
-
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Act_Plataforma);
-            $bd->cerrarBD();
 		}
 
 		//Buscar Plataformas por ID
@@ -92,7 +75,7 @@
     	{
 			$SQL_Bus_Plataformas =
 			"	
-                SELECT plat_id_plataforma, plat_nombre, plat_activo 
+                SELECT plat_id_plataforma, plat_nombre 
                 FROM Plataforma
 			";
 
