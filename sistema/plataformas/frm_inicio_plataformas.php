@@ -1,9 +1,9 @@
 <?php
   include('../../clases/BD.php');
-  include('../../clases/Usuario.php');
+  include('../../clases/Plataforma.php');
 
-  $obj_usuario = new Usuario();
-  $arr_usuarios = $obj_usuario->buscarTodosUsuarios();
+  $obj_plataforma = new Plataforma();
+  $arr_plataformas = $obj_plataforma->buscarTodasPlataformas();
 
   $x = 0;
 ?>
@@ -21,7 +21,7 @@
             </li>
           </ol>
         </div>
-        <div class="col-sm-2" align="center">
+        <div class="col-sm-2" aligne="center">
           <a href="#">
             <button id="btn-registro-plataforma" type="button" class="btn btn-success">
               <i class="fas fa-plus-circle"></i>&nbsp;&nbsp; Agregar
@@ -41,34 +41,38 @@
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-condensed table-hover" id="tabla_usuarios" width="100%" cellspacing="0">
+            <table class="table table-condensed table-hover" id="tabla_plataformas" width="100%" cellspacing="0">
               <thead class="thead-dark">
                 <tr>
                   <th>ID</th>
                   <th>Plataforma</th>
-                  <th>Tipo</th>
+                  <th>Estatus</th>
                   <th>Opciones</th>
                 </tr>
               </thead>
               <tbody>
-               
+                <?php foreach ($arr_plataformas as $plataformas) { ?>
                   <tr>
-                    
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    
+                  <?php $x++; ?>
+                    <td><?php echo $plataformas['plat_id_plataforma']; ?></td>
+                    <td><?php echo $plataformas['plat_nombre']; ?></td>
                     <td>
-                      <button type="button" class="btn btn-primary btn-table" title="Actualizar">
+                      <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input"
+                            id="estatusPlataforma<?php echo $x ?>"
+                            <?php if ($plataformas['plat_activo'] == 't') { ?> checked <?php } ?>
+                            onclick="cambioEstatus(<?php echo $plataformas['plat_id_plataforma']; ?> , '<?php echo $plataformas['plat_activo']; ?>', '<?php echo $plataformas['plat_nombre']; ?>')">
+                        <label class="custom-control-label"
+                            for="estatusPlataforma<?php echo $x ?>"></label>
+                      </div>
+                    <td>
+                      <button type="button" class="btn btn-primary btn-table" title="Actualizar"
+                        onclick="actualizarPlataforma(<?php echo $plataformas['plat_id_plataforma']?>)">
                         <i class="fas fa-edit"></i>
-                      </button>
-                      
-                      <button type="button" class="btn btn-danger btn-table" title="Eliminar">
-                        <i class="fas fa-trash-alt"></i>
-                      </button>
+                      </button> 
                     </td>
                   </tr>
-         
+                <?php } ?>
               </tbody>
             </table>
           </div>
@@ -78,4 +82,4 @@
   </div>
 </div>
 
-<script src="../sistema/plataformas/plataformas.js"></script>
+<script src="../sistema/plataformas/control_plataformas.js"></script>
