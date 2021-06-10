@@ -74,6 +74,7 @@ $obj_PreguntaSeguridad = new PreguntaSeguridad();
             <input type="hidden" id="id_PreguntaSeguridad" name="id_PreguntaSeguridad" value="<?php echo $_POST['id'];?>">
           <?php }} else { ?>
             <input type="hidden" name="dml" value="insert" />
+            <input type="hidden" id="EstatusPreguntaSeguridad" name="EstatusPreguntaSeguridad" value="true">
           <?php } ?>
 
 

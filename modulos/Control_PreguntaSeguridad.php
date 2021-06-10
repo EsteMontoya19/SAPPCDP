@@ -8,11 +8,12 @@
     if($_POST['dml'] == 'insert')
     {
         $Pregunta = $_POST['NombrePreguntaSeguridad'];
+        $Activo = $_POST['EstatusPreguntaSeguridad'];
 
         $existe = $obj_PreguntaSeguridad->buscarPreguntaSeguridadNombre($Pregunta);
 
         if($existe->numero == 0){
-            $obj_PreguntaSeguridad->agregarPreguntaSeguridad($Pregunta);
+            $obj_PreguntaSeguridad->agregarPreguntaSeguridad($Pregunta, $Activo);
             exit("1");
         } else {
             exit("2");
@@ -32,6 +33,24 @@
             exit("2");
         }
     } 
+    elseif ($_POST['dml'] == 'cambio')
+    {
+        $id = $_POST['id'];
+        $Activo = $_POST['estatus'];
+
+        if ($Activo == 't')
+        {
+            $Activo = 'FALSE';
+            $obj_PreguntaSeguridad->cambiarEstatusPreguntaSeguridad($Activo, $id);
+        }
+        elseif($Activo == 'f')
+        {
+            $Activo = 'TRUE';
+            $obj_PreguntaSeguridad->cambiarEstatusPreguntaSeguridad($Activo, $id);
+        }
+        
+        exit("1");
+    }
     else
     {
         exit("0");

@@ -4,6 +4,8 @@
 
   $obj_PreguntaSeguridad = new PreguntaSeguridad();
   $arr_preguntasseguridad = $obj_PreguntaSeguridad->buscarTodasPreguntaSeguridad();
+
+  $x = 0;
 ?>
 
 <div id="wrapper">
@@ -51,8 +53,16 @@
               <tbody>
                 <?php foreach ($arr_preguntasseguridad as $preguntasseguridad) { ?>
                   <tr>
+                  <?php $x++; ?>
                     <td><?php echo $preguntasseguridad['prse_id_pregunta']; ?></td>
                     <td><?php echo $preguntasseguridad['prse_pregunta']; ?></td>
+                    <td>
+                      <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="estatusPreguntaSeguridad<?php echo $x ?>"
+                          <?php if ($preguntasseguridad['prse_activo'] == 't') { ?> checked <?php } ?>
+                          onclick="cambioEstatus(<?php echo $preguntasseguridad['prse_id_pregunta']; ?> , '<?php echo $preguntasseguridad['prse_activo']; ?>', '<?php echo $preguntasseguridad['prse_pregunta']; ?>')">
+                          <label class="custom-control-label" for="estatusPreguntaSeguridad<?php echo $x ?>"></label>
+                      </div>
                     <td>
                       <button type="button" class="btn btn-primary btn-table" title="Actualizar"
                         onclick="actualizarPreguntaSeguridad(<?php echo $preguntasseguridad['prse_id_pregunta']?>)">

@@ -2,12 +2,12 @@
 	class PreguntaSeguridad
   	{
         //Agregar PreguntaSeguridad
-        function agregarPreguntaSeguridad ($PreguntaSeguridad)
+        function agregarPreguntaSeguridad ($PreguntaSeguridad, $Activo)
     	{
 			$SQL_Ins_PreguntaSeguridad =
 			"
-				INSERT INTO Pregunta_Seguridad(prse_pregunta)
-				VALUES ('$PreguntaSeguridad');
+				INSERT INTO Pregunta_Seguridad(prse_pregunta, prse_activo)
+				VALUES ('$PreguntaSeguridad', '$Activo');
 			";
 
 			$bd = new BD();
@@ -33,6 +33,23 @@
 			$transaccion_1 = new Transaccion($bd->conexion);
 			$transaccion_1->enviarQuery($SQL_Act_PreguntaSeguridad);
 			$bd->cerrarBD();
+		}
+
+        //Cambiar Estado PreguntaSeguridad
+        function cambiarEstatusPreguntaSeguridad ($Activo, $id)
+    	{
+			$SQL_Act_PreguntaSeguridad = 
+            "   
+				UPDATE Pregunta_Seguridad
+				SET prse_activo = '$Activo'
+				WHERE prse_id_pregunta = $id
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Act_PreguntaSeguridad);
+            $bd->cerrarBD();
 		}
 
 		//Buscar PreguntaSeguridad por ID
@@ -76,7 +93,7 @@
     	{
 			$SQL_Bus_PreguntasSeguridad =
 			"	
-				SELECT prse_id_pregunta, prse_pregunta 
+				SELECT prse_id_pregunta, prse_pregunta, prse_activo 
 				FROM Pregunta_Seguridad 
 			";
 
