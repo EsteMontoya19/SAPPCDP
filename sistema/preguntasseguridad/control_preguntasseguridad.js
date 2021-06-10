@@ -146,54 +146,6 @@ $(document).ready(function () {
     });
 });
 
-// Cambiar Estatus PreguntaSeguridad
-function cambioEstatus(id, estatus, nombre) {
-  var mensaje = '¿Esta seguro de cambiar el estatus de la pregunta de seguridad ';
-  mensaje = mensaje.concat(nombre);
-  mensaje = mensaje.concat('?<br>');
-  if (estatus == 't') {
-      mensaje = mensaje.concat('Esta acción no afectará a los usuarios que utilizan esta pregunta.');
-  } else {
-      mensaje = mensaje.concat('Esta acción no afectará a los usuarios que utilizan esta pregunta, ésta acción solo impide que futuros usuarios la utilicen.');
-  }
-  var titulo = 'Cambio de estatus de la pregunta de seguridad';
-  alertify.confirm(
-      titulo,
-      mensaje,
-      function () {
-          var dml = 'cambio';
-          var datos = {
-              id: id,
-              dml: dml,
-              estatus: estatus,
-          };
-          $.ajax({
-              data: datos,
-              type: 'POST',
-              url: '../modulos/Control_PreguntaSeguridad.php',
-              success: function (respuesta) {
-                  console.log(respuesta);
-                  if (respuesta == 1) {
-                      alertify.success('Se cambio el estatus de la pregunta de seguridad');
-                      setTimeout(function () {
-                          $('#container').load('../sistema/preguntasseguridad/frm_inicio_preguntasseguridad.php');
-                      }, 1500);
-                  } else {
-                      alertify.error('Hubo un problema al cambiar el estatus de la pregunta de seguridad');
-                  }
-              },
-          });
-      },
-      function () {
-          alertify.confirm().close();
-          //$('#container').load('../sistema/preguntasseguridad/frm_inicio_preguntasseguridad.php');
-      }
-  );
-  setTimeout(function () {
-      $('#container').load('../sistema/preguntasseguridad/frm_inicio_preguntasseguridad.php');
-  }, 1500);
-}
-
 // Tabla dinámica
 $(document).ready(function () {
   $('#tabla_preguntasseguridad').DataTable({
