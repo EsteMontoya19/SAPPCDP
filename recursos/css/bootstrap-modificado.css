@@ -1,3 +1,15 @@
+.btn-ingreso{
+  color: #fff;
+  background-color: #004c94;
+  border-color: #4d668b;
+}
+
+.btn-ingreso:hover{
+  color: #fff;
+  background-color: #4fd3d8;
+  border-color: #004c94;
+}
+
 .btn-descarga{
     color: #fff;
     background-color: #004c94;
@@ -9,7 +21,6 @@
     background-color: #4fd3d8;
     border-color: #004c94;
   }
-
   .btn-aceptar{
     color: #fff;
     background-color: #db9806;
@@ -29,6 +40,11 @@
   .centrado{
     text-align: center;
     margin:auto;
+  }
+
+  .derecho{
+    text-align: left;
+    margin-bottom: 1%;
   }
 
   .col-form-label, .negritas {
