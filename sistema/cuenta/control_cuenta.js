@@ -1,20 +1,25 @@
+//? Acciones relacionadas con presionar los botones
 $(document).ready(function () {
     
+    //Acciones del breadcrumb
     $('#btn-validacion-contrasena').click(function () {
         $('html, body').animate({ scrollTop: 0 }, 0);
         $('#container').load('../sistema/cuenta/frm_validacion.php');
     });
 
+    //Acciones del breadcrumb
     $('#btn-cambiar-contrasena').click(function () {
         $('html, body').animate({ scrollTop: 0 }, 0);
         $('#container').load('../sistema/cuenta/frm_validacion.php');
     });
 
+    //Acciones del botón regresar de Cambiar contraseñas
     $('#btn-regresar-cambio-contrasena').click(function () {
         $('html, body').animate({ scrollTop: 0 }, 0);
         location.reload();
     });
     
+    //Acciones del botón  de comprobar de Cambiar contraseñas
     $('#btn-comprobar-usuario').click(function () {
         if (validarFormularioAcceso()) {
             datos = $('#validacion_acceso').serialize();
@@ -36,13 +41,13 @@ $(document).ready(function () {
         }
     });
 
+    //Acción del botón que actualiza lo de Cambiar contraseñas
     $('#btn-actualizar-usuario-contrasena').click(function () {
         if (validarFormularioContrasena()) {
-            alert("si entra");
             datos = $('#form_contrasena').serialize();
             $.ajax({
                 type: 'POST',
-                url: '../modulos/Control_Contrasena.php',
+                url: '../modulos/Control_Cuenta.php',
                 data: datos,
                 success: function (respuesta) {
                     console.log(respuesta);
@@ -51,6 +56,35 @@ $(document).ready(function () {
                         setTimeout(function () {
                             $('html, body').animate({ scrollTop: 0 }, 0);
                             location.reload();
+                        }, 0);
+                    } else if (respuesta.endsWith('2')) {
+                        $('html, body').animate({ scrollTop: 200 }, 'slow');
+                        document.getElementById('strNombreUsuario').focus();
+                        alertify.error('El nombre de usuario ya existe');
+                    } else {
+                        alertify.error('Hubo un problema al registrar al usuario');
+                    }
+                },
+            });
+            return false;
+        }
+    });
+
+    //Acciones relacionadas con actualizar Mi cuenta
+    $('#btn-actualizar-usuario-mi-cuenta').click(function () {
+        if (validarFormularioUsuario(true)) {
+            datos = $('#form_usuario').serialize();
+            $.ajax({
+                type: 'POST',
+                url: '../modulos/Control_Usuario.php',
+                data: datos,
+                success: function (respuesta) {
+                    console.log(respuesta);
+                    if (respuesta.endsWith('1')) {
+                        alertify.success('El registro se actualizó correctamente');
+                        setTimeout(function () {
+                            $('html, body').animate({ scrollTop: 0 }, 0);
+                            $('#container').load('../sistema/usuarios/frm_inicio_usuarios.php');
                         }, 0);
                     } else if (respuesta.endsWith('2')) {
                         $('html, body').animate({ scrollTop: 200 }, 'slow');
@@ -72,8 +106,15 @@ $(document).ready(function () {
         }
     });
 
+    //Acciones del botón regresar de Mi cuenta
+    $('#btn-regresar-usuario').click(function () {
+        location.reload();
+    });
+
 });
 
+
+//? Funciones que se utilizan en las acciones
 // Validar el formulario alumnos
 function validarFormularioUsuario() {
     if ($('#strUsuarioNombre').val() == '') {

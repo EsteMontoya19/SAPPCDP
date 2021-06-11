@@ -5,7 +5,6 @@
   $obj_Usuario = new Usuario();
 
 
-
   if ($_POST['dml'] == 'contrasena'){
     $usuario = $obj_Usuario->buscarUsuario($_POST['idUsuario']);
 
@@ -18,49 +17,37 @@
     }
     exit("2");
 
-  }
-
-  if($_POST['dml'] == 'update')
-  {
-    $nombre = $_POST['strUsuarioNombre'];
-    $primerApellido = $_POST['strUsuarioPrimerApe'];
-    $segundoApellido = $_POST['strUsuarioSegundoApe'];
-    $correo = $_POST['strUsuarioCorreo'];
-    $telefono = $_POST['strUsuarioTelefono'];
+  } 
+  
+  if ($_POST['dml'] == 'update') {
+    
     $nombreUsu = $_POST['strNombreUsuario'];
-    $usuario = $_POST['idUsuario'];
-    $persona = $_POST['idPersona'];
-    $rol = $_POST['intUsuarioRol'];
-    $tipo = 1;
-    $domicilio = NULL;
-    $estudio = NULL;
-    $nacimiento = NULL;
-    $genero = NULL;
+    $usuario_existente = $obj_Usuario->buscarNombreUsuario($nombreUsu);
+    $idPersona = $_POST['idPersona'];
+    $idUsuario = $_POST['idUsuario'];
 
-    $obj_Usuario->actualizarUsuario($rol, $usuario, $nombreUsu);
-    $obj_Correo->actualizarCorreo($persona, $tipo, $correo);
-    $obj_Telefono->actualizarTelefono($persona, $tipo, $telefono);
-    $obj_Persona->actualizarPersona($persona, $domicilio, $estudio, $nombre, $primerApellido, $segundoApellido, $nacimiento, $genero);
+    $esElMismo = 0;
 
-    echo 1;
-  }
+    //?Se valida si el nombre de usuario es el mismo que otro, omitiendo a el nombre usuario actual
+    if($nombreUsu == $usuario_existente->usua_num_usuario && $idUsuario == $usuario_existente->usua_id_usuario){
+      $esElMismo = 1;
+    } else {
+      exit("2");
+    }
 
-  elseif($_POST['dml'] == 'contra')
-  {
-    $id_usuario = $_POST['idUsuario'];
-    $usuario = $obj_Usuario->buscarUsuario($id_usuario);
+    if(!isset($usuario_existente->usua_num_usuario) || $esElMismo == 1) {  
+  
+    //? Datos de usuario
+    $idPersona = $_POST['idPersona'];
+    $nombreUsuario = $_POST['strNombreUsuario'];
+    $rol = (integer) $_POST['hideRol'];
+    $pregunta = (integer) $_POST['UsuarioPregunta'];
+    $recuperacion = $_POST['UsuarioRespuesta'];
     $contrasenia = $_POST['strContrasenia01'];
 
-    if($usuario->usua_contra == $contrasenia)
-    {
-        $n_contrasena = $_POST['strContrasenia02'];
-        $obj_Usuario->actualizarContrasena($id_usuario, $n_contrasena);
-        echo 1;
-    }
-    else
-    {
-        echo 2;
-    }
-  }
+    $obj_Usuario->actualizarUsuario($idPersona, $rol, $pregunta, $nombreUsuario, $contrasenia, $recuperacion);
 
+    exit("1");
+  }
+}
 ?>
