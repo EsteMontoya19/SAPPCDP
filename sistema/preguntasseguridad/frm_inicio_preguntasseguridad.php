@@ -1,9 +1,9 @@
 <?php
   include('../../clases/BD.php');
-  include('../../clases/Plataforma.php');
+  include('../../clases/PreguntaSeguridad.php');
 
-  $obj_plataforma = new Plataforma();
-  $arr_plataformas = $obj_plataforma->buscarTodasPlataformas();
+  $obj_PreguntaSeguridad = new PreguntaSeguridad();
+  $arr_preguntasseguridad = $obj_PreguntaSeguridad->buscarTodasPreguntaSeguridad();
 
   $x = 0;
 ?>
@@ -17,18 +17,18 @@
         <div class="col-sm-10" style="padding:0px">
           <ol class="breadcrumb">
             <li class="breadcrumb-item active">
-              <i class="fas fa-user-shield"></i>&nbsp; Plataformas
+              <i class="fas fa-user-shield"></i>&nbsp; Preguntas de Seguridad
             </li>
           </ol>
         </div>
         <div class="col-sm-2" aligne="center">
           <a href="#">
-            <button id="btn-registro-plataforma" type="button" class="btn btn-success">
+            <button id="btn-registro-preguntaseguridad" type="button" class="btn btn-success">
               <i class="fas fa-plus-circle"></i>&nbsp;&nbsp; Agregar
             </button>
           </a>
         </div>
-      </div>
+      </div> 
 
       <p>
         <hr>
@@ -41,33 +41,31 @@
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-condensed table-hover" id="tabla_plataformas" width="100%" cellspacing="0">
+            <table class="table table-condensed table-hover" id="tabla_preguntasseguridad" width="100%" cellspacing="0">
               <thead class="thead-dark">
                 <tr>
                   <th>ID</th>
-                  <th>Plataforma</th>
+                  <th>Pregunta de Seguridad</th>
                   <th>Estatus</th>
                   <th>Opciones</th>
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($arr_plataformas as $plataformas) { ?>
+                <?php foreach ($arr_preguntasseguridad as $preguntasseguridad) { ?>
                   <tr>
                   <?php $x++; ?>
-                    <td><?php echo $plataformas['plat_id_plataforma']; ?></td>
-                    <td><?php echo $plataformas['plat_nombre']; ?></td>
+                    <td><?php echo $preguntasseguridad['prse_id_pregunta']; ?></td>
+                    <td><?php echo $preguntasseguridad['prse_pregunta']; ?></td>
                     <td>
                       <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input"
-                            id="estatusPlataforma<?php echo $x ?>"
-                            <?php if ($plataformas['plat_activo'] == 't') { ?> checked <?php } ?>
-                            onclick="cambioEstatus(<?php echo $plataformas['plat_id_plataforma']; ?> , '<?php echo $plataformas['plat_activo']; ?>', '<?php echo $plataformas['plat_nombre']; ?>')">
-                        <label class="custom-control-label"
-                            for="estatusPlataforma<?php echo $x ?>"></label>
+                        <input type="checkbox" class="custom-control-input" id="estatusPreguntaSeguridad<?php echo $x ?>"
+                          <?php if ($preguntasseguridad['prse_activo'] == 't') { ?> checked <?php } ?>
+                          onclick="cambioEstatus(<?php echo $preguntasseguridad['prse_id_pregunta']; ?> , '<?php echo $preguntasseguridad['prse_activo']; ?>', '<?php echo $preguntasseguridad['prse_pregunta']; ?>')">
+                          <label class="custom-control-label" for="estatusPreguntaSeguridad<?php echo $x ?>"></label>
                       </div>
                     <td>
                       <button type="button" class="btn btn-primary btn-table" title="Actualizar"
-                        onclick="actualizarPlataforma(<?php echo $plataformas['plat_id_plataforma']?>)">
+                        onclick="actualizarPreguntaSeguridad(<?php echo $preguntasseguridad['prse_id_pregunta']?>)">
                         <i class="fas fa-edit"></i>
                       </button> 
                     </td>
@@ -82,4 +80,4 @@
   </div>
 </div>
 
-<script src="../sistema/plataformas/control_plataformas.js"></script>
+<script src="../sistema/preguntasseguridad/control_preguntasseguridad.js"></script>

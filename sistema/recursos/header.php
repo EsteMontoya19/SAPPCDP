@@ -78,7 +78,7 @@
               </a>
               <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarUser">
                 <a class="dropdown-item disabled" href="#"></a>
-                <a class="dropdown-item" type="button"  id="btn_horario">Horarios</a>
+                <a class="dropdown-item" type="button"  id="btn_preguntaseguridad">Preguntas de seguridad</a>
                 <a class="dropdown-item" type="button"  id="btn_plataforma">Plataforma</a>
                 <a class="dropdown-item" type="button"  id="btn_calendario">Calendario</a>
               </div>
