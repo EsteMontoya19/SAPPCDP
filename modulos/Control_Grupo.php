@@ -227,10 +227,9 @@
         if($sesiones_inscritas[$ultima_sesion_inscritas]['sesi_fecha'] < $sesiones_nuevo[$primera_sesion]['sesi_fecha']){
           /*solo si se ha terminado de reccorrer la lista de grupos inscritos del profesor se permite inscribir*/
           if($contador_grupo == $cantidad_grupos_profesor){
-            //TODO: Dejar inscribir
-            //? $obj_Inscripcion->agregarInscripcion($grupo, $profesor->prof_id_profesor);
-            //? exit("1");
-            exit("5"); 
+            //? Esto lo inscribe
+             $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
+             exit("1");
           }
         } else {
           /*Si el grupo inscrito en su ultima sesión == grupo a inscribir en su primera sesion
@@ -242,10 +241,9 @@
             if($sesiones_inscritas[$ultima_sesion_inscritas]['sesi_hora_fin'] <= $sesiones_nuevo[$primera_sesion]['sesi_hora_inicio'] || 
               $sesiones_inscritas[$ultima_sesion_inscritas]['sesi_hora_inicio'] >= $sesiones_nuevo[$primera_sesion]['sesi_hora_fin']){
                 if($contador_grupo == $cantidad_grupos_profesor){
-                  //TODO: Dejar inscribir
-                  //? $obj_Inscripcion->agregarInscripcion($grupo, $profesor->prof_id_profesor);
-                  //? exit("1");
-                  exit("5"); 
+                  //? Esto Lo inscribe
+                  $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
+                  exit("1");
                 }
             } else {
               exit('3');
@@ -255,10 +253,11 @@
             /*si grupo inscrito en primera sesion > grupo a inscribir en ultima sesión 
             no hay traslape porque el grupo a inscribir tiene todas sus sesiones antes que el grupo inscrito*/
             if ($sesiones_inscritas[$primera_sesion]['sesi_fecha'] > $sesiones_nuevo[$ultima_sesion_nuevo]['sesi_fecha']){
-              //TODO Dejar Inscribir
-              //? $obj_Inscripcion->agregarInscripcion($grupo, $profesor->prof_id_profesor);
-              //? exit("1");
-              exit('5');
+              if($contador_grupo == $cantidad_grupos_profesor){
+                //? Esto lo inscribe
+                $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
+                exit("1");
+              }
             } else {
               /*Si el grupo inscrito en su primera sesión es = al nuevo en su ultima sesión, solo se verifica que no haya traslape en las horas*/
               if($sesiones_inscritas[$primera_sesion]['sesi_fecha'] == $sesiones_nuevo[$ultima_sesion_nuevo]['sesi_fecha']){
@@ -268,10 +267,9 @@
                 if($sesiones_inscritas[$primera_sesion]['sesi_hora_fin'] <= $sesiones_nuevo[$ultima_sesion_nuevo]['sesi_hora_inicio'] || 
                 $sesiones_inscritas[$primera_sesion]['sesi_hora_inicio'] >= $sesiones_nuevo[$ultima_sesion_nuevo]['sesi_hora_fin']){
                   if($contador_grupo == $cantidad_grupos_profesor){
-                    //TODO: Dejar inscribir
-                    //? $obj_Inscripcion->agregarInscripcion($grupo, $profesor->prof_id_profesor);
-                    //? exit("1");
-                    exit("5"); 
+                    //?
+                    $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
+                    exit("1");
                   }
                 } else {
                   exit('3');
@@ -286,7 +284,8 @@
                       /*Si la sesion inscrita en hora fin es menor o igual a la nueva en su hora de inicio o  
                       Si la sesion inscrita en su hora de inicio era mayor o igual a la nueva en su hora de fin, no hay traslape,
                       no se pone nada dentro de ese if porque debe validar todas las sesiones, para que en caso de ser correcto en la primera no lo inscriba inmediatamente*/
-                      if($sesion_grupo_inscrito['sesi_hora_fin'] <= $sesion_grupo_nuevo['sesi_hora_inicio'] || $sesion_grupo_inscrito['sesi_hora_inicio'] >= $sesion_grupo_nuevo['sesi_hora_fin']){
+                      if($sesion_grupo_inscrito['sesi_hora_fin'] <= $sesion_grupo_nuevo['sesi_hora_inicio'] || 
+                      $sesion_grupo_inscrito['sesi_hora_inicio'] >= $sesion_grupo_nuevo['sesi_hora_fin']){
                       } else {  
                           exit("3");
                       }
@@ -295,10 +294,9 @@
                 }
                 /*Ahora si termino las validaciones y no hay traslape, solo si se ha terminado de reccorrer la lista de grupos inscritos del profesor se permite inscribir*/
                 if($contador_grupo == $cantidad_grupos_profesor){
-                  //TODO: Dejar inscribir
-                  //? $obj_Inscripcion->agregarInscripcion($grupo, $profesor->prof_id_profesor);
-                  //? exit("1");
-                  exit("5");
+                  //? Esto lo permite inscribir
+                  $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
+                  exit("1");
                 }
               }
             }

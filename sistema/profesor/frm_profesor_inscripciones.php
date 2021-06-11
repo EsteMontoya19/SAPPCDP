@@ -68,7 +68,7 @@
                    } else {
                      $modalidad=$obj_Grupo->buscarDatosPresencial($idGrupo);
                    }
-                }
+                
                 ?>
 
                       <tr>
@@ -96,7 +96,7 @@
                           </button> -->
                         </td>
                       </tr>
-                  <?php } ?>
+                  <?php } } ?>
                   
                 </tbody>
               </table>
