@@ -27,20 +27,12 @@ $persona->pers_apellido_paterno = null;
 $persona->pers_correo = null;
 $persona->pers_telefono = null;
 
-$profesor = null;
-$profesor_coordinacion = null;
-
-$moderador_dia = null;
 
 
 // Catálogos
 $obj_Busqueda = new Busqueda();
 $arr_roles = $obj_Busqueda->selectRoles();
 $arr_preguntas = $obj_Busqueda->selectPregunta();
-$arr_dias = $obj_Busqueda->selectDias();
-$arr_niveles = $obj_Busqueda->selectNiveles();
-$arr_modalidades = $obj_Busqueda->selectModalidades();
-$arr_coordinaciones = $obj_Busqueda->selectCoordinaciones();
 
 // Validar entidad  //*? Se crean las variables para consultar en caso de no ser un nuevo registro.
 if (isset($_POST['persona']) && isset($_POST['id'])) { 
@@ -61,15 +53,11 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
         case 2: //Moderador
         $obj_Moderador = new Moderador();
         $moderador = $obj_Moderador->buscarModerador($_POST['persona']);
-        $moderador_dia = $obj_Moderador->buscarModeradorDias($moderador->mode_id_moderador);
         break;
 
         case 3: //Profesor
         $obj_Profesor = new Profesor();
         $profesor = $obj_Profesor->buscarProfesor($_POST['persona']);
-        $profesor_nivel = $obj_Profesor->buscarProfesorNiveles($profesor->prof_id_profesor);
-        $profesor_modalidad = $obj_Profesor->buscarProfesorModalidades($profesor->prof_id_profesor);
-        $profesor_coordinacion = $obj_Profesor->buscarProfesorCoordinaciones($profesor->prof_id_profesor);
         break;
         
     }
@@ -81,8 +69,11 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
     <div class="container-fluid">
 
       <ol class="breadcrumb">
-        <li id="btn-inicio-usuario" class="breadcrumb-item">
-          <a href="#"><i class="fas fa-user-shield"></i>&nbsp; Mi cuenta</a>
+        <li id="btn-validacion-contrasena" class="breadcrumb-item">
+          <a href="#"><i class="fas fa-user-shield"></i>&nbsp; Validación usuario</a>
+        </li>
+        <li id="btn-cambiar-contrasena" class="breadcrumb-item">
+          <a href="#"><i class="fas fa-user-shield"></i>&nbsp; Cambiar contraseña</a>
         </li>
       </ol>
       <p>
@@ -90,7 +81,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
       </p>
 
       <!-- Formulario -->
-      <form name="form_usuario" id="form_usuario" method="POST">
+      <form name="form_contrasena" id="form_contrasena" method="POST">
           <!-- Datos de la usuario -->
           <div class="form-group">
             <div class="card lg-12">
@@ -171,11 +162,11 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
       </form>
       <!-- Botones -->
       <div class="col-lg-12" style="text-align: center;">
-        <button id="btn-regresar-usuario" type="button" class="btn btn-success btn-footer btn-regresar">Regresar</button>
-        <button id="btn-actualizar-usuario-mi-cuenta" type="button" class="btn btn-success btn-footer btn-aceptar">Guardar</button>
+        <button id="btn-regresar-cambio-contrasena" type="button" class="btn btn-success btn-footer btn-regresar">Regresar</button>
+        <button id="btn-actualizar-usuario-contrasena" type="button" class="btn btn-success btn-footer btn-aceptar">Guardar</button>
       </div>
     </div>
   </div>
 </div>
 
-<script src="../sistema/usuarios/control_cuenta.js"></script>
+<script src="../sistema/cuenta/control_cuenta.js"></script>

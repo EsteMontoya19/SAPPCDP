@@ -1,24 +1,58 @@
 <?php
   include('../clases/BD.php');
+  include('../clases/Usuario.php');
   include('../clases/Grupo.php');
   include('../clases/Sesion.php');
   include('../clases/Curso.php');
   include('../clases/Inscripcion.php');
   include('../clases/Profesor.php');
 
+  $obj_Usuario = new Usuario();
+
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
   $obj_Inscripcion = new Inscripcion();
   $obj_Profesor = new Profesor();
+
   
   if ($_POST['dml'] == 'contrasena'){
-    $usuario = $_POST['strUsuario'];
+    $usuario = $obj_Usuario->buscarUsuario($_POST['idUsuario']);
+
+    $nombreUsuario = $_POST['strUsuario'];
     $contrasena = $_POST['strContrasena'];
 
+    if($usuario->usua_num_usuario == $nombreUsuario && $usuario->usua_contrasena == $contrasena) {
+        exit("1");
+    }
+    exit("2");
 
-    echo "true";
+  } elseif ($_POST['dml'] == 'update') {
+    
+      $nombreUsu = $_POST['strNombreUsuario'];
+      $usuario_existente = $obj_Usuario->buscarNombreUsuario($nombreUsu);
+      $idPersona = $_POST['idPersona'];
+      $idUsuario = $_POST['idUsuario'];
 
-  } 
+      $esElMismo = 0;
+      if($nombreUsu == $usuario_existente->usua_num_usuario && $idUsuario == $usuario_existente->usua_id_usuario){
+        $esElMismo = 1;
+      }
+
+      if(!isset($usuario_existente->usua_num_usuario) || $esElMismo == 1) {  
+    
+      //? Datos de usuario
+      $idPersona = $_POST['idPersona'];
+      $nombreUsuario = $_POST['strNombreUsuario'];
+      $rol = (integer) $_POST['hideRol'];
+      $pregunta = (integer) $_POST['UsuarioPregunta'];
+      $recuperacion = $_POST['UsuarioRespuesta'];
+      $contrasenia = $_POST['strContrasenia01'];
+
+      $obj_Usuario->actualizarUsuario($idPersona, $rol, $pregunta, $nombreUsuario, $contrasenia, $recuperacion);
+
+      exit("1");
+    }
+  }
   
   
   

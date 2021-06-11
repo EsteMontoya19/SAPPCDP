@@ -1,15 +1,24 @@
 <?php
-
   include('../clases/BD.php');
   include('../clases/Usuario.php');
-  include('../clases/Persona.php');
-  include('../clases/Telefono.php');
-  include('../clases/Correo.php');
 
-  $obj_Persona = new Persona();
   $obj_Usuario = new Usuario();
-  $obj_Telefono = new Telefono();
-  $obj_Correo = new Correo();
+
+
+
+  if ($_POST['dml'] == 'contrasena'){
+    $usuario = $obj_Usuario->buscarUsuario($_POST['idUsuario']);
+
+    $nombreUsuario = $_POST['strUsuario'];
+    $contrasena = $_POST['strContrasena'];
+
+    //? Verifica que los usuarios y contraseñas introducidas sean los mismos del usuario del perfil
+    if($usuario->usua_num_usuario == $nombreUsuario && $usuario->usua_contrasena == $contrasena) {
+        exit("1");
+    }
+    exit("2");
+
+  }
 
   if($_POST['dml'] == 'update')
   {

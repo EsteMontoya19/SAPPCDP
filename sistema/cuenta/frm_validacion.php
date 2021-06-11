@@ -2,8 +2,8 @@
     <div id="content-wrapper">
         <div class="container-fluid">
             <ol class="breadcrumb">
-                <li id="btn-inicio-usuario" class="breadcrumb-item">
-                    <a href="#"><i class="fas fa-user-shield"></i>&nbsp;Cambio de contraseña</a>
+                <li id="btn-validacion-contrasena" class="breadcrumb-item">
+                    <a href="#"><i class="fas fa-user-shield"></i>&nbsp;Validación usuario</a>
                 </li>
             </ol>
             <p>
@@ -11,7 +11,7 @@
             </p>
 
             <!-- Formulario -->
-            <form name="validacion_acceso" method='POST'>
+            <form name="validacion_acceso" id="validacion_acceso" method='POST'>
                 <!-- Datos generales -->
                 <div class="form-group">
                     <div class="card lg-12">
@@ -53,6 +53,7 @@
                     </div>
                     <input type="hidden" id="idUsuario" name="idUsuario" value="<?php echo $_POST['id']; ?>">
                     <input type="hidden" id="idPersona" name="idPersona" value="<?php echo $_POST['persona']; ?>">
+                    <input type="hidden" id="dml" name="dml" value="contrasena">
             </form>
         </div>
     </div>
