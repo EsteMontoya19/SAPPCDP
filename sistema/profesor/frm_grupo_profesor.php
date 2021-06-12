@@ -458,10 +458,20 @@ jQuery(document).ready(function () {
           if(isset($persona)  && isset($Grupo)) {
             $profesor = $obj_Profesor->buscarProfesor($persona->pers_id_persona);
             $inscrito =  $obj_Inscripcion->buscarInscripcion($Grupo->grup_id_grupo, $profesor->prof_id_profesor);
-            if (!isset($inscrito)) { ?>
-              <button id="btn-inscripcion-grupo" type="button" class="btn btn-success btn-footer btn-aceptar" 
-                onclick="inscribirGrupo(<?php echo $Grupo->grup_id_grupo?>, <?php echo $Grupo->grup_num_inscritos?>, <?php echo $Grupo->grup_cupo?>, <?php echo $persona->pers_id_persona?>, '<?php echo $Curso1->curs_nombre?>', '<?php echo $Curso1->curs_tipo?>', '<?php echo $Curso1->curs_nivel?>')">Inscribirse</button>
-            <?php } ?>
+            $periodoInscripcion = $obj_Inscripcion->buscarVigenciaInscripcion($Grupo->grup_id_grupo);
+
+            //? Se verifica que el periodo de inscripción del grupo se vigente, si no no aparece nada
+            if (isset($periodoInscripcion)) {
+              //? Si el profesor ya esta inscrito el botón no aparece
+              if (!isset($inscrito)) { ?>
+                <button id="btn-inscripcion-grupo" type="button" class="btn btn-success btn-footer btn-aceptar" 
+                  onclick="inscribirGrupo(<?php echo $Grupo->grup_id_grupo?>, <?php echo $Grupo->grup_num_inscritos?>, <?php echo $Grupo->grup_cupo?>, <?php echo $persona->pers_id_persona?>, '<?php echo $Curso1->curs_nombre?>', '<?php echo $Curso1->curs_tipo?>', '<?php echo $Curso1->curs_nivel?>')">Inscribirse</button>
+              <?php } else {
+                echo ("<p>Ya se encuentra inscrito</p>");
+              }
+            } else {
+              echo ("<p>El perido de inscripción  a este grupo finalizo</p>");
+            }?>
           <?php } ?>
         <?php } ?>
       <?php } ?>

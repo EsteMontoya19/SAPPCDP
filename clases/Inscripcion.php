@@ -36,6 +36,22 @@
 			$bd->cerrarBD();
 			return $obj_Inscripcion;
         }
+        function buscarVigenciaInscripcion($grupo)
+        {
+            $SQL_Bus_Inscripcion = 
+			"SELECT *
+             FROM Grupo
+             WHERE grup_id_grupo = $grupo AND CURRENT_DATE >= grup_inicio_insc AND CURRENT_DATE <= grup_fin_insc
+            ";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Inscripcion);
+			$obj_Inscripcion = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return $obj_Inscripcion;
+        }
 
         function buscarGrupoPorInsc($inscripcion)
         {
