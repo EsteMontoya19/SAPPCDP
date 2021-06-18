@@ -205,6 +205,12 @@
       exit("2");
     } else {
       $grupos_profesor = $obj_Grupo->gruposInscritosActivosxProfesor($profesor->prof_id_profesor);
+      //? En caso de que el profesor no tenga ningún grupo inscrito, en automatico debe inscribir ya que no hay
+      //? translape ni nada que validar
+      if (!isset($grupos_profesor) || $grupos_profesor == ""){
+        $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
+        exit("1");
+      }
       //Obtiene todas las sesiones del grupo al que se desea inscribir
       $sesiones_nuevo = $obj_Sesion->buscarSesionesIDGrupo($grupo->grup_id_grupo);
       $cantidad_grupos_profesor = sizeof($grupos_profesor);
@@ -304,8 +310,7 @@
           }
         }
       }
-      //? Dejar inscribir en este punto que termina el for each en caso de haber pasado todas las valoraciones de todos los grupos en caso de no funcionar el otro.
-
+      //? Dejar inscribir en este punto que termina el for each en caso de haber pasado todas las valoraciones de todos los grupos en caso de no funcionar el otro
     }
   }
 ?>

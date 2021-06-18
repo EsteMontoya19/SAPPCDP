@@ -128,7 +128,12 @@ error_reporting(E_ALL);
 
 		function traerRegistros()
 		{
-			return pg_fetch_all($this->query);
+			if (pg_num_rows($this->query) == 0){
+				return NULL;
+			} else {
+				return pg_fetch_all($this->query);
+			}
+			
 		}
 
 
