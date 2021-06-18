@@ -467,7 +467,7 @@ jQuery(document).ready(function () {
                 <button id="btn-inscripcion-grupo" type="button" class="btn btn-success btn-footer btn-aceptar" 
                   onclick="inscribirGrupo(<?php echo $Grupo->grup_id_grupo?>, <?php echo $Grupo->grup_num_inscritos?>, <?php echo $Grupo->grup_cupo?>, <?php echo $persona->pers_id_persona?>, '<?php echo $Curso1->curs_nombre?>', '<?php echo $Curso1->curs_tipo?>', '<?php echo $Curso1->curs_nivel?>')">Inscribirse</button>
               <?php } else {
-                echo ("<p>Ya se encuentra inscrito</p>");
+                echo ("<p>Ya se encuentra inscrito a este grupo</p>");
               }
             } else {
               echo ("<p>El perido de inscripción  a este grupo finalizo</p>");
