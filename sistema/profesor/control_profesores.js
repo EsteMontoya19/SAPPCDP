@@ -98,7 +98,7 @@ function inscribirGrupo (grupo,inscritos, cupo, persona, nombre, tipo, nivel) {
                         } else if (respuesta.endsWith('5')) {
                             alertify.error('Se ha inscrito adecuadamente');
                         } else {
-                            alertify.error('Estoy ignorando todo');
+                            alertify.error('Ocurrio un problema con la inscripción');
                             // alertify.error('Hubo un error al inscribirse al grupo');
                         }
                         /*setTimeout(function () {
