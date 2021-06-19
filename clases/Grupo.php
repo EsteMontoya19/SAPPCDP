@@ -449,5 +449,45 @@
                 $bd->cerrarBD();
                 return ($transaccion_1->traerObjeto(0));
         }
+
+        //Busca el numero de grupos que imparte un profesor
+        function buscarNumGruposImpartidosxProfesor($id){
+			$SQL_Bus_Grupos =
+            "	
+                SELECT COUNT(GRUP_ID_GRUPO)
+                FROM GRUPO 
+                WHERE PROF_ID_PROFESOR = $id
+            ";
+    
+                $bd = new BD();
+                $bd->abrirBD();
+                $transaccion_1 = new Transaccion($bd->conexion);
+                $transaccion_1->enviarQuery($SQL_Bus_Grupos);
+                $bd->cerrarBD();
+                return ($transaccion_1->traerRegistros());
+		}
+
+        //Busca los grupos que imparte un profesor
+        function buscarGruposImpartidosxProfesor($id){
+			$SQL_Bus_Grupos =
+            "	
+                SELECT GRUP_ID_GRUPO, C.CURS_ID_CURSOS, GRUP_MODALIDAD,
+                    CURS_NOMBRE, CURS_NUM_SESIONES, G.PLAT_ID_PLATAFORMA, 
+                    GRUP_REUNION, CALE_SEMESTRE
+                FROM GRUPO G, CURSO C, PROFESOR P, CALENDARIO CA
+                WHERE G.PROF_ID_PROFESOR = $id
+                    AND G.CURS_ID_CURSOS = C.CURS_ID_CURSOS 
+                    AND G.PROF_ID_PROFESOR = P.PROF_ID_PROFESOR 
+                    AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO 
+                ORDER BY GRUP_ID_GRUPO DESC;
+            ";
+
+                $bd = new BD();
+                $bd->abrirBD();
+                $transaccion_1 = new Transaccion($bd->conexion);
+                $transaccion_1->enviarQuery($SQL_Bus_Grupos);
+                $bd->cerrarBD();
+                return ($transaccion_1->traerRegistros());
+		}
     }
 ?>

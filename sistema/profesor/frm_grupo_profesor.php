@@ -66,13 +66,20 @@ jQuery(document).ready(function () {
 
       <ol class="breadcrumb">
         <li id="btn-inicio-grupo" class="breadcrumb-item">
-          <a href="#"><i class="fas fa-user-shield"></i>&nbsp; Grupos disponibles</a>
+        <?php if (isset($_POST['CRUD'])) { ?>
+          <?php if ($_POST['CRUD'] == 5) { ?>
+            <a href="#"><i class="fas fa-user-shield"></i>&nbsp; Grupos inscritos</a>
+          <?php } elseif ($_POST['CRUD'] == 6) { ?>
+            <a href="#"><i class="fas fa-user-shield"></i>&nbsp; Grupos a impartir</a>
+          <?php } else { ?>
+            <a href="#"><i class="fas fa-user-shield"></i>&nbsp; Grupos disponibles</a>
+          <?php }} ?>
         </li>
         <!-- Validación de la ruta -->
         <?php if (isset($_POST['CRUD'])) { ?>
           <?php if ($_POST['CRUD'] == 1) { ?>
             <li class="breadcrumb-item active"><i class="fas fa-edit"></i>&nbsp; Actualizar registro</li>
-          <?php } elseif ($_POST['CRUD'] == 0 || $_POST['CRUD'] == 5) { ?>
+          <?php } elseif ($_POST['CRUD'] == 0 || $_POST['CRUD'] == 5 || $_POST['CRUD'] == 6) { ?>
             <li class="breadcrumb-item active"><i class="fas fa-search-plus"></i>&nbsp; Detalles del curso</li>
           <?php } ?>
         <?php } else { ?>
@@ -88,7 +95,7 @@ jQuery(document).ready(function () {
 
         <!-- Desactivar formulario INICIO en caso de no ser un registro-->
         <?php if (isset($_POST['CRUD'])) { ?>
-          <?php if ($_POST['CRUD'] == 0 || $_POST['CRUD'] == 5) { ?>
+          <?php if ($_POST['CRUD'] == 0 || $_POST['CRUD'] == 5 || $_POST['CRUD'] == 6) { ?>
             <fieldset disabled>
           <?php } ?>
         <?php } ?>
@@ -426,17 +433,17 @@ jQuery(document).ready(function () {
         <?php } ?>
 
         <!-- Desactivar formulario FIN -->
-        <?php if (isset($_POST['CRUD']) && $_POST['CRUD'] == 0 || $_POST['CRUD'] == 5) { ?>
+        <?php if (isset($_POST['CRUD']) && $_POST['CRUD'] == 0 || $_POST['CRUD'] == 5 || $_POST['CRUD'] == 6) { ?>
             </fieldset>
         <?php } ?>
 
         <!-- ID e Instrucciones -->
         <?php if (isset($_POST['CRUD'])) { ?>
-          <?php if ($_POST['CRUD'] == 1 || $_POST['CRUD'] == 5) { ?>
+          <?php if ($_POST['CRUD'] == 1 || $_POST['CRUD'] == 5 || $_POST['CRUD'] == 6) { ?>
             <input type="hidden" name="dml" value="update" />
             <input type="hidden" id="idGrupo" name="idGrupo" value="<?php echo $_POST['id'];?>">
             <input type="hidden" id="ifModalidad" name="ifModalidad" value="<?php echo $Grupo->grup_modalidad;?>">
-          <?php } elseif ($_POST['CRUD'] == 0 || $_POST['CRUD'] == 5) { ?>
+          <?php } elseif ($_POST['CRUD'] == 0 || $_POST['CRUD'] == 5 || $_POST['CRUD'] == 6) { ?>
             <input type="hidden" name="dml" value="select" />
           <?php } ?>
         <?php } else { ?>
@@ -449,7 +456,7 @@ jQuery(document).ready(function () {
     <div class="col-lg-12" style="text-align: center;">
       <button id="btn-regresar-grupo" type="button" class="btn btn-primary btn-footer btn-regresar">Regresar</button>
       <?php if (isset($_POST['CRUD'])) { ?>
-        <?php if ($_POST['CRUD'] == 0 || $_POST['CRUD'] == 5) { ?>
+        <?php if ($_POST['CRUD'] == 0 || $_POST['CRUD'] == 5 || $_POST['CRUD'] == 6) { ?>
           <a id="temarioDW" href="<?php echo isset($Curso1) ? $Curso1 -> curs_temario : "No subido"; ?>" download
               class="btn btn-descarga" role="button"><i class="fas fa-file-download"
                 style="padding-right: 10px;"></i>Descargar temario</a>

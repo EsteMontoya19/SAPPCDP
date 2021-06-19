@@ -35,6 +35,10 @@ $(document).ready(function () {
     $('#btn_profesor_grupos_inscritos').click(function () {
         $('#container').load('../sistema/profesor/frm_profesor_inscripciones.php');
     });
+
+    $('#btn_profesor_grupos_impartir').click(function () {
+        $('#container').load('../sistema/profesor/frm_profesor_impartir.php');
+    });
     
     $('#btn_regProp').click(function () {
         $('#container').load('../sistema/propuestas/frm_propuestas.php');
@@ -116,6 +120,21 @@ function gruposInscritos(persona) {
         data: datos,
         type: 'POST',
         url: '../sistema/profesor/frm_profesor_inscripciones.php',
+        success: function (data) {
+            $('#container').html(data);
+        },
+    });
+}
+
+function gruposImpartir(persona) {
+    var datos = {
+        persona: persona,
+    };
+    
+    $.ajax({
+        data: datos,
+        type: 'POST',
+        url: '../sistema/profesor/frm_profesor_impartir.php',
         success: function (data) {
             $('#container').html(data);
         },
