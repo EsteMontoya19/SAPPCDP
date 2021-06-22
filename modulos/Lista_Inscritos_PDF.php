@@ -3,11 +3,11 @@
     include('../clases/BD.php');
     include('../clases/Grupo.php');
     include('../clases/Sesion.php');
-    include('Reportegeneral.php'); //TODO Aquí va el prototipo de header y footer
+    include('../clases/PDF.php'); //TODO Aquí va el prototipo de header y footer
 
     // Inicializamos las variables requeridas
     //? Solo recibe el ID del grupo
-    $idGrupo = $_POST['idGrupo'];
+    $idGrupo = $_GET['idGrupo'];
     $obj_Grupo = new Grupo();
     $arr_Inscritos = $obj_Grupo->buscarInscripcionesxGrupo($idGrupo);
     $curso = $obj_Grupo->buscarNombreCursoxGrupo($idGrupo);

@@ -89,7 +89,7 @@
 		function numSesionesGrupo($idGrupo) {
 
 			$SQL_Bus_Sesion =
-			"SELECT COUNT(grup_id_grupo)
+			"SELECT COUNT(grup_id_grupo) numero
 			 FROM sesion
 			 WHERE grup_id_grupo = $idGrupo
 			 GROUP BY grup_id_grupo 

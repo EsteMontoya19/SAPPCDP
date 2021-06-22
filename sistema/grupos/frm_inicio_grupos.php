@@ -21,7 +21,7 @@
             </li>
             </ol>
           </div>
-          <div class="col-sm-2" align="center">
+          <div class="col-sm-2" aligne="center">
             <a href="#">
               <button id="btn-registro-grupo" type="button" class="btn btn-success">
                 <i class="fas fa-plus-circle"></i>&nbsp;&nbsp; Agregar grupo
@@ -93,10 +93,11 @@
                         <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupo(<?php echo $grupo['grup_id_grupo']?>, '<?php echo $grupo['grup_modalidad']?>')">
                           <i class="fas fa-search-plus"></i>
                         </button>
-
-                        <button type="button" class="btn btn-danger btn-table" title="Listas" style="margin-top: 5px;background: #20560a">
-                          <i class="fas fa-list-alt"></i>
-                        </button>
+                        <?php if($grupo['grup_num_inscritos'] != 0){ ?>
+                            <a href="../modulos/Lista_Inscritos_PDF.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-primary btn-table" title="Lista" style="margin-top: 5px;background: #20560a">
+                              <i class="fas fa-list-alt"></i>
+                            </a>
+                          <?php } ?>
 
                         <button type="button" class="btn btn-danger btn-table" title="Constancias" style="margin-top: 5px">
                           <i class="fas fa-list-alt"></i>
