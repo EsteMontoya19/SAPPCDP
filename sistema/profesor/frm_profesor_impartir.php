@@ -90,7 +90,7 @@
                             <i class="fas fa-search-plus"></i>
                           </button>
                           <?php if($grupo['grup_num_inscritos'] != 0){ ?>
-                            <a href="../modulos/Lista_Inscritos_PDF.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-primary btn-table" title="Lista" style="margin-top: 5px;">
+                            <a href="../modulos/Control_PDF_Inscritos.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-primary btn-table" title="Lista" style="margin-top: 5px;">
                               <i class="fas fa-list-alt"></i>
                             </a>
                           <?php } ?>
