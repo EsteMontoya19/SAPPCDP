@@ -133,6 +133,27 @@ function inscribirGrupo (grupo,inscritos, cupo, persona, nombre, tipo, nivel) {
     }
 
 }
+
+function listaInscritos(idGrupo, tipoLista) {
+    alert("entra");
+    var datos = {
+        idGrupo: idGrupo,
+        tipoLista: tipoLista
+    };
+    alert(tipoLista);
+    $.ajax({
+        data: datos,
+        type: 'POST',
+        url: '../modulos/Control_PDF.php',
+        success: function (respuesta) {
+            alertify.success("Si entra y sale" + respuesta);
+            console.log(respuesta);
+            
+        },
+    });
+}
+
+
 $(document).ready(function () {
     $('#tabla_grupos').DataTable({
         language: {

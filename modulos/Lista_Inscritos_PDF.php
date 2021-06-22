@@ -3,7 +3,7 @@
     include('../clases/BD.php');
     include('../clases/Grupo.php');
     include('../clases/Sesion.php');
-    include('../clases/PDF.php'); //TODO Aquí va el prototipo de header y footer
+    include('../clases/PDF.php');
 
     // Inicializamos las variables requeridas
     //? Solo recibe el ID del grupo

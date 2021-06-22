@@ -4,7 +4,8 @@
 		function buscarProfesor($persona)
 		{
 			$SQL_Bus_Profesor = 
-			"SELECT P.prof_id_profesor, P.pers_id_persona, P.prof_num_trabajador, P.prof_semblanza, P.prof_rfc
+			"SELECT P.prof_id_profesor, P.pers_id_persona, P.prof_num_trabajador, P.prof_semblanza, P.prof_rfc, PE.pers_nombre,
+					PE.pers_apellido_paterno, PE.pers_apellido_materno
 			 FROM Profesor P, Persona PE
 			 WHERE P.pers_id_persona = PE.pers_id_persona AND P.pers_id_persona = $persona
 			";

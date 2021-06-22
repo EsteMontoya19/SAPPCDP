@@ -46,7 +46,7 @@
         {
             $SQL_Bus_Curso = 
             "   SELECT g.grup_id_grupo, g.prof_id_profesor, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
-                    g. curs_id_cursos, curs_nombre, 
+                    g. curs_id_cursos, curs_nombre, curs_tipo, curs_nivel,  curs_num_sesiones,
                     g.plat_id_plataforma, grup_reunion, grup_acceso, grup_clave_acceso, grup_cupo,  
                     grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, grup_estado,
                     (SELECT pers_nombre || ' ' || pers_apellido_paterno || ' ' || pers_apellido_materno
@@ -473,13 +473,14 @@
             "	
                 SELECT GRUP_ID_GRUPO, C.CURS_ID_CURSOS, GRUP_MODALIDAD,
                     CURS_NOMBRE, CURS_NUM_SESIONES, G.PLAT_ID_PLATAFORMA, 
-                    GRUP_REUNION, CALE_SEMESTRE, grup_num_inscritos
+                    GRUP_REUNION, CALE_SEMESTRE, grup_num_inscritos, GRUP_ACTIVO
                 FROM GRUPO G, CURSO C, PROFESOR P, CALENDARIO CA
-                WHERE G.PROF_ID_PROFESOR = $id
+                WHERE G.PROF_ID_PROFESOR = 1
                     AND G.CURS_ID_CURSOS = C.CURS_ID_CURSOS 
                     AND G.PROF_ID_PROFESOR = P.PROF_ID_PROFESOR 
-                    AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO 
-                ORDER BY GRUP_ID_GRUPO DESC;
+                    AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO
+                ORDER BY GRUP_ACTIVO DESC,
+                        GRUP_ID_GRUPO DESC;
             ";
 
                 $bd = new BD();
