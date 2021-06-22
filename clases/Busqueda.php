@@ -126,7 +126,7 @@
         {
             $SQL_Bus_Plataformas =
             "   
-                SELECT PLAT_ID_PLATAFORMA, PLAT_NOMBRE
+                SELECT PLAT_ID_PLATAFORMA, PLAT_NOMBRE, PLAT_ACTIVO
                 FROM PLATAFORMA
                 ORDER BY PLAT_NOMBRE
             ";
