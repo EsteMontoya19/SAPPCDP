@@ -489,5 +489,44 @@
                 $bd->cerrarBD();
                 return ($transaccion_1->traerRegistros());
 		}
+
+        //Permite Consultar las inscripciones de un grupo 
+        function buscarInscripcionesxGrupo($ID)
+        {
+            $SQL_Bus_Cursos = 
+            "   
+            SELECT pers_apellido_paterno, pers_apellido_materno, pers_nombre
+            FROM Inscripcion I, Profesor p, Persona E 
+            WHERE I.prof_id_profesor = P.prof_id_profesor 
+            AND P.pers_id_persona = E.pers_id_persona AND grup_id_grupo = $ID 
+            ORDER BY pers_apellido_paterno, pers_apellido_materno, pers_nombre DESC;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Cursos);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+        }
+
+        //Permite consultar el nombre de un curso por el ID del grupo
+        function buscarNombreCursoxGrupo($ID){
+            $SQL_Bus_Curso = 
+            "   
+                SELECT curs_nombre, curs_nivel, curs_tipo
+                FROM Curso C, Grupo G
+                WHERE C.curs_id_cursos=G.curs_id_cursos AND grup_id_grupo = $ID;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Curso);
+            $obj_Grupo = $transaccion_1->traerObjeto(0);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
+
+        }
     }
 ?>

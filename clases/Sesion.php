@@ -125,5 +125,22 @@
 			$bd->cerrarBD();
 			return ($transaccion_1->traerObjeto(0));
 		}
+
+		// Busca las fechas de sesiones (unicamente día y mes) de un grupo
+		function buscarFechaSesiones($idGrupo){
+			$SQL_Bus_Sesion =
+			"
+			SELECT to_char(sesi_fecha, 'DD-MM') fecha
+			FROM SESION 
+			WHERE GRUP_ID_GRUPO = $idGrupo
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Sesion);
+			$bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+		}
     }
 ?>
