@@ -58,7 +58,7 @@ error_reporting(E_ALL);
 		}
 
 	  /**************************************************************
-	  * Metodo que ejecuta la instruccion DML
+	  * Método que ejecuta la instruccion DML
 	  **************************************************************/
 		function enviarQuery($sql)
 		{
@@ -85,7 +85,7 @@ error_reporting(E_ALL);
 
 
 	  /**************************************************************
-	   * Metodo que envia una serie de querys en forma simultanea,
+	   * Método que envia una serie de querys en forma simultanea,
 	   * tipo transaccion en una base de datos.
 	  **************************************************************/
 		function enviarQueryAsincrono($sqls, $numsqls) // Lalo: ¿Qué es un Query Asincrono?
@@ -101,7 +101,7 @@ error_reporting(E_ALL);
 			}
 		}
 	  /**************************************************************
-	   * Metodo que sirve para hacer un commit a un query asincrono.
+	   * Método que sirve para hacer un commit a un query asincrono.
 	   * Y el resultado del primer o n query que se envio.
 	  **************************************************************/
 		function traerResultadoQueryAsincrono()
@@ -109,7 +109,7 @@ error_reporting(E_ALL);
 			$this->query = pg_get_result($this->conexion);
 		}
 	  /**************************************************************
-	   * Metodo que sirve para mostrar el error generado por un query.
+	   * Método que sirve para mostrar el error generado por un query.
 	   * @attribute error se guarda el error que mando el query.
 	  **************************************************************/
 		function traerErrorQueryAsincrono()
@@ -118,7 +118,7 @@ error_reporting(E_ALL);
 		}
 
 	  /**************************************************************
-	   * Metodo que realiza retorna el array con los registros
+	   * Método que realiza retorna el array con los registros
 	   * obtenidos
 	  **************************************************************/
 		function traerRegistro($i)
@@ -138,7 +138,7 @@ error_reporting(E_ALL);
 
 
 	  /**************************************************************
-	   * Metodo que retorna el array con los registros
+	   * Método que retorna el array con los registros
 	   * obtenidos en forma de objeto
 		**************************************************************/
 		function traerObjeto($i)
@@ -151,7 +151,7 @@ error_reporting(E_ALL);
 		}
 
 	  /**************************************************************
-	   * Metodo que realiza retorna el nÃºmero de registros afectados
+	   * Método que realiza retorna el nÃºmero de registros afectados
 	   **************************************************************/
 		function traerRegistrosAfectados()
 		{
@@ -159,7 +159,7 @@ error_reporting(E_ALL);
 		}
 
 	  /**************************************************************
-	   * Metodo que realiza retorna el numero de registros de la
+	   * Método que realiza retorna el numero de registros de la
 	   * consulta
 	   *************************************************************/
 
@@ -169,7 +169,7 @@ error_reporting(E_ALL);
 		}
 
 	  /**************************************************************
-	   * Metodo que realiza utiliza el mysql_result() para obtener un
+	   * Método que realiza utiliza el mysql_result() para obtener un
 	   * resultado VERIFICAR?
 	   **************************************************************/
 		function traerCampo($rs, $numero, $campo)
@@ -178,7 +178,7 @@ error_reporting(E_ALL);
 		}
 
 	  /**************************************************************
-	   * Metodo que permite obtener el resultado de query()
+	   * Método que permite obtener el resultado de query()
 	   **************************************************************/
 		function traerQuery()
 		{

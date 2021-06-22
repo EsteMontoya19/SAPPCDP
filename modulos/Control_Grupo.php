@@ -234,8 +234,8 @@
           /*solo si se ha terminado de reccorrer la lista de grupos inscritos del profesor se permite inscribir*/
           if($contador_grupo == $cantidad_grupos_profesor){
             //? Esto lo inscribe
-             $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
-             exit("1");
+            $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
+            exit("1");
           }
         } else {
           /*Si el grupo inscrito en su ultima sesión == grupo a inscribir en su primera sesion
