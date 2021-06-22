@@ -115,13 +115,17 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                   <label for="UsuarioPregunta">Pregunta de seguridad: *</label>
                   <select class="custom-select" id="UsuarioPregunta"name="UsuarioPregunta">
                     <option value="0">Seleccione una pregunta</option>
-                    <?php foreach ($arr_preguntas as $pregunta) { ?>
+                    <?php foreach ($arr_preguntas as $pregunta) { if ($pregunta['prse_activo'] == 't') { ?>
                       <option value="<?php echo $pregunta['prse_id_pregunta']; ?>"
                         <?php if(isset($usuario)) { if ($usuario->prse_id_pregunta == $pregunta['prse_id_pregunta']) { ?>
                         selected <?php } }?>>
                         <?php echo $pregunta['prse_pregunta']; ?>
                       </option>
-                    <?php } ?>
+                    <?php } else { if(isset($usuario)) { if ($usuario->prse_id_pregunta == $pregunta['prse_id_pregunta']) {?>
+                          <option value="<?php echo $pregunta['prse_id_pregunta'];?>" selected>
+                            <?php echo $pregunta['prse_pregunta']; ?>
+                          </option>
+                    <?php } } } }?>
                   </select>
                 </div>
                 <div class="col-lg-6 form-group">

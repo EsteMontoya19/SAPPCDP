@@ -283,11 +283,11 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
                     <div class="col-sm-12">
                       <select class="custom-select" id="UsuarioPregunta"name="UsuarioPregunta">
                       <option value="0">Seleccione una pregunta</option>
-                      <?php foreach ($arr_preguntas as $pregunta) { ?>
+                      <?php foreach ($arr_preguntas as $pregunta) { if ($pregunta['prse_activo'] == 't') { ?>
                         <option value="<?php echo $pregunta['prse_id_pregunta']; ?>">
                           <?php echo $pregunta['prse_pregunta']; ?>
                         </option>
-                      <?php } ?>
+                      <?php } }?>
                     </select>
                     </div>
                   </div>

@@ -10,21 +10,22 @@
 INSERT INTO Persona (pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono)
 	VALUES ('Esteban', 'Montoya', 'Maya', 'estemontoya99@gmail.com', '5548364465'),
           ('Samuel', 'Alcantara', 'Chavez', 'samuelunam3151@gmail.com', '5564164687'),
-          ('Karen', 'Fuentez', 'Aguilar', 'ftzkaren21@gmail.com', '5620589315');
+          ('Karen', 'Fuentez', 'Aguilar', 'ftzkaren21@gmail.com', '5620589315'),
+          ('Luis Antonio', 'Gutierrez','Castro', 'lantonio.gc99@gmail.com', '5580947651');
 
 INSERT INTO Rol (rol_nombre) VALUES ('Administrador del sistema'),('Moderador'),('Profesor');
 
 INSERT INTO PREGUNTA_SEGURIDAD (prse_pregunta, prse_activo) VALUES ('Como se llamaba tu primer mascota', 'TRUE'), ('Pelicula de acción favorita', 'TRUE'),
-			('Superherore favorito', 'TRUE');
+			('Superheroe favorito', 'TRUE');
 
 INSERT INTO Usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usuario, usua_contrasena, usua_respuesta, usua_activo)
 		VALUES (1, 1, 3, 'Esteban', '1234', 'Linterna Verde', true), (2, 2, 3, 'Samuel', '1234', 'Batman', true),
-            (3, 3, 3, 'Karen', '1234', 'Flash', true);
+            (3, 3, 3, 'Karen', '1234', 'Flash', true),(4,3,3,'Tony', '1234', 'Spiderman', true);
 
 INSERT INTO Administrador (pers_id_persona, admi_num_trabajador, admi_rfc) VALUES (1, '315067596', 'MOME990905134');
 
 INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza, prof_rfc) 
-      VALUES (3, '123457890', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber','KAFA12345');
+      VALUES (3, '123457890', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber','KAFA12345'),(4,'1234569870','Profesor de informatica con experiencia en IOS y MACOS', 'GUCL990326S58');
 
 INSERT INTO Moderador (pers_id_persona, mode_num_cuenta, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin) 
 		VALUES (2, '123457890', '2021/02/23', '2021/09/08','07:00:00', '21:00:00');
@@ -43,11 +44,11 @@ INSERT INTO Coordinacion (coor_nombre) VALUES ('Informática'), ('Fiscal'), ('Co
 ('Maestría en auditoria'), ('Especialidad en administración gerontológica'), ('Maestría negocios internacionales'), ('Maestría en turismo'), 
 ('Maestría en alta dirección'), ('Maestría en informática administrativa');
 
-INSERT INTO Profesor_Nivel (prof_id_profesor, nive_id_nivel) VALUES (1, 1), (1, 2);
+INSERT INTO Profesor_Nivel (prof_id_profesor, nive_id_nivel) VALUES (1, 1), (1, 2),(2, 1), (2, 2);
 
-INSERT INTO Profesor_Modalidad (prof_id_profesor, moda_id_modalidad) VALUES (1,1);
+INSERT INTO Profesor_Modalidad (prof_id_profesor, moda_id_modalidad) VALUES (1,1), (2,3);
 
-INSERT INTO Profesor_Coordinacion(prof_id_profesor, coor_id_coordinacion) VALUES (1,1),(1,24), (1,14);
+INSERT INTO Profesor_Coordinacion(prof_id_profesor, coor_id_coordinacion) VALUES (1,1),(1,24), (1,14),(2,1),(2,23),(2,24);
 
 INSERT INTO Curso (CURS_TIPO, CURS_NOMBRE, CURS_NUM_SESIONES, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, CURS_NIVEL, CURS_OBJETIVOS, CURS_TEMARIO, CURS_ACTIVO)
 			VALUES ('Curso', 'Cuestionarios en Zoom', 2, 'Nada', 'Nada', 'Básico', 'Aprender', '/nose.pdf', 'TRUE');

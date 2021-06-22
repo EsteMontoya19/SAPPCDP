@@ -78,7 +78,7 @@
         function selectPregunta()
         {
             $SQL_Bus_Preg = 
-            "   SELECT prse_id_pregunta, prse_pregunta
+            "   SELECT prse_id_pregunta, prse_pregunta, prse_activo
                 FROM Pregunta_Seguridad;
             ";
 

@@ -475,7 +475,7 @@
                     CURS_NOMBRE, CURS_NUM_SESIONES, G.PLAT_ID_PLATAFORMA, 
                     GRUP_REUNION, CALE_SEMESTRE, grup_num_inscritos, GRUP_ACTIVO
                 FROM GRUPO G, CURSO C, PROFESOR P, CALENDARIO CA
-                WHERE G.PROF_ID_PROFESOR = 1
+                WHERE G.PROF_ID_PROFESOR = $id
                     AND G.CURS_ID_CURSOS = C.CURS_ID_CURSOS 
                     AND G.PROF_ID_PROFESOR = P.PROF_ID_PROFESOR 
                     AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO
