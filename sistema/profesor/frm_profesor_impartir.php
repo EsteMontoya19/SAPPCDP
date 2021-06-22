@@ -89,7 +89,7 @@
                             onclick="consultarGrupoImpartir(<?php echo $grupo['grup_id_grupo']?>,'<?php echo $idPersona?>')">
                             <i class="fas fa-search-plus"></i>
                           </button>
-                          //TODO : Hacer que genere un Excel de la lista. 
+                          <!--TODO : Hacer que genere un Excel de la lista. --> 
                           <button type="button" class="btn btn-primary btn-table" title="Lista" style="margin-top: 5px;">
                             <i class="fas fa-list-alt"></i>
                           </button>

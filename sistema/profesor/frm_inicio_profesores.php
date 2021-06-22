@@ -1,12 +1,15 @@
 <?php
   include('../../clases/BD.php');
   include('../../clases/Grupo.php');
+  include('../../clases/Profesor.php');
   
   $obj_Grupo = new Grupo();
   $arr_grupos = $obj_Grupo ->buscarGruposProfesores();
   
   if (isset($_POST['persona'])){
     $idPersona = $_POST['persona'];
+    $obj_profesor = new Profesor();
+    $id_profesor = $obj_profesor->buscarProfesor($idPersona);
   } else {
     $idPersona = 0;
   }
@@ -55,7 +58,13 @@
                 </thead>
                 <tbody>
                   
-                  <?php foreach ($arr_grupos as $grupo) { ?>
+                                                          <!--
+                                                            Se usa para validar que el id del profesor que esta consultando los grupos
+                                                            no sea el mismo que el del grupo publicado, así directamente si es el mismo
+                                                            quiere decir que el imparte el grupo, por lo que no hay motivo para que le 
+                                                            permita inscribirse o verlo como posibilidad de grupo a inscribirse.
+                                                          -->
+                  <?php foreach ($arr_grupos as $grupo) { if($grupo['prof_id_profesor'] != $id_profesor->prof_id_profesor) {?>
                       <tr>
                         <td><?php echo $grupo['grup_id_grupo'];?></td>
                         <td><?php echo $grupo['curs_nombre'];?></td>
@@ -82,7 +91,7 @@
                           </button> -->
                         </td>
                       </tr>
-                  <?php } ?>
+                  <?php } } ?>
                   
                 </tbody>
               </table>
