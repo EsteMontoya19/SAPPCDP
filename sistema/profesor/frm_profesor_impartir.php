@@ -93,6 +93,11 @@
                           <button type="button" class="btn btn-primary btn-table" title="Lista" style="margin-top: 5px;">
                             <i class="fas fa-list-alt"></i>
                           </button>
+                          <?php if($grupo['grup_num_inscritos'] != 0){ ?>
+                            <a href="../modulos/Control_PDF_Inscritos.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-primary btn-table" title="Lista" style="margin-top: 5px;">
+                              <i class="fas fa-list-alt"></i>
+                            </a>
+                          <?php } ?>
                         </td>
                       </tr>
                   <?php } } ?>

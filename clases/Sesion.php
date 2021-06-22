@@ -89,7 +89,7 @@
 		function numSesionesGrupo($idGrupo) {
 
 			$SQL_Bus_Sesion =
-			"SELECT COUNT(grup_id_grupo)
+			"SELECT COUNT(grup_id_grupo) numero
 			 FROM sesion
 			 WHERE grup_id_grupo = $idGrupo
 			 GROUP BY grup_id_grupo 
@@ -124,6 +124,23 @@
 			$obj_Sesion = $transaccion_1->traerObjeto(0);
 			$bd->cerrarBD();
 			return ($transaccion_1->traerObjeto(0));
+		}
+
+		// Busca las fechas de sesiones (unicamente día y mes) de un grupo
+		function buscarFechaSesiones($idGrupo){
+			$SQL_Bus_Sesion =
+			"
+			SELECT to_char(sesi_fecha, 'DD-MM') fecha
+			FROM SESION 
+			WHERE GRUP_ID_GRUPO = $idGrupo
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Sesion);
+			$bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
 		}
     }
 ?>
