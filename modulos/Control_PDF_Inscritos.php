@@ -3,7 +3,7 @@
     include('../clases/BD.php');
     include('../clases/Grupo.php');
     include('../clases/Sesion.php');
-    include('../clases/PDF.php');
+    include('../clases/PDF_horizontal.php');
 
     // Inicializamos las variables requeridas
     //? Solo recibe el ID del grupo
@@ -26,6 +26,8 @@
     $pdf->SetFont('Arial','B',14); //Tipo de letra, Estilo ('B', 'I', 'U' o '') y Tamaño en puntos defecto 12. Obligatorio al menos una vez antes de invocar por primera vez el metodo Cell
     $pdf->Cell(256,12,utf8_decode($nombreCurso),0,1,'C'); //ancho, alto, Texto, Borde 0 o 1 o 'L','R','B','T' o combinación, Salto de Linea (1 siguiente), alineación (L, R, C), color (TRUE o FALSE) función
 
+    $pdf->Ln(10);
+
     /*Creamos banderas 
         $numeroUno almacena el numero de ciclos que debe dar, si el número de sesiones es menor p igual a 10 será un unico ciclo.
         $numeroDos numero de sesiones que restan para el ultimo o unico ciclo de 1 a 10
@@ -43,8 +45,6 @@
         $numeroTres = 10;
     }
 
-    $pdf->SetFont('Arial','B',12);
-    
     //Se inicializa el contador en 0. Servirá para indicar el lugar en el que se guardará una consulta
     $i=0; 
     //Se pasa el arreglo de la consulta sql a un arreglo númerico. Ya que el KEY númerico en este caso es más facil de consultar
@@ -61,7 +61,7 @@
         Devuelve $j para conocer el lugar siguiente del arreglo por si existe un siguiente ciclo y continúe en ese lugar.*/
     function imprimirFecha($contador, $arreglo, $j, $pdf){
         for($i=$contador; $i>0; $i--){
-            $pdf->Cell(13,5,$arreglo[$j],1,0,'L');
+            $pdf->Cell(13,5,$arreglo[$j],1,0,'L',1);
             $j++;
         }
         return $j;
@@ -74,6 +74,8 @@
             $pdf->Cell(13,5,'',1,0,'L');
         }
     }
+
+    
 
     //Se inicializa el contador en 0.
     $h=0;
@@ -90,17 +92,24 @@
         }
 
         // Se imprime el encabezado de la tabla
-        $pdf->Cell(128,5,'Nombre Completo',1,0,'L');
+        $pdf->SetFillColor(218, 165, 32); //219, 149, 1 es el color del sistema
+        $pdf->SetFont('Arial','B',12);
+        $pdf->Cell(8,5,'#',1,0,'C',1);
+        $pdf->Cell(123,5,'Nombre Completo',1,0,'L',1);
         $h = imprimirFecha($numeroTres, $arr_fechas, $h, $pdf);
 
         $pdf->Ln(5);
+        $pdf->SetFont('Arial','',12);
 
         // Se imprime el cuerpo de la tabla
+        $k=1;
         foreach($arr_Inscritos as $inscrito){
+            $pdf->Cell(8,5,$k,1,0,'C');
             $nombreCompleto=$inscrito['pers_apellido_paterno'].' '.$inscrito['pers_apellido_materno'].' '.$inscrito['pers_nombre'];
-            $pdf->Cell(128,5,$nombreCompleto,1,0,'L');
+            $pdf->Cell(123,5,$nombreCompleto,1,0,'L');
             imprimirColumnasFecha($numeroTres, $pdf);
             $pdf->Ln(5);
+            $k++;
         }
 
         //Se añade una pagina. En el ultimo recorrido, se ignora.
