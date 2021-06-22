@@ -88,10 +88,7 @@
                           <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupoInscrito(<?php echo $grupo['grup_id_grupo']?>,'<?php echo $idPersona?>')">
                             <i class="fas fa-search-plus"></i>
                           </button>
-                          <button type="button" class="btn btn-primary btn-table" title="Lista" style="margin-top: 5px;"
-                                  onclick="listaInscritos(0,'comprobante')">
-                            <i class="fas fa-list-alt"></i>
-                          </button>
+                          <a class = "btn btn-primary" target="_blank" href="../modulos/Control_PDF.php?tipo=comprobante&idP=<?php echo($idPersona); ?>&idG=<?php echo($grupo['grup_id_grupo']); ?>" role="button"><i class="fas fa-list-alt"></i></a>
                           <!-- <button type="button" class="btn btn-primary btn-table" title="Comprobante" style="margin-top: 5px;">
                             <i class="fas fa-list-alt"></i>
                           </button>

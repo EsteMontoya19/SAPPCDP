@@ -2,11 +2,13 @@
 
 // Clases
     include('../clases/BD.php');
-    include('../clases/Grupo.php');
     include('../clases/Sesion.php');
     include('../clases/PDF.php');
+    include('../clases/Profesor.php');
+    include('../clases/Grupo.php');
+    include('../clases/Plataforma.php');
     
-    if ($_POST['tipoLista'] == "listaPDF") {
+    if ($_GET['tipo'] == "listaPDF") {
         // Inicializamos las variables requeridas
         //? Solo recibe el ID del grupo
         $idGrupo = $_POST['idGrupo'];
@@ -125,7 +127,22 @@
             
     }   
     
-    if ($_POST['tipoLista'] == "comprobante") {
+    if ($_GET['tipo'] == "comprobante") {
+    
+    //? ID's recibidos por get
+    $idPersona = $_GET["idP"];
+    $idGrupo = $_GET["idG"];
+    
+    //? Objetos necesarios para los resultados del comprobante de inscripción
+    //Objetos
+    $obj_Profesor = new Profesor ();
+    $obj_Grupo = new Grupo ();
+    $obj_Plataforma = new Plataforma ();
+
+    //? Variables con los datos de la consulta
+    $profesor = $obj_Profesor->buscarProfesor($idPersona);
+    $grupo = $obj_Grupo->buscarGrupo($idGrupo);
+    $plataforma = $obj_Plataforma->buscarPlataforma($grupo->plat_id_plataforma);
     
     //? Constructor
     $pdf = new PDF("P", "mm", "Letter"); //! Las medidas afectan lo expresado en otras funciones como Cell
@@ -159,22 +176,22 @@
     $pdf->SetFont("Times","B", 12);
     $pdf->Cell(45,5,utf8_decode("Nombre: "),1,0, "L", false);
     $pdf->SetFont("Times","", 12);
-    $pdf->Cell(0,5,utf8_decode("AQUI VA EL NOMBRE"),1,1, "L", false);
+    $pdf->Cell(0,5,utf8_decode(" ".$profesor->pers_nombre),1,1, "L", false);
     
     $pdf->SetFont("Times","B", 12);
     $pdf->Cell(45,5,utf8_decode("Apellido Paterno: "),1,0, "L", false);
     $pdf->SetFont("Times","", 12);
-    $pdf->Cell(0,5,utf8_decode("AQUI VA EL APELLIDO P"),1,1, "L", false);
+    $pdf->Cell(0,5,utf8_decode(" ".$profesor->pers_apellido_paterno),1,1, "L", false);
     
     $pdf->SetFont("Times","B", 12);
     $pdf->Cell(45,5,utf8_decode("Apellido Materno: "),1,0, "L", false);
     $pdf->SetFont("Times","", 12);
-    $pdf->Cell(0,5,utf8_decode("AQUI VA EL APELLIDO M"),1,1, "L", false);
+    $pdf->Cell(0,5,utf8_decode(" ".$profesor->pers_apellido_materno),1,1, "L", false);
     
     $pdf->SetFont("Times","B", 12);
     $pdf->Cell(45,5,utf8_decode("Número de trabajador: "),1,0, "L", false);
     $pdf->SetFont("Times","", 12);
-    $pdf->Cell(0,5,utf8_decode("AQUI VA EL NÚMERO TRABAJADOR"),1,1, "L", false);
+    $pdf->Cell(0,5,utf8_decode(" ".$profesor->prof_num_trabajador),1,1, "L", false);
     
     $pdf->Ln(10);
     
@@ -184,22 +201,22 @@
     $pdf->SetFont("Times","B", 12);
     $pdf->Cell(20,5,utf8_decode("Curso: "),1,0, "L", false);
     $pdf->SetFont("Times","", 12);
-    $pdf->Cell(0,5,utf8_decode("AQUI VA EL CURSO"),1,1, "L", false);
+    $pdf->Cell(0,5,utf8_decode(" ".$grupo->curs_nombre),1,1, "L", false);
 
     $pdf->SetFont("Times","B", 12);
     $pdf->Cell(20,5,utf8_decode("Tipo: "),1,0, "L", false);
     $pdf->SetFont("Times","", 12);
-    $pdf->Cell(0,5,utf8_decode("AQUI VA EL TIPO DEL CURSO"),1,1, "L", false);
+    $pdf->Cell(0,5,utf8_decode(" ".$grupo->curs_tipo),1,1, "L", false);
 
     $pdf->SetFont("Times","B", 12);
     $pdf->Cell(20,5,utf8_decode("Nivel: "),1,0, "L", false);
     $pdf->SetFont("Times","", 12);
-    $pdf->Cell(0,5,utf8_decode("AQUI VA EL NIVEL DEL CURSO"),1,1, "L", false);
+    $pdf->Cell(0,5,utf8_decode(" ".$grupo->curs_nivel),1,1, "L", false);
 
     $pdf->SetFont("Times","B", 12);
     $pdf->Cell(20,5,utf8_decode("Sesiones: "),1,0, "L", false);
     $pdf->SetFont("Times","", 12);
-    $pdf->Cell(0,5,utf8_decode("AQUI VA LAS SESIONES  DEL CURSO"),1,1, "L", false);
+    $pdf->Cell(0,5,utf8_decode(" ".$grupo->curs_num_sesiones),1,1, "L", false);
     $pdf->Ln(10);
 
 
@@ -211,41 +228,42 @@
     $pdf->SetFont("Times","B", 12);
     $pdf->Cell(25,5,utf8_decode("Profesor: "),1,0, "L", false);
     $pdf->SetFont("Times","", 12);
-    $pdf->Cell(0,5,utf8_decode("AQUI VA EL NOMBRE DEL PROFE"),1,1, "L", false);
+    $pdf->Cell(0,5,utf8_decode(" ".$grupo->pers_nombre),1,1, "L", false);
 
     $pdf->SetFont("Times","B", 12);
     $pdf->Cell(25,5,utf8_decode("Moderador: "),1,0, "L", false);
     $pdf->SetFont("Times","", 12);
-    $pdf->Cell(0,5,utf8_decode("AQUI VA EL NOMBRE DEL MODERADOR"),1,1, "L", false);
+    $pdf->Cell(0,5,utf8_decode(" ".$grupo->pers_apellido_paterno),1,1, "L", false);
 
     $pdf->SetFont("Times","B", 12);
     $pdf->Cell(25,5,utf8_decode("Modalidad: "),1,0, "L", false);
     $pdf->SetFont("Times","", 12);
-    $pdf->Cell(0,5,utf8_decode("AQUI VA EL LA MODALIDAD DEL GRUPO"),1,1, "L", false);
+    $pdf->Cell(0,5,utf8_decode(" ".$grupo->pers_apellido_materno),1,1, "L", false);
     
-    $tipo = 2;
-    if($tipo == 1 || isset($tipo)) {
+    
+    if(!isset($grupo->plat_id_plataforma)) {
+        //TODO: Falta asignarles variables
         $pdf->SetFont("Times","B", 12);
         $pdf->Cell(20,5,utf8_decode("Edificio: "),1,0, "L", false);
         $pdf->SetFont("Times","", 12);
-        $pdf->Cell(0,5,utf8_decode("AQUI VA EL EDIFICIO"),1,1, "L", false);
+        $pdf->Cell(0,5,utf8_decode("Por el momento no hay cursos preseciales"),1,1, "L", false);
 
         $pdf->SetFont("Times","B", 12);
         $pdf->Cell(20,5,utf8_decode("Salón: "),1,0, "L", false);
         $pdf->SetFont("Times","", 12);
-        $pdf->Cell(0,5,utf8_decode("AQUI VA EL SALÓN"),1,1, "L", false);
+        $pdf->Cell(0,5,utf8_decode("or el momento no hay cursos preseciales"),1,1, "L", false);
 
     } else {
         $pdf->SetFont("Times","B", 12);
         $pdf->Cell(25,5,utf8_decode("Plataforma: "),1,0, "L", false);
         $pdf->SetFont("Times","", 12);
-        $pdf->Cell(0,5,utf8_decode("AQUI VA LA PLATAFORMA"),1,1, "L", false);
+        $pdf->Cell(0,5,utf8_decode(" ".$plataforma->plat_nombre),1,1, "L", false);
     }
 
     $pdf->SetFont("Times","B", 12);
     $pdf->Cell(25,5,utf8_decode("Sesiones: "),1,0, "L", false);
     $pdf->SetFont("Times","", 12);
-    $pdf->Cell(0,5,utf8_decode("AQUI VA EL NÚMERO DE SESIONES"),1,1, "L", false);
+    $pdf->Cell(0,5,utf8_decode(" ".$grupo->curs_num_sesiones),1,1, "L", false);
     $pdf->Ln(10);
 
     

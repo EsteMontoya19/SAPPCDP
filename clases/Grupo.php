@@ -46,7 +46,7 @@
         {
             $SQL_Bus_Curso = 
             "   SELECT g.grup_id_grupo, g.prof_id_profesor, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
-                    g. curs_id_cursos, curs_nombre, 
+                    g. curs_id_cursos, curs_nombre, curs_tipo, curs_nivel,  curs_num_sesiones,
                     g.plat_id_plataforma, grup_reunion, grup_acceso, grup_clave_acceso, grup_cupo,  
                     grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, grup_estado,
                     (SELECT pers_nombre || ' ' || pers_apellido_paterno || ' ' || pers_apellido_materno
