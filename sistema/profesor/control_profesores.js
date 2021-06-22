@@ -9,14 +9,12 @@ $(document).ready(function () {
     });
 });
 
-function validarInscripcion (inscritos, cupo){
-
-    if(cupo <= inscritos) {
+function validarInscripcion(inscritos, cupo) {
+    if (cupo <= inscritos) {
         return false;
     }
 
     return true;
-
 }
 
 // Consultar grupo
@@ -24,7 +22,7 @@ function consultarGrupo(id, persona) {
     var datos = {
         id: id,
         CRUD: 0,
-        persona : persona,
+        persona: persona,
     };
     $.ajax({
         data: datos,
@@ -41,7 +39,7 @@ function consultarGrupoInscrito(id, persona) {
     var datos = {
         id: id,
         CRUD: 5,
-        persona : persona,
+        persona: persona,
     };
     $.ajax({
         data: datos,
@@ -58,7 +56,7 @@ function consultarGrupoImpartir(id, persona) {
     var datos = {
         id: id,
         CRUD: 6,
-        persona : persona,
+        persona: persona,
     };
     $.ajax({
         data: datos,
@@ -72,10 +70,8 @@ function consultarGrupoImpartir(id, persona) {
 }
 
 // Inscripcion curso
-function inscribirGrupo (grupo,inscritos, cupo, persona, nombre, tipo, nivel) {
-    
-    if (validarInscripcion (inscritos, cupo)) {
-   
+function inscribirGrupo(grupo, inscritos, cupo, persona, nombre, tipo, nivel) {
+    if (validarInscripcion(inscritos, cupo)) {
         var mensaje = '¿Esta seguro que desea inscribirse al ';
         mensaje = mensaje.concat(tipo);
         mensaje = mensaje.concat(' ');
@@ -89,11 +85,11 @@ function inscribirGrupo (grupo,inscritos, cupo, persona, nombre, tipo, nivel) {
             titulo,
             mensaje,
             function () {
-                var dml = "inscripcion"
+                var dml = 'inscripcion';
                 var datos = {
                     grupo: grupo,
                     persona: persona,
-                    dml : dml,
+                    dml: dml,
                 };
                 $.ajax({
                     data: datos,
@@ -131,7 +127,6 @@ function inscribirGrupo (grupo,inscritos, cupo, persona, nombre, tipo, nivel) {
     } else {
         alertify.error('Ya no existen lugares disponibles');
     }
-
 }
 
 function listaInscritos(idGrupo, tipoLista) {

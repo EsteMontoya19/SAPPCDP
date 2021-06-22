@@ -61,13 +61,13 @@
                 <?php
                 if (isset($arr_grupos)) {
                   foreach ($arr_grupos as $grupo) { 
-                   $idGrupo = $grupo['grup_id_grupo'];
-                   $sesion = $obj_Sesion->buscarMinSesion($idGrupo);
-                   if($grupo['grup_modalidad'] == 'En línea'){
-                     $modalidad=$obj_Grupo->buscarDatosEnLinea($idGrupo);
-                   } else {
-                     $modalidad=$obj_Grupo->buscarDatosPresencial($idGrupo);
-                   }
+                  $idGrupo = $grupo['grup_id_grupo'];
+                  $sesion = $obj_Sesion->buscarMinSesion($idGrupo);
+                  if($grupo['grup_modalidad'] == 'En línea'){
+                    $modalidad=$obj_Grupo->buscarDatosEnLinea($idGrupo);
+                  } else {
+                    $modalidad=$obj_Grupo->buscarDatosPresencial($idGrupo);
+                  }
                 
                 ?>
 
@@ -88,6 +88,10 @@
                           <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" 
                             onclick="consultarGrupoImpartir(<?php echo $grupo['grup_id_grupo']?>,'<?php echo $idPersona?>')">
                             <i class="fas fa-search-plus"></i>
+                          </button>
+                          //TODO : Hacer que genere un Excel de la lista. 
+                          <button type="button" class="btn btn-primary btn-table" title="Lista" style="margin-top: 5px;">
+                            <i class="fas fa-list-alt"></i>
                           </button>
                           <?php if($grupo['grup_num_inscritos'] != 0){ ?>
                             <a href="../modulos/Control_PDF_Inscritos.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-primary btn-table" title="Lista" style="margin-top: 5px;">
