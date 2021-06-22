@@ -449,5 +449,88 @@
                 $bd->cerrarBD();
                 return ($transaccion_1->traerObjeto(0));
         }
+<<<<<<< Updated upstream
+=======
+
+        //Busca el numero de grupos que imparte un profesor
+        function buscarNumGruposImpartidosxProfesor($id){
+			$SQL_Bus_Grupos =
+            "	
+                SELECT COUNT(GRUP_ID_GRUPO)
+                FROM GRUPO 
+                WHERE PROF_ID_PROFESOR = $id
+            ";
+    
+                $bd = new BD();
+                $bd->abrirBD();
+                $transaccion_1 = new Transaccion($bd->conexion);
+                $transaccion_1->enviarQuery($SQL_Bus_Grupos);
+                $bd->cerrarBD();
+                return ($transaccion_1->traerRegistros());
+		}
+
+        //Busca los grupos que imparte un profesor
+        function buscarGruposImpartidosxProfesor($id){
+			$SQL_Bus_Grupos =
+            "	
+                SELECT GRUP_ID_GRUPO, C.CURS_ID_CURSOS, GRUP_MODALIDAD,
+                       CURS_NOMBRE, CURS_NUM_SESIONES, G.PLAT_ID_PLATAFORMA, 
+                       GRUP_REUNION, CALE_SEMESTRE, GRUP_ACTIVO
+                FROM GRUPO G, CURSO C, PROFESOR P, CALENDARIO CA
+                WHERE G.PROF_ID_PROFESOR = 1
+                    AND G.CURS_ID_CURSOS = C.CURS_ID_CURSOS 
+                    AND G.PROF_ID_PROFESOR = P.PROF_ID_PROFESOR 
+                    AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO
+                ORDER BY GRUP_ACTIVO DESC,
+                        GRUP_ID_GRUPO DESC;
+            ";
+
+                $bd = new BD();
+                $bd->abrirBD();
+                $transaccion_1 = new Transaccion($bd->conexion);
+                $transaccion_1->enviarQuery($SQL_Bus_Grupos);
+                $bd->cerrarBD();
+                return ($transaccion_1->traerRegistros());
+		}
+
+        //Permite Consultar las inscripciones de un grupo 
+        function buscarInscripcionesxGrupo($ID)
+        {
+            $SQL_Bus_Cursos = 
+            "   
+            SELECT pers_apellido_paterno, pers_apellido_materno, pers_nombre
+            FROM Inscripcion I, Profesor p, Persona E 
+            WHERE I.prof_id_profesor = P.prof_id_profesor 
+            AND P.pers_id_persona = E.pers_id_persona AND grup_id_grupo = $ID 
+            ORDER BY pers_apellido_paterno, pers_apellido_materno, pers_nombre DESC;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Cursos);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+        }
+
+        //Permite consultar el nombre de un curso por el ID del grupo
+        function buscarNombreCursoxGrupo($ID){
+            $SQL_Bus_Curso = 
+            "   
+                SELECT curs_nombre, curs_nivel, curs_tipo
+                FROM Curso C, Grupo G
+                WHERE C.curs_id_cursos=G.curs_id_cursos AND grup_id_grupo = $ID;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Curso);
+            $obj_Grupo = $transaccion_1->traerObjeto(0);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
+
+        }
+>>>>>>> Stashed changes
     }
 ?>

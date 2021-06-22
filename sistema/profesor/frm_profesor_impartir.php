@@ -13,7 +13,7 @@
   if (isset($_POST['persona'])){
     $idPersona = $_POST['persona'];
     $profesor = $obj_Profesor->buscarProfesor($idPersona);
-    $arr_grupos = $obj_Grupo->gruposInscritosxProfesor($profesor->prof_id_profesor);
+    $arr_grupos = $obj_Grupo->buscarGruposImpartidosxProfesor($profesor->prof_id_profesor);
   } else {
     $idPersona = 0;
   }
@@ -28,7 +28,7 @@
           <div class="col-sm-12">
             <ol class="breadcrumb">
             <li class="breadcrumb-item active">
-              <i class="fas fa-users"></i>&nbsp; Grupos inscritos
+              <i class="fas fa-users"></i>&nbsp; Grupos a Impartir
             </li>
             </ol>
           </div>
@@ -85,19 +85,14 @@
                           echo "Edificio: ".$modalidad->edif_nombre." Salón: ".$modalidad->salo_nombre;
                         }?>
                         <td>
-                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupoInscrito(<?php echo $grupo['grup_id_grupo']?>,'<?php echo $idPersona?>')">
+                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" 
+                            onclick="consultarGrupoImpartir(<?php echo $grupo['grup_id_grupo']?>,'<?php echo $idPersona?>')">
                             <i class="fas fa-search-plus"></i>
                           </button>
                           <button type="button" class="btn btn-primary btn-table" title="Lista" style="margin-top: 5px;"
-                                  onclick="listaInscritos(0,'comprobante')">
+                          onclick="listaInscritos(<?php echo $grupo['grup_id_grupo']?>,'listaPDF')">
                             <i class="fas fa-list-alt"></i>
                           </button>
-                          <!-- <button type="button" class="btn btn-primary btn-table" title="Comprobante" style="margin-top: 5px;">
-                            <i class="fas fa-list-alt"></i>
-                          </button>
-                          <button type="button" class="btn btn-danger btn-table" title="Constancia" <?php if ($grupo['cons_id_constancias'] == Null) {?> style="display: none;" <?php } ?> style="margin-top: 5px;background: #20560a">
-                            <i class="fas fa-file"></i>
-                          </button> -->
                         </td>
                       </tr>
                   <?php } } ?>
