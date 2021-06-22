@@ -449,8 +449,6 @@
                 $bd->cerrarBD();
                 return ($transaccion_1->traerObjeto(0));
         }
-<<<<<<< Updated upstream
-=======
 
         //Busca el numero de grupos que imparte un profesor
         function buscarNumGruposImpartidosxProfesor($id){
@@ -531,6 +529,5 @@
             return ($transaccion_1->traerObjeto(0));
 
         }
->>>>>>> Stashed changes
     }
 ?>

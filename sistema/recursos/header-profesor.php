@@ -58,7 +58,8 @@
                 <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarProf">
                   <a class="dropdown-item" type="button"  id="btn_profesor_grupos_inscritos"
                   onclick="gruposInscritos(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)"> Inscrito </a>
-                  <a class="dropdown-item disabled" >A impartir</a>
+                  <a class="dropdown-item" type="button"  id="btn_profesor_grupos_impartir"
+                  onclick="gruposImpartir(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)">A impartir</a>
                 </div>
             </li>
 
