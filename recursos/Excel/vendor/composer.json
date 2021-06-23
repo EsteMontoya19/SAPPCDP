@@ -1,0 +1,13 @@
+{
+    "name": "parzibyte/generar_excel",
+    "description": "Generar un Excel",
+    "type": "project",
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.6"
+    },
+    "authors": [
+        {
+            "name": "Alcántara Chávez Samuel"
+        }
+    ]
+}
