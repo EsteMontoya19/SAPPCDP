@@ -5,25 +5,14 @@
 
     $idGrupo = $_GET['idGrupo'];
     $obj_Grupo = new Grupo();
-    $arr_Inscritos = $obj_Grupo->buscarInscripcionesxGrupo($idGrupo);
+    $obj_Sesion = new Sesion();
+    $arr_Inscritos = $obj_Grupo->buscarCorreosDeParticipantes($idGrupo);
     $curso = $obj_Grupo->buscarNombreCursoxGrupo($idGrupo);
     $grupo = $obj_Grupo->buscarGrupo($idGrupo);
-    $obj_Sesion = new Sesion();
-    $participantes = $obj_Grupo->buscarCorreosDeParticipantes($idGrupo);
     $sesion = $obj_Sesion->numSesionesGrupo($idGrupo);
-    $numSesiones = $sesion->numero;
     $arr_sesiones = $obj_Sesion->buscarFechaSesiones($idGrupo);
+    $numSesiones = $sesion->numero;
     $arr_fechas = [];
-    $arr_correos = [];
-    // $p=0;
-    // foreach($participantes as $participante){
-    //     $arr_participantes[$p] = $participante['nombre'];
-    // }
-
-    // $c=0;
-    // foreach($participantes as $participante){
-    //     $arr_participantes[$c] = $participante['pers_correo'];
-    // }
 
     //Se inicializa el contador en 0. Servirá para indicar el lugar en el que se guardará una consulta
     $i=0; 
@@ -95,7 +84,6 @@
     ->setARGB('77ACF1');
 
     // Definition: For -> Le da color a todos los encabezados de la lista de asistencia.
-    
     $documento
     ->getActiveSheet()
     ->getStyle("A8:".$letra."8")
@@ -118,21 +106,17 @@
     // Definition: Se coloca el apartado de constancia.
     $hoja -> setCellValueByColumnAndRow($numSesiones + 4, 8, "Constancia");
 
-    // ? Convertir el valor de String a entero
-    $num_inscritos = intval($inscritos);  
-
     //* Inicia la sección de datos.
     // Definition: El ciclo for se adapta al número de inscritos.
     $k=9;
     foreach($arr_Inscritos as $inscrito){
-        $nombreCompleto=$inscrito['pers_apellido_paterno'].' '.$inscrito['pers_apellido_materno'].' '.$inscrito['pers_nombre'];
-
+        $nombrePersona=$inscrito['nombre'];
+        $correoPersona=$inscrito['pers_correo'];
         $hoja -> setCellValueByColumnAndRow(1,$k, $k-8);
-        $hoja -> setCellValueByColumnAndRow(2,$k, $nombreCompleto);
-        $hoja -> setCellValueByColumnAndRow(3,$k, $nombreCompleto);
+        $hoja -> setCellValueByColumnAndRow(2,$k, $nombrePersona);
+        $hoja -> setCellValueByColumnAndRow(3,$k, $correoPersona);
         $k++;
     }
-
 
     $documento->getActiveSheet()->freezePane('D9','D9');
     ob_clean();
