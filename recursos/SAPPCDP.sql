@@ -67,27 +67,27 @@ INSERT INTO dia_festivo (cale_id_calendario, dife_fecha)
                 VALUES (1, '2021/09/15'), (1,'2021/09/16');
 
 INSERT INTO PLATAFORMA (PLAT_NOMBRE, PLAT_ACTIVO)
-			VALUES ('Zoom', 'TRUE'), ('Google Meet', 'TRUE');
+			VALUES ('Zoom', 'TRUE'), ('Google Meet', 'TRUE'), ('Messenger', 'TRUE');
 
 INSERT INTO Grupo (MODE_ID_MODERADOR, PROF_ID_PROFESOR, CURS_ID_CURSOS, SALO_ID_SALON, CALE_ID_CALENDARIO,
                PLAT_ID_PLATAFORMA, GRUP_REUNION, GRUP_ACCESO, GRUP_CLAVE_ACCESO, 
                GRUP_CUPO, GRUP_TIPO, GRUP_ACTIVO, GRUP_MODALIDAD, GRUP_ESTADO,  
                GRUP_INICIO_INSC, GRUP_FIN_INSC)
 			VALUES (1, 1, 1, null, 1, 
-               1, 'grupo reunion1', 'grupo acceso1', 'clave1', 
+               1, 'https://cuaed-unam.zoom.us/j/88139303420', '1234567', 'acceso', 
                50, 'Privado', 'true', 'En línea', 'Aprobado', 
-               '2021/02/23', '2021/09/08'),
+               '2021/06/23', '2021/09/08'),
                (1, 1, 1, 1, 
                1, null, null, null, null, 
-               60, 'Público', 'true', 'Presencial', 'Aprobado', 
-               '2021/02/25', '2021/09/07'),
+               60, 'Público', 'true', 'Presencial', 'Pendiente', 
+               '2022/01/01', '2022/02/01'),
                (1, 1, 1, null, 1, 
-               1, 'grupo reunion3', 'grupo acceso3', 'clave3', 
+               1, 'https://cuaed-unam.zoom.us/j/88139303420', 'grupo acceso3', 'clave3', 
                25, 'Público', 'true', 'En línea', 'Aprobado', 
-               '2021/02/28', '2021/09/09');
+               '2021/06/26', '2021/06/27');
 
 INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin)
-			VALUES   (1, '2021/09/08','07:00:00', '09:00:00'), (1, '2021/09/09','10:00:00', '12:00:00'),
+			VALUES   (1, '2021/07/08','07:00:00', '09:00:00'), (1, '2021/07/09','10:00:00', '12:00:00'),
                   (2, '2021/09/10','08:00:00', '10:00:00'), (2, '2021/09/11','11:00:00', '13:00:00'),
                   (3, '2021/09/08','12:00:00', '14:00:00'), (3, '2021/09/13','12:00:00', '14:00:00');
 
@@ -97,7 +97,7 @@ INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin)
 create table ADMINISTRADOR (
    admi_id_administrador  SERIAL               not null,
    PERS_ID_PERSONA      INT4                 not null,
-   admi_num_trabajador VARCHAR(10)             not null,
+   admi_num_trabajador VARCHAR(15)             not null,
    admi_rfc            VARCHAR(15)             not null,
    constraint PK_ADMINISTRADOR primary key (admi_id_administrador)
 );
