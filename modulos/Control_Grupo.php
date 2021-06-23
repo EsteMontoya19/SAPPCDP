@@ -5,6 +5,8 @@
   include('../clases/Curso.php');
   include('../clases/Inscripcion.php');
   include('../clases/Profesor.php');
+  include('../clases/Calendario.php');
+  include('../clases/Festivo.php');
 
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
@@ -46,10 +48,45 @@
     $sesion = array();
     $hora_inicio = array();
     $hora_fin = array();
+
+    //Se crean las variables que contienen los dias festivos, asueto y vacaciones administrativas
+    $obj_dias_festivos = new Festivo();
+    $obj_calendario = new Calendario();
+    $arr_dias_festivos = $obj_dias_festivos->buscarDiasFestivosActivos();//Busca los dias festivos
+    $asueto = $obj_calendario->consultarAsueto();//Busca el periodo de asueto academico
+    $vacaciones_Administrativas = $obj_calendario->consultarVacacionesAdministrativas();//Busca el periodo de vacaciones administrativas
+
+    //Se recorre el arreglo de sesiones para asignarles y validar cada una
     for ($iCont = 1 ; $iCont <= $numSesionesTotales ; $iCont++) {
       $sesion[$iCont] = $_POST['SesionFecha'.$iCont];
       $hora_inicio[$iCont] = $_POST['SesionHoraInicio'.$iCont];
       $hora_fin[$iCont] = $_POST['SesionHoraFin'.$iCont];
+      
+      //Aqui se validan primero los dias festivos
+      if(isset($arr_dias_festivos) || $arr_dias_festivos != ''){ 
+        foreach ($arr_dias_festivos as $dia_festivo){
+          //Compara la fecha de la sesión con el dia festivo y si es igual no permite registrar el grupo
+          if($dia_festivo['dife_fecha'] == $sesion[$iCont]){
+            exit("3");
+          }
+        }
+      }
+
+      //Aqui se valida que la fecha de la sesión no se encuentre dentro del periodo de vacaciones administrativas
+      if(isset($vacaciones_Administrativas) || $vacaciones_Administrativas != ''){
+        //Compara la fecha de la sesión con las vacaciones administrativas y si se encuentra contenido en el periodo no permite registrar el grupo
+        if($sesion[$iCont] >= $vacaciones_Administrativas->cale_inicio_admin && $sesion[$iCont] <= $vacaciones_Administrativas->cale_fin_admin){
+          exit("4");
+        }
+      }
+
+      //Aqui se verifica que la fecha de la sesion no se encuentre dentro del periodo de asueto
+      if(isset($asueto) || $asueto != ''){
+        //Compara la fecha de la sesión con el asueto y si se encuentra contenido en el asueto no permite registrar el grupo
+        if($sesion[$iCont] >= $asueto->cale_inicio_asueto && $sesion[$iCont] <= $asueto->cale_fin_asueto){
+          exit("5");
+        }
+      }
     }
     
     //? Se verifica la modalidad

@@ -374,6 +374,12 @@ $(document).ready(function () {
                         }, 1500);
                     } else if (respuesta == 2){
                         alertify.error('No se puede publicar un curso que no esta Aprobado.');
+                    } else if (respuesta == 3){
+                        alertify.error('No se puede registrar un grupo con sesiones en dias inhabiles o festivos');
+                    } else if (respuesta == 4){
+                        alertify.error('No se puede registrar un grupo con sesiones en el periodo de vacaciones administrativas');
+                    } else if (respuesta == 5){
+                        alertify.error('No se puede registrar un grupo con sesiones en asueto academico');
                     } else {
                         $('html, body').animate({ scrollTop: 0 }, 0);
                         alertify.error('Hubo un problema al registrar el grupo');
@@ -659,6 +665,7 @@ function cambioPublicacion(id, estatus, nombreCurso, modalidad) {
 }
 
 // Cambiar estatus_activo del grupo
+//? ¿Este pedazo de código ya no es necesario debido al de arriba o sí?
 function Publicar(id, estatus) {
     var mensaje = '¿Está seguro que desea cambiar la publicación del grupo?';
     mensaje = mensaje.concat('<br>Esto alterará la visibilidad del grupo ante los profesores');

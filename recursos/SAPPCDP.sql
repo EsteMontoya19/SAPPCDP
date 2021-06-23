@@ -61,7 +61,10 @@ INSERT INTO SALON (EDIF_ID_EDIFICIO, SALO_NOMBRE)
 
 INSERT INTO CALENDARIO (CALE_SEMESTRE, CALE_INICIO_CICLO, CALE_FIN_CICLO, CALE_INICIO_EXAMENES, CALE_FIN_EXAMENES, CALE_INICIO_ASUETO,
 						CALE_FIN_ASUETO, CALE_INICIO_INTERSEMESTRAL, CALE_FIN_INTERSEMESTRAL, CALE_INICIO_ADMIN, CALE_FIN_ADMIN, CALE_ACTIVO)
-   			VALUES('2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', TRUE);
+   			VALUES('2022-1', '2021/07/01', '2022/01/30', '2021/11/29', '2021/12/10', '2021/08/02', '2021/08/06', '2021/12/13', '2022/01/28', '2021/12/20', '2022/01/05', TRUE);
+
+INSERT INTO dia_festivo (cale_id_calendario, dife_fecha)
+                VALUES (1, '2021/09/15'), (1,'2021/09/16');
 
 INSERT INTO PLATAFORMA (PLAT_NOMBRE, PLAT_ACTIVO)
 			VALUES ('Zoom', 'TRUE'), ('Google Meet', 'TRUE');
@@ -147,8 +150,8 @@ create table CALENDARIO (
    CALE_FIN_CICLO        DATE                 not null,
    CALE_INICIO_EXAMENES    DATE                 not null,
    CALE_FIN_EXAMENES     DATE                 not null,
-   CALE_INICIO_ASUETO     DATE                 not null,
-   CALE_FIN_ASUETO       DATE                 not null,
+   CALE_INICIO_ASUETO     DATE                 null,
+   CALE_FIN_ASUETO       DATE                  null,
    CALE_INICIO_INTERSEMESTRAL DATE                 not null,
    CALE_FIN_INTERSEMESTRAL DATE                 not null,
    CALE_INICIO_ADMIN      DATE                 not null,
@@ -161,6 +164,30 @@ create table CALENDARIO (
 /* Index: CALENDARIO_PK                                         */
 /*==============================================================*/
 create unique index CALENDARIO_PK on CALENDARIO (
+CALE_ID_CALENDARIO
+);
+
+/*==============================================================*/
+/* Table: DIA_FESTIVO                                           */
+/*==============================================================*/
+create table DIA_FESTIVO (
+   DIFE_ID_DIA_FESTIVO  SERIAL      not null,
+   CALE_ID_CALENDARIO   INT4        not null,
+   DIFE_FECHA           DATE        not null,
+   constraint PK_DIA_FESTIVO primary key (DIFE_ID_DIA_FESTIVO)
+);
+
+/*==============================================================*/
+/* Index: DIA_FESTIVO_PK                                        */
+/*==============================================================*/
+create unique index DIA_FESTIVO_PK on DIA_FESTIVO(
+DIFE_ID_DIA_FESTIVO
+);
+
+/*==============================================================*/
+/* Index: DIA_FESTIVO_CALENDARIO_FK                             */
+/*==============================================================*/
+create index DIA_FESTIVO_FK on DIA_FESTIVO(
 CALE_ID_CALENDARIO
 );
 
@@ -478,7 +505,7 @@ PLAT_ID_PLATAFORMA
 );
 
 /*==============================================================*/
-/* Table: PREGUNTA_SEGURIDAD                                              */
+/* Table: PREGUNTA_SEGURIDAD                                    */
 /*==============================================================*/
 create table PREGUNTA_SEGURIDAD (
    prse_id_pregunta     SERIAL               not null,
@@ -488,7 +515,7 @@ create table PREGUNTA_SEGURIDAD (
 );
 
 /*==============================================================*/
-/* Index: PREGUNTA_SEGURIDADS_PK                                          */
+/* Index: PREGUNTA_SEGURIDADS_PK                                */
 /*==============================================================*/
 create unique index PREGUNTAS_PK on PREGUNTA_SEGURIDAD (
 prse_id_pregunta
@@ -905,3 +932,8 @@ alter table Resultado_Encuesta
    add constraint FK_RESULTADO_ENCUESTA_RELATIONS_INSCRIPCION foreign key (INSC_ID_INSCRIPCION)
       references INSCRIPCION (INSC_ID_INSCRIPCION)
       on delete restrict on update restrict; 
+
+alter table DIA_FESTIVO
+   add constraint FK_DIA_FESTIVO_RELATIONS_CALENDARIO foreign key (CALE_ID_CALENDARIO)
+   references CALENDARIO (CALE_ID_CALENDARIO)
+   on delete restrict on update restrict;
