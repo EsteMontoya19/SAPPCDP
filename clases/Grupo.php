@@ -41,20 +41,23 @@
             $bd->cerrarBD();
         }
 
-        function buscarCorreosDeParticipantes($id){
-            $SQL_Bus_CorreosDeParticipantes = 
-            "   SELECT Pers.pers_correo 
-                FROM Persona Pers, Inscripcion I, Grupo G, Profesor Prof
-                WHERE G.grup_id_grupo = $id AND I.grup_id_grupo = G.grup_id_grupo AND I.prof_id_profesor = Prof.prof_id_profesor AND Prof.pers_id_persona = Pers.pers_id_persona
+
+        
+        function buscarCorreosDeParticipantes($ID)
+        {
+            $SQL_Bus_Cursos = 
+            "   
+            SELECT ( Pers.pers_apellido_paterno || ' ' || pers_apellido_materno || ' ' || Pers.pers_nombre) AS nombre , Pers.pers_correo 
+            FROM Persona Pers, Inscripcion I, Grupo G, Profesor Prof
+            WHERE G.grup_id_grupo = $ID AND I.grup_id_grupo = G.grup_id_grupo AND I.prof_id_profesor = Prof.prof_id_profesor AND Prof.pers_id_persona = Pers.pers_id_persona
             ";
 
             $bd = new BD();
             $bd->abrirBD();
             $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Bus_CorreosDeParticipantes);
-            $obj_Grupo = $transaccion_1->traerObjeto(0);
+            $transaccion_1->enviarQuery($SQL_Bus_Cursos);
             $bd->cerrarBD();
-            return ($transaccion_1->traerObjeto(0));
+            return ($transaccion_1->traerRegistros());
         }
 
         //Permite Consultar cualquier tipo de grupo
