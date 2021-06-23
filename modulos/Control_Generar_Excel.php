@@ -7,16 +7,33 @@
     $obj_Grupo = new Grupo();
     $arr_Inscritos = $obj_Grupo->buscarInscripcionesxGrupo($idGrupo);
     $curso = $obj_Grupo->buscarNombreCursoxGrupo($idGrupo);
-    $profesor = $obj_Grupo->buscarGrupo($idGrupo);
+    $grupo = $obj_Grupo->buscarGrupo($idGrupo);
     $obj_Sesion = new Sesion();
+    $participantes = $obj_Grupo->buscarCorreosDeParticipantes($idGrupo);
     $sesion = $obj_Sesion->numSesionesGrupo($idGrupo);
     $numSesiones = $sesion->numero;
     $arr_sesiones = $obj_Sesion->buscarFechaSesiones($idGrupo);
+    $arr_fechas = [];
+    $arr_correos = [];
+    // $p=0;
+    // foreach($participantes as $participante){
+    //     $arr_participantes[$p] = $participante['nombre'];
+    // }
 
-    $file = fopen("Mensajes.txt", "a");
-    fwrite($file, "Sesiones: ".$numSesiones.PHP_EOL);
-    fwrite($file, "Datos del GET: ".$profesor);
-    fclose($file);
+    // $c=0;
+    // foreach($participantes as $participante){
+    //     $arr_participantes[$c] = $participante['pers_correo'];
+    // }
+
+    //Se inicializa el contador en 0. Servirá para indicar el lugar en el que se guardará una consulta
+    $i=0; 
+    //Se pasa el arreglo de la consulta sql a un arreglo numérico. Ya que el KEY numérico en este caso es más fácil de consultar
+    foreach ($arr_sesiones as $sesion) {
+        $arr_fechas[$i] = $sesion['fecha'];
+        $i++; 
+    }
+
+    
 
     // ? Variables para permitir conseguir la coordenada X de una celda en número.
     $numero = $numSesiones + 4;
@@ -52,9 +69,9 @@
     // Definition: Esta parte escribe dentro de cada celda, con las cordenadas [A: Columna ,1: Fila] 
     $hoja -> setCellValueByColumnAndRow(1,1, "Relación de participantes");
     $hoja -> setCellValueByColumnAndRow(2,3, 'Curso: '.$curso->curs_nombre);
-    $hoja -> setCellValueByColumnAndRow(2,4, "Instructor: ");
-    $hoja -> setCellValueByColumnAndRow(2,5, "Moderador: ");
-    $hoja -> setCellValueByColumnAndRow(2,6, "Fecha de la primera sesión: ");
+    $hoja -> setCellValueByColumnAndRow(2,4, "Instructor: ".$grupo->pers_apellido_paterno." ".$grupo->pers_apellido_materno." ".$grupo->pers_nombre);
+    $hoja -> setCellValueByColumnAndRow(2,5, "Moderador: ".$grupo->moderador);
+    $hoja -> setCellValueByColumnAndRow(2,6, "Fecha de la primera sesión: ".$arr_fechas[0]);
 
     // Definition: Le da estilo al titulo principal.
     $hoja -> getStyle('A1') -> applyFromArray($styleArray);
@@ -94,21 +111,29 @@
     $hoja -> setCellValueByColumnAndRow(2,8, "Profesor");
     $hoja -> setCellValueByColumnAndRow(3,8, "Correo");
     
-    // TODO: Se tiene que obtener el length de las sesiones para saber el límite del for -> length + 4
+    // Definition: Se adaptan las columnas de Asistencia en caso de ser más de una sesión.
     for ($i=4; $i <= $numSesiones + 3  ; $i++) {
-        // !Ver si funciona
-        $hoja -> setCellValueByColumnAndRow($i,8, "Asistencia");
+        $hoja -> setCellValueByColumnAndRow($i,8, "Asistencia  ".$arr_fechas[$i-4]);
     }
-    // TODO: Se tiene que adaptar a for de arriba en caso de ser más de una sesión.
+    // Definition: Se coloca el apartado de constancia.
     $hoja -> setCellValueByColumnAndRow($numSesiones + 4, 8, "Constancia");
 
+    // ? Convertir el valor de String a entero
+    $num_inscritos = intval($inscritos);  
+
     //* Inicia la sección de datos.
-    // TODO: Se tiene que adaptar al número de inscritos.
-    for ($i=9; $i <= 12 ; $i++) {
-        $hoja -> setCellValueByColumnAndRow(1,$i, $i-8);
-        $hoja -> setCellValueByColumnAndRow(2,$i, "Fuentes Aguilar Karen");
-        $hoja -> setCellValueByColumnAndRow(3,$i, "laKarenMaestra@gmail.com");
+    // Definition: El ciclo for se adapta al número de inscritos.
+    $k=9;
+    foreach($arr_Inscritos as $inscrito){
+        $nombreCompleto=$inscrito['pers_apellido_paterno'].' '.$inscrito['pers_apellido_materno'].' '.$inscrito['pers_nombre'];
+
+        $hoja -> setCellValueByColumnAndRow(1,$k, $k-8);
+        $hoja -> setCellValueByColumnAndRow(2,$k, $nombreCompleto);
+        $hoja -> setCellValueByColumnAndRow(3,$k, $nombreCompleto);
+        $k++;
     }
+
+
     $documento->getActiveSheet()->freezePane('D9','D9');
     ob_clean();
     $writer = new Xlsx($documento);

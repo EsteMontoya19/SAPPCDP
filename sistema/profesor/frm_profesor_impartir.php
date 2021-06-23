@@ -93,7 +93,6 @@
                               <i class="fas fa-list-alt"></i>
                             </a>
                           <?php } ?>
-                          <!-- //TODO : Hacer que genere un Excel de la lista.  -->
                           <?php if($grupo['grup_num_inscritos'] != 0){ ?>
                             <a href="../modulos/Control_Generar_Excel.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-secondary btn-table" title="Descargar Excel" style="margin-top: 5px;">
                               <i class="fas fa-list-alt"></i>

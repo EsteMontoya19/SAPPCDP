@@ -41,6 +41,22 @@
             $bd->cerrarBD();
         }
 
+        function buscarCorreosDeParticipantes($id){
+            $SQL_Bus_CorreosDeParticipantes = 
+            "   SELECT Pers.pers_correo 
+                FROM Persona Pers, Inscripcion I, Grupo G, Profesor Prof
+                WHERE G.grup_id_grupo = $id AND I.grup_id_grupo = G.grup_id_grupo AND I.prof_id_profesor = Prof.prof_id_profesor AND Prof.pers_id_persona = Pers.pers_id_persona
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_CorreosDeParticipantes);
+            $obj_Grupo = $transaccion_1->traerObjeto(0);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
+        }
+
         //Permite Consultar cualquier tipo de grupo
         function buscarGrupo($id)
         {
@@ -49,7 +65,7 @@
                     g. curs_id_cursos, curs_nombre, curs_tipo, curs_nivel,  curs_num_sesiones,
                     g.plat_id_plataforma, grup_reunion, grup_acceso, grup_clave_acceso, grup_cupo,  
                     grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, grup_estado,
-                    (SELECT pers_nombre || ' ' || pers_apellido_paterno || ' ' || pers_apellido_materno
+                    (SELECT pers_apellido_paterno || ' ' || pers_apellido_materno || ' ' || pers_nombre
 					 FROM grupo g, moderador m, persona p
 					 WHERE g.mode_id_moderador = m.mode_id_moderador AND m.pers_id_persona = p.pers_id_persona
                         AND g.grup_id_grupo = $id
