@@ -142,7 +142,11 @@
     //? Variables con los datos de la consulta
     $profesor = $obj_Profesor->buscarProfesor($idPersona);
     $grupo = $obj_Grupo->buscarGrupo($idGrupo);
-    $plataforma = $obj_Plataforma->buscarPlataforma($grupo->plat_id_plataforma);
+    if(isset($grupo->plat_id_plataforma) || $grupo->plat_id_plataforma != "") {
+        $plataforma = $obj_Plataforma->buscarPlataforma($grupo->plat_id_plataforma);
+    } else {
+        $plataforma = null;
+    }
     
     //? Constructor
     $pdf = new PDF("P", "mm", "Letter"); //! Las medidas afectan lo expresado en otras funciones como Cell
