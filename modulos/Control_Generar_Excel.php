@@ -49,17 +49,17 @@
     $hoja -> setTitle("Asistencia del grupo");
     
 
-    //? Esta parte escribe dentro de cada celda, con las cordenadas [A: Columna ,1: Fila] 
+    // Definition: Esta parte escribe dentro de cada celda, con las cordenadas [A: Columna ,1: Fila] 
     $hoja -> setCellValueByColumnAndRow(1,1, "Relación de participantes");
     $hoja -> setCellValueByColumnAndRow(2,3, 'Curso: '.$curso->curs_nombre);
     $hoja -> setCellValueByColumnAndRow(2,4, "Instructor: ");
     $hoja -> setCellValueByColumnAndRow(2,5, "Moderador: ");
     $hoja -> setCellValueByColumnAndRow(2,6, "Fecha de la primera sesión: ");
 
-    //? Le da estilo al titulo principal.
+    // Definition: Le da estilo al titulo principal.
     $hoja -> getStyle('A1') -> applyFromArray($styleArray);
 
-    //? Aquí combinamos las celdas para que se vea más presentable. 
+    // Definition: Aquí combinamos las celdas para que se vea más presentable. 
     $hoja -> mergeCells("A1:".$letra."1");
     $hoja -> mergeCells("A2:".$letra."2");
 
@@ -68,7 +68,7 @@
         $hoja -> mergeCells("B$i:E$i");
     }
 
-    //? Esto da el color Azul al titulo principal.
+    // Definition: Esto da el color Azul al titulo principal.
     $documento
     ->getActiveSheet()
     ->getStyle('A1')
@@ -77,7 +77,7 @@
     ->getStartColor()
     ->setARGB('77ACF1');
 
-    //? For: Le da color a todos los encabezados de la lista de asistencia.
+    // Definition: For -> Le da color a todos los encabezados de la lista de asistencia.
     
     $documento
     ->getActiveSheet()
@@ -93,6 +93,7 @@
     $hoja -> setCellValueByColumnAndRow(1,8, "#");
     $hoja -> setCellValueByColumnAndRow(2,8, "Profesor");
     $hoja -> setCellValueByColumnAndRow(3,8, "Correo");
+    
     // TODO: Se tiene que obtener el length de las sesiones para saber el límite del for -> length + 4
     for ($i=4; $i <= $numSesiones + 3  ; $i++) {
         // !Ver si funciona
