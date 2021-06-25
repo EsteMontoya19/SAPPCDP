@@ -1,6 +1,7 @@
 <?php
   class Persona
   {
+    //Registra una persona
     function agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono)
     {
       //Aquí iría una validación pero puede ser que ya se esté haciendo en otra parte
@@ -17,6 +18,7 @@
   		$this->id_persona = Persona::buscarUltimo(); //? Supongo aqui asigna un atributo
     }
 
+    //Busca el último registro de persona
     function buscarUltimo()
     {
       $bd = new BD();
@@ -32,6 +34,7 @@
       return $Persona_Seq;
     }
 
+    //Actualiza todos los datos de una persona dado el id de la persona
     function actualizarPersona($persona, $nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono)
     {
 
@@ -50,6 +53,7 @@
   		$this->id_persona = Persona::buscarUltimo();
     }
 
+    //Elimina el registro de un persona dado el id
     function eliminarPersona($persona)
     {
       $SQL_Eli_Persona= 
@@ -64,6 +68,7 @@
       $bd->cerrarBD();
     }
 
+    //Busca una persona dado el id
     function buscarPersona($persona)
 		{
 			$SQL_Bus_Persona = 

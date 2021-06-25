@@ -1,6 +1,7 @@
 <?php
   class Administrador
   {
+    //Buscar los datos de un administrador dado el id
     function buscarAdministrador($persona)
 		{
 			$SQL_Bus_Administrador = 
@@ -18,6 +19,7 @@
 			return ($transaccion_1->traerObjeto(0));
 		}
 
+    //Agregar un administrador
     function agregarAdministrador($persona, $num_trabajador, $rfc)
     {
       //Aquí iría una validación pero puede ser que ya se esté haciendo en otra parte
@@ -33,6 +35,7 @@
   		$bd->cerrarBD();
     }
 
+    //Actualizar todos los datos de un administrador dado el id
     function actualizarAdministrador($persona, $num_trabajador, $rfc)
 		{
       //? Validamos si ya tiene otro registro
@@ -64,6 +67,8 @@
         $this->agregarAdministrador($persona, $num_trabajador, $rfc);
       }
 		}    
+
+    //Buscar todos los administradores activos
     function administradoresActivos () {
       $SQL_Bus_Administrador = 
 			"SELECT COUNT (A.admi_id_administrador)

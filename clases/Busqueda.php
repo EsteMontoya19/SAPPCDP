@@ -1,6 +1,7 @@
 <?php
     class Busqueda
     {
+        //Consultar coordinaciones: id y nombre.
         function selectCoordinaciones()
         {
             $SQL_Bus_Eventos =
@@ -16,6 +17,8 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }       
+
+        //Consultar niveles: id y nombre.
         function selectNiveles()
         {
             $SQL_Bus_Eventos =
@@ -31,6 +34,8 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }
+
+        //Consultar modalidades: id y nombre.
         function selectModalidades()
         {
             $SQL_Bus_Eventos =
@@ -46,6 +51,8 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }
+
+        //Consultar días: id y nombre.
         function selectDias()
         {
             $SQL_Bus_Eventos =
@@ -61,6 +68,8 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }
+
+        //Consultar roles: id y nombre.
         function selectRoles()
         {
             $SQL_Bus_Rol = 
@@ -75,6 +84,8 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }
+
+        //Consultar las preguntas de seguridad: id, pregunta y estado.
         function selectPregunta()
         {
             $SQL_Bus_Preg = 
@@ -90,21 +101,7 @@
             return ($transaccion_1->traerRegistros());
         }
 
-        
-
-        function numeroDias (){
-            $SQL_Bus_Eventos =
-            "SELECT COUNT (dia_id_dia)
-             FROM Dia
-            ";
-
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Bus_Eventos);
-            $bd->cerrarBD();
-            return ($transaccion_1->traerRegistros());
-        }
+        //Consultar los salones: id, edificio al que pertenece y el nombre del salón.
         function selectSalones()
         {
             $SQL_Bus_Salones =
@@ -122,6 +119,8 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }  
+
+        //Consultarn las plataformas: id, nombre y estado.
         function selectPlataformas()
         {
             $SQL_Bus_Plataformas =
@@ -137,7 +136,9 @@
             $transaccion_1->enviarQuery($SQL_Bus_Plataformas);
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
-        }      
+        }
+
+        //Consultarn cursos activos: id, nombre, número de sesiones, tipo y nivel.      
         function selectCursosActivos()
         {
             $SQL_Bus_Cursos =

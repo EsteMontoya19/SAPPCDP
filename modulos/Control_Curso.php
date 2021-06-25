@@ -61,15 +61,20 @@
   if($_POST['dml'] == 'update')
   {
 
+    //Se inicializan las variables con los datos enviados por POST.
     $nombre = $_POST['strNombreCurso'];
     $tipo = $_POST['intTipoCurso'];
     $nivel = $_POST['intNivel']; 
+
+    //Se almacena la consulta de los datos de un curso si concuerda con el nombre, tipo y nivel.
     $cursoExistente = $obj_Curso->buscarCursoNombre($nombre, $tipo, $nivel);
+    //Se almacena la consulta de los datos de un curso dado el id.
     $cursoActual = $obj_Curso->buscarCurso($_POST['idCurso']);
 
-    if(!isset($cursoExistente->curs_nombre) || $cursoActual->curs_id_cursos == $cursoExistente->curs_id_cursos) { //? Si no hay curso con ese nombre o si es el mismo curso 
-      if (isset($_FILES['temario']['name']) && $_FILES['temario']['name'] != ''){ //? Si se actualizó el temario
-       
+    //Si NO se encontró un curso con el mismo nombre, tipo y nivel O si es el mismo curso 
+    if(!isset($cursoExistente->curs_nombre) || $cursoActual->curs_id_cursos == $cursoExistente->curs_id_cursos) { 
+      //Si se actualizó el temario
+      if (isset($_FILES['temario']['name']) && $_FILES['temario']['name'] != ''){ 
         $file = is_uploaded_file($_FILES['temario']['tmp_name']);
         $rutaPasada = $cursoActual->curs_temario;
         unlink("$rutaPasada");
@@ -78,7 +83,6 @@
         $nuevoNombre = "Temario_".$_POST['intTipoCurso']."_".$_POST['strNombreCurso']."_".$_POST['intNivel'].".pdf";
         move_uploaded_file($_FILES['temario']['tmp_name'], $rutaNueva.$nuevoNombre);
         $temario = $rutaNueva.$nuevoNombre;
-
       } else { //? Si no modifico el temario
         $rutaPasada = $cursoActual->curs_temario;
         $rutaNueva = "../recursos/PDF/Temarios/";
@@ -91,14 +95,17 @@
         exit('2');
     }
 
+    //Se almacenan los demás datos enviados por POST
     $curso = $_POST['idCurso'];
     $nombre = $_POST['strNombreCurso'];
     $num_sesiones = $_POST['strNumeroSesiones'];
     $req_tecnicos = $_POST['strReqTec'];
     $conocimientos = $_POST['strConNeces'];
     $objetivo = $_POST['strObjCurso'];
+    //Si el estado está vacio se almacena 'TRUE'
     $activo = isset($_POST['bEstado']) ? $_POST['bEstado'] : TRUE;
-
+    
+    //Se actualiza el curso
     $obj_Curso->actualizarCurso($curso, $tipo, $nombre, $num_sesiones, $req_tecnicos, $conocimientos, $nivel, $objetivo, $temario, $activo);
     
     echo 1;

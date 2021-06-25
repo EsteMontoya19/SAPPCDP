@@ -15,7 +15,7 @@
 
   if($_POST['dml'] == 'insert')
   {
-    
+    //Se inicializan las variables con los datos enviados por POST
     $curso = $_POST['ID_Curso'];
     $tipo = $_POST['GrupoTipo'];
     $estado = $_POST['GrupoEstatus'];
@@ -89,7 +89,7 @@
       }
     }
     
-    //? Se verifica la modalidad
+    //? Se verifica la modalidad y se asignan las variables nulas dependiendo la modalidad
     if(isset($modalidad) && $modalidad == "Presencial"){
       $salon = $_POST['ID_Salon']; 
       $plataforma = "null";
@@ -106,13 +106,16 @@
       exit('2');
     }
 
-    
+    //Se agrega el registro del grupo
     $obj_Grupo->agregarGrupo($moderador, $profesor, $curso, $salon, $plataforma, $reunion, $acceso, $clave, $cupo, $estado, $publicado,
                               $modalidad, $tipo, $inicio_insc, $fin_insc);
                               
+    //Se busca el id del ultimo registro
     $id_grupo = $obj_Grupo->buscarUltimo();
 
+    //Se recorre el arreglo de sesiones, hora inicio y hora fin
     for ($iCont = 1 ; $iCont <= $numSesionesTotales ; $iCont++) {
+      //Se agregan las sesiones del grupo
       $obj_Sesion -> agregarSesion($id_grupo, $sesion[$iCont], $hora_inicio[$iCont], $hora_fin[$iCont]);
     }
 
@@ -122,9 +125,8 @@
 
   elseif($_POST['dml'] == 'update')
   {
-
+    //Se inicializan las variables con los datos enviados por POST
     $grupo = $_POST['idGrupo'];
-
     $tipo_grupo = $_POST['GrupoTipo'];
     $modalidad = $_POST['ifModalidad'];
     $estado = $_POST['GrupoEstatus'];
@@ -140,6 +142,7 @@
       $moderador = $_POST['ID_Moderador'];
     }
 
+    // Se verifica la modalidad y se asignan las variables nulas dependiendo la modalidad
     if ($modalidad == 'En línea'){
       $salon = 'NULL';
       $plataforma = $_POST['ID_Plataforma'];
@@ -154,19 +157,22 @@
       $clave = 'NULL';
     }
 
+    //Se actualiza el grupo
     $obj_Grupo->actualizarGrupo($grupo, $tipo_grupo, $estado, $profesor, $moderador, $cupo, $inicio_insc, $fin_insc, $salon, $plataforma, $reunion, $acceso, $clave);
 
+    //Se inicializan los arreglos de id sesiones, fecha, hora de inicio y hora fin.
     $arr_idSesiones = $_POST['idSesion'];
     $arr_FechasSesiones = $_POST['SesionFecha'];
     $arr_HorasSesionesI = $_POST['SesionHoraInicio'];
     $arr_HorasSesionesF = $_POST['SesionHoraFin'];
 
+    //Se recorren los arreglos de id sesiones, fecha, hora de inicio y hora fin.
     for ($i=0;$i<sizeof($arr_FechasSesiones);$i++) {
       $sesion=$arr_idSesiones[$i];
       $fecha_sesion = $arr_FechasSesiones[$i];
       $hora_inicio = $arr_HorasSesionesI[$i];
       $hora_fin = $arr_HorasSesionesF[$i];
-      
+      //Se actualiza la sesión
       $obj_Sesion -> actualizarSesion($sesion, $grupo, $fecha_sesion, $hora_inicio,$hora_fin);
     }
 

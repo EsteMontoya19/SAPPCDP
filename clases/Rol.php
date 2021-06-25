@@ -1,6 +1,7 @@
 <?php
     class Rol
     {
+        //Buscar todos los roles
         function buscarRoles()
         {
             $SQL_Bus_Rol = 
@@ -16,6 +17,7 @@
             return ($transaccion_1->traerRegistros());
         }
 
+        //Buscar el rol dado el id de usuario
         function rolUsuario ($usuario) {
 
             $SQL_Rol_Usuario = 

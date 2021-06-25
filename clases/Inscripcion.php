@@ -1,6 +1,7 @@
 <?php
     class Inscripcion
     {
+        //Registrar una inscripción
         function agregarInscripcion($grupo, $profesor)
         {
             /*Se modifico esta función borrando la subconsulta para hacer más eficiente el programa y ahorrarse esa subconsulta por cada ejecución de la función*/
@@ -20,6 +21,7 @@
             $bd->cerrarBD();
         }
 
+        //Buscar una inscripción dado el id del grupo y del profesor
         function buscarInscripcion($grupo, $profesor)
         {
             $SQL_Bus_Inscripcion = 
@@ -36,6 +38,8 @@
 			$bd->cerrarBD();
 			return $obj_Inscripcion;
         }
+
+        //Bsuca todos los datos de un grupo dado el id, además de que el día actual se encuentre dentro del rango de fechas de inscripcion. 
         function buscarVigenciaInscripcion($grupo)
         {
             $SQL_Bus_Inscripcion = 
@@ -53,6 +57,11 @@
 			return $obj_Inscripcion;
         }
 
+
+
+        //? Ninguno de los siguientes métodos se utiliza actualmente 24/06/2021
+
+        //Busca el id del grupo dado el is de inscripción
         function buscarGrupoPorInsc($inscripcion)
         {
             $SQL_Bus_Ins = 
@@ -70,6 +79,8 @@
             return ($transaccion_1->traerObjeto(0));
         }
 
+        //Cuenta el número de inscripciones que tiene un grupo dado el id.
+        //Se deja de utilizar por que se añadió el atributo número de inscritos
         function numeroAlumnos($grupo)
         {
             $SQL_Bus_numAlum = 

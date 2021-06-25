@@ -1,7 +1,7 @@
 <?php
   class Moderador
   {
-
+    //Eliminar un moderador dado el id de una persona
     function eliminarModerador($persona)
     {
       
@@ -22,6 +22,7 @@
       $bd->cerrarBD();
     }
 
+    //Buscar un moderador dado el id de una persona
     function buscarModerador($persona)
 		{
 			$SQL_Bus_Moderador = 
@@ -39,6 +40,7 @@
 			return ($transaccion_1->traerObjeto(0));
 		}
 
+    //Buscar los días (id y nombre) de un moderador dado el id del moderador
     function buscarModeradorDias($moderador)
 		{
 			$SQL_Bus_Moderador = 
@@ -55,6 +57,7 @@
       return ($transaccion_1->traerRegistros());
 		}
 
+    //Buscar todos los moderadores activos
     function buscarModeradoresActivos(){
       $SQL_Buscar_Moderador = 
         "
@@ -72,82 +75,87 @@
       return ($transaccion_1->traerRegistros());
     }
 
-      function agregarModerador ($persona, $numCuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin) {
+    //Agregar un moderador
+    function agregarModerador ($persona, $numCuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin) {
 
-        $SQL_REGISTRO_MODERADOR = 
-          "INSERT INTO Moderador (pers_id_persona, mode_num_cuenta, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin)
-          VALUES ($persona, '$numCuenta', '$fechaInicio', '$fechaFin', '$horaInicio', '$horaFin');
-          ";
+      $SQL_REGISTRO_MODERADOR = 
+      "INSERT INTO Moderador (pers_id_persona, mode_num_cuenta, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin)
+        VALUES ($persona, '$numCuenta', '$fechaInicio', '$fechaFin', '$horaInicio', '$horaFin');
+      ";
 
-          $bd = new BD();
-          $bd->abrirBD();
-          $transaccion_1 = new Transaccion($bd->conexion);
-          $transaccion_1->enviarQuery($SQL_REGISTRO_MODERADOR);
-          $bd->cerrarBD();
-      }
-      function agregarDiasModerador($persona, $dia) {
+      $bd = new BD();
+      $bd->abrirBD();
+      $transaccion_1 = new Transaccion($bd->conexion);
+      $transaccion_1->enviarQuery($SQL_REGISTRO_MODERADOR);
+      $bd->cerrarBD();
+    }
+    
+    //Agregar los días de un moderador
+    function agregarDiasModerador($persona, $dia) {
 
-        $SQL_REGISTRO_DIA_MODERADOR = 
-          "INSERT INTO Moderador_Dia (mode_id_moderador, dia_id_dia) VALUES ((SELECT mode_id_moderador
-                                                                              FROM Moderador
-                                                                              WHERE pers_id_persona = $persona), $dia)
-          ";
-        $bd = new BD();
-        $bd->abrirBD();
-        $transaccion_1 = new Transaccion($bd->conexion);
-        $transaccion_1->enviarQuery($SQL_REGISTRO_DIA_MODERADOR);
-        $bd->cerrarBD();
-      }
-
-      function actualizarModerador ($persona, $numCuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin) {
-
-        //? Validamos si ya tiene otro registro
-        $SQL_VALIDACION_MODERADOR = 
-        "SELECT *
-        FROM Moderador
-        WHERE pers_id_persona = $persona";
-
-        $bd = new BD();
-        $bd->abrirBD();
-        $transaccion_1 = new Transaccion($bd->conexion);
-        $transaccion_1->enviarQuery($SQL_VALIDACION_MODERADOR);
-        $existe = $transaccion_1->traerObjeto(0);
-        $bd->cerrarBD();
-
-        if($existe != null) {
-
-        $SQL_ACTUALIZACION_MODERADOR = 
-          "UPDATE Moderador 
-           SET mode_num_cuenta= '$numCuenta', mode_fecha_inicio= '$fechaInicio', mode_fecha_fin= '$fechaFin', mode_hora_inicio= '$horaInicio', mode_hora_fin= '$horaFin'
-           WHERE pers_id_persona = $persona
-          ";
-
-          $bd = new BD();
-          $bd->abrirBD();
-          $transaccion_1 = new Transaccion($bd->conexion);
-          $transaccion_1->enviarQuery($SQL_ACTUALIZACION_MODERADOR);
-          $bd->cerrarBD();
-        } else {
-          $this->agregarModerador($persona, $numCuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin);
-        }
-      }
-
-      function eliminarDiasModerador ($persona) {
-        
-        $SQL_BORRAR_DIAS_MODERADOR= 
-        "DELETE FROM Moderador_Dia
-         WHERE mode_id_moderador = (SELECT mode_id_moderador
-                                    FROM Moderador
-                                    WHERE pers_id_persona = $persona);
+      $SQL_REGISTRO_DIA_MODERADOR = 
+        "INSERT INTO Moderador_Dia (mode_id_moderador, dia_id_dia) VALUES ((SELECT mode_id_moderador
+                                                                            FROM Moderador
+                                                                            WHERE pers_id_persona = $persona), $dia)
         ";
+      $bd = new BD();
+      $bd->abrirBD();
+      $transaccion_1 = new Transaccion($bd->conexion);
+      $transaccion_1->enviarQuery($SQL_REGISTRO_DIA_MODERADOR);
+      $bd->cerrarBD();
+    }
+
+    //Actualiza todos los datos de un moderador dado el id
+    function actualizarModerador ($persona, $numCuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin) {
+
+      //? Validamos si ya tiene otro registro
+      $SQL_VALIDACION_MODERADOR = 
+      "SELECT *
+      FROM Moderador
+      WHERE pers_id_persona = $persona";
+
+      $bd = new BD();
+      $bd->abrirBD();
+      $transaccion_1 = new Transaccion($bd->conexion);
+      $transaccion_1->enviarQuery($SQL_VALIDACION_MODERADOR);
+      $existe = $transaccion_1->traerObjeto(0);
+      $bd->cerrarBD();
+
+      if($existe != null) {
+
+      $SQL_ACTUALIZACION_MODERADOR = 
+        "UPDATE Moderador 
+          SET mode_num_cuenta= '$numCuenta', mode_fecha_inicio= '$fechaInicio', mode_fecha_fin= '$fechaFin', mode_hora_inicio= '$horaInicio', mode_hora_fin= '$horaFin'
+          WHERE pers_id_persona = $persona
+        ";
+
         $bd = new BD();
         $bd->abrirBD();
         $transaccion_1 = new Transaccion($bd->conexion);
-        $transaccion_1->enviarQuery($SQL_BORRAR_DIAS_MODERADOR);
+        $transaccion_1->enviarQuery($SQL_ACTUALIZACION_MODERADOR);
         $bd->cerrarBD();
+      } else {
+        $this->agregarModerador($persona, $numCuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin);
       }
     }
-  ?>
+
+    //Elimina los días de un moderador dado el id del moderador
+    function eliminarDiasModerador ($persona) {
+      
+      $SQL_BORRAR_DIAS_MODERADOR= 
+      "DELETE FROM Moderador_Dia
+        WHERE mode_id_moderador = (SELECT mode_id_moderador
+                                  FROM Moderador
+                                  WHERE pers_id_persona = $persona);
+      ";
+      $bd = new BD();
+      $bd->abrirBD();
+      $transaccion_1 = new Transaccion($bd->conexion);
+      $transaccion_1->enviarQuery($SQL_BORRAR_DIAS_MODERADOR);
+      $bd->cerrarBD();
+    }
+  }
+?>
 
   
 

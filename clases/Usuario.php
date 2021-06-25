@@ -1,6 +1,7 @@
 <?php
 	class Usuario
   	{
+		//Actualizar el estatus dado el id y el estatus
 		function modificarEstatus($usuario, $estatus)
 		{
 			$SQL_Persona_Est="
@@ -16,6 +17,7 @@
 			$bd->cerrarBD();
 		}
 
+		//Agregar un usuario
 		function agregarUsuario($persona, $rol, $pregunta, $nombreUsuario, $contrasenia, $recuperacion, $estado)
     	{
 			$SQL_Ins_Usuario =
@@ -30,6 +32,7 @@
 			$bd->cerrarBD();
 		}
 
+		//Actualizar un usuario dado el id de la persona
 		function actualizarUsuario($idPersona, $rol, $pregunta, $nombreUsuario, $contrasenia, $recuperacion)
 		{
 			$SQL_Act_Usuario= 
@@ -45,6 +48,7 @@
 			$bd->cerrarBD();
 		}
 
+		//Eliminar el resgitro de un usuario dado el id de usuario
 		function eliminarUsuario($usuario)
 		{
 			$SQL_Eli_Usuario= 
@@ -59,6 +63,7 @@
 			$bd->cerrarBD();
 		}
 
+		//Buscar todoas los usuarios
 		function buscarTodosUsuarios()
 		{
 			$SQL_Bus_usuarios =
@@ -76,7 +81,7 @@
 			return ($transaccion_1->traerRegistros());
 		}
 
-
+		//Bsucar un usuario dado el id de usuario
 		function buscarUsuario($intIdUsuario)
 		{
 			$SQL_Bus_Usuario = 
@@ -94,6 +99,7 @@
 			return ($transaccion_1->traerObjeto(0));
 		}
 
+		//Bsucar datos de un usuario dado el nombre de usuario
 		function buscarNombreUsuario($nombreUsu)
 		{
 			$SQL_Bus_Usuario = 
@@ -111,6 +117,7 @@
 			return ($transaccion_1->traerObjeto(0));
 		}
 
+		//Eliminar registro de una persona dado el id de usuario
 		function eliminarPersonaRol($intIdPersonaRol){
 			$SQLDEL_PersonaRol = "DELETE FROM usuario
 				WHERE usua_id_usuario =  $intIdPersonaRol";

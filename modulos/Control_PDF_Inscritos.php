@@ -97,7 +97,7 @@
         $pdf->Cell(8,5,'#',1,0,'C',1);
         $pdf->Cell(123,5,'Nombre Completo',1,0,'L',1);
         $h = imprimirFecha($numeroTres, $arr_fechas, $h, $pdf);
-
+        //Salto de línea
         $pdf->Ln(5);
         $pdf->SetFont('Arial','',12);
 

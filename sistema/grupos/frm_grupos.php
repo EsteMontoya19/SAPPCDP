@@ -22,7 +22,6 @@ jQuery(document).ready(function () {
   // Objetos
   $obj_Busqueda = new Busqueda();
   $obj_Grupo = new Grupo();
-
   $obj_Sesion = new Sesion();
   $obj_Curso = new Curso();
   $obj_Profesor = new Profesor();

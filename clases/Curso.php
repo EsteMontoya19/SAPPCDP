@@ -17,6 +17,7 @@
             return ($transaccion_1->traerObjeto(0));
         }
 
+        //Busca el número de sesiones de un curso
         function buscarNumSesiones($id) {
             $SQL_Bus_Curso =
             "   SELECT CURS_NUM_SESIONES
@@ -33,6 +34,7 @@
             return ($transaccion_1->traerObjeto(0));
         }
 
+        //Busca todos los datos de un curso dado el nombre, tipo y nivel.
         function buscarCursoNombre($curso, $tipo, $nivel) {
             $SQL_Bus_Curso =
             "   SELECT CURS_ID_CURSOS, CURS_NOMBRE, CURS_TIPO, CURS_NUM_SESIONES, CURS_ACTIVO, CURS_NIVEL, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, CURS_OBJETIVOS,CURS_TEMARIO
@@ -48,6 +50,7 @@
             return ($transaccion_1->traerObjeto(0));
         }
 
+        //Busca todos los cursos 
         function buscarTodosCursos()
 		{
 			$SQL_Bus_cursos =
@@ -63,6 +66,7 @@
 			return ($transaccion_1->traerRegistros());
 		}
 
+        //Actualiza el estatus de un curso dado el id y el estatus
         function modificarEstatus($curso, $estatus)
 		{
 			$SQL_Curso_Est="
@@ -78,6 +82,7 @@
 			$bd->cerrarBD();
 		}
 
+        //Actualiza todos los datos de un curso dado el ID así como los demás atributos
         function actualizarCurso($curso, $tipo, $nombre, $num_sesiones, $req_tecnicos, $conocimientos, $nivel, $objetivo, $temario, $activo)
         {
             $SQL_Act_Curso=
