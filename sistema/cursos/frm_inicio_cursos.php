@@ -58,7 +58,9 @@ $x = 0;
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($arr_cursos as $cursos) { ?>
+                                <?php 
+                                if(isset($arr_cursos)){
+                                foreach ($arr_cursos as $cursos) { ?>
                                 <tr>
                                     <?php $x++; ?>
                                     <td><?php echo $cursos['curs_id_cursos']; ?></td>
@@ -87,7 +89,7 @@ $x = 0;
                                         </button>
                                     </td>
                                 </tr>
-                                <?php } ?>
+                                <?php } }?>
                             </tbody>
                         </table>
                     </div>

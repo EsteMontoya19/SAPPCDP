@@ -51,7 +51,9 @@
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($arr_preguntasseguridad as $preguntasseguridad) { ?>
+                <?php 
+                if (isset($arr_preguntasseguridad)){
+                foreach ($arr_preguntasseguridad as $preguntasseguridad) { ?>
                   <tr>
                   <?php $x++; ?>
                     <td><?php echo $preguntasseguridad['prse_id_pregunta']; ?></td>
@@ -70,7 +72,7 @@
                       </button> 
                     </td>
                   </tr>
-                <?php } ?>
+                <?php }} ?>
               </tbody>
             </table>
           </div>

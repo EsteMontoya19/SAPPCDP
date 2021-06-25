@@ -51,7 +51,9 @@
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($arr_plataformas as $plataformas) { ?>
+                <?php 
+                if (isset($arr_plataformas)){
+                foreach ($arr_plataformas as $plataformas) { ?>
                   <tr>
                   <?php $x++; ?>
                     <td><?php echo $plataformas['plat_id_plataforma']; ?></td>
