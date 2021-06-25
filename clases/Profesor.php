@@ -195,7 +195,7 @@
 			$transaccion_1 = new Transaccion($bd->conexion);
 			$transaccion_1->enviarQuery($SQL_BORRAR_MODALIDADES_PROFESOR);
 			$bd->cerrarBD();
-		}´
+		}
 
 		//Eliminar la coordinación de un profesor dado su id
 		function eliminarCoordinacionesProfesor ($persona) {
