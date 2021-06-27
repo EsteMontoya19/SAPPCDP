@@ -111,7 +111,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                     value="<?php echo isset($persona) ? $persona->pers_apellido_paterno : ""; ?>">
                 </div>
                 <div class="col-lg-4 form-group">
-                  <label for="strUsuarioSegundoApe" class = "negritas">Apellido Materno: *</label>
+                  <label for="strUsuarioSegundoApe" class = "negritas">Apellido Materno:</label>
                   <input type="text" class="form-control" id="strUsuarioSegundoApe" name="strUsuarioSegundoApe"
                     value="<?php echo isset($persona) ? $persona->pers_apellido_materno : ""; ?>">
                 </div>

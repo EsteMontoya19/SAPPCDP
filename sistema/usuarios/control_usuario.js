@@ -54,7 +54,7 @@ $(document).ready(function () {
 
     //Botón para actualizar usuarios por el Coordinador
     $('#btn-actualizar-usuario').click(function () {
-        if (validarFormularioUsuario(false)) {
+        if (validarFormularioUsuario()) {
             datos = $('#form_usuario').serialize();
             $.ajax({
                 type: 'POST',
@@ -137,11 +137,7 @@ $(document).ready(function () {
     });
 });
 
-
-
-
 //? Funciones de los botones
-
 // Actualizar usuario
 function actualizarUsuario(id, persona, rol) {
     var datos = {
@@ -295,9 +291,8 @@ function cambioEstatus(id, estatus, nombre, apellido, rol) {
 }
 
 //? Validaciones y animaciones de campos
-
 // Validación del formulario para usuario
-function validarFormularioUsuario($miCuenta) {
+function validarFormularioUsuario() {
     if ($('#strUsuarioNombre').val() == '') {
         $('html, body').animate({ scrollTop: 0 }, 'slow');
         document.getElementById('strUsuarioNombre').focus();
@@ -311,7 +306,7 @@ function validarFormularioUsuario($miCuenta) {
             return false;
         }
 
-        var letExp = /^([a-zA-Z\s])*$/;
+        var letExp = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/g;
         if (letExp.test($('#strUsuarioNombre').val())) {
         } else {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
@@ -334,7 +329,7 @@ function validarFormularioUsuario($miCuenta) {
             return false;
         }
 
-        var letExp = /^([a-zA-Z])*$/;
+        var letExp = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/g;
         if (letExp.test($('#strUsuarioPrimerApe').val())) {
         } else {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
@@ -351,7 +346,7 @@ function validarFormularioUsuario($miCuenta) {
             alertify.error('El apellido materno debe tener máximo 50 caracteres');
             return false;
         }
-        var letExp = /^([a-zA-Z])*$/;
+        var letExp = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/g;
         if (letExp.test($('#strUsuarioSegundoApe').val())) {
         } else {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
@@ -414,80 +409,75 @@ function validarFormularioUsuario($miCuenta) {
             }
         }
     }
-
-    //? Validación datos de usuario
-    if ($miCuenta == false) {
-        if ($('#strNombreUsuario').val() == '') {
-            alertify.error('Se debe ingresar el identificador del usuario');
-            $('html, body').animate({ scrollTop: 200 }, 'slow');
+    if ($('#strNombreUsuario').val() == '') {
+        alertify.error('Se debe ingresar el identificador del usuario');
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('strNombreUsuario').focus();
+        return false;
+    } else {
+        if ($('#strNombreUsuario').val().length > 15) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
             document.getElementById('strNombreUsuario').focus();
-            return false;
-        } else {
-            if ($('#strNombreUsuario').val().length > 15) {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('strNombreUsuario').focus();
-                alertify.error('El nombre de usuario debe tener máximo 15 caracteres');
-                return false;
-            }
-        }
-    
-
-        if ($('#intUsuarioRol').val() == 0) {
-            alertify.error('Debe seleccionar un rol de usuario');
-            $('html, body').animate({ scrollTop: 200 }, 'slow');
-            document.getElementById('intUsuarioRol').focus();
-            return false;
-        }
-
-        if ($('#UsuarioPregunta').val() == 0) {
-            alertify.error('Debe seleccionar una pregunta de seguridad');
-            $('html, body').animate({ scrollTop: 250 }, 'slow');
-            document.getElementById('UsuarioPregunta').focus();
-            return false;
-        }
-
-        if ($('#UsuarioRespuesta').val() == '') {
-            alertify.error('Se debe ingresar una respuesta a la pregunta');
-            $('html, body').animate({ scrollTop: 200 }, 'slow');
-            document.getElementById('UsuarioRespuesta').focus();
-            return false;
-        } else {
-            if ($('#UsuarioRespuesta').val().length > 30) {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('UsuarioRespuesta').focus();
-                alertify.error('La respuesta debe tener máximo 15 caracteres');
-                return false;
-            }
-        }
-
-        if ($('#strContrasenia01').val() == '') {
-            alertify.error('Debe ingresar una contraseña');
-            $('html, body').animate({ scrollTop: 250 }, 'slow');
-            document.getElementById('strContrasenia01').focus();
-            return false;
-        } else {
-            if ($('#strContrasenia01').val().length > 20) {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('strContrasenia01').focus();
-                alertify.error('La contraseña debe tener máximo 20 caracteres.');
-                return false;
-            }
-        }
-
-        if ($('#strContrasenia02').val() == '') {
-            alertify.error('Debe ingresar la confirmación de la contraseña');
-            $('html, body').animate({ scrollTop: 250 }, 'slow');
-            document.getElementById('strContrasenia02').focus();
-            return false;
-        }
-
-        if ($('#strContrasenia01').val() != $('#strContrasenia02').val()) {
-            alertify.error('Las contraseña no coinciden en alguno de los campos');
-            $('html, body').animate({ scrollTop: 300 }, 'slow');
-            document.getElementById('strContrasenia01').focus();
+            alertify.error('El nombre de usuario debe tener máximo 15 caracteres');
             return false;
         }
     }
+    if ($('#intUsuarioRol').val() == 0) {
+        alertify.error('Debe seleccionar un rol de usuario');
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('intUsuarioRol').focus();
+        return false;
+    }
+
+    if ($('#UsuarioPregunta').val() == 0) {
+        alertify.error('Debe seleccionar una pregunta de seguridad');
+        $('html, body').animate({ scrollTop: 250 }, 'slow');
+        document.getElementById('UsuarioPregunta').focus();
+        return false;
+    }
+
+    if ($('#UsuarioRespuesta').val() == '') {
+        alertify.error('Se debe ingresar una respuesta a la pregunta');
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('UsuarioRespuesta').focus();
+        return false;
+    } else {
+        if ($('#UsuarioRespuesta').val().length > 30) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('UsuarioRespuesta').focus();
+            alertify.error('La respuesta debe tener máximo 15 caracteres');
+            return false;
+        }
+    }
+
+    if ($('#strContrasenia01').val() == '') {
+        alertify.error('Debe ingresar una contraseña');
+        $('html, body').animate({ scrollTop: 250 }, 'slow');
+        document.getElementById('strContrasenia01').focus();
+        return false;
+    } else {
+        if ($('#strContrasenia01').val().length > 20) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('strContrasenia01').focus();
+            alertify.error('La contraseña debe tener máximo 20 caracteres.');
+            return false;
+        }
+    }
+
+    if ($('#strContrasenia02').val() == '') {
+        alertify.error('Debe ingresar la confirmación de la contraseña');
+        $('html, body').animate({ scrollTop: 250 }, 'slow');
+        document.getElementById('strContrasenia02').focus();
+        return false;
+    }
+
+    if ($('#strContrasenia01').val() != $('#strContrasenia02').val()) {
+        alertify.error('Las contraseña no coinciden en alguno de los campos');
+        $('html, body').animate({ scrollTop: 300 }, 'slow');
+        document.getElementById('strContrasenia01').focus();
+        return false;
+    }
+    
 
     //? Validación datos de cuenta según rol
     if ($('#intUsuarioRol').val() == 1) {
@@ -710,6 +700,8 @@ function validarFormularioUsuario($miCuenta) {
 
         var algunSeleccionado = 0;
         var iCont = 1;
+        //!Este 24 debe de cambiarse por una variable que muestre el total de coordinaciones
+        //TODO: Mejorar esta parte de la coordinación
         while (iCont <= 24) {
             var isChecked = document.getElementById('strCoordinacion' + iCont).checked;
             if (isChecked) {
@@ -724,7 +716,6 @@ function validarFormularioUsuario($miCuenta) {
     }
     return true;
 }
-
 //Mostrar contraseña index.php
 function hideOrShowPassword() {
   var x = document.getElementById('strContrasena');
@@ -734,7 +725,6 @@ function hideOrShowPassword() {
     x.type = 'password';
   }
 }
-
 // Mostrar o ocultar contraseña
 function hideOrShowPassword1() {
     var password1, check;
@@ -750,7 +740,6 @@ function hideOrShowPassword1() {
         password1.type = 'password';
     }
 }
-
 // Mostrar o ocultar contraseña
 function hideOrShowPassword2() {
     var password2, check;
@@ -766,7 +755,6 @@ function hideOrShowPassword2() {
         password2.type = 'password';
     }
 }
-
 // Despliegue de campos según su rol.
 $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
     var tipo_evento = $('#intUsuarioRol').val();
