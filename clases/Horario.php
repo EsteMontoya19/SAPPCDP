@@ -1,4 +1,6 @@
 <?php
+        //? a Excepción de ' eliminarHorario ' ninguna de las siguientes funciones se utiliza
+        
     class Horario
     {
         function agregarHorario($dia, $salon, $grupo, $hora_inicio, $hora_fin)

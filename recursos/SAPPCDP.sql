@@ -52,21 +52,22 @@ INSERT INTO PLATAFORMA (PLAT_NOMBRE, PLAT_ACTIVO)
 INSERT INTO Persona (pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono)
 	VALUES ('Esteban', 'Montoya', 'Maya', 'estemontoya99@gmail.com', '5548364465'),
           ('Samuel', 'Alcantara', 'Chavez', 'samuelunam3151@gmail.com', '5564164687'),
-          ('Karen', 'Fuentez', 'Aguilar', 'ftzkaren21@gmail.com', '5620589315');
+          ('Karen', 'Fuentez', 'Aguilar', 'ftzkaren21@gmail.com', '5620589315'),
+          ('Luis Antonio', 'Gutierrez','Castro', 'lantonio.gc99@gmail.com', '5580947651');
 
 INSERT INTO Rol (rol_nombre) VALUES ('Administrador del sistema'),('Moderador'),('Profesor');
 
 INSERT INTO PREGUNTA_SEGURIDAD (prse_pregunta, prse_activo) VALUES ('Como se llamaba tu primer mascota', 'TRUE'), ('Pelicula de acción favorita', 'TRUE'),
-			('Superherore favorito', 'TRUE');
+			('Superheroe favorito', 'TRUE');
 
 INSERT INTO Usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usuario, usua_contrasena, usua_respuesta, usua_activo)
 		VALUES (1, 1, 3, 'Esteban', '1234', 'Linterna Verde', true), (2, 2, 3, 'Samuel', '1234', 'Batman', true),
-            (3, 3, 3, 'Karen', '1234', 'Flash', true);
+            (3, 3, 3, 'Karen', '1234', 'Flash', true),(4,3,3,'Tony', '1234', 'Spiderman', true);
 
 INSERT INTO Administrador (pers_id_persona, admi_num_trabajador, admi_rfc) VALUES (1, '315067596', 'MOME990905134');
 
 INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza, prof_rfc) 
-      VALUES (3, '123457890', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber','KAFA12345');
+      VALUES (3, '123457890', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber','KAFA12345'),(4,'1234569870','Profesor de informatica con experiencia en IOS y MACOS', 'GUCL990326S58');
 
 INSERT INTO Moderador (pers_id_persona, mode_num_cuenta, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin) 
 		VALUES (2, '123457890', '2021/02/23', '2021/09/08','07:00:00', '21:00:00');
@@ -85,11 +86,11 @@ INSERT INTO Coordinacion (coor_nombre) VALUES ('Informática'), ('Fiscal'), ('Co
 ('Maestría en auditoria'), ('Especialidad en administración gerontológica'), ('Maestría negocios internacionales'), ('Maestría en turismo'), 
 ('Maestría en alta dirección'), ('Maestría en informática administrativa');
 
-INSERT INTO Profesor_Nivel (prof_id_profesor, nive_id_nivel) VALUES (1, 1), (1, 2);
+INSERT INTO Profesor_Nivel (prof_id_profesor, nive_id_nivel) VALUES (1, 1), (1, 2),(2, 1), (2, 2);
 
-INSERT INTO Profesor_Modalidad (prof_id_profesor, moda_id_modalidad) VALUES (1,1);
+INSERT INTO Profesor_Modalidad (prof_id_profesor, moda_id_modalidad) VALUES (1,1), (2,3);
 
-INSERT INTO Profesor_Coordinacion(prof_id_profesor, coor_id_coordinacion) VALUES (1,1),(1,24), (1,14);
+INSERT INTO Profesor_Coordinacion(prof_id_profesor, coor_id_coordinacion) VALUES (1,1),(1,24), (1,14),(2,1),(2,23),(2,24);
 
 INSERT INTO Curso (CURS_TIPO, CURS_NOMBRE, CURS_NUM_SESIONES, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, CURS_NIVEL, CURS_OBJETIVOS, CURS_TEMARIO, CURS_ACTIVO)
 			VALUES ('Curso', 'Cuestionarios en Zoom', 2, 'Nada', 'Nada', 'Básico', 'Aprender', '/nose.pdf', 'TRUE');
@@ -102,30 +103,33 @@ INSERT INTO SALON (EDIF_ID_EDIFICIO, SALO_NOMBRE)
 
 INSERT INTO CALENDARIO (CALE_SEMESTRE, CALE_INICIO_CICLO, CALE_FIN_CICLO, CALE_INICIO_EXAMENES, CALE_FIN_EXAMENES, CALE_INICIO_ASUETO,
 						CALE_FIN_ASUETO, CALE_INICIO_INTERSEMESTRAL, CALE_FIN_INTERSEMESTRAL, CALE_INICIO_ADMIN, CALE_FIN_ADMIN, CALE_ACTIVO)
-   			VALUES('2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', '2021/02/23', TRUE);
+   			VALUES('2022-1', '2021/07/01', '2022/01/30', '2021/11/29', '2021/12/10', '2021/08/02', '2021/08/06', '2021/12/13', '2022/01/28', '2021/12/20', '2022/01/05', TRUE);
+
+INSERT INTO dia_festivo (cale_id_calendario, dife_fecha)
+                VALUES (1, '2021/09/15'), (1,'2021/09/16');
 
 INSERT INTO PLATAFORMA (PLAT_NOMBRE, PLAT_ACTIVO)
-			VALUES ('Zoom', 'TRUE'), ('Google Meet', 'TRUE');
+			VALUES ('Zoom', 'TRUE'), ('Google Meet', 'TRUE'), ('Messenger', 'TRUE');
 
 INSERT INTO Grupo (MODE_ID_MODERADOR, PROF_ID_PROFESOR, CURS_ID_CURSOS, SALO_ID_SALON, CALE_ID_CALENDARIO,
                PLAT_ID_PLATAFORMA, GRUP_REUNION, GRUP_ACCESO, GRUP_CLAVE_ACCESO, 
                GRUP_CUPO, GRUP_TIPO, GRUP_ACTIVO, GRUP_MODALIDAD, GRUP_ESTADO,  
                GRUP_INICIO_INSC, GRUP_FIN_INSC)
 			VALUES (1, 1, 1, null, 1, 
-               1, 'grupo reunion1', 'grupo acceso1', 'clave1', 
+               1, 'https://cuaed-unam.zoom.us/j/88139303420', '1234567', 'acceso', 
                50, 'Privado', 'true', 'En línea', 'Aprobado', 
-               '2021/02/23', '2021/09/08'),
+               '2021/06/23', '2021/09/08'),
                (1, 1, 1, 1, 
                1, null, null, null, null, 
-               60, 'Público', 'true', 'Presencial', 'Aprobado', 
-               '2021/02/25', '2021/09/07'),
+               60, 'Público', 'true', 'Presencial', 'Pendiente', 
+               '2022/01/01', '2022/02/01'),
                (1, 1, 1, null, 1, 
-               1, 'grupo reunion3', 'grupo acceso3', 'clave3', 
+               1, 'https://cuaed-unam.zoom.us/j/88139303420', 'grupo acceso3', 'clave3', 
                25, 'Público', 'true', 'En línea', 'Aprobado', 
-               '2021/02/28', '2021/09/09');
+               '2021/06/26', '2021/06/27');
 
 INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin)
-			VALUES   (1, '2021/09/08','07:00:00', '09:00:00'), (1, '2021/09/09','10:00:00', '12:00:00'),
+			VALUES   (1, '2021/07/08','07:00:00', '09:00:00'), (1, '2021/07/09','10:00:00', '12:00:00'),
                   (2, '2021/09/10','08:00:00', '10:00:00'), (2, '2021/09/11','11:00:00', '13:00:00'),
                   (3, '2021/09/08','12:00:00', '14:00:00'), (3, '2021/09/13','12:00:00', '14:00:00');
 
@@ -135,7 +139,7 @@ INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin)
 create table ADMINISTRADOR (
    admi_id_administrador  SERIAL               not null,
    PERS_ID_PERSONA      INT4                 not null,
-   admi_num_trabajador VARCHAR(10)             not null,
+   admi_num_trabajador VARCHAR(15)             not null,
    admi_rfc            VARCHAR(15)             not null,
    constraint PK_ADMINISTRADOR primary key (admi_id_administrador)
 );
@@ -188,8 +192,8 @@ create table CALENDARIO (
    CALE_FIN_CICLO        DATE                 not null,
    CALE_INICIO_EXAMENES    DATE                 not null,
    CALE_FIN_EXAMENES     DATE                 not null,
-   CALE_INICIO_ASUETO     DATE                 not null,
-   CALE_FIN_ASUETO       DATE                 not null,
+   CALE_INICIO_ASUETO     DATE                 null,
+   CALE_FIN_ASUETO       DATE                  null,
    CALE_INICIO_INTERSEMESTRAL DATE                 not null,
    CALE_FIN_INTERSEMESTRAL DATE                 not null,
    CALE_INICIO_ADMIN      DATE                 not null,
@@ -202,6 +206,30 @@ create table CALENDARIO (
 /* Index: CALENDARIO_PK                                         */
 /*==============================================================*/
 create unique index CALENDARIO_PK on CALENDARIO (
+CALE_ID_CALENDARIO
+);
+
+/*==============================================================*/
+/* Table: DIA_FESTIVO                                           */
+/*==============================================================*/
+create table DIA_FESTIVO (
+   DIFE_ID_DIA_FESTIVO  SERIAL      not null,
+   CALE_ID_CALENDARIO   INT4        not null,
+   DIFE_FECHA           DATE        not null,
+   constraint PK_DIA_FESTIVO primary key (DIFE_ID_DIA_FESTIVO)
+);
+
+/*==============================================================*/
+/* Index: DIA_FESTIVO_PK                                        */
+/*==============================================================*/
+create unique index DIA_FESTIVO_PK on DIA_FESTIVO(
+DIFE_ID_DIA_FESTIVO
+);
+
+/*==============================================================*/
+/* Index: DIA_FESTIVO_CALENDARIO_FK                             */
+/*==============================================================*/
+create index DIA_FESTIVO_FK on DIA_FESTIVO(
 CALE_ID_CALENDARIO
 );
 
@@ -519,7 +547,7 @@ PLAT_ID_PLATAFORMA
 );
 
 /*==============================================================*/
-/* Table: PREGUNTA_SEGURIDAD                                              */
+/* Table: PREGUNTA_SEGURIDAD                                    */
 /*==============================================================*/
 create table PREGUNTA_SEGURIDAD (
    prse_id_pregunta     SERIAL               not null,
@@ -529,7 +557,7 @@ create table PREGUNTA_SEGURIDAD (
 );
 
 /*==============================================================*/
-/* Index: PREGUNTA_SEGURIDADS_PK                                          */
+/* Index: PREGUNTA_SEGURIDADS_PK                                */
 /*==============================================================*/
 create unique index PREGUNTAS_PK on PREGUNTA_SEGURIDAD (
 prse_id_pregunta
@@ -946,3 +974,58 @@ alter table Resultado_Encuesta
    add constraint FK_RESULTADO_ENCUESTA_RELATIONS_INSCRIPCION foreign key (INSC_ID_INSCRIPCION)
       references INSCRIPCION (INSC_ID_INSCRIPCION)
       on delete restrict on update restrict; 
+
+alter table DIA_FESTIVO
+   add constraint FK_DIA_FESTIVO_RELATIONS_CALENDARIO foreign key (CALE_ID_CALENDARIO)
+   references CALENDARIO (CALE_ID_CALENDARIO)
+   on delete restrict on update restrict;
+
+/*==============================================================*/
+/* DBMS name:      PostgreSQL 8                                 */
+/* Created on:     25/062021 10:25:05 a. m.                    */
+/*==============================================================*/
+
+/*==============================================================*/
+/*      Inserción de datos en tablas                            */
+/*==============================================================*/
+
+/* Información básica para que el sistema funcione*/
+
+INSERT INTO Persona (pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono)
+	VALUES ('Esteban', 'Montoya', 'Maya', 'estemontoya99@gmail.com', '5548364465');
+
+INSERT INTO Rol (rol_nombre) VALUES ('Administrador del sistema'),('Moderador'),('Profesor');
+
+INSERT INTO PREGUNTA_SEGURIDAD (prse_pregunta, prse_activo) VALUES ('Superheroe favorito', 'TRUE');
+
+INSERT INTO Usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usuario, usua_contrasena, usua_respuesta, usua_activo)
+		VALUES (1, 1, 1, 'Esteban', '1234', 'Linterna Verde', true);
+
+INSERT INTO Administrador (pers_id_persona, admi_num_trabajador, admi_rfc) VALUES (1, '315067596', 'MOME990905134');
+
+INSERT INTO Dia (dia_nombre) VALUES ('Lunes'), ('Martes'), ('Miercoles'), ('Jueves'), ('Viernes'), ('Sabado');
+
+INSERT INTO Nivel (nive_nombre) VALUES ('Licenciatura'), ('Postgrado');
+
+INSERT INTO Modalidad (moda_nombre) VALUES ('Presencial'), ('Abierta'), ('A distancia');
+
+INSERT INTO Coordinacion (coor_nombre) VALUES ('Informática'), ('Fiscal'), ('Contabilidad'), ('Finanzas'), ('Administración básica'), ('Matemáticas'), ('Auditoría'), ('Economía'), 
+('Derecho'), ('Costos y Presupuestos'), ('Contabilidad básica'), ('Recursos humanos'), ('Mercadotecnia'),('Maestrías en línea'), 
+('Maestrías en administración de sistemas de salud'), ('Maestría en finanzas'),('Especialidades de alta dirección'), ('RH y mercadotecnia'), 
+('Maestría en auditoria'), ('Especialidad en administración gerontológica'), ('Maestría negocios internacionales'), ('Maestría en turismo'), 
+('Maestría en alta dirección'), ('Maestría en informática administrativa');
+
+INSERT INTO EDIFICIO (EDIF_NOMBRE)
+			VALUES ('A');
+
+INSERT INTO SALON (EDIF_ID_EDIFICIO, SALO_NOMBRE)
+			VALUES (1, '05');
+
+/* A falta de la interfaz de calendario*/
+
+INSERT INTO CALENDARIO (CALE_SEMESTRE, CALE_INICIO_CICLO, CALE_FIN_CICLO, CALE_INICIO_EXAMENES, CALE_FIN_EXAMENES, CALE_INICIO_ASUETO,
+						CALE_FIN_ASUETO, CALE_INICIO_INTERSEMESTRAL, CALE_FIN_INTERSEMESTRAL, CALE_INICIO_ADMIN, CALE_FIN_ADMIN, CALE_ACTIVO)
+   			VALUES('2022-1', '2021/07/01', '2022/01/30', '2021/11/29', '2021/12/10', '2021/08/02', '2021/08/06', '2021/12/13', '2022/01/28', '2021/12/20', '2022/01/05', TRUE);
+
+INSERT INTO dia_festivo (cale_id_calendario, dife_fecha)
+                VALUES (1, '2021/09/15'), (1,'2021/09/16');

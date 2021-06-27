@@ -55,8 +55,9 @@
                   </tr>
                 </thead>
                 <tbody>
-
-                  <?php foreach ($arr_grupos as $grupo) { ?>
+                <?php 
+                if(isset($arr_grupos)){
+                foreach ($arr_grupos as $grupo) { ?>
                     <tr>
                       <?php $activo++; ?>
                       <td><?php echo $grupo['grup_id_grupo'];?></td>
@@ -104,7 +105,7 @@
                         </button>
                       </td>
                     </tr>
-                  <?php } ?>
+                  <?php } }?>
 
                 </tbody>
               </table>

@@ -49,7 +49,7 @@
 			$bd->cerrarBD();
 		}
 
-        //Buscar sesión
+        //Buscar sesión por el id
         function buscarSesionesIDGrupo($id_grupo)
         {
 			$SQL_Bus_Sesion =
@@ -86,6 +86,7 @@
 			return ($transaccion_1->traerObjeto(0));
         }
 
+		//Buscar número de sesiones por id del grupo
 		function numSesionesGrupo($idGrupo) {
 
 			$SQL_Bus_Sesion =
@@ -104,7 +105,7 @@
 			return ($transaccion_1->traerObjeto(0));
 		}
 
-
+		//Buscar la fecha y hora de la primer sesión de un grupo 
 		function buscarMinSesion($idGrupo){
 			$SQL_Bus_Sesion =
 			"

@@ -1,9 +1,10 @@
 <?php
     class Profesor
     {
+		//Buscar un profesor dado el id
 		function buscarProfesor($persona)
 		{
-			$SQL_Bus_Profesor = 
+			$SQL_Bus_Profesor =
 			"SELECT P.prof_id_profesor, P.pers_id_persona, P.prof_num_trabajador, P.prof_semblanza, P.prof_rfc, PE.pers_nombre,
 					PE.pers_apellido_paterno, PE.pers_apellido_materno
 			 FROM Profesor P, Persona PE
@@ -19,6 +20,7 @@
 			return ($transaccion_1->traerObjeto(0));
         }
 
+		//Buscar los niveles de un profesor dado el id del profesor
 		function buscarProfesorNiveles ($profesor) {
 			$SQL_Bus_Niveles = 
 			"SELECT N.nive_id_nivel, N.nive_nombre
@@ -34,6 +36,8 @@
 			$bd->cerrarBD();
 			return ($transaccion_1->traerRegistros());
 		}
+
+		//Buscar las modalidades de un profesor dado el id del profesor
 		function buscarProfesorModalidades ($profesor) {
 			$SQL_Bus_Niveles = 
 			"SELECT M.moda_id_modalidad, M.moda_nombre
@@ -49,6 +53,8 @@
 			$bd->cerrarBD();
 			return ($transaccion_1->traerRegistros());
 		}
+
+		//Buscar las coordinaciones de un profesor dado el id del profesor
 		function buscarProfesorCoordinaciones ($profesor) {
 			$SQL_Bus_Niveles = 
 			"SELECT C.coor_id_coordinacion, C.coor_nombre
@@ -65,6 +71,7 @@
 			return ($transaccion_1->traerRegistros());
 		}
 
+		//Agregar el registro de un profesor
 		function agregarProfesor($persona, $numTrabajador, $semblanza, $rfc)
 		{
 		//Aquí iría una validación pero puede ser que ya se esté haciendo en otra parte
@@ -80,6 +87,7 @@
 			$bd->cerrarBD();
 		}
 
+		//Agregar el nivel de un profesor dado su id
 		function agregarNivelesProfesor($persona, $nivel) {
 	
 			$SQL_REGISTRO_NIVEL_PROFESOR = 
@@ -94,6 +102,7 @@
 			$bd->cerrarBD();
 		}
 
+		//Agregar la modalidad de un profesor dado su id
 		function agregarModalidadesProfesor($persona, $modalidad) {
 			$SQL_REGISTRO_MODALIDAD_PROFESOR = 
 			  "INSERT INTO Profesor_Modalidad (prof_id_profesor, moda_id_modalidad) VALUES ((SELECT prof_id_profesor
@@ -107,6 +116,7 @@
 			$bd->cerrarBD();
 		}
 
+		//Agregar la coordinación de un profesor dado su id
 		function agregarCoordinacionesProfesor($persona, $coordinacion) {
 			$SQL_REGISTRO_COORDINACION_PROFESOR = 
 			  "INSERT INTO Profesor_Coordinacion (prof_id_profesor, coor_id_coordinacion) VALUES ((SELECT prof_id_profesor
@@ -120,6 +130,7 @@
 			$bd->cerrarBD();
 		}
 
+		//Actualizar el registro de un profesor dado su id
 		function actualizarProfesor($persona, $num_trabajador, $semblanza, $rfc)
 		{
 			//? Validamos si ya tiene otro registro
@@ -154,6 +165,7 @@
 			}
         }
 
+		//Eliminar el registro de un profesor dado el id de una persona
 		function eliminarNivelesProfesor ($persona) {
         
 			$SQL_BORRAR_NIVELES_PROFESOR= 
@@ -168,6 +180,8 @@
 			$transaccion_1->enviarQuery($SQL_BORRAR_NIVELES_PROFESOR);
 			$bd->cerrarBD();
 		}
+
+		//Eliminar la modalidad de un profesor dado su id
 		function eliminarModalidadesProfesor ($persona) {
         
 			$SQL_BORRAR_MODALIDADES_PROFESOR= 
@@ -182,6 +196,8 @@
 			$transaccion_1->enviarQuery($SQL_BORRAR_MODALIDADES_PROFESOR);
 			$bd->cerrarBD();
 		}
+
+		//Eliminar la coordinación de un profesor dado su id
 		function eliminarCoordinacionesProfesor ($persona) {
         
 			$SQL_BORRAR_COORDINACIONES_PROFESOR= 
@@ -196,6 +212,8 @@
 			$transaccion_1->enviarQuery($SQL_BORRAR_COORDINACIONES_PROFESOR);
 			$bd->cerrarBD();
 		}
+
+		//Eliminar el registro de un profesor dado el id del profesor
         function eliminarProfesor($profesor)
 		{
 			$SQL_Eli_Profesor = 
@@ -210,6 +228,7 @@
 			$bd->cerrarBD();
 		}
         
+		//Buscar todos los grupos que imparte un profesor 
         function buscarGruposProfesor($profesor)
 		{
 			$SQL_Bus_Profesor = 
@@ -227,6 +246,7 @@
 			return ($transaccion_1->traerObjeto(0));
 		}
 
+		//Buscar datos de todos los profesores
         function buscarTodosProfesores()
         {
             $SQL_Bus_Profesores =
@@ -245,6 +265,7 @@
                 return ($transaccion_1->traerRegistros());
         }
 
+		//Buscar el último profesor registrado
 		function buscarUltimo()
 		{
 			$bd = new BD();
@@ -260,6 +281,7 @@
 			return $Profesor_Seq;
 		}
 
+		//buscar todos los profesores activos
 		function buscarProfesoresActivos(){
 			$SQL_Bus_Profesores =
             "	
@@ -277,6 +299,7 @@
                 return ($transaccion_1->traerRegistros());
 		}
 
+		//buscar los datos de un profesor dado el número de trabajador
 		function buscarNumTrabajador ($numTrabajador) {
 
 			$SQL_Bus_Profesor = 

@@ -1,6 +1,7 @@
 <?php
 	class Cuenta
   	{
+		//Busca un usuario dado el usuario y la contraseña
         function buscarUsuarioSistema($usuario, $contrasena)
 		{
 			$SQL_Bus_Usuario = 

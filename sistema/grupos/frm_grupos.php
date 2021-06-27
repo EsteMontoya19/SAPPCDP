@@ -22,7 +22,6 @@ jQuery(document).ready(function () {
   // Objetos
   $obj_Busqueda = new Busqueda();
   $obj_Grupo = new Grupo();
-
   $obj_Sesion = new Sesion();
   $obj_Curso = new Curso();
   $obj_Profesor = new Profesor();
@@ -286,12 +285,16 @@ jQuery(document).ready(function () {
                           for="lbID_Plataforma"><b>Plataforma:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
                         <select class="custom-select" id="ID_Plataforma" name="ID_Plataforma">
                           <option value="0">Seleccione una opción</option>
-                          <?php foreach ($arr_Plataformas as $Plataforma) { ?>
+                          <?php foreach ($arr_Plataformas as $Plataforma) { if($Plataforma['plat_activo'] == 't') {?>
                             <option value="<?php echo $Plataforma['plat_id_plataforma'];?>"
                               <?php if(isset($Grupo)) { if ($Grupo->plat_id_plataforma == $Plataforma['plat_id_plataforma']) { ?>selected <?php } }?>>
                               <?php echo $Plataforma['plat_nombre']; ?>
                             </option>
-                          <?php } ?>
+                          <?php } else { if(isset($Grupo)) { if ($Grupo->plat_id_plataforma == $Plataforma['plat_id_plataforma']) { ?>
+                            <option value="<?php echo $Plataforma['plat_id_plataforma'] ?>" selected>
+                              <?php echo $Plataforma['plat_nombre']; ?>
+                            </option>
+                          <?php } } } } ?>
                         </select>
                       </div>
                       <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>

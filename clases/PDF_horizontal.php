@@ -20,7 +20,7 @@ class PDF extends FPDF {
         -------------------------------------------------------------
         file: (Ruta de la imagen)
         x: (Espacio entre el borde izquierdo y la imagen) - null
-        y: (Espacio entre el cabezara y la imagen) - null
+        y: (Espacio entre el cabezal y la imagen) - null
         w: (Ancho de la imagen en la pagina)
             Si el valor es positivo, éste será la altura en la unidad de medida definida por el usuario.
             Si el valor es negativo, el valor absoluto será la resolución vertical en ppp.
