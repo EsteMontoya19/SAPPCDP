@@ -232,17 +232,14 @@
     $pdf->SetFont("Times","B", 12);
     $pdf->Cell(25,5,utf8_decode("Profesor: "),1,0, "L", false);
     $pdf->SetFont("Times","", 12);
-    $pdf->Cell(0,5,utf8_decode(" ".$grupo->pers_nombre),1,1, "L", false);
+    $pdf->Cell(0,5,utf8_decode($grupo->pers_apellido_materno." ".$grupo->pers_apellido_paterno." ".$grupo->pers_nombre),1,1, "L", false);
 
     $pdf->SetFont("Times","B", 12);
     $pdf->Cell(25,5,utf8_decode("Moderador: "),1,0, "L", false);
     $pdf->SetFont("Times","", 12);
-    $pdf->Cell(0,5,utf8_decode(" ".$grupo->pers_apellido_paterno),1,1, "L", false);
+    $pdf->Cell(0,5,utf8_decode( $grupo->moderador),1,1, "L", false);
 
-    $pdf->SetFont("Times","B", 12);
-    $pdf->Cell(25,5,utf8_decode("Modalidad: "),1,0, "L", false);
-    $pdf->SetFont("Times","", 12);
-    $pdf->Cell(0,5,utf8_decode(" ".$grupo->pers_apellido_materno),1,1, "L", false);
+
     
     
     if(!isset($grupo->plat_id_plataforma)) {
@@ -262,6 +259,16 @@
         $pdf->Cell(25,5,utf8_decode("Plataforma: "),1,0, "L", false);
         $pdf->SetFont("Times","", 12);
         $pdf->Cell(0,5,utf8_decode(" ".$plataforma->plat_nombre),1,1, "L", false);
+
+        $pdf->SetFont("Times","B", 12);
+        $pdf->Cell(25,5,utf8_decode("Link acceso: "),1,0, "L", false);
+        $pdf->SetFont("Times","", 12);
+        $pdf->Cell(0,5,utf8_decode(" ".$grupo->grup_acceso),1,1, "L", false);
+
+        $pdf->SetFont("Times","B", 12);
+        $pdf->Cell(25,5,utf8_decode("Clave acceso: "),1,0, "L", false);
+        $pdf->SetFont("Times","", 12);
+        $pdf->Cell(0,5,utf8_decode(" ".$grupo->grup_clave_acceso),1,1, "L", false);
     }
 
     $pdf->SetFont("Times","B", 12);

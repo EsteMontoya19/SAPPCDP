@@ -238,12 +238,11 @@ CALE_ID_CALENDARIO
 /*==============================================================*/
 create table CONSTANCIA (
    CONS_ID_CONSTANCIAS  SERIAL               not null,
-   INSC_ID_INSCRIPCION  INT4                 not null,
-   CONS_URL             VARCHAR(200)            not null,
+   CONS_URL             VARCHAR(200)            null,
    CONS_ESTADO          VARCHAR(15)             not null,
-   CONS_FOLIO           VARCHAR(30)             not null,
-   CONS_FECHA           DATE                 not null,
-   CONS_HORA            DATE                 not null,
+   CONS_FOLIO           VARCHAR(30)             null,
+   CONS_FECHA           DATE                 null,
+   CONS_HORA            DATE                 null,
    constraint PK_CONSTANCIA primary key (CONS_ID_CONSTANCIAS)
 );
 
@@ -252,13 +251,6 @@ create table CONSTANCIA (
 /*==============================================================*/
 create unique index CONSTANCIAS_PK on CONSTANCIA (
 CONS_ID_CONSTANCIAS
-);
-
-/*==============================================================*/
-/* Index: RELATIONSHIP_33_FK                                    */
-/*==============================================================*/
-create  index RELATIONSHIP_33_FK on CONSTANCIA (
-INSC_ID_INSCRIPCION
 );
 
 /*==============================================================*/
@@ -831,12 +823,6 @@ alter table ADMINISTRADOR
 
 alter table ASISTENCIA
    add constraint FK_ASISTENC_RELATIONS_INSCRIPC foreign key (INSC_ID_INSCRIPCION)
-      references INSCRIPCION (INSC_ID_INSCRIPCION)
-      on delete restrict on update restrict;
-
-
-alter table CONSTANCIA
-   add constraint FK_CONSTANC_RELATIONS_INSCRIPC foreign key (INSC_ID_INSCRIPCION)
       references INSCRIPCION (INSC_ID_INSCRIPCION)
       on delete restrict on update restrict;
 
