@@ -4,7 +4,7 @@
 		//Buscar un profesor dado el id
 		function buscarProfesor($persona)
 		{
-			$SQL_Bus_Profesor = 
+			$SQL_Bus_Profesor =
 			"SELECT P.prof_id_profesor, P.pers_id_persona, P.prof_num_trabajador, P.prof_semblanza, P.prof_rfc, PE.pers_nombre,
 					PE.pers_apellido_paterno, PE.pers_apellido_materno
 			 FROM Profesor P, Persona PE
@@ -195,7 +195,7 @@
 			$transaccion_1 = new Transaccion($bd->conexion);
 			$transaccion_1->enviarQuery($SQL_BORRAR_MODALIDADES_PROFESOR);
 			$bd->cerrarBD();
-		}´
+		}
 
 		//Eliminar la coordinación de un profesor dado su id
 		function eliminarCoordinacionesProfesor ($persona) {
