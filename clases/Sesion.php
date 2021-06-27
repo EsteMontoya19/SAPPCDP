@@ -130,10 +130,9 @@
 		// Busca las fechas de sesiones (unicamente día y mes) de un grupo
 		function buscarFechaSesiones($idGrupo){
 			$SQL_Bus_Sesion =
-			"
-			SELECT to_char(sesi_fecha, 'DD-MM') fecha
-			FROM SESION 
-			WHERE GRUP_ID_GRUPO = $idGrupo
+			"SELECT to_char(sesi_fecha, 'DD-MM-YYYY') fecha, sesi_hora_inicio, sesi_hora_fin
+			 FROM SESION 
+			 WHERE GRUP_ID_GRUPO = $idGrupo
 			";
 
 			$bd = new BD();
@@ -143,5 +142,23 @@
 			$bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
 		}
+
+		/* Estas funciones ayudan a saber en formato de letra una fecha intruducida que siga el formato DD-MM-YYYY
+		Ambas se utilizan en la creción de PDF's */
+		function conocerDiaSemanaFecha($fecha) {
+			$dias = array('Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado');
+			$dia = $dias[date('w', strtotime($fecha))];
+			return $dia;
+		}
+
+		function obtenerFechaEnLetra($fecha){
+			$dia= $this->conocerDiaSemanaFecha($fecha);
+			$num = date("j", strtotime($fecha));
+			$anno = date("Y", strtotime($fecha));
+			$mes = array('enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre');
+			$mes = $mes[(date('m', strtotime($fecha))*1)-1];
+			return $dia.' '.$num.' de '.$mes.' del '.$anno;
+		}
+		 
     }
 ?>
