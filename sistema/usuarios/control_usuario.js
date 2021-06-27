@@ -710,6 +710,8 @@ function validarFormularioUsuario($miCuenta) {
 
         var algunSeleccionado = 0;
         var iCont = 1;
+        //!Este 24 debe de cambiarse por una variable que muestre el total de coordinaciones
+        //TODO: Mejorar esta parte de la coordinación
         while (iCont <= 24) {
             var isChecked = document.getElementById('strCoordinacion' + iCont).checked;
             if (isChecked) {
