@@ -19,7 +19,7 @@
 
     <!-- Icono de la pestaña -->
     <link rel="../recursos/shortcut icon" href="../recursos/favicon.ico"/>
-    
+
     <!-- Alertify -->
     <link rel="stylesheet" type="text/css" href="../recursos/alertify/css/alertify.css">
     <link rel="stylesheet" type="text/css" href="../recursos/alertify/css/alertify.rtl.css">
@@ -46,11 +46,11 @@
 
   </head>
 
-  <body style="background:#DB9501">
+  <body style="background:#272A5C">
 
     <div class="container">
       <div class="card card-login mx-auto mt-5">
-        <div class="card-header bg-blue">
+        <div class="card-header bg-banner-loggin">
           <b style="color: white">&nbsp; Administración</b>
         </div>
         <div class="card-body">
