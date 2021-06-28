@@ -55,7 +55,7 @@ jQuery(document).ready(function () {
       $Curso1=$obj_Curso->buscarCurso($Grupo->curs_id_cursos);
   }
 
-  if (isset($_POST['persona'])) { 
+  if (isset($_POST['persona'])) {
     // Recuperar información la persona que consulta
     $persona = $obj_Persona->buscarPersona($_POST['persona']);
   }

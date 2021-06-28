@@ -3,13 +3,13 @@
   include('../../clases/Grupo.php');
   include('../../clases/Sesion.php');
   include('../../clases/Profesor.php');
-  
+
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
   $obj_Profesor = new Profesor();
 
   $arr_grupos = null;
-  
+
   if (isset($_POST['persona'])){
     $idPersona = $_POST['persona'];
     $profesor = $obj_Profesor->buscarProfesor($idPersona);
@@ -60,15 +60,14 @@
                 <tbody>
                 <?php
                 if (isset($arr_grupos)) {
-                  foreach ($arr_grupos as $grupo) { 
-                   $idGrupo = $grupo['grup_id_grupo'];
-                   $sesion = $obj_Sesion->buscarMinSesion($idGrupo);
-                   if($grupo['grup_modalidad'] == 'En línea'){
-                     $modalidad=$obj_Grupo->buscarDatosEnLinea($idGrupo);
-                   } else {
-                     $modalidad=$obj_Grupo->buscarDatosPresencial($idGrupo);
-                   }
-                
+                  foreach ($arr_grupos as $grupo) {
+                    $idGrupo = $grupo['grup_id_grupo'];
+                    $sesion = $obj_Sesion->buscarMinSesion($idGrupo);
+                    if($grupo['grup_modalidad'] == 'En línea'){
+                      $modalidad=$obj_Grupo->buscarDatosEnLinea($idGrupo);
+                    } else {
+                      $modalidad=$obj_Grupo->buscarDatosPresencial($idGrupo);
+                    }
                 ?>
 
                       <tr>
@@ -88,7 +87,7 @@
                           <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupoInscrito(<?php echo $grupo['grup_id_grupo']?>,'<?php echo $idPersona?>')">
                             <i class="fas fa-search-plus"></i>
                           </button>
-                          <a class = "btn btn-primary" target="_blank" title="Comprobante inscripción" href="../modulos/Control_PDF.php?tipo=comprobante&idP=<?php echo($idPersona); ?>&idG=<?php echo($grupo['grup_id_grupo']); ?>" role="button"><i class="far fa-file-pdf"></i></i></a>
+                          <a class = "btn btn-pdf" target="_blank" title="Comprobante inscripción" href="../modulos/Control_PDF.php?tipo=comprobante&idP=<?php echo($idPersona); ?>&idG=<?php echo($grupo['grup_id_grupo']); ?>" role="button"><i class="far fa-file-pdf"></i></i></a>
                           <!-- <button type="button" class="btn btn-primary btn-table" title="Comprobante" style="margin-top: 5px;">
                             <i class="fas fa-list-alt"></i>
                           </button>
@@ -98,7 +97,6 @@
                         </td>
                       </tr>
                   <?php } } ?>
-                  
                 </tbody>
               </table>
             </div>

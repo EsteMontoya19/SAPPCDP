@@ -60,10 +60,10 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
 ?>
 
 
-<body style="background:#DB9501">
+<body style="background:#042a68">
   <div class="container">
     <div class="card card-login mx-auto mt-5">
-      <div class="card-header bg-blue">
+      <div class="card-header bg-banner-loggin">
        <p class = "centrado negritas">&nbsp; Administración </p>
       </div>
 
