@@ -64,7 +64,9 @@
                                                             quiere decir que el imparte el grupo, por lo que no hay motivo para que le 
                                                             permita inscribirse o verlo como posibilidad de grupo a inscribirse.
                                                           -->
-                  <?php foreach ($arr_grupos as $grupo) { if($grupo['prof_id_profesor'] != $id_profesor->prof_id_profesor) {?>
+                  <?php
+                  if(isset($arr_grupos)){ 
+                  foreach ($arr_grupos as $grupo) { if($grupo['prof_id_profesor'] != $id_profesor->prof_id_profesor) {?>
                       <tr>
                         <td><?php echo $grupo['grup_id_grupo'];?></td>
                         <td><?php echo $grupo['curs_nombre'];?></td>
@@ -91,7 +93,7 @@
                           </button> -->
                         </td>
                       </tr>
-                  <?php } } ?>
+                  <?php } } } ?>
                   
                 </tbody>
               </table>

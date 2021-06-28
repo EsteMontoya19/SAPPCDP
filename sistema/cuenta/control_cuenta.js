@@ -72,7 +72,7 @@ $(document).ready(function () {
 
     //Acciones relacionadas con actualizar Mi cuenta
     $('#btn-actualizar-usuario-mi-cuenta').click(function () {
-        if (validarFormularioUsuario(true)) {
+        if (validarFormularioUsuario()) {
             datos = $('#form_usuario').serialize();
             $.ajax({
                 type: 'POST',
@@ -130,12 +130,12 @@ function validarFormularioUsuario() {
             return false;
         }
 
-        var letExp = /^([a-zA-Z\s])*$/;
+        var letExp = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/g;
         if (letExp.test($('#strUsuarioNombre').val())) {
         } else {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
             document.getElementById('strUsuarioNombre').focus();
-            alertify.error('El nombre debe estar compuesto unicamente por letras (a-z, A-Z).');
+            alertify.error('El nombre debe estar compuesto unicamente por letras (a-z, A-Z) y mas de una letra.');
             return false;
         }
     }
@@ -153,12 +153,12 @@ function validarFormularioUsuario() {
             return false;
         }
 
-        var letExp = /^([a-zA-Z])*$/;
+        var letExp = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/g;
         if (letExp.test($('#strUsuarioPrimerApe').val())) {
         } else {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
             document.getElementById('strUsuarioPrimerApe').focus();
-            alertify.error('El apellido paterno debe estar compuesto unicamente por letras (a-z, A-Z).');
+            alertify.error('El apellido paterno debe estar compuesto unicamente por letras (a-z, A-Z) y mas de una letra.');
             return false;
         }
     }
@@ -170,12 +170,12 @@ function validarFormularioUsuario() {
             alertify.error('El apellido materno debe tener máximo 50 caracteres');
             return false;
         }
-        var letExp = /^([a-zA-Z])*$/;
+        var letExp = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/g;
         if (letExp.test($('#strUsuarioSegundoApe').val())) {
         } else {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
             document.getElementById('strUsuarioSegundoApe').focus();
-            alertify.error('El apellido materno debe estar compuesto unicamente por letras (a-z, A-Z).');
+            alertify.error('El apellido materno debe estar compuesto unicamente por letras (a-z, A-Z) y mas de una letra.');
             return false;
         }
     }
@@ -235,7 +235,8 @@ function validarFormularioUsuario() {
     }
 
     //? Validación datos de cuenta según rol
-    if ($('#intUsuarioRol').val() == 1) {
+    alert($('#hideRol').val());
+    if ($('#hideRol').val() == 1) {
         if ($('#intNum_Trabajador').val() == '') {
             alertify.error('Debe ingresar un número de trabajador');
             $('html, body').animate({ scrollTop: 250 }, 'slow');
@@ -283,7 +284,7 @@ function validarFormularioUsuario() {
 
     //? Los de moderador
 
-    if ($('#intUsuarioRol').val() == 2) {
+    if ($('#hideRol').val() == 2) {
         var algunSeleccionado = 0;
         var iCont = 1;
         while (iCont < 7) {
@@ -368,7 +369,7 @@ function validarFormularioUsuario() {
         }
     }
 
-    if ($('#intUsuarioRol').val() == 3) {
+    if ($('#hideRol').val() == 3) {
         if ($('#intNum_Trabajador').val() == '') {
             alertify.error('Debe ingresar un número de trabajador');
             $('html, body').animate({ scrollTop: 250 }, 'slow');
@@ -488,7 +489,7 @@ function validarFormularioContrasena() {
     }
 
 
-    if ($('#intUsuarioRol').val() == 0) {
+    if ($('#hideRol').val() == 0) {
         alertify.error('Debe seleccionar un rol de usuario');
         $('html, body').animate({ scrollTop: 200 }, 'slow');
         document.getElementById('intUsuarioRol').focus();

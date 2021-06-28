@@ -4,6 +4,48 @@
 /*==============================================================*/
 
 /*==============================================================*/
+/*      Inserción minima de datos para tablas                   */
+/*==============================================================*/
+INSERT INTO Persona (pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono)
+	VALUES ('Rocío Ayme', 'García', 'Castillo', 'coordinadoraPPCDP@gmail.com', '5548364465');
+
+INSERT INTO Rol (rol_nombre) VALUES ('Administrador del sistema'),('Moderador'),('Profesor');
+
+INSERT INTO PREGUNTA_SEGURIDAD (prse_pregunta, prse_activo) VALUES ('Como se llamaba tu primer mascota', 'TRUE');
+
+INSERT INTO Usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usuario, usua_contrasena, usua_respuesta, usua_activo)
+		VALUES (1, 1, 1, 'Rocio', '1234', 'Superman', true);
+
+INSERT INTO Administrador (pers_id_persona, admi_num_trabajador, admi_rfc) VALUES (1, '315067596', 'GACR990905134');
+
+INSERT INTO Dia (dia_nombre) VALUES ('Lunes'), ('Martes'), ('Miercoles'), ('Jueves'), ('Viernes'), ('Sabado');
+
+INSERT INTO Nivel (nive_nombre) VALUES ('Licenciatura'), ('Postgrado');
+
+INSERT INTO Modalidad (moda_nombre) VALUES ('Presencial'), ('Abierta'), ('A distancia');
+
+INSERT INTO Coordinacion (coor_nombre) VALUES ('Informática'), ('Fiscal'), ('Contabilidad'), ('Finanzas'), ('Administración básica'), ('Matemáticas'), ('Auditoría'), ('Economía'), 
+('Derecho'), ('Costos y Presupuestos'), ('Contabilidad básica'), ('Recursos humanos'), ('Mercadotecnia'),('Maestrías en línea'), 
+('Maestrías en administración de sistemas de salud'), ('Maestría en finanzas'),('Especialidades de alta dirección'), ('RH y mercadotecnia'), 
+('Maestría en auditoria'), ('Especialidad en administración gerontológica'), ('Maestría negocios internacionales'), ('Maestría en turismo'), 
+('Maestría en alta dirección'), ('Maestría en informática administrativa');
+
+INSERT INTO EDIFICIO (EDIF_NOMBRE)
+			VALUES ('A');
+
+INSERT INTO SALON (EDIF_ID_EDIFICIO, SALO_NOMBRE)
+			VALUES (1, '05');
+
+INSERT INTO CALENDARIO (CALE_SEMESTRE, CALE_INICIO_CICLO, CALE_FIN_CICLO, CALE_INICIO_EXAMENES, CALE_FIN_EXAMENES, CALE_INICIO_ASUETO,
+						CALE_FIN_ASUETO, CALE_INICIO_INTERSEMESTRAL, CALE_FIN_INTERSEMESTRAL, CALE_INICIO_ADMIN, CALE_FIN_ADMIN, CALE_ACTIVO)
+   			VALUES('2022-1', '2021/07/01', '2022/01/30', '2021/11/29', '2021/12/10', '2021/08/02', '2021/08/06', '2021/12/13', '2022/01/28', '2021/12/20', '2022/01/05', TRUE);
+
+INSERT INTO dia_festivo (cale_id_calendario, dife_fecha)
+                VALUES (1, '2021/09/15'), (1,'2021/09/16');
+
+INSERT INTO PLATAFORMA (PLAT_NOMBRE, PLAT_ACTIVO)
+			VALUES ('Zoom', 'TRUE');
+/*==============================================================*/
 /*      Inserción de datos en tablas                            */
 /*==============================================================*/
 
@@ -196,12 +238,11 @@ CALE_ID_CALENDARIO
 /*==============================================================*/
 create table CONSTANCIA (
    CONS_ID_CONSTANCIAS  SERIAL               not null,
-   INSC_ID_INSCRIPCION  INT4                 not null,
-   CONS_URL             VARCHAR(200)            not null,
+   CONS_URL             VARCHAR(200)            null,
    CONS_ESTADO          VARCHAR(15)             not null,
-   CONS_FOLIO           VARCHAR(30)             not null,
-   CONS_FECHA           DATE                 not null,
-   CONS_HORA            DATE                 not null,
+   CONS_FOLIO           VARCHAR(30)             null,
+   CONS_FECHA           DATE                 null,
+   CONS_HORA            DATE                 null,
    constraint PK_CONSTANCIA primary key (CONS_ID_CONSTANCIAS)
 );
 
@@ -210,13 +251,6 @@ create table CONSTANCIA (
 /*==============================================================*/
 create unique index CONSTANCIAS_PK on CONSTANCIA (
 CONS_ID_CONSTANCIAS
-);
-
-/*==============================================================*/
-/* Index: RELATIONSHIP_33_FK                                    */
-/*==============================================================*/
-create  index RELATIONSHIP_33_FK on CONSTANCIA (
-INSC_ID_INSCRIPCION
 );
 
 /*==============================================================*/
@@ -789,12 +823,6 @@ alter table ADMINISTRADOR
 
 alter table ASISTENCIA
    add constraint FK_ASISTENC_RELATIONS_INSCRIPC foreign key (INSC_ID_INSCRIPCION)
-      references INSCRIPCION (INSC_ID_INSCRIPCION)
-      on delete restrict on update restrict;
-
-
-alter table CONSTANCIA
-   add constraint FK_CONSTANC_RELATIONS_INSCRIPC foreign key (INSC_ID_INSCRIPCION)
       references INSCRIPCION (INSC_ID_INSCRIPCION)
       on delete restrict on update restrict;
 
