@@ -121,8 +121,9 @@
     $writer = new Xlsx($documento);
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment; filename="Lista de Asistencia"');
-    // $writer = IOFactory::createWriter($documento, 'Xlsx');
-    $writer->save('php://output'.'xlsx');
+    // header('Content-Disposition: attachment; filename="Lista de Asistencia".'.xlsx"');
+    header('Content-Disposition: attachment; filename="Lista de Asistencia".xlsx');
+    header('Cache-Control: max-age=0');
+    $writer->save('php://output');
     exit;
 ?>
