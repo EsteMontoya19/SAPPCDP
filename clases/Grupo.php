@@ -316,7 +316,7 @@
         {
             $SQL_Bus_Cursos = 
             "   
-            SELECT pers_apellido_paterno, pers_apellido_materno, pers_nombre
+            SELECT pers_apellido_paterno, pers_apellido_materno, pers_nombre, pers_correo
             FROM Inscripcion I, Profesor p, Persona E 
             WHERE I.prof_id_profesor = P.prof_id_profesor 
             AND P.pers_id_persona = E.pers_id_persona AND grup_id_grupo = $ID 
@@ -335,7 +335,7 @@
         function buscarNombreCursoxGrupo($ID){
             $SQL_Bus_Curso = 
             "   
-                SELECT curs_nombre, curs_nivel, curs_tipo
+                SELECT curs_nombre, curs_nivel, curs_tipo, mode_id_moderador, prof_id_profesor, plat_id_plataforma, salo_id_salon, grup_modalidad
                 FROM Curso C, Grupo G
                 WHERE C.curs_id_cursos=G.curs_id_cursos AND grup_id_grupo = $ID;
             ";

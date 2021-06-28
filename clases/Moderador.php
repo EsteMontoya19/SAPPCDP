@@ -154,6 +154,24 @@
       $transaccion_1->enviarQuery($SQL_BORRAR_DIAS_MODERADOR);
       $bd->cerrarBD();
     }
+
+    //Busca el nombre del moderador dado el id de moderador
+    function buscarModeradorNombre($id){
+			$SQL_Bus_Moderador = 
+			"	
+        SELECT DISTINCT PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
+        FROM Moderador M, Persona P
+        WHERE M.PERS_ID_PERSONA=P.PERS_ID_PERSONA AND MODE_ID_MODERADOR = $id
+			";
+
+      $bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Moderador);
+			$obj_Usuario = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerObjeto(0));
+		}
   }
 ?>
 
