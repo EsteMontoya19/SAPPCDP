@@ -2761,6 +2761,86 @@ fieldset:disabled a.btn {
     pointer-events: none;
 }
 
+.btn-excel {
+    color: #fff;
+    background-color: #3f7e00;
+    border-color: #3f7e00;
+}
+
+.btn-excel:hover {
+    color: #fff;
+    background-color: #5fbb02;
+    border-color: #5fbb02;
+}
+
+.btn-excel:focus,
+.btn-excel.focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(12, 106, 0, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(12, 106, 0, 0.5);
+}
+
+.btn-excel.disabled,
+.btn-excel:disabled {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-excel:not(:disabled):not(.disabled):active,
+.btn-excel:not(:disabled):not(.disabled).active,
+.show > .btn-excel.dropdown-toggle {
+    color: #fff;
+    background-color: #3f7e00;
+    border-color: #3f7e00;
+}
+
+.btn-excel:not(:disabled):not(.disabled):active:focus,
+.btn-excel:not(:disabled):not(.disabled).active:focus,
+.show > .btn-excel.dropdown-toggle:focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(12, 106, 0, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(12, 106, 0, 0.5);
+}
+
+.btn-pdf {
+    color: #fff;
+    background-color: #e90a0a;
+    border-color: #e90a0a;
+}
+
+.btn-pdf:hover {
+    color: #fff;
+    background-color: #e44242;
+    border-color: #e44242;
+}
+
+.btn-pdf:focus,
+.btn-pdf.focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(12, 106, 0, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(12, 106, 0, 0.5);
+}
+
+.btn-pdf.disabled,
+.btn-pdf:disabled {
+    color: #fff;
+    background-color: #525b64;
+    border-color: #525b64;
+}
+
+.btn-pdf:not(:disabled):not(.disabled):active,
+.btn-pdf:not(:disabled):not(.disabled).active,
+.show > .btn-pdf.dropdown-toggle {
+    color: #fff;
+    background-color: #e44242;
+    border-color: #e44242;
+}
+
+.btn-pdf:not(:disabled):not(.disabled):active:focus,
+.btn-pdf:not(:disabled):not(.disabled).active:focus,
+.show > .btn-pdf.dropdown-toggle:focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(12, 106, 0, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(12, 106, 0, 0.5);
+}
+
 .btn-primary {
     color: #fff;
     background-color: #db9501;
@@ -4094,8 +4174,8 @@ input[type='button'].btn-block {
 
 .custom-control-input:checked ~ .custom-control-label::before {
     color: #fff;
-    border-color: #007bff;
-    background-color: #007bff;
+    border-color: #5d2860;
+    background-color: #5d2860;
 }
 
 .custom-control-input:focus ~ .custom-control-label::before {
@@ -4586,7 +4666,7 @@ input[type='button'].btn-block {
 
 .nav-item:hover {
     transition: background-color 0.5s linear 0.1s;
-    background-color: #ef7c05;
+    background-color: #ea9955;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     border-bottom-left-radius: 0.5rem;
@@ -7313,6 +7393,10 @@ button.bg-light:focus {
 
 .bg-blue {
     background-color: #042a68 !important;
+}
+
+.bg-banner-loggin {
+    background-color: #ea9955;
 }
 
 a.bg-dark:hover,

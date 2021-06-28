@@ -6,14 +6,14 @@
 
 .btn-sy01 {
     color: #fff;
-    background-color: #6E6702;
-    border-color: #6E6702;
+    background-color: #ea9955;
+    border-color: #ea9955;
 }
 
 .btn-sy01:hover {
     color: #fff;
-    background-color: #DB9501;
-    border-color: #DB9501;
+    background-color: #042a68;
+    border-color: #042a68;
 }
 
 .table-home {
@@ -21,11 +21,11 @@
 }
 
 .footer-pro {
-    position:fixed;
-    left:0px;
-    bottom:0px;
-    height:30px;
-    width:100%;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: 30px;
+    width: 100%;
 }
 
 .card-title {
