@@ -146,7 +146,9 @@
                   
                 </tbody>
               </table>
+              <?php
               //? Tenemos en el css un estilo para las leyendas importantes?
+              ?>
               <p> <FONT color="#FD2424">*Los grupos se cierran cuando se alcanza el máximo de inscritos o despúes del último día de insripción.</p>
             </div>
           </div>
