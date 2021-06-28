@@ -1,4 +1,5 @@
-    <footer style="bottom: 0; position: fixed; width:100%;" class="py-1 bg-blue">
+    <!-- <footer style="bottom: 0; position: fixed; width:100%;" class="py-1 bg-blue"> -->
+    <footer class="py-1 bg-blue">
       <div class="navbar navbar-fixed-bottom">
         <p style="font-size: 12px;"  class="m-1 text-center text-white smaller">© 2021 Copyright &copy; Esta página puede ser reproducida con fines no lucrativos, siempre y cuando no se mutile, se cite la fuente completa y su dirección electrónica. De otra forma requiere permiso previo por escrito de la institución. AVISO DE PRIVACIDAD. Sitio web administrado por el Centro de Informática de la Facultad de Contaduría y Administración (CIFCA).</p>
       </div>
