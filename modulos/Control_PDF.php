@@ -138,6 +138,7 @@
     $obj_Profesor = new Profesor ();
     $obj_Grupo = new Grupo ();
     $obj_Plataforma = new Plataforma ();
+    $obj_Sesion = new Sesion();
 
     //? Variables con los datos de la consulta
     $profesor = $obj_Profesor->buscarProfesor($idPersona);
@@ -171,6 +172,8 @@
     $pdf->Ln(10);
     $pdf->SetFont("Arial","B", 18);
     $pdf->Cell(0,10,utf8_decode("Comprobante de inscripción"),0,1, "C", false);
+    $pdf->SetFont("Arial","", 12);
+    $pdf->Cell(0,10,utf8_decode("Fecha de impresión: ".date('d-m-Y')),0,1, "C", false);
     $pdf->Ln(12);
 
     //? Datos del inscrito
@@ -230,12 +233,12 @@
     $pdf->Cell(0,5,utf8_decode("Datos del grupo"),1,2, "C", false);
 
     $pdf->SetFont("Times","B", 12);
-    $pdf->Cell(25,5,utf8_decode("Profesor: "),1,0, "L", false);
+    $pdf->Cell(28,5,utf8_decode("Profesor: "),1,0, "L", false);
     $pdf->SetFont("Times","", 12);
     $pdf->Cell(0,5,utf8_decode($grupo->pers_apellido_materno." ".$grupo->pers_apellido_paterno." ".$grupo->pers_nombre),1,1, "L", false);
 
     $pdf->SetFont("Times","B", 12);
-    $pdf->Cell(25,5,utf8_decode("Moderador: "),1,0, "L", false);
+    $pdf->Cell(28,5,utf8_decode("Moderador: "),1,0, "L", false);
     $pdf->SetFont("Times","", 12);
     $pdf->Cell(0,5,utf8_decode( $grupo->moderador),1,1, "L", false);
 
@@ -245,18 +248,18 @@
     if(!isset($grupo->plat_id_plataforma)) {
         //TODO: Falta asignarles variables
         $pdf->SetFont("Times","B", 12);
-        $pdf->Cell(20,5,utf8_decode("Edificio: "),1,0, "L", false);
+        $pdf->Cell(28,5,utf8_decode("Edificio: "),1,0, "L", false);
         $pdf->SetFont("Times","", 12);
         $pdf->Cell(0,5,utf8_decode("Por el momento no hay cursos preseciales"),1,1, "L", false);
 
         $pdf->SetFont("Times","B", 12);
-        $pdf->Cell(20,5,utf8_decode("Salón: "),1,0, "L", false);
+        $pdf->Cell(28,5,utf8_decode("Salón: "),1,0, "L", false);
         $pdf->SetFont("Times","", 12);
-        $pdf->Cell(0,5,utf8_decode("or el momento no hay cursos preseciales"),1,1, "L", false);
+        $pdf->Cell(0,5,utf8_decode("Por el momento no hay cursos preseciales"),1,1, "L", false);
 
     } else {
         $pdf->SetFont("Times","B", 12);
-        $pdf->Cell(25,5,utf8_decode("Plataforma: "),1,0, "L", false);
+        $pdf->Cell(28,5,utf8_decode("Plataforma: "),1,0, "L", false);
         $pdf->SetFont("Times","", 12);
         $pdf->Cell(0,5,utf8_decode(" ".$plataforma->plat_nombre),1,1, "L", false);
 
@@ -271,10 +274,28 @@
         $pdf->Cell(0,5,utf8_decode(" ".$grupo->grup_clave_acceso),1,1, "L", false);
     }
 
-    $pdf->SetFont("Times","B", 12);
-    $pdf->Cell(25,5,utf8_decode("Sesiones: "),1,0, "L", false);
-    $pdf->SetFont("Times","", 12);
-    $pdf->Cell(0,5,utf8_decode(" ".$grupo->curs_num_sesiones),1,1, "L", false);
+        $pdf->SetFont("Times","B", 12);
+        $pdf->Cell(28,5,utf8_decode("Link acceso: "),1,0, "L", false);
+        $pdf->SetFont("Times","", 12);
+        $pdf->Cell(0,5,utf8_decode($grupo->grup_acceso),1,1, "L", false);
+
+        $pdf->SetFont("Times","B", 12);
+        $pdf->Cell(28,5,utf8_decode("Clave acceso: "),1,0, "L", false);
+        $pdf->SetFont("Times","", 12);
+        $pdf->Cell(0,5,utf8_decode($grupo->grup_clave_acceso),1,1, "L", false);
+
+        $sesionesGrupo = $obj_Sesion->buscarFechaSesiones($idGrupo);
+        
+        $iCont = 1;
+        foreach($sesionesGrupo as $sesion) {
+
+            $pdf->SetFont("Times","B", 12);
+            $pdf->Cell(28,5,utf8_decode("Sesión ".$iCont.": "),1,0, "L", false);
+            $pdf->SetFont("Times","", 12);
+            $pdf->Cell(0,5,utf8_decode($obj_Sesion->obtenerFechaEnLetra($sesion['fecha']). " de  ".$sesion['sesi_hora_inicio']." a ".$sesion['sesi_hora_fin']),1,1, "L", false);
+            $iCont++;
+        }
+    }
     $pdf->Ln(10);
 
     
@@ -292,5 +313,7 @@
     ---------------------------------------------------------------*/
     $pdf->Output("I", "Comprobante inscripción.pdf", true);
     }
+
+    
 
 ?>

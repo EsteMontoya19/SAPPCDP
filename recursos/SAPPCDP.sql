@@ -509,7 +509,7 @@ create table PERSONA (
    PERS_NOMBRE          VARCHAR(50)             not null,
    PERS_APELLIDO_PATERNO VARCHAR(30)             not null,
    PERS_APELLIDO_MATERNO VARCHAR(30)             null,
-   PERS_CORREO          VARCHAR(30)             not null,
+   PERS_CORREO          VARCHAR(100)             not null,
    PERS_TELEFONO        VARCHAR(10)             not null,
    constraint PK_PERSONA primary key (PERS_ID_PERSONA)
 );
