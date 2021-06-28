@@ -316,5 +316,23 @@
 			$bd->cerrarBD();
 			return ($transaccion_1->traerObjeto(0));
 		}
+
+		//Busca el nombre del profesor dado el id de profesor
+		function buscarProfesorNombre($id){
+			$SQL_Bus_Profesor = 
+			"	
+				SELECT DISTINCT PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
+				FROM Profesor P, Persona PE
+				WHERE P.PERS_ID_PERSONA=PE.PERS_ID_PERSONA AND PROF_ID_PROFESOR = $id
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Profesor);
+			$obj_Usuario = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerObjeto(0));
+		}
     }
 ?>
