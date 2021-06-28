@@ -68,10 +68,13 @@
                   onclick="gruposPublicados(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)">
                   <i class="fas fa-chalkboard-teacher"></i>&nbsp; Cursos publicados</a>
             </li>
+
+            <?php //TODO: Hacer las funciones de Propuesta del Profesor ?>
+            <!--
             <li id="btn_regProp" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-file"></i>&nbsp; Propuestas</a>
             </li>
-
+-->
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
                 <i class="fas fa-user-circle"></i>

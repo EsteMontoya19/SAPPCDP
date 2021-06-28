@@ -98,7 +98,8 @@
             </form>
             <div class="col-12 text-center">
               <br>
-              <a class="d-block small" href="#">¿Olvidaste tu contraseña?</a>
+              <?php //TODO: Hacer que funcione el olvidaste tu contraseña ?>
+              <!-- <a class="d-block small" href="#">¿Olvidaste tu contraseña?</a>  -->
             </div>
           </div>
         </div>

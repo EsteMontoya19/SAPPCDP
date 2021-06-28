@@ -57,20 +57,31 @@
             <li id="btn_grupos" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-users"></i>&nbsp; Grupos</a>
             </li>
+
+            <?php //TODO: Hacer las funciones de Propuestas del Coordinador ?>
+            <!--
             <li id="btn_propuestas" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-lightbulb"></i>&nbsp; Propuestas</a>
             </li>
+-->
+
+            <?php //TODO: Hacer las funciones de Reportes del Coordinador ?>
+            <!--
             <li id="" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-file-alt"></i>&nbsp; Reportes</a>
             </li>
+-->
+
             <li id="btn_usuarios" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-shield"></i>&nbsp; Usuarios</a>
             </li>
 
+            <?php //TODO: Hacer las funciones de asistencia del Coordinador ?>
+            <!--
             <li id="btn_asist" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-graduate"></i>&nbsp; Asistencia</a>
             </li>
-
+-->
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
@@ -80,7 +91,8 @@
                 <a class="dropdown-item disabled" href="#"></a>
                 <a class="dropdown-item" type="button"  id="btn_preguntaseguridad">Preguntas de seguridad</a>
                 <a class="dropdown-item" type="button"  id="btn_plataforma">Plataforma</a>
-                <a class="dropdown-item" type="button"  id="btn_calendario">Calendario</a>
+                <?php //TODO: Hacer las funciones de Calendario del Coordinador ?>
+               <!-- <a class="dropdown-item" type="button"  id="btn_calendario">Calendario</a>  -->
               </div>
             </li>
 

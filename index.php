@@ -100,7 +100,8 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
             <button type="submit" class="btn btn-sy01 btn-block" id="btn-inicio">Ingresar</button>
           </form>
           <div class="col-12 text-center negritas">
-            <a class="d-block small" href="#" style="color:#DB9501">¿Olvidaste tu contraseña?</a>
+            <?php //TODO: Hacer que funcione el olvidaste tu contraseña ?>
+          <!--  <a class="d-block small" href="#" style="color:#DB9501">¿Olvidaste tu contraseña?</a> -->
             <a class="d-block small" href="#" style="color:#DB9501" type="button" data-toggle="modal"
               data-target="#exampleModal">Registrar Profesor</a>
           </div>

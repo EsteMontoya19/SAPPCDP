@@ -126,7 +126,7 @@ function validarFormularioCurso() {
     }
 
     if ($('#strNumeroSesiones').val() == '' || $('#strNumeroSesiones').val() < 1) {
-        alertify.error('Debe ingresar un número de sesiones válido para el curso');
+        alertify.error('Debe ingresar un número de sesiones válido para el curso, es decir mayor a 0');
         $('html, body').animate({ scrollTop: 150 }, 'slow');
         document.getElementById('strNumeroSesiones').focus();
         return false;
