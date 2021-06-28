@@ -3,29 +3,61 @@
     include('../clases/BD.php');
     include('../clases/Grupo.php');
     include('../clases/Sesion.php');
+    include('../clases/Moderador.php');
+    include('../clases/Profesor.php');
+    include('../clases/Plataforma.php');
+    include('../clases/Busqueda.php');
     include('../clases/PDF_horizontal.php');
 
     // Inicializamos las variables requeridas
     //? Solo recibe el ID del grupo
     $idGrupo = $_GET['idGrupo'];
     $obj_Grupo = new Grupo();
-    $arr_Inscritos = $obj_Grupo->buscarInscripcionesxGrupo($idGrupo);
-    $curso = $obj_Grupo->buscarNombreCursoxGrupo($idGrupo);
     $obj_Sesion = new Sesion();
+    $obj_Moderador = new Moderador();
+    $obj_Profesor = new Profesor();
+    $obj_Plataforma = new Plataforma();
+    $obj_Busqueda = new Busqueda();
+    $arr_Inscritos = $obj_Grupo->buscarInscripcionesxGrupo($idGrupo);
+    $arr_sesiones = $obj_Sesion->buscarFechaSesiones($idGrupo);
+    $curso = $obj_Grupo->buscarNombreCursoxGrupo($idGrupo);
     $sesion = $obj_Sesion->numSesionesGrupo($idGrupo);
     $numSesiones = $sesion->numero;
-    $arr_sesiones = $obj_Sesion->buscarFechaSesiones($idGrupo);
+    $idGrupo='ID del Grupo: '.$idGrupo;
+    $nombreCurso = 'Nombre del Curso: '.$curso->curs_nombre;
+    $sesiones='Núm. Sesiones: '.$numSesiones;
+    $instructor=$obj_Profesor->buscarProfesorNombre($curso->prof_id_profesor);
+    $nombreInstructor='Instructor: '.$instructor->pers_nombre.' '.$instructor->pers_apellido_paterno.' '.$instructor->pers_apellido_materno;
+    if($curso->mode_id_moderador != NULL){
+        $moderador=$obj_Moderador->buscarModeradorNombre($curso->mode_id_moderador);
+        $nombreModerador='Moderador: '.$moderador->pers_nombre.' '.$moderador->pers_apellido_paterno.' '.$moderador->pers_apellido_materno; 
+    } else {
+        $nombreModerador='Moderador: Sin moderador';
+    }
+    if($curso->grup_modalidad='En línea'){
+        $plataforma=$obj_Plataforma->buscarPlataforma($curso->plat_id_plataforma);
+        $nombreLugar='Plataforma: '.$plataforma->plat_nombre;
+    }else{
+        $salon=$obj_Busqueda->selectSalon($curso->salo_id_salon);
+        $nombreLugar='Edificio: '.$salon->edif_nombre.'Salon: '.$salon->salo_nombre;
+    }
+    
 
-    //Se almacena el Titulo de la Lista
-    $nombreCurso = 'ID del Grupo: '.$idGrupo.'   Nombre del Curso: '.$curso->curs_nombre.'    Núm. Sesiones: '.$numSesiones;
 
     //Titulo de la Pagina y metodos requeridos de la instancia PDF
     $pdf = new PDF(); 
     $pdf->AddPage('C', 'letter', 0); // Añade paginas Orientación: vertical 'P' u horizontal 'L', tamaño de papel (Legal, letter, etc), rotar pagina con SOLO multiplos de 90° positivos o negativos. Rota con todo y texto
     $pdf->AliasNbPages();
-    $pdf->SetFont('Arial','B',14); //Tipo de letra, Estilo ('B', 'I', 'U' o '') y Tamaño en puntos defecto 12. Obligatorio al menos una vez antes de invocar por primera vez el metodo Cell
-    $pdf->Cell(256,12,utf8_decode($nombreCurso),0,1,'C'); //ancho, alto, Texto, Borde 0 o 1 o 'L','R','B','T' o combinación, Salto de Linea (1 siguiente), alineación (L, R, C), color (TRUE o FALSE) función
+    $pdf->SetFont('Arial','B',12); //Tipo de letra, Estilo ('B', 'I', 'U' o '') y Tamaño en puntos defecto 12. Obligatorio al menos una vez antes de invocar por primera vez el metodo Cell
+    $pdf->Cell(256,6,utf8_decode($idGrupo),0,1,'L'); //ancho, alto, Texto, Borde 0 o 1 o 'L','R','B','T' o combinación, Salto de Linea (1 siguiente), alineación (L, R, C), color (TRUE o FALSE) función
+    $pdf->Cell(256,6,utf8_decode($nombreCurso),0,1,'L');
+    $pdf->Cell(256,6,utf8_decode($sesiones),0,1,'L');
+    $pdf->Cell(256,6,utf8_decode($nombreInstructor),0,1,'L');
+    $pdf->Cell(256,6,utf8_decode($nombreModerador),0,1,'L');
+    $pdf->Cell(256,6,utf8_decode($nombreLugar),0,1,'L');
+    
 
+    
     $pdf->Ln(10);
 
     /*Creamos banderas 
@@ -34,15 +66,16 @@
         $numeroTres almacena el número 10, para indicar cuando un grupo tiene más de 10 sesiones
     */
     //Si el modulo(% residuo) difiere de 0
-    if(fmod($numSesiones,10.0) != 0){
-        $numeroUno = intdiv($numSesiones,10)+1;
-        $numeroDos = $numSesiones-(($numeroUno-1)*10);
-        if($numSesiones>10){
-            $numeroTres=10;
+    if(fmod($numSesiones,3.0) != 0){
+        $numeroUno = intdiv($numSesiones,3)+1;
+        $numeroDos = $numSesiones-(($numeroUno-1)*3);
+        if($numSesiones>3){
+            $numeroTres=3;
         } 
     } else {
-        $numeroUno = $numSesiones/10;
-        $numeroTres = 10;
+        $numeroUno = $numSesiones/3;
+        $numeroDos = $numSesiones-(($numeroUno-1)*3);
+        $numeroTres = 3;
     }
 
     //Se inicializa el contador en 0. Servirá para indicar el lugar en el que se guardará una consulta
@@ -83,10 +116,10 @@
     for($i=$numeroUno; $i>0; $i--){
 
         // Se cambia el valor de la bandera de acuerdo al npumero de sesiones que requiere el ciclo
-        if($i==1 AND $numSesiones>=10) {
+        if($i==1 AND $numSesiones>=3) {
             $numeroTres = $numeroDos;
         } elseif($i>1) {
-            $numeroTres = 10;
+            $numeroTres = 3;
         } elseif($i==1) {
             $numeroTres = $numeroDos;
         }
@@ -95,8 +128,12 @@
         $pdf->SetFillColor(218, 165, 32); //219, 149, 1 es el color del sistema
         $pdf->SetFont('Arial','B',12);
         $pdf->Cell(8,5,'#',1,0,'C',1);
-        $pdf->Cell(123,5,'Nombre Completo',1,0,'L',1);
+        $pdf->Cell(94,5,'Profesor',1,0,'L',1);
+        $pdf->Cell(94,5,'Correo',1,0,'L',1);
         $h = imprimirFecha($numeroTres, $arr_fechas, $h, $pdf);
+        if($i==1){
+            $pdf->Cell(25,5,'Constancia',1,0,'L',1);
+        }
         //Salto de línea
         $pdf->Ln(5);
         $pdf->SetFont('Arial','',12);
@@ -106,8 +143,13 @@
         foreach($arr_Inscritos as $inscrito){
             $pdf->Cell(8,5,$k,1,0,'C');
             $nombreCompleto=$inscrito['pers_apellido_paterno'].' '.$inscrito['pers_apellido_materno'].' '.$inscrito['pers_nombre'];
-            $pdf->Cell(123,5,$nombreCompleto,1,0,'L');
+            $pdf->Cell(94,5,$nombreCompleto,1,0,'L');
+            $correo=$inscrito['pers_correo'];
+            $pdf->Cell(94,5,$correo,1,0,'L');
             imprimirColumnasFecha($numeroTres, $pdf);
+            if($i==1){
+            $pdf->Cell(25,5,'',1,0,'L');
+            }
             $pdf->Ln(5);
             $k++;
         }

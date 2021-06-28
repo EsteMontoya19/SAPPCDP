@@ -156,5 +156,23 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }
+
+        function selectSalon($id)
+        {
+            $SQL_Bus_Salon =
+            "   
+                SELECT EDIF_NOMBRE, SALO_NOMBRE 
+                FROM SALON S, EDIFICIO E
+                WHERE S.EDIF_ID_EDIFICIO = E.EDIF_ID_EDIFICIO AND SALO_ID_SALON = $id
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Salon);
+            $obj_Busqueda = $transaccion_1->traerObjeto(0);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
+        }
     }
 ?>
