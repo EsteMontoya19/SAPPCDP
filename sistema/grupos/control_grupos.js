@@ -110,19 +110,35 @@ function validarFormularioGrupo() {
                 return false;
             }
 
+            /*Se cambia la validación para que no sea obligatorio el ID de Reunion y solo valide que lo ingresado es correcto 
+            cuando algo es ingresado.Código para hacerlo obligatorio:
             if ($('#ID_Reunion').val() == '') {
                 $('html, body').animate({ scrollTop: 250 }, 'slow');
                 document.getElementById('ID_Reunion').focus();
                 alertify.error('Debe ingresar el ID de la reunión');
                 return false;
             }
+            */
+            if ($('#ID_Reunion').val() != '') {
+                var numExp = /^([0-9])*$/;
+                if (numExp.test($('#ID_Reunion').val())) {
+                } else {
+                    $('html, body').animate({ scrollTop: 100 }, 'slow');
+                    document.getElementById('ID_Reunion').focus();
+                    alertify.error('El ID de la reunion solo puede tener números');
+                    return false;
+                }
+            } 
 
+            /*Se quita la validación para que no sea obligatorio agregar una clave de acceso
+            Código para hacerlo obligatorio:
             if ($('#Clave_Acceso').val() == '') {
                 $('html, body').animate({ scrollTop: 250 }, 'slow');
                 document.getElementById('Clave_Acceso').focus();
                 alertify.error('Debe ingresar la clave de la reunión');
                 return false;
             }
+            */
         } else {
             if ($('#GrupoModalidad').val() == 'Presencial') {
                 //! Bloque temporal de cursos preseciales por pandemia
@@ -167,7 +183,7 @@ function validarFormularioGrupo() {
 
     if ($('#GrupoInicioInscripcion').val() > $('#GrupoFinInscripcion').val()) {
         $('html, body').animate({ scrollTop: 200 }, 'slow');
-        document.getElementById('GrupoInicioInscripcion').focus();
+        document.getElementById('GrupoFinInscripcion').focus();
         alertify.error('La fecha de inicio del periodo de inscripciones al grupo debe ser menor a la de termino');
         return false;
     }
@@ -180,10 +196,10 @@ function validarFormularioGrupo() {
             alertify.error('La fecha de la sesión ' + iCon + ' no puede estar vacía, favor de ingresar una fecha');
             return false;
         } else {
-            if ($('#SesionFecha' + iCon).val() < $('#GrupoFinInscripcion').val()) {
+            if ($('#SesionFecha' + iCon).val() <= $('#GrupoFinInscripcion').val()) {
                 $('html, body').animate({ scrollTop: 300 }, 'slow');
                 document.getElementById('SesionFecha' + iCon).focus();
-                alertify.error('La fecha de la sesión ' + iCon + ' no puede ser menor a la fecha de termino de inscripción');
+                alertify.error('La fecha de la sesión ' + iCon + ' debe ser mayor a la fecha de termino de inscripción');
                 return false;
             }
 
@@ -213,6 +229,22 @@ function validarFormularioGrupo() {
                 document.getElementById('SesionHoraInicio' + iCon).focus();
                 alertify.error('El horario de inicio de la sesión ' + iCon + ' no puede estar vacío, favor de ingresar una hora de inicio');
                 return false;
+            } else {
+                /*String Fecha guardara las cadenas con las que se crearan las variables de las fechas respectivamente
+                Primero tendrá los valores para que sea la sesión a las 7:00 am */
+                var stringFecha = $('#SesionFecha' + iCon).val() + ' 07:00';
+                var objFecha3 = new Date(stringFecha);
+                /*Después se asignan los valores con la hora de inicio para validar que no pueda ser menor a las 7:00 am 
+                y no haya sesiones en horario inválido*/
+                stringFecha =  $('#SesionFecha' + iCon).val() + ' ' + $('#SesionHoraInicio' + iCon).val();
+                var objFecha4 = new Date(stringFecha);
+                
+                //Aqui se compara que la sesion en la hora de inicio no sea mayor a las 7:00 am, de lo contrario manda error
+                if(objFecha3 > objFecha4){
+                    document.getElementById('SesionHoraInicio' + iCon).focus();
+                    alertify.error('El horario de inicio de la sesión ' + iCon + ' no puede ser menor a las 7:00 am');
+                    return false;
+                }
             }
     
             if ($('#SesionHoraFin' + iCon).val() == '') {
@@ -220,6 +252,22 @@ function validarFormularioGrupo() {
                 document.getElementById('SesionHoraFin' + iCon).focus();
                 alertify.error('El horario de termino la sesión ' + iCon + ' no puede estar vacío, favor de ingresar una hora de término');
                 return false;
+            } else {
+                /*String Fecha guardara las cadenas con las que se crearan las variables de las fechas respectivamente
+                Primero tendrá los valores para que la sesión termine a las 10:00 pm */
+                var stringFecha = $('#SesionFecha' + iCon).val() + ' 22:00';
+                var objFecha3 = new Date(stringFecha);
+                /*Después se asignan los valores con la hora de fin para validar que no pueda ser mayor a las 10:00 pm 
+                y no haya sesiones en horario inválido*/
+                stringFecha =  $('#SesionFecha' + iCon).val() + ' ' + $('#SesionHoraFin' + iCon).val();
+                var objFecha4 = new Date(stringFecha);
+                
+                //Aqui se compara que la sesion en la hora de termino no sea mayor a las 10:00 pm, de lo contrario manda error
+                if(objFecha3 < objFecha4){
+                    document.getElementById('SesionHoraFin' + iCon).focus();
+                    alertify.error('El horario de término de la sesión ' + iCon + ' no puede ser mayor a las 10:00 pm');
+                    return false;
+                }
             }
             
             //Valida que la hora de termino no pueda ser menor que la de inicio
