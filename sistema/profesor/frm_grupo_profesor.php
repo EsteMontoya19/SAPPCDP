@@ -89,7 +89,10 @@ jQuery(document).ready(function () {
       <p>
         <hr>
       </p>
-
+      
+      <p class = "aviso-amarillo">Para completar su inscripción es necesario revisar la información del grupo y dar click en el botón "Inscribirse"
+          al final de la página.
+      </p>
       <!-- Formulario -->
       <form name="form_grupo" id="form_grupo" method="POST">
 
@@ -470,12 +473,19 @@ jQuery(document).ready(function () {
             //? Se verifica que el periodo de inscripción del grupo se vigente, si no no aparece nada
             if (isset($periodoInscripcion)) {
               //? Si el profesor ya esta inscrito el botón no aparece
-              if (!isset($inscrito)) { ?>
+              if (!isset($inscrito)) { 
+                //? Si se ha agotado el cupo del grupo
+                if($Grupo->grup_num_inscritos == $Grupo->grup_cupo) {
+                  echo ("<p class = 'aviso-rojo'>Ya no hay cupo para inscribirse a este grupo.</p>");
+                } else { ?>
                 <button id="btn-inscripcion-grupo" type="button" class="btn btn-success btn-footer btn-aceptar" 
                   onclick="inscribirGrupo(<?php echo $Grupo->grup_id_grupo?>, <?php echo $Grupo->grup_num_inscritos?>, <?php echo $Grupo->grup_cupo?>, <?php echo $persona->pers_id_persona?>, '<?php echo $Curso1->curs_nombre?>', '<?php echo $Curso1->curs_tipo?>', '<?php echo $Curso1->curs_nivel?>')">Inscribirse</button>
+                <?php } ?>
               <?php } else {
                 echo ("<p class = 'aviso-rojo'>Ya se encuentra inscrito a este grupo</p>");
               }
+
+              
             } else {
               echo ("<p class = 'aviso-rojo'>El perido de inscripción  a este grupo finalizo</p>");
             }?>

@@ -51,10 +51,12 @@
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav ml-auto">
          
-
+          <?php //TODO: Hacer las funciones de Asistencia del Moderador ?>
+            <!--
              <li id="btn_asist" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-graduate"></i>&nbsp; Asistencia</a>
             </li>
+-->
 
 
 

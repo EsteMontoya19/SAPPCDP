@@ -235,7 +235,6 @@ function validarFormularioUsuario() {
     }
 
     //? Validación datos de cuenta según rol
-    alert($('#hideRol').val());
     if ($('#hideRol').val() == 1) {
         if ($('#intNum_Trabajador').val() == '') {
             alertify.error('Debe ingresar un número de trabajador');
@@ -527,6 +526,13 @@ function validarFormularioContrasena() {
             $('html, body').animate({ scrollTop: 0 }, 'slow');
             document.getElementById('strContrasenia01').focus();
             alertify.error('La contraseña debe tener máximo 20 caracteres.');
+            return false;
+        }
+
+        if ($('#strContrasenia01').val().length < 8) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('strContrasenia01').focus();
+            alertify.error('La contraseña debe tener mínimo 8 caracteres.');
             return false;
         }
     }

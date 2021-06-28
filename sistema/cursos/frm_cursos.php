@@ -139,7 +139,7 @@ $curso -> curs_temario=null;
                 </div>
 
                 <div class="col-lg-6 form-group">
-                  <label for="temario"><b>Temario:</b></label>
+                  <label for="temario"><b>Temario: *</b></label>
                   <div class="custom-file">
                     <input type="file" id="temario" name="temario" class="custom-file-input" accept="application/pdf"
                       <?php echo !isset($curso) ? "require": ""; ?> required>

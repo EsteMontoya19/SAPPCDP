@@ -100,7 +100,9 @@ function inscribirGrupo(grupo, inscritos, cupo, persona, nombre, tipo, nivel) {
                         if (respuesta.endsWith('1')) {
                             alertify.success('¡Felicidades! Se inscribio correctamente al grupo.');
                             setTimeout(function () {
-                                $('#container').load('../sistema/profesor/frm_inicio_profesores.php');
+                                location.reload();
+                                //TODO: Hacer cursos publicados para todos y pantalla de inicio, ver como hacer el id
+                                //$('#container').load('../sistema/profesor/frm_inicio_profesores.php');
                             }, 1500);
                         } else if (respuesta.endsWith('2')) {
                             alertify.error('Usted ya esta inscrito a este grupo.');
