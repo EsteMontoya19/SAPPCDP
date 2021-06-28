@@ -9,6 +9,13 @@
   font-weight: bolder;
 }
 
+.aviso-amarillo {
+  color:#db9806; 
+  font-weight: bolder;
+  text-align: center;
+  text-decoration:underline ;
+}
+
 .btn-ingreso:hover{
   color: #fff;
   background-color: #4fd3d8;

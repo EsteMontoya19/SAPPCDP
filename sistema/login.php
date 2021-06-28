@@ -19,7 +19,7 @@
 
     <!-- Icono de la pestaña -->
     <link rel="../recursos/shortcut icon" href="../recursos/favicon.ico"/>
-    
+
     <!-- Alertify -->
     <link rel="stylesheet" type="text/css" href="../recursos/alertify/css/alertify.css">
     <link rel="stylesheet" type="text/css" href="../recursos/alertify/css/alertify.rtl.css">
@@ -46,11 +46,11 @@
 
   </head>
 
-  <body style="background:#DB9501">
+  <body style="background:#272A5C">
 
     <div class="container">
       <div class="card card-login mx-auto mt-5">
-        <div class="card-header bg-blue">
+        <div class="card-header bg-banner-loggin">
           <b style="color: white">&nbsp; Administración</b>
         </div>
         <div class="card-body">
@@ -58,7 +58,7 @@
             <form name="frm_acceso" method='POST' action='../modulos/ControlAcceso.php'>
               <div class="form-group">
                 <div class="form-label-group" align="center">
-                   <h4>Programa Permanente de Capacitación a Distancia para Profesores de la FCA(PPCDP)</h4>
+                  <h4>Programa Permanente de Capacitación a Distancia para Profesores de la FCA(PPCDP)</h4>
                 </div>
               </div>
               <hr>
@@ -98,7 +98,8 @@
             </form>
             <div class="col-12 text-center">
               <br>
-              <a class="d-block small" href="#">¿Olvidaste tu contraseña?</a>
+              <?php //TODO: Hacer que funcione el olvidaste tu contraseña ?>
+              <!-- <a class="d-block small" href="#">¿Olvidaste tu contraseña?</a>  -->
             </div>
           </div>
         </div>

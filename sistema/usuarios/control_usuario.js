@@ -462,6 +462,13 @@ function validarFormularioUsuario() {
             alertify.error('La contraseña debe tener máximo 20 caracteres.');
             return false;
         }
+
+        if ($('#strContrasenia01').val().length < 8) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('strContrasenia01').focus();
+            alertify.error('La contraseña debe tener mínimo 8 caracteres.');
+            return false;
+        }
     }
 
     if ($('#strContrasenia02').val() == '') {
