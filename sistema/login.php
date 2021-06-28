@@ -58,7 +58,7 @@
             <form name="frm_acceso" method='POST' action='../modulos/ControlAcceso.php'>
               <div class="form-group">
                 <div class="form-label-group" align="center">
-                   <h4>Programa Permanente de Capacitación a Distancia para Profesores de la FCA(PPCDP)</h4>
+                  <h4>Programa Permanente de Capacitación a Distancia para Profesores de la FCA(PPCDP)</h4>
                 </div>
               </div>
               <hr>
