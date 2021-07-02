@@ -21,7 +21,7 @@ error_reporting(E_ALL);
 			$this->usuario  = "postgres";
 			$this->password = "postgres";
 			$this->puerto   = "5432";
-			$this->bd       = ($strBD != "") ? $strBD : "SAPPCDP";
+			$this->bd       = ($strBD != "") ? $strBD : "SAPPCDP2";
 			$this->cadena_conexion = "host=". $this->servidor ." port=". $this->puerto ." dbname=". $this->bd ." user=". $this->usuario ." password=". $this->password;
 		}
 
