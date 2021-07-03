@@ -55,7 +55,8 @@ $obj_Busqueda = new Busqueda();
 $arr_coordinaciones = $obj_Busqueda->selectCoordinaciones();
 $arr_niveles = $obj_Busqueda->selectNiveles();
 $arr_modalidades = $obj_Busqueda->selectModalidades();
-$arr_preguntas = $obj_Busqueda->selectPregunta();
+// TODO: Preguntar si esto es requerido.
+// $arr_preguntas = $obj_Busqueda->selectPregunta();
 ?>
 
 
@@ -82,26 +83,26 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
               <div class="form-label-group">
                 <input type="text" name="strUsuario" id="strUsuario" class="form-control" placeholder="Usuario"
                   required="required" autofocus="autofocus">
-                <label for="strUsuario"><i class="fas fa-user" style="color: #C05805"></i>&nbsp; Usuario</label>
+                <label for="strUsuario"><i class="fas fa-user" style="color: #126E82"></i>&nbsp; Usuario</label>
               </div>
             </div>
             <div class="form-group">
               <div class="form-label-group">
                 <input type="password" name="strContrasena" id="strContrasena" class="form-control"
                   placeholder="Contraseña" required="required">
-                <label for="strContrasena"><i class="fas fa-key" style="color: #C05805"></i>&nbsp; Contraseña</label>
+                <label for="strContrasena"><i class="fas fa-key" style="color: #126E82"></i>&nbsp; Contraseña</label>
               </div>
             </div>
             <div class="form-group" style="text-align: center;">
               <input type="checkbox" id="ver1" class="ver" onChange="hideOrShowPassword()" />
-              <label class="text" style="color:#DB9501">&nbsp;Mostrar contraseña</label>
+              <label class="text" style="color:#126E82">&nbsp;Mostrar contraseña</label>
             </div>
             <button type="submit" class="btn btn-sy01 btn-block" id="btn-inicio">Ingresar</button>
           </form>
           <div class="col-12 text-center negritas">
             <?php //TODO: Hacer que funcione el olvidaste tu contraseña ?>
           <!--  <a class="d-block small" href="#" style="color:#DB9501">¿Olvidaste tu contraseña?</a> -->
-            <a class="d-block small" href="#" style="color:#DB9501" type="button" data-toggle="modal"
+            <a class="d-block small" href="#" style="color:#126E82" type="button" data-toggle="modal"
               data-target="#exampleModal">Registrar Profesor</a>
           </div>
         </div>
