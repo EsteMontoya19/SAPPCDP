@@ -2,12 +2,14 @@
   class Persona
   {
     //Registra una persona
-    function agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono)
+    //TODO Verificado en la BD 02/07/2021
+    //? Se añadió a la tabla el atributo rfc
+    function agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc)
     {
       //Aquí iría una validación pero puede ser que ya se esté haciendo en otra parte
       $SQL_Ins_Persona =
-      " INSERT INTO Persona (pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono)
-        VALUES ('$nombre', '$apellidoPaterno', '$apellidoMaterno', '$correo', '$telefono');
+      " INSERT INTO Persona (pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono, pers_rfc)
+        VALUES ('$nombre', '$apellidoPaterno', '$apellidoMaterno', '$correo', '$telefono', '$rfc');
       ";
       
       $bd = new BD();
@@ -19,6 +21,7 @@
     }
 
     //Busca el último registro de persona
+    //TODO Verificado en la BD 02/07/2021
     function buscarUltimo()
     {
       $bd = new BD();
@@ -35,12 +38,17 @@
     }
 
     //Actualiza todos los datos de una persona dado el id de la persona
-    function actualizarPersona($persona, $nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono)
+    //TODO Verificado en la BD 02/07/2021
+    //? Se añadió a la tabla el atributo rfc
+    function actualizarPersona($persona, $nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc)
     {
 
       $SQL_Act_Persona =
-      " UPDATE Persona
-        SET pers_nombre = '$nombre', pers_apellido_paterno = '$apellidoPaterno', pers_apellido_materno = '$apellidoMaterno', pers_correo = '$correo', pers_telefono = '$telefono'
+      " 
+        UPDATE Persona
+        SET pers_nombre = '$nombre', pers_apellido_paterno = '$apellidoPaterno', 
+        pers_apellido_materno = '$apellidoMaterno', pers_correo = '$correo', 
+        pers_telefono = '$telefono', pers_rfc = '$rfc'
         WHERE pers_id_persona = $persona;
       ";
     
@@ -54,6 +62,7 @@
     }
 
     //Elimina el registro de un persona dado el id
+    //TODO Verificado en la BD 02/07/2021
     function eliminarPersona($persona)
     {
       $SQL_Eli_Persona= 
@@ -69,10 +78,12 @@
     }
 
     //Busca una persona dado el id
+    //TODO Verificado en la BD 02/07/2021
     function buscarPersona($persona)
 		{
 			$SQL_Bus_Persona = 
-			"	SELECT pers_id_persona, pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono
+			"	SELECT pers_id_persona, pers_nombre, pers_apellido_paterno, pers_apellido_materno, 
+                pers_correo, pers_telefono, pers_rfc
 				FROM persona
 				WHERE pers_id_persona = $persona;
 			";

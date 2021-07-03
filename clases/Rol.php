@@ -2,10 +2,12 @@
     class Rol
     {
         //Buscar todos los roles
+        //TODO Verificado en la BD 02/07/2021
         function buscarRoles()
         {
             $SQL_Bus_Rol = 
-            "   SELECT rol_id_rol, rol_nombre
+            "   
+                SELECT rol_id_rol, rol_nombre
                 FROM rol;
             ";
 
@@ -18,6 +20,7 @@
         }
 
         //Buscar el rol dado el id de usuario
+        //TODO Verificado en la BD 02/07/2021
         function rolUsuario ($usuario) {
 
             $SQL_Rol_Usuario = 
