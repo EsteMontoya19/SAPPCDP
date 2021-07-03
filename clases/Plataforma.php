@@ -1,4 +1,5 @@
 <?php
+	//TODO Verificado que toda la clase funciona en la BD 01/07/2021
 	class Plataforma
   	{
         //Agregar Plataforma
@@ -24,7 +25,7 @@
 			"	
                 UPDATE Plataforma
                 SET plat_nombre = '$Nombre'
-                WHERE plat_id_plataforma = $id
+                WHERE plat_id_plataforma = $id;
 			";
 
 			$bd = new BD();
@@ -41,7 +42,7 @@
             "   
                 UPDATE Plataforma
                 SET plat_activo = '$Activo'
-                WHERE plat_id_plataforma = $id
+                WHERE plat_id_plataforma = $id;
             ";
 
             $bd = new BD();
@@ -58,7 +59,7 @@
 			"	
                 SELECT plat_nombre 
                 FROM Plataforma
-				WHERE plat_id_plataforma = $id
+				WHERE plat_id_plataforma = $id;
 			";
 
 			$bd = new BD();
@@ -76,7 +77,7 @@
 			"	
 				SELECT COUNT(plat_id_plataforma) as numero
 				FROM Plataforma
-				WHERE plat_nombre = '$nombre'
+				WHERE LOWER(plat_nombre) = LOWER('$nombre');
 			";
 
 			$bd = new BD();
@@ -93,7 +94,7 @@
 			$SQL_Bus_Plataformas =
 			"	
                 SELECT plat_id_plataforma, plat_nombre, plat_activo 
-                FROM Plataforma
+                FROM Plataforma;
 			";
 
 			$bd = new BD();

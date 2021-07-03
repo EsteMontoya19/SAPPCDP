@@ -1,11 +1,13 @@
 <?php
+    //Usar este tipo de comentarios para confirmar que se ha verificado, ponerlo por funcion o justo debajo de la clase si ya se tiene completa
+    //TODO Verificado que toda la clase funciona en la BD 01/07/2021
     class Curso {
         // Esta función Busca un Curso y obtiene un objeto con ID, Nombre y Número de sesiones
         function buscarCurso($id) {
             $SQL_Bus_Curso =
-            "   SELECT CURS_ID_CURSOS, CURS_NOMBRE, CURS_TIPO, CURS_NUM_SESIONES, CURS_ACTIVO, CURS_NIVEL, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, CURS_OBJETIVOS,CURS_TEMARIO
+            "   SELECT CURS_ID_CURSO, CURS_NOMBRE, CURS_TIPO, CURS_NUM_SESIONES, CURS_ACTIVO, CURS_NIVEL, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, CURS_OBJETIVOS,CURS_TEMARIO
                 FROM CURSO
-                WHERE CURS_ID_CURSOS = $id;
+                WHERE CURS_ID_CURSO = $id;
             ";
 
             $bd = new BD();
@@ -22,7 +24,7 @@
             $SQL_Bus_Curso =
             "   SELECT CURS_NUM_SESIONES
                 FROM CURSO
-                WHERE CURS_ID_CURSOS = $id;
+                WHERE CURS_ID_CURSO = $id;
             ";
 
             $bd = new BD();
@@ -37,7 +39,7 @@
         //Busca todos los datos de un curso dado el nombre, tipo y nivel.
         function buscarCursoNombre($curso, $tipo, $nivel) {
             $SQL_Bus_Curso =
-            "   SELECT CURS_ID_CURSOS, CURS_NOMBRE, CURS_TIPO, CURS_NUM_SESIONES, CURS_ACTIVO, CURS_NIVEL, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, CURS_OBJETIVOS,CURS_TEMARIO
+            "   SELECT CURS_ID_CURSO, CURS_NOMBRE, CURS_TIPO, CURS_NUM_SESIONES, CURS_ACTIVO, CURS_NIVEL, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, CURS_OBJETIVOS,CURS_TEMARIO
                 FROM CURSO
                 WHERE LOWER(CURS_NOMBRE) = LOWER('$curso') AND LOWER(CURS_TIPO) = LOWER('$tipo') AND LOWER(CURS_NIVEL) = LOWER('$nivel');
             ";
@@ -54,7 +56,7 @@
         function buscarTodosCursos()
 		{
 			$SQL_Bus_cursos =
-			"	SELECT DISTINCT curs_id_cursos,curs_nombre, curs_tipo, curs_nivel, curs_num_sesiones, curs_activo
+			"	SELECT DISTINCT CURS_ID_CURSO,curs_nombre, curs_tipo, curs_nivel, curs_num_sesiones, curs_activo
 				FROM curso;
 			";
 
@@ -72,7 +74,7 @@
 			$SQL_Curso_Est="
 			UPDATE Curso
 			SET curs_activo = $estatus
-			WHERE curs_id_cursos = $curso";
+			WHERE CURS_ID_CURSO = $curso;";
 
 
 			$bd = new BD();
@@ -91,7 +93,7 @@
                 SET CURS_TIPO='$tipo', CURS_NOMBRE='$nombre', CURS_NUM_SESIONES=$num_sesiones, 
                 CURS_REQ_TECNICOS='$req_tecnicos', CURS_CONOCIMIENTOS='$conocimientos', CURS_NIVEL='$nivel', 
                 CURS_OBJETIVOS='$objetivo', CURS_TEMARIO='$temario', CURS_ACTIVO=$activo
-                WHERE curs_id_cursos = $curso;
+                WHERE CURS_ID_CURSO = $curso;
             ";
 			
             $bd = new BD();
@@ -119,4 +121,5 @@
         }
     
     }
+    
 ?>
