@@ -4666,7 +4666,7 @@ input[type='button'].btn-block {
 
 .nav-item:hover {
     transition: background-color 0.5s linear 0.1s;
-    background-color: #ea9955;
+    background-color: #6892d5;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     border-bottom-left-radius: 0.5rem;
@@ -7392,11 +7392,11 @@ button.bg-light:focus {
 }
 
 .bg-blue {
-    background-color: #042a68 !important;
+    background-color: #6892d5 !important;
 }
 
 .bg-banner-loggin {
-    background-color: #ea9955;
+    background-color: #6892d5;
 }
 
 a.bg-dark:hover,
