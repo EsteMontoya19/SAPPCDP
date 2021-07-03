@@ -25,12 +25,11 @@
 
 			if($transaccion_1->contarNumeroRegistros()==0)
     		{
-      			return false;
+			return false;
     		}
 
     		$obj_Usuario = $transaccion_1->traerObjeto(0);
 			$bd->cerrarBD();
-			
 			$this->id_usuario = $obj_Usuario->usua_num_usuario;
 			$this->id_contrasena = $obj_Usuario->usua_contrasena;
 			$this->id_rol = $obj_Usuario->rol_id_rol;
