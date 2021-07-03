@@ -2,6 +2,7 @@
     class Calendario
     {
         //Permite Consultar los dias de inicio y fin de un periodo de asueto académico como semana santa del calendario activo
+        //TODO Verificado en la BD
         function consultarAsueto()
         {
             $SQL_Bus_Asueto = 
@@ -19,6 +20,7 @@
         }
         
         //Permite Consultar el inicio del periodo de vacaciones administrativas correspondientes al semestre del calendario activo
+        //TODO Verificado en la BD
         function consultarVacacionesAdministrativas()
         {
             $SQL_Bus_Vac_Admin = 
@@ -36,6 +38,7 @@
         }
 
         //Permite insertar un dia festivo en la base de datos
+        //? Falta completar varible $SQL
         function agregarCalendario($id_calendario, $fecha)
         {
 
@@ -53,6 +56,7 @@
         }
 
         //Permite actualizar un dia festivo en la base de datos
+        //? Falta completar varible $SQL
         function actualizarCalendario($id_calendario)
         {
 

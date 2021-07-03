@@ -57,8 +57,8 @@ error_reporting(E_ALL);
 			$this->conexion = $conexion;
 		}
 
-	  /**************************************************************
-	  * Método que ejecuta la instruccion DML
+	/**************************************************************
+	  * Método que ejecuta la instrucción DML
 	  **************************************************************/
 		function enviarQuery($sql)
 		{
@@ -84,8 +84,8 @@ error_reporting(E_ALL);
 		}
 
 
-	  /**************************************************************
-	   * Método que envia una serie de querys en forma simultanea,
+	/**************************************************************
+	   * Método que envía una serie de querys en forma simultanea,
 	   * tipo transaccion en una base de datos.
 	  **************************************************************/
 		function enviarQueryAsincrono($sqls, $numsqls) // Lalo: ¿Qué es un Query Asincrono?
@@ -100,15 +100,15 @@ error_reporting(E_ALL);
 				}
 			}
 		}
-	  /**************************************************************
+	/**************************************************************
 	   * Método que sirve para hacer un commit a un query asincrono.
-	   * Y el resultado del primer o n query que se envio.
+	   * Y el resultado del primer o n query que se envío.
 	  **************************************************************/
 		function traerResultadoQueryAsincrono()
 		{
 			$this->query = pg_get_result($this->conexion);
 		}
-	  /**************************************************************
+	/**************************************************************
 	   * Método que sirve para mostrar el error generado por un query.
 	   * @attribute error se guarda el error que mando el query.
 	  **************************************************************/
@@ -117,7 +117,7 @@ error_reporting(E_ALL);
 			return  $this->error;
 		}
 
-	  /**************************************************************
+	/**************************************************************
 	   * Método que realiza retorna el array con los registros
 	   * obtenidos
 	  **************************************************************/
@@ -133,11 +133,10 @@ error_reporting(E_ALL);
 			} else {
 				return pg_fetch_all($this->query);
 			}
-			
 		}
 
 
-	  /**************************************************************
+	/**************************************************************
 	   * Método que retorna el array con los registros
 	   * obtenidos en forma de objeto
 		**************************************************************/
@@ -150,7 +149,7 @@ error_reporting(E_ALL);
 			}
 		}
 
-	  /**************************************************************
+	/**************************************************************
 	   * Método que realiza retorna el nÃºmero de registros afectados
 	   **************************************************************/
 		function traerRegistrosAfectados()
@@ -158,7 +157,7 @@ error_reporting(E_ALL);
 			return pg_affected_rows($this->query);
 		}
 
-	  /**************************************************************
+	/**************************************************************
 	   * Método que realiza retorna el numero de registros de la
 	   * consulta
 	   *************************************************************/
@@ -168,7 +167,7 @@ error_reporting(E_ALL);
 			return pg_num_rows($this->query);
 		}
 
-	  /**************************************************************
+	/**************************************************************
 	   * Método que realiza utiliza el mysql_result() para obtener un
 	   * resultado VERIFICAR?
 	   **************************************************************/
@@ -177,7 +176,7 @@ error_reporting(E_ALL);
 			return pg_fetch_result($rs, $numero, $campo);
 		}
 
-	  /**************************************************************
+	/**************************************************************
 	   * Método que permite obtener el resultado de query()
 	   **************************************************************/
 		function traerQuery()

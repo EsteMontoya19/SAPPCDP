@@ -2,6 +2,7 @@
     class Busqueda
     {
         //Consultar coordinaciones: id y nombre.
+        //TODO Verificado en la BD 01/07/2021
         function selectCoordinaciones()
         {
             $SQL_Bus_Eventos =
@@ -19,6 +20,7 @@
         }       
 
         //Consultar niveles: id y nombre.
+        //TODO Verificado en la BD 01/07/2021
         function selectNiveles()
         {
             $SQL_Bus_Eventos =
@@ -36,6 +38,7 @@
         }
 
         //Consultar modalidades: id y nombre.
+        //TODO Verificado en la BD 01/07/2021
         function selectModalidades()
         {
             $SQL_Bus_Eventos =
@@ -53,6 +56,7 @@
         }
 
         //Consultar días: id y nombre.
+        //TODO Verificado en la BD 01/07/2021
         function selectDias()
         {
             $SQL_Bus_Eventos =
@@ -70,6 +74,7 @@
         }
 
         //Consultar roles: id y nombre.
+        //TODO Verificado en la BD 01/07/2021
         function selectRoles()
         {
             $SQL_Bus_Rol = 
@@ -86,6 +91,7 @@
         }
 
         //Consultar las preguntas de seguridad: id, pregunta y estado.
+        //TODO NO EXISTE EN LA BD 01/07/2021
         function selectPregunta()
         {
             $SQL_Bus_Preg = 
@@ -102,6 +108,7 @@
         }
 
         //Consultar los salones: id, edificio al que pertenece y el nombre del salón.
+        //TODO Verificado en la BD 01/07/2021
         function selectSalones()
         {
             $SQL_Bus_Salones =
@@ -121,6 +128,8 @@
         }  
 
         //Consultarn las plataformas: id, nombre y estado.
+        //TODO Verificado en la BD 01/07/2021
+        //?Falta PLAT_ACTIVO
         function selectPlataformas()
         {
             $SQL_Bus_Plataformas =
@@ -138,7 +147,8 @@
             return ($transaccion_1->traerRegistros());
         }
 
-        //Consultarn cursos activos: id, nombre, número de sesiones, tipo y nivel.      
+        //Consultarn cursos activos: id, nombre, número de sesiones, tipo y nivel.
+        //TODO Verificado en la BD 01/07/2021  
         function selectCursosActivos()
         {
             $SQL_Bus_Cursos =
@@ -157,6 +167,8 @@
             return ($transaccion_1->traerRegistros());
         }
 
+        //Consulta un salon y el edificio al que pertenece dado el id del salón
+        //TODO Verificado en la BD 01/07/2021
         function selectSalon($id)
         {
             $SQL_Bus_Salon =
