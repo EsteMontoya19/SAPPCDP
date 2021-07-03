@@ -428,18 +428,15 @@
         function buscarTodosGruposPresencial()
         {
             $SQL_Bus_Cursos = 
-            "   SELECT g.grup_id_grupo, g.prof_id_profesor, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
-                    g. curs_id_cursos, curs_nombre, grup_cupo,  grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, grup_estado,
-                    (edif_nombre || '/' ||salo_nombre) salon 
-                    /*(SELECT pers_nombre || ' ' || pers_apellido_paterno || ' ' || pers_apellido_materno
-					 FROM grupo g, moderador m, persona p
-					 WHERE g.mode_id_moderador = m.mode_id_moderador AND m.pers_id_persona = p.pers_id_persona
-					) as moderador*/
-                FROM grupo g, profesor p, persona pr, curso c, plataforma pl, calendario ca, salon s, edificio e 
-                WHERE g.prof_id_profesor = p.prof_id_profesor AND p.pers_id_persona = pr.pers_id_persona AND g.curs_id_cursos = c.curs_id_cursos 
-                    AND g.cale_id_calendario = ca.cale_id_calendario AND g.salo_id_salon = s.salo_id_salon AND s.edif_id_edificio = e.edif_id_edificio
-                    AND lower(grup_modalidad) NOT LIKE '%l_nea%'
-                ORDER BY g.grup_id_grupo DESC;
+            "   SELECT g.grup_id_grupo, g.curs_id_curso, curs_nombre, ( edif_nombre || salo_nombre) as salon, g.esta_id_estado, esta_nombre,
+                    g.moap_id_modalidad, moap_nombre, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo, grup_num_inscritos, grup_publicado,
+                    grup_tipo, grup_inicio_insc, grup_fin_insc, pg.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno
+                FROM Grupo g, Curso c, salon s, edificio ed,estado e, modalidad_aprendizaje m, personal_grupo pg, usuario u, persona pe
+                WHERE g.curs_id_curso = c.curs_id_curso AND g.salo_id_salon = s.salo_id_salon AND s.edif_id_edificio = ed.edif_id_edificio 
+                    AND g.esta_id_estado = e.esta_id_estado	AND g.moap_id_modalidad = m.moap_id_modalidad AND g.grup_id_grupo = pg.grup_id_grupo 
+                    AND pg.usua_id_usuario = u.usua_id_usuario	AND u.pers_id_persona = pe.pers_id_persona AND rol_id_rol = 2 
+                    AND g.moap_id_modalidad = 1
+                ORDER BY grup_id_grupo ASC;
             ";
 
             $bd = new BD();
@@ -451,22 +448,18 @@
         }
 
         //Permite obtener todos los grupos de modalidad en Linea
+        //TODO Verificado en la BD 01/07/2021 
         function buscarTodosWebinar()
         {
             $SQL_Bus_Cursos = 
-            "   SELECT g.grup_id_grupo, g.prof_id_profesor, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
-                    g.curs_id_cursos, curs_nombre, 
-                    g.plat_id_plataforma id_plataforma, plat_nombre plataforma, grup_reunion, grup_acceso, grup_clave_acceso, grup_cupo,  
-                    grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, grup_estado
-                    /*(SELECT pers_nombre || ' ' || pers_apellido_paterno || ' ' || pers_apellido_materno
-					 FROM grupo g, moderador m, persona p
-					 WHERE g.mode_id_moderador = m.mode_id_moderador AND m.pers_id_persona = p.pers_id_persona
-					) as moderador*/
-                FROM grupo g, profesor p, persona pr, curso c, plataforma pl, calendario ca
-                WHERE g.prof_id_profesor = p.prof_id_profesor AND p.pers_id_persona = pr.pers_id_persona AND g.curs_id_cursos = c.curs_id_cursos 
-                    AND g.plat_id_plataforma = pl.plat_id_plataforma AND g.cale_id_calendario = ca.cale_id_calendario 
-                    AND lower(grup_modalidad) LIKE '%l_nea%'
-                ORDER BY g.grup_id_grupo DESC;
+            "   SELECT g.grup_id_grupo, g.curs_id_curso, curs_nombre, g.plat_id_plataforma, plat_nombre, g.esta_id_estado, esta_nombre,
+                    g.moap_id_modalidad, moap_nombre, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo, grup_num_inscritos, grup_publicado,
+                    grup_tipo, grup_inicio_insc, grup_fin_insc, pg.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno
+                FROM Grupo g, Curso c, plataforma p, estado e, modalidad_aprendizaje m, personal_grupo pg, usuario u, persona pe
+                WHERE g.curs_id_curso = c.curs_id_curso AND g.plat_id_plataforma = p.plat_id_plataforma AND g.esta_id_estado = e.esta_id_estado
+                    AND g.moap_id_modalidad = m.moap_id_modalidad AND g.grup_id_grupo = pg.grup_id_grupo AND pg.usua_id_usuario = u.usua_id_usuario
+                    AND u.pers_id_persona = pe.pers_id_persona AND rol_id_rol = 2 AND g.moap_id_modalidad = 2
+                ORDER BY grup_id_grupo ASC;
             ";
 
             $bd = new BD();
@@ -478,22 +471,23 @@
         }
 
         //permite obtener un grupo presencial por id
-        //Acoplar este método y el siguiente para que muestren los datos del formulario unicamente, no necesitas los id realmente. 
+        //Acoplar este método y el siguiente para que muestren los datos del formulario unicamente, no necesitas los id realmente.
+        //TODO Verificado en la BD 01/07/2021 
         function buscarGrupoPresencial($id)
         {
             $SQL_Bus_Curso = 
-            "   SELECT g.grup_id_grupo, g.prof_id_profesor, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
-                    g. curs_id_cursos, curs_nombre, grup_cupo,  grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, grup_estado,
-                    (edif_nombre || '/' ||salo_nombre) salon,
-                    (SELECT pers_nombre || ' ' || pers_apellido_paterno || ' ' || pers_apellido_materno
-					 FROM grupo g, moderador m, persona p
-					 WHERE g.mode_id_moderador = m.mode_id_moderador AND m.pers_id_persona = p.pers_id_persona
-                        AND g.grup_id_grupo = $id
-					) as moderador
-                FROM grupo g, profesor p, persona pr, curso c, plataforma pl, calendario ca, salon s, edificio e 
-                WHERE g.prof_id_profesor = p.prof_id_profesor AND p.pers_id_persona = pr.pers_id_persona AND g.curs_id_cursos = c.curs_id_cursos 
-                    AND g.cale_id_calendario = ca.cale_id_calendario AND g.salo_id_salon = s.salo_id_salon AND s.edif_id_edificio = e.edif_id_edificio
-                    AND lower(grup_modalidad) NOT LIKE '%l_nea%' AND g.grup_id_grupo = $id;
+            "   SELECT g.grup_id_grupo, g.curs_id_curso, curs_nombre, ( edif_nombre || salo_nombre) as salon, g.esta_id_estado, esta_nombre,
+                    g.moap_id_modalidad, moap_nombre, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo, grup_num_inscritos, grup_publicado,
+                    grup_tipo, grup_inicio_insc, grup_fin_insc, pg.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
+                    (SELECT pers_nombre || ' ' || pers_apellido_paterno || ' ' || pers_apellido_materno 
+                    FROM personal_grupo pg, usuario u, persona p
+                    WHERE pg.grup_id_grupo = $id AND pg.usua_id_usuario = u.usua_id_usuario AND u.pers_id_persona = p.pers_id_persona
+                        AND rol_id_rol = 3) as moderador
+                FROM Grupo g, Curso c, salon s, edificio ed,estado e, modalidad_aprendizaje m, personal_grupo pg, usuario u, persona pe
+                WHERE g.curs_id_curso = c.curs_id_curso AND g.salo_id_salon = s.salo_id_salon AND s.edif_id_edificio = ed.edif_id_edificio 
+                    AND g.esta_id_estado = e.esta_id_estado	AND g.moap_id_modalidad = m.moap_id_modalidad AND g.grup_id_grupo = pg.grup_id_grupo 
+                    AND pg.usua_id_usuario = u.usua_id_usuario	AND u.pers_id_persona = pe.pers_id_persona AND rol_id_rol = 2 
+                    AND g.moap_id_modalidad = 1 AND g.grup_id_grupo = $id;
             ";
 
             $bd = new BD();
@@ -506,22 +500,21 @@
         }
 
         //permite obtener un grupo en linea por id
+        //TODO Verificado en la BD 01/07/2021
         function buscarGrupoWeb($id)
         {
             $SQL_Bus_Curso = 
-            "   SELECT g.grup_id_grupo, g.prof_id_profesor, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
-                    g. curs_id_cursos, curs_nombre, 
-                    g.plat_id_plataforma id_plataforma, plat_nombre plataforma, grup_reunion, grup_acceso, grup_clave_acceso, grup_cupo,  
-                    grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, grup_estado,
-                    (SELECT pers_nombre || ' ' || pers_apellido_paterno || ' ' || pers_apellido_materno
-					 FROM grupo g, moderador m, persona p
-					 WHERE g.mode_id_moderador = m.mode_id_moderador AND m.pers_id_persona = p.pers_id_persona
-                        AND g.grup_id_grupo = $id
-					) as moderador
-                FROM grupo g, profesor p, persona pr, curso c, plataforma pl, calendario ca
-                WHERE g.prof_id_profesor = p.prof_id_profesor AND p.pers_id_persona = pr.pers_id_persona AND g.curs_id_cursos = c.curs_id_cursos 
-                    AND g.plat_id_plataforma = pl.plat_id_plataforma AND g.cale_id_calendario = ca.cale_id_calendario 
-                    AND lower(grup_modalidad) LIKE '%l_nea%' AND g.grup_id_grupo = $id;
+            "   SELECT g.grup_id_grupo, g.curs_id_curso, curs_nombre, g.plat_id_plataforma, plat_nombre, g.esta_id_estado, esta_nombre,
+                    g.moap_id_modalidad, moap_nombre, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo, grup_num_inscritos, grup_publicado,
+                    grup_tipo, grup_inicio_insc, grup_fin_insc, pg.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
+                    (SELECT pers_nombre || ' ' || pers_apellido_paterno || ' ' || pers_apellido_materno 
+                    FROM personal_grupo pg, usuario u, persona p
+                    WHERE pg.grup_id_grupo = $id AND pg.usua_id_usuario = u.usua_id_usuario AND u.pers_id_persona = p.pers_id_persona
+                        AND rol_id_rol = 3) as moderador
+                FROM Grupo g, Curso c, plataforma p, estado e, modalidad_aprendizaje m, personal_grupo pg, usuario u, persona pe
+                WHERE g.curs_id_curso = c.curs_id_curso AND g.plat_id_plataforma = p.plat_id_plataforma AND g.esta_id_estado = e.esta_id_estado
+                    AND g.moap_id_modalidad = m.moap_id_modalidad AND g.grup_id_grupo = pg.grup_id_grupo AND pg.usua_id_usuario = u.usua_id_usuario
+                    AND u.pers_id_persona = pe.pers_id_persona AND rol_id_rol = 2 AND g.moap_id_modalidad = 2 AND g.grup_id_grupo = $id;
             ";
 
             $bd = new BD();
