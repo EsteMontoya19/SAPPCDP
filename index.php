@@ -2,7 +2,6 @@
 <html lang="es">
 
 <head>
-
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -60,11 +59,11 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
 ?>
 
 
-<body style="background:#272A5C">
+<body style="background:#F8FCFB">
   <div class="container">
     <div class="card card-login mx-auto mt-5">
       <div class="card-header bg-banner-loggin">
-       <p class = "centrado negritas">&nbsp; Administración </p>
+      <p class = "centrado negritas">&nbsp; Administración </p>
       </div>
 
       <div class="card-body">
@@ -127,7 +126,6 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
           <div class="container">
             <div class="row">
               <div class="col-lg-12">
-              
               <!-- Formulario Auto-registro de profeosres -->
                 <form name="form_usuario" id="form_usuario" method="POST">
                   <input type="hidden" name="dml" id="dml" value="insert">
@@ -181,7 +179,6 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
                       <input type="text" class="form-control" name= "intNum_Trabajador" id="intNum_Trabajador" placeholder = "123456">
                     </div>
                   </div>
-                  
                   <div class="form-group row">
                     <label for="rfc" class="col-sm-6 col-form-label">RFC con Homoclave: *</label>
                     <div class="col-sm-12">
@@ -220,7 +217,7 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
                                   value="<?php echo ($modalidad['moda_id_modalidad']);?>">
                           <label class="form-check-label" for="inlineCheckbox1"><?php echo ($modalidad['moda_nombre']);?></label>
                         </div>
-                      <?php } ?> 
+                      <?php } ?>
                     </div>
                   </div>
 
@@ -229,8 +226,8 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
                     <div class="col-sm-12">
                       <table> <?php //*? Esto lo creo para hacer columnas con los checkbox?>
                         <tr>
-                          <td>               
-                            <?php foreach ($arr_coordinaciones as $coordinacion) { ?> 
+                          <td>
+                            <?php foreach ($arr_coordinaciones as $coordinacion) { ?>
                                   <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="strCoordinacion<?php echo ($coordinacion['coor_id_coordinacion']);?>" name="strCoordinacion<?php echo ($coordinacion['coor_id_coordinacion']);?>"
                                             value="<?php echo ($coordinacion['coor_id_coordinacion']);?>">
@@ -239,17 +236,16 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
                                         $tamano = sizeof($arr_coordinaciones);
                                         static $mostradas = 0;
                                         if ($mostradas == 12 ){
-                                          echo("</td><td>"); 
+                                          echo("</td><td>");
                                           $mostradas = 0;
                                         } else {
                                           $mostradas++;
                                         }
-                                        
                                       ?>
                                   </div>
                             <?php } ?>
                           </td>
-                        </tr>         
+                        </tr>
                       </table>
   	                </div>
                   </div>
@@ -298,7 +294,7 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
                     <div class="col-sm-12">
                       <input type="text" class="form-control" id="UsuarioRespuesta" name = "UsuarioRespuesta">
                     </div>
-                  </div>                    
+                  </div>
                 </form>
               </div>
             </div>
