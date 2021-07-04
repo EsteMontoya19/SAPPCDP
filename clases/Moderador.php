@@ -89,7 +89,7 @@
 
     //Agregar un moderador
     //TODO Verificado en la BD 02/07/2021
-    //? Se quitó el campo $numCuenta(número de cuenta) y se cambió pers_id_persona por usua_id_usuario
+    //? Se quitó el campo $numCuenta(número de cuenta)
     function agregarModerador ($persona, $numCuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin) {
 
       $SQL_REGISTRO_MODERADOR = 
@@ -106,13 +106,12 @@
     
     //Agregar los días de un moderador
     //TODO Verificado en la BD 02/07/2021
-    //? Se cambió pers_id_persona por usua_id_usuario
     function agregarDiasModerador($persona, $dia) {
 
       $SQL_REGISTRO_DIA_MODERADOR = 
-        "INSERT INTO Moderador_Dia (mode_id_moderador, dia_id_dia) VALUES ((SELECT mode_id_moderador
-                                                                            FROM HORARIO_MODERADOR
-                                                                            WHERE usua_id_usuario = $persona), $dia)
+        "INSERT INTO Moderador_Dia (mode_id_moderador, dia_id_dia) VALUES ((SELECT MODE_ID_MODERADOR
+                                                                              FROM HORARIO_MODERADOR HM, USUARIO U, PERSONA P
+                                                                              WHERE HM.USUA_ID_USUARIO = U.USUA_ID_USUARIO AND U.PERS_ID_PERSONA = P.PERS_ID_PERSONA AND ROL_ID_ROL = 3 AND P.PERS_ID_PERSONA = $persona), $dia)
         ";
       $bd = new BD();
       $bd->abrirBD();
@@ -128,9 +127,13 @@
 
       //? Validamos si ya tiene otro registro
       $SQL_VALIDACION_MODERADOR = 
-      "SELECT *
-      FROM HORARIO_MODERADOR
-      WHERE usua_id_usuario = $persona";
+      "
+        SELECT *
+        FROM HORARIO_MODERADOR
+        WHERE usua_id_usuario = (SELECT usua_id_usuario
+                                FROM USUARIO U, PERSONA P
+                                WHERE U.PERS_ID_PERSONA = P.PERS_ID_PERSONA AND ROL_ID_ROL = 3 AND P.PERS_ID_PERSONA = $persona)
+      ";
 
       $bd = new BD();
       $bd->abrirBD();
@@ -142,9 +145,12 @@
       if($existe != null) {
 
       $SQL_ACTUALIZACION_MODERADOR = 
-        "UPDATE HORARIO_MODERADOR 
+        "
+          UPDATE HORARIO_MODERADOR 
           SET mode_fecha_inicio= '$fechaInicio', mode_fecha_fin= '$fechaFin', mode_hora_inicio= '$horaInicio', mode_hora_fin= '$horaFin'
-          WHERE usua_id_usuario = $persona
+          WHERE usua_id_usuario = (SELECT usua_id_usuario
+                                    FROM USUARIO U, PERSONA P
+                                    WHERE U.PERS_ID_PERSONA = P.PERS_ID_PERSONA AND ROL_ID_ROL = 3 AND P.PERS_ID_PERSONA = $persona)
         ";
 
         $bd = new BD();
@@ -159,14 +165,13 @@
 
     //Elimina los días de un moderador dado el id del moderador
     //TODO Verificado en la BD 02/07/2021
-    //? Se cambió pers_id_persona por usua_id_usuario
     function eliminarDiasModerador ($persona) {
       
       $SQL_BORRAR_DIAS_MODERADOR= 
       "DELETE FROM Moderador_Dia
-        WHERE mode_id_moderador = (SELECT mode_id_moderador
-                                  FROM HORARIO_MODERADOR
-                                  WHERE usua_id_usuario = $persona);
+        WHERE mode_id_moderador = (SELECT MODE_ID_MODERADOR
+                                    FROM HORARIO_MODERADOR HM, USUARIO U, PERSONA P
+                                    WHERE HM.USUA_ID_USUARIO = U.USUA_ID_USUARIO AND U.PERS_ID_PERSONA = P.PERS_ID_PERSONA AND ROL_ID_ROL = 3 AND P.PERS_ID_PERSONA = $persona);
       ";
       $bd = new BD();
       $bd->abrirBD();
@@ -182,7 +187,7 @@
 			"	
         SELECT DISTINCT PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
         FROM HORARIO_MODERADOR HM, USUARIO U, PERSONA P
-        WHERE HM.USUA_ID_USUARIO = U.USUA_ID_USUARIO AND U.PERS_ID_PERSONA = P.PERS_ID_PERSONA AND ROL_ID_ROL = 3 AND MODE_ID_MODERADOR = 1
+        WHERE HM.USUA_ID_USUARIO = U.USUA_ID_USUARIO AND U.PERS_ID_PERSONA = P.PERS_ID_PERSONA AND ROL_ID_ROL = 3 AND MODE_ID_MODERADOR = $id
 			";
 
       $bd = new BD();
