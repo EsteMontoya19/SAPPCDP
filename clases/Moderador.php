@@ -2,16 +2,22 @@
   class Moderador
   {
     //Eliminar un moderador dado el id de una persona
+    //TODO Verificado en la BD 02/07/2021
     function eliminarModerador($persona)
     {
       
       $SQL_Eli_Moderador = 
-        "DELETE FROM Moderador_Dia
-        WHERE mode_id_moderador = (SELECT mode_id_moderador
-                                 FROM Moderador
-                                 WHERE pers_id_persona = $persona);
-        DELETE FROM Moderador
-        WHERE pers_id_persona = $persona;
+        "
+          DELETE FROM Moderador_Dia
+          WHERE mode_id_moderador = (SELECT mode_id_moderador
+                    FROM HORARIO_MODERADOR HM, USUARIO U
+                    WHERE HM.USUA_ID_USUARIO = U.USUA_ID_USUARIO AND ROL_ID_ROL = 3
+                        AND PERS_ID_PERSONA = $persona);
+          DELETE FROM HORARIO_MODERADOR
+          WHERE mode_id_moderador = (SELECT mode_id_moderador
+                    FROM HORARIO_MODERADOR HM, USUARIO U
+                    WHERE HM.USUA_ID_USUARIO = U.USUA_ID_USUARIO AND ROL_ID_ROL = 3
+                        AND PERS_ID_PERSONA = $persona);
         ";
 
 
@@ -23,12 +29,15 @@
     }
 
     //Buscar un moderador dado el id de una persona
+    //TODO Verificado en la BD 02/07/2021
+    //? El numero de cuenta debe buscarse de otra forma, ya que en una sola busqueda es conflictivo encontrar si es moderador profesor o de servicio social
     function buscarModerador($persona)
 		{
 			$SQL_Bus_Moderador = 
-			"	SELECT DISTINCT M.mode_id_moderador, M.mode_num_cuenta, M.pers_id_persona, M.mode_fecha_inicio, M.mode_fecha_fin, M.mode_hora_inicio, M.mode_hora_fin
-        FROM Moderador M, Persona P
-        WHERE M.pers_id_persona = $persona
+			"	
+      SELECT DISTINCT M.mode_id_moderador, pers_id_persona, M.mode_fecha_inicio, M.mode_fecha_fin, M.mode_hora_inicio, M.mode_hora_fin
+      FROM Horario_Moderador M, Usuario U
+      WHERE M.USUA_ID_USUARIO = U.USUA_ID_USUARIO AND ROL_ID_ROL = 3 AND pers_id_persona = $persona
 			";
 
 			$bd = new BD();
@@ -41,12 +50,14 @@
 		}
 
     //Buscar los días (id y nombre) de un moderador dado el id del moderador
+    //TODO Verificado en la BD 02/07/2021
     function buscarModeradorDias($moderador)
 		{
 			$SQL_Bus_Moderador = 
-			"	SELECT DISTINCT D.dia_id_dia, D.dia_nombre
-        FROM Dia D, Moderador_Dia MD, Moderador M
-        WHERE MD.mode_id_moderador = $moderador AND MD.dia_id_dia = D.dia_id_dia
+			"	
+        SELECT DISTINCT D.dia_id_dia, D.dia_nombre
+        FROM Dia D, Moderador_Dia MD
+        WHERE MD.dia_id_dia = D.dia_id_dia AND mode_id_moderador = $moderador
 			";
 
       $bd = new BD();
@@ -58,13 +69,14 @@
 		}
 
     //Buscar todos los moderadores activos
+    //TODO Verificado en la BD 02/07/2021
     function buscarModeradoresActivos(){
       $SQL_Buscar_Moderador = 
         "
           SELECT DISTINCT MODE_ID_MODERADOR, PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
-          FROM Moderador M, Persona P, Usuario U
-          WHERE M.PERS_ID_PERSONA=P.PERS_ID_PERSONA AND U.PERS_ID_PERSONA=P.PERS_ID_PERSONA AND USUA_ACTIVO = 'TRUE'
-          ORDER BY PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
+          FROM HORARIO_MODERADOR HM, USUARIO U, PERSONA P
+          WHERE HM.USUA_ID_USUARIO = U.USUA_ID_USUARIO AND U.PERS_ID_PERSONA = P.PERS_ID_PERSONA AND ROL_ID_ROL = 3
+              AND USUA_ACTIVO = 'TRUE'
         ";
 
       $bd = new BD();
@@ -76,11 +88,13 @@
     }
 
     //Agregar un moderador
+    //TODO Verificado en la BD 02/07/2021
+    //? Se quitó el campo $numCuenta(número de cuenta)
     function agregarModerador ($persona, $numCuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin) {
 
       $SQL_REGISTRO_MODERADOR = 
-      "INSERT INTO Moderador (pers_id_persona, mode_num_cuenta, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin)
-        VALUES ($persona, '$numCuenta', '$fechaInicio', '$fechaFin', '$horaInicio', '$horaFin');
+      "INSERT INTO HORARIO_MODERADOR (usua_id_usuario, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin)
+        VALUES ($persona, '$fechaInicio', '$fechaFin', '$horaInicio', '$horaFin');
       ";
 
       $bd = new BD();
@@ -91,12 +105,13 @@
     }
     
     //Agregar los días de un moderador
+    //TODO Verificado en la BD 02/07/2021
     function agregarDiasModerador($persona, $dia) {
 
       $SQL_REGISTRO_DIA_MODERADOR = 
-        "INSERT INTO Moderador_Dia (mode_id_moderador, dia_id_dia) VALUES ((SELECT mode_id_moderador
-                                                                            FROM Moderador
-                                                                            WHERE pers_id_persona = $persona), $dia)
+        "INSERT INTO Moderador_Dia (mode_id_moderador, dia_id_dia) VALUES ((SELECT MODE_ID_MODERADOR
+                                                                              FROM HORARIO_MODERADOR HM, USUARIO U, PERSONA P
+                                                                              WHERE HM.USUA_ID_USUARIO = U.USUA_ID_USUARIO AND U.PERS_ID_PERSONA = P.PERS_ID_PERSONA AND ROL_ID_ROL = 3 AND P.PERS_ID_PERSONA = $persona), $dia)
         ";
       $bd = new BD();
       $bd->abrirBD();
@@ -106,13 +121,19 @@
     }
 
     //Actualiza todos los datos de un moderador dado el id
-    function actualizarModerador ($persona, $numCuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin) {
+    //TODO Verificado en la BD 02/07/2021
+    //? Se cambió pers_id_persona por usua_id_usuario, se quitó mode_num_cuenta
+    function actualizarModerador ($persona, $fechaInicio, $fechaFin, $horaInicio, $horaFin) {
 
       //? Validamos si ya tiene otro registro
       $SQL_VALIDACION_MODERADOR = 
-      "SELECT *
-      FROM Moderador
-      WHERE pers_id_persona = $persona";
+      "
+        SELECT *
+        FROM HORARIO_MODERADOR
+        WHERE usua_id_usuario = (SELECT usua_id_usuario
+                                FROM USUARIO U, PERSONA P
+                                WHERE U.PERS_ID_PERSONA = P.PERS_ID_PERSONA AND ROL_ID_ROL = 3 AND P.PERS_ID_PERSONA = $persona)
+      ";
 
       $bd = new BD();
       $bd->abrirBD();
@@ -124,9 +145,12 @@
       if($existe != null) {
 
       $SQL_ACTUALIZACION_MODERADOR = 
-        "UPDATE Moderador 
-          SET mode_num_cuenta= '$numCuenta', mode_fecha_inicio= '$fechaInicio', mode_fecha_fin= '$fechaFin', mode_hora_inicio= '$horaInicio', mode_hora_fin= '$horaFin'
-          WHERE pers_id_persona = $persona
+        "
+          UPDATE HORARIO_MODERADOR 
+          SET mode_fecha_inicio= '$fechaInicio', mode_fecha_fin= '$fechaFin', mode_hora_inicio= '$horaInicio', mode_hora_fin= '$horaFin'
+          WHERE usua_id_usuario = (SELECT usua_id_usuario
+                                    FROM USUARIO U, PERSONA P
+                                    WHERE U.PERS_ID_PERSONA = P.PERS_ID_PERSONA AND ROL_ID_ROL = 3 AND P.PERS_ID_PERSONA = $persona)
         ";
 
         $bd = new BD();
@@ -135,18 +159,19 @@
         $transaccion_1->enviarQuery($SQL_ACTUALIZACION_MODERADOR);
         $bd->cerrarBD();
       } else {
-        $this->agregarModerador($persona, $numCuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin);
+        $this->agregarModerador($persona, $fechaInicio, $fechaFin, $horaInicio, $horaFin);
       }
     }
 
     //Elimina los días de un moderador dado el id del moderador
+    //TODO Verificado en la BD 02/07/2021
     function eliminarDiasModerador ($persona) {
       
       $SQL_BORRAR_DIAS_MODERADOR= 
       "DELETE FROM Moderador_Dia
-        WHERE mode_id_moderador = (SELECT mode_id_moderador
-                                  FROM Moderador
-                                  WHERE pers_id_persona = $persona);
+        WHERE mode_id_moderador = (SELECT MODE_ID_MODERADOR
+                                    FROM HORARIO_MODERADOR HM, USUARIO U, PERSONA P
+                                    WHERE HM.USUA_ID_USUARIO = U.USUA_ID_USUARIO AND U.PERS_ID_PERSONA = P.PERS_ID_PERSONA AND ROL_ID_ROL = 3 AND P.PERS_ID_PERSONA = $persona);
       ";
       $bd = new BD();
       $bd->abrirBD();
@@ -156,12 +181,13 @@
     }
 
     //Busca el nombre del moderador dado el id de moderador
+    //TODO Verificado en la BD 02/07/2021
     function buscarModeradorNombre($id){
 			$SQL_Bus_Moderador = 
 			"	
         SELECT DISTINCT PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
-        FROM Moderador M, Persona P
-        WHERE M.PERS_ID_PERSONA=P.PERS_ID_PERSONA AND MODE_ID_MODERADOR = $id
+        FROM HORARIO_MODERADOR HM, USUARIO U, PERSONA P
+        WHERE HM.USUA_ID_USUARIO = U.USUA_ID_USUARIO AND U.PERS_ID_PERSONA = P.PERS_ID_PERSONA AND ROL_ID_ROL = 3 AND MODE_ID_MODERADOR = $id
 			";
 
       $bd = new BD();

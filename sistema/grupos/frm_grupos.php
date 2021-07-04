@@ -315,7 +315,7 @@ jQuery(document).ready(function () {
                           <div id="Reunion" class="col-lg-6 form-group" style="display: none;">
                             <?php }?>
                             <label for="lbID_Reunion"><b>ID de la
-                                Reunión:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
+                                Reunión:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { /*echo "*";*/} ?></b></label>
                             <input type="text" class="form-control" id="ID_Reunion" name="ID_Reunion"
                               value="<?php echo isset($Grupo) ? $Grupo->grup_reunion : ""; ?>">
                           </div>
@@ -325,7 +325,7 @@ jQuery(document).ready(function () {
                             <div id="Clave" class="col-lg-6 form-group" style="display: none;">
                               <?php }?>
                               <label for="lbClave_Acceso"><b>Clave de
-                                  Acceso:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
+                                  Acceso:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { /*echo "*";*/} ?></b></label>
                               <input type="text" class="form-control" id="Clave_Acceso" name="Clave_Acceso"
                                 value="<?php echo isset($Grupo) ? $Grupo->grup_clave_acceso : ""; ?>">
                             </div>

@@ -2,7 +2,6 @@
 <html lang="es">
 
 <head>
-
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -56,15 +55,16 @@ $obj_Busqueda = new Busqueda();
 $arr_coordinaciones = $obj_Busqueda->selectCoordinaciones();
 $arr_niveles = $obj_Busqueda->selectNiveles();
 $arr_modalidades = $obj_Busqueda->selectModalidades();
-$arr_preguntas = $obj_Busqueda->selectPregunta();
+// TODO: Preguntar si esto es requerido.
+// $arr_preguntas = $obj_Busqueda->selectPregunta();
 ?>
 
 
-<body style="background:#272A5C">
+<body style="background:#F8FCFB">
   <div class="container">
     <div class="card card-login mx-auto mt-5">
       <div class="card-header bg-banner-loggin">
-       <p class = "centrado negritas">&nbsp; Administración </p>
+      <p class = "centrado negritas">&nbsp; Administración </p>
       </div>
 
       <div class="card-body">
@@ -83,26 +83,26 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
               <div class="form-label-group">
                 <input type="text" name="strUsuario" id="strUsuario" class="form-control" placeholder="Usuario"
                   required="required" autofocus="autofocus">
-                <label for="strUsuario"><i class="fas fa-user" style="color: #C05805"></i>&nbsp; Usuario</label>
+                <label for="strUsuario"><i class="fas fa-user" style="color: #126E82"></i>&nbsp; Usuario</label>
               </div>
             </div>
             <div class="form-group">
               <div class="form-label-group">
                 <input type="password" name="strContrasena" id="strContrasena" class="form-control"
                   placeholder="Contraseña" required="required">
-                <label for="strContrasena"><i class="fas fa-key" style="color: #C05805"></i>&nbsp; Contraseña</label>
+                <label for="strContrasena"><i class="fas fa-key" style="color: #126E82"></i>&nbsp; Contraseña</label>
               </div>
             </div>
             <div class="form-group" style="text-align: center;">
               <input type="checkbox" id="ver1" class="ver" onChange="hideOrShowPassword()" />
-              <label class="text" style="color:#DB9501">&nbsp;Mostrar contraseña</label>
+              <label class="text" style="color:#126E82">&nbsp;Mostrar contraseña</label>
             </div>
             <button type="submit" class="btn btn-sy01 btn-block" id="btn-inicio">Ingresar</button>
           </form>
           <div class="col-12 text-center negritas">
             <?php //TODO: Hacer que funcione el olvidaste tu contraseña ?>
           <!--  <a class="d-block small" href="#" style="color:#DB9501">¿Olvidaste tu contraseña?</a> -->
-            <a class="d-block small" href="#" style="color:#DB9501" type="button" data-toggle="modal"
+            <a class="d-block small" href="#" style="color:#126E82" type="button" data-toggle="modal"
               data-target="#exampleModal">Registrar Profesor</a>
           </div>
         </div>
@@ -127,7 +127,6 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
           <div class="container">
             <div class="row">
               <div class="col-lg-12">
-              
               <!-- Formulario Auto-registro de profeosres -->
                 <form name="form_usuario" id="form_usuario" method="POST">
                   <input type="hidden" name="dml" id="dml" value="insert">
@@ -181,7 +180,6 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
                       <input type="text" class="form-control" name= "intNum_Trabajador" id="intNum_Trabajador" placeholder = "123456">
                     </div>
                   </div>
-                  
                   <div class="form-group row">
                     <label for="rfc" class="col-sm-6 col-form-label">RFC con Homoclave: *</label>
                     <div class="col-sm-12">
@@ -220,7 +218,7 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
                                   value="<?php echo ($modalidad['moda_id_modalidad']);?>">
                           <label class="form-check-label" for="inlineCheckbox1"><?php echo ($modalidad['moda_nombre']);?></label>
                         </div>
-                      <?php } ?> 
+                      <?php } ?>
                     </div>
                   </div>
 
@@ -229,8 +227,8 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
                     <div class="col-sm-12">
                       <table> <?php //*? Esto lo creo para hacer columnas con los checkbox?>
                         <tr>
-                          <td>               
-                            <?php foreach ($arr_coordinaciones as $coordinacion) { ?> 
+                          <td>
+                            <?php foreach ($arr_coordinaciones as $coordinacion) { ?>
                                   <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="strCoordinacion<?php echo ($coordinacion['coor_id_coordinacion']);?>" name="strCoordinacion<?php echo ($coordinacion['coor_id_coordinacion']);?>"
                                             value="<?php echo ($coordinacion['coor_id_coordinacion']);?>">
@@ -239,17 +237,16 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
                                         $tamano = sizeof($arr_coordinaciones);
                                         static $mostradas = 0;
                                         if ($mostradas == 12 ){
-                                          echo("</td><td>"); 
+                                          echo("</td><td>");
                                           $mostradas = 0;
                                         } else {
                                           $mostradas++;
                                         }
-                                        
                                       ?>
                                   </div>
                             <?php } ?>
                           </td>
-                        </tr>         
+                        </tr>
                       </table>
   	                </div>
                   </div>
@@ -298,7 +295,7 @@ $arr_preguntas = $obj_Busqueda->selectPregunta();
                     <div class="col-sm-12">
                       <input type="text" class="form-control" id="UsuarioRespuesta" name = "UsuarioRespuesta">
                     </div>
-                  </div>                    
+                  </div>
                 </form>
               </div>
             </div>

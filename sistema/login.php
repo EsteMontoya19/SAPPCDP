@@ -46,7 +46,7 @@
 
   </head>
 
-  <body style="background:#272A5C">
+  <body >
 
     <div class="container">
       <div class="card card-login mx-auto mt-5">
@@ -81,18 +81,18 @@
               <div class="form-group">
                 <div class="form-label-group">
                   <input type="text" name="strUsuario" id="strUsuario" class="form-control" placeholder="Usuario" required="required" autofocus="autofocus">
-                  <label for="strUsuario"><i class="fas fa-user" style="color: orange"></i>&nbsp; Usuario</label>
+                  <label for="strUsuario"><i class="fas fa-user" style="color: #126E82"></i>&nbsp; Usuario</label>
                 </div>
               </div>
               <div class="form-group">
                 <div class="form-label-group">
                   <input type="password" name="strContrasena" id="strContrasena" class="form-control" placeholder="Contraseña" required="required">
-                  <label for="strContrasena"><i class="fas fa-key" style="color: orange"></i>&nbsp; Contraseña</label>
+                  <label for="strContrasena"><i class="fas fa-key" style="color: #126E82"></i>&nbsp; Contraseña</label>
                 </div>
               </div>
               <div class="form-group" style="text-align: center;">
                 <input type="checkbox" id="ver1" class="ver" onChange="hideOrShowPassword()" />
-                <label class="text" style="color:#0C4590">&nbsp;Mostrar contraseña</label>
+                <label class="text" style="color:#126E82">&nbsp;Mostrar contraseña</label>
               </div>
               <button type="submit" class="btn btn-sy01 btn-block" id="btn-inicio">Ingresar</button>
             </form>
@@ -105,5 +105,6 @@
         </div>
       </div>
     </div>
+    <script src="../usuarios/control_usuario.js"></script>
   </body>
 </html>

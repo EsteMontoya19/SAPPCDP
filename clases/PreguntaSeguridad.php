@@ -1,4 +1,5 @@
 <?php
+	//TODO Verificado que toda la clase funciona en la BD 01/07/2021
 	class PreguntaSeguridad
   	{
         //Agregar PreguntaSeguridad
@@ -6,7 +7,7 @@
     	{
 			$SQL_Ins_PreguntaSeguridad =
 			"
-				INSERT INTO Pregunta_Seguridad(prse_pregunta, prse_activo)
+				INSERT INTO Pregunta_Seguridad(prse_nombre, prse_activo)
 				VALUES ('$PreguntaSeguridad', '$Activo');
 			";
 
@@ -24,8 +25,8 @@
 			$SQL_Act_PreguntaSeguridad =
 			"	
 				UPDATE Pregunta_Seguridad
-				SET prse_pregunta = '$PreguntaSeguridad'
-				WHERE prse_id_pregunta = $id
+				SET prse_nombre = '$PreguntaSeguridad'
+				WHERE prse_id_pregunta = $id;
 			";
 
 			$bd = new BD();
@@ -42,7 +43,7 @@
             "   
 				UPDATE Pregunta_Seguridad
 				SET prse_activo = '$Activo'
-				WHERE prse_id_pregunta = $id
+				WHERE prse_id_pregunta = $id;
             ";
 
             $bd = new BD();
@@ -57,9 +58,9 @@
     	{
 			$SQL_Bus_PreguntaSeguridad =
 			"	
-				SELECT prse_pregunta 
+				SELECT prse_nombre 
 				FROM Pregunta_Seguridad
-				WHERE prse_id_pregunta = $id
+				WHERE prse_id_pregunta = $id;
 			";
 
 			$bd = new BD();
@@ -77,7 +78,7 @@
 			"	
 				SELECT COUNT(prse_id_pregunta) as numero
 				FROM Pregunta_Seguridad
-				WHERE prse_pregunta = '$pregunta'
+				WHERE LOWER(prse_nombre) = LOWER('$pregunta');
 			";
 
 			$bd = new BD();
@@ -93,8 +94,8 @@
     	{
 			$SQL_Bus_PreguntasSeguridad =
 			"	
-				SELECT prse_id_pregunta, prse_pregunta, prse_activo 
-				FROM Pregunta_Seguridad 
+				SELECT prse_id_pregunta, prse_nombre, prse_activo 
+				FROM Pregunta_Seguridad; 
 			";
 
 			$bd = new BD();

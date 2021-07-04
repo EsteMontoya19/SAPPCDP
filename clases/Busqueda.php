@@ -2,6 +2,7 @@
     class Busqueda
     {
         //Consultar coordinaciones: id y nombre.
+        //TODO Verificado en la BD 01/07/2021
         function selectCoordinaciones()
         {
             $SQL_Bus_Eventos =
@@ -19,6 +20,7 @@
         }       
 
         //Consultar niveles: id y nombre.
+        //TODO Verificado en la BD 01/07/2021
         function selectNiveles()
         {
             $SQL_Bus_Eventos =
@@ -36,6 +38,7 @@
         }
 
         //Consultar modalidades: id y nombre.
+        //TODO Verificado en la BD 01/07/2021
         function selectModalidades()
         {
             $SQL_Bus_Eventos =
@@ -53,6 +56,7 @@
         }
 
         //Consultar días: id y nombre.
+        //TODO Verificado en la BD 01/07/2021
         function selectDias()
         {
             $SQL_Bus_Eventos =
@@ -70,6 +74,7 @@
         }
 
         //Consultar roles: id y nombre.
+        //TODO Verificado en la BD 01/07/2021
         function selectRoles()
         {
             $SQL_Bus_Rol = 
@@ -86,6 +91,7 @@
         }
 
         //Consultar las preguntas de seguridad: id, pregunta y estado.
+        //TODO NO EXISTE EN LA BD 01/07/2021
         function selectPregunta()
         {
             $SQL_Bus_Preg = 
@@ -102,6 +108,7 @@
         }
 
         //Consultar los salones: id, edificio al que pertenece y el nombre del salón.
+        //TODO Verificado en la BD 01/07/2021
         function selectSalones()
         {
             $SQL_Bus_Salones =
@@ -121,6 +128,8 @@
         }  
 
         //Consultarn las plataformas: id, nombre y estado.
+        //TODO Verificado en la BD 01/07/2021
+        //?Falta PLAT_ACTIVO
         function selectPlataformas()
         {
             $SQL_Bus_Plataformas =
@@ -138,7 +147,8 @@
             return ($transaccion_1->traerRegistros());
         }
 
-        //Consultarn cursos activos: id, nombre, número de sesiones, tipo y nivel.      
+        //Consultarn cursos activos: id, nombre, número de sesiones, tipo y nivel.
+        //TODO Verificado en la BD 01/07/2021  
         function selectCursosActivos()
         {
             $SQL_Bus_Cursos =
@@ -157,6 +167,8 @@
             return ($transaccion_1->traerRegistros());
         }
 
+        //Consulta un salon y el edificio al que pertenece dado el id del salón
+        //TODO Verificado en la BD 01/07/2021
         function selectSalon($id)
         {
             $SQL_Bus_Salon =
@@ -170,6 +182,141 @@
             $bd->abrirBD();
             $transaccion_1 = new Transaccion($bd->conexion);
             $transaccion_1->enviarQuery($SQL_Bus_Salon);
+            $obj_Busqueda = $transaccion_1->traerObjeto(0);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
+        }
+
+        //Consulta Todos los estados que puede tener un grupo
+        //TODO Verificado en la BD 01/07/2021
+        function selectEstadosGrupo()
+        {
+            $SQL_Bus_Estados =
+            "   
+                SELECT esta_id_estado, esta_nombre
+                FROM Estado;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Estados);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+        }
+
+        //Consulta un estado de un grupo por ID
+        //TODO Verificado en la BD 01/07/2021
+        function selectEstadoGrupo($id)
+        {
+            $SQL_Bus_Estado =
+            "   
+                SELECT esta_id_estado, esta_nombre 
+                FROM Estado
+                WHERE esta_id_estado = $id;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Estado);
+            $obj_Busqueda = $transaccion_1->traerObjeto(0);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
+        }
+
+        //Consulta un estado de un grupo por nombre
+        //TODO Verificado en la BD 01/07/2021
+        function selectEstadoGrupoxNombre($nombre)
+        {
+            $SQL_Bus_Estado =
+            "   
+                SELECT esta_id_estado, esta_nombre 
+                FROM Estado
+                WHERE LOWER(esta_nombre) = LOWER($nombre);
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Estado);
+            $obj_Busqueda = $transaccion_1->traerObjeto(0);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
+        }
+
+        //Consulta todas las modalidades de aprendizaje
+        //TODO Verificado en la BD 01/07/2021
+        function selectModalidadesAprendizaje()
+        {
+            $SQL_Bus_Modalidades_Aprendizaje =
+            "   
+                SELECT moap_id_modalidad, moap_nombre, moap_activo
+                FROM Modalidad_Aprendizaje;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Modalidades_Aprendizaje);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+        }
+
+        //Consulta todas las modalidades de aprendizaje activas
+        //TODO Verificado en la BD 01/07/2021
+        function selectModalidadesAprendizajeActivas()
+        {
+            $SQL_Bus_Modalidades_Aprendizaje =
+            "   
+                SELECT moap_id_modalidad, moap_nombre, moap_activo
+                FROM Modalidad_Aprendizaje
+                WHERE moap_activo = true;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Modalidades_Aprendizaje);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+        }
+
+        //Consulta una modalidad de aprendizaje por ID
+        //TODO Verificado en la BD 01/07/2021
+        function selectModalidadAprendizaje($id)
+        {
+            $SQL_Bus_Modalidad_Aprendizaje =
+            "   
+                SELECT moap_id_modalidad, moap_nombre, moap_activo
+                FROM Modalidad_Aprendizaje
+                WHERE moap_id_modalidad = $id;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Modalidad_Aprendizaje);
+            $obj_Busqueda = $transaccion_1->traerObjeto(0);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
+        }
+
+        //Consulta una modalidad de aprendizaje por nombre
+        //TODO Verificado en la BD 01/07/2021
+        function selectModalidadAprendizajexNombre($nombre)
+        {
+            $SQL_Bus_Modalidad_Aprendizaje =
+            "   
+                SELECT moap_id_modalidad, moap_nombre, moap_activo
+                FROM Modalidad_Aprendizaje
+                WHERE LOWER(moap_nombre) = LOWER($nombre);
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Modalidad_Aprendizaje);
             $obj_Busqueda = $transaccion_1->traerObjeto(0);
             $bd->cerrarBD();
             return ($transaccion_1->traerObjeto(0));

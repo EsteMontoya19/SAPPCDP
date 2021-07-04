@@ -11,8 +11,8 @@
 		function buscar($strUsuario, $strContrasena)
   		{
 			$SQL_Busq_Usuario =
-			" 	SELECT U.usua_id_usuario, U.pers_id_persona, U.rol_id_rol, R.rol_nombre, U.prse_id_pregunta, U.usua_num_usuario,
-					   U.usua_contrasena, U.usua_respuesta, U.usua_activo
+			" 	SELECT U.usua_id_usuario, U.pers_id_persona, U.rol_id_rol, R.rol_nombre, U.usua_num_usuario,
+				U.usua_contrasena, U.usua_activo
       			FROM Usuario U, Rol R
       			WHERE R.rol_id_rol = U.rol_id_rol AND U.usua_num_usuario = '$strUsuario' AND usua_contrasena = '$strContrasena';
 			";
@@ -25,29 +25,27 @@
 
 			if($transaccion_1->contarNumeroRegistros()==0)
     		{
-      			return false;
+			return false;
     		}
 
     		$obj_Usuario = $transaccion_1->traerObjeto(0);
 			$bd->cerrarBD();
-			
 			$this->id_usuario = $obj_Usuario->usua_num_usuario;
 			$this->id_contrasena = $obj_Usuario->usua_contrasena;
 			$this->id_rol = $obj_Usuario->rol_id_rol;
 			$this->id_persona = $obj_Usuario->pers_id_persona;
 			$this->estado = $obj_Usuario->usua_activo;
 
-			 return true;
+			return true;
 		}
 
 		function validarEstado($strUsuario, $strContrasena)
-  		{
+		{
 			$SQL_Busq_Usuario =
-			" 	SELECT U.usua_id_usuario, U.pers_id_persona, U.rol_id_rol, R.rol_nombre, U.prse_id_pregunta, U.usua_num_usuario,
-					   U.usua_contrasena, U.usua_respuesta, U.usua_activo
-	   			FROM Usuario U, Rol R
-	   			WHERE R.rol_id_rol = U.rol_id_rol AND U.usua_num_usuario = '$strUsuario' AND usua_contrasena = '$strContrasena'
-				   	  AND U.usua_activo = true;
+			" 	SELECT U.usua_id_usuario, U.pers_id_persona, U.rol_id_rol, R.rol_nombre, U.usua_num_usuario, U.usua_contrasena, U.usua_activo
+				FROM Usuario U, Rol R
+				WHERE R.rol_id_rol = U.rol_id_rol AND U.usua_num_usuario = '$strUsuario' AND usua_contrasena = '$strContrasena'
+				AND U.usua_activo = true;
 			";
 
 			$bd = new BD();

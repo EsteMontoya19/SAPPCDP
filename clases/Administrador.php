@@ -1,13 +1,16 @@
 <?php
   class Administrador
   {
-    //Buscar los datos de un administrador dado el id
+    //Buscar los datos de un administrador dado el id persona
+    //TODO Verificado en la BD 02/07/2021
+    //? La original Administrador(Tabla) ya no se incluye en la nueva versión de BD
     function buscarAdministrador($persona)
 		{
 			$SQL_Bus_Administrador = 
-			"	SELECT A.admi_id_administrador, A.pers_id_persona, A.admi_num_trabajador, A.admi_rfc
-        FROM Administrador A, Persona P
-        WHERE A.pers_id_persona = $persona
+			"	
+        SELECT PR.pers_id_persona, prof_num_trabajador, pers_rfc
+        FROM Persona PE, Profesor PR
+        WHERE PE.pers_id_persona = PR.pers_id_persona AND PE.pers_id_persona = $persona
 			";
 
 			$bd = new BD();
@@ -19,6 +22,29 @@
 			return ($transaccion_1->traerObjeto(0));
 		}
 
+    //Buscar el npumero de administradores activos
+    //TODO Verificado en la BD 02/07/2021
+    //? La original Administrador(Tabla) ya no se incluye en la nueva versión de BD
+    function administradoresActivos () {
+      $SQL_Bus_Administrador = 
+			"
+        SELECT COUNT (usua_id_usuario)
+        FROM Usuario 
+        WHERE usua_activo = TRUE AND rol_id_rol = 1
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Administrador);
+			$obj_Persona = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+
+			return ($obj_Persona->count);
+    }
+
+    //TODO Funciones ya no necesarias 02/07/2021
+    /*
     //Agregar un administrador
     function agregarAdministrador($persona, $num_trabajador, $rfc)
     {
@@ -67,24 +93,6 @@
         $this->agregarAdministrador($persona, $num_trabajador, $rfc);
       }
 		}    
-
-    //Buscar todos los administradores activos
-    function administradoresActivos () {
-      $SQL_Bus_Administrador = 
-			"SELECT COUNT (A.admi_id_administrador)
-       FROM Administrador A, Persona P, Usuario U
-       WHERE A.pers_id_persona = P.pers_id_persona AND P.pers_id_persona = U.pers_id_persona AND U.usua_activo = TRUE
-       GROUP BY A.admi_id_administrador
-			";
-
-			$bd = new BD();
-			$bd->abrirBD();
-			$transaccion_1 = new Transaccion($bd->conexion);
-			$transaccion_1->enviarQuery($SQL_Bus_Administrador);
-			$obj_Persona = $transaccion_1->traerObjeto(0);
-			$bd->cerrarBD();
-
-			return ($obj_Persona->count);
-    }
+    */
   }
 ?>

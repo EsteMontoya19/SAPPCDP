@@ -255,7 +255,7 @@ th {
 label {
     display: inline-block;
     margin-bottom: 0.5rem;
-    color: #db9501;
+    color: #6892d5;
 }
 
 button {
@@ -2021,8 +2021,8 @@ pre code {
 
 .table .thead-dark th {
     color: #fff;
-    background-color: #5d2860;
-    border-color: #5d2860;
+    background-color: #51c4d3;
+    border-color: #51c4d3;
     font-weight: initial;
 }
 
@@ -2843,14 +2843,14 @@ fieldset:disabled a.btn {
 
 .btn-primary {
     color: #fff;
-    background-color: #db9501;
-    border-color: #db9501;
+    background-color: #6892d5;
+    border-color: #6892d5;
 }
 
 .btn-primary:hover {
     color: #fff;
-    background-color: #0069d9;
-    border-color: #0062cc;
+    background-color: #132c33;
+    border-color: #132c33;
 }
 
 .btn-primary:focus,
@@ -2923,14 +2923,14 @@ fieldset:disabled a.btn {
 
 .btn-success {
     color: #fff;
-    background-color: #727077;
-    border-color: #727077;
+    background-color: #132c33;
+    border-color: #132c33;
 }
 
 .btn-success:hover {
     color: #fff;
-    background-color: #db9501;
-    border-color: #db9501;
+    background-color: #51c4d3;
+    border-color: #51c4d3;
 }
 
 .btn-success:focus,
@@ -2963,8 +2963,8 @@ fieldset:disabled a.btn {
 
 .btn-info {
     color: #fff;
-    background-color: #5d2860;
-    border-color: #5d2860;
+    background-color: #79d1c3;
+    border-color: #79d1c3;
 }
 
 .btn-info:hover {
@@ -4174,8 +4174,8 @@ input[type='button'].btn-block {
 
 .custom-control-input:checked ~ .custom-control-label::before {
     color: #fff;
-    border-color: #5d2860;
-    background-color: #5d2860;
+    border-color: #126e82;
+    background-color: #126e82;
 }
 
 .custom-control-input:focus ~ .custom-control-label::before {
@@ -4666,7 +4666,7 @@ input[type='button'].btn-block {
 
 .nav-item:hover {
     transition: background-color 0.5s linear 0.1s;
-    background-color: #ea9955;
+    background-color: #132c33;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     border-bottom-left-radius: 0.5rem;
@@ -5254,7 +5254,7 @@ input[type='button'].btn-block {
 .card-header {
     padding: 0.75rem 1.25rem;
     margin-bottom: 0;
-    background-color: #5d2860;
+    background-color: #51c4d3;
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
     border-right: 1px solid rgba(0, 0, 0, 0.125);
     border-left: 1px solid rgba(0, 0, 0, 0.125);
@@ -5473,7 +5473,7 @@ input[type='button'].btn-block {
     padding: 0.75rem 1rem;
     margin-bottom: 0.2rem;
     list-style: none;
-    background-color: #db9501;
+    background-color: #126e82;
     border-radius: 0.25rem;
 }
 
@@ -7392,11 +7392,11 @@ button.bg-light:focus {
 }
 
 .bg-blue {
-    background-color: #042a68 !important;
+    background-color: #132c33 !important;
 }
 
 .bg-banner-loggin {
-    background-color: #ea9955;
+    background-color: #132c33;
 }
 
 a.bg-dark:hover,
