@@ -2,7 +2,7 @@
 	class Usuario
   	{
 		//Actualizar el estatus dado el id y el estatus
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado en la BD 02/07/2021
 		function modificarEstatus($usuario, $estatus)
 		{
 			$SQL_Persona_Est=
@@ -21,14 +21,14 @@
 		}
 
 		//Agregar un usuario
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado en la BD 02/07/2021
 		//? La original usua_respuesta ($recuperacion) ya no se incluye en la nueva versión de BD
 		function agregarUsuario($persona, $rol, $pregunta, $nombreUsuario, $contrasenia, $estado)
-    	{
+    	{	//? El id de la pregunta es NULL por que aún no tenemos nada en esos catálogos
 			$SQL_Ins_Usuario =
 			"	
 				INSERT INTO usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usuario, usua_contrasena, usua_activo)
-				VALUES ($persona, $rol, $pregunta, '$nombreUsuario', '$contrasenia', '$estado');
+				VALUES ($persona, $rol, null, '$nombreUsuario', '$contrasenia', '$estado');
 			";
 
 			$bd = new BD();
@@ -39,15 +39,14 @@
 		}
 
 		//Actualizar un usuario dado el id de la persona
-		//TODO Verificado en la BD 02/07/2021
-		//? La original usua_respuesta ($recuperacion) ya no se incluye en la nueva versión de BD
+		//? Verificado en la BD 02/07/2021
 		function actualizarUsuario($idPersona, $rol, $pregunta, $nombreUsuario, $contrasenia)
 		{
 			$SQL_Act_Usuario= 
 			" 	
 			UPDATE Usuario
-				SET rol_id_rol = $rol , prse_id_pregunta= $pregunta, usua_num_usuario= '$nombreUsuario', usua_contrasena= '$contrasenia'
-				WHERE pers_id_persona = $idPersona;
+			SET rol_id_rol = $rol , prse_id_pregunta= null, usua_num_usuario= '$nombreUsuario', usua_contrasena= '$contrasenia'
+			WHERE pers_id_persona = $idPersona AND rol_id_rol = $rol;
 			";
 
 			$bd = new BD();
@@ -58,7 +57,7 @@
 		}
 
 		//Eliminar el resgitro de un usuario dado el id de usuario
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado en la BD 02/07/2021
 		function eliminarUsuario($usuario)
 		{
 			$SQL_Eli_Usuario= 
@@ -75,7 +74,7 @@
 		}
 
 		//Buscar todoas los usuarios
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado en la BD 02/07/2021
 		//? La original usua_respuesta y prse_pregunta ya no se incluye en la nueva versión de BD
 		function buscarTodosUsuarios()
 		{
@@ -96,7 +95,7 @@
 		}
 
 		//Buscar un usuario dado el id de usuario
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado en la BD 02/07/2021
 		//? La original prse_id_pregunta ya no se incluye en la nueva versión de BD
 		function buscarUsuario($intIdUsuario)
 		{
@@ -117,7 +116,7 @@
 		}
 
 		//Bucar datos de un usuario dado el nombre de usuario
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado en la BD 02/07/2021
 		//? La original usua_respuesta y prse_pregunta ya no se incluye en la nueva versión de BD
 		function buscarNombreUsuario($nombreUsu)
 		{
@@ -125,7 +124,7 @@
 			"	
 				SELECT U.usua_id_usuario, U.rol_id_rol, U.usua_num_usuario, U.usua_contrasena
 				FROM Rol R, Usuario U
-				WHERE R.rol_id_rol = U.rol_id_rol AND U.usua_num_usuario = = '$nombreUsu';
+				WHERE R.rol_id_rol = U.rol_id_rol AND U.usua_num_usuario = '$nombreUsu';
 			";
 
 			$bd = new BD();
@@ -138,7 +137,7 @@
 		}
 
 		//Eliminar registro de una persona dado el id de usuario
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado en la BD 02/07/2021
 		function eliminarPersonaRol($intIdPersonaRol){
 			$SQLDEL_PersonaRol = 
 			"

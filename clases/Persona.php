@@ -2,7 +2,7 @@
   class Persona
   {
     //Registra una persona
-    //TODO Verificado en la BD 02/07/2021
+    //? Verificado en la BD 02/07/2021
     //? Se añadió a la tabla el atributo rfc
     function agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc)
     {
@@ -21,7 +21,7 @@
     }
 
     //Busca el último registro de persona
-    //TODO Verificado en la BD 02/07/2021
+    //? Verificado en la BD 02/07/2021
     function buscarUltimo()
     {
       $bd = new BD();
@@ -38,7 +38,7 @@
     }
 
     //Actualiza todos los datos de una persona dado el id de la persona
-    //TODO Verificado en la BD 02/07/2021
+    //? Verificado en la BD 02/07/2021
     //? Se añadió a la tabla el atributo rfc
     function actualizarPersona($persona, $nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc)
     {
@@ -62,7 +62,7 @@
     }
 
     //Elimina el registro de un persona dado el id
-    //TODO Verificado en la BD 02/07/2021
+    //? Verificado en la BD 02/07/2021
     function eliminarPersona($persona)
     {
       $SQL_Eli_Persona= 
@@ -78,7 +78,7 @@
     }
 
     //Busca una persona dado el id
-    //TODO Verificado en la BD 02/07/2021
+    //? Verificado en la BD 02/07/2021
     function buscarPersona($persona)
 		{
 			$SQL_Bus_Persona = 
@@ -96,5 +96,23 @@
 			$bd->cerrarBD();
 			return ($transaccion_1->traerObjeto(0));
 		}
+
+    function rolesPersona ($idPersona) {
+      $SQL_Bus_Persona = 
+			"	SELECT count (*) as roles_persona
+        FROM Usuario U
+        INNER JOIN Persona P ON U.pers_id_persona = P.pers_id_persona
+        WHERE P.pers_nombre = 'Esteban'
+        GROUP BY U.pers_id_persona
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Persona);
+			$obj_Persona = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerObjeto(0));
+    }
   }
 ?>

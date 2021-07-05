@@ -61,6 +61,10 @@ $(document).ready(function () {
     });
 });
 
+function FormularioAutoRegistro() {
+    $('#Auto-registro').load('sistema/usuarios/frm_autoregistro.php');
+    //$('#container').load('../usuario/frm_autoregistro.php');
+}
 // Ir a mi cuenta
 function miCuenta(id, persona) {
     var datos = {

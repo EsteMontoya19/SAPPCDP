@@ -1,204 +1,57 @@
 /*==============================================================*/
-/* DBMS name:      PostgreSQL 8                                 */
-/* Created on:     25/04/2021 05:39:28 p. m.                    */
+/* DBMS name:      PostgreSQL 9.x                               */
+/* Created on:     01/07/2021 10:17:54 p. m.                    */
 /*==============================================================*/
-
-/*==============================================================*/
-/*      Inserción minima de datos para tablas                   */
-/*==============================================================*/
-INSERT INTO Persona (pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono)
-	VALUES ('Rocío Ayme', 'García', 'Castillo', 'coordinadoraPPCDP@gmail.com', '5548364465');
-
-INSERT INTO Rol (rol_nombre) VALUES ('Administrador del sistema'),('Moderador'),('Profesor');
-
-INSERT INTO PREGUNTA_SEGURIDAD (prse_pregunta, prse_activo) VALUES ('Como se llamaba tu primer mascota', 'TRUE');
-
-INSERT INTO Usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usuario, usua_contrasena, usua_respuesta, usua_activo)
-		VALUES (1, 1, 1, 'Rocio', '1234', 'Superman', true);
-
-INSERT INTO Administrador (pers_id_persona, admi_num_trabajador, admi_rfc) VALUES (1, '315067596', 'GACR990905134');
-
-INSERT INTO Dia (dia_nombre) VALUES ('Lunes'), ('Martes'), ('Miercoles'), ('Jueves'), ('Viernes'), ('Sabado');
-
-INSERT INTO Nivel (nive_nombre) VALUES ('Licenciatura'), ('Postgrado');
-
-INSERT INTO Modalidad (moda_nombre) VALUES ('Presencial'), ('Abierta'), ('A distancia');
-
-INSERT INTO Coordinacion (coor_nombre) VALUES ('Informática'), ('Fiscal'), ('Contabilidad'), ('Finanzas'), ('Administración básica'), ('Matemáticas'), ('Auditoría'), ('Economía'), 
-('Derecho'), ('Costos y Presupuestos'), ('Contabilidad básica'), ('Recursos humanos'), ('Mercadotecnia'),('Maestrías en línea'), 
-('Maestrías en administración de sistemas de salud'), ('Maestría en finanzas'),('Especialidades de alta dirección'), ('RH y mercadotecnia'), 
-('Maestría en auditoria'), ('Especialidad en administración gerontológica'), ('Maestría negocios internacionales'), ('Maestría en turismo'), 
-('Maestría en alta dirección'), ('Maestría en informática administrativa');
-
-INSERT INTO EDIFICIO (EDIF_NOMBRE)
-			VALUES ('A');
-
-INSERT INTO SALON (EDIF_ID_EDIFICIO, SALO_NOMBRE)
-			VALUES (1, '05');
-
-INSERT INTO CALENDARIO (CALE_SEMESTRE, CALE_INICIO_CICLO, CALE_FIN_CICLO, CALE_INICIO_EXAMENES, CALE_FIN_EXAMENES, CALE_INICIO_ASUETO,
-						CALE_FIN_ASUETO, CALE_INICIO_INTERSEMESTRAL, CALE_FIN_INTERSEMESTRAL, CALE_INICIO_ADMIN, CALE_FIN_ADMIN, CALE_ACTIVO)
-   			VALUES('2022-1', '2021/07/01', '2022/01/30', '2021/11/29', '2021/12/10', '2021/08/02', '2021/08/06', '2021/12/13', '2022/01/28', '2021/12/20', '2022/01/05', TRUE);
-
-INSERT INTO dia_festivo (cale_id_calendario, dife_fecha)
-                VALUES (1, '2021/09/15'), (1,'2021/09/16');
-
-INSERT INTO PLATAFORMA (PLAT_NOMBRE, PLAT_ACTIVO)
-			VALUES ('Zoom', 'TRUE');
-/*==============================================================*/
-/*      Inserción de datos en tablas                            */
-/*==============================================================*/
-
-INSERT INTO Persona (pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono)
-	VALUES ('Esteban', 'Montoya', 'Maya', 'estemontoya99@gmail.com', '5548364465'),
-          ('Samuel', 'Alcantara', 'Chavez', 'samuelunam3151@gmail.com', '5564164687'),
-          ('Karen', 'Fuentez', 'Aguilar', 'ftzkaren21@gmail.com', '5620589315'),
-          ('Luis Antonio', 'Gutierrez','Castro', 'lantonio.gc99@gmail.com', '5580947651');
-
-INSERT INTO Rol (rol_nombre) VALUES ('Administrador del sistema'),('Moderador'),('Profesor');
-
-INSERT INTO PREGUNTA_SEGURIDAD (prse_pregunta, prse_activo) VALUES ('Como se llamaba tu primer mascota', 'TRUE'), ('Pelicula de acción favorita', 'TRUE'),
-			('Superheroe favorito', 'TRUE');
-
-INSERT INTO Usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usuario, usua_contrasena, usua_respuesta, usua_activo)
-		VALUES (1, 1, 3, 'Esteban', '1234', 'Linterna Verde', true), (2, 2, 3, 'Samuel', '1234', 'Batman', true),
-            (3, 3, 3, 'Karen', '1234', 'Flash', true),(4,3,3,'Tony', '1234', 'Spiderman', true);
-
-INSERT INTO Administrador (pers_id_persona, admi_num_trabajador, admi_rfc) VALUES (1, '315067596', 'MOME990905134');
-
-INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza, prof_rfc) 
-      VALUES (3, '123457890', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber','KAFA12345'),(4,'1234569870','Profesor de informatica con experiencia en IOS y MACOS', 'GUCL990326S58');
-
-INSERT INTO Moderador (pers_id_persona, mode_num_cuenta, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin) 
-		VALUES (2, '123457890', '2021/02/23', '2021/09/08','07:00:00', '21:00:00');
-
-INSERT INTO Dia (dia_nombre) VALUES ('Lunes'), ('Martes'), ('Miercoles'), ('Jueves'), ('Viernes'), ('Sabado');
-
-INSERT INTO Moderador_Dia (mode_id_moderador, dia_id_dia) VALUES (1,1), (1,2), (1,3), (1,4), (1,5);
-
-INSERT INTO Nivel (nive_nombre) VALUES ('Licenciatura'), ('Postgrado');
-
-INSERT INTO Modalidad (moda_nombre) VALUES ('Presencial'), ('Abierta'), ('A distancia');
-
-INSERT INTO Coordinacion (coor_nombre) VALUES ('Informática'), ('Fiscal'), ('Contabilidad'), ('Finanzas'), ('Administración básica'), ('Matemáticas'), ('Auditoría'), ('Economía'), 
-('Derecho'), ('Costos y Presupuestos'), ('Contabilidad básica'), ('Recursos humanos'), ('Mercadotecnia'),('Maestrías en línea'), 
-('Maestrías en administración de sistemas de salud'), ('Maestría en finanzas'),('Especialidades de alta dirección'), ('RH y mercadotecnia'), 
-('Maestría en auditoria'), ('Especialidad en administración gerontológica'), ('Maestría negocios internacionales'), ('Maestría en turismo'), 
-('Maestría en alta dirección'), ('Maestría en informática administrativa');
-
-INSERT INTO Profesor_Nivel (prof_id_profesor, nive_id_nivel) VALUES (1, 1), (1, 2),(2, 1), (2, 2);
-
-INSERT INTO Profesor_Modalidad (prof_id_profesor, moda_id_modalidad) VALUES (1,1), (2,3);
-
-INSERT INTO Profesor_Coordinacion(prof_id_profesor, coor_id_coordinacion) VALUES (1,1),(1,24), (1,14),(2,1),(2,23),(2,24);
-
-INSERT INTO Curso (CURS_TIPO, CURS_NOMBRE, CURS_NUM_SESIONES, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, CURS_NIVEL, CURS_OBJETIVOS, CURS_TEMARIO, CURS_ACTIVO)
-			VALUES ('Curso', 'Cuestionarios en Zoom', 2, 'Nada', 'Nada', 'Básico', 'Aprender', '/nose.pdf', 'TRUE');
-
-INSERT INTO EDIFICIO (EDIF_NOMBRE)
-			VALUES ('A');
-
-INSERT INTO SALON (EDIF_ID_EDIFICIO, SALO_NOMBRE)
-			VALUES (1, '05');
-
-INSERT INTO CALENDARIO (CALE_SEMESTRE, CALE_INICIO_CICLO, CALE_FIN_CICLO, CALE_INICIO_EXAMENES, CALE_FIN_EXAMENES, CALE_INICIO_ASUETO,
-						CALE_FIN_ASUETO, CALE_INICIO_INTERSEMESTRAL, CALE_FIN_INTERSEMESTRAL, CALE_INICIO_ADMIN, CALE_FIN_ADMIN, CALE_ACTIVO)
-   			VALUES('2022-1', '2021/07/01', '2022/01/30', '2021/11/29', '2021/12/10', '2021/08/02', '2021/08/06', '2021/12/13', '2022/01/28', '2021/12/20', '2022/01/05', TRUE);
-
-INSERT INTO dia_festivo (cale_id_calendario, dife_fecha)
-                VALUES (1, '2021/09/15'), (1,'2021/09/16');
-
-INSERT INTO PLATAFORMA (PLAT_NOMBRE, PLAT_ACTIVO)
-			VALUES ('Zoom', 'TRUE'), ('Google Meet', 'TRUE'), ('Messenger', 'TRUE');
-
-INSERT INTO Grupo (MODE_ID_MODERADOR, PROF_ID_PROFESOR, CURS_ID_CURSOS, SALO_ID_SALON, CALE_ID_CALENDARIO,
-               PLAT_ID_PLATAFORMA, GRUP_REUNION, GRUP_ACCESO, GRUP_CLAVE_ACCESO, 
-               GRUP_CUPO, GRUP_TIPO, GRUP_ACTIVO, GRUP_MODALIDAD, GRUP_ESTADO,  
-               GRUP_INICIO_INSC, GRUP_FIN_INSC)
-			VALUES (1, 1, 1, null, 1, 
-               1, 'https://cuaed-unam.zoom.us/j/88139303420', '1234567', 'acceso', 
-               50, 'Privado', 'true', 'En línea', 'Aprobado', 
-               '2021/06/23', '2021/09/08'),
-               (1, 1, 1, 1, 
-               1, null, null, null, null, 
-               60, 'Público', 'true', 'Presencial', 'Pendiente', 
-               '2022/01/01', '2022/02/01'),
-               (1, 1, 1, null, 1, 
-               1, 'https://cuaed-unam.zoom.us/j/88139303420', 'grupo acceso3', 'clave3', 
-               25, 'Público', 'true', 'En línea', 'Aprobado', 
-               '2021/06/26', '2021/06/27');
-
-INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin)
-			VALUES   (1, '2021/07/08','07:00:00', '09:00:00'), (1, '2021/07/09','10:00:00', '12:00:00'),
-                  (2, '2021/09/10','08:00:00', '10:00:00'), (2, '2021/09/11','11:00:00', '13:00:00'),
-                  (3, '2021/09/08','12:00:00', '14:00:00'), (3, '2021/09/13','12:00:00', '14:00:00');
-
-/*==============================================================*/
-/* Table: ADMINISTRADOR                                          */
-/*==============================================================*/
-create table ADMINISTRADOR (
-   admi_id_administrador  SERIAL               not null,
-   PERS_ID_PERSONA      INT4                 not null,
-   admi_num_trabajador VARCHAR(15)             not null,
-   admi_rfc            VARCHAR(15)             not null,
-   constraint PK_ADMINISTRADOR primary key (admi_id_administrador)
-);
-
-/*==============================================================*/
-/* Index: ADMINISTRADORES_PK                                     */
-/*==============================================================*/
-create unique index ADMINISTRADORES_PK on ADMINISTRADOR (
-admi_id_administrador
-);
-
-/*==============================================================*/
-/* Index: RELATIONSHIP_16_FK                                    */
-/*==============================================================*/
-create  index RELATIONSHIP_16_FK on ADMINISTRADOR (
-PERS_ID_PERSONA
-);
 
 /*==============================================================*/
 /* Table: ASISTENCIA                                            */
 /*==============================================================*/
 create table ASISTENCIA (
-   ASIS_ID_LISTA        SERIAL               not null,
-   INSC_ID_INSCRIPCION  INT4                 null,
-   ASIS_ESTADO          BOOL                 not null,
-   constraint PK_ASISTENCIA primary key (ASIS_ID_LISTA)
+   SESI_ID_SESIONES     INT4                 not null,
+   INSC_ID_INSCRIPCION  INT4                 not null,
+   ASIS_PRESENTE        BOOL                 null,
+   constraint PK_ASISTENCIA primary key (SESI_ID_SESIONES, INSC_ID_INSCRIPCION)
 );
 
 /*==============================================================*/
 /* Index: ASISTENCIA_PK                                         */
 /*==============================================================*/
 create unique index ASISTENCIA_PK on ASISTENCIA (
-ASIS_ID_LISTA
+SESI_ID_SESIONES,
+INSC_ID_INSCRIPCION
 );
 
 /*==============================================================*/
-/* Index: RELATIONSHIP_24_FK                                    */
+/* Index: RELATIONSHIP_41_FK                                    */
 /*==============================================================*/
-create  index RELATIONSHIP_24_FK on ASISTENCIA (
+create  index RELATIONSHIP_41_FK on ASISTENCIA (
 INSC_ID_INSCRIPCION
+);
+
+/*==============================================================*/
+/* Index: ASISTIDO_FK                                           */
+/*==============================================================*/
+create  index ASISTIDO_FK on ASISTENCIA (
+SESI_ID_SESIONES
 );
 
 /*==============================================================*/
 /* Table: CALENDARIO                                            */
 /*==============================================================*/
 create table CALENDARIO (
-   CALE_ID_CALENDARIO    SERIAL                 not null,
-   CALE_SEMESTRE         VARCHAR(20)                 not null,
-   CALE_INICIO_CICLO      DATE                 not null,
-   CALE_FIN_CICLO        DATE                 not null,
-   CALE_INICIO_EXAMENES    DATE                 not null,
-   CALE_FIN_EXAMENES     DATE                 not null,
-   CALE_INICIO_ASUETO     DATE                 null,
-   CALE_FIN_ASUETO       DATE                  null,
+   CALE_ID_CALENDARIO   SERIAL               not null,
+   CALE_SEMESTRE        VARCHAR(6)           not null,
+   CALE_INICIO_CICLO    DATE                 not null,
+   CALE_FIN_CICLO       DATE                 not null,
+   CALE_INICIO_EXAMENES DATE                 not null,
+   CALE_FIN_EXAMENES    DATE                 not null,
+   CALE_INICIO_ASUETO   DATE                 not null,
+   CALE_FIN_ASUETO      DATE                 not null,
    CALE_INICIO_INTERSEMESTRAL DATE                 not null,
    CALE_FIN_INTERSEMESTRAL DATE                 not null,
-   CALE_INICIO_ADMIN      DATE                 not null,
-   CALE_FIN_ADMIN        DATE                 not null,
-   CALE_ACTIVO           BOOL                 not null DEFAULT 'FALSE',
+   CALE_INICIO_ADMIN    DATE                 not null,
+   CALE_FIN_ADMIN       DATE                 not null,
+   CALE_ACTIVO          BOOL                 null,
    constraint PK_CALENDARIO primary key (CALE_ID_CALENDARIO)
 );
 
@@ -210,62 +63,40 @@ CALE_ID_CALENDARIO
 );
 
 /*==============================================================*/
-/* Table: DIA_FESTIVO                                           */
-/*==============================================================*/
-create table DIA_FESTIVO (
-   DIFE_ID_DIA_FESTIVO  SERIAL      not null,
-   CALE_ID_CALENDARIO   INT4        not null,
-   DIFE_FECHA           DATE        not null,
-   constraint PK_DIA_FESTIVO primary key (DIFE_ID_DIA_FESTIVO)
-);
-
-/*==============================================================*/
-/* Index: DIA_FESTIVO_PK                                        */
-/*==============================================================*/
-create unique index DIA_FESTIVO_PK on DIA_FESTIVO(
-DIFE_ID_DIA_FESTIVO
-);
-
-/*==============================================================*/
-/* Index: DIA_FESTIVO_CALENDARIO_FK                             */
-/*==============================================================*/
-create index DIA_FESTIVO_FK on DIA_FESTIVO(
-CALE_ID_CALENDARIO
-);
-
-/*==============================================================*/
 /* Table: CONSTANCIA                                            */
 /*==============================================================*/
 create table CONSTANCIA (
    CONS_ID_CONSTANCIAS  SERIAL               not null,
-   CONS_URL             VARCHAR(200)            null,
-   CONS_ESTADO          VARCHAR(15)             not null,
-   CONS_FOLIO           VARCHAR(30)             null,
-   CONS_FECHA           DATE                 null,
-   CONS_HORA            DATE                 null,
+   CONS_URL             VARCHAR(200)         not null,
+   CONS_ESTADO          VARCHAR(15)          not null,
+   CONS_FOLIO           VARCHAR(30)          not null,
+   CONS_FECHA           DATE                 not null,
+   CONS_HORA            DATE                 not null,
+   CONS_TIPO            INT4                 null,
    constraint PK_CONSTANCIA primary key (CONS_ID_CONSTANCIAS)
 );
 
 /*==============================================================*/
-/* Index: CONSTANCIAS_PK                                        */
+/* Index: CONSTANCIA_PK                                         */
 /*==============================================================*/
-create unique index CONSTANCIAS_PK on CONSTANCIA (
+create unique index CONSTANCIA_PK on CONSTANCIA (
 CONS_ID_CONSTANCIAS
 );
+
 
 /*==============================================================*/
 /* Table: COORDINACION                                          */
 /*==============================================================*/
 create table COORDINACION (
    COOR_ID_COORDINACION SERIAL               not null,
-   COOR_NOMBRE          VARCHAR(50)             not null,
+   COOR_NOMBRE          VARCHAR(50)          not null,
    constraint PK_COORDINACION primary key (COOR_ID_COORDINACION)
 );
 
 /*==============================================================*/
-/* Index: COORDINACIONES_PK                                     */
+/* Index: COORDINACION_PK                                       */
 /*==============================================================*/
-create unique index COORDINACIONES_PK on COORDINACION (
+create unique index COORDINACION_PK on COORDINACION (
 COOR_ID_COORDINACION
 );
 
@@ -273,24 +104,24 @@ COOR_ID_COORDINACION
 /* Table: CURSO                                                 */
 /*==============================================================*/
 create table CURSO (
-   CURS_ID_CURSOS       SERIAL                 not null,
-   CURS_TIPO            VARCHAR(10)             not null,
-   CURS_NOMBRE          VARCHAR(50)             not null,
+   CURS_ID_CURSO        SERIAL               not null,
+   CURS_TIPO            VARCHAR(10)          not null,
+   CURS_NOMBRE          VARCHAR(50)          not null,
    CURS_NUM_SESIONES    INT4                 null,
-   CURS_REQ_TECNICOS    VARCHAR(150)            null,
-   CURS_CONOCIMIENTOS   VARCHAR(150)            null,
-   CURS_NIVEL           VARCHAR(15)             not null,
-   CURS_OBJETIVOS       VARCHAR(150)            not null,
-   CURS_TEMARIO         VARCHAR(300)             null,
+   CURS_REQ_TECNICOS    VARCHAR(150)         null,
+   CURS_CONOCIMIENTOS   VARCHAR(150)         null,
+   CURS_NIVEL           VARCHAR(15)          not null,
+   CURS_OBJETIVOS       VARCHAR(150)         not null,
+   CURS_TEMARIO         VARCHAR(50)          null,
    CURS_ACTIVO          BOOL                 not null,
-   constraint PK_CURSO primary key (CURS_ID_CURSOS)
+   constraint PK_CURSO primary key (CURS_ID_CURSO)
 );
 
 /*==============================================================*/
-/* Index: CURSOS_PK                                             */
+/* Index: CURSO_PK                                              */
 /*==============================================================*/
-create unique index CURSOS_PK on CURSO (
-CURS_ID_CURSOS
+create unique index CURSO_PK on CURSO (
+CURS_ID_CURSO
 );
 
 /*==============================================================*/
@@ -298,7 +129,7 @@ CURS_ID_CURSOS
 /*==============================================================*/
 create table DIA (
    DIA_ID_DIA           SERIAL               not null,
-   DIA_NOMBRE           VARCHAR(10)             not null,
+   DIA_NOMBRE           VARCHAR(10)          not null,
    constraint PK_DIA primary key (DIA_ID_DIA)
 );
 
@@ -310,50 +141,104 @@ DIA_ID_DIA
 );
 
 /*==============================================================*/
+/* Table: DIA_FESTIVO                                           */
+/*==============================================================*/
+create table DIA_FESTIVO (
+   DIFE_ID_DIA_FESTIVO  SERIAL               not null,
+   CALE_ID_CALENDARIO   INT4                 not null,
+   DIFE_FECHA           DATE                 not null,
+   constraint PK_DIA_FESTIVO primary key (DIFE_ID_DIA_FESTIVO)
+);
+
+/*==============================================================*/
+/* Index: DIA_FESTIVO_PK                                        */
+/*==============================================================*/
+create unique index DIA_FESTIVO_PK on DIA_FESTIVO (
+DIFE_ID_DIA_FESTIVO
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_36_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_36_FK on DIA_FESTIVO (
+CALE_ID_CALENDARIO
+);
+
+/*==============================================================*/
 /* Table: EDIFICIO                                              */
 /*==============================================================*/
 create table EDIFICIO (
    EDIF_ID_EDIFICIO     SERIAL               not null,
-   EDIF_NOMBRE          VARCHAR(15)             not null,
+   EDIF_NOMBRE          VARCHAR(15)          not null,
    constraint PK_EDIFICIO primary key (EDIF_ID_EDIFICIO)
 );
 
 /*==============================================================*/
-/* Index: EDIFICIOS_PK                                          */
+/* Index: EDIFICIO_PK                                           */
 /*==============================================================*/
-create unique index EDIFICIOS_PK on EDIFICIO (
+create unique index EDIFICIO_PK on EDIFICIO (
 EDIF_ID_EDIFICIO
+);
+
+/*==============================================================*/
+/* Table: ENCUESTA                                              */
+/*==============================================================*/
+create table ENCUESTA (
+   ENCU_ID_ENCUESTA     SERIAL               not null,
+   ACTIVO               BOOL                 null,
+   constraint PK_ENCUESTA primary key (ENCU_ID_ENCUESTA)
+);
+
+/*==============================================================*/
+/* Index: ENCUESTA_PK                                           */
+/*==============================================================*/
+create unique index ENCUESTA_PK on ENCUESTA (
+ENCU_ID_ENCUESTA
+);
+
+/*==============================================================*/
+/* Table: ESTADO                                               */
+/*==============================================================*/
+create table ESTADO (
+   ESTA_ID_ESTADO       SERIAL               not null,
+   ESTA_NOMBRE          VARCHAR(15)          not null,
+   constraint PK_ESTADO primary key (ESTA_ID_ESTADO)
+);
+
+/*==============================================================*/
+/* Index: ESTADO_PK                                            */
+/*==============================================================*/
+create unique index ESTADO_PK on ESTADO (
+ESTA_ID_ESTADO
 );
 
 /*==============================================================*/
 /* Table: GRUPO                                                 */
 /*==============================================================*/
 create table GRUPO (
-   GRUP_ID_GRUPO        SERIAL                 not null,
-   mode_id_moderador      INT4                 null,
-   PROF_ID_PROFESOR     INT4                 null,
-   CURS_ID_CURSOS       INT4                 not null,
-   SALO_ID_SALON              INT4                 null,
+   GRUP_ID_GRUPO        SERIAL               not null,
+   CURS_ID_CURSO        INT4                 not null,
+   PLAT_ID_PLATAFORMA   INT4                 null,
    CALE_ID_CALENDARIO   INT4                 not null,
-   PLAT_ID_PLATAFORMA   INT4                    null,
-   GRUP_REUNION         VARCHAR(300)             null,
-   GRUP_ACCESO          VARCHAR(250)            null,
-   GRUP_CLAVE_ACCESO    VARCHAR(230)             null,
+   SALO_ID_SALON        INT4                 null,
+   ESTA_ID_ESTADO       INT4                 not null,
+   MOAP_ID_MODALIDAD    INT4                 not null,
+   GRUP_URL             VARCHAR(300)         null,
+   GRUP_ID_ACCESO       VARCHAR(100)         null,
+   GRUP_CLAVE_ACCESO    VARCHAR(10)          null,
    GRUP_CUPO            INT4                 not null,
-   GRUP_ESTADO          VARCHAR(10)             not null,
-   GRUP_ACTIVO          BOOL                 not null,
-   GRUP_MODALIDAD       VARCHAR(15)             not null,
-   GRUP_TIPO            VARCHAR(10)             not null,
+   GRUP_NUM_INSCRITOS   INT4                 not null default 0,
+   GRUP_PUBLICADO       BOOL                 not null,
+   GRUP_TIPO            VARCHAR(10)          not null,
    GRUP_INICIO_INSC     DATE                 not null,
    GRUP_FIN_INSC        DATE                 not null,
-   GRUP_NUM_INSCRITOS   INT4                 null DEFAULT 0,
    constraint PK_GRUPO primary key (GRUP_ID_GRUPO)
 );
 
 /*==============================================================*/
-/* Index: GRUPOS_PK                                             */
+/* Index: GRUPO_PK                                              */
 /*==============================================================*/
-create unique index GRUPOS_PK on GRUPO (
+create unique index GRUPO_PK on GRUPO (
 GRUP_ID_GRUPO
 );
 
@@ -361,28 +246,69 @@ GRUP_ID_GRUPO
 /* Index: RELATIONSHIP_20_FK                                    */
 /*==============================================================*/
 create  index RELATIONSHIP_20_FK on GRUPO (
-CURS_ID_CURSOS
+CURS_ID_CURSO
 );
 
 /*==============================================================*/
-/* Index: RELATIONSHIP_25_FK                                    */
+/* Index: RELATIONSHIP_22_FK                                    */
 /*==============================================================*/
-create  index RELATIONSHIP_25_FK on GRUPO (
-PROF_ID_PROFESOR
+create  index RELATIONSHIP_22_FK on GRUPO (
+PLAT_ID_PLATAFORMA
 );
 
 /*==============================================================*/
-/* Index: RELATIONSHIP_27_FK                                    */
+/* Index: RELATIONSHIP_23_FK                                    */
 /*==============================================================*/
-create  index RELATIONSHIP_27_FK on GRUPO (
-mode_id_moderador
+create  index RELATIONSHIP_23_FK on GRUPO (
+CALE_ID_CALENDARIO
 );
 
 /*==============================================================*/
-/* Index: RELATIONSHIP_34_FK                                    */
+/* Index: RELATIONSHIP_33_FK                                    */
 /*==============================================================*/
-create  index RELATIONSHIP_34_FK on GRUPO (
+create  index RELATIONSHIP_33_FK on GRUPO (
 SALO_ID_SALON
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_39_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_39_FK on GRUPO (
+ESTA_ID_ESTADO
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_40_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_40_FK on GRUPO (
+MOAP_ID_MODALIDAD
+);
+
+/*==============================================================*/
+/* Table: HORARIO_MODERADOR                                     */
+/*==============================================================*/
+create table HORARIO_MODERADOR (
+   MODE_ID_MODERADOR    SERIAL               not null,
+   USUA_ID_USUARIO      INT4                 not null,
+   MODE_FECHA_INICIO    DATE                 not null,
+   MODE_FECHA_FIN       DATE                 not null,
+   MODE_HORA_INICIO     TIME                 not null,
+   MODE_HORA_FIN        TIME                 not null,
+   constraint PK_HORARIO_MODERADOR primary key (MODE_ID_MODERADOR)
+);
+
+/*==============================================================*/
+/* Index: HORARIO_MODERADOR_PK                                  */
+/*==============================================================*/
+create unique index HORARIO_MODERADOR_PK on HORARIO_MODERADOR (
+MODE_ID_MODERADOR
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_15_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_15_FK on HORARIO_MODERADOR (
+USUA_ID_USUARIO
 );
 
 /*==============================================================*/
@@ -390,16 +316,18 @@ SALO_ID_SALON
 /*==============================================================*/
 create table INSCRIPCION (
    INSC_ID_INSCRIPCION  SERIAL               not null,
+   GRUP_ID_GRUPO        INT4                 null,
+   PROF_ID_PROFESOR     INT4                 null,
    CONS_ID_CONSTANCIAS  INT4                 null,
-   GRUP_ID_GRUPO        INT4                 not null,
-   PROF_ID_PROFESOR     INT4                 not null,
+   INSC_ACTIVO          BOOL                 not null,
+   INSC_APROBADO        BOOL                 null,
    constraint PK_INSCRIPCION primary key (INSC_ID_INSCRIPCION)
 );
 
 /*==============================================================*/
-/* Index: INSCRIPCIONES_PK                                      */
+/* Index: INSCRIPCION_PK                                        */
 /*==============================================================*/
-create unique index INSCRIPCIONES_PK on INSCRIPCION (
+create unique index INSCRIPCION_PK on INSCRIPCION (
 INSC_ID_INSCRIPCION
 );
 
@@ -418,9 +346,9 @@ PROF_ID_PROFESOR
 );
 
 /*==============================================================*/
-/* Index: RELATIONSHIP_32_FK                                    */
+/* Index: RELATIONSHIP_42_FK                                    */
 /*==============================================================*/
-create  index RELATIONSHIP_32_FK on INSCRIPCION (
+create  index RELATIONSHIP_42_FK on INSCRIPCION (
 CONS_ID_CONSTANCIAS
 );
 
@@ -429,59 +357,62 @@ CONS_ID_CONSTANCIAS
 /*==============================================================*/
 create table MODALIDAD (
    MODA_ID_MODALIDAD    SERIAL               not null,
-   MODA_NOMBRE          VARCHAR(30)             not null,
+   MODA_NOMBRE          VARCHAR(30)          not null,
    constraint PK_MODALIDAD primary key (MODA_ID_MODALIDAD)
 );
 
 /*==============================================================*/
-/* Index: MODALIDADES_PK                                        */
+/* Index: MODALIDAD_PK                                          */
 /*==============================================================*/
-create unique index MODALIDADES_PK on MODALIDAD (
+create unique index MODALIDAD_PK on MODALIDAD (
 MODA_ID_MODALIDAD
 );
 
 /*==============================================================*/
-/* Table: MODERADOR                                               */
+/* Table: MODALIDAD_APRENDIZAJE                                 */
 /*==============================================================*/
-create table MODERADOR (
-   mode_id_moderador      SERIAL               not null,
-   PERS_ID_PERSONA      INT4                 not null,
-   mode_num_cuenta      VARCHAR(15)             not null,
-   mode_fecha_inicio    DATE                 not null,
-   mode_fecha_fin       DATE                 not null,
-   mode_hora_inicio      TIME                 not null,
-   mode_hora_fin        TIME                 not null,
-   constraint PK_MODERADOR primary key (mode_id_moderador)
+create table MODALIDAD_APRENDIZAJE (
+   MOAP_ID_MODALIDAD    SERIAL               not null,
+   MOAP_NOMBRE          VARCHAR(15)          not null,
+   MOAP_ACTIVO          BOOL                 not null,
+   constraint PK_MODALIDAD_APRENDIZAJE primary key (MOAP_ID_MODALIDAD)
 );
 
 /*==============================================================*/
-/* Index: MODERADORES_PK                                          */
+/* Index: MODALIDAD_APRENDIZAJE_PK                              */
 /*==============================================================*/
-create unique index MODERADORES_PK on MODERADOR (
-mode_id_moderador
+create unique index MODALIDAD_APRENDIZAJE_PK on MODALIDAD_APRENDIZAJE (
+MOAP_ID_MODALIDAD
 );
 
 /*==============================================================*/
-/* Index: RELATIONSHIP_15_FK                                    */
-/*==============================================================*/
-create  index RELATIONSHIP_15_FK on MODERADOR (
-PERS_ID_PERSONA
-);
-
-/*==============================================================*/
-/* Table: MODERADOR_DIA                                          */
+/* Table: MODERADOR_DIA                                         */
 /*==============================================================*/
 create table MODERADOR_DIA (
-   mode_id_moderador      INT4                 not null,
    DIA_ID_DIA           INT4                 not null,
-   constraint PK_MODERADOR_DIA primary key (mode_id_moderador, DIA_ID_DIA)
+   MODE_ID_MODERADOR    INT4                 not null,
+   constraint PK_MODERADOR_DIA primary key (DIA_ID_DIA, MODE_ID_MODERADOR)
 );
 
 /*==============================================================*/
-/* Index: MODERADOR_DIA_PK                                       */
+/* Index: MODERADOR_DIA_PK                                      */
 /*==============================================================*/
 create unique index MODERADOR_DIA_PK on MODERADOR_DIA (
-mode_id_moderador,
+DIA_ID_DIA,
+MODE_ID_MODERADOR
+);
+
+/*==============================================================*/
+/* Index: MODERADOR_DIA2_FK                                     */
+/*==============================================================*/
+create  index MODERADOR_DIA2_FK on MODERADOR_DIA (
+MODE_ID_MODERADOR
+);
+
+/*==============================================================*/
+/* Index: MODERADOR_DIA_FK                                      */
+/*==============================================================*/
+create  index MODERADOR_DIA_FK on MODERADOR_DIA (
 DIA_ID_DIA
 );
 
@@ -490,14 +421,14 @@ DIA_ID_DIA
 /*==============================================================*/
 create table NIVEL (
    NIVE_ID_NIVEL        SERIAL               not null,
-   NIVE_NOMBRE          VARCHAR(15)             not null,
+   NIVE_NOMBRE          VARCHAR(15)          not null,
    constraint PK_NIVEL primary key (NIVE_ID_NIVEL)
 );
 
 /*==============================================================*/
-/* Index: NIVELES_PK                                            */
+/* Index: NIVEL_PK                                              */
 /*==============================================================*/
-create unique index NIVELES_PK on NIVEL (
+create unique index NIVEL_PK on NIVEL (
 NIVE_ID_NIVEL
 );
 
@@ -506,19 +437,50 @@ NIVE_ID_NIVEL
 /*==============================================================*/
 create table PERSONA (
    PERS_ID_PERSONA      SERIAL               not null,
-   PERS_NOMBRE          VARCHAR(50)             not null,
-   PERS_APELLIDO_PATERNO VARCHAR(30)             not null,
-   PERS_APELLIDO_MATERNO VARCHAR(30)             null,
-   PERS_CORREO          VARCHAR(100)             not null,
-   PERS_TELEFONO        VARCHAR(10)             not null,
+   PERS_NOMBRE          VARCHAR(50)          not null,
+   PERS_APELLIDO_PATERNO VARCHAR(30)          not null,
+   PERS_APELLIDO_MATERNO VARCHAR(30)          null,
+   PERS_CORREO          VARCHAR(30)          not null,
+   PERS_TELEFONO        VARCHAR(10)          not null,
+   PERS_RFC             VARCHAR(13)          not null,
    constraint PK_PERSONA primary key (PERS_ID_PERSONA)
 );
 
 /*==============================================================*/
-/* Index: PERSONAS_PK                                           */
+/* Index: PERSONA_PK                                            */
 /*==============================================================*/
-create unique index PERSONAS_PK on PERSONA (
+create unique index PERSONA_PK on PERSONA (
 PERS_ID_PERSONA
+);
+
+/*==============================================================*/
+/* Table: PERSONAL_GRUPO                                        */
+/*==============================================================*/
+create table PERSONAL_GRUPO (
+   GRUP_ID_GRUPO        INT4                 not null,
+   USUA_ID_USUARIO      INT4                 not null,
+   CONS_ID_CONSTANCIAS  INT4                 null
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_27_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_27_FK on PERSONAL_GRUPO (
+GRUP_ID_GRUPO
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_37_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_37_FK on PERSONAL_GRUPO (
+USUA_ID_USUARIO
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_38_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_38_FK on PERSONAL_GRUPO (
+CONS_ID_CONSTANCIAS
 );
 
 /*==============================================================*/
@@ -527,7 +489,7 @@ PERS_ID_PERSONA
 create table PLATAFORMA (
    PLAT_ID_PLATAFORMA   SERIAL               not null,
    PLAT_NOMBRE          VARCHAR(30)          not null,
-   PLAT_ACTIVO          BOOL                 not null,
+   PLAT_ACTIVO			BOOL				 not null,
    constraint PK_PLATAFORMA primary key (PLAT_ID_PLATAFORMA)
 );
 
@@ -539,20 +501,44 @@ PLAT_ID_PLATAFORMA
 );
 
 /*==============================================================*/
-/* Table: PREGUNTA_SEGURIDAD                                    */
+/* Table: PREGUNTA_ENCUESTA                                     */
 /*==============================================================*/
-create table PREGUNTA_SEGURIDAD (
-   prse_id_pregunta     SERIAL               not null,
-   prse_pregunta        VARCHAR(100)            not null,
-   prse_ACTIVO          BOOL                 not null,
-   constraint PK_PREGUNTA primary key (prse_id_pregunta)
+create table PREGUNTA_ENCUESTA (
+   PREN_ID_PREGUNTA     SERIAL               not null,
+   ENCU_ID_ENCUESTA     INT4                 null,
+   PREN_TIPO            VARCHAR(15)          not null,
+   constraint PK_PREGUNTA_ENCUESTA primary key (PREN_ID_PREGUNTA)
 );
 
 /*==============================================================*/
-/* Index: PREGUNTA_SEGURIDADS_PK                                */
+/* Index: PREGUNTA_ENCUESTA_PK                                  */
 /*==============================================================*/
-create unique index PREGUNTAS_PK on PREGUNTA_SEGURIDAD (
-prse_id_pregunta
+create unique index PREGUNTA_ENCUESTA_PK on PREGUNTA_ENCUESTA (
+PREN_ID_PREGUNTA
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_32_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_32_FK on PREGUNTA_ENCUESTA (
+ENCU_ID_ENCUESTA
+);
+
+/*==============================================================*/
+/* Table: PREGUNTA_SEGURIDAD                                    */
+/*==============================================================*/
+create table PREGUNTA_SEGURIDAD (
+   PRSE_ID_PREGUNTA     SERIAL               not null,
+   PRSE_NOMBRE          VARCHAR(40)          not null,
+   PRSE_ACTIVO          BOOL                 not null,
+   constraint PK_PREGUNTA_SEGURIDAD primary key (PRSE_ID_PREGUNTA)
+);
+
+/*==============================================================*/
+/* Index: PREGUNTA_SEGURIDAD_PK                                 */
+/*==============================================================*/
+create unique index PREGUNTA_SEGURIDAD_PK on PREGUNTA_SEGURIDAD (
+PRSE_ID_PREGUNTA
 );
 
 /*==============================================================*/
@@ -561,16 +547,15 @@ prse_id_pregunta
 create table PROFESOR (
    PROF_ID_PROFESOR     SERIAL               not null,
    PERS_ID_PERSONA      INT4                 not null,
-   PROF_NUM_TRABAJADOR  VARCHAR(15)             not null,
-   PROF_SEMBLANZA       VARCHAR(500)            not null,
-   PROF_RFC             VARCHAR(15)             not null,
+   PROF_NUM_TRABAJADOR  VARCHAR(15)          not null,
+   PROF_SEMBLANZA       VARCHAR(500)         	 null,
    constraint PK_PROFESOR primary key (PROF_ID_PROFESOR)
 );
 
 /*==============================================================*/
-/* Index: PROFESORES_PK                                         */
+/* Index: PROFESOR_PK                                           */
 /*==============================================================*/
-create unique index PROFESORES_PK on PROFESOR (
+create unique index PROFESOR_PK on PROFESOR (
 PROF_ID_PROFESOR
 );
 
@@ -585,16 +570,30 @@ PERS_ID_PERSONA
 /* Table: PROFESOR_COORDINACION                                 */
 /*==============================================================*/
 create table PROFESOR_COORDINACION (
-   PROF_ID_PROFESOR     INT4                 not null,
    COOR_ID_COORDINACION INT4                 not null,
-   constraint PK_PROFESOR_COORDINACION primary key (PROF_ID_PROFESOR, COOR_ID_COORDINACION)
+   PROF_ID_PROFESOR     INT4                 not null,
+   constraint PK_PROFESOR_COORDINACION primary key (COOR_ID_COORDINACION, PROF_ID_PROFESOR)
 );
 
 /*==============================================================*/
-/* Index: RELATIONSHIP_29_PK                                    */
+/* Index: PROFESOR_COORDINACION_PK                              */
 /*==============================================================*/
-create unique index RELATIONSHIP_29_PK on PROFESOR_COORDINACION (
-PROF_ID_PROFESOR,
+create unique index PROFESOR_COORDINACION_PK on PROFESOR_COORDINACION (
+COOR_ID_COORDINACION,
+PROF_ID_PROFESOR
+);
+
+/*==============================================================*/
+/* Index: PROFESOR_COORDINACION2_FK                             */
+/*==============================================================*/
+create  index PROFESOR_COORDINACION2_FK on PROFESOR_COORDINACION (
+PROF_ID_PROFESOR
+);
+
+/*==============================================================*/
+/* Index: PROFESOR_COORDINACION_FK                              */
+/*==============================================================*/
+create  index PROFESOR_COORDINACION_FK on PROFESOR_COORDINACION (
 COOR_ID_COORDINACION
 );
 
@@ -602,16 +601,30 @@ COOR_ID_COORDINACION
 /* Table: PROFESOR_MODALIDAD                                    */
 /*==============================================================*/
 create table PROFESOR_MODALIDAD (
-   PROF_ID_PROFESOR     INT4                 not null,
    MODA_ID_MODALIDAD    INT4                 not null,
-   constraint PK_PROFESOR_MODALIDAD primary key (PROF_ID_PROFESOR, MODA_ID_MODALIDAD)
+   PROF_ID_PROFESOR     INT4                 not null,
+   constraint PK_PROFESOR_MODALIDAD primary key (MODA_ID_MODALIDAD, PROF_ID_PROFESOR)
 );
 
 /*==============================================================*/
 /* Index: PROFESOR_MODALIDAD_PK                                 */
 /*==============================================================*/
 create unique index PROFESOR_MODALIDAD_PK on PROFESOR_MODALIDAD (
-PROF_ID_PROFESOR,
+MODA_ID_MODALIDAD,
+PROF_ID_PROFESOR
+);
+
+/*==============================================================*/
+/* Index: PROFESOR_MODALIDAD2_FK                                */
+/*==============================================================*/
+create  index PROFESOR_MODALIDAD2_FK on PROFESOR_MODALIDAD (
+PROF_ID_PROFESOR
+);
+
+/*==============================================================*/
+/* Index: PROFESOR_MODALIDAD_FK                                 */
+/*==============================================================*/
+create  index PROFESOR_MODALIDAD_FK on PROFESOR_MODALIDAD (
 MODA_ID_MODALIDAD
 );
 
@@ -619,17 +632,63 @@ MODA_ID_MODALIDAD
 /* Table: PROFESOR_NIVEL                                        */
 /*==============================================================*/
 create table PROFESOR_NIVEL (
-   PROF_ID_PROFESOR     INT4                 not null,
    NIVE_ID_NIVEL        INT4                 not null,
-   constraint PK_PROFESOR_NIVEL primary key (PROF_ID_PROFESOR, NIVE_ID_NIVEL)
+   PROF_ID_PROFESOR     INT4                 not null,
+   constraint PK_PROFESOR_NIVEL primary key (NIVE_ID_NIVEL, PROF_ID_PROFESOR)
 );
 
 /*==============================================================*/
 /* Index: PROFESOR_NIVEL_PK                                     */
 /*==============================================================*/
 create unique index PROFESOR_NIVEL_PK on PROFESOR_NIVEL (
-PROF_ID_PROFESOR,
+NIVE_ID_NIVEL,
+PROF_ID_PROFESOR
+);
+
+/*==============================================================*/
+/* Index: PROFESOR_NIVEL2_FK                                    */
+/*==============================================================*/
+create  index PROFESOR_NIVEL2_FK on PROFESOR_NIVEL (
+PROF_ID_PROFESOR
+);
+
+/*==============================================================*/
+/* Index: PROFESOR_NIVEL_FK                                     */
+/*==============================================================*/
+create  index PROFESOR_NIVEL_FK on PROFESOR_NIVEL (
 NIVE_ID_NIVEL
+);
+
+/*==============================================================*/
+/* Table: RESULTADO_ENCUESTA                                    */
+/*==============================================================*/
+create table RESULTADO_ENCUESTA (
+   REEN_ID_RESULTADO    SERIAL               not null,
+   INSC_ID_INSCRIPCION  INT4                 null,
+   PREN_ID_PREGUNTA     INT4                 null,
+   REEN_RESULTADO       VARCHAR(50)          not null,
+   constraint PK_RESULTADO_ENCUESTA primary key (REEN_ID_RESULTADO)
+);
+
+/*==============================================================*/
+/* Index: RESULTADO_ENCUESTA_PK                                 */
+/*==============================================================*/
+create unique index RESULTADO_ENCUESTA_PK on RESULTADO_ENCUESTA (
+REEN_ID_RESULTADO
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_35_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_35_FK on RESULTADO_ENCUESTA (
+INSC_ID_INSCRIPCION
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_29_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_29_FK on RESULTADO_ENCUESTA (
+PREN_ID_PREGUNTA
 );
 
 /*==============================================================*/
@@ -637,14 +696,14 @@ NIVE_ID_NIVEL
 /*==============================================================*/
 create table ROL (
    ROL_ID_ROL           SERIAL               not null,
-   ROL_NOMBRE           VARCHAR(30)             not null,
+   ROL_NOMBRE           VARCHAR(30)          not null,
    constraint PK_ROL primary key (ROL_ID_ROL)
 );
 
 /*==============================================================*/
-/* Index: ROLES_PK                                              */
+/* Index: ROL_PK                                                */
 /*==============================================================*/
-create unique index ROLES_PK on ROL (
+create unique index ROL_PK on ROL (
 ROL_ID_ROL
 );
 
@@ -654,40 +713,66 @@ ROL_ID_ROL
 create table SALON (
    SALO_ID_SALON        SERIAL               not null,
    EDIF_ID_EDIFICIO     INT4                 not null,
-   SALO_NOMBRE          VARCHAR(10)             not null,
+   SALO_NOMBRE          VARCHAR(10)          not null,
    constraint PK_SALON primary key (SALO_ID_SALON)
 );
 
 /*==============================================================*/
-/* Index: SALONES_PK                                            */
+/* Index: SALON_PK                                              */
 /*==============================================================*/
-create unique index SALONES_PK on SALON (
+create unique index SALON_PK on SALON (
 SALO_ID_SALON
 );
 
 /*==============================================================*/
-/* Index: RELATIONSHIP_35_FK                                    */
+/* Index: RELATIONSHIP_30_FK                                    */
 /*==============================================================*/
-create  index RELATIONSHIP_35_FK on SALON (
+create  index RELATIONSHIP_30_FK on SALON (
 EDIF_ID_EDIFICIO
+);
+
+/*==============================================================*/
+/* Table: SERVIDOR_SOCIAL                                       */
+/*==============================================================*/
+create table SERVIDOR_SOCIAL (
+   SESO_ID_SERVIDOR     SERIAL               not null,
+   PERS_ID_PERSONA      INT4                 not null,
+   SESO_NUM_CUENTA      VARCHAR(15)          not null,
+   constraint PK_SERVIDOR_SOCIAL primary key (SESO_ID_SERVIDOR)
+);
+
+/*==============================================================*/
+/* Index: SERVIDOR_SOCIAL_PK                                    */
+/*==============================================================*/
+create unique index SERVIDOR_SOCIAL_PK on SERVIDOR_SOCIAL (
+SESO_ID_SERVIDOR
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_16_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_16_FK on SERVIDOR_SOCIAL (
+PERS_ID_PERSONA
 );
 
 /*==============================================================*/
 /* Table: SESION                                                */
 /*==============================================================*/
 create table SESION (
-   SESI_ID_SESIONES     SERIAL                 not null,
-   GRUP_ID_GRUPO        INT4                 null,
+   SESI_ID_SESIONES     SERIAL               not null,
+   GRUP_ID_GRUPO        INT4                 not null,
    SESI_FECHA           DATE                 not null,
    SESI_HORA_INICIO     TIME                 not null,
-   SESI_HORA_FIN     TIME                 not null,
+   SESI_HORA_FIN        TIME                 null,
+   SESI_VIDEO           VARCHAR(300)         null,
+   SESI_ESTADO_VIDEO    VARCHAR(20)          null,
    constraint PK_SESION primary key (SESI_ID_SESIONES)
 );
 
 /*==============================================================*/
-/* Index: SESIONES_PK                                           */
+/* Index: SESION_PK                                             */
 /*==============================================================*/
-create unique index SESIONES_PK on SESION (
+create unique index SESION_PK on SESION (
 SESI_ID_SESIONES
 );
 
@@ -705,10 +790,9 @@ create table USUARIO (
    USUA_ID_USUARIO      SERIAL               not null,
    PERS_ID_PERSONA      INT4                 null,
    ROL_ID_ROL           INT4                 null,
-   prse_id_pregunta     INT4                 not null,
-   USUA_NUM_USUARIO     VARCHAR(15)             not null,
-   USUA_CONTRASENA      VARCHAR(20)             not null,
-   USUA_RESPUESTA       VARCHAR(30)             not null,
+   PRSE_ID_PREGUNTA     INT4                 null,
+   USUA_NUM_USUARIO     VARCHAR(15)          not null,
+   USUA_CONTRASENA      VARCHAR(20)          not null,
    USUA_ACTIVO          BOOL                 not null,
    constraint PK_USUARIO primary key (USUA_ID_USUARIO)
 );
@@ -735,90 +819,15 @@ ROL_ID_ROL
 );
 
 /*==============================================================*/
-/* Index: RELATIONSHIP_36_FK                                    */
+/* Index: RELATIONSHIP_43_FK                                    */
 /*==============================================================*/
-create  index RELATIONSHIP_36_FK on USUARIO (
-prse_id_pregunta
+create  index RELATIONSHIP_43_FK on USUARIO (
+PRSE_ID_PREGUNTA
 );
 
-/*==============================================================*/
-/* Table: Encuesta                                              */
-/*==============================================================*/
-
-CREATE TABLE ENCUESTA (
-   ENCU_ID_ENCUESTA       SERIAL       not null,
-   ENCU_ACTIVO            BOOL         not null,
-   constraint PK_ENCUESTA primary key (ENCU_ID_ENCUESTA)  
-);
-
-/*==============================================================*/
-/* Index: ENCUESTA_PK                                            */
-/*==============================================================*/
-create unique index ENCUESTA_PK on ENCUESTA (
-ENCU_ID_ENCUESTA
-);
-
-/*==============================================================*/
-/* Table: Pregunta_Encuesta                                     */
-/*==============================================================*/
-
-CREATE TABLE Pregunta_Encuesta (
-   PREN_ID_PREGUNTA     SERIAL           not null,
-   ENCU_ID_ENCUESTA     INT4             not null,
-   PREN_TIPO            VARCHAR(15)         not null,
-   constraint PK_PREGUNTA_ENCUESTA primary key (PREN_ID_PREGUNTA)  
-);
-
-/*==============================================================*/
-/* Index: PREGUNTA_ENCUESTA_PK                                  */
-/*==============================================================*/
-create unique index PREGUNTA_ENCUESTA_PK on Pregunta_Encuesta (
-PREN_ID_PREGUNTA
-);
-
-/*==============================================================*/
-/* Index: RELATIONSHIP_40_FK                                    */
-/*==============================================================*/
-create  index RELATIONSHIP_40_FK on PREGUNTA_ENCUESTA (
-ENCU_ID_ENCUESTA
-);
-
-/*==============================================================*/
-/* Table: Resultado_Encuesta                                   */
-/*==============================================================*/
-
-CREATE TABLE Resultado_Encuesta (
-   REEN_ID_RESULTADO    SERIAL         not null,
-   PREN_ID_PREGUNTA     INT4           not null,
-   INSC_ID_INSCRIPCION  INT4             not null,
-   REEN_RESULTADO       VARCHAR(50)         not null,
-   constraint PK_REEN_ID_RESULTADO primary key (REEN_ID_RESULTADO)
-);
-
-/*==============================================================*/
-/* Index: PREGUNTA_ENCUESTA_PK                                  */
-/*==============================================================*/
-create unique index REEN_ID_RESULTADO_PK on Resultado_Encuesta (
-REEN_ID_RESULTADO
-);
-
-/*==============================================================*/
-/* Index: RELATIONSHIP_41_FK                                    */
-/*==============================================================*/
-create  index RELATIONSHIP_41_FK on RESULTADO_ENCUESTA (
-PREN_ID_PREGUNTA
-);
-
-/*==============================================================*/
-/* Index: RELATIONSHIP_42_FK                                    */
-/*==============================================================*/
-create  index RELATIONSHIP_42_FK on RESULTADO_ENCUESTA (
-INSC_ID_INSCRIPCION
-);
-
-alter table ADMINISTRADOR
-   add constraint FK_ADMNISTR_RELATIONS_PERSONA foreign key (PERS_ID_PERSONA)
-      references PERSONA (PERS_ID_PERSONA)
+alter table ASISTENCIA
+   add constraint FK_ASISTENC_ASISTIDO_SESION foreign key (SESI_ID_SESIONES)
+      references SESION (SESI_ID_SESIONES)
       on delete restrict on update restrict;
 
 alter table ASISTENCIA
@@ -826,19 +835,25 @@ alter table ASISTENCIA
       references INSCRIPCION (INSC_ID_INSCRIPCION)
       on delete restrict on update restrict;
 
-alter table GRUPO
-   add constraint FK_GRUPO_RELATIONS_CURSO foreign key (CURS_ID_CURSOS)
-      references CURSO (CURS_ID_CURSOS)
+
+alter table DIA_FESTIVO
+   add constraint FK_DIA_FEST_RELATIONS_CALENDAR foreign key (CALE_ID_CALENDARIO)
+      references CALENDARIO (CALE_ID_CALENDARIO)
       on delete restrict on update restrict;
 
 alter table GRUPO
-   add constraint FK_GRUPO_RELATIONS_PROFESOR foreign key (PROF_ID_PROFESOR)
-      references PROFESOR (PROF_ID_PROFESOR)
+   add constraint FK_GRUPO_RELATIONS_CURSO foreign key (CURS_ID_CURSO)
+      references CURSO (CURS_ID_CURSO)
       on delete restrict on update restrict;
 
 alter table GRUPO
-   add constraint FK_GRUPO_RELATIONS_MODERADOR foreign key (mode_id_moderador)
-      references MODERADOR (mode_id_moderador)
+   add constraint FK_GRUPO_RELATIONS_PLATAFOR foreign key (PLAT_ID_PLATAFORMA)
+      references PLATAFORMA (PLAT_ID_PLATAFORMA)
+      on delete restrict on update restrict;
+
+alter table GRUPO
+   add constraint FK_GRUPO_RELATIONS_CALENDAR foreign key (CALE_ID_CALENDARIO)
+      references CALENDARIO (CALE_ID_CALENDARIO)
       on delete restrict on update restrict;
 
 alter table GRUPO
@@ -847,14 +862,19 @@ alter table GRUPO
       on delete restrict on update restrict;
 
 alter table GRUPO
-   add constraint FK_GRUPO_RELATIONS_CALENDARIO foreign key (CALE_ID_CALENDARIO)
-      references CALENDARIO (CALE_ID_CALENDARIO)
-      on delete restrict on update restrict; 
+   add constraint FK_GRUPO_RELATIONS_ESTADO foreign key (ESTA_ID_ESTADO)
+      references ESTADO (ESTA_ID_ESTADO)
+      on delete restrict on update restrict;
 
 alter table GRUPO
-   add constraint FK_GRUPO_RELATIONS_PLATAFORMA foreign key (PLAT_ID_PLATAFORMA)
-      references PLATAFORMA (PLAT_ID_PLATAFORMA)
-      on delete restrict on update restrict; 
+   add constraint FK_GRUPO_RELATIONS_MODALIDA foreign key (MOAP_ID_MODALIDAD)
+      references MODALIDAD_APRENDIZAJE (MOAP_ID_MODALIDAD)
+      on delete restrict on update restrict;
+
+alter table HORARIO_MODERADOR
+   add constraint FK_HORARIO__RELATIONS_USUARIO foreign key (USUA_ID_USUARIO)
+      references USUARIO (USUA_ID_USUARIO)
+      on delete restrict on update restrict;
 
 alter table INSCRIPCION
    add constraint FK_INSCRIPC_RELATIONS_GRUPO foreign key (GRUP_ID_GRUPO)
@@ -871,19 +891,34 @@ alter table INSCRIPCION
       references CONSTANCIA (CONS_ID_CONSTANCIAS)
       on delete restrict on update restrict;
 
-alter table MODERADOR
-   add constraint FK_MODERADOR_RELATIONS_PERSONA foreign key (PERS_ID_PERSONA)
-      references PERSONA (PERS_ID_PERSONA)
-      on delete restrict on update restrict;
-
 alter table MODERADOR_DIA
-   add constraint FK_MODERADOR__MODERADOR_D_MODERADOR foreign key (mode_id_moderador)
-      references MODERADOR (mode_id_moderador)
-      on delete restrict on update restrict;
-
-alter table MODERADOR_DIA
-   add constraint FK_MODERADOR__MODERADOR_D_DIA foreign key (DIA_ID_DIA)
+   add constraint FK_MODERADO_MODERADOR_DIA foreign key (DIA_ID_DIA)
       references DIA (DIA_ID_DIA)
+      on delete restrict on update restrict;
+
+alter table MODERADOR_DIA
+   add constraint FK_MODERADO_MODERADOR_HORARIO_ foreign key (MODE_ID_MODERADOR)
+      references HORARIO_MODERADOR (MODE_ID_MODERADOR)
+      on delete restrict on update restrict;
+
+alter table PERSONAL_GRUPO
+   add constraint FK_PERSONAL_RELATIONS_GRUPO foreign key (GRUP_ID_GRUPO)
+      references GRUPO (GRUP_ID_GRUPO)
+      on delete restrict on update restrict;
+
+alter table PERSONAL_GRUPO
+   add constraint FK_PERSONAL_RELATIONS_USUARIO foreign key (USUA_ID_USUARIO)
+      references USUARIO (USUA_ID_USUARIO)
+      on delete restrict on update restrict;
+
+alter table PERSONAL_GRUPO
+   add constraint FK_PERSONAL_RELATIONS_CONSTANC foreign key (CONS_ID_CONSTANCIAS)
+      references CONSTANCIA (CONS_ID_CONSTANCIAS)
+      on delete restrict on update restrict;
+
+alter table PREGUNTA_ENCUESTA
+   add constraint FK_PREGUNTA_RELATIONS_ENCUESTA foreign key (ENCU_ID_ENCUESTA)
+      references ENCUESTA (ENCU_ID_ENCUESTA)
       on delete restrict on update restrict;
 
 alter table PROFESOR
@@ -892,16 +927,11 @@ alter table PROFESOR
       on delete restrict on update restrict;
 
 alter table PROFESOR_COORDINACION
-   add constraint FK_PROFESOR_PROFESOR__PROFESOR foreign key (PROF_ID_PROFESOR)
-      references PROFESOR (PROF_ID_PROFESOR)
-      on delete restrict on update restrict;
-
-alter table PROFESOR_COORDINACION
    add constraint FK_PROFESOR_PROFESOR__COORDINA foreign key (COOR_ID_COORDINACION)
       references COORDINACION (COOR_ID_COORDINACION)
       on delete restrict on update restrict;
 
-alter table PROFESOR_MODALIDAD
+alter table PROFESOR_COORDINACION
    add constraint FK_PROFESOR_PROFESOR__PROFESOR foreign key (PROF_ID_PROFESOR)
       references PROFESOR (PROF_ID_PROFESOR)
       on delete restrict on update restrict;
@@ -911,7 +941,7 @@ alter table PROFESOR_MODALIDAD
       references MODALIDAD (MODA_ID_MODALIDAD)
       on delete restrict on update restrict;
 
-alter table PROFESOR_NIVEL
+alter table PROFESOR_MODALIDAD
    add constraint FK_PROFESOR_PROFESOR__PROFESOR foreign key (PROF_ID_PROFESOR)
       references PROFESOR (PROF_ID_PROFESOR)
       on delete restrict on update restrict;
@@ -921,9 +951,29 @@ alter table PROFESOR_NIVEL
       references NIVEL (NIVE_ID_NIVEL)
       on delete restrict on update restrict;
 
+alter table PROFESOR_NIVEL
+   add constraint FK_PROFESOR_PROFESOR__PROFESOR foreign key (PROF_ID_PROFESOR)
+      references PROFESOR (PROF_ID_PROFESOR)
+      on delete restrict on update restrict;
+
+alter table RESULTADO_ENCUESTA
+   add constraint FK_RESULTAD_RELATIONS_PREGUNTA foreign key (PREN_ID_PREGUNTA)
+      references PREGUNTA_ENCUESTA (PREN_ID_PREGUNTA)
+      on delete restrict on update restrict;
+
+alter table RESULTADO_ENCUESTA
+   add constraint FK_RESULTAD_RELATIONS_INSCRIPC foreign key (INSC_ID_INSCRIPCION)
+      references INSCRIPCION (INSC_ID_INSCRIPCION)
+      on delete restrict on update restrict;
+
 alter table SALON
    add constraint FK_SALON_RELATIONS_EDIFICIO foreign key (EDIF_ID_EDIFICIO)
       references EDIFICIO (EDIF_ID_EDIFICIO)
+      on delete restrict on update restrict;
+
+alter table SERVIDOR_SOCIAL
+   add constraint FK_SERVIDOR_RELATIONS_PERSONA foreign key (PERS_ID_PERSONA)
+      references PERSONA (PERS_ID_PERSONA)
       on delete restrict on update restrict;
 
 alter table SESION
@@ -937,8 +987,8 @@ alter table USUARIO
       on delete restrict on update restrict;
 
 alter table USUARIO
-   add constraint FK_USUARIO_RELATIONS_PREGUNTA foreign key (prse_id_pregunta)
-      references PREGUNTA_SEGURIDAD (prse_id_pregunta)
+   add constraint FK_USUARIO_RELATIONS_PREGUNTA foreign key (PRSE_ID_PREGUNTA)
+      references PREGUNTA_SEGURIDAD (PRSE_ID_PREGUNTA)
       on delete restrict on update restrict;
 
 alter table USUARIO
@@ -946,22 +996,143 @@ alter table USUARIO
       references PERSONA (PERS_ID_PERSONA)
       on delete restrict on update restrict;
 
-alter table Pregunta_Encuesta
-   add constraint FK_PREGUNTA_ENCUESTA_RELATIONS_ENCUESTA foreign key (ENCU_ID_ENCUESTA)
-      references ENCUESTA (ENCU_ID_ENCUESTA)
-      on delete restrict on update restrict; 
 
-alter table Resultado_Encuesta
-   add constraint FK_RESULTADO_ENCUESTA_RELATIONS_ENCUESTA foreign key (PREN_ID_PREGUNTA)
-      references PREGUNTA_ENCUESTA (PREN_ID_PREGUNTA)
-      on delete restrict on update restrict; 
 
-alter table Resultado_Encuesta
-   add constraint FK_RESULTADO_ENCUESTA_RELATIONS_INSCRIPCION foreign key (INSC_ID_INSCRIPCION)
-      references INSCRIPCION (INSC_ID_INSCRIPCION)
-      on delete restrict on update restrict; 
 
-alter table DIA_FESTIVO
-   add constraint FK_DIA_FESTIVO_RELATIONS_CALENDARIO foreign key (CALE_ID_CALENDARIO)
-   references CALENDARIO (CALE_ID_CALENDARIO)
-   on delete restrict on update restrict;
+
+
+
+INSERT INTO MODALIDAD_APRENDIZAJE (MOAP_NOMBRE, MOAP_ACTIVO) VALUES ('Presencial', 'TRUE'),('En línea', 'TRUE'),('Autogestivo', 'TRUE');
+
+INSERT INTO ESTADO (ESTA_NOMBRE ) VALUES ('Cancelado'),('En curso'),('Pendiente'),('Finalizado');
+
+INSERT INTO Rol (rol_nombre) VALUES ('Administrador del sistema'),('Instructor'),('Moderador'),('Profesor');
+
+INSERT INTO Dia (dia_nombre) VALUES ('Lunes'), ('Martes'), ('Miercoles'), ('Jueves'), ('Viernes'), ('Sabado');
+
+INSERT INTO Nivel (nive_nombre) VALUES ('Licenciatura'), ('Postgrado');
+
+INSERT INTO Modalidad (moda_nombre) VALUES ('Presencial'), ('Abierta'), ('A distancia');
+
+INSERT INTO Coordinacion (coor_nombre) VALUES ('Informática'), ('Fiscal'), ('Contabilidad'), ('Finanzas'), ('Administración básica'), ('Matemáticas'), ('Auditoría'), ('Economía'),
+('Derecho'), ('Costos y Presupuestos'), ('Contabilidad básica'), ('Recursos humanos'), ('Mercadotecnia'),('Maestrías en línea'),
+('Maestrías en administración de sistemas de salud'), ('Maestría en finanzas'),('Especialidades de alta dirección'), ('RH y mercadotecnia'),
+('Maestría en auditoria'), ('Especialidad en administración gerontológica'), ('Maestría negocios internacionales'), ('Maestría en turismo'),
+('Maestría en alta dirección'), ('Maestría en informática administrativa');
+
+INSERT INTO EDIFICIO (EDIF_NOMBRE)
+			VALUES ('A'),('B'),('C');
+
+INSERT INTO CALENDARIO (CALE_SEMESTRE, CALE_INICIO_CICLO, CALE_FIN_CICLO, CALE_INICIO_EXAMENES, CALE_FIN_EXAMENES, CALE_INICIO_ASUETO,
+						CALE_FIN_ASUETO, CALE_INICIO_INTERSEMESTRAL, CALE_FIN_INTERSEMESTRAL, CALE_INICIO_ADMIN, CALE_FIN_ADMIN, CALE_ACTIVO)
+   			VALUES('2021-2', '2021/07/01', '2022/01/30', '2021/11/29', '2021/12/10', '2021/08/02', '2021/08/06', '2021/12/13', '2022/01/28', '2021/12/20', '2022/01/05', TRUE);
+
+INSERT INTO PLATAFORMA (PLAT_NOMBRE, PLAT_ACTIVO)
+			VALUES ('Zoom', 'TRUE'),('Google Meet', 'TRUE'),('Webex', 'TRUE'),('Skype', 'FALSE');
+
+INSERT INTO Persona (pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono, PERS_RFC)
+	VALUES ('Rocío Ayme', 'García', 'Castillo', 'persona1@gmail.com', '5501010101', 'AAAA990115A01'),
+  ('Esteban', 'Montoya', 'Maya', 'persona2@gmail.com', '5501010102', 'BBBB990115A02'),
+  ('Karen', 'Fuentez', 'Aguilar', 'person3@gmail.com', '5501010103', 'CCCC990115A03'),
+  ('Samuel', 'Alcantara', 'Chavez', 'persona4@gmail.com', '5501010104', 'DDDD990115A04'),
+  ('Luis Antonio', 'Gutierrez', 'Castro', 'persona5@gmail.com', '5501010105', 'EEEE990115A05'),
+  ('Gabriel', 'Guevara', 'Gutierrez', 'persona6@gmail.com', '5501010106', 'GGGG990115A06'),
+	('Fernanda', 'Fuentez', 'Fuentez', 'persona7@gmail.com', '5501010107', 'FFFF990115A07'),
+	('Ana Patricia', 'Aguilar', 'Aguilar', 'persona8@gmail.com', '5501010108', 'HHHH990115A08'),
+	('Luna', 'Mesa', 'Carrillo', 'persona9@gmail.com', '5501010109', 'IIII990115A09');
+
+INSERT INTO dia_festivo (cale_id_calendario, dife_fecha)
+                VALUES (1, '2021/09/15'), (1,'2021/09/16');
+
+INSERT INTO SALON (EDIF_ID_EDIFICIO, SALO_NOMBRE)
+			VALUES (1, '05'),(2, '03'),(3, '08');
+
+INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza)
+    VALUES (1, '123451', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber'),
+						(2,'123452','Profesor de informatica con experiencia en IOS y MACOS'),
+						(3,'123453',null),
+						(4,'123454',null),
+						(5,'123455',null),
+						(6,'123456',null),
+						(7,'123457',null);
+
+INSERT INTO Profesor_Nivel (prof_id_profesor, nive_id_nivel) VALUES
+(1, 1), (1, 2),(2, 1), (3, 2), (4, 1), (5, 2),(6, 1), (7, 2);
+
+INSERT INTO Profesor_Modalidad (prof_id_profesor, moda_id_modalidad) VALUES
+(1, 1), (1, 2),(2, 1), (3, 2), (4, 3), (5, 2),(6, 1), (7, 3);
+
+INSERT INTO Profesor_Coordinacion(prof_id_profesor, coor_id_coordinacion) VALUES
+(1, 2), (1, 5),(2, 9), (3, 18), (4, 24), (5, 3),(6, 1), (7, 6);
+
+INSERT INTO SERVIDOR_SOCIAL (pers_id_persona, SESO_NUM_CUENTA)
+    VALUES (8, '123457898'),(9, '123457899');
+
+INSERT INTO USUARIO (PERS_ID_PERSONA,ROL_ID_ROL,USUA_NUM_USUARIO,USUA_CONTRASENA, USUA_ACTIVO) VALUES
+(1,1,'Administrador1','AAAA99','TRUE'),
+(2,1,'Administrador2','BBBB99','TRUE'),	(2,2,'Instructor1','BBBB99','TRUE'),	(2,3,'Monitor1','BBBB99','TRUE'),	(2,4,'123452','BBBB99','TRUE'),
+										(3,2,'Instructor2','CCCC99','TRUE'),	(3,3,'Monitor2','CCCC99','TRUE'),	(3,4,'123453','CCCC99','TRUE'),
+										(4,2,'Instructor3','DDDD99','TRUE'),																		(4,4,'123454','DDDD99','TRUE'),
+																													(5,3,'Monitor3','EEEE99','TRUE'),	(5,4,'123455','EEEE99','TRUE'),
+										(6,2,'Instructor4','GGGG99','TRUE'),
+																																														(7,4,'123457','FFFF99','TRUE'),
+																													(8,3,'123457898','HHHH99','TRUE'),
+																													(9,3,'123457898','IIII99','FALSE');
+
+
+
+
+INSERT INTO HORARIO_MODERADOR (usua_id_usuario, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin)
+		VALUES 	(4, '2021/02/23', '2021/09/08','07:00:00', '21:00:00'),
+						(7, '2021/02/23', '2021/09/08','07:00:00', '21:00:00'),
+						(11, '2021/02/23', '2021/09/08','07:00:00', '21:00:00'),
+						(15, '2021/02/23', '2021/09/08','07:00:00', '21:00:00'),
+						(16, '2021/02/23', '2021/09/08','07:00:00', '21:00:00');
+
+
+INSERT INTO Moderador_Dia (mode_id_moderador, dia_id_dia)
+VALUES 	(1,1), (1,2), (1,3), (1,4), (1,5),
+				(2,2), (2,3), (2,4), (2,5), (2,6),
+				(3,1), (3,3), (3,5),
+				(4,2), (4,4), (4,6),
+				(5,1), (5,2), (5,3), (5,4);
+
+INSERT INTO Curso (CURS_TIPO, CURS_NOMBRE, CURS_NUM_SESIONES, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, CURS_NIVEL, CURS_OBJETIVOS, CURS_TEMARIO, CURS_ACTIVO)
+			VALUES 	('Curso', 'Cuestionarios en Zoom', 1, 'Tener cuenta de Zoom', null, 'Básico', 'Aprender a ahcer cuestionarios en Zoom', '/nose.pdf', 'TRUE'),
+							('Taller', 'Actualización Meet', 2, 'Tener cuenta de Google', null, 'Básico', 'Aprender a usar las nuevas actualizaciones de Meet', '/nose.pdf', 'TRUE'),
+							('Curso', 'Excel', 3, 'Contar con Excel', null, 'Básico', 'Aprender', '/nose.pdf', 'TRUE'),
+							('Taller', 'Plan de Clase', 4, null, null, 'Intermedio', 'Aprender', '/nose.pdf', 'TRUE'),
+							('Curso', 'Biblioteca Digital', 5, null, null, 'Básico', 'Aprender', '/nose.pdf', 'FALSE'),
+							('Taller', 'Evaluar en Moodle', 1, 'Tener cuenta de Moodle', null, 'Avanzado', 'Aprender', '/nose.pdf', 'TRUE');
+
+INSERT INTO Grupo 	(CURS_ID_CURSO,CALE_ID_CALENDARIO,PLAT_ID_PLATAFORMA,SALO_ID_SALON,
+										ESTA_ID_ESTADO,MOAP_ID_MODALIDAD,GRUP_URL,GRUP_ID_ACCESO,GRUP_CLAVE_ACCESO,
+										GRUP_CUPO,GRUP_NUM_INSCRITOS,GRUP_PUBLICADO,GRUP_TIPO,GRUP_INICIO_INSC,GRUP_FIN_INSC)
+			VALUES	(1,1,1,null,
+							3,2,'https://cuaed-unam.zoom.us/j/88139303420','1234567','acceso1',
+							15,2,'TRUE','Público','2021/07/01','2021/07/17'),
+							(2,1,2,null,
+							3,2,'https://cuaed-unam.zoom.us/j/88139303430','1234566','acceso2',
+							15,1,'TRUE','Público','2021/07/01','2021/07/16'),
+							(3,1,1,null,
+							3,2,'https://cuaed-unam.zoom.us/j/88139303440','1234565','acceso3',
+							15,2,'TRUE','Público','2021/07/01','2021/07/15'),
+							(4,1,null,null,
+							3,3,'https://autogestivos.com',null,null,
+							15,0,'TRUE','Público','2021/07/01','2021/07/14'),
+							(4,1,null,2,
+							3,1,null,null,null,
+							15,0,'TRUE','Público','2021/07/01','2021/07/13');
+
+INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin)
+			VALUES  	(1, '2021/07/19','09:00:00', '11:00:00'),
+								(2, '2021/07/21','07:00:00', '09:00:00'), (2, '2021/07/28','10:00:00', '12:00:00'),
+								(3, '2021/07/19','07:00:00', '09:00:00'), (3, '2021/07/20','10:00:00', '12:00:00'),(3, '2021/07/21','13:00:00', '14:00:00'),
+								(4, '2021/07/26','07:00:00', '09:00:00'),(4, '2021/07/27','07:00:00', '09:00:00'),(4, '2021/07/28','07:00:00', '09:00:00'),(4, '2021/07/29','07:00:00', '09:00:00'),
+								(5, '2021/07/20','07:00:00', '09:00:00'),(5, '2021/07/27','13:00:00', '14:00:00'),(5, '2021/08/03','07:00:00', '09:00:00'),(5, '2021/08/10','07:00:00', '09:00:00');
+
+INSERT INTO PERSONAL_GRUPO (GRUP_ID_GRUPO,USUA_ID_USUARIO,CONS_ID_CONSTANCIAS)
+	VALUES(1,9,null),(1,4,null),(2,9,null),(3,9,null),(4,13,null),(4,11,null),(5,9,null);
+
+INSERT INTO INSCRIPCION (GRUP_ID_GRUPO,PROF_ID_PROFESOR,INSC_ACTIVO)
+	VALUES(1, 5, 'TRUE'),(2, 5, 'TRUE'),(3, 5, 'TRUE'),(4, 5, 'TRUE'),(1, 7, 'TRUE'),(3, 7, 'TRUE');

@@ -30,14 +30,30 @@
 
     //Buscar un moderador dado el id de una persona
     //TODO Verificado en la BD 02/07/2021
-    //? El numero de cuenta debe buscarse de otra forma, ya que en una sola busqueda es conflictivo encontrar si es moderador profesor o de servicio social
+    function buscarServidorSocial($persona)
+		{
+			$SQL_Bus_Moderador = 
+			"	SELECT DISTINCT seso_id_servidor, pers_id_persona, seso_num_cuenta
+        FROM Servidor_Social
+        WHERE pers_id_persona = $persona
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Moderador);
+			$obj_Persona = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerObjeto(0));
+		}
+
     function buscarModerador($persona)
 		{
 			$SQL_Bus_Moderador = 
-			"	
-      SELECT DISTINCT M.mode_id_moderador, pers_id_persona, M.mode_fecha_inicio, M.mode_fecha_fin, M.mode_hora_inicio, M.mode_hora_fin
-      FROM Horario_Moderador M, Usuario U
-      WHERE M.USUA_ID_USUARIO = U.USUA_ID_USUARIO AND ROL_ID_ROL = 3 AND pers_id_persona = $persona
+			"	SELECT DISTINCT HM.mode_id_moderador, pers_id_persona, HM.mode_fecha_inicio, HM.mode_fecha_fin, HM.mode_hora_inicio, HM.mode_hora_fin
+        FROM Usuario U
+        INNER JOIN Horario_Moderador HM ON U.usua_id_usuario = HM.usua_id_usuario
+        WHERE pers_id_persona = $persona
 			";
 
 			$bd = new BD();
@@ -50,14 +66,16 @@
 		}
 
     //Buscar los días (id y nombre) de un moderador dado el id del moderador
-    //TODO Verificado en la BD 02/07/2021
-    function buscarModeradorDias($moderador)
+    //? Verificado en la BD 04/07/2021
+    function buscarModeradorDias($persona)
 		{
 			$SQL_Bus_Moderador = 
-			"	
-        SELECT DISTINCT D.dia_id_dia, D.dia_nombre
-        FROM Dia D, Moderador_Dia MD
-        WHERE MD.dia_id_dia = D.dia_id_dia AND mode_id_moderador = $moderador
+			"	SELECT DISTINCT D.dia_id_dia , D.dia_nombre
+        FROM Usuario U
+        INNER JOIN Horario_Moderador HM ON U.usua_id_usuario = HM.usua_id_usuario
+        INNER JOIN Moderador_Dia MD ON HM.mode_id_moderador = MD.mode_id_moderador
+        INNER JOIN Dia D ON MD.dia_id_dia = D.dia_id_dia
+        WHERE pers_id_persona = $persona
 			";
 
       $bd = new BD();

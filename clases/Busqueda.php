@@ -2,7 +2,7 @@
     class Busqueda
     {
         //Consultar coordinaciones: id y nombre.
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 01/07/2021
         function selectCoordinaciones()
         {
             $SQL_Bus_Eventos =
@@ -20,7 +20,7 @@
         }       
 
         //Consultar niveles: id y nombre.
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 01/07/2021
         function selectNiveles()
         {
             $SQL_Bus_Eventos =
@@ -38,7 +38,7 @@
         }
 
         //Consultar modalidades: id y nombre.
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 01/07/2021
         function selectModalidades()
         {
             $SQL_Bus_Eventos =
@@ -56,7 +56,7 @@
         }
 
         //Consultar días: id y nombre.
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 01/07/2021
         function selectDias()
         {
             $SQL_Bus_Eventos =
@@ -91,11 +91,10 @@
         }
 
         //Consultar las preguntas de seguridad: id, pregunta y estado.
-        //TODO NO EXISTE EN LA BD 01/07/2021
         function selectPregunta()
         {
             $SQL_Bus_Preg = 
-            "   SELECT prse_id_pregunta, prse_pregunta, prse_activo
+            "   SELECT prse_id_pregunta, prse_nombre, prse_activo
                 FROM Pregunta_Seguridad;
             ";
 

@@ -167,13 +167,19 @@
 
 			if($existe != null) {
 
-
-				$SQL_Act_Profesor = 
-				" 	UPDATE Profesor
-					SET prof_num_trabajador = '$num_trabajador', prof_semblanza = '$semblanza'
-					WHERE pers_id_persona = $persona;
-				";
-
+				if (isset($semblanza)) {
+					$SQL_Act_Profesor = 
+					" 	UPDATE Profesor
+						SET prof_num_trabajador = '$num_trabajador', prof_semblanza = '$semblanza'
+						WHERE pers_id_persona = $persona;
+					";
+				} else {
+					$SQL_Act_Profesor = 
+					" 	UPDATE Profesor
+						SET prof_num_trabajador = '$num_trabajador'
+						WHERE pers_id_persona = $persona;
+					";
+				}
 				$bd = new BD();
 				$bd->abrirBD();
 				$transaccion_1 = new Transaccion($bd->conexion);
