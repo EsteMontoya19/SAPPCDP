@@ -86,14 +86,19 @@
 		//? el atributo rfc pertenece a persona
 		function agregarProfesor($persona, $numTrabajador, $semblanza)
 		{
-		//Aquí iría una validación pero puede ser que ya se esté haciendo en otra parte
-		$SQL_Ins_Profesor =
-		" 
-			INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza) VALUES 
-			($persona,'$numTrabajador', '$semblanza');
-		";
+			if (isset($semblanza)) {
+				$SQL_Ins_Profesor =
+				" INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza) VALUES 
+					($persona,'$numTrabajador', '$semblanza');
+				";
+			} else {
+				$SQL_Ins_Profesor =
+				" INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza) VALUES 
+					($persona,'$numTrabajador', 'null');
+				";
+			}
 		
-		$bd = new BD();
+			$bd = new BD();
 			$bd->abrirBD();
 			$transaccion_1 = new Transaccion($bd->conexion);
 			$transaccion_1->enviarQuery($SQL_Ins_Profesor);

@@ -26,6 +26,7 @@
   $persona->pers_apellido_paterno = null;
   $persona->pers_correo = null;
   $persona->pers_telefono = null;
+  $persona = null;
 
   $profesor = null;
   $profesor_coordinacion = null;
@@ -172,6 +173,39 @@
                     placeholder="ej. 5511223344" value="<?php echo isset($persona) ? $persona->pers_telefono : ""; ?>">
                 </div>
               </div>
+
+              <div class="col-lg-12 form-row">
+                <div id="numCuenta" class="col-lg-6 form-group">
+                <?php 
+                 //? Si es un servidor socila debe aparecer número de cuenta, sino es el de trabajador
+                    if(isset($usuario) && $usuario->rol_id_rol == MODERADOR) {
+                      if(isset($servidorSocial)  ){ ?>
+                        <label for="numCuenta" class = "negritas">Número de cuenta:*</label>
+                        <input value="<?php echo isset($servidorSocial) ? $servidorSocial-> seso_num_cuenta : ""; ?>" type="text" 
+                          class="form-control" name="lbNumCuenta"  id="intNumCuenta">
+                      <?php }  else { ?>
+                        <label for="intNum_Trabajador" class = "negritas">Número de trabajador:*</label>
+                        <input value="<?php echo isset($profesor) ? $profesor-> prof_num_trabajador : ""; ?>" type="text" 
+                          class="form-control" name="intNum_Trabajador"  id="intNum_Trabajador">
+                      <?php } 
+                    } else {?>
+                      <label for="intNum_Trabajador" class = "negritas">Número de trabajador o Número de cuenta:*</label>
+                      <input value="<?php echo isset($profesor) ? $profesor-> prof_num_trabajador : ""; ?>" type="text" 
+                        class="form-control" name="intNum_Trabajador"  id="intNum_Trabajador">
+                    <?php } ?>
+                  </div> 
+
+                <?php //? Si es Administrador, Profesor o Instructor?>
+                  <div id="rfc" class="col-lg-6 form-group">
+                  <label for="rfc" class = "negritas">RFC: *</label>
+                  <input value="<?php   if(isset($persona)){ 
+                                          echo($persona-> pers_rfc);
+                                        } else {
+                                          echo("");
+                                        }?>"  type="text"
+                      class="form-control" name="strRFC" id="strRFC">
+                  </div>
+              </div>
             </div>
           </div>
 
@@ -262,13 +296,13 @@
                 <i class="fas fa-id-badge fa-lg"></i>
                 &nbsp;Datos de la cuenta
               </div>
-              <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                
+
+              <div class="col-lg-12 form-row" style="margin-top: 15px;">        
                 <?php //? Si es Administrador, Profesor o Instructor?>
                 <?php if (isset($usuario) && $usuario->rol_id_rol == ADMINISTRADOR || $usuario->rol_id_rol == INSTRUCTOR || $usuario->rol_id_rol == PROFESOR) { ?>
-                  <div id="num_trabajador" class="col-lg-6 form-group">
+                  <div id="num_trabajador" class="col-lg-12 form-group">
                 <?php }  else { ?>
-                  <div id="num_trabajador" class="col-lg-6 form-group" style="display: none;">
+                  <div id="num_trabajador" class="col-lg-12 form-group" style="display: none;">
                     <?php } ?>
                     <label for="num_trabajador" class = "negritas">Número de trabajador:*</label>
                     <input value="<?php  if(isset($profesor)){ 
@@ -277,46 +311,14 @@
                                             echo("");
                                           } ?>" id="intNum_Trabajador" type="text" class="form-control" name="intNum_Trabajador">
                   </div> 
-                  <?php //? Si es Administrador, Profesor o Instructor?>
-                  <?php if (isset($usuario) && $usuario->rol_id_rol == ADMINISTRADOR || $usuario->rol_id_rol == INSTRUCTOR || $usuario->rol_id_rol == PROFESOR) { ?>
-                    <div id="rfc" class="col-lg-6 form-group">
-                  <?php }  else { ?>
-                    <div id="rfc" class="col-lg-6 form-group" style="display: none;">
-                  <?php } ?>
-                    <label for="rfc" class = "negritas">RFC: *</label>
-                    <input value="<?php   if(isset($persona)){ 
-                                            echo($persona-> pers_rfc);
-                                          } else {
-                                            echo("");
-                                          }?>"  type="text"
-                        class="form-control" name="strRFC" id="strRFC">
-                    </div>
               </div> <!-- Cierre div de datos row -->
               
               <!-- Datos del Moderador -->
               <div class="col-lg-12 form-row" style="margin-top: 15px;"> 
                 <?php if (isset($usuario) && $usuario->rol_id_rol == MODERADOR) { ?>
-                  <div id="numCuenta" class="col-lg-6 form-group">
+                  <div id="diasServicio" class="col-lg-12 form-group">
                 <?php }  else { ?>
-                  <div id="numCuenta" class="col-lg-6 form-group" style="display: none;">
-                <?php } 
-                 //? Si es un servidor socila debe aparecer número de cuenta, sino es el de trabajador
-                    if(isset($usuario) && $usuario->rol_id_rol == MODERADOR) {
-                      if(isset($servidorSocial)  ){ ?>
-                        <label for="numCuenta" class = "negritas">Número de cuenta:*</label>
-                        <input value="<?php echo isset($servidorSocial) ? $servidorSocial-> seso_num_cuenta : ""; ?>" type="text" 
-                          class="form-control" name="lbNumCuenta"  id="intNumCuenta">
-                      <?php }  else { ?>
-                        <label for="intNum_Trabajador" class = "negritas">Número de trabajador:*</label>
-                        <input value="<?php echo isset($profesor) ? $profesor-> prof_num_trabajador : ""; ?>" type="text" 
-                          class="form-control" name="intNum_Trabajador"  id="intNum_Trabajador">
-                      <?php } 
-                    }?>
-                  </div> 
-                <?php if (isset($usuario) && $usuario->rol_id_rol == MODERADOR) { ?>
-                  <div id="diasServicio" class="col-lg-6 form-group">
-                <?php }  else { ?>
-                  <div id="diasServicio" class="col-lg-6 form-group" style="display: none;">
+                  <div id="diasServicio" class="col-lg-12 form-group" style="display: none;">
                 <?php } ?>
                     <label for="diasServicio" class = "negritas">Dias del servicio:*</label><br>
                     <?php foreach ($arr_dias as $dia) { ?>
