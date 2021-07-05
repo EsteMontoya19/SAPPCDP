@@ -3,9 +3,7 @@
   include('../clases/BD.php');
   include('../clases/Usuario.php');
   include('../clases/Persona.php');
-  include('../clases/Moderador.php');
   include('../clases/Profesor.php');
-  include('../clases/Administrador.php');
   include('../clases/Busqueda.php');
 
   $obj_Persona = new Persona();
@@ -141,7 +139,7 @@
         $obj_Usuario->agregarUsuario($persona, $rol, $pregunta, $nombreUsuario, $contrasenia, $estado);
         switch($rol){
           case ADMINISTRADOR: //Administrador
-            $obj_Administrador->agregarAdministrador($persona, $num_trabajador, $rfc);
+            $obj_Profesor->agregarProfesor($persona, $num_trabajador, null);
           break;
 
           case MODERADOR: //Moderador

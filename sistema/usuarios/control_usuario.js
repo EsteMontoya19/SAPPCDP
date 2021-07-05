@@ -768,11 +768,18 @@ function hideOrShowPassword2() {
 }
 // Despliegue de campos según su rol.
 $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
+    //? Constantes para indicar el rol
+    const ADMINISTRADOR = 1;
+    const INSTRUCTOR = 2;
+    const MODERADOR = 3;
+    const PROFESOR = 4;
+
     var tipo_evento = $('#intUsuarioRol').val();
-    if (tipo_evento.startsWith('1')) {
-        $('#num_trabajador').show();
-        $('#rfc').show();
+    if (tipo_evento.startsWith(ADMINISTRADOR)) {
+       /* $('#num_trabajador').show();
+        $('#rfc').show(); 
         $('#numCuenta').hide();
+        Ahora son campos obligatorios*/
         $('#fechaInicio').hide();
         $('#fechaFin').hide();
         $('#horaInicio').hide();
@@ -783,10 +790,11 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
         $('#modalidadImparticion').hide();
         $('#coordinaciones').hide();
     }
-    if (tipo_evento.startsWith('3')) {
-        $('#num_trabajador').show();
+    if (tipo_evento.startsWith(PROFESOR) || tipo_evento.startsWith(INSTRUCTOR)) {
+        /*$('#num_trabajador').show();
         $('#rfc').show();
         $('#numCuenta').hide();
+        Ahora son campos obligatorios*/
         $('#fechaInicio').hide();
         $('#fechaFin').hide();
         $('#horaInicio').hide();
@@ -797,10 +805,11 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
         $('#modalidadImparticion').show();
         $('#coordinaciones').show();
     }
-    if (tipo_evento.startsWith('2')) {
-        $('#num_trabajador').hide();
+    if (tipo_evento.startsWith(MODERADOR)) {
+        /*$('#num_trabajador').hide();
         $('#rfc').hide();
         $('#numCuenta').show();
+        Ahora son campos obligatorios*/
         $('#fechaInicio').show();
         $('#fechaFin').show();
         $('#horaInicio').show();
