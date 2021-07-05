@@ -489,42 +489,59 @@ function validarFormularioUsuario() {
     
 
     //? Validación datos de cuenta según rol
-    if ($('#intUsuarioRol').val() == 1) {
-        if ($('#intNum_Trabajador').val() == '') {
-            alertify.error('Debe ingresar un número de trabajador');
-            $('html, body').animate({ scrollTop: 250 }, 'slow');
-            document.getElementById('intNum_Trabajador').focus();
-            return false;
+    if ($('#intNum_Trabajador').val() == '') {
+        alertify.error('Debe ingresar un número de trabajador');
+        $('html, body').animate({ scrollTop: 250 }, 'slow');
+        document.getElementById('intNum_Trabajador').focus();
+        return false;
+    } else {
+        var numExp = /^([0-9])*$/;
+        if (numExp.test($('#intNum_Trabajador').val())) {
         } else {
-            var numExp = /^([0-9])*$/;
-            if (numExp.test($('#intNum_Trabajador').val())) {
-            } else {
-                $('html, body').animate({ scrollTop: 100 }, 'slow');
-                document.getElementById('intNum_Trabajador').focus();
-                alertify.error('El numero de trabajador de incluir unicamente números.');
-                return false;
-            }
-            if ($('#intNum_Trabajador').val().length > 10) {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('intNum_Trabajador').focus();
-                alertify.error('El número de trabajador debe tener máximo 10 caracteres.');
-                return false;
-            }
+            $('html, body').animate({ scrollTop: 100 }, 'slow');
+            document.getElementById('intNum_Trabajador').focus();
+            alertify.error('El numero de trabajador de incluir unicamente números.');
+            return false;
         }
-
-        if ($('#strRFC').val() == '') {
-            alertify.error('Debe ingresar su RFC');
+        if ($('#intNum_Trabajador').val().length > 10) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('intNum_Trabajador').focus();
+            alertify.error('El número de trabajador debe tener máximo 10 caracteres.');
+            return false;
+        }
+    }
+    
+    if ($('#strRFC').val() == '') {
+        alertify.error('Debe ingresar su RFC');
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+        document.getElementById('strRFC').focus();
+        return false;
+    } else {
+        if ($('#strRFC').val().length > 13) {
             $('html, body').animate({ scrollTop: 0 }, 'slow');
             document.getElementById('strRFC').focus();
+            alertify.error('El RFC debe tener máximo 13 caracteres.');
             return false;
-        } else {
-            if ($('#strRFC').val().length > 13) {
+        } 
+        if ($('#strRFC').val().length < 10){
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('strRFC').focus();
+            alertify.error('El RFC debe tener al menos 10 caracteres.');
+            return false;
+        }
+        
+        if ($('#strRFC').val().length == 13) {
+            var rfcExp = /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/;
+            if (rfcExp.test($('#strRFC').val())) {
+            } else {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
                 document.getElementById('strRFC').focus();
-                alertify.error('El RFC debe tener máximo 13 caracteres.');
+                alertify.error('El RFC de ser con homoclave y mayusculas <br> El formato es (NNNN000000XXX).');
                 return false;
             }
-            var rfcExp = /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/;
+        }            
+        if ($('#strRFC').val().length == 10) {
+            var rfcExp = /^([A-ZÑ\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1]))([A-Z\d]{3})?$/;
             if (rfcExp.test($('#strRFC').val())) {
             } else {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
@@ -534,7 +551,7 @@ function validarFormularioUsuario() {
             }
         }
     }
-
+    
     //TODO: Hacer validaciones de instructor
     //? Los de moderador
 
@@ -795,12 +812,16 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
         $('#rfc').show();
         $('#numCuenta').hide();
         Ahora son campos obligatorios*/
+        if (tipo_evento.startsWith(INSTRUCTOR)) {
+            $('#semblanza').show();
+        } else {
+            $('#semblanza').hide();
+        }
         $('#fechaInicio').hide();
         $('#fechaFin').hide();
         $('#horaInicio').hide();
         $('#horaFin').hide();
         $('#diasServicio').hide();
-        $('#semblanza').show();
         $('#nivelImparticion').show();
         $('#modalidadImparticion').show();
         $('#coordinaciones').show();

@@ -26,6 +26,7 @@
   $persona->pers_apellido_paterno = null;
   $persona->pers_correo = null;
   $persona->pers_telefono = null;
+  $persona = null;
 
   $profesor = null;
   $profesor_coordinacion = null;
@@ -188,7 +189,7 @@
                           class="form-control" name="intNum_Trabajador"  id="intNum_Trabajador">
                       <?php } 
                     } else {?>
-                      <label for="intNum_Trabajador" class = "negritas">Número de trabajador o de cuenta:*</label>
+                      <label for="intNum_Trabajador" class = "negritas">Número de trabajador o Número de cuenta:*</label>
                       <input value="<?php echo isset($profesor) ? $profesor-> prof_num_trabajador : ""; ?>" type="text" 
                         class="form-control" name="intNum_Trabajador"  id="intNum_Trabajador">
                     <?php } ?>
