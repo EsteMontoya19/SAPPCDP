@@ -108,7 +108,7 @@
     //Agregar un moderador
     //TODO Verificado en la BD 02/07/2021
     //? Se quitó el campo $numCuenta(número de cuenta)
-    function agregarModerador ($persona, $numCuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin) {
+    function agregarModerador ($persona, $fechaInicio, $fechaFin, $horaInicio, $horaFin) {
 
       $SQL_REGISTRO_MODERADOR = 
       "INSERT INTO HORARIO_MODERADOR (usua_id_usuario, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin)
@@ -182,7 +182,7 @@
     }
 
     //Elimina los días de un moderador dado el id del moderador
-    //TODO Verificado en la BD 02/07/2021
+    //? Verificado en la BD 02/07/2021
     function eliminarDiasModerador ($persona) {
       
       $SQL_BORRAR_DIAS_MODERADOR= 

@@ -341,12 +341,11 @@
 		}
 
 		//buscar los datos de un profesor dado el número de trabajador
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado en la BD 02/07/2021
 		function buscarNumTrabajador ($numTrabajador) {
 
 			$SQL_Bus_Profesor = 
-			"
-				SELECT prof_id_profesor, P.pers_id_persona, prof_num_trabajador, prof_semblanza, pers_rfc
+			"	SELECT prof_id_profesor, P.pers_id_persona, prof_num_trabajador, prof_semblanza, pers_rfc
 				FROM Profesor P, Persona PE
 				WHERE P.pers_id_persona = PE.pers_id_persona AND prof_num_trabajador = '$numTrabajador'
 			";

@@ -22,7 +22,6 @@ $(document).ready(function () {
     $('#btn-registrar-usuario').click(function () {
         if (validarFormularioUsuario()) {
             datos = $('#form_usuario').serialize();
-
             $.ajax({
                 type: 'POST',
                 url: '../modulos/Control_Usuario.php',
@@ -79,7 +78,19 @@ $(document).ready(function () {
                             $('html, body').animate({ scrollTop: 0 }, 0);
                             location.reload();
                         }, 1500);
-                    } else {
+                    } else if(respuesta.endsWith('3')) {
+                        alertify.error('El número de trabjador debe de ser de 6 digitos.');
+                        setTimeout(function () {
+                            $('html, body').animate({ scrollTop: 0 }, 0);
+                            location.reload();
+                        }, 1500);
+                    } else if(respuesta.endsWith('4')) {
+                        alertify.error('El número de cuenta debe de ser de 9 digitos.');
+                        setTimeout(function () {
+                            $('html, body').animate({ scrollTop: 0 }, 0);
+                            location.reload();
+                        }, 1500);
+                    } else{
                         alertify.error('Hubo un problema al registrar al usuario');
                     }
                 },
@@ -290,6 +301,13 @@ function cambioEstatus(id, estatus, nombre, apellido, rol) {
     }, 1500);
 }
 
+
+//? Evita al Coordinador escribir la contraseña cuando se crea un Profesor
+function AsignarContrasena() {
+    document.getElementById("strContrasenia01").value = document.getElementById("strRFC").value;
+    document.getElementById("strContrasenia02").value = document.getElementById("strRFC").value;
+}
+
 //? Validaciones y animaciones de campos
 // Validación del formulario para usuario
 function validarFormularioUsuario() {
@@ -489,28 +507,65 @@ function validarFormularioUsuario() {
     
 
     //? Validación datos de cuenta según rol
-    if ($('#intNum_Trabajador').val() == '') {
-        alertify.error('Debe ingresar un número de trabajador');
-        $('html, body').animate({ scrollTop: 250 }, 'slow');
-        document.getElementById('intNum_Trabajador').focus();
-        return false;
-    } else {
-        var numExp = /^([0-9])*$/;
-        if (numExp.test($('#intNum_Trabajador').val())) {
-        } else {
-            $('html, body').animate({ scrollTop: 100 }, 'slow');
+    
+    //? Si no son Moderador
+    if ($('#hideRol').val() != 3) {
+        
+        if ($('#intNum_Trabajador').val() == '') {
+            alertify.error('Debe ingresar un número de trabajador');
+            $('html, body').animate({ scrollTop: 250 }, 'slow');
             document.getElementById('intNum_Trabajador').focus();
-            alertify.error('El numero de trabajador de incluir unicamente números.');
             return false;
+        } else {
+            var numExp = /^([0-9])*$/;
+            if (numExp.test($('#intNum_Trabajador').val())) {
+            } else {
+                $('html, body').animate({ scrollTop: 100 }, 'slow');
+                document.getElementById('intNum_Trabajador').focus();
+                alertify.error('El numero de trabajador de incluir unicamente números.');
+                return false;
+            }
+            if ($('#intNum_Trabajador').val().length > 6) {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('intNum_Trabajador').focus();
+                alertify.error('El número de trabajador debe tener máximo 6 caracteres.');
+                return false;
+            }
         }
-        if ($('#intNum_Trabajador').val().length > 10) {
+    } else {
+        //? En caso de que se Moderador
+
+        //? Si hay algo en NumTrabjador y no hay nada en NumCuenta, ignoramos NumCuenta
+        if ($('#intNum_Trabajador').val() != '' && typeof($('#intNumCuenta').val()) == 'undefined') {
+            var numExp = /^([0-9])*$/;
+            if (numExp.test($('#intNum_Trabajador').val())) {
+            } else {
+                $('html, body').animate({ scrollTop: 100 }, 'slow');
+                document.getElementById('intNum_Trabajador').focus();
+                alertify.error('El numero de trabajador de incluir unicamente números.');
+                return false;
+            }
+            if ($('#intNum_Trabajador').val().length > 6 || $('#intNum_Trabajador').val().length < 6) {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('intNum_Trabajador').focus();
+                alertify.error('El número de trabajador debe tener 6 cifras.');
+                return false;
+            }
+        } else if (typeof($('#intNum_Trabajador').val()) == 'undefined' && $('#intNumCuenta').val() != '') {
+            if ($('#intNumCuenta').val().length < 9 || $('#intNumCuenta').val().length > 9 ) {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('intNumCuenta').focus();
+                alertify.error('El número de cuenta debe tener 9 cifras');
+                return false;
+            }
+        } else {
+            alertify.error('Debe ingresar el número de cuenta o de trabajador.');
             $('html, body').animate({ scrollTop: 0 }, 'slow');
-            document.getElementById('intNum_Trabajador').focus();
-            alertify.error('El número de trabajador debe tener máximo 10 caracteres.');
+            document.getElementById('strRFC').focus();
             return false;
         }
     }
-    
+
     if ($('#strRFC').val() == '') {
         alertify.error('Debe ingresar su RFC');
         $('html, body').animate({ scrollTop: 0 }, 'slow');
@@ -576,7 +631,8 @@ function validarFormularioUsuario() {
             document.getElementById('intNumCuenta').focus();
             return false;
         } else {
-            if ($('#intNumCuenta').val().length < 6) {
+            /* //TODO: Falta modificar las validaciones
+            if ($('#intNumCuenta').val().length < 9) {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
                 document.getElementById('intNumCuenta').focus();
                 alertify.error('El número de cuenta debe tener al menos 6 cifras');
@@ -596,7 +652,7 @@ function validarFormularioUsuario() {
                 alertify.error('El número de cuenta debe tener máximo 10 cifras.');
                 return false;
             }
-
+            
             var numExp = /^([0-9])*$/;
             if (numExp.test($('#intNumCuenta').val())) {
             } else {
@@ -605,6 +661,7 @@ function validarFormularioUsuario() {
                 alertify.error('El numero de cuenta de incluir unicamente números.');
                 return false;
             }
+            */
         }
 
         if ($('#strFechaInicio').val() == '') {
@@ -783,6 +840,7 @@ function hideOrShowPassword2() {
         password2.type = 'password';
     }
 }
+
 // Despliegue de campos según su rol.
 $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
     //? Constantes para indicar el rol
@@ -812,10 +870,15 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
         $('#rfc').show();
         $('#numCuenta').hide();
         Ahora son campos obligatorios*/
+
+        //?En caso de que si sea Instructor
         if (tipo_evento.startsWith(INSTRUCTOR)) {
             $('#semblanza').show();
+        //?En caso de que sea un profesor su usuario y contraseña se auto asignans
         } else {
             $('#semblanza').hide();
+            document.getElementById("strNombreUsuario").value = $('#intNum_Trabajador').val();
+            document.getElementById("strContrasenia01").value = $('#strRFC').val();
         }
         $('#fechaInicio').hide();
         $('#fechaFin').hide();

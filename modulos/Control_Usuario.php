@@ -5,12 +5,16 @@
   include('../clases/Persona.php');
   include('../clases/Profesor.php');
   include('../clases/Busqueda.php');
+  include('../clases/ServidorSocial.php');
+  include('../clases/Moderador.php');
+  include('../clases/Administrador.php');
 
   $obj_Persona = new Persona();
   $obj_Usuario = new Usuario();
   $obj_Moderador = new Moderador();
   $obj_Profesor = new Profesor();
   $obj_Busqueda = new Busqueda();
+  $obj_ServidorSocial = new ServidorSocial();
   $obj_Administrador = new Administrador();
 
   //Arreglos necesarios
@@ -30,7 +34,7 @@
     if($_POST['dml'] == 'insert')
     {
       $rol = (integer) $_POST['intUsuarioRol'];
-
+      
       switch($rol) {
         //? Para los demas usuarios su nombre de usuario y contraseña son los que ellos decidan
         case ADMINISTRADOR:
@@ -38,12 +42,30 @@
         case MODERADOR:
           $nombreUsuario = $_POST['strNombreUsuario'];
           $contrasenia = $_POST['strContrasenia01'];
-        break;
-        
-        //? Para los Profesores 
+          break;
+          
         case PROFESOR:
-          $nombreUsuario = $_POST['intNum_Trabajador'];
-          $contrasenia = $_POST['strRFC'];
+          $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador']);
+          if(isset($profesor_existente->prof_num_trabajador)) {
+          exit("3");
+          }
+
+          //? Si existe algo en contraseña y en usuaruio significa que no venimos de mi cuenta
+          if (isset($_POST['strContrasenia01']) && isset($_POST['strNombreUsuario']) ) {
+            //? Se hace para respetar el cambio de usuario y contra si se hace desde usuario y no del Autoregistro
+            if ($_POST['intNum_Trabajador'] != $_POST['strNombreUsuario'] ||  $_POST['strRFC'] != $_POST['strContrasenia01']) {
+              $nombreUsuario = $_POST['strNombreUsuario'];
+              $contrasenia = $_POST['strContrasenia01'];
+            } else {
+              //? Para los Profesores 
+              $nombreUsuario = $_POST['intNum_Trabajador'];
+              $contrasenia = $_POST['strRFC'];
+            }
+          } else {
+            //?Significa que viene del Auto-Registro
+            $nombreUsuario = $_POST['intNum_Trabajador'];
+            $contrasenia = $_POST['strRFC'];
+          }
         break;
       }
       
@@ -75,7 +97,7 @@
 
           //TODO: Hcer validaciones para Instructor
           
-          case MODERADR: 
+          case MODERADOR: 
             //*? Creado para guardar los inputs. Solo guarda los que tienen algo
             $diasModerador=array();
             foreach($arr_dias as $dia){
@@ -126,14 +148,10 @@
               } 
               $bandera++;
             }
-
-            $profesor_existente = $obj_Profesor->buscarNumTrabajador($num_trabajador);
-            if(isset($profesor_existente->prof_num_trabajador)) {
-              exit("3");
-            }
           break; 
         }
 
+        
         $obj_Persona->agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc);
         $persona = $obj_Persona->buscarUltimo();
         $obj_Usuario->agregarUsuario($persona, $rol, $pregunta, $nombreUsuario, $contrasenia, $estado);
@@ -190,6 +208,7 @@
       $apellidoMaterno = $_POST['strUsuarioSegundoApe'];
       $correo = $_POST['strUsuarioCorreo'];
       $telefono = $_POST['strUsuarioTelefono'];
+      $rfc = $_POST['strRFC'];
       
       //? Datos de usuario
       $nombreUsuario = $_POST['strNombreUsuario'];
@@ -203,7 +222,6 @@
       //?Datos según rol
       if($rol == ADMINISTRADOR || $rol == INSTRUCTOR || $rol == PROFESOR) {
         $num_trabajador = $_POST['intNum_Trabajador'];
-        $rfc = $_POST['strRFC'];
 
         if($rol == INSTRUCTOR) {
           $semblanza = $_POST['strSemblanza'];
@@ -261,6 +279,7 @@
       }
       
       $obj_Persona->actualizarPersona($idPersona, $nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc);
+      
       $obj_Usuario->actualizarUsuario($idPersona, $rol, $pregunta, $nombreUsuario, $contrasenia);
 
       switch($rol){
@@ -269,12 +288,32 @@
         break;
 
         case MODERADOR:
-          $obj_Moderador->actualizarModerador($idPersona, $num_cuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin);
+          //? Primero debemos de saber si es un moderador Profesor o Servidor Social
+          if(isset($num_trabajador)) {
+            //? Si el número de trabajador es diferente a 6 es un error por que no se puede haber registrado
+            //? a un profesor y despues cambiarlo a serviddr social
+            if (strlen($num_trabajador) < 6 || strlen($num_trabajador) > 6) {
+              exit("3");
+            }
+            $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, null);
+
+            //? Si tiene número de cuenta es un servidor social
+          } elseif (isset($num_cuenta)) {
+            //? Si el número de cuenta es diferente a 9 es un error por que no se puede haber registrado
+            //? a un Servidor Social  y despues cambiarlo a Profesora
+            if (strlen($num_trabajador) < 6 || strlen($num_trabajador) > 6) {
+              exit("4");
+            }
+            $obj_ServidorSocial->actualizarServidor($idPersona , $num_cuenta);
+          }
+
+          $obj_Moderador->actualizarModerador($idPersona, $fechaInicio, $fechaFin, $horaInicio, $horaFin);
           $obj_Moderador->eliminarDiasModerador($idPersona);
           foreach($diasModerador as $id){
             $obj_Moderador->agregarDiasModerador($idPersona, $id);
-          }
-        break;
+          } 
+          exit("1");
+        break; 
 
         case PROFESOR:
         case INSTRUCTOR:
@@ -301,7 +340,7 @@
           exit ("1");
         }
       } else {
-        echo 2;
+        exit("2");
       }
     }
     elseif($_POST['dml'] == 'delete')
@@ -344,6 +383,6 @@
       exit("1");
     }
   } else {
-    exit("5");
+    exit("3");
   }
 ?>

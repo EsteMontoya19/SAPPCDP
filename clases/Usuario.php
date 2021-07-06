@@ -136,6 +136,7 @@
 			return ($transaccion_1->traerObjeto(0));
 		}
 
+
 		//Eliminar registro de una persona dado el id de usuario
 		//? Verificado en la BD 02/07/2021
 		function eliminarPersonaRol($intIdPersonaRol){
