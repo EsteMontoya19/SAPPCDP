@@ -38,7 +38,7 @@
         }
 
         //Permite insertar un dia festivo en la base de datos
-        //? Falta completar varible $SQL
+        //? Falta completar variable $SQL
         function agregarCalendario($id_calendario, $fecha)
         {
 
@@ -56,13 +56,13 @@
         }
 
         //Permite actualizar un dia festivo en la base de datos
-        //? Falta completar varible $SQL
+        //? Falta completar variable $SQL
         function actualizarCalendario($id_calendario)
         {
 
-            $SQL_Act_Calendario = 
+            $SQL_Act_Calendario =
             "   UPDATE Calendario
-                SET 
+                SET
                 WHERE cale_id_calendario = $id_calendario;
             ";
 

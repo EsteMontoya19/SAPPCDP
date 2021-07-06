@@ -63,7 +63,7 @@ $x = 0;
                                 foreach ($arr_cursos as $cursos) { ?>
                                 <tr>
                                     <?php $x++; ?>
-                                    <td><?php echo $cursos['curs_id_cursos']; ?></td>
+                                    <td><?php echo $cursos['curs_id_curso']; ?></td>
                                     <td><?php echo $cursos['curs_nombre']; ?></td>
                                     <td><?php echo $cursos['curs_tipo']; ?></td>
                                     <td><?php echo $cursos['curs_nivel']; ?></td>
@@ -73,18 +73,18 @@ $x = 0;
                                             <input type="checkbox" class="custom-control-input"
                                                 id="estatusCurso<?php echo $x ?>"
                                                 <?php if ($cursos['curs_activo'] == 't') { ?> checked <?php } ?>
-                                                onclick="cambioEstatus(<?php echo $cursos['curs_id_cursos'] ?> , '<?php echo $cursos['curs_activo']; ?>', '<?php echo $cursos['curs_nombre']; ?>')">
+                                                onclick="cambioEstatus(<?php echo $cursos['curs_id_curso'] ?> , '<?php echo $cursos['curs_activo']; ?>', '<?php echo $cursos['curs_nombre']; ?>')">
                                             <label class="custom-control-label"
                                                 for="estatusCurso<?php echo $x ?>"></label>
                                         </div>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-info btn-table" title="Detalles"
-                                            onclick="consultarCursoDirecto(<?php echo $cursos['curs_id_cursos'] ?>)">
+                                            onclick="consultarCursoDirecto(<?php echo $cursos['curs_id_curso'] ?>)">
                                             <i class="fas fa-search-plus"></i>
                                         </button>
                                         <button type="button" class="btn btn-primary btn-table" title="Editar"
-                                            onclick="actualizarCursoDirecto(<?php echo $cursos['curs_id_cursos'] ?>)">
+                                            onclick="actualizarCursoDirecto(<?php echo $cursos['curs_id_curso'] ?>)">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                     </td>
