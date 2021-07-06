@@ -1,17 +1,20 @@
 <?php
     class Grupo
+    //TODO Verificado todos los métodos utilizados actualmente en la BD 06/07/2021
     {
         //Permite agregar cualquier tipo de grupo
-        function agregarGrupo($moderador, $profesor, $curso, $salon, $plataforma, $reunion, $acceso, $clave, $cupo, $estado, $activo,
+        //? Verificado en la BD 06/07/2021
+        /*No agrega el instructor ni moderador en este método, en el caso de estado y modalidad ahora manda ID*/
+        function agregarGrupo($curso, $salon, $plataforma, $url, $acceso, $clave, $cupo, $estado, $activo,
          $modalidad, $tipo_grupo, $inicio_insc, $fin_insc)
         {
             $SQL_Ins_Grupo = 
-            "   INSERT INTO Grupo (mode_id_moderador, prof_id_profesor, curs_id_cursos, salo_id_salon, cale_id_calendario, plat_id_plataforma, grup_reunion, grup_acceso, grup_clave_acceso,  
-                            grup_cupo, grup_estado, grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc)
-                            VALUES ($moderador, $profesor, $curso, $salon, (SELECT cale_id_calendario
-                                                                            FROM Calendario
-                                                                            WHERE cale_activo = TRUE), 
-                                    $plataforma, '$reunion', '$acceso','$clave', $cupo, '$estado', $activo, '$modalidad', '$tipo_grupo', '$inicio_insc', '$fin_insc')
+            "   INSERT INTO Grupo (curs_id_curso, salo_id_salon, cale_id_calendario, plat_id_plataforma, grup_url, grup_id_acceso, grup_clave_acceso,  
+                            grup_cupo, esta_id_estado, grup_publicado, moap_id_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc)
+                VALUES ($curso, $salon, (SELECT cale_id_calendario
+                                        FROM Calendario
+                                        WHERE cale_activo = TRUE), 
+                $plataforma, '$url', '$acceso','$clave', $cupo, '$estado', $activo, '$modalidad', '$tipo_grupo', '$inicio_insc', '$fin_insc')
             ";
 
             $bd = new BD();
@@ -23,14 +26,16 @@
         }
 
         //Permite Actualizar Cualquier tipo de grupo
-        //No actualiza curs_id_cursos, grup_modalidad, grup_activo ni cale_id_calendario. Por los requerimientos del sistema.
-        function actualizarGrupo($grupo, $tipo_grupo, $estado, $profesor, $moderador, $cupo, $inicio_insc, $fin_insc, $salon, $plataforma, $reunion, $acceso, $clave)
+        //? Verificado en la BD 06/07/2021
+        /*No actualiza curs_id_cursos, grup_modalidad, grup_activo ni cale_id_calendario. Por los requerimientos del sistema.
+        El estado debe mandar el ID, el instructor y moderador se actualizan en otro método de personal_grupo*/
+        function actualizarGrupo($grupo, $tipo_grupo, $estado, $cupo, $inicio_insc, $fin_insc, $salon, $plataforma, $url, $acceso, $clave)
         { 
             $SQL_Actua_Grupo =
             "   UPDATE grupo
-                SET grup_tipo = '$tipo_grupo', grup_estado = '$estado', prof_id_profesor = $profesor, mode_id_moderador = $moderador,
+                SET grup_tipo = '$tipo_grupo', esta_id_estado = '$estado', 
                 grup_cupo = $cupo, grup_inicio_insc = '$inicio_insc', grup_fin_insc = '$fin_insc',
-                salo_id_salon = $salon, plat_id_plataforma = $plataforma, grup_reunion = '$reunion', grup_acceso = '$acceso', grup_clave_acceso = '$clave'
+                salo_id_salon = $salon, plat_id_plataforma = $plataforma, grup_url = '$url', grup_id_acceso = '$acceso', grup_clave_acceso = '$clave'
                 WHERE grup_id_grupo = $grupo;
             ";
 
@@ -42,7 +47,7 @@
         }
 
         //Busca los correos de los profesores inscritos a un grupo.
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 06/07/2021
         function buscarCorreosDeParticipantes($ID)
         {
             $SQL_Bus_Cursos = 
@@ -61,7 +66,7 @@
         }
 
         //Permite Consultar cualquier tipo de grupo
-        //TODO Verificado en la BD 01/07/2021
+        //?Verificado en la BD 06/07/2021
         function buscarGrupo($id)
         {
             $SQL_Bus_Curso = 
@@ -91,7 +96,7 @@
         }
 
         //Permite Consultar todos los grupos sin importar la modalidad
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 06/07/2021
         //? Ahora regresa el id de usuario del profesor y no su id de profesor.
         function buscarTodosGrupos()
         {
@@ -120,7 +125,7 @@
         Permite consultar todos los grupos que deben ser mostrados para 
         los profesores, para ello deben estar publicados, en Inscripciones(estado pendiente) y públicos
         */
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 06/07/2021
         //? Ahora regresa el id de usuario del profesor y no su id de profesor.
         function buscarGruposProfesores()
         {
@@ -148,7 +153,7 @@
         }
 
         // Permite Cambiar estatus_activo grupo
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 06/07/2021
         function cambiarEstatus($id, $activo)
         {
             $SQL_Act_Curso = 
@@ -165,7 +170,7 @@
         }
 
         //Permite obtener los grupos a los cuales se ha inscrito un profesor
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 06/07/2021
         function gruposInscritosxProfesor($idProfesor)
         {
             $SQL_Act_Curso = 
@@ -189,7 +194,7 @@
         }
 
         //Permite obtener todos los grupos activos a los cuales se ha inscrito un profesor
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 06/07/2021
         function gruposInscritosActivosxProfesor($idProfesor)
         {
             $SQL_Act_Curso = 
@@ -212,7 +217,7 @@
             return ($transaccion_1->traerRegistros());
         }
 
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 06/07/2021
         //? Ahora verifica la modalidad mediante el id
         function buscarDatosEnLinea($id)
         {
@@ -233,7 +238,7 @@
             return ($transaccion_1->traerObjeto(0));
         }
 
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 06/07/2021
         //?Ahora regresa el id de la modalidad, pero verifica que sea el correspondiente a presencial.
         function buscarDatosPresencial($id)
         {
@@ -256,7 +261,7 @@
         }
 
         //Permite eliminar un grupo independientemente de si es en modo presencial o en linea
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 06/07/2021
         //?No debe utilizarse esta función
         function eliminarGrupo($grupo)
         {
@@ -273,7 +278,7 @@
         }
 
         //Busca el ultimo grupo registrado
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 06/07/2021
         function buscarUltimo()
         {
             $bd = new BD();
@@ -291,7 +296,7 @@
         }
 
         //Busca todos los datos de un grupo dado el id.
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 06/07/2021
         //? Se cambia ahora, regresa los id de usuario del profesor y el moderador, a su vez lo que regresa es el id de modalidad y estado.
         function buscarSoloGrupo($id){
             $SQL_Bus_SoloGrupo = 
@@ -316,7 +321,7 @@
         }
 
         //Busca los grupos que imparte un profesor
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 06/07/2021
         //? Se cambia la logica ahora el id hace referencia al id de usuario del profesor
         function buscarGruposImpartidosxProfesor($id){
 			$SQL_Bus_Grupos =
@@ -341,7 +346,7 @@
 		}
 
         //Permite Consultar las inscripciones de un grupo
-        //TODO Verificado en la BD 01/07/2021 
+        //? Verificado en la BD 06/07/2021 
         function buscarInscripcionesxGrupo($ID)
         {
             $SQL_Bus_Cursos = 
@@ -362,7 +367,7 @@
         }
 
         //Permite consultar el nombre de un curso por el ID del grupo
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 06/07/2021
         /*SELECT curs_nombre, curs_nivel, curs_tipo, mode_id_moderador, prof_id_profesor, plat_id_plataforma, salo_id_salon, grup_modalidad
                 FROM Curso C, Grupo G
                 WHERE C.curs_id_cursos=G.curs_id_cursos AND grup_id_grupo = $ID;*/
@@ -487,7 +492,7 @@
         }
 
         //Permite obtener todos los grupos de modalidad en Linea
-        //TODO Verificado en la BD 01/07/2021 
+        //? Verificado en la BD 06/07/2021 
         function buscarTodosWebinar()
         {
             $SQL_Bus_Cursos = 
@@ -511,7 +516,7 @@
 
         //permite obtener un grupo presencial por id
         //Acoplar este método y el siguiente para que muestren los datos del formulario unicamente, no necesitas los id realmente.
-        //TODO Verificado en la BD 01/07/2021 
+        //? Verificado en la BD 06/07/2021 
         function buscarGrupoPresencial($id)
         {
             $SQL_Bus_Curso = 
@@ -539,7 +544,7 @@
         }
 
         //permite obtener un grupo en linea por id
-        //TODO Verificado en la BD 01/07/2021
+        //? Verificado en la BD 06/07/2021
         function buscarGrupoWeb($id)
         {
             $SQL_Bus_Curso = 
