@@ -8,11 +8,55 @@
 		{
 			$SQL_Bus_Profesor =
 			"
-				SELECT P.prof_id_profesor, P.pers_id_persona, P.prof_num_trabajador, 
+				SELECT U.usua_id_usuario, P.prof_id_profesor, P.pers_id_persona, P.prof_num_trabajador, 
 					P.prof_semblanza, PE.pers_rfc, PE.pers_nombre,
 					PE.pers_apellido_paterno, PE.pers_apellido_materno
-			 	FROM Profesor P, Persona PE
-			 	WHERE P.pers_id_persona = PE.pers_id_persona AND P.pers_id_persona = $persona
+				FROM Profesor P, Persona PE
+				WHERE P.pers_id_persona = PE.pers_id_persona AND rol_id_rol = 2 AND P.pers_id_persona = $persona
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Profesor);
+			$obj_Profesor = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerObjeto(0));
+        }
+
+		//Busca los datos de un profesor, dado el id de persona
+		//TODO Verificado en la BD 07/07/2021
+		function buscarProfesorxPersona($persona)
+		{
+			$SQL_Bus_Profesor =
+			"
+				SELECT U.usua_id_usuario, P.prof_id_profesor, P.pers_id_persona, P.prof_num_trabajador, 
+					P.prof_semblanza, PE.pers_rfc, PE.pers_nombre,
+					PE.pers_apellido_paterno, PE.pers_apellido_materno
+				FROM Profesor P, Persona PE, Usuario U
+				WHERE P.pers_id_persona = PE.pers_id_persona AND PE.pers_id_persona = U.pers_id_persona AND rol_id_rol = 2 AND P.pers_id_persona = $persona
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Profesor);
+			$obj_Profesor = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerObjeto(0));
+        }
+
+		//Busca los datos de un profesor, dado el id de usuario
+		//TODO Verificado en la BD 07/07/2021
+		function buscarProfesorxUsuario($usuario)
+		{
+			$SQL_Bus_Profesor =
+			"
+				SELECT U.usua_id_usuario, P.prof_id_profesor, P.pers_id_persona, P.prof_num_trabajador, 
+					P.prof_semblanza, PE.pers_rfc, PE.pers_nombre,
+					PE.pers_apellido_paterno, PE.pers_apellido_materno
+				FROM Profesor P, Persona PE, Usuario U
+				WHERE P.pers_id_persona = PE.pers_id_persona AND PE.pers_id_persona = U.pers_id_persona AND rol_id_rol = 2 AND U.usua_id_usuario = $persona
 			";
 
 			$bd = new BD();

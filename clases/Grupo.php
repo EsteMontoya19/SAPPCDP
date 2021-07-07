@@ -130,11 +130,11 @@
         function buscarGruposProfesores()
         {
             $SQL_Bus_Cursos = 
-            "   SELECT g.grup_id_grupo, p.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
-                    g. curs_id_curso, curs_nombre, curs_tipo, curs_num_sesiones, curs_nivel, curs_objetivos,
-                    g.plat_id_plataforma, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo,  grup_num_inscritos,
-                    grup_publicado, g.moap_id_modalidad, moap_nombre, grup_tipo, grup_inicio_insc, grup_fin_insc, 
-                    g.esta_id_estado, esta_nombre
+            "   
+                SELECT g.grup_id_grupo, p.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
+                    curs_nombre, curs_tipo, curs_nivel, curs_objetivos, grup_cupo,  grup_num_inscritos,
+                    moap_nombre, to_char(grup_inicio_insc, 'DD') diaini, to_char(to_timestamp (to_char(grup_inicio_insc, 'MM')::text, 'MM'), 'TMmon') mesini, 
+                    to_char(grup_fin_insc, 'DD') diafin, to_char(to_timestamp (to_char(grup_fin_insc, 'MM')::text, 'MM'), 'TMmon') mesfin
                 FROM grupo g, personal_grupo p, usuario u,persona pr, curso c, calendario ca, modalidad_aprendizaje m, estado e 
                 WHERE grup_tipo = 'Público' AND g.esta_id_estado = 3 AND grup_publicado = true AND rol_id_rol = 2
                     AND g.grup_id_grupo = p.grup_id_grupo AND p.usua_id_usuario = u.usua_id_usuario

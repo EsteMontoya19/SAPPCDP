@@ -127,6 +127,28 @@
 			return ($transaccion_1->traerObjeto(0));
 		}
 
+		//Buscar día y mes de la primer sesión de un grupo 
+		function buscarMinSesionDM($idGrupo){
+			$SQL_Bus_Sesion =
+			"
+			SELECT to_char(sesi_fecha, 'DD') dia, to_char(to_timestamp (to_char(sesi_fecha, 'MM')::text, 'MM'), 'TMmon') mes
+			FROM sesion
+			WHERE sesi_id_sesiones = (
+				SELECT MIN(sesi_id_sesiones) sesi_id_sesiones 
+				FROM sesion 
+				WHERE grup_id_grupo = $idGrupo
+				)
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Sesion);
+			$obj_Sesion = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerObjeto(0));
+		}
+
 		// Busca las fechas de sesiones (unicamente día y mes) de un grupo
 		function buscarFechaSesiones($idGrupo){
 			$SQL_Bus_Sesion =
