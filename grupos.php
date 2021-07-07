@@ -10,7 +10,7 @@
   <meta name="author" content="">
 
   <!-- Título de la página -->
-  <title>Inicio de sesión</title>
+  <title>PPCDP Grupos</title>
 
   <!-- Referencias -->
 
@@ -67,23 +67,12 @@
       <div class="container-fluid">
 
         <!-- Indicador -->
-        <div class="form-inline">
-          <div class="col-sm-12">
-            <ol class="breadcrumb">
-            <li class="breadcrumb-item active">
-              <i class="fas fa-users"></i>&nbsp; Grupos publicados
-            </li>
-            </ol>
-          </div>
+        <div class="form-label-group centrado">
+          <h4>Programa Permanente de Capacitación a Distancia para Profesores de la FCA (PPCDP)</h4>
         </div>
-
-        <p>
-          <hr>
-        </p>
-
         <div class="card mb-3">
           <div class="card-header">
-            <i class="fas fa-folder"></i> Resultados
+            <i class="fas fa-folder"></i> Grupos publicados
           </div>
           <div class="card-body">
             <div class="table-responsive">

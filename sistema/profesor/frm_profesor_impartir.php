@@ -12,8 +12,10 @@
   
   if (isset($_POST['persona'])){
     $idPersona = $_POST['persona'];
-    $profesor = $obj_Profesor->buscarProfesor($idPersona);
-    $arr_grupos = $obj_Grupo->buscarGruposImpartidosxProfesor($profesor->prof_id_profesor);
+    $profesor = $obj_Profesor->buscarInstructorxPersona($idPersona);
+    if(isset($profesor)){
+      $arr_grupos = $obj_Grupo->buscarGruposImpartidosxProfesor($profesor->prof_id_profesor);
+    }
   } else {
     $idPersona = 0;
   }
@@ -60,43 +62,50 @@
                 <tbody>
                 <?php
                 if (isset($arr_grupos)) {
-                  foreach ($arr_grupos as $grupo) { 
-                  $idGrupo = $grupo['grup_id_grupo'];
-                  $sesion = $obj_Sesion->buscarMinSesion($idGrupo);
-                  if($grupo['grup_modalidad'] == 'En línea'){
-                    $modalidad=$obj_Grupo->buscarDatosEnLinea($idGrupo);
-                  } else {
-                    $modalidad=$obj_Grupo->buscarDatosPresencial($idGrupo);
-                  }
-                ?>
+                  foreach ($arr_grupos as $grupo) {
+                    $idGrupo = $grupo['grup_id_grupo'];
+                    $sesion = $obj_Sesion->numSesionesGrupo($idGrupo);
+                    $sesionUno = $obj_Sesion->buscarMinSesion($idGrupo);
+                    if($grupo['moap_id_modalidad'] == 1){
+                      $modalidad=$obj_Grupo->buscarDatosPresencial($idGrupo);
+                    } elseif ($grupo['moap_id_modalidad'] == 2) {
+                      $modalidad=$obj_Grupo->buscarDatosEnLinea($idGrupo);
+                    } elseif ($grupo['moap_id_modalidad'] == 3) {
+                      $modalidad=$obj_Grupo->buscarDatosAutogestivo($idGrupo);
+                    }
+                    ?>
                       <tr>
                         <td><?php echo $grupo['grup_id_grupo'];?></td>
                         <td><?php echo $grupo['cale_semestre'];?></td>
                         <td><?php echo $grupo['curs_nombre'];?></td>
-                        <td><?php echo $grupo['grup_modalidad'];?></td>
-                        <td><?php echo $grupo['curs_num_sesiones'];?></td>
-                        <td><?php echo $sesion->sesi_fecha."      ".$sesion->sesi_hora_inicio;?></td>
-                        <td><?php if($grupo['grup_modalidad'] == 'En línea'){?>
-                          <a href="<?php echo $modalidad->grup_acceso;?>" target="_blank"><?php echo $modalidad->plat_nombre;?></a>
-                        <?php
+                        <td><?php echo $grupo['moap_nombre'];?></td>
+                        <td><?php echo $sesion->numero;?></td>
+                        <td><?php echo $sesionUno->fecha.'  '.$sesionUno->hora_ini.'-'.$sesionUno->hora_fin;?></td>
+                        <td><?php 
+                        if ($grupo['esta_nombre'] == 'En curso'){
+                          if($grupo['moap_id_modalidad'] == 2){?>
+                            <a href="<?php echo $modalidad->grup_url;?>" target="_blank"><?php echo $modalidad->plat_nombre;?></a>
+                          <?php
+                          } elseif($grupo['moap_id_modalidad'] == 1) { 
+                            echo "Edificio: ".$modalidad->edif_nombre." Salón: ".$modalidad->salo_nombre;
+                          } elseif($grupo['moap_id_modalidad'] == 3) { ?>
+                            <a href="<?php echo $modalidad->grup_url;?>" target="_blank">Plataforma externa</a>
+                          <?php
+                          }
                         } else {
-                          echo "Edificio: ".$modalidad->edif_nombre." Salón: ".$modalidad->salo_nombre;
+                          echo $grupo['esta_nombre'];
                         }?>
                         <td>
-                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;"
-                            onclick="consultarGrupoImpartir(<?php echo $grupo['grup_id_grupo']?>,'<?php echo $idPersona?>')">
+                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupoInscrito(<?php echo $grupo['grup_id_grupo']?>,'<?php echo $idPersona?>')">
                             <i class="fas fa-search-plus"></i>
                           </button>
-                          <?php if($grupo['grup_num_inscritos'] != 0){ ?>
-                            <a href="../modulos/Control_PDF_Inscritos.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-table btn-pdf" title="Descargar PDF" style="margin-top: 5px;">
-                              <i class="fa fa-file-pdf"></i>
-                            </a>
-                          <?php } ?>
-                          <?php if($grupo['grup_num_inscritos'] != 0){ ?>
-                            <a href="../modulos/Control_Generar_Excel.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-table btn-excel" title="Descargar Excel" style="margin-top: 5px;">
-                              <i class="fa fa-table"></i>
-                            </a>
-                          <?php } ?>
+                          <a class = "btn btn-pdf" target="_blank" title="Comprobante inscripción" href="../modulos/Control_PDF.php?tipo=comprobante&idP=<?php echo($idPersona); ?>&idG=<?php echo($grupo['grup_id_grupo']); ?>" role="button"><i class="far fa-file-pdf"></i></i></a>
+                          <!-- <button type="button" class="btn btn-primary btn-table" title="Comprobante" style="margin-top: 5px;">
+                            <i class="fas fa-list-alt"></i>
+                          </button>
+                          <button type="button" class="btn btn-danger btn-table" title="Constancia" <?php if ($grupo['cons_id_constancias'] == Null) {?> style="display: none;" <?php } ?> style="margin-top: 5px;background: #20560a">
+                            <i class="fas fa-file"></i>
+                          </button> -->
                         </td>
                       </tr>
                   <?php } } ?>

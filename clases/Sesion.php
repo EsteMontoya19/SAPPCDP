@@ -109,13 +109,13 @@
 		function buscarMinSesion($idGrupo){
 			$SQL_Bus_Sesion =
 			"
-			SELECT sesi_fecha, sesi_hora_inicio
-			FROM sesion
-			WHERE sesi_id_sesiones = (
-				SELECT MIN(sesi_id_sesiones) sesi_id_sesiones 
-				FROM sesion 
-				WHERE grup_id_grupo = $idGrupo
-				) 
+				SELECT to_char(sesi_fecha, 'DD-MM-YYYY') fecha, to_char(sesi_hora_inicio, 'HH:MM') hora_ini, to_char(sesi_hora_fin, 'HH:MM') hora_fin
+				FROM sesion
+				WHERE sesi_id_sesiones = (
+					SELECT MIN(sesi_id_sesiones) sesi_id_sesiones 
+					FROM sesion 
+					WHERE grup_id_grupo = $idGrupo
+					) 
 			";
 
 			$bd = new BD();

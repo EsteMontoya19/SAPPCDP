@@ -175,13 +175,15 @@
         {
             $SQL_Act_Curso = 
             "   
-                SELECT I.PROF_ID_PROFESOR, I.GRUP_ID_GRUPO, C.CURS_ID_CURSO, moap_id_modalidad, CONS_ID_CONSTANCIAS,
-                    CURS_NOMBRE, CURS_NUM_SESIONES, G.PLAT_ID_PLATAFORMA, grup_url, CALE_SEMESTRE
-                FROM INSCRIPCION I, GRUPO G, CURSO C, CALENDARIO CA
-                WHERE I.PROF_ID_PROFESOR = 5
+                SELECT G.GRUP_ID_GRUPO, G.moap_id_modalidad, moap_nombre, CONS_ID_CONSTANCIAS,
+                    CURS_NOMBRE, CALE_SEMESTRE, ESTA_NOMBRE
+                FROM INSCRIPCION I, GRUPO G, CURSO C, CALENDARIO CA, MODALIDAD_APRENDIZAJE M, ESTADO E
+                WHERE I.PROF_ID_PROFESOR = $idProfesor
                     AND I.GRUP_ID_GRUPO = G.GRUP_ID_GRUPO 
                     AND G.CURS_ID_CURSO = C.CURS_ID_CURSO  
                     AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO 
+                    AND G.MOAP_ID_MODALIDAD = M.MOAP_ID_MODALIDAD
+                    AND E.ESTA_ID_ESTADO = G.ESTA_ID_ESTADO
                 ORDER BY I.GRUP_ID_GRUPO ASC;
             ";
             
@@ -215,6 +217,27 @@
             $transaccion_1->enviarQuery($SQL_Act_Curso);
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
+        }
+
+        //Busca los datos de un grupo autogestivo dado el id del grupo
+        //TODO Verificado en la BD 07/07/2021
+        function buscarDatosAutogestivo($id)
+        {
+            $SQL_Bus_Grupo = 
+            "  
+                SELECT grup_url
+                FROM GRUPO 
+                WHERE moap_id_modalidad = 3  
+                AND GRUP_ID_GRUPO=$id; 
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Grupo);
+            $obj_Grupo = $transaccion_1->traerObjeto(0);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
         }
 
         //? Verificado en la BD 06/07/2021
@@ -326,14 +349,14 @@
         function buscarGruposImpartidosxProfesor($id){
 			$SQL_Bus_Grupos =
             "	
-                SELECT G.GRUP_ID_GRUPO, C.CURS_ID_CURSO, moap_nombre modalidad,
-                    CURS_NOMBRE, CURS_NUM_SESIONES, G.PLAT_ID_PLATAFORMA, 
-                    GRUP_URL, CALE_SEMESTRE, grup_num_inscritos, grup_publicado
-                FROM Personal_Grupo P, GRUPO G, CURSO C, Modalidad_Aprendizaje M, CALENDARIO CA
+                SELECT G.GRUP_ID_GRUPO, M.moap_id_modalidad, moap_nombre,
+                    CURS_NOMBRE, CALE_SEMESTRE, grup_num_inscritos, esta_nombre
+                FROM Personal_Grupo P, GRUPO G, CURSO C, Modalidad_Aprendizaje M, CALENDARIO CA, Estado E
                 WHERE P.usua_id_usuario = $id
                     AND G.CURS_ID_CURSO = C.CURS_ID_CURSO AND G.grup_id_grupo = P.grup_id_grupo
                     AND G.moap_id_modalidad = M.moap_id_modalidad
                     AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO
+                    AND G.ESTA_ID_ESTADO = E.ESTA_ID_ESTADO
                 ORDER BY GRUP_ID_GRUPO ASC;
             ";
 
