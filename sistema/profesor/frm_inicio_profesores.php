@@ -11,7 +11,12 @@
   if (isset($_POST['persona'])){
     $idPersona = $_POST['persona'];
     $obj_profesor = new Profesor();
-    $id_profesor = $obj_profesor->buscarProfesorxPersona($idPersona);
+    $profesor = $obj_profesor->buscarProfesorxPersona($idPersona);
+    if(isset($profesor)){
+      $id_profesor=$profesor->usua_id_usuario;
+    } else {
+      $id_profesor=0;
+    }
   } else {
     $idPersona = 0;
   }
@@ -69,7 +74,7 @@
                   <?php
                   if(isset($arr_grupos)){ 
                   foreach ($arr_grupos as $grupo) { 
-                    if($grupo['usua_id_usuario'] != $id_profesor->usua_id_usuario) {
+                    if($grupo['usua_id_usuario'] != $id_profesor) {
                       $sesion = $obj_Sesion->numSesionesGrupo($grupo['grup_id_grupo']);
                       $sesionUno = $obj_Sesion->buscarMinSesionDM($grupo['grup_id_grupo']);?>
                       <tr>
