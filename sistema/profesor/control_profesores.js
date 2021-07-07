@@ -52,23 +52,6 @@ function consultarGrupoInscrito(id, persona) {
     });
 }
 
-function consultarGrupoImpartir(id, persona) {
-    var datos = {
-        id: id,
-        CRUD: 6,
-        persona: persona,
-    };
-    $.ajax({
-        data: datos,
-        type: 'POST',
-        url: '../sistema/profesor/frm_grupo_profesor.php',
-        success: function (data) {
-            $('html, body').animate({ scrollTop: 0 }, 0);
-            $('#container').html(data);
-        },
-    });
-}
-
 // Inscripcion curso
 function inscribirGrupo(grupo, inscritos, cupo, persona, nombre, tipo, nivel) {
     if (validarInscripcion(inscritos, cupo)) {
