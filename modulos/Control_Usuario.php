@@ -5,7 +5,6 @@
   include('../clases/Persona.php');
   include('../clases/Profesor.php');
   include('../clases/Busqueda.php');
-  include('../clases/ServidorSocial.php');
   include('../clases/Moderador.php');
   include('../clases/Administrador.php');
 
@@ -14,7 +13,6 @@
   $obj_Moderador = new Moderador();
   $obj_Profesor = new Profesor();
   $obj_Busqueda = new Busqueda();
-  $obj_ServidorSocial = new ServidorSocial();
   $obj_Administrador = new Administrador();
 
   //Arreglos necesarios
@@ -39,15 +37,47 @@
         //? Para los demas usuarios su nombre de usuario y contraseña son los que ellos decidan
         case ADMINISTRADOR:
         case INSTRUCTOR:
-        case MODERADOR:
           $nombreUsuario = $_POST['strNombreUsuario'];
           $contrasenia = $_POST['strContrasenia01'];
-          break;
+
+          $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador']);
+          
+          if(isset($profesor_existente->prof_num_trabajador)) {
+            exit("3");
+          }
+        break;
+
+        case MODERADOR:
+
+        //? Se verifica si se registrara un Servidor Social o un Profesor Moderador
+        //? Si mide 6 es un Profesor el que se esta registrando
+        if(strlen($_POST['intNum_Trabajador']) == 6) {
+          $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador']);
+          $profesor_existente = $obj_Moderador->buscarModerador($profesor_existente->pers_id_persona);
+          $num_cuenta = null;
+
+          if(isset($profesor_existente->prof_num_trabajador)) {
+            exit("3");
+          }
+
+          //? Si mide 9 es un Servidor Social el que se esta registrando
+        } elseif (strlen($_POST['intNum_Trabajador']) == 9) {
+          //?Si es un Servidor Social se verifica que no haya uno con el numero de cuenta ingresado
+          if (isset($obj_Moderador->buscarServidorSocialNumCuenta($_POST['intNum_Trabajador'])->seso_id_servidor)) {
+            exit("4");
+          } 
+          $num_cuenta = $_POST['intNum_Trabajador'];
+        } else {
+          exit("5");
+        }
+          $nombreUsuario = $_POST['strNombreUsuario'];
+          $contrasenia = $_POST['strContrasenia01'];
+        break;
           
         case PROFESOR:
           $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador']);
           if(isset($profesor_existente->prof_num_trabajador)) {
-          exit("3");
+            exit("3");
           }
 
           //? Si existe algo en contraseña y en usuaruio significa que no venimos de mi cuenta
@@ -69,7 +99,7 @@
         break;
       }
       
-      $usuario_existente = $obj_Usuario->buscarNombreUsuario($nombreUsu);
+      $usuario_existente = $obj_Usuario->buscarNombreUsuario($_POST['strNombreUsuario']);
       if(!isset($usuario_existente->usua_num_usuario)) {
         
         //?Datos de persona
@@ -78,6 +108,7 @@
         $apellidoMaterno = $_POST['strUsuarioSegundoApe'];
         $correo = $_POST['strUsuarioCorreo'];
         $telefono = $_POST['strUsuarioTelefono'];
+        $rfc = $_POST['strRFC'];
         
         //? Datos de usuario
         //TODO: Preguntar por solictud de usuario se quita pregunta de seguridad
@@ -92,12 +123,16 @@
         switch($rol){
           case ADMINISTRADOR:
             $num_trabajador = $_POST['intNum_Trabajador'];
-            $rfc = $_POST['strRFC'];
           break;  
 
           //TODO: Hcer validaciones para Instructor
           
           case MODERADOR: 
+            //? Si no hay nada en numero de cuenta es que en la validación de la linea 50 si obtuvimos un Profesor
+            if(!isset($num_cuenta)) {
+              $num_trabajador = $_POST['intNum_Trabajador'];
+            }
+
             //*? Creado para guardar los inputs. Solo guarda los que tienen algo
             $diasModerador=array();
             foreach($arr_dias as $dia){
@@ -109,7 +144,6 @@
               $bandera++;
             }
 
-            $num_cuenta = $_POST['lbNumCuenta'];
             $fechaInicio = $_POST['strFechaInicio'];
             $fechaFin = $_POST['strFechaFin']; 
             $horaInicio = $_POST['strHoraInicio']; 
@@ -117,9 +151,9 @@
           break; 
 
           case PROFESOR:
+          case INSTRUCTOR:
             $num_trabajador = $_POST['intNum_Trabajador'];
-            $rfc = $_POST['strRFC'];
-            $semblanza = isset($_POST['strSemblanza']) ? $_POST['strSemblanza'] : null;
+            isset($_POST['strSemblanza']) ? $semblanza = $_POST['strSemblanza'] : $semblanza = null;
             
             //*? Creado para guardar los inputs. Solo guarda los que tienen algo
             $nivelesProfesor=array();
@@ -151,7 +185,7 @@
           break; 
         }
 
-        
+        //TODO: Validaciones para personas que ya estan registradas con otro rol
         $obj_Persona->agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc);
         $persona = $obj_Persona->buscarUltimo();
         $obj_Usuario->agregarUsuario($persona, $rol, $pregunta, $nombreUsuario, $contrasenia, $estado);
@@ -161,13 +195,22 @@
           break;
 
           case MODERADOR: //Moderador
-            $obj_Moderador->agregarModerador($persona, $num_cuenta, $fechaInicio, $fechaFin, $horaInicio, $horaFin );
+            //? Se debe de registrar un Servidor social
+            if(isset($num_cuenta)) {
+              $obj_Moderador->agregarServidor($persona, $num_cuenta);
+            //? Se debde registrar un Profesor
+            } else {
+              $obj_Profesor->agregarProfesor($persona, $num_trabajador, null);
+            }
+
+            $obj_Moderador->agregarModerador($obj_Usuario->buscarUsuarioPersona($persona)->usua_id_usuario, $fechaInicio, $fechaFin, $horaInicio, $horaFin );
             foreach($diasModerador as $id){
               $obj_Moderador->agregarDiasModerador($persona, $id);
             }
           break;
 
-          case 4: //Profesor
+          case PROFESOR: //Profesor
+          case INSTRUCTOR: //Profesor
             $obj_Profesor->agregarProfesor($persona, $num_trabajador, $semblanza);
             
             foreach($nivelesProfesor as $id){
@@ -268,10 +311,9 @@
         $fechaFin = $_POST['strFechaFin']; 
         $horaInicio = $_POST['strHoraInicio']; 
         $horaFin = $_POST['strHoraFin'];
-        //? Si tienen más de un rol no tienen datos de Servidor_Social, sino de profesor
-        //? Este If valida eso y asigna las variables correspondientes
-        if ($obj_Persona->rolesPersona($_POST['idPersona'])->roles_persona == 1) {
-          $num_cuenta = $_POST['lbNumCuenta'];
+        //? Si existe un registro como Servidor Social, llamo al id para usar el isset
+        if (isset($obj_Moderador->buscarServidorSocial($_POST['idPersona'])->seso_id_servidor)) {
+          $num_cuenta = $_POST['intNumCuenta'];
         } else {
           $num_trabajador = $_POST['intNum_Trabajador'];
           $rfc = $_POST['strRFC'];
@@ -301,10 +343,10 @@
           } elseif (isset($num_cuenta)) {
             //? Si el número de cuenta es diferente a 9 es un error por que no se puede haber registrado
             //? a un Servidor Social  y despues cambiarlo a Profesora
-            if (strlen($num_trabajador) < 6 || strlen($num_trabajador) > 6) {
+            if (strlen($num_cuenta) < 9 || strlen($num_cuenta) > 9) {
               exit("4");
             }
-            $obj_ServidorSocial->actualizarServidor($idPersona , $num_cuenta);
+            $obj_Moderador->actualizarServidor($idPersona , $num_cuenta);
           }
 
           $obj_Moderador->actualizarModerador($idPersona, $fechaInicio, $fechaFin, $horaInicio, $horaFin);

@@ -78,7 +78,7 @@
       case MODERADOR: //Moderador
         //? Si tienen más de un rol no tienen datos de Servidor_Social, sino de profesor
         //? Este If valida eso y asigna las variables correspondientes
-        if ($obj_Persona->rolesPersona($_POST['persona'])->roles_persona == 1) {
+        if ($obj_Moderador->buscarServidorSocial($_POST['persona'])) {
           $servidorSocial = $obj_Moderador->buscarServidorSocial($_POST['persona']);
         } else {
           $profesor = $profesor = $obj_Profesor->buscarProfesor($_POST['persona']);
@@ -148,13 +148,13 @@
                         <input value="<?php echo isset($servidorSocial) ? $servidorSocial-> seso_num_cuenta : ""; ?>" type="text" 
                           class="form-control" name="intNumCuenta"  id="intNumCuenta">
                       <?php }  else { ?>
-                        <label for="intNum_Trabajador" class = "negritas">Número de trabajador o Número de cuenta:*</label>
+                        <label for="intNum_Trabajador" class = "negritas">Número de trabajador:*</label>
                         <input value="<?php echo isset($profesor) ? $profesor-> prof_num_trabajador : ""; ?>" type="text" 
                         class="form-control" name="intNum_Trabajador"  id="intNum_Trabajador">
                       <?php } 
                     } else {?>
                       <label for="intNum_Trabajador" class = "negritas">Número de trabajador:*</label>
-                      <input value="<?php echo isset($profesor) ? $profesor-> prof_num_trabajador : ""; ?>" type="text" 
+                      <input value="<?php echo isset($profesor) ? $profesor-> prof_num_trabajador : "" ; ?>" type="text" 
                         class="form-control" name="intNum_Trabajador"  id="intNum_Trabajador">
                     <?php } ?>
                   </div> 

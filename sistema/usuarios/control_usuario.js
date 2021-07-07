@@ -42,7 +42,15 @@ $(document).ready(function () {
                         $('html, body').animate({ scrollTop: 200 }, 'slow');
                         document.getElementById('intNum_Trabajador').focus();
                         alertify.error('Ya existe un profesor con ese número de trabajador');
-                    } else {
+                    } else  if (respuesta.endsWith('4')) {
+                        $('html, body').animate({ scrollTop: 200 }, 'slow');
+                        document.getElementById('intNum_Trabajador').focus();
+                        alertify.error('Ya existe un moderador registrado con ese número de cuenta');
+                    } else  if (respuesta.endsWith('5')) {
+                        $('html, body').animate({ scrollTop: 200 }, 'slow');
+                        document.getElementById('intNum_Trabajador').focus();
+                        alertify.error('La extensión del número de cuenta o trabajador no es correcta.');
+                    }else {
                         alertify.error('Hubo un problema al registrar al usuario');
                     }
                 },
@@ -508,7 +516,8 @@ function validarFormularioUsuario() {
 
     //? Validación datos de cuenta según rol
     
-    //? Si no son Moderador
+    //? Si no son Moderador y no estan creando un nuevo usuario
+    alert($('#hideRol').val());
     if ($('#hideRol').val() != 3) {
         
         if ($('#intNum_Trabajador').val() == '') {
@@ -525,12 +534,35 @@ function validarFormularioUsuario() {
                 alertify.error('El numero de trabajador de incluir unicamente números.');
                 return false;
             }
-            if ($('#intNum_Trabajador').val().length > 6) {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('intNum_Trabajador').focus();
-                alertify.error('El número de trabajador debe tener máximo 6 caracteres.');
-                return false;
+            //? Esto significa que estan creando un nuevo usuario
+
+            if(typeof($('#hideRol').val()) == 'undefined') {
+                if ($('#intNum_Trabajador').val().length > 9 ) {
+                    $('html, body').animate({ scrollTop: 0 }, 'slow');
+                    document.getElementById('intNum_Trabajador').focus();
+                    alertify.error('El número de trabajador o número de cuenta debe tener máximo 9 cifras.');
+                    return false;
+                } else if ($('#intNum_Trabajador').val().length < 9 && $('#intNum_Trabajador').val().length > 6) {
+                    $('html, body').animate({ scrollTop: 0 }, 'slow');
+                    document.getElementById('intNum_Trabajador').focus();
+                    alertify.error('El número de trabajador o número de cuenta debe tener máximo 9 cifras.');
+                    return false;
+                } else if ($('#intNum_Trabajador').val().length < 6) {
+                    $('html, body').animate({ scrollTop: 0 }, 'slow');
+                    document.getElementById('intNum_Trabajador').focus();
+                    alertify.error('El número de trabajador es 6 cifras.');
+                    return false;
+                }
+
+            } else {
+                if ($('#intNum_Trabajador').val().length > 6) {
+                    $('html, body').animate({ scrollTop: 0 }, 'slow');
+                    document.getElementById('intNum_Trabajador').focus();
+                    alertify.error('El número de trabajador debe tener máximo 6 caracteres.');
+                    return false;
+                }
             }
+
         }
     } else {
         //? En caso de que se Moderador

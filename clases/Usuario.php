@@ -114,6 +114,22 @@
 			$bd->cerrarBD();
 			return ($transaccion_1->traerObjeto(0));
 		}
+		function buscarUsuarioPersona($persona)
+		{
+			$SQL_Bus_Usuario = 
+			"	SELECT U.usua_id_usuario, U.rol_id_rol, R.rol_nombre, U.usua_num_usuario, U.usua_contrasena, U.usua_activo
+				FROM Rol R, Usuario U
+				WHERE R.rol_id_rol = U.rol_id_rol AND U.pers_id_persona = $persona;
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Usuario);
+			$obj_Usuario = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerObjeto(0));
+		}
 
 		//Bucar datos de un usuario dado el nombre de usuario
 		//? Verificado en la BD 02/07/2021

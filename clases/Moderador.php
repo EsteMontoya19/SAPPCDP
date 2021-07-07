@@ -28,8 +28,8 @@
       $bd->cerrarBD();
     }
 
-    //Buscar un moderador dado el id de una persona
-    //TODO Verificado en la BD 02/07/2021
+    //Buscar un Servidor Social dado el id de una persona
+    //? Verificado en la BD 02/07/2021
     function buscarServidorSocial($persona)
 		{
 			$SQL_Bus_Moderador = 
@@ -46,6 +46,26 @@
 			$bd->cerrarBD();
 			return ($transaccion_1->traerObjeto(0));
 		}
+
+    //Buscar un Servidor Social dado el numero de cuenta de una persona
+    //? Verificado en la BD 02/07/2021
+    function buscarServidorSocialNumCuenta($numCuenta)
+		{
+			$SQL_Bus_Moderador = 
+			"	SELECT DISTINCT seso_id_servidor, pers_id_persona, seso_num_cuenta
+        FROM Servidor_Social
+        WHERE seso_num_cuenta = '$numCuenta'
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Moderador);
+			$obj_Persona = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerObjeto(0));
+		}
+    
 
     function buscarModerador($persona)
 		{
@@ -121,6 +141,20 @@
       $transaccion_1->enviarQuery($SQL_REGISTRO_MODERADOR);
       $bd->cerrarBD();
     }
+
+    function agregarServidor ($persona, $seso_num_cuenta) {
+
+      $SQL_REGISTRO_MODERADOR = 
+      "INSERT INTO Servidor_Social (pers_id_persona, seso_num_cuenta)
+        VALUES ($persona, '$seso_num_cuenta');
+      ";
+
+      $bd = new BD();
+      $bd->abrirBD();
+      $transaccion_1 = new Transaccion($bd->conexion);
+      $transaccion_1->enviarQuery($SQL_REGISTRO_MODERADOR);
+      $bd->cerrarBD();
+    }
     
     //Agregar los días de un moderador
     //TODO Verificado en la BD 02/07/2021
@@ -135,6 +169,21 @@
       $bd->abrirBD();
       $transaccion_1 = new Transaccion($bd->conexion);
       $transaccion_1->enviarQuery($SQL_REGISTRO_DIA_MODERADOR);
+      $bd->cerrarBD();
+    }
+
+    function actualizarServidor ($persona, $seso_num_cuenta) {
+
+      $SQL_ACTUALIZACION_SERVIDOR = 
+      "UPDATE Servidor_Social
+      SET seso_num_cuenta = '$seso_num_cuenta' 
+      WHERE pers_id_persona = $persona
+      ";
+
+      $bd = new BD();
+      $bd->abrirBD();
+      $transaccion_1 = new Transaccion($bd->conexion);
+      $transaccion_1->enviarQuery($SQL_ACTUALIZACION_SERVIDOR);
       $bd->cerrarBD();
     }
 
