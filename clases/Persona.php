@@ -97,6 +97,23 @@
 			return ($transaccion_1->traerObjeto(0));
 		}
 
+    function buscarPersonaRFC($rfc)
+		{
+			$SQL_Bus_Persona = 
+			"	SELECT pers_id_persona, pers_nombre, pers_apellido_paterno, pers_apellido_materno, 
+                pers_correo, pers_telefono, pers_rfc
+				FROM persona
+				WHERE pers_rfc = '$rfc';
+			";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Persona);
+			$bd->cerrarBD();
+			return ($transaccion_1->traerObjeto(0));
+		}
+
     //Busca una persona dado el id
     //? Verificado en la BD 02/07/2021
     function personaExistente($persona)

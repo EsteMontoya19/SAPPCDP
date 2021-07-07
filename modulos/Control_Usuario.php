@@ -40,7 +40,7 @@
           $nombreUsuario = $_POST['strNombreUsuario'];
           $contrasenia = $_POST['strContrasenia01'];
 
-          $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador']);
+          $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador'], $rol);
           
           if(isset($profesor_existente->prof_num_trabajador)) {
             exit("3");
@@ -52,7 +52,7 @@
         //? Se verifica si se registrara un Servidor Social o un Profesor Moderador
         //? Si mide 6 es un Profesor el que se esta registrando
         if(strlen($_POST['intNum_Trabajador']) == 6) {
-          $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador']);
+          $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador'], $rol);
           $profesor_existente = $obj_Moderador->buscarModerador($profesor_existente->pers_id_persona);
           $num_cuenta = null;
 
@@ -75,7 +75,7 @@
         break;
           
         case PROFESOR:
-          $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador']);
+          $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador'], $rol);
           if(isset($profesor_existente->prof_num_trabajador)) {
             exit("3");
           }
@@ -185,10 +185,17 @@
           break; 
         }
 
-        //TODO: Validaciones para personas que ya estan registradas con otro rol
-        $obj_Persona->agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc);
-        $persona = $obj_Persona->buscarUltimo();
+        //? Se verifica que no exista un registro de persona previo, de ser así no se crea uno nuevo
+        $persona_exitente = $obj_Persona->buscarPersonaRFC($_POST['rfc']);
+        if (isset($persona_exitente)) {
+          $persona = $persona_exitente->pers_id_persona;
+        } else {
+          $obj_Persona->agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc);
+          $persona = $obj_Persona->buscarUltimo();
+        }
+        
         $obj_Usuario->agregarUsuario($persona, $rol, $pregunta, $nombreUsuario, $contrasenia, $estado);
+        
         switch($rol){
           case ADMINISTRADOR: //Administrador
             $obj_Profesor->agregarProfesor($persona, $num_trabajador, null);
@@ -423,6 +430,26 @@
       }
 
       exit("1");
+    } 
+    elseif($_POST['dml'] == 'autollenado')
+    {
+      $resultado = array();
+      $persona = $obj_Persona->buscarPersonaRFC($_POST['rfc']);
+      
+      
+      if (isset($persona->pers_id_persona)) {
+        $resultado ['estado'] = "Encontrado";
+        $resultado ['nombre'] = $persona->pers_nombre;
+        $resultado ['apellidoPaterno'] = $persona->pers_apellido_paterno;
+        $resultado ['apellidoMaterno'] = $persona->pers_apellido_materno;
+        $resultado ['correo'] = $persona->pers_correo;
+        $resultado ['telefono'] = $persona->pers_telefono;
+        
+      } else {
+        $resultado ['estado'] = "Nulo";
+      }
+      echo json_encode($resultado);
+      
     }
   } else {
     exit("3");

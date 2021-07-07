@@ -172,7 +172,7 @@
                             if(!isset($_POST['CRUD'])) {
                               echo ('onkeyup = "AsignarContrasena();" ');
                             }
-                      ?>>
+                      ?> onblur="buscarPersona()">
                   </div>
               </div>
 
