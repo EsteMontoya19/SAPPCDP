@@ -318,10 +318,73 @@ function AsignarContrasena() {
 
 //? Rellena y bloquea los campos de persona cuando se ingresa un RFC que ya este registrado previamente
 function buscarPersona () {
-    var dml = 'autollenado';
+    var dml = 'llenadoPersona';
     var rfc = document.getElementById("strRFC").value;
+    var datos = {
+        rfc: rfc,
+        dml: dml,
+    };
+    $.ajax({
+        data: datos,
+        type: 'POST',
+        dataType: "json",
+        url: '../modulos/Control_Usuario.php',
+        success: function (respuesta) {
+            if (respuesta.estado == "Encontrado") {
+
+                var titulo = "Se encontró una persona registrada en el sistema con el mismo RFC.";
+                var mensaje = "Los campos de la persona se bloquearán con los datos encontrados. \n Para actualizar estos datos hagalo desde la opción de actualizar.";
+                
+                alertify.alert(titulo, mensaje, function(){ alertify.success('Datos cargados'); });
+                
+                document.getElementById("strUsuarioNombre").value = respuesta.nombre;
+                document.getElementById("strUsuarioPrimerApe").value = respuesta.apellidoPaterno;
+                document.getElementById("strUsuarioSegundoApe").value = respuesta.apellidoMaterno;
+                document.getElementById("strUsuarioCorreo").value = respuesta.correo;
+                document.getElementById("strUsuarioTelefono").value = respuesta.telefono;
+
+                //$( "#strRFC" ).prop( "disabled", true );
+                $( "#strUsuarioNombre" ).prop( "disabled", true );
+                $( "#strUsuarioPrimerApe" ).prop( "disabled", true );
+                $( "#strUsuarioSegundoApe" ).prop( "disabled", true );
+                $( "#strUsuarioCorreo" ).prop( "disabled", true );
+                $( "#strUsuarioTelefono" ).prop( "disabled", true );
+            }  else if (respuesta.estado == "Nulo") {
+
+                document.getElementById("strUsuarioNombre").value = " ";
+                document.getElementById("strUsuarioPrimerApe").value = " ";
+                document.getElementById("strUsuarioSegundoApe").value = " ";
+                document.getElementById("strUsuarioCorreo").value = " ";
+                document.getElementById("strUsuarioTelefono").value = " ";
+
+                $( "#strUsuarioNombre" ).prop( "disabled", false );
+                $( "#strUsuarioPrimerApe" ).prop( "disabled", false );
+                $( "#strUsuarioSegundoApe" ).prop( "disabled", false );
+                $( "#strUsuarioCorreo" ).prop( "disabled", false );
+                $( "#strUsuarioTelefono" ).prop( "disabled", false );
+
+                alertify.success('No se encontró otro usuario con ese RFC.');
+            }
+        },
+    });
+}
+
+//? Rellena y bloquea los campos de profesor cuando se ingresa un número de trabajador que ya este registrado previamente
+$(document).on('change', '#intUsuarioRol', function buscarProfesor () {
+    //? Constantes para indicar el rol
+    const INSTRUCTOR = 2;
+    const PROFESOR = 4;
+
+    var tipo_evento = $('#intUsuarioRol').val();
+
+    if (tipo_evento.startsWith(INSTRUCTOR) || tipo_evento.startsWith(PROFESOR)) {
+        var dml = 'llenadoProfesor';
+        var numTrabajador = document.getElementById("numTrabajador").value;
+    
+    
+        if(numTrabajador.toString().length == 6) {
             var datos = {
-                rfc: rfc,
+                numTrabajador: numTrabajador,
                 dml: dml,
             };
             $.ajax({
@@ -331,30 +394,21 @@ function buscarPersona () {
                 url: '../modulos/Control_Usuario.php',
                 success: function (respuesta) {
                     if (respuesta.estado == "Encontrado") {
-
-                        var titulo = "Se encontro una persona registrada en el sistema con el mismo RFC.";
-                        var mensaje = "Los campos de la persona se bloquearan con los datos encontrados. \n Para actualizar estos datos hagalo desde la opción de actualizar.";
+        
+                        var titulo = "Se encontro un profesor registrado en el sistema con el mismo Número de trabajador.";
+                        var mensaje = "Los campos del profesor se bloquearan con los datos encontrados. \n Para actualizar estos datos hagalo desde la opción de actualizar.";
                         
                         alertify.alert(titulo, mensaje, function(){ alertify.success('Datos cargados'); });
                         
-                        document.getElementById("strUsuarioNombre").value = respuesta.nombre;
-                        document.getElementById("strUsuarioPrimerApe").value = respuesta.apellidoPaterno;
-                        document.getElementById("strUsuarioSegundoApe").value = respuesta.apellidoMaterno;
-                        document.getElementById("strUsuarioCorreo").value = respuesta.correo;
-                        document.getElementById("strUsuarioTelefono").value = respuesta.telefono;
-
-                        $( "#strRFC" ).prop( "disabled", true );
-                        $( "#strUsuarioNombre" ).prop( "disabled", true );
-                        $( "#strUsuarioPrimerApe" ).prop( "disabled", true );
-                        $( "#strUsuarioSegundoApe" ).prop( "disabled", true );
-                        $( "#strUsuarioCorreo" ).prop( "disabled", true );
-                        $( "#strUsuarioTelefono" ).prop( "disabled", true );
                     }  else if (respuesta.estado == "Nulo") {
-                        alertify.success('No se encontró otro usuario con ese RFC.');
+      
                     }
                 },
-            });
-}
+            })
+        };
+
+    }
+});
 
 //? Validaciones y animaciones de campos
 // Validación del formulario para usuario

@@ -155,7 +155,12 @@
                     } else {?>
                       <label for="intNum_Trabajador" class = "negritas">Número de trabajador:*</label>
                       <input value="<?php echo isset($profesor) ? $profesor-> prof_num_trabajador : "" ; ?>" type="text" 
-                        class="form-control" name="intNum_Trabajador"  id="intNum_Trabajador">
+                        class="form-control" name="intNum_Trabajador"  id="intNum_Trabajador" 
+                        <?php //? Evita al Coordinador escribir el Numero de trabajador cuando se crea un Profesor
+                            if(!isset($_POST['CRUD'])) {
+                              echo (' onblur="buscarPersona()" ');
+                            }
+                      ?> >
                     <?php } ?>
                   </div> 
 
@@ -170,9 +175,10 @@
                       class="form-control" name="strRFC" id="strRFC"
                       <?php //? Evita al Coordinador escribir el Numero de trabajador cuando se crea un Profesor
                             if(!isset($_POST['CRUD'])) {
-                              echo ('onkeyup = "AsignarContrasena();" ');
+                              echo (' onkeyup = "AsignarContrasena();" ');
+                              echo (' onblur="buscarPersona()" ');
                             }
-                      ?> onblur="buscarPersona()">
+                      ?> >
                   </div>
               </div>
 

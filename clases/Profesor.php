@@ -358,6 +358,7 @@
 			return ($transaccion_1->traerObjeto(0));
 		}
 
+		//!Crear otro para poder buscarsus datos con numero de trabajador 
 		//Busca el nombre del profesor dado el id de profesor
 		//TODO Verificado en la BD 02/07/2021
 		function buscarProfesorNombre($id){

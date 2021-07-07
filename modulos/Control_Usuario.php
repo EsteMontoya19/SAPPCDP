@@ -32,7 +32,11 @@
     if($_POST['dml'] == 'insert')
     {
       $rol = (integer) $_POST['intUsuarioRol'];
-      
+      $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador'], $rol);
+      if(isset($profesor_existente->prof_num_trabajador)) {
+        exit("3");
+      }
+
       switch($rol) {
         //? Para los demas usuarios su nombre de usuario y contraseña son los que ellos decidan
         case ADMINISTRADOR:
@@ -40,11 +44,7 @@
           $nombreUsuario = $_POST['strNombreUsuario'];
           $contrasenia = $_POST['strContrasenia01'];
 
-          $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador'], $rol);
           
-          if(isset($profesor_existente->prof_num_trabajador)) {
-            exit("3");
-          }
         break;
 
         case MODERADOR:
@@ -52,14 +52,7 @@
         //? Se verifica si se registrara un Servidor Social o un Profesor Moderador
         //? Si mide 6 es un Profesor el que se esta registrando
         if(strlen($_POST['intNum_Trabajador']) == 6) {
-          $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador'], $rol);
-          $profesor_existente = $obj_Moderador->buscarModerador($profesor_existente->pers_id_persona);
           $num_cuenta = null;
-
-          if(isset($profesor_existente->prof_num_trabajador)) {
-            exit("3");
-          }
-
           //? Si mide 9 es un Servidor Social el que se esta registrando
         } elseif (strlen($_POST['intNum_Trabajador']) == 9) {
           //?Si es un Servidor Social se verifica que no haya uno con el numero de cuenta ingresado
@@ -195,7 +188,7 @@
         }
         
         $obj_Usuario->agregarUsuario($persona, $rol, $pregunta, $nombreUsuario, $contrasenia, $estado);
-        
+
         switch($rol){
           case ADMINISTRADOR: //Administrador
             $obj_Profesor->agregarProfesor($persona, $num_trabajador, null);
@@ -431,7 +424,7 @@
 
       exit("1");
     } 
-    elseif($_POST['dml'] == 'autollenado')
+    elseif($_POST['dml'] == 'llenadoPersona')
     {
       $resultado = array();
       $persona = $obj_Persona->buscarPersonaRFC($_POST['rfc']);
@@ -451,7 +444,28 @@
       echo json_encode($resultado);
       
     }
-  } else {
+  } 
+  elseif($_POST['dml'] == 'llenadoProfesor')
+  {
+      $resultado = array();
+      //! Aqui voy
+      $profesor = $obj_Persona->buscarPersonaRFC($_POST['rfc']);
+      
+      
+      if (isset($persona->pers_id_persona)) {
+        $resultado ['estado'] = "Encontrado";
+        $resultado ['nombre'] = $persona->pers_nombre;
+        $resultado ['apellidoPaterno'] = $persona->pers_apellido_paterno;
+        $resultado ['apellidoMaterno'] = $persona->pers_apellido_materno;
+        $resultado ['correo'] = $persona->pers_correo;
+        $resultado ['telefono'] = $persona->pers_telefono;
+        
+      } else {
+        $resultado ['estado'] = "Nulo";
+      }
+      echo json_encode($resultado);
+      
+    }else {
     exit("3");
   }
 ?>
