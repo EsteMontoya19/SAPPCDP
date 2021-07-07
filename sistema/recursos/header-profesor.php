@@ -59,7 +59,7 @@
 
             <li id = "btn_profesor_grupos_publicados" class="nav-item">
                 <a id = "btn_profesor_grupos_publicados" class="nav-link" href="#" style="color:#FFFFFF" 
-                  onclick="gruposInscritos(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)">
+                onclick="gruposPublicados(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)">
                   <i class="fas fa-chalkboard-teacher"></i>&nbsp; Cursos publicados</a>
             </li>
 

@@ -11,7 +11,7 @@
   if (isset($_POST['persona'])){
     $idPersona = $_POST['persona'];
     $obj_profesor = new Profesor();
-    $profesor = $obj_profesor->buscarProfesorxPersona($idPersona);
+    $profesor = $obj_profesor->buscarInstructorxPersona($idPersona);
     if(isset($profesor)){
       $id_profesor=$profesor->usua_id_usuario;
     } else {
