@@ -346,7 +346,7 @@
         //Busca los grupos que imparte un profesor
         //? Verificado en la BD 06/07/2021
         //? Se cambia la logica ahora el id hace referencia al id de usuario del profesor
-        function buscarGruposImpartidosxProfesor($id){
+        function buscarGruposImpartidosxInstructor($id){
 			$SQL_Bus_Grupos =
             "	
                 SELECT G.GRUP_ID_GRUPO, M.moap_id_modalidad, moap_nombre,
