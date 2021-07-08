@@ -449,16 +449,18 @@
   {
       $resultado = array();
       //! Aqui voy
-      $profesor = $obj_Persona->buscarPersonaRFC($_POST['rfc']);
+      $profesor = $obj_Profesor->buscarNumTrabajador($_POST['numTrabajador'], null);
       
       
-      if (isset($persona->pers_id_persona)) {
+      if (isset($profesor->prof_id_profesor)) {
         $resultado ['estado'] = "Encontrado";
-        $resultado ['nombre'] = $persona->pers_nombre;
-        $resultado ['apellidoPaterno'] = $persona->pers_apellido_paterno;
-        $resultado ['apellidoMaterno'] = $persona->pers_apellido_materno;
-        $resultado ['correo'] = $persona->pers_correo;
-        $resultado ['telefono'] = $persona->pers_telefono;
+        $resultado ['idProfesor'] = $profesor->prof_id_profesor;
+        $resultado ['idPersona'] = $profesor->pers_id_persona;
+        $resultado ['numTrabajador'] = $profesor->prof_num_trabajador;
+        $resultado ['semblanza'] = $profesor->prof_semblanza;
+        $resultado ['rfc'] = $profesor->pers_rfc;
+
+        
         
       } else {
         $resultado ['estado'] = "Nulo";

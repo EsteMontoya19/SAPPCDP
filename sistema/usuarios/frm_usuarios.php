@@ -18,6 +18,8 @@
   $usuario->usua_contrasena = null;
   $usuario->usua_respuesta = null;
   $usuario->usua_activo = null;
+
+  $usuario = null;
   
   $persona = new Persona();
   $persona->pers_id_persona = null;
@@ -158,7 +160,7 @@
                         class="form-control" name="intNum_Trabajador"  id="intNum_Trabajador" 
                         <?php //? Evita al Coordinador escribir el Numero de trabajador cuando se crea un Profesor
                             if(!isset($_POST['CRUD'])) {
-                              echo (' onblur="buscarPersona()" ');
+                              echo (' onblur="buscarProfesor()" ');
                             }
                       ?> >
                     <?php } ?>
@@ -302,10 +304,8 @@
             </div>
           </div>
 
-      <?php //? Si es Administrador, Profesor o Instructor?>
-        <?php if (isset($usuario) && $usuario->rol_id_rol != ADMINISTRADOR) { ?>
           <!-- Datos de cuenta según rol -->
-          <div class="form-group">
+          <div id = "datosCuenta" class="form-group" style="display: none;">
             <div class="card lg-12">
               <div class="card-header negritas">
                 <i class="fas fa-id-badge fa-lg"></i>
@@ -342,7 +342,7 @@
                     <label for="fechaInicio" class = "negritas">Fecha de inicio del servicio: *</label>
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_inicio: ""; ?>" type="date" class="form-control" name="strFechaInicio" id="strFechaInicio">
                   </div>
-                <?php if ($usuario->rol_id_rol == MODERADOR) { ?>
+                <?php if (isset($usuario) && $usuario->rol_id_rol == MODERADOR) { ?>
                   <div id="fechaFin" class="col-lg-3 form-group">
                 <?php }  else { ?>
                   <div id="fechaFin" class="col-lg-3 form-group" style="display: none;">
@@ -350,7 +350,7 @@
                     <label for="fechaFin" class = "negritas">Fecha de fin del servicio:*</label>
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_fin: ""; ?>" type="date" class="form-control" name="strFechaFin" id="strFechaFin">
                   </div>
-                <?php if ($usuario->rol_id_rol == MODERADOR) { ?>
+                <?php if (isset($usuario) && $usuario->rol_id_rol == MODERADOR) { ?>
                   <div id="horaInicio" class="col-lg-3 form-group">
                 <?php }  else { ?>
                   <div id="horaInicio" class="col-lg-3 form-group" style="display: none;">
@@ -358,7 +358,7 @@
                     <label for="horaInicio" class = "negritas">Hora de inicio del servicio: *</label>
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_inicio: ""; ?>" type="time" class="form-control" name="strHoraInicio" id="strHoraInicio">
                   </div>
-                <?php if ($usuario->rol_id_rol == MODERADOR) { ?>
+                <?php if (isset($usuario) && $usuario->rol_id_rol == MODERADOR) { ?>
                   <div id="horaFin" class="col-lg-3 form-group">
                 <?php }  else { ?>
                   <div id="horaFin" class="col-lg-3 form-group" style="display: none;">
@@ -370,7 +370,7 @@
 
               <!-- Datos del Profesor -->
               <div class="col-lg-12 form-row" style="margin-top: 15px;">  
-                <?php if ($usuario->rol_id_rol == INSTRUCTOR) { ?>
+                <?php if (isset($usuario) && $usuario->rol_id_rol == INSTRUCTOR) { ?>
                   <div id="semblanza" class="col-lg-12 form-group">
                 <?php }  else { ?>
                   <div id="semblanza" class="col-lg-12 form-group" style="display: none;">
@@ -382,7 +382,7 @@
               
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <?php //? Si es Profesor  o Instructor ?>
-                <?php if ($usuario->rol_id_rol == PROFESOR || $usuario->rol_id_rol == INSTRUCTOR) { ?>
+                <?php if (isset($usuario) && ($usuario->rol_id_rol == PROFESOR || $usuario->rol_id_rol == INSTRUCTOR)) { ?>
                   <div id="nivelImparticion" class="col-lg-6 form-group">
                 <?php }  else { ?>
                   <div id="nivelImparticion" class="col-lg-6 form-group" style="display: none;">
@@ -405,7 +405,7 @@
                     <?php } ?>
                   </div> 
                 <?php //? Si es Profesor  o Instructor ?>
-                <?php if ($usuario->rol_id_rol == PROFESOR || $usuario->rol_id_rol == INSTRUCTOR) { ?>
+                <?php if (isset($usuario) && ($usuario->rol_id_rol == PROFESOR || $usuario->rol_id_rol == INSTRUCTOR)) { ?>
                   <div id="modalidadImparticion" class="col-lg-6 form-group">
                 <?php }  else { ?>
                   <div id="modalidadImparticion" class="col-lg-6 form-group" style="display: none;">
@@ -430,7 +430,7 @@
 
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <?php //? Si es Profesor o Instructor ?>
-                <?php if ($usuario->rol_id_rol == PROFESOR || $usuario->rol_id_rol == INSTRUCTOR) { ?>
+                <?php if (isset($usuario) && ($usuario->rol_id_rol == PROFESOR || $usuario->rol_id_rol == INSTRUCTOR)) { ?>
                   <div id="coordinaciones" class="col-lg-12 form-group">
                 <?php }  else { ?>
                   <div id="coordinaciones" class="col-lg-12 form-group" style="display: none;">
@@ -471,8 +471,6 @@
               </div>  <!-- Fin del campo-->
             </div>  <!-- Fin del card-->
           </div> <!-- Este es cierra todo el grupo de Datos de cuenta -->
-        <?php } ?>                                                          
-
                                                             
                                                               
                                                               
@@ -504,19 +502,19 @@
         <?php } ?>
 
       </form>
-      <!-- Botones -->
-      <div class="col-lg-12" style="text-align: center;">
-        <button id="btn-regresar-usuario" type="button" class="btn btn-success btn-footer btn-regresar">Regresar</button>
-        <?php if (isset($_POST['CRUD'])) { ?>
-          <?php if ($_POST['CRUD'] == 1) { ?>
-            <button id="btn-actualizar-usuario" type="button" class="btn btn-success btn-footer btn-aceptar">Actualizar</button>
-          <?php } ?>
-        <?php } else { ?>
-          <button id="btn-registrar-usuario" type="button" class="btn btn-success btn-footer btn-aceptar">Guardar</button>
-        <?php } ?>
-      </div>
     </div>
   </div>
+</div>
+<!-- Botones -->
+<div class="col-lg-12" style="text-align: center;">
+  <button id="btn-regresar-usuario" type="button" class="btn btn-success btn-footer btn-regresar">Regresar</button>
+  <?php if (isset($_POST['CRUD'])) { ?>
+    <?php if ($_POST['CRUD'] == 1) { ?>
+      <button id="btn-actualizar-usuario" type="button" class="btn btn-success btn-footer btn-aceptar">Actualizar</button>
+    <?php } ?>
+  <?php } else { ?>
+    <button id="btn-registrar-usuario" type="button" class="btn btn-success btn-footer btn-aceptar">Guardar</button>
+  <?php } ?>
 </div>
 
 <script src="../sistema/usuarios/control_usuario.js"></script>

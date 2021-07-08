@@ -411,11 +411,22 @@
 		//? Verificado en la BD 02/07/2021
 		function buscarNumTrabajador ($numTrabajador, $rol) {
 
-			$SQL_Bus_Profesor = 
-			"SELECT prof_id_profesor, P.pers_id_persona, prof_num_trabajador, prof_semblanza, pers_rfc
-			 FROM Profesor P, Persona PE, Usuario U
-			 WHERE P.pers_id_persona = PE.pers_id_persona AND U.pers_id_persona = P.pers_id_persona AND P.prof_num_trabajador = '$numTrabajador' AND U.rol_id_rol = $rol
-			";
+			//? Tratamos de simular polimorfismo para que acepte aún sin el rol
+			if (isset($rol)) {
+
+				$SQL_Bus_Profesor = 
+				"SELECT prof_id_profesor, P.pers_id_persona, prof_num_trabajador, prof_semblanza, pers_rfc
+				FROM Profesor P, Persona PE, Usuario U
+				WHERE P.pers_id_persona = PE.pers_id_persona AND U.pers_id_persona = P.pers_id_persona AND P.prof_num_trabajador = '$numTrabajador' AND U.rol_id_rol = $rol
+				";
+			} else {
+				$SQL_Bus_Profesor = 
+				"SELECT DISTINCT prof_id_profesor, P.pers_id_persona, prof_num_trabajador, prof_semblanza, pers_rfc
+				FROM Profesor P, Persona PE, Usuario U
+				WHERE P.pers_id_persona = PE.pers_id_persona AND U.pers_id_persona = P.pers_id_persona AND P.prof_num_trabajador = '123452' 
+				";
+
+			}
 
 			$bd = new BD();
 			$bd->abrirBD();

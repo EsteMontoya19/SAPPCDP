@@ -370,45 +370,50 @@ function buscarPersona () {
 }
 
 //? Rellena y bloquea los campos de profesor cuando se ingresa un número de trabajador que ya este registrado previamente
-$(document).on('change', '#intUsuarioRol', function buscarProfesor () {
-    //? Constantes para indicar el rol
-    const INSTRUCTOR = 2;
-    const PROFESOR = 4;
+function buscarProfesor () {
+    var dml = 'llenadoProfesor';
+    var numTrabajador = document.getElementById("intNum_Trabajador").value;
 
-    var tipo_evento = $('#intUsuarioRol').val();
-
-    if (tipo_evento.startsWith(INSTRUCTOR) || tipo_evento.startsWith(PROFESOR)) {
-        var dml = 'llenadoProfesor';
-        var numTrabajador = document.getElementById("numTrabajador").value;
-    
-    
-        if(numTrabajador.toString().length == 6) {
-            var datos = {
-                numTrabajador: numTrabajador,
-                dml: dml,
-            };
-            $.ajax({
-                data: datos,
-                type: 'POST',
-                dataType: "json",
-                url: '../modulos/Control_Usuario.php',
-                success: function (respuesta) {
-                    if (respuesta.estado == "Encontrado") {
-        
-                        var titulo = "Se encontro un profesor registrado en el sistema con el mismo Número de trabajador.";
-                        var mensaje = "Los campos del profesor se bloquearan con los datos encontrados. \n Para actualizar estos datos hagalo desde la opción de actualizar.";
-                        
-                        alertify.alert(titulo, mensaje, function(){ alertify.success('Datos cargados'); });
-                        
-                    }  else if (respuesta.estado == "Nulo") {
-      
-                    }
-                },
-            })
+    //? Esto solo va a aplicar con numeros de trabjador que son los de 6 cifras
+    if (numTrabajador.length == 6) {
+        var datos = {
+            numTrabajador: numTrabajador,
+            dml: dml,
         };
+        $.ajax({
+            data: datos,
+            type: 'POST',
+            dataType: "json",
+            url: '../modulos/Control_Usuario.php',
+            success: function (respuesta) {
+                if (respuesta.estado == "Encontrado") {
 
+                    var titulo = "Se encontró un profesor registrado en el sistema con el mismo Número de trabajador.";
+                    var mensaje = "Los campos del profesor se bloquearán con los datos encontrados. \n Para actualizar estos datos hagalo desde la opción de actualizar.";
+                    
+                    alertify.alert(titulo, mensaje, function(){ alertify.success('Datos cargados'); });
+                    
+                    document.getElementById("strUsuarioNombre").value = respuesta.nombre;
+                    document.getElementById("strUsuarioPrimerApe").value = respuesta.apellidoPaterno;
+                    document.getElementById("strUsuarioSegundoApe").value = respuesta.apellidoMaterno;
+                    document.getElementById("strUsuarioCorreo").value = respuesta.correo;
+                    document.getElementById("strUsuarioTelefono").value = respuesta.telefono;
+
+                    //$( "#strRFC" ).prop( "disabled", true );
+                    $( "#strUsuarioNombre" ).prop( "disabled", true );
+                    $( "#strUsuarioPrimerApe" ).prop( "disabled", true );
+                    $( "#strUsuarioSegundoApe" ).prop( "disabled", true );
+                    $( "#strUsuarioCorreo" ).prop( "disabled", true );
+                    $( "#strUsuarioTelefono" ).prop( "disabled", true );
+                }  else if (respuesta.estado == "Nulo") {
+
+                    alertify.success('No se encontró otro usuario con ese RFC.');
+                }
+            },
+        });
     }
-});
+}
+
 
 //? Validaciones y animaciones de campos
 // Validación del formulario para usuario
@@ -530,26 +535,27 @@ function validarFormularioUsuario() {
         }
     }
 
+    if ($('#intUsuarioRol').val() == 0) {
+        alertify.error('Debe seleccionar un rol de usuario');
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('intUsuarioRol').focus();
+        return false;
+    }
+
     //! Se eliminaron los datos de usuario por solicitud de la Coordinadora
-    // if ($('#strNombreUsuario').val() == '') {
-    //     alertify.error('Se debe ingresar el identificador del usuario');
-    //     $('html, body').animate({ scrollTop: 200 }, 'slow');
-    //     document.getElementById('strNombreUsuario').focus();
-    //     return false;
-    // } else {
-    //     if ($('#strNombreUsuario').val().length > 15) {
-    //         $('html, body').animate({ scrollTop: 0 }, 'slow');
-    //         document.getElementById('strNombreUsuario').focus();
-    //         alertify.error('El nombre de usuario debe tener máximo 15 caracteres');
-    //         return false;
-    //     }
-    // }
-    // if ($('#intUsuarioRol').val() == 0) {
-    //     alertify.error('Debe seleccionar un rol de usuario');
-    //     $('html, body').animate({ scrollTop: 200 }, 'slow');
-    //     document.getElementById('intUsuarioRol').focus();
-    //     return false;
-    // }
+    if ($('#strNombreUsuario').val() == '') {
+        alertify.error('Se debe ingresar el identificador del usuario');
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('strNombreUsuario').focus();
+        return false;
+    } else {
+        if ($('#strNombreUsuario').val().length > 15) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('strNombreUsuario').focus();
+            alertify.error('El nombre de usuario debe tener máximo 15 caracteres');
+            return false;
+        }
+     }
 
     // if ($('#UsuarioPregunta').val() == 0) {
     //     alertify.error('Debe seleccionar una pregunta de seguridad');
@@ -611,7 +617,6 @@ function validarFormularioUsuario() {
     //? Validación datos de cuenta según rol
     
     //? Si no son Moderador y no estan creando un nuevo usuario
-    alert($('#hideRol').val());
     if ($('#hideRol').val() != 3) {
         
         if ($('#intNum_Trabajador').val() == '') {
@@ -823,7 +828,15 @@ function validarFormularioUsuario() {
         }
     }
 
-    if ($('#intUsuarioRol').val() == 4 || $('#intUsuarioRol').val() == 2) {
+    if($('#intUsuarioRol').val() != 3 && typeof($('#intNum_Trabajador').val()) == 'undefined' ) {
+        if ($('#intNum_Trabajador').val().length < 6 || $('#intNum_Trabajador').val().length > 6) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('intNum_Trabajador').focus();
+            alertify.error('El Número de trabajador es de 6 cifras.');
+            return false;
+        }
+    }
+    if ($('#intUsuarioRol').val() != 4 || $('#intUsuarioRol').val() == 2) {
         if ($('#intNum_Trabajador').val() == '') {
             alertify.error('Debe ingresar un número de trabajador');
             $('html, body').animate({ scrollTop: 250 }, 'slow');
@@ -841,7 +854,7 @@ function validarFormularioUsuario() {
             if ($('#intNum_Trabajador').val().length > 10) {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
                 document.getElementById('intNum_Trabajador').focus();
-                alertify.error('El número de trabajador debe tener máximo 10 caracteres.');
+                alertify.error('El número de trabajador debe tener máximo 6 cifras.');
                 return false;
             }
         }
@@ -981,6 +994,7 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
         $('#rfc').show(); 
         $('#numCuenta').hide();
         Ahora son campos obligatorios*/
+        $('#datosCuenta').hide();
         $('#fechaInicio').hide();
         $('#fechaFin').hide();
         $('#horaInicio').hide();
@@ -990,13 +1004,20 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
         $('#nivelImparticion').hide();
         $('#modalidadImparticion').hide();
         $('#coordinaciones').hide();
-    }
-    if (tipo_evento.startsWith(PROFESOR) || tipo_evento.startsWith(INSTRUCTOR)) {
+    } else if (tipo_evento.startsWith(PROFESOR) || tipo_evento.startsWith(INSTRUCTOR)) {
         /*$('#num_trabajador').show();
         $('#rfc').show();
         $('#numCuenta').hide();
         Ahora son campos obligatorios*/
-
+        $('#datosCuenta').show();
+        $('#fechaInicio').hide();
+        $('#fechaFin').hide();
+        $('#horaInicio').hide();
+        $('#horaFin').hide();
+        $('#diasServicio').hide();
+        $('#nivelImparticion').show();
+        $('#modalidadImparticion').show();
+        $('#coordinaciones').show();
         //?En caso de que si sea Instructor
         if (tipo_evento.startsWith(INSTRUCTOR)) {
             $('#semblanza').show();
@@ -1006,25 +1027,28 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
             document.getElementById("strNombreUsuario").value = $('#intNum_Trabajador').val();
             document.getElementById("strContrasenia01").value = $('#strRFC').val();
         }
-        $('#fechaInicio').hide();
-        $('#fechaFin').hide();
-        $('#horaInicio').hide();
-        $('#horaFin').hide();
-        $('#diasServicio').hide();
-        $('#nivelImparticion').show();
-        $('#modalidadImparticion').show();
-        $('#coordinaciones').show();
-    }
-    if (tipo_evento.startsWith(MODERADOR)) {
+    } else if (tipo_evento.startsWith(MODERADOR)) {
         /*$('#num_trabajador').hide();
         $('#rfc').hide();
         $('#numCuenta').show();
         Ahora son campos obligatorios*/
+        $('#datosCuenta').show();
         $('#fechaInicio').show();
         $('#fechaFin').show();
         $('#horaInicio').show();
         $('#horaFin').show();
         $('#diasServicio').show();
+        $('#semblanza').hide();
+        $('#nivelImparticion').hide();
+        $('#modalidadImparticion').hide();
+        $('#coordinaciones').hide();
+    } else {
+        $('#datosCuenta').hide();
+        $('#fechaInicio').hide();
+        $('#fechaFin').hide();
+        $('#horaInicio').hide();
+        $('#horaFin').hide();
+        $('#diasServicio').hide();
         $('#semblanza').hide();
         $('#nivelImparticion').hide();
         $('#modalidadImparticion').hide();
