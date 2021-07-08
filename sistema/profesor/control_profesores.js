@@ -18,11 +18,12 @@ function validarInscripcion(inscritos, cupo) {
 }
 
 // Consultar grupo
-function consultarGrupo(id, persona) {
+function consultarGrupo(id, persona, modalidad) {
     var datos = {
         id: id,
         CRUD: 0,
         persona: persona,
+        modalidad:modalidad,
     };
     $.ajax({
         data: datos,
@@ -35,28 +36,12 @@ function consultarGrupo(id, persona) {
     });
 }
 
-function consultarGrupoInscrito(id, persona) {
+function consultarGrupoInscrito(id, persona, modalidad) {
     var datos = {
         id: id,
-        CRUD: 5,
+        CRUD: 1,
         persona: persona,
-    };
-    $.ajax({
-        data: datos,
-        type: 'POST',
-        url: '../sistema/profesor/frm_grupo_profesor.php',
-        success: function (data) {
-            $('html, body').animate({ scrollTop: 0 }, 0);
-            $('#container').html(data);
-        },
-    });
-}
-
-function consultarGrupoImpartir(id, persona) {
-    var datos = {
-        id: id,
-        CRUD: 6,
-        persona: persona,
+        modalidad:modalidad,
     };
     $.ajax({
         data: datos,

@@ -16,6 +16,11 @@
   text-decoration:underline ;
 }
 
+.aviso-verde {
+  color: #189e2e ; 
+  font-weight: bolder;
+}
+
 .btn-ingreso:hover{
   color: #fff;
   background-color: #4fd3d8;

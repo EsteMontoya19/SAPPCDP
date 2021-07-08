@@ -10,7 +10,7 @@
   <meta name="author" content="">
 
   <!-- Título de la página -->
-  <title>Inicio de sesión</title>
+  <title>PPCDP Grupos</title>
 
   <!-- Referencias -->
 
@@ -50,10 +50,14 @@
     //Clases
   include('clases/BD.php');
   include('clases/Grupo.php');
+  include('clases/Sesion.php');
   
     //Objetos y Arreglos
   $obj_Grupo = new Grupo();
   $arr_grupos = $obj_Grupo ->buscarGruposProfesores();
+  $obj_Sesion = new Sesion();
+  
+
 ?>
 
 
@@ -63,23 +67,12 @@
       <div class="container-fluid">
 
         <!-- Indicador -->
-        <div class="form-inline">
-          <div class="col-sm-12">
-            <ol class="breadcrumb">
-            <li class="breadcrumb-item active">
-              <i class="fas fa-users"></i>&nbsp; Grupos publicados
-            </li>
-            </ol>
-          </div>
+        <div class="form-label-group centrado">
+          <h4>Programa Permanente de Capacitación a Distancia para Profesores de la FCA (PPCDP)</h4>
         </div>
-
-        <p>
-          <hr>
-        </p>
-
         <div class="card mb-3">
           <div class="card-header">
-            <i class="fas fa-folder"></i> Resultados
+            <i class="fas fa-folder"></i> Grupos publicados
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -117,25 +110,20 @@
                                                           -->
                   <?php
                   if(isset($arr_grupos)){ 
-                  foreach ($arr_grupos as $grupo) {?>
+                  foreach ($arr_grupos as $grupo) {
+                    $sesion = $obj_Sesion->numSesionesGrupo($grupo['grup_id_grupo']);
+
+                    $sesionUno = $obj_Sesion->buscarMinSesionDM($grupo['grup_id_grupo']);
+                    ?>
                       <tr>
                         <td><?php echo $grupo['grup_id_grupo'];?></td>
                         <td><?php echo $grupo['curs_nombre'];?></td>
-                        <!--
-                        <td><?php /* echo $grupo['curs_tipo'];?></td>
-                        <td><?php echo $grupo['grup_modalidad'];?></td>
-                        <td><?php echo ($grupo['grup_cupo'] - $grupo['grup_num_inscritos']);?></td>
-                        <td><?php echo $grupo['pers_nombre'];?> <?php echo $grupo['pers_apellido_paterno'];?> <?php echo $grupo['pers_apellido_materno'];?></td>
-                        <td><?php echo $grupo['grup_inicio_insc'];?></td>
-                        <td><?php echo $grupo['grup_fin_insc'];?></td>
-                        <td><?php echo $grupo['curs_num_sesiones'];*/?></td>
-                        -->
                         <td><?php echo $grupo['curs_nivel'];?></td>
                         <td><?php echo $grupo['curs_objetivos'];?></td>
-                        <td><?php echo $grupo['grup_modalidad'];?></td>
+                        <td><?php echo $grupo['moap_nombre'];?></td>
                         <td><?php echo ($grupo['grup_cupo'] - $grupo['grup_num_inscritos']);?></td>
-                        <td><?php echo $grupo['grup_fin_insc'];?></td>
-                        <td><?php echo $grupo['curs_num_sesiones'];?></td>
+                        <td><?php echo $grupo['diafin'].' - '.$grupo['mesfin'];?></td>
+                        <td><?php echo $sesion->numero;?></td>
                         <td>
                           <a href="index.php" type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;">
                             <i>¡Inscríbete!</i>

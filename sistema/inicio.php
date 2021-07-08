@@ -10,6 +10,8 @@
 if ($cuenta->rol_id_rol==1) {
 	include_once '../sistema/recursos/header.php';
 }elseif($cuenta->rol_id_rol==2){
+  include_once '../sistema/recursos/header-instructor.php';
+}elseif($cuenta->rol_id_rol==3){
 	include_once '../sistema/recursos/header-monitor.php';
 }else{
 	include_once '../sistema/recursos/header-profesor.php';

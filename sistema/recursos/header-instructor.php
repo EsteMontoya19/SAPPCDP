@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="Sistema de gestión de inscricpiones a grupos PPCDP" content="">
+    <meta name="Sistema de Inscripciones de CENAPyME" content="">
     <meta name="CIFCA" content="">
 
     <title>PPDCP</title>
@@ -50,60 +50,26 @@
       <!-- Navbar Search -->
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav ml-auto">
-            
-            <li id="btn_cursos" class="nav-item">
-                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-book"></i>&nbsp; Cursos</a>
-            </li>
-            <li id="btn_grupos" class="nav-item">
-                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-users"></i>&nbsp; Grupos</a>
+            <li id = "btn_instructor_grupos_impartir" class="nav-item">
+                <a id = "btn_instructor_grupos_impartir" class="nav-link" href="#" style="color:#FFFFFF" 
+                onclick="gruposImpartir(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)">
+                  <i class="fas fa-chalkboard"></i>&nbsp; Mis grupos</a>
             </li>
 
-            <?php //TODO: Hacer las funciones de Propuestas del Coordinador ?>
+            <?php //TODO: Hacer las funciones de Propuesta del Profesor ?>
             <!--
-            <li id="btn_propuestas" class="nav-item">
-                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-lightbulb"></i>&nbsp; Propuestas</a>
+            <li id="btn_regProp" class="nav-item">
+                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-file"></i>&nbsp; Propuestas</a>
             </li>
 -->
-
-            <?php //TODO: Hacer las funciones de Reportes del Coordinador ?>
-            <!--
-            <li id="" class="nav-item">
-                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-file-alt"></i>&nbsp; Reportes</a>
-            </li>
--->
-
-            <li id="btn_usuarios" class="nav-item">
-                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-shield"></i>&nbsp; Usuarios</a>
-            </li>
-
-            <?php //TODO: Hacer las funciones de asistencia del Coordinador ?>
-            <!--
-            <li id="btn_asist" class="nav-item">
-                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-graduate"></i>&nbsp; Asistencia</a>
-            </li>
--->
-
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
-                <i class="fas fa-user-circle"><div style="width: 20px;"></div></i>Catálogos
-              </a>
-              <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarUser">
-                <a class="dropdown-item disabled" href="#"></a>
-                <a class="dropdown-item" type="button"  id="btn_preguntaseguridad">Preguntas de seguridad</a>
-                <a class="dropdown-item" type="button"  id="btn_plataforma">Plataforma</a>
-                <?php //TODO: Hacer las funciones de Calendario del Coordinador ?>
-               <!-- <a class="dropdown-item" type="button"  id="btn_calendario">Calendario</a>  -->
-              </div>
-            </li>
-
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
                 <i class="fas fa-user-circle"></i>
-                &nbsp; <?php echo isset($cuenta) ? $cuenta->pers_nombre : ""; ?> <?php echo isset($cuenta) ? $cuenta->pers_apellido_paterno : ""; ?> <?php echo isset($cuenta) ? $cuenta->pers_apellido_materno: ""; ?>
+                &nbsp; <?php echo isset($cuenta) ? $cuenta->pers_nombre : ""; ?> <?php echo isset($cuenta) ? $cuenta->pers_apellido_paterno : ""; ?> <?php echo isset($cuenta) ? $cuenta->pers_apellido_materno : ""; ?>
               </a>
               <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarUser">
                 <a class="dropdown-item disabled" href="*"><?php echo isset($cuenta) ? $cuenta->rol_nombre : ""; ?></a>
-                <a id="btn_cuenta" class="dropdown-item" href="#" onclick="miCuenta(<?php echo isset($cuenta) ? $cuenta->usua_id_usuario : "";?>, <?php echo isset($cuenta) ? $cuenta->pers_id_persona : ""; ?>)" > Mi cuenta</a>
+                <a class="dropdown-item" href="#" onclick="miCuenta(<?php echo isset($cuenta) ? $cuenta->usua_id_usuario : ""; ?>, <?php echo isset($cuenta) ? $cuenta->pers_id_persona : ""; ?>)" > Mi cuenta</a>
                 <?php //? Cambiar contraseña, no visible ?>
                 <!--
                 <a class="dropdown-item" href="#" onclick="cambiarContrasena(<?php echo isset($cuenta) ? $cuenta->usua_id_usuario : ""; ?>, <?php echo isset($cuenta) ? $cuenta->pers_id_persona : ""; ?>)" >Cambiar contraseña</a>

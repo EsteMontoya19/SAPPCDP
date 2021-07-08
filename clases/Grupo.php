@@ -130,11 +130,11 @@
         function buscarGruposProfesores()
         {
             $SQL_Bus_Cursos = 
-            "   SELECT g.grup_id_grupo, p.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
-                    g. curs_id_curso, curs_nombre, curs_tipo, curs_num_sesiones, curs_nivel, curs_objetivos,
-                    g.plat_id_plataforma, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo,  grup_num_inscritos,
-                    grup_publicado, g.moap_id_modalidad, moap_nombre, grup_tipo, grup_inicio_insc, grup_fin_insc, 
-                    g.esta_id_estado, esta_nombre
+            "   
+                SELECT g.grup_id_grupo, p.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
+                    curs_nombre, curs_tipo, curs_nivel, curs_objetivos, grup_cupo,  grup_num_inscritos, g.moap_id_modalidad,
+                    moap_nombre, to_char(grup_inicio_insc, 'DD') diaini, to_char(to_timestamp (to_char(grup_inicio_insc, 'MM')::text, 'MM'), 'TMmon') mesini, 
+                    to_char(grup_fin_insc, 'DD') diafin, to_char(to_timestamp (to_char(grup_fin_insc, 'MM')::text, 'MM'), 'TMmon') mesfin
                 FROM grupo g, personal_grupo p, usuario u,persona pr, curso c, calendario ca, modalidad_aprendizaje m, estado e 
                 WHERE grup_tipo = 'Público' AND g.esta_id_estado = 3 AND grup_publicado = true AND rol_id_rol = 2
                     AND g.grup_id_grupo = p.grup_id_grupo AND p.usua_id_usuario = u.usua_id_usuario
@@ -175,13 +175,15 @@
         {
             $SQL_Act_Curso = 
             "   
-                SELECT I.PROF_ID_PROFESOR, I.GRUP_ID_GRUPO, C.CURS_ID_CURSO, moap_id_modalidad, CONS_ID_CONSTANCIAS,
-                    CURS_NOMBRE, CURS_NUM_SESIONES, G.PLAT_ID_PLATAFORMA, grup_url, CALE_SEMESTRE
-                FROM INSCRIPCION I, GRUPO G, CURSO C, CALENDARIO CA
-                WHERE I.PROF_ID_PROFESOR = 5
+                SELECT G.GRUP_ID_GRUPO, G.moap_id_modalidad, moap_nombre, CONS_ID_CONSTANCIAS,
+                    CURS_NOMBRE, CALE_SEMESTRE, ESTA_NOMBRE
+                FROM INSCRIPCION I, GRUPO G, CURSO C, CALENDARIO CA, MODALIDAD_APRENDIZAJE M, ESTADO E
+                WHERE I.PROF_ID_PROFESOR = $idProfesor
                     AND I.GRUP_ID_GRUPO = G.GRUP_ID_GRUPO 
                     AND G.CURS_ID_CURSO = C.CURS_ID_CURSO  
                     AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO 
+                    AND G.MOAP_ID_MODALIDAD = M.MOAP_ID_MODALIDAD
+                    AND E.ESTA_ID_ESTADO = G.ESTA_ID_ESTADO
                 ORDER BY I.GRUP_ID_GRUPO ASC;
             ";
             
@@ -215,6 +217,27 @@
             $transaccion_1->enviarQuery($SQL_Act_Curso);
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
+        }
+
+        //Busca los datos de un grupo autogestivo dado el id del grupo
+        //TODO Verificado en la BD 07/07/2021
+        function buscarDatosAutogestivo($id)
+        {
+            $SQL_Bus_Grupo = 
+            "  
+                SELECT grup_url
+                FROM GRUPO 
+                WHERE moap_id_modalidad = 3  
+                AND GRUP_ID_GRUPO=$id; 
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Grupo);
+            $obj_Grupo = $transaccion_1->traerObjeto(0);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
         }
 
         //? Verificado en la BD 06/07/2021
@@ -320,20 +343,67 @@
                 return ($transaccion_1->traerObjeto(0));
         }
 
+
+        function buscarGrupoCompleto($id){
+            $SQL_Bus_Grupo = 
+            "
+                SELECT G.GRUP_ID_GRUPO, G.CURS_ID_CURSO, CURS_NOMBRE, CURS_TIPO, CURS_NIVEL, CURS_OBJETIVOS, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, 
+                    G.MOAP_ID_MODALIDAD, MOAP_NOMBRE, ESTA_NOMBRE, PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO, 
+                    GRUP_CUPO, GRUP_NUM_INSCRITOS, GRUP_INICIO_INSC, GRUP_FIN_INSC, GRUP_PUBLICADO, GRUP_TIPO
+                FROM GRUPO G, CURSO C, MODALIDAD_APRENDIZAJE M, ESTADO E, 
+                    PERSONAL_GRUPO PG, USUARIO U, PERSONA P
+                WHERE 	G.CURS_ID_CURSO = C.CURS_ID_CURSO 
+                    AND G.MOAP_ID_MODALIDAD = M.MOAP_ID_MODALIDAD
+                    AND G.ESTA_ID_ESTADO = E.ESTA_ID_ESTADO
+                    AND G.GRUP_ID_GRUPO = PG.GRUP_ID_GRUPO
+                    AND PG.USUA_ID_USUARIO = U.USUA_ID_USUARIO
+                    AND U.PERS_ID_PERSONA = P.PERS_ID_PERSONA
+                    AND ROL_ID_ROL = 2
+                    AND G.GRUP_ID_GRUPO = $id
+            ";
+
+                $bd = new BD();
+                $bd->abrirBD();
+                $transaccion_1 = new Transaccion($bd->conexion);
+                $transaccion_1->enviarQuery($SQL_Bus_Grupo);
+                $obj_Grupo = $transaccion_1->traerObjeto(0);
+                $bd->cerrarBD();
+                return ($transaccion_1->traerObjeto(0));
+        }
+
+        function idUsuarioModeradorGrupo($id){
+            $SQL_Bus_Grupo = 
+            "
+                SELECT P.USUA_ID_USUARIO
+                FROM PERSONAL_GRUPO P, USUARIO U
+                WHERE P.USUA_ID_USUARIO = U.USUA_ID_USUARIO 
+                    AND ROL_ID_ROL = 3
+                    AND GRUP_ID_GRUPO = 1
+            ";
+
+                $bd = new BD();
+                $bd->abrirBD();
+                $transaccion_1 = new Transaccion($bd->conexion);
+                $transaccion_1->enviarQuery($SQL_Bus_Grupo);
+                $obj_Grupo = $transaccion_1->traerObjeto(0);
+                $bd->cerrarBD();
+                return ($transaccion_1->traerObjeto(0));
+        }
+
         //Busca los grupos que imparte un profesor
         //? Verificado en la BD 06/07/2021
         //? Se cambia la logica ahora el id hace referencia al id de usuario del profesor
-        function buscarGruposImpartidosxProfesor($id){
+        function buscarGruposImpartidosxInstructor($id){
 			$SQL_Bus_Grupos =
             "	
-                SELECT G.GRUP_ID_GRUPO, C.CURS_ID_CURSO, moap_nombre modalidad,
-                    CURS_NOMBRE, CURS_NUM_SESIONES, G.PLAT_ID_PLATAFORMA, 
-                    GRUP_URL, CALE_SEMESTRE, grup_num_inscritos, grup_publicado
-                FROM Personal_Grupo P, GRUPO G, CURSO C, Modalidad_Aprendizaje M, CALENDARIO CA
+                SELECT G.GRUP_ID_GRUPO, M.moap_id_modalidad, moap_nombre,
+                    CURS_NOMBRE, CALE_SEMESTRE, grup_num_inscritos, esta_nombre
+                FROM Personal_Grupo P, GRUPO G, CURSO C, Modalidad_Aprendizaje M, CALENDARIO CA, Estado E
                 WHERE P.usua_id_usuario = $id
                     AND G.CURS_ID_CURSO = C.CURS_ID_CURSO AND G.grup_id_grupo = P.grup_id_grupo
                     AND G.moap_id_modalidad = M.moap_id_modalidad
                     AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO
+                    AND G.ESTA_ID_ESTADO = E.ESTA_ID_ESTADO
                 ORDER BY GRUP_ID_GRUPO ASC;
             ";
 

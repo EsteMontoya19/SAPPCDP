@@ -2,14 +2,21 @@
   include('../../clases/BD.php');
   include('../../clases/Grupo.php');
   include('../../clases/Profesor.php');
-  
+  include('../../clases/Sesion.php');
+
   $obj_Grupo = new Grupo();
   $arr_grupos = $obj_Grupo ->buscarGruposProfesores();
+  $obj_Sesion = new Sesion();
   
   if (isset($_POST['persona'])){
     $idPersona = $_POST['persona'];
     $obj_profesor = new Profesor();
-    $id_profesor = $obj_profesor->buscarProfesor($idPersona);
+    $profesor = $obj_profesor->buscarInstructorxPersona($idPersona);
+    if(isset($profesor)){
+      $id_profesor=$profesor->usua_id_usuario;
+    } else {
+      $id_profesor=0;
+    }
   } else {
     $idPersona = 0;
   }
@@ -50,9 +57,9 @@
                     <th>Modalidad</th>
                     <th>Lugares Disp</th>
                     <th>Profesor</th>
-                    <th>Fecha Inicio</th>
-                    <th>Fecha Fin</th>
+                    <th>Periodo de Inscripciones</th>
                     <th>Número de sesiones</th>
+                    <th>Primera Sesión</th>
                     <th>Opciones</th>
                   </tr>
                 </thead>
@@ -66,31 +73,25 @@
                                                           -->
                   <?php
                   if(isset($arr_grupos)){ 
-                  foreach ($arr_grupos as $grupo) { if($grupo['prof_id_profesor'] != $id_profesor->prof_id_profesor) {?>
+                  foreach ($arr_grupos as $grupo) { 
+                    if($grupo['usua_id_usuario'] != $id_profesor) {
+                      $sesion = $obj_Sesion->numSesionesGrupo($grupo['grup_id_grupo']);
+                      $sesionUno = $obj_Sesion->buscarMinSesionDM($grupo['grup_id_grupo']);?>
                       <tr>
                         <td><?php echo $grupo['grup_id_grupo'];?></td>
                         <td><?php echo $grupo['curs_nombre'];?></td>
                         <td><?php echo $grupo['curs_tipo'];?></td>
-                        <td><?php echo $grupo['grup_modalidad'];?></td>
+                        <td><?php echo $grupo['moap_nombre'];?></td>
                         <td><?php echo ($grupo['grup_cupo'] - $grupo['grup_num_inscritos']);?></td>
                         <td><?php echo $grupo['pers_nombre'];?> <?php echo $grupo['pers_apellido_paterno'];?> <?php echo $grupo['pers_apellido_materno'];?></td>
-                        <td><?php echo $grupo['grup_inicio_insc'];?></td>
-                        <td><?php echo $grupo['grup_fin_insc'];?></td>
-                        <td><?php echo $grupo['curs_num_sesiones'];?></td>
+                        <td><?php echo $grupo['diaini'].'-'.$grupo['mesini'].' al '.$grupo['diafin'].'-'.$grupo['mesfin'];?></td>
+                        <td><?php echo $sesion->numero;?></td>
+                        <td><?php echo $sesionUno->dia.'-'.$sesionUno->mes;?></td>
                         <td>
 
-                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupo(<?php echo $grupo['grup_id_grupo']?>,'<?php echo $idPersona?>')">
+                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupo(<?php echo $grupo['grup_id_grupo']?>, <?php echo $idPersona?>, <?php echo $grupo['moap_id_modalidad']?>)">
                             <i class="fas fa-search-plus"></i>
                           </button>
-                         <!-- <button type="button" class="btn btn-primary btn-table" title="Inscribir" style="margin-top: 5px;">
-                            <i class="fas fa-edit"></i>
-                          </button>
-                          <button type="button" class="btn btn-primary btn-table" title="Comprobante" style="margin-top: 5px;">
-                            <i class="fas fa-list-alt"></i>
-                          </button>
-                          <button type="button" class="btn btn-danger btn-table" title="Constancia" style="margin-top: 5px;background: #20560a">
-                            <i class="fas fa-file"></i>
-                          </button> -->
                         </td>
                       </tr>
                   <?php } } } ?>

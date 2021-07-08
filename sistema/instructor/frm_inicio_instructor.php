@@ -3,22 +3,22 @@
   include('../../clases/Grupo.php');
   include('../../clases/Sesion.php');
   include('../../clases/Profesor.php');
-
+  
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
   $obj_Profesor = new Profesor();
 
   $arr_grupos = null;
-
+  
   if (isset($_POST['persona'])){
     $idPersona = $_POST['persona'];
-    $profesor = $obj_Profesor->buscarProfesorxPersona($idPersona);
+    $profesor = $obj_Profesor->buscarInstructorxPersona($idPersona);
     if(isset($profesor)){
-      $arr_grupos = $obj_Grupo->gruposInscritosxProfesor($profesor->prof_id_profesor);
+      $arr_grupos = $obj_Grupo->buscarGruposImpartidosxInstructor($profesor->usua_id_usuario);
     }
-  } else {
-    $idPersona = 0;
-  }
+  } 
+
+            
 ?>
 
   <div id="wrapper">
@@ -30,7 +30,7 @@
           <div class="col-sm-12">
             <ol class="breadcrumb">
             <li class="breadcrumb-item active">
-              <i class="fas fa-users"></i>&nbsp; Grupos inscritos
+              <i class="fas fa-users"></i>&nbsp; Grupos a Impartir
             </li>
             </ol>
           </div>
@@ -96,7 +96,7 @@
                           echo $grupo['esta_nombre'];
                         }?>
                         <td>
-                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupoInscrito(<?php echo $grupo['grup_id_grupo']?>,<?php echo $idPersona?>, <?php echo $grupo['moap_id_modalidad']?>)">
+                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupoImpartir(<?php echo $grupo['grup_id_grupo']?>,'<?php echo $idPersona?>', <?php echo $grupo['moap_id_modalidad']?>)">
                             <i class="fas fa-search-plus"></i>
                           </button>
                           <a class = "btn btn-pdf" target="_blank" title="Comprobante inscripción" href="../modulos/Control_PDF.php?tipo=comprobante&idP=<?php echo($idPersona); ?>&idG=<?php echo($grupo['grup_id_grupo']); ?>" role="button"><i class="far fa-file-pdf"></i></i></a>
@@ -118,4 +118,4 @@
     </div>
   </div>
 
-  <script src="../sistema/profesor/control_profesores.js"></script>
+  <script src="../sistema/instructor/control_instructores.js"></script>

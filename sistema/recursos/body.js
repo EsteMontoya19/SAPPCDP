@@ -36,8 +36,8 @@ $(document).ready(function () {
         $('#container').load('../sistema/profesor/frm_profesor_inscripciones.php');
     });
 
-    $('#btn_profesor_grupos_impartir').click(function () {
-        $('#container').load('../sistema/profesor/frm_profesor_impartir.php');
+    $('#btn_instructor_grupos_impartir').click(function () {
+        $('#container').load('../sistema/instructor/frm_inicio_instructor.php');
     });
     
     $('#btn_regProp').click(function () {
@@ -138,7 +138,7 @@ function gruposImpartir(persona) {
     $.ajax({
         data: datos,
         type: 'POST',
-        url: '../sistema/profesor/frm_profesor_impartir.php',
+        url: '../sistema/instructor/frm_inicio_instructor.php',
         success: function (data) {
             $('#container').html(data);
         },
