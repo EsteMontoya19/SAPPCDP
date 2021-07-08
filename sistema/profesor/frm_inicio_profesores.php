@@ -89,7 +89,7 @@
                         <td><?php echo $sesionUno->dia.'-'.$sesionUno->mes;?></td>
                         <td>
 
-                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupo(<?php echo $grupo['grup_id_grupo']?>,'<?php echo $idPersona?>')">
+                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupo(<?php echo $grupo['grup_id_grupo']?>, <?php echo $idPersona?>, <?php echo $grupo['moap_id_modalidad']?>)">
                             <i class="fas fa-search-plus"></i>
                           </button>
                         </td>

@@ -132,7 +132,7 @@
             $SQL_Bus_Cursos = 
             "   
                 SELECT g.grup_id_grupo, p.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
-                    curs_nombre, curs_tipo, curs_nivel, curs_objetivos, grup_cupo,  grup_num_inscritos,
+                    curs_nombre, curs_tipo, curs_nivel, curs_objetivos, grup_cupo,  grup_num_inscritos, g.moap_id_modalidad,
                     moap_nombre, to_char(grup_inicio_insc, 'DD') diaini, to_char(to_timestamp (to_char(grup_inicio_insc, 'MM')::text, 'MM'), 'TMmon') mesini, 
                     to_char(grup_fin_insc, 'DD') diafin, to_char(to_timestamp (to_char(grup_fin_insc, 'MM')::text, 'MM'), 'TMmon') mesfin
                 FROM grupo g, personal_grupo p, usuario u,persona pr, curso c, calendario ca, modalidad_aprendizaje m, estado e 
@@ -347,7 +347,7 @@
         function buscarGrupoCompleto($id){
             $SQL_Bus_Grupo = 
             "
-                SELECT CURS_NOMBRE, CURS_TIPO, CURS_NIVEL, CURS_OBJETIVOS, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, 
+                SELECT G.GRUP_ID_GRUPO, G.CURS_ID_CURSO, CURS_NOMBRE, CURS_TIPO, CURS_NIVEL, CURS_OBJETIVOS, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, 
                     G.MOAP_ID_MODALIDAD, MOAP_NOMBRE, ESTA_NOMBRE, PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO, 
                     GRUP_CUPO, GRUP_NUM_INSCRITOS, GRUP_INICIO_INSC, GRUP_FIN_INSC, GRUP_PUBLICADO, GRUP_TIPO
                 FROM GRUPO G, CURSO C, MODALIDAD_APRENDIZAJE M, ESTADO E, 

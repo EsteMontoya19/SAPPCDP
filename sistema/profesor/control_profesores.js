@@ -18,11 +18,12 @@ function validarInscripcion(inscritos, cupo) {
 }
 
 // Consultar grupo
-function consultarGrupo(id, persona) {
+function consultarGrupo(id, persona, modalidad) {
     var datos = {
         id: id,
         CRUD: 0,
         persona: persona,
+        modalidad:modalidad,
     };
     $.ajax({
         data: datos,
@@ -35,11 +36,12 @@ function consultarGrupo(id, persona) {
     });
 }
 
-function consultarGrupoInscrito(id, persona) {
+function consultarGrupoInscrito(id, persona, modalidad) {
     var datos = {
         id: id,
         CRUD: 1,
         persona: persona,
+        modalidad:modalidad,
     };
     $.ajax({
         data: datos,

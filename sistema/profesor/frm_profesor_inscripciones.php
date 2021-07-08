@@ -96,7 +96,7 @@
                           echo $grupo['esta_nombre'];
                         }?>
                         <td>
-                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupoInscrito(<?php echo $grupo['grup_id_grupo']?>,'<?php echo $idPersona?>')">
+                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupoInscrito(<?php echo $grupo['grup_id_grupo']?>,<?php echo $idPersona?>, <?php echo $grupo['moap_id_modalidad']?>)">
                             <i class="fas fa-search-plus"></i>
                           </button>
                           <a class = "btn btn-pdf" target="_blank" title="Comprobante inscripción" href="../modulos/Control_PDF.php?tipo=comprobante&idP=<?php echo($idPersona); ?>&idG=<?php echo($grupo['grup_id_grupo']); ?>" role="button"><i class="far fa-file-pdf"></i></i></a>

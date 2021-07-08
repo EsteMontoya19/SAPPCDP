@@ -5,12 +5,23 @@
   include('../../clases/Grupo.php');
   include('../../clases/Sesion.php');
   include('../../clases/Moderador.php');
-  include('../../clases/Busqueda.php');
+  include('../../clases/Curso.php');
+  include('../../clases/Persona.php');
+  include('../../clases/Profesor.php');
+  include('../../clases/Inscripcion.php');
+  
+
 
   // Objetos
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
   $obj_Moderador = new Moderador();
+  $obj_Curso = new Curso();
+  $obj_Persona = new Persona();
+  $obj_Profesor = new Profesor();
+  $obj_Inscripcion = new Inscripcion();
+  $Grupo = $obj_Grupo->grup_id_grupo = Null;
+  $Grupo = $obj_Grupo->grup_num_inscritos = Null;
   
   // Validar entidad  
   if (isset($_POST['id'])) { 
@@ -19,6 +30,7 @@
     $Grupo = $obj_Grupo->buscarGrupoCompleto($idGrupo);
     $arr_Sesiones = $obj_Sesion->buscarSesionesIDGrupo($idGrupo);
     $personal = $obj_Grupo->idUsuarioModeradorGrupo($idGrupo);
+    $Curso1=$obj_Curso->buscarCurso($Grupo->curs_id_curso);
     if(isset($personal)){
       $moderador = $obj_Moderador->buscarModeradorIDUsuario($personal->usua_id_usuario);
     } else {
@@ -38,6 +50,11 @@
   } else {
     $idmodalidad = null;
     $modalidad = null;
+  }
+
+  if (isset($_POST['persona'])) {
+    // Recuperar información la persona que consulta
+    $persona = $obj_Persona->buscarPersona($_POST['persona']);
   }
 ?>
 <div id="wrapper">
@@ -140,7 +157,7 @@
             </select>
           </div>
           <div class="col-lg-4 form-group">
-            <label for="GrupoModalidad"><b>Modalidad:<?php if (isset($_POST['CRUD']) == false) { echo "*";} ?></b></label>
+            <label for="GrupoModalidad"><b>Modalidad:</b></label>
             <select required='required' class="custom-select" id="GrupoModalidad" name="GrupoModalidad" disabled>
             <option value='0' selected><?php echo $Grupo->moap_nombre ?></option>
             </select>
@@ -150,20 +167,7 @@
             <select class="custom-select" id="Estado" name="Estado" disabled>
               <option value='0' selected ><?php echo $Grupo->esta_nombre ?></option>
             </select>
-          </div>
-          <!--
-          <div class="col-lg-4 form-group" style="display: none;">
-            <label for="ID_Status"><b>Publicado:</b></label>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="ID_Status" name="ID_Status"
-                <?php /*if (isset($Grupo) && $Grupo->grup_publicado == 'f') { ?>
-                <?php } else { echo "checked";} ?> <?php if (isset($Grupo)) { ?>
-                onclick="Publicar(<?php echo $Grupo->grup_id_grupo ?> , '<?php echo $Grupo->grup_publicado; ?>')"
-                <?php } else {?> value="true" <?php } */?>>
-              <label class="custom-control-label" for="ID_Status"></label>
-            </div>
-          </div>
-          -->                
+          </div>           
         </div>
         <div class="col-lg-12 form-row" style="margin-top: 15px;">
           <div class="col-lg-6 form-group">
@@ -339,16 +343,34 @@
       <?php $i++; } ?>
       </div>
       <!-- Fin de Sección: Sesiones -->
+
     </div>
     <!-- Botones -->
     <div class="col-lg-12" style="text-align: center;">
       <button id="btn-regresar-grupo" type="button" class="btn btn-primary btn-footer btn-regresar">Regresar</button>
       <?php if (isset($_POST['CRUD'])) { ?>
-        <?php if ($_POST['CRUD'] == 0) { ?>
+        <?php if ($_POST['CRUD'] == 0 || $_POST['CRUD'] == 1) { ?>
           <a id="temarioDW" href="<?php echo isset($Curso1) ? $Curso1 -> curs_temario : "No subido"; ?>" download
               class="btn btn-descarga" role="button"><i class="fas fa-file-download"
                 style="padding-right: 10px;"></i>Descargar temario</a>
-      <?php }} ?>
+
+          <?php 
+          if(isset($Grupo)) {
+            $periodoInscripcion = $obj_Inscripcion->buscarVigenciaInscripcion($Grupo->grup_id_grupo);
+
+            //? Se verifica que el periodo de inscripción del grupo se vigente, si no no aparece nada
+            if (!isset($periodoInscripcion)) {
+              echo ("<p class = 'aviso-rojo'>El perido de inscripción  a este grupo finalizo</p>");
+            } else {
+              echo ("<p class = 'aviso-verde'>El perido de inscripción  a este grupo continúa</p>");
+            }
+            if ($Grupo->grup_cupo - $Grupo->grup_num_inscritos == 0) {
+              echo ("<p class = 'aviso-rojo'>Ya no quedan lugares para este grupo</p>");
+            } else {
+              echo ("<p class = 'aviso-verde'>Aún quedan lugares para este grupo</p>");
+            }
+
+          } } } ?>
     </div>
   </div>
 </div>
