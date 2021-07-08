@@ -11,10 +11,11 @@ $(document).ready(function () {
 
 // Consultar grupo
 
-function consultarGrupoImpartir(id, persona) {
+function consultarGrupoImpartir(id, persona, modalidad) {
     var datos = {
         id: id,
-        CRUD: 6,
+        modalidad: modalidad,
+        CRUD: 0,
         persona: persona,
     };
     $.ajax({

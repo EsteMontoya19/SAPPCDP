@@ -38,7 +38,7 @@ function consultarGrupo(id, persona) {
 function consultarGrupoInscrito(id, persona) {
     var datos = {
         id: id,
-        CRUD: 5,
+        CRUD: 1,
         persona: persona,
     };
     $.ajax({

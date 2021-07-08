@@ -343,6 +343,53 @@
                 return ($transaccion_1->traerObjeto(0));
         }
 
+
+        function buscarGrupoCompleto($id){
+            $SQL_Bus_Grupo = 
+            "
+                SELECT CURS_NOMBRE, CURS_TIPO, CURS_NIVEL, CURS_OBJETIVOS, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, 
+                    G.MOAP_ID_MODALIDAD, MOAP_NOMBRE, ESTA_NOMBRE, PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO, 
+                    GRUP_CUPO, GRUP_NUM_INSCRITOS, GRUP_INICIO_INSC, GRUP_FIN_INSC, GRUP_PUBLICADO, GRUP_TIPO
+                FROM GRUPO G, CURSO C, MODALIDAD_APRENDIZAJE M, ESTADO E, 
+                    PERSONAL_GRUPO PG, USUARIO U, PERSONA P
+                WHERE 	G.CURS_ID_CURSO = C.CURS_ID_CURSO 
+                    AND G.MOAP_ID_MODALIDAD = M.MOAP_ID_MODALIDAD
+                    AND G.ESTA_ID_ESTADO = E.ESTA_ID_ESTADO
+                    AND G.GRUP_ID_GRUPO = PG.GRUP_ID_GRUPO
+                    AND PG.USUA_ID_USUARIO = U.USUA_ID_USUARIO
+                    AND U.PERS_ID_PERSONA = P.PERS_ID_PERSONA
+                    AND ROL_ID_ROL = 2
+                    AND G.GRUP_ID_GRUPO = $id
+            ";
+
+                $bd = new BD();
+                $bd->abrirBD();
+                $transaccion_1 = new Transaccion($bd->conexion);
+                $transaccion_1->enviarQuery($SQL_Bus_Grupo);
+                $obj_Grupo = $transaccion_1->traerObjeto(0);
+                $bd->cerrarBD();
+                return ($transaccion_1->traerObjeto(0));
+        }
+
+        function idUsuarioModeradorGrupo($id){
+            $SQL_Bus_Grupo = 
+            "
+                SELECT P.USUA_ID_USUARIO
+                FROM PERSONAL_GRUPO P, USUARIO U
+                WHERE P.USUA_ID_USUARIO = U.USUA_ID_USUARIO 
+                    AND ROL_ID_ROL = 3
+                    AND GRUP_ID_GRUPO = 1
+            ";
+
+                $bd = new BD();
+                $bd->abrirBD();
+                $transaccion_1 = new Transaccion($bd->conexion);
+                $transaccion_1->enviarQuery($SQL_Bus_Grupo);
+                $obj_Grupo = $transaccion_1->traerObjeto(0);
+                $bd->cerrarBD();
+                return ($transaccion_1->traerObjeto(0));
+        }
+
         //Busca los grupos que imparte un profesor
         //? Verificado en la BD 06/07/2021
         //? Se cambia la logica ahora el id hace referencia al id de usuario del profesor
