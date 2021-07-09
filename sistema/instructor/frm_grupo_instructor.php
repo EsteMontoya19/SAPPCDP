@@ -113,27 +113,21 @@
           <div class="col-lg-12 form-row" style="margin-top: 15px;">
             <div class="col-lg-12 form-group">
               <label for="strObjCurso"><b>Objetivos:</b></label>
-              <textarea type="text" class="form-control" id="strObjCurso" name="strObjCurso" disabled>
-                <?php echo isset($Grupo->curs_objetivos) ? $Grupo->curs_objetivos : ""; ?>
-              </textarea>
+              <textarea type="text" class="form-control" id="strObjCurso" name="strObjCurso" disabled><?php echo isset($Grupo->curs_objetivos) ? $Grupo->curs_objetivos : ""; ?></textarea>
             </div>
           </div>
 
           <div class="col-lg-12 form-row" style="margin-top: 15px;">
             <div class="col-lg-12 form-group">
               <label for="strReqTec"><b>Requisitos Técnicos:</b></label>
-              <textarea type="text" class="form-control" id="strReqTec" name="strReqTec" disabled> 
-                <?php echo isset($Grupo->curs_req_tecnicos) ? $Grupo->curs_req_tecnicos : ""; ?> 
-              </textarea>
+              <textarea type="text" class="form-control" id="strReqTec" name="strReqTec" disabled><?php echo isset($Grupo->curs_req_tecnicos) ? $Grupo->curs_req_tecnicos : ""; ?></textarea>
             </div>
           </div>
 
           <div class="col-lg-12 form-row" style="margin-top: 15px;">
             <div class="col-lg-12 form-group">
               <label for="strConNeces"><b>Conocimientos Necesarios:</b></label>
-              <textarea type="text" class="form-control" id="strConNeces" name="strConNeces" disabled> 
-                <?php echo isset($Grupo->curs_conocimientos) ? $Grupo->curs_conocimientos : "";?>
-              </textarea>
+              <textarea type="text" class="form-control" id="strConNeces" name="strConNeces" disabled><?php echo isset($Grupo->curs_conocimientos) ? $Grupo->curs_conocimientos : "";?></textarea>
             </div>
           </div>
         </div>
@@ -198,18 +192,18 @@
               <label
                 for="GrupoCupo"><b>Lugares disponibles:</b></label>
               <input type="number" class="form-control grupo-cupo" id="GrupoCupo" name="GrupoCupo" placeholder="0"
-                min="0" value="<?php echo isset($Grupo)?($Grupo->grup_cupo - $Grupo->grup_num_inscritos) : "";?>">
+                min="0" value="<?php echo isset($Grupo)?($Grupo->grup_cupo - $Grupo->grup_num_inscritos) : "";?>" disabled>
             </div>
             <div class="col-lg-5 form-group">
               <label for="GrupoInicioInscripcion"><b>Fecha de inicio de inscripciones:</b></label>
               <input type="date" class="form-control" id="GrupoInicioInscripcion"
                 name="GrupoInicioInscripcion" placeholder="0" min="0"
-                value="<?php echo isset($Grupo)?$Grupo->grup_inicio_insc : ""; ?>">
+                value="<?php echo isset($Grupo)?$Grupo->grup_inicio_insc : ""; ?>" disabled>
             </div>
             <div class="col-lg-5 form-group">
               <label for="GrupoFinInscripcion"><b>Última fecha de inscripciones: </b></label>
               <input type="date" class="form-control" id="GrupoFinInscripcion" name="GrupoFinInscripcion"
-                placeholder="0" min="0" value="<?php echo isset($Grupo)?$Grupo->grup_fin_insc : ""; ?>">
+                placeholder="0" min="0" value="<?php echo isset($Grupo)?$Grupo->grup_fin_insc : ""; ?>" disabled>
             </div>
           </div>
         </div>
@@ -231,7 +225,7 @@
             <div id="Edificio" class="col-lg-6 form-group" style="display: none;">
             <?php }?>
               <label for="lbID_Edificio"><b>Edificio:</b></label>
-              <select class="custom-select" id="ID_Salon" name="ID_Edificio">
+              <select class="custom-select" id="ID_Salon" name="ID_Edificio" disabled>
                 <option value="0" selected> <?php echo $modalidad->edif_nombre; ?></option>
               </select>
             </div>
@@ -241,7 +235,7 @@
             <div id="Salon" class="col-lg-6 form-group" style="display: none;">
             <?php }?>
               <label for="lbID_Salon"><b>Salon:</b></label>
-              <select class="custom-select" id="ID_Salon" name="ID_Salon">
+              <select class="custom-select" id="ID_Salon" name="ID_Salon" disabled>
                 <option value="0" selected> <?php echo $modalidad->salo_nombre; ?></option>
               </select>
             </div>
@@ -253,7 +247,7 @@
           <div id="Plataforma" class="col-lg-12 form-group" style="display: none;">
           <?php }?>
               <label for="lbID_Plataforma"><b>Plataforma:</b></label>
-              <select class="custom-select" id="ID_Plataforma" name="ID_Plataforma">
+              <select class="custom-select" id="ID_Plataforma" name="ID_Plataforma" disabled>
                 <option value="0" selected> <?php echo isset($modalidad) ? $modalidad->plat_nombre : ""; ?></option>
               </select>
           </div>
@@ -265,7 +259,7 @@
           <?php }?>
               <label for="lbURL_Acceso"><b>URL de acceso:</b></label>
               <input type="text" class="form-control" id="URL" name="URL"
-                      value="<?php echo isset($modalidad) ? $modalidad->grup_url : ""; ?>">
+                      value="<?php echo isset($modalidad) ? $modalidad->grup_url : ""; ?>" disabled> 
           </div>
           <div class="col-lg-12 form-row" style="margin-top: 15px;">
             <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2) { ?>
@@ -275,7 +269,7 @@
             <?php }?>
               <label for="lbID_Acceso"><b>ID de la Reunión:</b></label>
               <input type="text" class="form-control" id="ID_Acceso" name="ID_Acceso" 
-                value="<?php echo isset($modalidad) ? $modalidad->grup_id_acceso: ""; ?>">
+                value="<?php echo isset($modalidad) ? $modalidad->grup_id_acceso: ""; ?>" disabled>
             </div>
             <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2) { ?>
             <div id="Clave" class="col-lg-6 form-group">
@@ -284,7 +278,7 @@
             <?php }?>
               <label for="lbClave_Acceso"><b>Clave de Acceso:</b></label>
               <input type="text" class="form-control" id="Clave_Acceso" name="Clave_Acceso"
-                value="<?php echo isset($modalidad) ? $modalidad->grup_clave_acceso : ""; ?>">
+                value="<?php echo isset($modalidad) ? $modalidad->grup_clave_acceso : ""; ?>" disabled>
             </div>
           </div>
           
@@ -296,7 +290,7 @@
           <?php }?>
               <label for="lbURL_Acceso"><b>URL de acceso:</b></label>
               <input type="text" class="form-control" id="URL" name="URL"
-                      value="<?php echo isset($modalidad) ? $modalidad->grup_url : ""; ?>">
+                      value="<?php echo isset($modalidad) ? $modalidad->grup_url : ""; ?>" disabled>
           </div>
 
         </div>
@@ -317,26 +311,26 @@
           <div class="card-header">
             <i class="fas fa-id-card fa-lg"></i>
             <b>&nbsp;&nbsp; <?php echo "Sesión #".$i; ?></b>
-            <input type="hidden" id="<?php echo $idSesion;?>" name="idSesion[]" value="<?php echo $Sesion['sesi_id_sesiones'];?>">
+            <input type="hidden" id="<?php echo $idSesion;?>" name="idSesion[]" value="<?php echo $Sesion['sesi_id_sesiones'];?>" disabled>
           </div>
           <div class="col-lg-12 form-row" style="margin-top: 15px;">
             <div id="<?php echo $SesionFecha;?>" class="col-lg-6 form-group">
               <label for="<?php echo $SesionFecha;?>"><b>Fecha:</b></label>
               <input type="date" class="form-control" id="<?php echo $SesionFecha;?>"
                 name="SesionFecha[]" placeholder="0" min="0"
-                value="<?php echo isset($Sesion)?$Sesion['sesi_fecha']:""; ?>">
+                value="<?php echo isset($Sesion)?$Sesion['sesi_fecha']:""; ?>" disabled>
             </div>
             <div id="<?php echo $SesionHoraInicio;?>" class="col-lg-3 form-group">
               <label for="<?php echo $SesionHoraInicio;?>"><b>Hora de inicio:</b></label>
               <input type="time" class="form-control" id="<?php echo $SesionHoraInicio;?>"
                 name="SesionHoraInicio[]>" placeholder="0" min="0"
-                value="<?php echo isset($Sesion)?$Sesion['sesi_hora_inicio']:"";?>">
+                value="<?php echo isset($Sesion)?$Sesion['sesi_hora_inicio']:"";?>" disabled>
             </div>
             <div id="<?php echo $SesionHoraFin;?>" class="col-lg-3 form-group">
               <label for="<?php echo $SesionHoraFin;?>"><b>Hora de fin:</b></label>
               <input type="time" class="form-control" id="<?php echo $SesionHoraFin;?>"
                 name="SesionHoraFin[]>" placeholder="0" min="0"
-                value="<?php echo isset($Sesion)?$Sesion['sesi_hora_fin']:"";?>">
+                value="<?php echo isset($Sesion)?$Sesion['sesi_hora_fin']:"";?>" disabled>
             </div>
           </div>
         </div>

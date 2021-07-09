@@ -140,27 +140,21 @@ jQuery(document).ready(function () {
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
               <div class="col-lg-12 form-group">
                 <label for="strObjCurso"><b>Objetivos:</b></label>
-                <textarea type="text" class="form-control" id="strObjCurso" name="strObjCurso" disabled>
-                  <?php echo isset($Grupo->curs_objetivos) ? $Grupo->curs_objetivos : ""; ?>
-                </textarea>
+                <textarea type="text" class="form-control" id="strObjCurso" name="strObjCurso" disabled><?php echo isset($Grupo->curs_objetivos) ? $Grupo->curs_objetivos : ""; ?></textarea>
               </div>
             </div>
 
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
               <div class="col-lg-12 form-group">
                 <label for="strReqTec"><b>Requisitos Técnicos:</b></label>
-                <textarea type="text" class="form-control" id="strReqTec" name="strReqTec" disabled> 
-                  <?php echo isset($Grupo->curs_req_tecnicos) ? $Grupo->curs_req_tecnicos : ""; ?> 
-                </textarea>
+                <textarea type="text" class="form-control" id="strReqTec" name="strReqTec" disabled><?php echo isset($Grupo->curs_req_tecnicos) ? $Grupo->curs_req_tecnicos : ""; ?></textarea>
               </div>
             </div>
 
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
               <div class="col-lg-12 form-group">
                 <label for="strConNeces"><b>Conocimientos Necesarios:</b></label>
-                <textarea type="text" class="form-control" id="strConNeces" name="strConNeces" disabled> 
-                  <?php echo isset($Grupo->curs_conocimientos) ? $Grupo->curs_conocimientos : "";?>
-                </textarea>
+                <textarea type="text" class="form-control" id="strConNeces" name="strConNeces" disabled><?php echo isset($Grupo->curs_conocimientos) ? $Grupo->curs_conocimientos : "";?></textarea>
               </div>
             </div>
           </div>
@@ -174,40 +168,40 @@ jQuery(document).ready(function () {
               <i class="fas fa-id-card fa-lg"></i>
               <b>&nbsp;&nbsp;Datos del Grupo</b>
             </div>
-          </div>
-          <div class="col-lg-12 form-row" style="margin-top: 15px;">
-            <div class="col-lg-4 form-group">
-              <label
-                for="GrupoTipo"><b>Tipo:</b></label>
-              <select class="custom-select" id="GrupoTipo" name="GrupoTipo" disabled>
-              <option value='0' selected><?php echo $Grupo->grup_tipo ?></option>
-              </select>
+            <div class="col-lg-12 form-row" style="margin-top: 15px;">
+              <div class="col-lg-4 form-group">
+                <label
+                  for="GrupoTipo"><b>Tipo:</b></label>
+                <select class="custom-select" id="GrupoTipo" name="GrupoTipo" disabled>
+                <option value='0' selected><?php echo $Grupo->grup_tipo ?></option>
+                </select>
+              </div>
+              <div class="col-lg-4 form-group">
+                <label for="GrupoModalidad"><b>Modalidad:</b></label>
+                <select required='required' class="custom-select" id="GrupoModalidad" name="GrupoModalidad" disabled>
+                <option value='0' selected><?php echo $Grupo->moap_nombre ?></option>
+                </select>
+              </div>
+              <div class="col-lg-4 form-group">
+                <label for="Estado"><b>Estado:</b></label>
+                <select class="custom-select" id="Estado" name="Estado" disabled>
+                  <option value='0' selected ><?php echo $Grupo->esta_nombre ?></option>
+                </select>
+              </div>           
             </div>
-            <div class="col-lg-4 form-group">
-              <label for="GrupoModalidad"><b>Modalidad:</b></label>
-              <select required='required' class="custom-select" id="GrupoModalidad" name="GrupoModalidad" disabled>
-              <option value='0' selected><?php echo $Grupo->moap_nombre ?></option>
-              </select>
-            </div>
-            <div class="col-lg-4 form-group">
-              <label for="Estado"><b>Estado:</b></label>
-              <select class="custom-select" id="Estado" name="Estado" disabled>
-                <option value='0' selected ><?php echo $Grupo->esta_nombre ?></option>
-              </select>
-            </div>           
-          </div>
-          <div class="col-lg-12 form-row" style="margin-top: 15px;">
-            <div class="col-lg-6 form-group">
-              <label for="ID_Profesor"><b>Profesor:</b></label>
-              <select class="custom-select" id="ID_Profesor" name="ID_Profesor" disabled>
-                <option value='0' selected ><?php echo $Grupo->pers_nombre." ".$Grupo->pers_apellido_paterno." ".$Grupo->pers_apellido_materno; ?></option>
-              </select>
-            </div>
-            <div class="col-lg-6 form-group">
-              <label for="ID_Moderador"><b>Moderador:</b></label>
-              <select class="custom-select" id="ID_Moderador" name="ID_Moderador" disabled>
-                <option value='0' selected ><?php echo $moderador->pers_nombre." ".$moderador->pers_apellido_paterno." ".$moderador->pers_apellido_materno; ?></option>
-              </select>
+            <div class="col-lg-12 form-row" style="margin-top: 15px;">
+              <div class="col-lg-6 form-group">
+                <label for="ID_Profesor"><b>Profesor:</b></label>
+                <select class="custom-select" id="ID_Profesor" name="ID_Profesor" disabled>
+                  <option value='0' selected ><?php echo $Grupo->pers_nombre." ".$Grupo->pers_apellido_paterno." ".$Grupo->pers_apellido_materno; ?></option>
+                </select>
+              </div>
+              <div class="col-lg-6 form-group">
+                <label for="ID_Moderador"><b>Moderador:</b></label>
+                <select class="custom-select" id="ID_Moderador" name="ID_Moderador" disabled>
+                  <option value='0' selected ><?php if(isset($moderador)) { echo $moderador->pers_nombre." ".$moderador->pers_apellido_paterno." ".$moderador->pers_apellido_materno; } else { echo 'Sin moderador';} ?></option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -252,7 +246,7 @@ jQuery(document).ready(function () {
             </div>
             <!-- div de la modalidad Presencial -->
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
-            <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 1) { ?>
+              <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 1) { ?>
               <div id="Edificio" class="col-lg-6 form-group">
               <?php } else {?>
               <div id="Edificio" class="col-lg-6 form-group" style="display: none;">
@@ -285,7 +279,7 @@ jQuery(document).ready(function () {
                 </select>
             </div>
             
-            <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2) { ?>
+            <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2 && $_POST['CRUD'] == 1 && $Grupo->esta_nombre == 'En curso') { ?>
             <div id="URL" class="col-lg-12 form-group">
             <?php } else {?>
             <div id="URL" class="col-lg-12 form-group" style="display: none;">
@@ -295,7 +289,7 @@ jQuery(document).ready(function () {
                         value="<?php echo isset($modalidad) ? $modalidad->grup_url : ""; ?>">
             </div>
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
-              <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2) { ?>
+              <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2 && $_POST['CRUD'] == 1 && $Grupo->esta_nombre == 'En curso') { ?>
               <div id="ID_Acceso" class="col-lg-6 form-group">
               <?php } else {?>
               <div id="Reunion" class="col-lg-6 form-group" style="display: none;">
@@ -304,7 +298,7 @@ jQuery(document).ready(function () {
                 <input type="text" class="form-control" id="ID_Acceso" name="ID_Acceso" 
                   value="<?php echo isset($modalidad) ? $modalidad->grup_id_acceso: ""; ?>">
               </div>
-              <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2) { ?>
+              <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2 && $_POST['CRUD'] == 1 && $Grupo->esta_nombre == 'En curso') { ?>
               <div id="Clave" class="col-lg-6 form-group">
               <?php } else {?>
               <div id="Clave" class="col-lg-6 form-group" style="display: none;">
@@ -406,8 +400,6 @@ jQuery(document).ready(function () {
               <?php } else {
                 echo ("<p class = 'aviso-rojo'>Ya se encuentra inscrito a este grupo</p>");
               }
-
-              
             } else {
               echo ("<p class = 'aviso-rojo'>El perido de inscripción  a este grupo finalizo</p>");
             }?>
