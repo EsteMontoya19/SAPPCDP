@@ -4,7 +4,7 @@
         //Obtiene los datos del instructor de un grupo
         function buscarInstructor($grupo){
             $SQL_Bus_Instructor = 
-            "   SELECT g.usua_id_usuario, u.pers_id_persona, pers_nombre, pers_apellido_paterno, pers_apellido_materno
+            "   SELECT g.usua_id_usuario usr_instructor, u.pers_id_persona, pers_nombre, pers_apellido_paterno, pers_apellido_materno
                 FROM personal_grupo g, usuario u, persona p
                 WHERE g.grup_id_grupo = $grupo AND rol_id_rol = 2
                     AND g.usua_id_usuario = u.usua_id_usuario AND u.pers_id_persona = p.pers_id_persona;
@@ -21,7 +21,7 @@
         //Obtiene los datos del moderador de un grupo
         function buscarModerador($grupo){
             $SQL_Bus_Moderador = 
-            "   SELECT g.usua_id_usuario, u.pers_id_persona, pers_nombre, pers_apellido_paterno, pers_apellido_materno
+            "   SELECT g.usua_id_usuario usr_moderador, u.pers_id_persona, pers_nombre, pers_apellido_paterno, pers_apellido_materno
                 FROM personal_grupo g, usuario u, persona p
                 WHERE g.grup_id_grupo = $grupo AND rol_id_rol = 3
                     AND g.usua_id_usuario = u.usua_id_usuario AND u.pers_id_persona = p.pers_id_persona;
@@ -109,14 +109,14 @@
         //Permite agregar instructor o moderador al grupo
         function agregarPersonal($grupo, $idusuario){
             $SQL_Agr_Personal =
-            "   INSERT INTO Personal_Grupo(grup_id_grupo, usua_id_usuario, cons_id_constancia)
+            "   INSERT INTO Personal_Grupo(grup_id_grupo, usua_id_usuario, cons_id_constancias)
                 VALUES ($grupo, $idusuario, null);
             ";
 
             $bd = new BD();
             $bd->abrirBD();
-            $transaccion_1 = new Transaccion();
-            $transaccion_1->enviarQuery();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Agr_Personal);
             $bd->cerrarBD();
         }
 
@@ -129,8 +129,8 @@
 
             $bd = new BD();
             $bd->abrirBD();
-            $transaccion_1 = new Transaccion();
-            $transaccion_1->enviarQuery();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Qui_Personal);
             $bd->cerrarBD();
         }
         //Permite asignar una constancia al instructor o moderador de un grupo

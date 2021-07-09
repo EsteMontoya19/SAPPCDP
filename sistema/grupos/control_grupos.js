@@ -474,6 +474,8 @@ $(document).ready(function () {
                             $('html, body').animate({ scrollTop: 0 }, 0);
                             $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
                         }, 0);
+                    } else if (respuesta == 2){
+                        alertify.error('Llegué hasta aquí');
                     } else {
                         alertify.error('Hubo un problema al actualizar al grupo');
                     }

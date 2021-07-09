@@ -164,10 +164,34 @@
     //Se actualiza el personal del grupo
     $obj_personal_grupo->actualizarInstructor($grupo, $profesor);
     //? Se verifica que tiene el moderador porque de eso depende si se actualizará o agregara. 
-    if ($moderador == "null"){
-      
+    $moderador_anterior = $obj_personal_grupo->buscarModerador($grupo);
+    if ($moderador_anterior->usr_moderador == ''){
+
+        $moderador_anterior->usr_moderador = 'N';
+        $file = fopen("Mensajes.txt", "a");
+        fwrite($file, $moderador_anterior->usr_moderador.PHP_EOL);
+        fwrite($file, $moderador.PHP_EOL);
+        fclose($file);
     } else {
-      $obj_personal_grupo->actualizarModerador($grupo, $moderador);
+      $file = fopen("Mensajes.txt", "a");
+        fwrite($file, $moderador_anterior->usr_moderador.PHP_EOL);
+        fwrite($file, $moderador.PHP_EOL);
+        fclose($file);
+    }
+
+    if ($moderador == "null"){
+      if ($moderador_anterior->usr_moderador != 'N'){
+        //? Esta parte ya funciona
+        $obj_personal_grupo->quitarPersonal($grupo, $moderador_anterior->usr_moderador);
+      }      
+    } else {
+      if ($moderador_anterior->usr_moderador == 'N'){
+        //TODOEsta es la parte que no sabe que onda
+        $obj_personal_grupo->agregarPersonal($grupo, $moderador);
+      } else {
+        //? esta parte ya funciona
+        $obj_personal_grupo->actualizarModerador($grupo, $moderador);
+      }
     }
     
 
