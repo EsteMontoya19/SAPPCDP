@@ -33,6 +33,8 @@ jQuery(document).ready(function () {
   $arr_Moderadores = $obj_Moderador->buscarModeradoresActivos();
   $arr_Plataformas = $obj_Busqueda->selectPlataformas();
   $arr_Salones = $obj_Busqueda->selectSalones();
+  $arr_Modalidades = $obj_Busqueda->selectModalidadesAprendizaje();
+  $arr_Estados = $obj_Busqueda->selectEstadosGrupo();
 
   $Grupo = new Grupo();
   $Grupo = $obj_Grupo->grup_id_grupo = Null;
@@ -47,7 +49,7 @@ jQuery(document).ready(function () {
 
       $Grupo = $obj_Grupo->buscarSoloGrupo($_POST['id']);
       $arr_Sesiones = $obj_Sesion->buscarSesionesIDGrupo($_POST['id']);
-      //$Curso=$obj_Curso->buscarCurso($Grupo->curs_id_cursos);
+      //$Curso=$obj_Curso->buscarCurso($Grupo->curs_id_curso);
   }
 ?>
 
@@ -98,8 +100,8 @@ jQuery(document).ready(function () {
                     <?php if (isset($_POST['CRUD']) == 1) { echo "disabled";} ?>>
                     <option value="0">Seleccionar una opción</option>
                     <?php foreach ($arr_Cursos as $Curso) { ?>
-                    <option value="<?php echo $Curso['curs_id_cursos']; ?>" <?php if(isset($Grupo)) { 
-                      if ($Grupo->curs_id_cursos == $Curso['curs_id_cursos']) { 
+                    <option value="<?php echo $Curso['curs_id_curso']; ?>" <?php if(isset($Grupo)) { 
+                      if ($Grupo->curs_id_curso == $Curso['curs_id_curso']) { 
                       ?> selected <?php } }?>> <?php echo ($Curso['curs_nombre']." (".$Curso['curs_tipo'].") ".$Curso['curs_nivel']); ?>
                     </option>
                     <?php } ?>
@@ -136,12 +138,14 @@ jQuery(document).ready(function () {
                   <select required='required' class="custom-select" id="GrupoModalidad" name="GrupoModalidad"
                     <?php if (isset($_POST['CRUD']) == 1) { echo "disabled";} ?>>
                     <option value="0">Seleccione una opción</option>
-                    <option value="En línea"
-                      <?php if(isset($Grupo) && $Grupo->grup_modalidad == "En línea") { echo "selected"; }?>> En línea
-                    </option>
-                    <option value="Presencial"
-                      <?php if(isset($Grupo) && $Grupo->grup_modalidad == "Presencial") { echo "selected"; }?>>
-                      Presencial</option>
+                    <?php foreach($arr_Modalidades as $Modalidad) {?>
+                      <option value="<?php echo $Modalidad['moap_id_modalidad'];?>" 
+                        <?php if (isset($Grupo)) {
+                          if($Grupo->moap_id_modalidad == $Modalidad['moap_id_modalidad']) {
+                        ?> selected <?php } }?>>
+                        <?php echo $Modalidad['moap_nombre'];?>
+                      </option>
+                    <?php }?>
                   </select>
                 </div>
                 <div class="col-lg-4 form-group">
@@ -149,15 +153,14 @@ jQuery(document).ready(function () {
                     for="GrupoEstatus"><b>Estado:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";} ?></b></label>
                   <select class="custom-select" id="GrupoEstatus" name="GrupoEstatus">
                     <option value="0">Seleccione una opción</option>
-                    <option value="Aprobado"
-                      <?php if(isset($Grupo) && $Grupo->grup_estado == "Aprobado") { echo "selected"; }?>>Aprobado
-                    </option>
-                    <option value="Pendiente"
-                      <?php if(isset($Grupo) && $Grupo->grup_estado == "Pendiente") { echo "selected"; }?>>Pendiente
-                    </option>
-                    <option value="Rechazado"
-                      <?php if(isset($Grupo) && $Grupo->grup_estado == "Rechazado") { echo "selected"; }?>>Rechazado
-                    </option>
+                    <?php foreach ($arr_Estados as $Estado) {?>
+                      <option value="<?php echo $Estado['esta_id_estado']; ?>"
+                        <?php if (isset($Grupo)) { 
+                          if ($Grupo->esta_id_estado == $Estado['esta_id_estado']) {
+                        ?> selected <?php } }?>>
+                        <?php echo $Estado['esta_nombre']; ?>
+                      </option>
+                    <?php }?>
                   </select>
                 </div>
               </div>
@@ -253,11 +256,17 @@ jQuery(document).ready(function () {
                 <div class="card-header">
                   <i class="fas fa-id-card fa-lg"></i>
                   <b>&nbsp;&nbsp; <?php echo "Datos de la Modalidad"; 
-                    if (isset($Grupo->grup_modalidad)) echo ": ".$Grupo->grup_modalidad;?></b>
+                    if (isset($Grupo->moap_id_modalidad)) {
+                      foreach ($arr_Modalidades as $Modalidad) {
+                        if ($Grupo->moap_id_modalidad == $Modalidad['moap_id_modalidad']){
+                          echo ": ".$Modalidad['moap_nombre'];
+                        }
+                      }
+                    } ?></b>
                 </div>
                 <div class="col-lg-12 form-row" style="margin-top: 15px;">
                   <!-- div de la modalidad presencial -->
-                  <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'Presencial') { ?>
+                  <?php if (isset($Grupo) && $Grupo->moap_id_modalidad == 1) { ?>
                     <div id="Salon" class="col-lg-6 form-group">
                   <?php } else {?>
                     <div id="Salon" class="col-lg-6 form-group" style="display: none;">
@@ -276,7 +285,7 @@ jQuery(document).ready(function () {
                     </select>
                   </div>
                     <!-- div de la modalidad en línea -->
-                    <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
+                    <?php if (isset($Grupo) && $Grupo->moap_id_modalidad == 2) { ?>
                     <div id="Plataforma" class="col-lg-6 form-group">
                       <?php } else {?>
                       <div id="Plataforma" class="col-lg-6 form-group" style="display: none;">
@@ -297,7 +306,7 @@ jQuery(document).ready(function () {
                           <?php } } } } ?>
                         </select>
                       </div>
-                      <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
+                      <?php if (isset($Grupo) && $Grupo->moap_id_modalidad == 2) { ?>
                       <div id="Acceso" class="col-lg-6 form-group">
                         <?php } else {?>
                         <div id="Acceso" class="col-lg-6 form-group" style="display: none;">
@@ -305,11 +314,11 @@ jQuery(document).ready(function () {
                           <label for="lbURL_Acceso"><b>Link de
                               acceso:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
                           <input type="text" class="form-control" id="URL_Acceso" name="URL_Acceso"
-                            value="<?php echo isset($Grupo) ? $Grupo->grup_acceso : ""; ?>">
+                            value="<?php echo isset($Grupo) ? $Grupo->grup_id_acceso : ""; ?>">
                         </div>
                       </div>
                       <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                        <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
+                        <?php if (isset($Grupo) && $Grupo->moap_id_modalidad == 2) { ?>
                         <div id="Reunion" class="col-lg-6 form-group">
                           <?php } else {?>
                           <div id="Reunion" class="col-lg-6 form-group" style="display: none;">
@@ -317,9 +326,9 @@ jQuery(document).ready(function () {
                             <label for="lbID_Reunion"><b>ID de la
                                 Reunión:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { /*echo "*";*/} ?></b></label>
                             <input type="text" class="form-control" id="ID_Reunion" name="ID_Reunion"
-                              value="<?php echo isset($Grupo) ? $Grupo->grup_reunion : ""; ?>">
+                              value="<?php echo isset($Grupo) ? $Grupo->grup_url : ""; ?>">
                           </div>
-                          <?php if (isset($Grupo) && $Grupo->grup_modalidad == 'En línea') { ?>
+                          <?php if (isset($Grupo) && $Grupo->moap_id_modalidad == 2) { ?>
                           <div id="Clave" class="col-lg-6 form-group">
                             <?php } else {?>
                             <div id="Clave" class="col-lg-6 form-group" style="display: none;">
@@ -332,6 +341,17 @@ jQuery(document).ready(function () {
                           </div>
                         </div>
                       </div>
+                      <!-- Div de la modalidad: AutoGestiva-->
+                      <?php if (isset($Grupo) && $Grupo->moap_id_modalidad == 3) { ?>
+                        <div id="PlataformaAG" class="col-lg-6 form-group">
+                      <?php } else {?>
+                        <div id="PlataformaAG" class="col-lg-6 form-group" style="display: none;">
+                      <?php }?>
+                          <label for="lbURL_Plataforma"><b>Link de la plataforma donde se toma
+                            el curso:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
+                              <input type="text" class="form-control" id="URL_Plataforma" name="URL_Plataforma"
+                                value="<?php echo isset($Grupo) ? $Grupo->grup_url : ""; ?>">
+                        </div>
             <!-- Fin de Sección: Modalidad -->
 
           <?php if(isset($Grupo)) {?>
