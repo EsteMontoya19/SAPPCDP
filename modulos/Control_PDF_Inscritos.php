@@ -8,6 +8,7 @@
     include('../clases/Plataforma.php');
     include('../clases/Busqueda.php');
     include('../clases/PDF_horizontal.php');
+    include('../clases/Personal_Grupo.php');
 
     // Inicializamos las variables requeridas
     //? Solo recibe el ID del grupo
@@ -18,29 +19,38 @@
     $obj_Profesor = new Profesor();
     $obj_Plataforma = new Plataforma();
     $obj_Busqueda = new Busqueda();
+    $obj_Personal = new Personal_Grupo();
     $arr_Inscritos = $obj_Grupo->buscarInscripcionesxGrupo($idGrupo);
-    $arr_sesiones = $obj_Sesion->buscarFechaSesiones($idGrupo);
+    $arr_sesiones = $obj_Sesion->buscarDiaMesSesiones($idGrupo);
     $curso = $obj_Grupo->buscarNombreCursoxGrupo($idGrupo);
     $sesion = $obj_Sesion->numSesionesGrupo($idGrupo);
     $numSesiones = $sesion->numero;
-    $idGrupo='ID del Grupo: '.$idGrupo;
+    $id_Grupo='ID del Grupo: '.$idGrupo;
     $nombreCurso = 'Nombre del Curso: '.$curso->curs_nombre;
-    $sesiones='Núm. Sesiones: '.$numSesiones;
-    $instructor=$obj_Profesor->buscarProfesorNombre($curso->prof_id_profesor);
+    $sesiones = 'Núm. Sesiones: '.$numSesiones;
+    $instructor = $obj_Personal->buscarPersonal($idGrupo, 2);
+    $moderador = $obj_Personal->buscarPersonal($idGrupo, 3);
     $nombreInstructor='Instructor: '.$instructor->pers_nombre.' '.$instructor->pers_apellido_paterno.' '.$instructor->pers_apellido_materno;
-    if($curso->mode_id_moderador != NULL){
-        $moderador=$obj_Moderador->buscarModeradorNombre($curso->mode_id_moderador);
+    if(isset($moderador)){
         $nombreModerador='Moderador: '.$moderador->pers_nombre.' '.$moderador->pers_apellido_paterno.' '.$moderador->pers_apellido_materno; 
     } else {
         $nombreModerador='Moderador: Sin moderador';
     }
-    if($curso->grup_modalidad='En línea'){
-        $plataforma=$obj_Plataforma->buscarPlataforma($curso->plat_id_plataforma);
-        $nombreLugar='Plataforma: '.$plataforma->plat_nombre;
-    }else{
-        $salon=$obj_Busqueda->selectSalon($curso->salo_id_salon);
-        $nombreLugar='Edificio: '.$salon->edif_nombre.'Salon: '.$salon->salo_nombre;
+    
+    if($curso->moap_id_modalidad == 1){
+        $modalidad = $obj_Grupo->buscarDatosPresencial($idGrupo);
+        $nombreLugar = 'Edificio: '.$modalidad->edif_nombre.'Salon: '.$modalidad->salo_nombre;
+        
+    } elseif ($curso->moap_id_modalidad == 2) {
+        $modalidad = $obj_Grupo->buscarDatosEnLinea($idGrupo);
+        $nombreLugar = 'Plataforma: '.$modalidad->plat_nombre;
+        $modalidadNombre = 'Modalidad: En línea';
+    } elseif ($curso->moap_id_modalidad == 3) {
+        $modalidad = $obj_Grupo->buscarDatosAutogestivo($idGrupo);
+        $nombreLugar = 'Plataforma externa: '.$modalidad->grup_url;
+        $modalidadNombre = 'Modalidad: Autogestivo';
     }
+    
     
 
 
@@ -49,11 +59,12 @@
     $pdf->AddPage('C', 'letter', 0); // Añade paginas Orientación: vertical 'P' u horizontal 'L', tamaño de papel (Legal, letter, etc), rotar pagina con SOLO multiplos de 90° positivos o negativos. Rota con todo y texto
     $pdf->AliasNbPages();
     $pdf->SetFont('Arial','B',12); //Tipo de letra, Estilo ('B', 'I', 'U' o '') y Tamaño en puntos defecto 12. Obligatorio al menos una vez antes de invocar por primera vez el metodo Cell
-    $pdf->Cell(256,6,utf8_decode($idGrupo),0,1,'L'); //ancho, alto, Texto, Borde 0 o 1 o 'L','R','B','T' o combinación, Salto de Linea (1 siguiente), alineación (L, R, C), color (TRUE o FALSE) función
+    $pdf->Cell(256,6,utf8_decode($id_Grupo),0,1,'L'); //ancho, alto, Texto, Borde 0 o 1 o 'L','R','B','T' o combinación, Salto de Linea (1 siguiente), alineación (L, R, C), color (TRUE o FALSE) función
     $pdf->Cell(256,6,utf8_decode($nombreCurso),0,1,'L');
     $pdf->Cell(256,6,utf8_decode($sesiones),0,1,'L');
     $pdf->Cell(256,6,utf8_decode($nombreInstructor),0,1,'L');
     $pdf->Cell(256,6,utf8_decode($nombreModerador),0,1,'L');
+    $pdf->Cell(256,6,utf8_decode($modalidadNombre),0,1,'L');
     $pdf->Cell(256,6,utf8_decode($nombreLugar),0,1,'L');
     
 
@@ -82,7 +93,7 @@
     $i=0; 
     //Se pasa el arreglo de la consulta sql a un arreglo númerico. Ya que el KEY númerico en este caso es más facil de consultar
     foreach ($arr_sesiones as $sesion) {
-        $arr_fechas[$i] = $sesion['fecha'];
+        $arr_fechas[$i] = $sesion['dia'].'-'.$sesion['mes'];
         $i++; 
     }
 
@@ -94,7 +105,7 @@
         Devuelve $j para conocer el lugar siguiente del arreglo por si existe un siguiente ciclo y continúe en ese lugar.*/
     function imprimirFecha($contador, $arreglo, $j, $pdf){
         for($i=$contador; $i>0; $i--){
-            $pdf->Cell(13,5,$arreglo[$j],1,0,'L',1);
+            $pdf->Cell(15,5,$arreglo[$j],1,0,'L',1);
             $j++;
         }
         return $j;
@@ -104,7 +115,7 @@
         $pdf es la instancia que estamos ocupando para imprimir el PDF */
     function imprimirColumnasFecha($contador, $pdf){
         for($i=$contador; $i>0; $i--){
-            $pdf->Cell(13,5,'',1,0,'L');
+            $pdf->Cell(15,5,'',1,0,'L');
         }
     }
 

@@ -378,7 +378,7 @@
                 FROM PERSONAL_GRUPO P, USUARIO U
                 WHERE P.USUA_ID_USUARIO = U.USUA_ID_USUARIO 
                     AND ROL_ID_ROL = 3
-                    AND GRUP_ID_GRUPO = 1
+                    AND GRUP_ID_GRUPO = $id
             ";
 
                 $bd = new BD();
@@ -444,7 +444,7 @@
         function buscarNombreCursoxGrupo($ID){
             $SQL_Bus_Curso = 
             "   
-                SELECT curs_nombre, curs_nivel, curs_tipo, P.usua_id_usuario, plat_id_plataforma, salo_id_salon, moap_nombre, 
+                SELECT curs_nombre, curs_nivel, curs_tipo, P.usua_id_usuario, plat_id_plataforma, salo_id_salon, M.moap_id_modalidad, moap_nombre, 
                     (SELECT P.usua_id_usuario
                     FROM Personal_grupo P, Usuario U
                     WHERE P.usua_id_usuario = U.usua_id_usuario AND rol_id_rol = 3 AND p.grup_id_grupo = $ID) as id_moderador
