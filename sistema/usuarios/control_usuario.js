@@ -380,6 +380,7 @@ function buscarProfesor () {
             numTrabajador: numTrabajador,
             dml: dml,
         };
+        alert("Si entra");
         $.ajax({
             data: datos,
             type: 'POST',
@@ -393,21 +394,18 @@ function buscarProfesor () {
                     
                     alertify.alert(titulo, mensaje, function(){ alertify.success('Datos cargados'); });
                     
-                    document.getElementById("strUsuarioNombre").value = respuesta.nombre;
-                    document.getElementById("strUsuarioPrimerApe").value = respuesta.apellidoPaterno;
-                    document.getElementById("strUsuarioSegundoApe").value = respuesta.apellidoMaterno;
-                    document.getElementById("strUsuarioCorreo").value = respuesta.correo;
-                    document.getElementById("strUsuarioTelefono").value = respuesta.telefono;
+                    document.getElementById("semblanza").value = respuesta.semblanza;
+                    document.getElementById("strRFC").value = respuesta.rfc;
+                    $('#nivelImparticion').hide();
+                    $('#modalidadImparticion').hide();
+                    $('#coordinaciones').hide();
+                    $( "#semblanza" ).prop( "disabled", true );
 
-                    //$( "#strRFC" ).prop( "disabled", true );
-                    $( "#strUsuarioNombre" ).prop( "disabled", true );
-                    $( "#strUsuarioPrimerApe" ).prop( "disabled", true );
-                    $( "#strUsuarioSegundoApe" ).prop( "disabled", true );
-                    $( "#strUsuarioCorreo" ).prop( "disabled", true );
-                    $( "#strUsuarioTelefono" ).prop( "disabled", true );
+
+                   document.getElementById("strRFC").focus();
                 }  else if (respuesta.estado == "Nulo") {
 
-                    alertify.success('No se encontró otro usuario con ese RFC.');
+                    alertify.success('No se encontró otro profesor con ese Número de trabajador.');
                 }
             },
         });

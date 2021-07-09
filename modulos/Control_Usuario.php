@@ -26,7 +26,8 @@
     define ("INSTRUCTOR" , 2);
     define ("MODERADOR" , 3);
     define ("PROFESOR" , 4);
-  
+
+
   if (isset($_POST['dml'])) {
 
     if($_POST['dml'] == 'insert')
@@ -444,30 +445,82 @@
       echo json_encode($resultado);
       
     }
-  } 
-  elseif($_POST['dml'] == 'llenadoProfesor')
-  {
-      $resultado = array();
-      //! Aqui voy
-      $profesor = $obj_Profesor->buscarNumTrabajador($_POST['numTrabajador'], null);
-      
-      
-      if (isset($profesor->prof_id_profesor)) {
-        $resultado ['estado'] = "Encontrado";
-        $resultado ['idProfesor'] = $profesor->prof_id_profesor;
-        $resultado ['idPersona'] = $profesor->pers_id_persona;
-        $resultado ['numTrabajador'] = $profesor->prof_num_trabajador;
-        $resultado ['semblanza'] = $profesor->prof_semblanza;
-        $resultado ['rfc'] = $profesor->pers_rfc;
+    elseif($_POST['dml'] == 'llenadoProfesor')
+    {
 
+        $resultado = array();
+        $profesor = $obj_Profesor->buscarNumTrabajador($_POST['numTrabajador'], null);
         
         
-      } else {
-        $resultado ['estado'] = "Nulo";
-      }
-      echo json_encode($resultado);
-      
+        if (isset($profesor->prof_id_profesor)) {
+  
+          //? Asignamos al arreglo Json los datos del profesor
+          $resultado ['estado'] = "Encontrado";
+          $resultado ['idProfesor'] = $profesor->prof_id_profesor;
+          $resultado ['idPersona'] = $profesor->pers_id_persona;
+          $resultado ['numTrabajador'] = $profesor->prof_num_trabajador;
+          $resultado ['semblanza'] = $profesor->prof_semblanza;
+          $resultado ['rfc'] = $profesor->pers_rfc;
+  
+          //? Arreglos de los catalogos de profesor, se ocuparan para saber la cantidad de registros que habrá
+          $resultado["niveles"] = count($arr_niveles);
+          $resultado["modalidades"] = count($arr_modalidades);
+          $resultado["coordinaciones"] = count($arr_coordinaciones);  
+  
+          //?  Buscamos los arreglos del profesor
+          $niveles = $obj_Profesor->buscarProfesorNiveles($profesor->prof_id_profesor);
+          $modalidades = $obj_Profesor->buscarProfesorModalidades($profesor->prof_id_profesor);
+          $coordinaciones = $obj_Profesor->buscarProfesorCoordinaciones($profesor->prof_id_profesor);
+  
+          /* //? Puede ser que no tenga registro de profesor, entonces validamos si hay algun registro en las variables
+          if (count($niveles) > 0 && count($modalidades) > 0 && count($coordinaciones) > 0) {
+            
+            //? Creamos el arreglo con los niveles en 1 para los que tiene el profesor y 0 para los que no estan
+            for ($iCont = 1; $iCont <= $resultado["niveles"] ; $iCont++) {
+              foreach ($niveles as $nivel) {
+                if($iCont == $nivel["nive_id_nivel"]) {
+                  $resultado ['nivel'.$iCont] = 1;
+
+                } else {
+                  $resultado ['nivel'.$iCont] = 0;
+                }
+              }
+            }
+
+            //? Creamos el arreglo con las modalidades en 1 para los que tiene el profesor y 0 para los que no estan
+            for ($iCont = 1; $iCont <= $resultado["modalidades"] ; $iCont++) {
+              foreach ($modalidades as $modalidad) {
+                if($iCont == $modalidad["moda_id_modalidad"]) {
+                  $resultado ['modalidad'.$iCont] = 1;
+
+                } else {
+                  $resultado ['modalidad'.$iCont] = 0;
+                }      
+              }
+            }
+
+            //? Creamos el arreglo con las modalidades en 1 para los que tiene el profesor y 0 para los que no estan
+            for ($iCont = 1; $iCont <= $resultado["coordinaciones"] ; $iCont++) {
+              foreach ($coordinaciones as $coordinacion) {
+                if($iCont == $coordinacion["coor_id_coordinacion"]) {
+                  $resultado ['coordinacion'.$iCont] = 1;
+
+                } else {
+                  $resultado ['coordinacion'.$iCont] = 0;
+                }
+              }
+            }   
+          } else {
+            //? En caso de que no tenga registro como profesor, cuyo caso solo tendría registro de moderador
+            $resultado ['registroProfesor'] = "Nulo";
+          }  */           
+        } else {
+          $resultado ['estado'] = "Nulo";
+        } 
+        echo json_encode($resultado);
+        
     }else {
-    exit("3");
+      exit("3");
+    } 
   }
 ?>
