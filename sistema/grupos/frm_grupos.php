@@ -216,6 +216,7 @@ jQuery(document).ready(function () {
                 </div>
               </div>
             </div>
+          </div>
             <!-- Fin de Sección: Datos del Grupo-->
 
 
@@ -339,8 +340,7 @@ jQuery(document).ready(function () {
                                 value="<?php echo isset($Grupo) ? $Grupo->grup_clave_acceso : ""; ?>">
                             </div>
                           </div>
-                        </div>
-                      </div>
+                        
                       <!-- Div de la modalidad: AutoGestiva-->
                       <?php if (isset($Grupo) && $Grupo->moap_id_modalidad == 3) { ?>
                         <div id="PlataformaAG" class="col-lg-6 form-group">
@@ -352,6 +352,9 @@ jQuery(document).ready(function () {
                               <input type="text" class="form-control" id="URL_Plataforma" name="URL_Plataforma"
                                 value="<?php echo isset($Grupo) ? $Grupo->grup_url : ""; ?>">
                         </div>
+
+                  </div>
+                </div>
             <!-- Fin de Sección: Modalidad -->
 
           <?php if(isset($Grupo)) {?>
