@@ -696,7 +696,7 @@ function cambioPublicacion(id, estatus, nombreCurso, modalidad) {
                     } else if (respuesta == 3) {
                         alertify.error('El grupo debe tener un Profesor asignado.');
                     } else if (respuesta == 4) {
-                        alertify.error('El grupo debe estar Aprobado para ser publicado.');
+                        alertify.error('Un grupo Finalizado ya no se puede publicar de nuevo');
                     } else {
                         alertify.error('Hubo un problema al registrar el grupo.');
                     }

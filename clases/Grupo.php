@@ -326,7 +326,7 @@
             "
                 SELECT g.grup_id_grupo, curs_id_curso, salo_id_salon, plat_id_plataforma, cale_id_calendario, grup_url, grup_id_acceso, grup_clave_acceso,  
                     grup_cupo, esta_id_estado, grup_publicado, moap_id_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, grup_num_inscritos,
-                    p.usua_id_usuario usr_profesor, (SELECT p.usua_id_usuario
+                    p.usua_id_usuario usr_instructor, (SELECT p.usua_id_usuario
                         FROM personal_grupo p, usuario u
                         WHERE grup_id_grupo = $id AND rol_id_rol = 3 AND p.usua_id_usuario = u.usua_id_usuario) as usr_moderador
                 FROM Grupo g, personal_grupo p, usuario u

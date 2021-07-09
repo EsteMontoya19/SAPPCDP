@@ -16,7 +16,7 @@ jQuery(document).ready(function () {
   include('../../clases/Grupo.php');
   include('../../clases/Sesion.php');
   include('../../clases/Curso.php');
-  include('../../clases/Profesor.php');
+  include('../../clases/Instructor.php');
   include('../../clases/Moderador.php');
 
   // Objetos
@@ -24,12 +24,12 @@ jQuery(document).ready(function () {
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
   $obj_Curso = new Curso();
-  $obj_Profesor = new Profesor();
+  $obj_instructor = new Instructor();
   $obj_Moderador = new Moderador();
 
   //Catálogos
   $arr_Cursos = $obj_Busqueda->selectCursosActivos();
-  $arr_Profesores = $obj_Profesor->buscarProfesoresActivos();
+  $arr_Instructores = $obj_instructor->buscarInstructoresActivos();
   $arr_Moderadores = $obj_Moderador->buscarModeradoresActivos();
   $arr_Plataformas = $obj_Busqueda->selectPlataformas();
   $arr_Salones = $obj_Busqueda->selectSalones();
@@ -152,7 +152,7 @@ jQuery(document).ready(function () {
                   <label
                     for="GrupoEstatus"><b>Estado:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";} ?></b></label>
                   <select class="custom-select" id="GrupoEstatus" name="GrupoEstatus">
-                    <option value="0">Seleccione una opción</option>
+                    <option value="0"> Seleccione una opción </option>
                     <?php foreach ($arr_Estados as $Estado) {?>
                       <option value="<?php echo $Estado['esta_id_estado']; ?>"
                         <?php if (isset($Grupo)) { 
@@ -167,7 +167,7 @@ jQuery(document).ready(function () {
 
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <?php if (isset($_POST['CRUD']) ){?>
-                <div class="col-lg-6 form-group">
+                <div class="col-lg-4 form-group">
                   <?php } else {?>
                   <div class="col-lg-4 form-group">
                     <?php } ?>
@@ -175,31 +175,31 @@ jQuery(document).ready(function () {
                         <?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  { echo "*";} ?></b></label>
                     <select class="custom-select" id="ID_Profesor" name="ID_Profesor">
                       <option value="0">Seleccione una opción</option>
-                      <?php foreach ($arr_Profesores as $Profesor) { ?>
-                      <option value="<?php echo $Profesor['prof_id_profesor']; ?>" <?php if(isset($Grupo)) { if ($Grupo->prof_id_profesor == $Profesor['prof_id_profesor']) 
+                      <?php foreach ($arr_Instructores as $Instructor) { ?>
+                      <option value="<?php echo $Instructor['usr_instructor']; ?>" <?php if(isset($Grupo)) { if ($Grupo->usr_instructor == $Instructor['usr_instructor']) 
                       { ?> selected <?php }}?>>
-                        <?php echo $Profesor['pers_nombre']." ".$Profesor['pers_apellido_paterno']." ".$Profesor['pers_apellido_materno']; ?>
+                        <?php echo $Instructor['pers_nombre']." ".$Instructor['pers_apellido_paterno']." ".$Instructor['pers_apellido_materno']; ?>
                       </option> <?php } ?>
                     </select>
                   </div>
                 <?php if (isset($_POST['CRUD']) ){?>
-                  <div class="col-lg-6 form-group">
+                  <div class="col-lg-4 form-group">
                 <?php } else {?>
                   <div class="col-lg-4 form-group">
                 <?php } ?>
                 <label for="ID_Moderador"><b>Moderador:
                     <?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
                 <select class="custom-select" id="ID_Moderador" name="ID_Moderador">
-                  <option value="0">Seleccione una opción</option>
+                  <option value="0"><?php if (($_POST['CRUD']) == 0) {echo "Sin Moderador";} else { echo "Seleccione una opción";}?> </option>
                   <?php foreach ($arr_Moderadores as $Moderador) { ?>
-                  <option value="<?php echo $Moderador['mode_id_moderador']; ?>" <?php if(isset($Grupo)) { if ($Grupo->mode_id_moderador == $Moderador['mode_id_moderador']) 
+                  <option value="<?php echo $Moderador['usr_moderador']; ?>" <?php if(isset($Grupo)) { if ($Grupo->usr_moderador == $Moderador['usr_moderador']) 
                 { ?> selected <?php }}?>>
                     <?php echo $Moderador['pers_nombre']." ".$Moderador['pers_apellido_paterno']." ".$Moderador['pers_apellido_materno']; ?>
                   </option> <?php } ?>
                 </select>
               </div>
               <?php if (isset($_POST['CRUD']) ){?>
-              <div class="col-lg-4 form-group" style="display: none;">
+              <div class="col-lg-4 form-group">
                 <?php } else {?>
                 <div class="col-lg-4 form-group">
                   <?php } ?>
@@ -207,9 +207,9 @@ jQuery(document).ready(function () {
                       <?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) { echo "*";}?></b></label>
                   <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="ID_Status" name="ID_Status"
-                      <?php if (isset($Grupo) && $Grupo->grup_activo == 'f') { ?>
+                      <?php if (isset($Grupo) && $Grupo->grup_publicado == 'f') { ?>
                       <?php } else { echo "checked";} ?> <?php if (isset($Grupo)) { ?>
-                      onclick="Publicar(<?php echo $Grupo->grup_id_grupo ?> , '<?php echo $Grupo->grup_activo; ?>')"
+                      onclick="Publicar(<?php echo $Grupo->grup_id_grupo ?> , '<?php echo $Grupo->grup_publicado; ?>')"
                       <?php } else {?> value="true" <?php } ?>>
                     <label class="custom-control-label" for="ID_Status"></label>
                   </div>
@@ -421,7 +421,7 @@ jQuery(document).ready(function () {
           <?php if ($_POST['CRUD'] == 1) { ?>
             <input type="hidden" name="dml" value="update" />
             <input type="hidden" id="idGrupo" name="idGrupo" value="<?php echo $_POST['id'];?>">
-            <input type="hidden" id="ifModalidad" name="ifModalidad" value="<?php echo $Grupo->grup_modalidad;?>">
+            <input type="hidden" id="ifModalidad" name="ifModalidad" value="<?php echo $Grupo->moap_id_modalidad;?>">
           <?php } elseif ($_POST['CRUD'] == 0) { ?>
             <input type="hidden" name="dml" value="select" />
           <?php } ?>

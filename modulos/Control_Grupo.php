@@ -7,11 +7,13 @@
   include('../clases/Profesor.php');
   include('../clases/Calendario.php');
   include('../clases/Festivo.php');
+  include('../clases/Personal_Grupo.php');
 
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
   $obj_Inscripcion = new Inscripcion();
   $obj_Profesor = new Profesor();
+  $obj_personal_grupo = new Personal_Grupo();
 
   if($_POST['dml'] == 'insert')
   {
@@ -136,29 +138,38 @@
     $fin_insc = $_POST['GrupoFinInscripcion'];
     
     //? Puede que un grupo no tenga moderador
-    if (!isset($_POST['ID_Moderador']) || $_POST['ID_Moderador'] == "" || $_POST['ID_Moderador'] == 0) {       
+    if (!isset($_POST['ID_Moderador']) || $_POST['ID_Moderador'] == "" || $_POST['ID_Moderador'] == 0) {
       $moderador = "null";
     } else {
       $moderador = $_POST['ID_Moderador'];
     }
 
     // Se verifica la modalidad y se asignan las variables nulas dependiendo la modalidad
-    if ($modalidad == 'En línea'){
+    if ($modalidad == 2){
       $salon = 'NULL';
       $plataforma = $_POST['ID_Plataforma'];
-      $reunion = $_POST['ID_Reunion'];
+      $url = $_POST['ID_Reunion'];
       $acceso = $_POST['URL_Acceso'];
       $clave = $_POST['Clave_Acceso'];
     } else {
       $salon = $_POST['ID_Salon'];
       $plataforma = 'NULL';
-      $reunion = 'NULL';
+      $url = 'NULL';
       $acceso = 'NULL';
       $clave = 'NULL';
     }
 
     //Se actualiza el grupo
-    $obj_Grupo->actualizarGrupo($grupo, $tipo_grupo, $estado, $profesor, $moderador, $cupo, $inicio_insc, $fin_insc, $salon, $plataforma, $reunion, $acceso, $clave);
+    $obj_Grupo->actualizarGrupo($grupo, $tipo_grupo, $estado, $cupo, $inicio_insc, $fin_insc, $salon, $plataforma, $url, $acceso, $clave);
+    //Se actualiza el personal del grupo
+    $obj_personal_grupo->actualizarInstructor($grupo, $profesor);
+    //? Se verifica que tiene el moderador porque de eso depende si se actualizará o agregara. 
+    if ($moderador == "null"){
+      
+    } else {
+      $obj_personal_grupo->actualizarModerador($grupo, $moderador);
+    }
+    
 
     //Se inicializan los arreglos de id sesiones, fecha, hora de inicio y hora fin.
     $arr_idSesiones = $_POST['idSesion'];
@@ -210,9 +221,9 @@
         exit("2");
       } */
 
-      if (!isset($grupoActual->prof_id_profesor) ) {
+      if (!isset($grupoActual->usr_instructor) ) {
         exit("3");
-      } else if ($grupoActual->grup_estado != "Aprobado"){
+      } else if ($grupoActual->esta_id_estado == 4){
         exit("4");
       }
       $estatus = 'TRUE';
