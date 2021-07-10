@@ -31,27 +31,6 @@ function validarFormularioGrupo() {
     const objFechaHoy = new Date(objFecha.getFullYear(), objFecha.getMonth(), objFecha.getDate());
 
     //Validaciones generales de los grupos
-    if ($('#GrupoCupo').val() == '') {
-        $('html, body').animate({ scrollTop: 0 }, 'slow');
-        document.getElementById('GrupoCupo').focus();
-        alertify.error('Debe ingresar el cupo del grupo');
-        return false;
-    } else {
-        if ($('#GrupoCupo').val() < 5) {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-            document.getElementById('GrupoCupo').focus();
-            alertify.error('Debe ingresar un cupo del grupo mayor a 5');
-            return false;
-        } else {
-            if ($('#GrupoCupo').val() > 60) {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('GrupoCupo').focus();
-                alertify.error('Debe asignar un cupo de grupo máximo de 60');
-                return false;
-            }
-        }
-    }
-
     if ($('#ID_Curso').val() == '0') {
         $('html, body').animate({ scrollTop: 0 }, 'slow');
         document.getElementById('ID_Curso').focus();
@@ -69,7 +48,7 @@ function validarFormularioGrupo() {
     if ($('#GrupoEstatus').val() == '0') {
         $('html, body').animate({ scrollTop: 0 }, 'slow');
         document.getElementById('GrupoEstatus').focus();
-        alertify.error('Debe ingresar el estatus del grupo: Aprobado / Rechazado / Pendiente');
+        alertify.error('Debe ingresar el estatus del grupo: Cancelado / En Curso / Pendiente / Finalizado');
         return false;
     }
 
@@ -96,6 +75,27 @@ function validarFormularioGrupo() {
         return false;
     } else {
         if ($('#GrupoModalidad').val() == '2') {
+            if ($('#GrupoCupo').val() == '') {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('GrupoCupo').focus();
+                alertify.error('Debe ingresar el cupo del grupo');
+                return false;
+            } else {
+                if ($('#GrupoCupo').val() < 2) {
+                    $('html, body').animate({ scrollTop: 0 }, 'slow');
+                    document.getElementById('GrupoCupo').focus();
+                    alertify.error('Debe ingresar un cupo del grupo mayor a 2 para los grupos En Línea');
+                    return false;
+                } else {
+                    if ($('#GrupoCupo').val() > 100) {
+                        $('html, body').animate({ scrollTop: 0 }, 'slow');
+                        document.getElementById('GrupoCupo').focus();
+                        alertify.error('Debe asignar un cupo de grupo máximo de 100 para los grupos En Línea');
+                        return false;
+                    }
+                }
+            }
+
             if ($('#ID_Plataforma').val() == 0) {
                 $('html, body').animate({ scrollTop: 200 }, 'slow');
                 document.getElementById('ID_Plataforma').focus();
@@ -139,17 +139,64 @@ function validarFormularioGrupo() {
                 return false;
             }
             */
-        } else {
-            if ($('#GrupoModalidad').val() == '1') {
-                //! Bloque temporal de cursos preseciales por pandemia
+        } else if ($('#GrupoModalidad').val() == '1'){
+                /*//! Bloque temporal de cursos preseciales por pandemia
                 alertify.error('Por el momento no se pueden registrar grupos para clases prescenciales.');
-                return false;
+                return false;*/
+                if ($('#GrupoCupo').val() == '') {
+                    $('html, body').animate({ scrollTop: 0 }, 'slow');
+                    document.getElementById('GrupoCupo').focus();
+                    alertify.error('Debe ingresar el cupo del grupo');
+                    return false;
+                } else {
+                    if ($('#GrupoCupo').val() < 10) {
+                        $('html, body').animate({ scrollTop: 0 }, 'slow');
+                        document.getElementById('GrupoCupo').focus();
+                        alertify.error('Debe ingresar un cupo del grupo mayor a 10 para los grupos Presenciales');
+                        return false;
+                    } else {
+                        if ($('#GrupoCupo').val() > 30) {
+                            $('html, body').animate({ scrollTop: 0 }, 'slow');
+                            document.getElementById('GrupoCupo').focus();
+                            alertify.error('Debe asignar un cupo de grupo máximo de 30 para los grupos Presenciales');
+                            return false;
+                        }
+                    }
+                }
+
                 if ($('#ID_Salon').val() == 0) {
                     $('html, body').animate({ scrollTop: 100 }, 'slow');
                     document.getElementById('ID_Salon').focus();
                     alertify.error('Debe ingresar el salon en el que se impartirá la clase');
                     return false;
                 }
+        } else {
+            if ($('#GrupoCupo').val() == '') {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('GrupoCupo').focus();
+                alertify.error('Debe ingresar el cupo del grupo');
+                return false;
+            } else {
+                if ($('#GrupoCupo').val() < 5) {
+                    $('html, body').animate({ scrollTop: 0 }, 'slow');
+                    document.getElementById('GrupoCupo').focus();
+                    alertify.error('Debe ingresar un cupo del grupo mayor a 5 para los grupos Autogestivos');
+                    return false;
+                } else {
+                    if ($('#GrupoCupo').val() > 100) {
+                        $('html, body').animate({ scrollTop: 0 }, 'slow');
+                        document.getElementById('GrupoCupo').focus();
+                        alertify.error('Debe asignar un cupo de grupo máximo de 100 para los grupos Autogestivos');
+                        return false;
+                    }
+                }
+            }
+            
+            if ($('#URL_Plataforma').val() == '') {
+                $('html, body').animate({ scrollTop: 200 }, 'slow');
+                document.getElementById('URL_Plataforma').focus();
+                alertify.error('Debe ingresar el link de acceso a la plataforma para tomar la clase');
+                return false;
             }
         }
     }
@@ -421,7 +468,7 @@ $(document).ready(function () {
                             $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
                         }, 1500);
                     } else if (respuesta == 2){
-                        alertify.error('No se puede publicar un curso que no esta Aprobado.');
+                        alertify.error('No se puede publicar un curso con estado Cancelado o Finalizado');
                     } else if (respuesta == 3){
                         alertify.error('No se puede registrar un grupo con sesiones en dias inhabiles o festivos');
                     } else if (respuesta == 4){
@@ -430,7 +477,7 @@ $(document).ready(function () {
                         alertify.error('No se puede registrar un grupo con sesiones en asueto academico');
                     } else {
                         $('html, body').animate({ scrollTop: 0 }, 0);
-                        alertify.error('Hubo un problema al registrar el grupo');
+                        alertify.error('Hubo un problema al registrar el grupo' + respuesta);
                     }
                 },
             });
@@ -477,7 +524,7 @@ $(document).ready(function () {
                     } else if (respuesta == 2){
                         alertify.error('Llegué hasta aquí');
                     } else {
-                        alertify.error('Hubo un problema al actualizar al grupo' +  respuesta);
+                        alertify.error('Hubo un problema al actualizar al grupo');
                     }
                 },
             });
@@ -769,19 +816,29 @@ $(document).ready(function () {
 //! No eliminar, permite desplegar cuando es un nuevo registro de grupos
 $(document).on('change', '#GrupoModalidad', function mostrarCamposModalidad() {
     var tipo_evento = $('#GrupoModalidad').val();
-    if (tipo_evento.startsWith('En línea')) {
+    if (tipo_evento.startsWith('2')) {
         $('#Salon').hide();
         $('#Plataforma').show();
         $('#Acceso').show();
         $('#Reunion').show();
         $('#Clave').show();
+        $('#PlataformaAG').hide();
     }
-    if (tipo_evento.startsWith('Presencial')) {
+    if (tipo_evento.startsWith('1')) {
         $('#Salon').show();
         $('#Plataforma').hide();
         $('#Acceso').hide();
         $('#Reunion').hide();
         $('#Clave').hide();
+        $('#PlataformaAG').hide();
+    }
+    if (tipo_evento.startsWith('3')) {
+        $('#Salon').hide();
+        $('#Plataforma').hide();
+        $('#Acceso').hide();
+        $('#Reunion').hide();
+        $('#Clave').hide();
+        $('#PlataformaAG').show();
     }
 });
 
