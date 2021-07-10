@@ -220,9 +220,9 @@ if (isset($_POST['id'])) {
                         echo "*";
                     }?></b></label>
                 <select class="custom-select" id="ID_Moderador" name="ID_Moderador">
-                  <option value="0"><?php if (isset($_POST['CRUD']) == 0) {
+                  <option value="0"><?php if (isset($_POST['CRUD']) && ($_POST['CRUD']) == 0) {
                         echo "Sin Moderador";
-                                    } else {
+                                    } elseif (!isset($_POST['CRUD']) || ($_POST['CRUD']) != 0) {
                                         echo "Seleccione una opción";
                                     }?> </option>
                   <?php foreach ($arr_Moderadores as $Moderador) { ?>
@@ -322,15 +322,18 @@ if (isset($_POST['id'])) {
                                                      } ?></b></label>
                     <select class="custom-select" id="ID_Salon" name="ID_Salon">
                       <option value="0">Seleccione una opción</option>
-                      <?php foreach ($arr_Salones as $Salon) { ?>
+                      <?php if (isset($arr_Salones)) {
+                            foreach ($arr_Salones as $Salon) { ?>
                         <option value="<?php echo $Salon['salo_id_salon'];?>"
-                            <?php if (isset($Grupo)) {
-                                if ($Grupo->salo_id_salon == $Salon['salo_id_salon']) { ?>
-                                <?php }
-                            }?>>
-                            <?php echo "Edificio: ".$Salon['edif_nombre']." Salon: ".$Salon['salo_nombre']; ?>
+                                  <?php if (isset($Grupo)) {
+                                        if ($Grupo->salo_id_salon == $Salon['salo_id_salon']) {
+                                            ?> selected
+                                        <?php }
+                                  }?>>
+                                  <?php echo "Edificio: ".$Salon['edif_nombre']." Salon: ".$Salon['salo_nombre']; ?>
                         </option>
-                      <?php } ?>
+                            <?php }
+                      }?>
                     </select>
                   </div>
                     <!-- div de la modalidad en línea -->
@@ -377,7 +380,7 @@ if (isset($_POST['id'])) {
                                     echo "*";
                                      }?></b></label>
                           <input type="text" class="form-control" id="URL_Acceso" name="URL_Acceso"
-                            value="<?php echo isset($Grupo) ? $Grupo->grup_id_acceso : ""; ?>">
+                            value="<?php echo isset($Grupo) ? $Grupo->grup_url : ""; ?>">
                         </div>
                       </div>
                       <div class="col-lg-12 form-row" style="margin-top: 15px;">
@@ -391,7 +394,7 @@ if (isset($_POST['id'])) {
 /*echo "*";*/
                                         } ?></b></label>
                             <input type="text" class="form-control" id="ID_Reunion" name="ID_Reunion"
-                              value="<?php echo isset($Grupo) ? $Grupo->grup_url : ""; ?>">
+                              value="<?php echo isset($Grupo) ? $Grupo->grup_id_acceso : ""; ?>">
                           </div>
                           <?php if (isset($Grupo) && $Grupo->moap_id_modalidad == 2) { ?>
                           <div id="Clave" class="col-lg-6 form-group">
