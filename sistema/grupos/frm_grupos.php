@@ -220,7 +220,7 @@ if (isset($_POST['id'])) {
                         echo "*";
                     }?></b></label>
                 <select class="custom-select" id="ID_Moderador" name="ID_Moderador">
-                  <option value="0"><?php if (($_POST['CRUD']) == 0) {
+                  <option value="0"><?php if (isset($_POST['CRUD']) == 0) {
                         echo "Sin Moderador";
                                     } else {
                                         echo "Seleccione una opción";
