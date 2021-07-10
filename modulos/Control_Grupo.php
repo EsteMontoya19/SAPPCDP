@@ -262,8 +262,11 @@
     $obj_Curso = new Curso ();
     $sesiones = $obj_Curso->buscarNumSesiones($idCurso);
 
-    echo $sesiones->curs_num_sesiones;
-
+    if (isset($sesiones->curs_num_sesiones)){
+      echo $sesiones->curs_num_sesiones;
+    } else {
+      echo 0;
+    }
   } 
 
   if ($_POST['dml'] == 'inscripcion') {
