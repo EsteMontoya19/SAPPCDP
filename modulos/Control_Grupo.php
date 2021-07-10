@@ -148,8 +148,8 @@
     if ($modalidad == 2){
       $salon = 'NULL';
       $plataforma = $_POST['ID_Plataforma'];
-      $url = $_POST['ID_Reunion'];
-      $acceso = $_POST['URL_Acceso'];
+      $url = $_POST['URL_Acceso'];
+      $acceso = $_POST['ID_Reunion'];
       $clave = $_POST['Clave_Acceso'];
     } else {
       $salon = $_POST['ID_Salon'];
@@ -161,38 +161,6 @@
 
     //Se actualiza el grupo
     $obj_Grupo->actualizarGrupo($grupo, $tipo_grupo, $estado, $cupo, $inicio_insc, $fin_insc, $salon, $plataforma, $url, $acceso, $clave);
-    //Se actualiza el personal del grupo
-    $obj_personal_grupo->actualizarInstructor($grupo, $profesor);
-    //? Se verifica que tiene el moderador porque de eso depende si se actualizará o agregara. 
-    $moderador_anterior = $obj_personal_grupo->buscarModerador($grupo);
-    if ($moderador_anterior->usr_moderador == ''){
-
-        $moderador_anterior->usr_moderador = 'N';
-        $file = fopen("Mensajes.txt", "a");
-        fwrite($file, $moderador_anterior->usr_moderador.PHP_EOL);
-        fwrite($file, $moderador.PHP_EOL);
-        fclose($file);
-    } else {
-      $file = fopen("Mensajes.txt", "a");
-        fwrite($file, $moderador_anterior->usr_moderador.PHP_EOL);
-        fwrite($file, $moderador.PHP_EOL);
-        fclose($file);
-    }
-
-    if ($moderador == "null"){
-      if ($moderador_anterior->usr_moderador != 'N'){
-        //? Esta parte ya funciona
-        $obj_personal_grupo->quitarPersonal($grupo, $moderador_anterior->usr_moderador);
-      }      
-    } else {
-      if ($moderador_anterior->usr_moderador == 'N'){
-        //TODOEsta es la parte que no sabe que onda
-        $obj_personal_grupo->agregarPersonal($grupo, $moderador);
-      } else {
-        //? esta parte ya funciona
-        $obj_personal_grupo->actualizarModerador($grupo, $moderador);
-      }
-    }
     
 
     //Se inicializan los arreglos de id sesiones, fecha, hora de inicio y hora fin.
@@ -211,6 +179,19 @@
       $obj_Sesion -> actualizarSesion($sesion, $grupo, $fecha_sesion, $hora_inicio,$hora_fin);
     }
 
+    //Se actualiza el personal del grupo
+    $obj_personal_grupo->actualizarInstructor($grupo, $profesor);
+    //? Se verifica que tiene el moderador porque de eso depende si se actualizará o agregara.
+    $moderador_anterior = $obj_personal_grupo->buscarModerador($grupo);
+
+    if ($moderador == "null" && isset($moderador_anterior->usr_moderador)){
+        //Asigna 
+        $obj_personal_grupo->quitarPersonal($grupo, $moderador_anterior->usr_moderador);      
+    } elseif (!isset($moderador_anterior->usr_moderador)) {
+        $obj_personal_grupo->agregarPersonal($grupo, $moderador);
+    } else {
+      $obj_personal_grupo->actualizarModerador($grupo, $moderador);
+    }
     echo 1;
   }
   elseif($_POST['dml'] == 'delete')

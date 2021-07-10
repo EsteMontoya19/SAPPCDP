@@ -95,7 +95,7 @@ function validarFormularioGrupo() {
         alertify.error('Debe ingresar la modalidad del grupo');
         return false;
     } else {
-        if ($('#GrupoModalidad').val() == 'En línea') {
+        if ($('#GrupoModalidad').val() == '2') {
             if ($('#ID_Plataforma').val() == 0) {
                 $('html, body').animate({ scrollTop: 200 }, 'slow');
                 document.getElementById('ID_Plataforma').focus();
@@ -140,7 +140,7 @@ function validarFormularioGrupo() {
             }
             */
         } else {
-            if ($('#GrupoModalidad').val() == 'Presencial') {
+            if ($('#GrupoModalidad').val() == '1') {
                 //! Bloque temporal de cursos preseciales por pandemia
                 alertify.error('Por el momento no se pueden registrar grupos para clases prescenciales.');
                 return false;
@@ -477,7 +477,7 @@ $(document).ready(function () {
                     } else if (respuesta == 2){
                         alertify.error('Llegué hasta aquí');
                     } else {
-                        alertify.error('Hubo un problema al actualizar al grupo');
+                        alertify.error('Hubo un problema al actualizar al grupo' +  respuesta);
                     }
                 },
             });
