@@ -8,12 +8,14 @@
   include('../clases/Calendario.php');
   include('../clases/Festivo.php');
   include('../clases/Personal_Grupo.php');
+  include('../clases/Busqueda.php');
 
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
   $obj_Inscripcion = new Inscripcion();
   $obj_Profesor = new Profesor();
   $obj_personal_grupo = new Personal_Grupo();
+  $obj_Busqueda = new Busqueda();
 
   if($_POST['dml'] == 'insert')
   {
@@ -273,14 +275,32 @@
     $persona = $_POST['persona'];
     $grupo = $obj_Grupo->buscarGrupo($_POST['grupo']);
     $profesor = $obj_Profesor->buscarProfesor($persona);
-    $inscrito =  $obj_Inscripcion->buscarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
 
-    //? Prueba para hacer las comparaciones
-    /*$file = fopen('Mensajes.txt', 'a');
-      fwrite($file, $grupo->grup_id_grupo.PHP_EOL);
-      fwrite($file, count($grupos_profesor).PHP_EOL);
-      fwrite($file, $inscrito.PHP_EOL);
-      fclose($file);*/
+    //Esta variable guarda los cursos y cantidad de veces que se ha inscrito a ellos
+    $cursos_inscritos = $obj_Busqueda->selectVecesInscritoCurso($profesor->prof_id_profesor);
+    
+    if(isset($cursos_inscritos)){
+      /* SI se encuentran cursos incritos, para cada uno se compara si es el mismo id que el del curso del nuevo grupo
+       y en caso de ya haberse inscrito 2 veces no se le permite inscribirse de nuevo como fue solicitado*/
+      foreach ($cursos_inscritos as $curso_inscrito){
+        if ($curso_inscrito['curs_id_curso'] == $grupo->curs_id_curso && $curso_inscrito['veces_inscrito'] == 2){
+          exit('6');
+        }
+      }
+    }
+
+    //Guarda la cantidad de grupos que ha inscrito un profesor en un semestre
+    $cantidad_grupos_inscritos = $obj_Busqueda->selectCantidadGruposInscritos($profesor->prof_id_profesor);
+    if(isset($cantidad_grupos_inscritos)){
+      /*Compara si la cantidad de grupos inscritos por el profesor en el semestre ya son 10 y de ser así
+      se ha llegado a los máximos que puede inscribir por semestre por lo que ya no le permite inscribirse
+      */
+      if($cantidad_grupos_inscritos->cantidad_grupos == 5/*10*/){
+        exit('7');
+      }
+    }
+
+    $inscrito =  $obj_Inscripcion->buscarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
 
     if  (isset($inscrito) && $inscrito != '') {
       exit('2');
@@ -394,4 +414,10 @@
       //? Dejar inscribir en este punto que termina el for each en caso de haber pasado todas las valoraciones de todos los grupos en caso de no funcionar el otro
     }
   }
+  //? Prueba para hacer las comparaciones
+    /*$file = fopen('Mensajes.txt', 'a');
+      fwrite($file, $grupo->grup_id_grupo.PHP_EOL);
+      fwrite($file, count($grupos_profesor).PHP_EOL);
+      fwrite($file, $inscrito.PHP_EOL);
+      fclose($file);*/
 ?>

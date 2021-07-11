@@ -96,9 +96,13 @@ function inscribirGrupo(grupo, inscritos, cupo, persona, nombre, tipo, nivel) {
                         } else if (respuesta.endsWith('4')) {
                             alertify.error('Llegó al pedazo del codigo que se queria');
                         } else if (respuesta.endsWith('5')) {
-                            alertify.error('Se ha inscrito adecuadamente');
+                            alertify.success('Se ha inscrito adecuadamente');
+                        } else if (respuesta.endsWith('6')) {
+                            alertify.error('Lo siento ya se ha inscrito 2 veces a este curso, aunque fuese en otro grupo y semestre, y son las máximas permitidas');
+                        } else if (respuesta.endsWith('7')) {
+                            alertify.error('Ya no te puedes inscribir a más grupos este semestre, el máximo son 5');
                         } else {
-                            alertify.error('Ocurrio un problema con la inscripción');
+                            alertify.error('Ocurrio un problema con la inscripción' + respuesta);
                             // alertify.error('Hubo un error al inscribirse al grupo');
                         }
                         /*setTimeout(function () {
