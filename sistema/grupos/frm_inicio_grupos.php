@@ -83,12 +83,12 @@
                       <td><small><?php echo $grupo['pers_nombre'];?> <?php echo $grupo['pers_apellido_paterno'];?> <?php echo $grupo['pers_apellido_materno'];?></small></td>
                       <td>
                         <div class="custom-control custom-switch">                          
-                          <input type="checkbox" class="custom-control-input" id="estatusGrupo<?php echo $activo ?>" <?php if ($grupo['grup_activo'] == 't') { ?> checked <?php } ?> onclick="cambioPublicacion(<?php echo $grupo['grup_id_grupo'] ?> , '<?php echo $grupo['grup_activo']; ?>', '<?php echo $grupo['curs_nombre']; ?>', '<?php echo $grupo['grup_modalidad']; ?>')">
+                          <input type="checkbox" class="custom-control-input" id="estatusGrupo<?php echo $activo ?>" <?php if ($grupo['grup_publicado'] == 't') { ?> checked <?php } ?> onclick="cambioPublicacion(<?php echo $grupo['grup_id_grupo'] ?> , '<?php echo $grupo['grup_publicado']; ?>', '<?php echo $grupo['curs_nombre']; ?>', '<?php echo $grupo['grup_modalidad']; ?>')">
                           <label class="custom-control-label" for="estatusGrupo<?php echo $activo ?>"></label>
                         </div>
                       </td>
                       <td>
-                        <button type="button" class="btn btn-primary btn-table" title="Actualizar" <?php if ($grupo['grup_activo'] == 't') {?> style="display: none;" <?php } ?>style="margin-top: 5px;" onclick="actualizarGrupo(<?php echo $grupo['grup_id_grupo']?>)">
+                        <button type="button" class="btn btn-primary btn-table" title="Actualizar" <?php if ($grupo['grup_publicado'] == 't') {?> style="display: none;" <?php } ?>style="margin-top: 5px;" onclick="actualizarGrupo(<?php echo $grupo['grup_id_grupo']?>)">
                           <i class="fas fa-edit"></i>
                         </button>
                         <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupo(<?php echo $grupo['grup_id_grupo']?>, '<?php echo $grupo['grup_modalidad']?>')">

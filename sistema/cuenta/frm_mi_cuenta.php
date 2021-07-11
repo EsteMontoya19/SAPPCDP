@@ -29,7 +29,6 @@ $persona->pers_telefono = null;
 
 $profesor = null;
 $profesor_coordinacion = null;
-
 $moderador_dia = null;
 
 
@@ -42,9 +41,13 @@ $arr_niveles = $obj_Busqueda->selectNiveles();
 $arr_modalidades = $obj_Busqueda->selectModalidades();
 $arr_coordinaciones = $obj_Busqueda->selectCoordinaciones();
 
-// Validar entidad  //*? Se crean las variables para consultar en caso de no ser un nuevo registro.
-if (isset($_POST['persona']) && isset($_POST['id'])) { 
 
+// fwrite($file, count($grupos_profesor).PHP_EOL);
+// fwrite($file, $inscrito.PHP_EOL);
+
+
+// Validar entidad  //*? Se crean las variables para consultar en caso de no ser un nuevo registro.
+if (isset($_POST['persona']) && isset($_POST['id'])) {
     // Recuperar información de consulta
     $obj_Persona = new Persona();
     $persona = $obj_Persona->buscarPersona($_POST['persona']);
@@ -54,24 +57,25 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
 
     switch ($usuario->rol_id_rol) {
         case 1: //Administrador
-        $obj_Administrador = new Administrador();
-        $administrador = $obj_Administrador->buscarAdministrador($_POST['persona']);
-        break;
+            $obj_Administrador = new Administrador();
+            $administrador = $obj_Administrador->buscarAdministrador($_POST['persona']);
+            break;
 
-        case 2: //Moderador
-        $obj_Moderador = new Moderador();
-        $moderador = $obj_Moderador->buscarModerador($_POST['persona']);
-        $moderador_dia = $obj_Moderador->buscarModeradorDias($moderador->mode_id_moderador);
-        break;
-
-        case 3: //Profesor
-        $obj_Profesor = new Profesor();
-        $profesor = $obj_Profesor->buscarProfesor($_POST['persona']);
-        $profesor_nivel = $obj_Profesor->buscarProfesorNiveles($profesor->prof_id_profesor);
-        $profesor_modalidad = $obj_Profesor->buscarProfesorModalidades($profesor->prof_id_profesor);
-        $profesor_coordinacion = $obj_Profesor->buscarProfesorCoordinaciones($profesor->prof_id_profesor);
-        break;
-        
+        case 3: //Moderador
+            $file = fopen('Mensajes.txt', 'a');
+            $obj_Moderador = new Moderador();
+            $moderador = $obj_Moderador->buscarModerador($_POST['persona']);
+            $moderador_dia = $obj_Moderador->buscarModeradorDias($_POST['persona']);
+            break;
+          // Case 2: Instructor
+        case 2:
+        case 4: //Profesor
+            $obj_Profesor = new Profesor();
+            $profesor = $obj_Profesor->buscarProfesor($_POST['persona']);
+            $profesor_nivel = $obj_Profesor->buscarProfesorNiveles($profesor->prof_id_profesor);
+            $profesor_modalidad = $obj_Profesor->buscarProfesorModalidades($profesor->prof_id_profesor);
+            $profesor_coordinacion = $obj_Profesor->buscarProfesorCoordinaciones($profesor->prof_id_profesor);
+            break;
     }
 }
 ?>
@@ -132,7 +136,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
               </div>
             </div>
           </div>
-          
+
           <!-- Datos de cuenta según rol -->
           <div class="form-group">
             <div class="card lg-12">
@@ -141,64 +145,70 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                 <b>&nbsp;Datos de la cuenta</b>
               </div>
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                <?php if (isset($usuario) && $usuario->rol_id_rol == 1 || $usuario->rol_id_rol == 3) { ?>
+                <?php if (isset($usuario) && $usuario->rol_id_rol == 1 || $usuario->rol_id_rol == 4) { ?>
                   <div id="num_trabajador" class="col-lg-6 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="num_trabajador" class="col-lg-6 form-group" style="display: none;">
-                    <?php } ?>
+                <?php } ?>
                     <label for="num_trabajador" class = "negritas">Número de trabajador:*</label>
-                    <input value="<?php if (isset($administrador)) { 
-                                          echo($administrador-> admi_num_trabajador);
-                                        } else {
-                                          if(isset($profesor)){ 
+                    <input value="<?php if (isset($administrador)) {
+                                          echo($administrador-> prof_num_trabajador);
+                                  } else {
+                                      if (isset($profesor)) {
                                             echo($profesor-> prof_num_trabajador);
-                                          } else {
-                                            echo("");
-                                          }
-                                        } ?>" id="intNum_Trabajador" type="text" class="form-control" name="intNum_Trabajador">
-                  </div> 
-                  <?php if (isset($usuario) && $usuario->rol_id_rol == 1 || $usuario->rol_id_rol == 3) { ?>
+                                      } else {
+                                          echo("");
+                                      }
+                                  } ?>" id="intNum_Trabajador" type="text" class="form-control" name="intNum_Trabajador">
+                  </div>
+                  <?php if (isset($usuario) && $usuario->rol_id_rol == 2 || $usuario->rol_id_rol == 4) { ?>
                     <div id="rfc" class="col-lg-6 form-group">
-                  <?php }  else { ?>
+                  <?php } else { ?>
                     <div id="rfc" class="col-lg-6 form-group" style="display: none;">
                   <?php } ?>
                     <label for="rfc" class = "negritas">RFC: *</label>
-                    <input value="<?php if (isset($administrador)) { 
-                                          echo($administrador-> admi_rfc);
-                                        } else {
-                                          if(isset($profesor)){ 
-                                            echo($profesor-> prof_rfc);
-                                          } else {
-                                            echo("");
-                                          }
-                                        }?>"  type="text"
+                    <input value="<?php if (isset($administrador)) {
+                                          echo($persona-> pers_rfc);
+                                  } else {
+                                      if (isset($profesor)) {
+                                            echo($persona-> pers_rfc);
+                                      } else {
+                                          echo("");
+                                      }
+                                  }?>"  type="text"
                         class="form-control" name="strRFC" id="strRFC">
                     </div>
               </div> <!-- Cierre div de datos row -->
-              
-              <div class="col-lg-12 form-row" style="margin-top: 15px;"> 
-                <?php if (isset($usuario) && $usuario->rol_id_rol == 2) { ?>
+
+              <div class="col-lg-12 form-row" style="margin-top: 15px;">
+                <?php if (isset($usuario) && $usuario->rol_id_rol == 3) { ?>
                   <div id="numCuenta" class="col-lg-6 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="numCuenta" class="col-lg-6 form-group" style="display: none;">
                 <?php } ?>
                     <label for="numCuenta" class = "negritas">Número de cuenta:*</label>
-                      <input value="<?php echo isset($moderador) ? $moderador-> mode_num_cuenta : ""; ?>" type="text" 
+                      <input value="<?php echo isset($moderador) ? $moderador-> seso_num_cuenta : "";
+                      // TODO: Prueba Número de cuenta
+                                          // $file = fopen('Mensajes.txt', 'a');
+                                          // fwrite($file, "Número de cuenta: ".$moderador ['seso_num_cuenta'].PHP_EOL);
+                                          // fclose($file);?>" type="text"
                         class="form-control" name="lbNumCuenta"  id="intNumCuenta" disabled>
-                  </div> 
-                <?php if (isset($usuario) && $usuario->rol_id_rol == 2) { ?>
+                  </div>
+                <?php if (isset($usuario) && $usuario->rol_id_rol == 3) { ?>
                   <div id="diasServicio" class="col-lg-6 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="diasServicio" class="col-lg-6 form-group" style="display: none;">
                 <?php } ?>
                     <label for="diasServicio" class = "negritas">Dias del servicio:*</label><br>
                     <?php foreach ($arr_dias as $dia) { ?>
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="strDiaServicio<?php echo ($dia['dia_id_dia']);?>" value="<?php echo ($dia['dia_id_dia']);?>" name="strDiaServicio<?php echo ($dia['dia_id_dia']);?>" 
-                          <?php if(isset($moderador_dia) && is_array($moderador_dia) || is_object($moderador_dia)) { 
-                            foreach ($moderador_dia as $diaModerador) {
-                              if ($diaModerador['dia_id_dia'] == $dia['dia_id_dia']) { ?> checked<?php } 
-                            }
+                          <?php if (isset($moderador_dia) && is_array($moderador_dia) || is_object($moderador_dia)) {
+                                foreach ($moderador_dia as $diaModerador) {
+                                    if ($diaModerador['dia_id_dia'] == $dia['dia_id_dia']) {
+                                        ?> checked<?php
+                                    }
+                                }
                           }?> disabled>
                         <label class="form-check-label" for="inlineCheckbox1"><?php echo ($dia['dia_nombre']);?></label>
                       </div>
@@ -206,145 +216,136 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
               </div>  <!-- Cierre div de datos row -->
 
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                <?php if (isset($usuario) && $usuario->rol_id_rol == 2) { ?>
+                <?php if (isset($usuario) && $usuario->rol_id_rol == 3) { ?>
                   <div id="fechaInicio" class="col-lg-3 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="fechaInicio" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="fechaInicio" class = "negritas">Fecha de inicio del servicio: *</label>
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_inicio: ""; ?>" type="date" class="form-control" name="strFechaInicio" id="strFechaInicio" disabled>
                   </div>
-                <?php if ($usuario->rol_id_rol == 2) { ?>
+                <?php if ($usuario->rol_id_rol == 3) { ?>
                   <div id="fechaFin" class="col-lg-3 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="fechaFin" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="fechaFin" class = "negritas">Fecha de fin del servicio:*</label>
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_fin: ""; ?>" type="date" class="form-control" name="strFechaFin" id="strFechaFin" disabled>
                   </div>
-                <?php if ($usuario->rol_id_rol == 2) { ?>
+                <?php if ($usuario->rol_id_rol == 3) { ?>
                   <div id="horaInicio" class="col-lg-3 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="horaInicio" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="horaInicio" class = "negritas">Hora de inicio del servicio: *</label>
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_inicio: ""; ?>" type="time" class="form-control" name="strHoraInicio" id="strHoraInicio" disabled>
                   </div>
-                <?php if ($usuario->rol_id_rol == 2) { ?>
+                <?php if ($usuario->rol_id_rol == 3) { ?>
                   <div id="horaFin" class="col-lg-3 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="horaFin" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="horaFin" class = "negritas">Hora de fin del servicio: *</label>
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_fin: ""; ?>" type="time" class="form-control" name="strHoraFin" id="strHoraFin" disabled> 
               </div>  <!-- Cierre div de datos row -->
-              
-              <div class="col-lg-12 form-row" style="margin-top: 15px;">  
-                <?php if ($usuario->rol_id_rol == 3) { ?>
+
+              <div class="col-lg-12 form-row" style="margin-top: 15px;">
+                <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="semblanza" class="col-lg-12 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="semblanza" class="col-lg-12 form-group" style="display: none;">
                 <?php } ?>
                   <label for="strSemblanza" class = "negritas">Semblanza:*</label>
                   <textarea type="text" class="form-control" id="strSemblanza" name="strSemblanza"><?php echo isset($profesor) ? $profesor-> prof_semblanza: ""; ?></textarea>           
                   </div>
               </div> <!-- Cierre div de datos row -->
-              
+
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                <?php if ($usuario->rol_id_rol == 3) { ?>
+                <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="nivelImparticion" class="col-lg-6 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="nivelImparticion" class="col-lg-6 form-group" style="display: none;">
                 <?php } ?>
                   <label for="nivelImparticion" class = "negritas">Nivel de impartición:*</label><br>
                     <?php foreach ($arr_niveles as $nivel) { ?>
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="strNivel<?php echo ($nivel['nive_id_nivel']);?>" name="strNivel<?php echo ($nivel['nive_id_nivel']);?>"
-                                value="<?php echo ($nivel['nive_id_nivel']);?>" 
-                          <?php if(isset($nivel) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) { 
-                            foreach ($profesor_nivel as $nivelProfesor) 
-                            {
-                              if ($nivelProfesor['nive_id_nivel'] == $nivel['nive_id_nivel']) { ?> 
-                                checked 
-                              <?php } 
-                            }
+                                value="<?php echo ($nivel['nive_id_nivel']);?>"
+                          <?php if (isset($nivel) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) {
+                                foreach ($profesor_nivel as $nivelProfesor) {
+                                    if ($nivelProfesor['nive_id_nivel'] == $nivel['nive_id_nivel']) { ?>
+                                checked
+                                    <?php }
+                                }
                           }?>>
                         <label class="form-check-label" for="inlineCheckbox1"><?php echo ($nivel['nive_nombre']);?></label>
                       </div>
                     <?php } ?>
-                  </div> 
-              <?php if ($usuario->rol_id_rol == 3) { ?>
+                  </div>
+              <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="modalidadImparticion" class="col-lg-6 form-group">
-                <?php }  else { ?>
+              <?php } else { ?>
                   <div id="modalidadImparticion" class="col-lg-6 form-group" style="display: none;">
-                <?php } ?>
+              <?php } ?>
                   <label for="modalidadImparticion" class = "negritas">Modalidad en la que imparte clases : *</label><br>
                   <?php foreach ($arr_modalidades as $modalidad) { ?>
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="strModalidad<?php echo ($modalidad['moda_id_modalidad']);?>" name="strModalidad<?php echo ($modalidad['moda_id_modalidad']);?>"
-                                value="<?php echo ($modalidad['moda_id_modalidad']);?>" 
-                          <?php if(isset($modalidad) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) { 
-                            foreach ($profesor_modalidad as $modalidadProfesor) {
-                              if ($modalidadProfesor['moda_id_modalidad'] == $modalidad['moda_id_modalidad']) { ?> 
-                                checked 
-                              <?php } 
-                            }
+                                value="<?php echo ($modalidad['moda_id_modalidad']);?>"
+                          <?php if (isset($modalidad) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) {
+                                foreach ($profesor_modalidad as $modalidadProfesor) {
+                                    if ($modalidadProfesor['moda_id_modalidad'] == $modalidad['moda_id_modalidad']) { ?>
+                                checked
+                                    <?php }
+                                }
                           }?>>
                         <label class="form-check-label" for="inlineCheckbox1"><?php echo ($modalidad['moda_nombre']);?></label>
                       </div>
-                  <?php } ?>              
+                  <?php } ?>
                   </div>  <!-- Fin del campo-->
               </div> <!-- Fin del row-->
 
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                <?php if ($usuario->rol_id_rol == 3) { ?>
+                <?php if ($usuario->rol_id_rol == 2) { ?>
                   <div id="coordinaciones" class="col-lg-12 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="coordinaciones" class="col-lg-12 form-group" style="display: none;">
-                <?php } ?>    
+                <?php } ?>
                 <label for="coordinaciones" class = "negritas">Coordinaciones a las que pertenece: *</label><br>
                 <table> <?php //*? Esto lo creo para hacer columnas con los checkbox?>
                   <tr>
-                    <td>               
-                      <?php foreach ($arr_coordinaciones as $coordinacion) { ?> 
+                    <td>
+                      <?php foreach ($arr_coordinaciones as $coordinacion) { ?>
                             <div class="form-check">
                               <input class="form-check-input" type="checkbox" id="strCoordinacion<?php echo ($coordinacion['coor_id_coordinacion']);?>" name="strCoordinacion<?php echo ($coordinacion['coor_id_coordinacion']);?>"
-                                      value="<?php echo ($coordinacion['coor_id_coordinacion']);?>" 
+                                      value="<?php echo ($coordinacion['coor_id_coordinacion']);?>"
                                 <?php //? Lo de is_array e is_object es para eliminar warnings
-                                if(isset($coordinacion) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) { 
-                                  foreach ($profesor_coordinacion as $coordinacionProfesor) {
-                                    if ($coordinacionProfesor['coor_id_coordinacion'] == $coordinacion['coor_id_coordinacion']) { ?> 
-                                      checked 
-                                    <?php } 
-                                  }
+                                if (isset($coordinacion) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) {
+                                    foreach ($profesor_coordinacion as $coordinacionProfesor) {
+                                        if ($coordinacionProfesor['coor_id_coordinacion'] == $coordinacion['coor_id_coordinacion']) { ?> 
+                                      checked
+                                        <?php }
+                                    }
                                 }?>>
                               <label class="form-check-label" for="inlineCheckbox1"><?php echo ($coordinacion['coor_nombre']);?></label> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                                 <?php //*? Esto lo creo para hacer dos columnas con las coordinaciones si se borra solo aparecen en una fila
                                   $tamano = sizeof($arr_coordinaciones);
                                   static $mostradas = 0;
-                                  if ($mostradas == 7 ){
-                                    echo("</td><td>"); 
+                                if ($mostradas == 7) {
+                                    echo("</td><td>");
                                     $mostradas = 0;
-                                  } else {
+                                } else {
                                     $mostradas++;
-                                  }
-                                  
-                                ?>
+                                }?>
                             </div>
                       <?php } ?>
                     </td>
-                  </tr>         
+                  </tr>
                 </table>
               </div>  <!-- Fin del campo-->
             </div>  <!-- Fin del card-->
-          </div> <!-- Este es cierra todo el grupo de Datos de cuenata -->                                                          
+          </div> <!-- Este es cierra todo el grupo de Datos de cuenta -->
 
-                                                            
-                                                              
-                                                              
-
-
-                                                              
 
         <!-- Necesarios para actualizar -->
         <input type="hidden" name="dml" value="update">

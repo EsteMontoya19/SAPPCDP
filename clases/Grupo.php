@@ -71,7 +71,7 @@
         {
             $SQL_Bus_Curso = 
             "   SELECT g.grup_id_grupo, p.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
-                    g. curs_id_curso, curs_nombre, curs_tipo, curs_nivel,  curs_num_sesiones,
+                    g.curs_id_curso, curs_nombre, curs_tipo, curs_nivel,  curs_num_sesiones,
                     g.plat_id_plataforma, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo,  
                     grup_publicado, moap_id_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, esta_id_estado,
                     (SELECT pers_apellido_paterno || ' ' || pers_apellido_materno || ' ' || pers_nombre
@@ -208,6 +208,7 @@
                 AND G.CURS_ID_CURSO = C.CURS_ID_CURSO
                 AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO 
                 AND grup_publicado = true
+                AND insc_activo = true
             ORDER BY I.GRUP_ID_GRUPO ASC;
             ";
             
@@ -218,7 +219,7 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }
-
+        
         //Busca los datos de un grupo autogestivo dado el id del grupo
         //TODO Verificado en la BD 07/07/2021
         function buscarDatosAutogestivo($id)
@@ -326,7 +327,7 @@
             "
                 SELECT g.grup_id_grupo, curs_id_curso, salo_id_salon, plat_id_plataforma, cale_id_calendario, grup_url, grup_id_acceso, grup_clave_acceso,  
                     grup_cupo, esta_id_estado, grup_publicado, moap_id_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, grup_num_inscritos,
-                    p.usua_id_usuario usr_profesor, (SELECT p.usua_id_usuario
+                    p.usua_id_usuario usr_instructor, (SELECT p.usua_id_usuario
                         FROM personal_grupo p, usuario u
                         WHERE grup_id_grupo = $id AND rol_id_rol = 3 AND p.usua_id_usuario = u.usua_id_usuario) as usr_moderador
                 FROM Grupo g, personal_grupo p, usuario u

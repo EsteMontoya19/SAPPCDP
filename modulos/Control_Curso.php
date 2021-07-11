@@ -72,7 +72,7 @@
     $cursoActual = $obj_Curso->buscarCurso($_POST['idCurso']);
 
     //Si NO se encontró un curso con el mismo nombre, tipo y nivel O si es el mismo curso 
-    if(!isset($cursoExistente->curs_nombre) || $cursoActual->curs_id_cursos == $cursoExistente->curs_id_cursos) { 
+    if(!isset($cursoExistente->curs_nombre) || $cursoActual->curs_id_curso == $cursoExistente->curs_id_curso) { 
       //Si se actualizó el temario
       if (isset($_FILES['temario']['name']) && $_FILES['temario']['name'] != ''){ 
         $file = is_uploaded_file($_FILES['temario']['tmp_name']);

@@ -152,7 +152,7 @@
         {
             $SQL_Bus_Cursos =
             "   
-                SELECT CURS_ID_CURSOS, CURS_NOMBRE, CURS_NUM_SESIONES, CURS_TIPO, CURS_NIVEL
+                SELECT CURS_ID_CURSO, CURS_NOMBRE, CURS_NUM_SESIONES, CURS_TIPO, CURS_NIVEL
                 FROM CURSO
                 WHERE CURS_ACTIVO = TRUE
                 ORDER BY CURS_NOMBRE ASC;
@@ -317,6 +317,47 @@
             $transaccion_1 = new Transaccion($bd->conexion);
             $transaccion_1->enviarQuery($SQL_Bus_Modalidad_Aprendizaje);
             $obj_Busqueda = $transaccion_1->traerObjeto(0);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
+        }
+
+        //Consulta los cursos que ha tomado un profesor y las veces que lo ha hecho
+        function selectVecesInscritoCurso($profesor)
+        {
+            $SQL_Bus_Veces_Inscrito =
+            "   
+                SELECT curs_id_curso, COUNT(*) as veces_inscrito
+                FROM Inscripcion i, grupo g
+                WHERE insc_activo = true AND prof_id_profesor = $profesor
+                    AND i.grup_id_grupo = g.grup_id_grupo
+                GROUP BY curs_id_curso;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Veces_Inscrito);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+        }
+
+        //Consulta la cantidad de grupos que ha inscrito un profesor en un semestre (calendario)
+        function selectCantidadGruposInscritos($profesor)
+        {
+            $SQL_Bus_Cant_Grupos =
+            "   
+                SELECT prof_id_profesor, COUNT(*) as cantidad_grupos
+                FROM inscripcion i, grupo g
+                WHERE insc_activo = true AND prof_id_profesor = $profesor
+                    AND i.grup_id_grupo = g.grup_id_grupo
+                    AND cale_id_calendario = (SELECT cale_id_calendario FROM Calendario WHERE cale_activo = true)
+                GROUP BY prof_id_profesor;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Cant_Grupos);
             $bd->cerrarBD();
             return ($transaccion_1->traerObjeto(0));
         }

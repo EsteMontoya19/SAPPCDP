@@ -118,15 +118,6 @@
     $pdf->SetFont("Times","", 12);
     $pdf->Cell(0,5,utf8_decode($grupo->pers_apellido_materno." ".$grupo->pers_apellido_paterno." ".$grupo->pers_nombre),1,1, "L", false);
 
-    $pdf->SetFont("Times","B", 12);
-    $pdf->Cell(28,5,utf8_decode("Moderador: "),1,0, "L", false);
-    $pdf->SetFont("Times","", 12);
-    if(isset($grupo->moderador)) {
-        $pdf->Cell(0,5,utf8_decode( $grupo->moderador),1,1, "L", false);
-    } else {
-        $pdf->Cell(0,5,utf8_decode("Sin moderador"),1,1, "L", false);
-    }
-
 
     
     
