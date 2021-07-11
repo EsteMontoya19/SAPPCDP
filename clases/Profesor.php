@@ -423,7 +423,7 @@
 				$SQL_Bus_Profesor = 
 				"SELECT DISTINCT prof_id_profesor, P.pers_id_persona, prof_num_trabajador, prof_semblanza, pers_rfc
 				FROM Profesor P, Persona PE, Usuario U
-				WHERE P.pers_id_persona = PE.pers_id_persona AND U.pers_id_persona = P.pers_id_persona AND P.prof_num_trabajador = '123452' 
+				WHERE P.pers_id_persona = PE.pers_id_persona AND U.pers_id_persona = P.pers_id_persona AND P.prof_num_trabajador = '$numTrabajador' 
 				";
 
 			}

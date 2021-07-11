@@ -305,7 +305,11 @@
           </div>
 
           <!-- Datos de cuenta según rol -->
-          <div id = "datosCuenta" class="form-group" style="display: none;">
+          <div id = "datosCuenta" class="form-group"                    
+           <?php if (isset($usuario) && $usuario->rol_id_rol == ADMINISTRADOR) {
+                      echo ('style="display: none;"');
+                    }
+            ?> >
             <div class="card lg-12">
               <div class="card-header negritas">
                 <i class="fas fa-id-badge fa-lg"></i>
@@ -382,7 +386,7 @@
               
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <?php //? Si es Profesor  o Instructor ?>
-                <?php if (isset($usuario) && ($usuario->rol_id_rol == PROFESOR || $usuario->rol_id_rol == INSTRUCTOR)) { ?>
+                <?php if (isset($usuario) && ($usuario->rol_id_rol == PROFESOR )) { ?>
                   <div id="nivelImparticion" class="col-lg-6 form-group">
                 <?php }  else { ?>
                   <div id="nivelImparticion" class="col-lg-6 form-group" style="display: none;">
@@ -405,7 +409,7 @@
                     <?php } ?>
                   </div> 
                 <?php //? Si es Profesor  o Instructor ?>
-                <?php if (isset($usuario) && ($usuario->rol_id_rol == PROFESOR || $usuario->rol_id_rol == INSTRUCTOR)) { ?>
+                <?php if (isset($usuario) && ($usuario->rol_id_rol == PROFESOR)) { ?>
                   <div id="modalidadImparticion" class="col-lg-6 form-group">
                 <?php }  else { ?>
                   <div id="modalidadImparticion" class="col-lg-6 form-group" style="display: none;">
@@ -430,7 +434,7 @@
 
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <?php //? Si es Profesor o Instructor ?>
-                <?php if (isset($usuario) && ($usuario->rol_id_rol == PROFESOR || $usuario->rol_id_rol == INSTRUCTOR)) { ?>
+                <?php if (isset($usuario) && ($usuario->rol_id_rol == PROFESOR)) { ?>
                   <div id="coordinaciones" class="col-lg-12 form-group">
                 <?php }  else { ?>
                   <div id="coordinaciones" class="col-lg-12 form-group" style="display: none;">

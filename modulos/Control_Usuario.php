@@ -180,10 +180,13 @@
         }
 
         //? Se verifica que no exista un registro de persona previo, de ser así no se crea uno nuevo
-        $persona_exitente = $obj_Persona->buscarPersonaRFC($_POST['rfc']);
-        if (isset($persona_exitente)) {
-          $persona = $persona_exitente->pers_id_persona;
+        $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador'], null);
+        if (isset($profesor_existente)) {
+          $persona = $profesor_existente->pers_id_persona;
         } else {
+          $file = fopen("Mensaje.txt", "a");
+          fwrite($file, $profesor_existente->pers_rfc.PHP_EOL);
+          fclose($file);
           $obj_Persona->agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc);
           $persona = $obj_Persona->buscarUltimo();
         }

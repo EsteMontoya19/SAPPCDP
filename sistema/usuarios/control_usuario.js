@@ -337,11 +337,12 @@ function buscarPersona () {
                 
                 alertify.alert(titulo, mensaje, function(){ alertify.success('Datos cargados'); });
                 
-                document.getElementById("strUsuarioNombre").value = respuesta.nombre;
-                document.getElementById("strUsuarioPrimerApe").value = respuesta.apellidoPaterno;
-                document.getElementById("strUsuarioSegundoApe").value = respuesta.apellidoMaterno;
-                document.getElementById("strUsuarioCorreo").value = respuesta.correo;
-                document.getElementById("strUsuarioTelefono").value = respuesta.telefono;
+                $('#strUsuarioNombre').val(respuesta.nombre);
+                $('#strUsuarioPrimerApe').val(respuesta.apellidoPaterno);
+                $('#strUsuarioSegundoApe').val(respuesta.apellidoMaterno);
+                $('#strUsuarioCorreo').val(respuesta.correo);
+                $('#strUsuarioTelefono').val(respuesta.telefono);
+
 
                 //$( "#strRFC" ).prop( "disabled", true );
                 $( "#strUsuarioNombre" ).prop( "disabled", true );
@@ -380,7 +381,6 @@ function buscarProfesor () {
             numTrabajador: numTrabajador,
             dml: dml,
         };
-        alert("Si entra");
         $.ajax({
             data: datos,
             type: 'POST',
@@ -394,15 +394,16 @@ function buscarProfesor () {
                     
                     alertify.alert(titulo, mensaje, function(){ alertify.success('Datos cargados'); });
                     
-                    document.getElementById("semblanza").value = respuesta.semblanza;
-                    document.getElementById("strRFC").value = respuesta.rfc;
+                    $('#semblanza').val(respuesta.semblanza);
+                    $('#strRFC').val(respuesta.rfc);
+
                     $('#nivelImparticion').hide();
                     $('#modalidadImparticion').hide();
                     $('#coordinaciones').hide();
                     $( "#semblanza" ).prop( "disabled", true );
-
-
-                   document.getElementById("strRFC").focus();
+                    
+                    $("#strRFC").focus();
+                    $( "#strRFC" ).prop( "disabled", true );
                 }  else if (respuesta.estado == "Nulo") {
 
                     alertify.success('No se encontró otro profesor con ese Número de trabajador.');
@@ -894,46 +895,49 @@ function validarFormularioUsuario() {
                 return false;
             }
         }
-        var algunSeleccionado = 0;
-        var iCont = 1;
-        while (iCont <= 2) {
-            var isChecked = document.getElementById('strNivel' + iCont).checked;
-            if (isChecked) {
-                algunSeleccionado++;
-            }
-            iCont++;
-        }
-        if (algunSeleccionado == 0) {
-            alertify.error('Debe seleccionar al menos un nivel en el que se imparte clases.');
-            return false;
-        }
 
-        var algunSeleccionado = 0;
-        var iCont = 1;
-        while (iCont <= 3) {
-            var isChecked = document.getElementById('strModalidad' + iCont).checked;
-            if (isChecked) {
-                algunSeleccionado++;
+        if ($('#intUsuarioRol').val() == 4) {
+            var algunSeleccionado = 0;
+            var iCont = 1;
+            while (iCont <= 2) {
+                var isChecked = document.getElementById('strNivel' + iCont).checked;
+                if (isChecked) {
+                    algunSeleccionado++;
+                }
+                iCont++;
             }
-            iCont++;
-        }
-        if (algunSeleccionado == 0) {
-            alertify.error('Debe seleccionar al menos una modalidad en la que imparta clases.');
-            return false;
-        }
+            if (algunSeleccionado == 0) {
+                alertify.error('Debe seleccionar al menos un nivel en el que se imparte clases.');
+                return false;
+            }
 
-        var algunSeleccionado = 0;
-        var iCont = 1;
-        while (iCont <= $('#numCoordinaciones').val()) {
-            var isChecked = document.getElementById('strCoordinacion' + iCont).checked;
-            if (isChecked) {
-                algunSeleccionado++;
+            var algunSeleccionado = 0;
+            var iCont = 1;
+            while (iCont <= 3) {
+                var isChecked = document.getElementById('strModalidad' + iCont).checked;
+                if (isChecked) {
+                    algunSeleccionado++;
+                }
+                iCont++;
             }
-            iCont++;
-        }
-        if (algunSeleccionado == 0) {
-            alertify.error('Debe seleccionar al menos una coordinación en la que participe.');
-            return false;
+            if (algunSeleccionado == 0) {
+                alertify.error('Debe seleccionar al menos una modalidad en la que imparta clases.');
+                return false;
+            }
+
+            var algunSeleccionado = 0;
+            var iCont = 1;
+            while (iCont <= $('#numCoordinaciones').val()) {
+                var isChecked = document.getElementById('strCoordinacion' + iCont).checked;
+                if (isChecked) {
+                    algunSeleccionado++;
+                }
+                iCont++;
+            }
+            if (algunSeleccionado == 0) {
+                alertify.error('Debe seleccionar al menos una coordinación en la que participe.');
+                return false;
+            }
         }
     }
     return true;
@@ -1019,6 +1023,9 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
         //?En caso de que si sea Instructor
         if (tipo_evento.startsWith(INSTRUCTOR)) {
             $('#semblanza').show();
+            $('#nivelImparticion').hide();
+            $('#modalidadImparticion').hide();
+            $('#coordinaciones').hide();
         //?En caso de que sea un profesor su usuario y contraseña se auto asignans
         } else {
             $('#semblanza').hide();
