@@ -33,19 +33,20 @@
     if($_POST['dml'] == 'insert')
     {
       $rol = (integer) $_POST['intUsuarioRol'];
+
+      //? Se verifica que no tenga una cuenta en ese rol
       $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador'], $rol);
       if(isset($profesor_existente->prof_num_trabajador)) {
         exit("3");
       }
 
+      //? Este switch vrifica cuentas existentes y asigna usuarios y contraseñas, asi como numero de cuentas de existir
       switch($rol) {
         //? Para los demas usuarios su nombre de usuario y contraseña son los que ellos decidan
         case ADMINISTRADOR:
         case INSTRUCTOR:
           $nombreUsuario = $_POST['strNombreUsuario'];
-          $contrasenia = $_POST['strContrasenia01'];
-
-          
+          $contrasenia = $_POST['strContrasenia01'];      
         break;
 
         case MODERADOR:
@@ -69,11 +70,6 @@
         break;
           
         case PROFESOR:
-          $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador'], $rol);
-          if(isset($profesor_existente->prof_num_trabajador)) {
-            exit("3");
-          }
-
           //? Si existe algo en contraseña y en usuaruio significa que no venimos de mi cuenta
           if (isset($_POST['strContrasenia01']) && isset($_POST['strNombreUsuario']) ) {
             //? Se hace para respetar el cambio de usuario y contra si se hace desde usuario y no del Autoregistro
@@ -93,39 +89,51 @@
         break;
       }
       
+      //? Se verifica que no se tenga un usuario con ese numero de usuario
       $usuario_existente = $obj_Usuario->buscarNombreUsuario($_POST['strNombreUsuario']);
       if(!isset($usuario_existente->usua_num_usuario)) {
         
         //?Datos de persona
+        $rfc = $_POST['strRFC'];
         $nombre = $_POST['strUsuarioNombre'];
         $apellidoPaterno = $_POST['strUsuarioPrimerApe'];
         $apellidoMaterno = $_POST['strUsuarioSegundoApe'];
         $correo = $_POST['strUsuarioCorreo'];
         $telefono = $_POST['strUsuarioTelefono'];
-        $rfc = $_POST['strRFC'];
+        //? El admin los crea en activo, debo poner en profesor el estado como false
+        $estado = isset($_POST['bEstado']) ? $_POST['bEstado'] : "TRUE"; 
         
+
         //? Datos de usuario
         //TODO: Preguntar por solictud de usuario se quita pregunta de seguridad
         $pregunta = null;
         $recuperacion = null;
         // $pregunta = (integer) $_POST['UsuarioPregunta'];
         // $recuperacion = $_POST['UsuarioRespuesta'];
-
-        $estado = isset($_POST['bEstado']) ? $_POST['bEstado'] : "TRUE"; //? El admin los crea en activo, debo poner en profesor el estado como false
         
-        //?Datos según rol
+        //? Este switch asigna los datos según cada uno de los roles
         switch($rol){
           case ADMINISTRADOR:
             $num_trabajador = $_POST['intNum_Trabajador'];
           break;  
 
-          //TODO: Hcer validaciones para Instructor
+          
+          case INSTRUCTOR:
+            $num_trabajador = $_POST['intNum_Trabajador'];
+            $semblanza = $_POST['strSemblanza'];
+
+          break; 
+
           
           case MODERADOR: 
             //? Si no hay nada en numero de cuenta es que en la validación de la linea 50 si obtuvimos un Profesor
             if(!isset($num_cuenta)) {
               $num_trabajador = $_POST['intNum_Trabajador'];
             }
+            $fechaInicio = $_POST['strFechaInicio'];
+            $fechaFin = $_POST['strFechaFin']; 
+            $horaInicio = $_POST['strHoraInicio']; 
+            $horaFin = $_POST['strHoraFin'];
 
             //*? Creado para guardar los inputs. Solo guarda los que tienen algo
             $diasModerador=array();
@@ -138,16 +146,11 @@
               $bandera++;
             }
 
-            $fechaInicio = $_POST['strFechaInicio'];
-            $fechaFin = $_POST['strFechaFin']; 
-            $horaInicio = $_POST['strHoraInicio']; 
-            $horaFin = $_POST['strHoraFin'];
           break; 
 
           case PROFESOR:
-          case INSTRUCTOR:
+            $semblanza = null;
             $num_trabajador = $_POST['intNum_Trabajador'];
-            isset($_POST['strSemblanza']) ? $semblanza = $_POST['strSemblanza'] : $semblanza = null;
             
             //*? Creado para guardar los inputs. Solo guarda los que tienen algo
             $nivelesProfesor=array();
@@ -176,26 +179,29 @@
               } 
               $bandera++;
             }
-          break; 
+
+          break;
         }
 
-        //? Se verifica que no exista un registro de persona previo, de ser así no se crea uno nuevo
+        //? Se buscan datos pre-existentes de profesor y persona (Se hace con Profesor por el autollenado)
         $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador'], null);
+        
         if (isset($profesor_existente)) {
           $persona = $profesor_existente->pers_id_persona;
         } else {
-          $file = fopen("Mensaje.txt", "a");
-          fwrite($file, $profesor_existente->pers_rfc.PHP_EOL);
-          fclose($file);
           $obj_Persona->agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc);
           $persona = $obj_Persona->buscarUltimo();
         }
         
         $obj_Usuario->agregarUsuario($persona, $rol, $pregunta, $nombreUsuario, $contrasenia, $estado);
 
+        //? Crear el Profesor
         switch($rol){
           case ADMINISTRADOR: //Administrador
-            $obj_Profesor->agregarProfesor($persona, $num_trabajador, null);
+            //? Si ya hay un profesor existente, ya no se registra nada
+            if(!isset($profesor_existente)) {
+              $obj_Profesor->agregarProfesor($persona, $num_trabajador, null);
+            } 
           break;
 
           case MODERADOR: //Moderador
@@ -204,18 +210,32 @@
               $obj_Moderador->agregarServidor($persona, $num_cuenta);
             //? Se debde registrar un Profesor
             } else {
-              $obj_Profesor->agregarProfesor($persona, $num_trabajador, null);
+              //? Si ya hay un profesor existente, ya no se registra nada
+              if(!isset($profesor_existente)) {
+                $obj_Profesor->agregarProfesor($persona, $num_trabajador, null);
+              }
             }
 
-            $obj_Moderador->agregarModerador($obj_Usuario->buscarUsuarioPersona($persona)->usua_id_usuario, $fechaInicio, $fechaFin, $horaInicio, $horaFin );
+            $obj_Moderador->agregarModerador($obj_Usuario->buscarUsuarioPersona($persona, $rol)->usua_id_usuario, $fechaInicio, $fechaFin, $horaInicio, $horaFin );
             foreach($diasModerador as $id){
               $obj_Moderador->agregarDiasModerador($persona, $id);
             }
           break;
 
-          case PROFESOR: //Profesor
-          case INSTRUCTOR: //Profesor
-            $obj_Profesor->agregarProfesor($persona, $num_trabajador, $semblanza);
+          case INSTRUCTOR: 
+            //? Si ya hay un profesor existente, ya no se registra nada
+            if(!isset($profesor_existente)) {
+              $obj_Profesor->agregarProfesor($persona, $num_trabajador, $semblanza);
+            } else {
+              //? Si ya existe un profesor existente se actualiza sus datos por si no tiene semblanza
+              $obj_Profesor->actualizarProfesor($persona, $num_trabajador, $semblanza);
+            }
+          break;
+
+          case PROFESOR: 
+            if(!isset($profesor_existente)) {
+              $obj_Profesor->agregarProfesor($persona, $num_trabajador, null);
+            } 
             
             foreach($nivelesProfesor as $id){
               $obj_Profesor->agregarNivelesProfesor($persona, $id);
@@ -230,9 +250,9 @@
         }
         
 
-        echo 1;
+        exit("1");
       } else {
-        echo 2;
+        exit("2");
       }
         
     }
@@ -303,6 +323,11 @@
 
       if($rol == MODERADOR) {
         //*? Creado para guardar los inputs. Solo guarda los que tienen algo
+        $fechaInicio = $_POST['strFechaInicio'];
+        $fechaFin = $_POST['strFechaFin']; 
+        $horaInicio = $_POST['strHoraInicio']; 
+        $horaFin = $_POST['strHoraFin'];
+
         $diasModerador=array();
         foreach($arr_dias as $dia){
           static $bandera =  1; 
@@ -311,10 +336,6 @@
           } 
           $bandera++;
         }
-        $fechaInicio = $_POST['strFechaInicio'];
-        $fechaFin = $_POST['strFechaFin']; 
-        $horaInicio = $_POST['strHoraInicio']; 
-        $horaFin = $_POST['strHoraFin'];
         //? Si existe un registro como Servidor Social, llamo al id para usar el isset
         if (isset($obj_Moderador->buscarServidorSocial($_POST['idPersona'])->seso_id_servidor)) {
           $num_cuenta = $_POST['intNumCuenta'];
@@ -355,15 +376,14 @@
 
           $obj_Moderador->actualizarModerador($idPersona, $fechaInicio, $fechaFin, $horaInicio, $horaFin);
           $obj_Moderador->eliminarDiasModerador($idPersona);
+
           foreach($diasModerador as $id){
             $obj_Moderador->agregarDiasModerador($idPersona, $id);
           } 
-          exit("1");
         break; 
 
         case PROFESOR:
-        case INSTRUCTOR:
-          $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, $semblanza);
+          $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, null);
           
           $obj_Profesor->eliminarNivelesProfesor($idPersona);
           foreach($nivelesProfesor as $id){
@@ -377,6 +397,10 @@
           foreach($coordinacionesProfesor as $id){
             $obj_Profesor->agregarCoordinacionesProfesor($idPersona, $id);
           }
+        break;
+
+        case INSTRUCTOR:
+          $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, $semblanza);
         break;
       }
 
@@ -464,59 +488,14 @@
           $resultado ['numTrabajador'] = $profesor->prof_num_trabajador;
           $resultado ['semblanza'] = $profesor->prof_semblanza;
           $resultado ['rfc'] = $profesor->pers_rfc;
-  
-          //? Arreglos de los catalogos de profesor, se ocuparan para saber la cantidad de registros que habrá
-          $resultado["niveles"] = count($arr_niveles);
-          $resultado["modalidades"] = count($arr_modalidades);
-          $resultado["coordinaciones"] = count($arr_coordinaciones);  
-  
-          //?  Buscamos los arreglos del profesor
-          $niveles = $obj_Profesor->buscarProfesorNiveles($profesor->prof_id_profesor);
-          $modalidades = $obj_Profesor->buscarProfesorModalidades($profesor->prof_id_profesor);
-          $coordinaciones = $obj_Profesor->buscarProfesorCoordinaciones($profesor->prof_id_profesor);
-  
-          /* //? Puede ser que no tenga registro de profesor, entonces validamos si hay algun registro en las variables
-          if (count($niveles) > 0 && count($modalidades) > 0 && count($coordinaciones) > 0) {
-            
-            //? Creamos el arreglo con los niveles en 1 para los que tiene el profesor y 0 para los que no estan
-            for ($iCont = 1; $iCont <= $resultado["niveles"] ; $iCont++) {
-              foreach ($niveles as $nivel) {
-                if($iCont == $nivel["nive_id_nivel"]) {
-                  $resultado ['nivel'.$iCont] = 1;
+          $resultado ['estado'] = "Encontrado";
 
-                } else {
-                  $resultado ['nivel'.$iCont] = 0;
-                }
-              }
-            }
-
-            //? Creamos el arreglo con las modalidades en 1 para los que tiene el profesor y 0 para los que no estan
-            for ($iCont = 1; $iCont <= $resultado["modalidades"] ; $iCont++) {
-              foreach ($modalidades as $modalidad) {
-                if($iCont == $modalidad["moda_id_modalidad"]) {
-                  $resultado ['modalidad'.$iCont] = 1;
-
-                } else {
-                  $resultado ['modalidad'.$iCont] = 0;
-                }      
-              }
-            }
-
-            //? Creamos el arreglo con las modalidades en 1 para los que tiene el profesor y 0 para los que no estan
-            for ($iCont = 1; $iCont <= $resultado["coordinaciones"] ; $iCont++) {
-              foreach ($coordinaciones as $coordinacion) {
-                if($iCont == $coordinacion["coor_id_coordinacion"]) {
-                  $resultado ['coordinacion'.$iCont] = 1;
-
-                } else {
-                  $resultado ['coordinacion'.$iCont] = 0;
-                }
-              }
-            }   
-          } else {
-            //? En caso de que no tenga registro como profesor, cuyo caso solo tendría registro de moderador
-            $resultado ['registroProfesor'] = "Nulo";
-          }  */           
+          $resultado ['nombre'] = $profesor->pers_nombre;
+          $resultado ['apellidoPaterno'] = $profesor->pers_apellido_paterno;
+          $resultado ['apellidoMaterno'] = $profesor->pers_apellido_materno;
+          $resultado ['correo'] = $profesor->pers_correo;
+          $resultado ['telefono'] = $profesor->pers_telefono;
+           
         } else {
           $resultado ['estado'] = "Nulo";
         } 

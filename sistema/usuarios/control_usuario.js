@@ -316,61 +316,8 @@ function AsignarContrasena() {
     document.getElementById("strContrasenia02").value = document.getElementById("strRFC").value;
 }
 
-//? Rellena y bloquea los campos de persona cuando se ingresa un RFC que ya este registrado previamente
-function buscarPersona () {
-    var dml = 'llenadoPersona';
-    var rfc = document.getElementById("strRFC").value;
-    var datos = {
-        rfc: rfc,
-        dml: dml,
-    };
-    $.ajax({
-        data: datos,
-        type: 'POST',
-        dataType: "json",
-        url: '../modulos/Control_Usuario.php',
-        success: function (respuesta) {
-            if (respuesta.estado == "Encontrado") {
 
-                var titulo = "Se encontró una persona registrada en el sistema con el mismo RFC.";
-                var mensaje = "Los campos de la persona se bloquearán con los datos encontrados. \n Para actualizar estos datos hagalo desde la opción de actualizar.";
-                
-                alertify.alert(titulo, mensaje, function(){ alertify.success('Datos cargados'); });
-                
-                $('#strUsuarioNombre').val(respuesta.nombre);
-                $('#strUsuarioPrimerApe').val(respuesta.apellidoPaterno);
-                $('#strUsuarioSegundoApe').val(respuesta.apellidoMaterno);
-                $('#strUsuarioCorreo').val(respuesta.correo);
-                $('#strUsuarioTelefono').val(respuesta.telefono);
-
-
-                //$( "#strRFC" ).prop( "disabled", true );
-                $( "#strUsuarioNombre" ).prop( "disabled", true );
-                $( "#strUsuarioPrimerApe" ).prop( "disabled", true );
-                $( "#strUsuarioSegundoApe" ).prop( "disabled", true );
-                $( "#strUsuarioCorreo" ).prop( "disabled", true );
-                $( "#strUsuarioTelefono" ).prop( "disabled", true );
-            }  else if (respuesta.estado == "Nulo") {
-
-                document.getElementById("strUsuarioNombre").value = " ";
-                document.getElementById("strUsuarioPrimerApe").value = " ";
-                document.getElementById("strUsuarioSegundoApe").value = " ";
-                document.getElementById("strUsuarioCorreo").value = " ";
-                document.getElementById("strUsuarioTelefono").value = " ";
-
-                $( "#strUsuarioNombre" ).prop( "disabled", false );
-                $( "#strUsuarioPrimerApe" ).prop( "disabled", false );
-                $( "#strUsuarioSegundoApe" ).prop( "disabled", false );
-                $( "#strUsuarioCorreo" ).prop( "disabled", false );
-                $( "#strUsuarioTelefono" ).prop( "disabled", false );
-
-                alertify.success('No se encontró otro usuario con ese RFC.');
-            }
-        },
-    });
-}
-
-//? Rellena y bloquea los campos de profesor cuando se ingresa un número de trabajador que ya este registrado previamente
+//? Rellena y bloquea los campos de profesor y persona cuando se ingresa un número de trabajador que ya este registrado previamente
 function buscarProfesor () {
     var dml = 'llenadoProfesor';
     var numTrabajador = document.getElementById("intNum_Trabajador").value;
@@ -396,15 +343,40 @@ function buscarProfesor () {
                     
                     $('#semblanza').val(respuesta.semblanza);
                     $('#strRFC').val(respuesta.rfc);
-
-                    $('#nivelImparticion').hide();
-                    $('#modalidadImparticion').hide();
-                    $('#coordinaciones').hide();
-                    $( "#semblanza" ).prop( "disabled", true );
+                    $('#strUsuarioNombre').val(respuesta.nombre);
+                    $('#strUsuarioPrimerApe').val(respuesta.apellidoPaterno);
+                    $('#strUsuarioSegundoApe').val(respuesta.apellidoMaterno);
+                    $('#strUsuarioCorreo').val(respuesta.correo);
+                    $('#strUsuarioTelefono').val(respuesta.telefono);
+    
                     
                     $("#strRFC").focus();
                     $( "#strRFC" ).prop( "disabled", true );
+                    $( "#strUsuarioNombre" ).prop( "disabled", true );
+                    $( "#strUsuarioPrimerApe" ).prop( "disabled", true );
+                    $( "#strUsuarioSegundoApe" ).prop( "disabled", true );
+                    $( "#strUsuarioCorreo" ).prop( "disabled", true );
+                    $( "#strUsuarioTelefono" ).prop( "disabled", true );
+                    $( "#semblanza" ).prop( "disabled", true );
+                    
+
                 }  else if (respuesta.estado == "Nulo") {
+                    $("#strRFC").focus();
+                    $( "#strRFC" ).prop( "disabled", false );
+                    $( "#strUsuarioNombre" ).prop( "disabled", false );
+                    $( "#strUsuarioPrimerApe" ).prop( "disabled", false );
+                    $( "#strUsuarioSegundoApe" ).prop( "disabled", false );
+                    $( "#strUsuarioCorreo" ).prop( "disabled", false );
+                    $( "#strUsuarioTelefono" ).prop( "disabled", false );
+                    $( "#semblanza" ).prop( "disabled", false );
+
+                    $('#semblanza').val("");
+                    $('#strRFC').val("");
+                    $('#strUsuarioNombre').val("");
+                    $('#strUsuarioPrimerApe').val("");
+                    $('#strUsuarioSegundoApe').val("");
+                    $('#strUsuarioCorreo').val("");
+                    $('#strUsuarioTelefono').val("");
 
                     alertify.success('No se encontró otro profesor con ese Número de trabajador.');
                 }
@@ -1031,6 +1003,7 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
             $('#semblanza').hide();
             document.getElementById("strNombreUsuario").value = $('#intNum_Trabajador').val();
             document.getElementById("strContrasenia01").value = $('#strRFC').val();
+            document.getElementById("strContrasenia02").value = $('#strRFC').val();
         }
     } else if (tipo_evento.startsWith(MODERADOR)) {
         /*$('#num_trabajador').hide();

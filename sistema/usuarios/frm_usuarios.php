@@ -178,7 +178,6 @@
                       <?php //? Evita al Coordinador escribir el Numero de trabajador cuando se crea un Profesor
                             if(!isset($_POST['CRUD'])) {
                               echo (' onkeyup = "AsignarContrasena();" ');
-                              echo (' onblur="buscarPersona()" ');
                             }
                       ?> >
                   </div>

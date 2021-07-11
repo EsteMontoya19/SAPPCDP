@@ -70,14 +70,9 @@ class Moderador
     function buscarModerador($persona)
     {
             $SQL_Bus_Moderador =
-            "	SELECT DISTINCT HM.mode_id_moderador , S.seso_num_cuenta ,  P.pers_id_persona , HM.mode_fecha_inicio, HM.mode_fecha_fin, HM.mode_hora_inicio, HM.mode_hora_fin
-        FROM Usuario U, servidor_social S, Persona P, Horario_Moderador HM
-        WHERE P.pers_id_persona = $persona
-          AND P.pers_id_persona = S.pers_id_persona
-          AND U.rol_id_rol = 3
-          AND U.usua_id_usuario = HM.usua_id_usuario
-          AND P.pers_id_persona = U.pers_id_persona
-          AND U.usua_id_usuario = Hm.usua_id_usuario
+            "	SELECT DISTINCT HM.mode_id_moderador, HM.mode_fecha_inicio, HM.mode_fecha_fin, HM.mode_hora_inicio, HM.mode_hora_fin
+            FROM Horario_Moderador HM, Usuario U
+            WHERE HM.usua_id_usuario = U.usua_id_usuario AND U.pers_id_persona = $persona
 			";
 
             $bd = new BD();
@@ -258,10 +253,9 @@ class Moderador
     function buscarModeradorNombre($id)
     {
             $SQL_Bus_Moderador =
-            "	
-        SELECT DISTINCT PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
-        FROM HORARIO_MODERADOR HM, USUARIO U, PERSONA P
-        WHERE HM.USUA_ID_USUARIO = U.USUA_ID_USUARIO AND U.PERS_ID_PERSONA = P.PERS_ID_PERSONA AND ROL_ID_ROL = 3 AND MODE_ID_MODERADOR = $id
+            " SELECT DISTINCT PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
+              FROM HORARIO_MODERADOR HM, USUARIO U, PERSONA P
+              WHERE HM.USUA_ID_USUARIO = U.USUA_ID_USUARIO AND U.PERS_ID_PERSONA = P.PERS_ID_PERSONA AND ROL_ID_ROL = 3 AND MODE_ID_MODERADOR = $id
 			";
 
         $bd = new BD();

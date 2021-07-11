@@ -415,13 +415,15 @@
 			if (isset($rol)) {
 
 				$SQL_Bus_Profesor = 
-				"SELECT prof_id_profesor, P.pers_id_persona, prof_num_trabajador, prof_semblanza, pers_rfc
+				"SELECT DISTINCT prof_id_profesor, P.pers_id_persona, prof_num_trabajador, prof_semblanza, pers_rfc, pers_nombre,
+						pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono
 				FROM Profesor P, Persona PE, Usuario U
 				WHERE P.pers_id_persona = PE.pers_id_persona AND U.pers_id_persona = P.pers_id_persona AND P.prof_num_trabajador = '$numTrabajador' AND U.rol_id_rol = $rol
 				";
 			} else {
 				$SQL_Bus_Profesor = 
-				"SELECT DISTINCT prof_id_profesor, P.pers_id_persona, prof_num_trabajador, prof_semblanza, pers_rfc
+				"SELECT DISTINCT prof_id_profesor, P.pers_id_persona, prof_num_trabajador, prof_semblanza, pers_rfc, pers_nombre,
+						pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono
 				FROM Profesor P, Persona PE, Usuario U
 				WHERE P.pers_id_persona = PE.pers_id_persona AND U.pers_id_persona = P.pers_id_persona AND P.prof_num_trabajador = '$numTrabajador' 
 				";
