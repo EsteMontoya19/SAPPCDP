@@ -138,10 +138,9 @@ class Usuario
     function buscarNombreUsuario($nombreUsu)
     {
         $SQL_Bus_Usuario =
-        "	
-				SELECT U.usua_id_usuario, U.rol_id_rol, U.usua_num_usuario, U.usua_contrasena
-				FROM Rol R, Usuario U
-				WHERE R.rol_id_rol = U.rol_id_rol AND U.usua_num_usuario = '$nombreUsu';
+        "SELECT U.usua_id_usuario, U.rol_id_rol, U.usua_num_usuario, U.usua_contrasena
+				 FROM Rol R, Usuario U
+				 WHERE R.rol_id_rol = U.rol_id_rol AND U.usua_num_usuario = '$nombreUsu';
 			";
 
         $bd = new BD();

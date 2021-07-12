@@ -389,6 +389,129 @@ function buscarProfesor () {
 //? Validaciones y animaciones de campos
 // Validación del formulario para usuario
 function validarFormularioUsuario() {
+    
+    //! Validaciones de Persona
+
+    //? Con esto sabemos si acaban de registrar a alguien.
+    if (typeof($('#hideRol').val()) == 'undefined') {
+
+        //? Solo el Moderador puede tener 6
+        if($('#intUsuarioRol').val() != 3) {
+            if ($('#intNum_Trabajador').val().length < 6 || $('#intNum_Trabajador').val().length > 6) {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('intNum_Trabajador').focus();
+                alertify.error('El número de trabjador no puede ser menor a 6 cifras.');
+                return false;
+            } 
+        } else {
+            if ($('#intNum_Trabajador').val() == '') {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('intNum_Trabajador').focus();
+                alertify.error('Se debe ingresar el Número de trabajador o Número de cuenta.');
+                return false;
+            } else {
+                if ($('#intNum_Trabajador').val().length < 6) {
+                    $('html, body').animate({ scrollTop: 0 }, 'slow');
+                    document.getElementById('intNum_Trabajador').focus();
+                    alertify.error('El número de cuenta o trabjador no puede ser menor a 6 cifras.');
+                    return false;
+                } 
+
+                if ($('#intNum_Trabajador').val().length > 6 && $('#intNum_Trabajador').val().length < 9) {
+                    $('html, body').animate({ scrollTop: 0 }, 'slow');
+                    document.getElementById('intNum_Trabajador').focus();
+                    alertify.error('La extensión del número de cuenta o trabajador es incorrecta.');
+                    return false;
+                } 
+
+                if ($('#intNum_Trabajador').val().length > 9) {
+                    $('html, body').animate({ scrollTop: 0 }, 'slow');
+                    document.getElementById('intNum_Trabajador').focus();
+                    alertify.error('El número de trabajador debe de ser mayor a 9 cifras.');
+                    return false;
+                }
+                
+                var numExp = /^([0-9])*$/;
+                if (numExp.test($('#intNum_Trabajador').val())) {
+                } else {
+                    $('html, body').animate({ scrollTop: 100 }, 'slow');
+                    document.getElementById('intNum_Trabajador').focus();
+                    alertify.error('El Número de trabajador o de cuenta debe de incluir solo números.');
+                    return false;
+                }
+            }
+        }
+    }
+
+    if (typeof($('#intNum_Trabajador').val()) != 'undefined' && typeof($('#intNumCuenta').val()) == 'undefined') {
+        if ($('#intNum_Trabajador').val() == '' ) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('intNum_Trabajador').focus();
+            alertify.error('Se debe ingresar el Número de trabajador o Número de cuenta.');
+            return false;
+        } else {
+            if ($('#intNum_Trabajador').val().length < 6 || $('#intNum_Trabajador').val().length > 6) {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('intNum_Trabajador').focus();
+                alertify.error('El número de trabjador debe ser de  6 cifras.');
+                return false;
+            }
+
+            var numExp = /^([0-9])*$/;
+            if (numExp.test($('#intNum_Trabajador').val())) {
+            } else {
+                $('html, body').animate({ scrollTop: 100 }, 'slow');
+                document.getElementById('intNum_Trabajador').focus();
+                alertify.error('El Número de trabajador debe de incluir solo números.');
+                return false;
+            }
+        }   
+    } else if (typeof($('#intNum_Trabajador').val()) == 'undefined' && typeof($('#intNumCuenta').val()) != 'undefined') {
+        if ($('#intNumCuenta').val() == '' ) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('intNumCuenta').focus();
+            alertify.error('Se debe ingresar el número de cuenta.');
+            return false;
+        } else {
+            if ($('#intNumCuenta').val().length < 9 || $('#intNumCuenta').val().length > 9) {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('intNumCuenta').focus();
+                alertify.error('El número de cuenta debe ser de  6 cifras.');
+                return false;
+            }
+
+            var numExp = /^([0-9])*$/;
+            if (numExp.test($('#intNumCuenta').val())) {
+            } else {
+                $('html, body').animate({ scrollTop: 100 }, 'slow');
+                document.getElementById('intNumCuenta').focus();
+                alertify.error('El Número de cuenta debe de incluir solo números.');
+                return false;
+            }
+        }   
+    } else {
+        alertify.error('Hubo un error al realizar la operación.');
+        return false;
+    }
+
+
+    if ($('#strRFC').val() == '') {
+        alertify.error('Debe ingresar su RFC con homoclave.  <br> En caso de no tenerla rellenar con 0.');
+        $('html, body').animate({ scrollTop: 250 }, 'slow');
+        document.getElementById('strRFC').focus();
+        return false;
+    } else {
+        var rfcExp = /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/;
+        if (rfcExp.test($('#strRFC').val())) {
+        } else {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('strRFC').focus();
+            alertify.error('El RFC debe incluir homoclave. <br> El formato es (NNNN000000XXX).');
+            return false;
+        }
+    }
+
+
     if ($('#strUsuarioNombre').val() == '') {
         $('html, body').animate({ scrollTop: 0 }, 'slow');
         document.getElementById('strUsuarioNombre').focus();
@@ -407,7 +530,7 @@ function validarFormularioUsuario() {
         } else {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
             document.getElementById('strUsuarioNombre').focus();
-            alertify.error('El nombre debe estar compuesto unicamente por letras (a-z, A-Z) y mas de una letra.');
+            alertify.error('El nombre debe estar compuesto unicamente por letras y sin espacios al final.');
             return false;
         }
     }
@@ -418,10 +541,10 @@ function validarFormularioUsuario() {
         alertify.error('Se debe ingresar el primer apellido del usuario');
         return false;
     } else {
-        if ($('#strUsuarioPrimerApe').val().length > 50) {
+        if ($('#strUsuarioPrimerApe').val().length > 30) {
             $('html, body').animate({ scrollTop: 0 }, 'slow');
             document.getElementById('strUsuarioPrimerApe').focus();
-            alertify.error('El apellido paterno debe tener máximo 50 caracteres');
+            alertify.error('El apellido paterno debe tener máximo 30 caracteres');
             return false;
         }
 
@@ -430,16 +553,16 @@ function validarFormularioUsuario() {
         } else {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
             document.getElementById('strUsuarioPrimerApe').focus();
-            alertify.error('El apellido paterno debe estar compuesto unicamente por letras (a-z, A-Z)  y mas de una letra.');
+            alertify.error('El apellido paterno debe estar compuesto unicamente por letras y sin espacios al final.');
             return false;
         }
     }
 
     if ($('#strUsuarioSegundoApe').val() != '') {
-        if ($('#strUsuarioSegundoApe').val().length > 50) {
+        if ($('#strUsuarioSegundoApe').val().length > 30) {
             $('html, body').animate({ scrollTop: 0 }, 'slow');
             document.getElementById('strUsuarioSegundoApe').focus();
-            alertify.error('El apellido materno debe tener máximo 50 caracteres');
+            alertify.error('El apellido materno debe tener máximo 30 caracteres');
             return false;
         }
         var letExp = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/g;
@@ -447,16 +570,15 @@ function validarFormularioUsuario() {
         } else {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
             document.getElementById('strUsuarioSegundoApe').focus();
-            alertify.error('El apellido materno debe estar compuesto unicamente por letras (a-z, A-Z)  y mas de una letra.');
+            alertify.error('El apellido materno debe estar compuesto unicamente por letras y sin espacios al final.');
             return false;
         }
     }
 
-
     if ($('#strUsuarioCorreo').val() == '') {
         $('html, body').animate({ scrollTop: 100 }, 'slow');
         document.getElementById('strUsuarioCorreo').focus();
-        alertify.error('Se debe ingresar el correo del usuario');
+        alertify.error('Se debe ingresar el correo del usuario.');
         return false;
     } else {
         var emailExp = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
@@ -464,7 +586,7 @@ function validarFormularioUsuario() {
         } else {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
             document.getElementById('strUsuarioCorreo').focus();
-            alertify.error('La direccion del correo es inválida');
+            alertify.error('La formato del correo es inválida');
             return false;
         }
         if ($('#strUsuarioCorreo').val().length > 30) {
@@ -478,23 +600,20 @@ function validarFormularioUsuario() {
     if ($('#strUsuarioTelefono').val() == '') {
         $('html, body').animate({ scrollTop: 100 }, 'slow');
         document.getElementById('strUsuarioTelefono').focus();
-        alertify.error('Se debe ingresar el teléfono del usuario');
+        alertify.error('Se debe ingresar el teléfono del usuario.');
         return false;
     } else {
         var tel = $('#strUsuarioTelefono').val();
         var total_numeros = tel.length;
 
-        if (total_numeros < 10) {
+        if (total_numeros < 10 || total_numeros > 10) {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
             document.getElementById('strUsuarioTelefono').focus();
-            alertify.error('El teléfono debe incluir mínimo 10 dígitos.');
+            alertify.error('El teléfono debe incluir unicamente 10 dígitos.');
             return false;
-        } else if (total_numeros > 10) {
-            $('html, body').animate({ scrollTop: 100 }, 'slow');
-            document.getElementById('strUsuarioTelefono').focus();
-            alertify.error('El teléfono debe incluir máximo 10 dígitos.');
-            return false;
-        } else if (total_numeros == 10) {
+        } 
+
+        if (total_numeros == 10) {
             var numExp = /^([0-9])*$/;
             if (numExp.test($('#strUsuarioTelefono').val())) {
             } else {
@@ -506,213 +625,89 @@ function validarFormularioUsuario() {
         }
     }
 
+    //! Validaciones de Usuario
     if ($('#intUsuarioRol').val() == 0) {
         alertify.error('Debe seleccionar un rol de usuario');
-        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        $('html, body').animate({ scrollTop: 100 }, 'slow');
         document.getElementById('intUsuarioRol').focus();
         return false;
-    }
+    }   
 
-    //! Se eliminaron los datos de usuario por solicitud de la Coordinadora
-    if ($('#strNombreUsuario').val() == '') {
-        alertify.error('Se debe ingresar el identificador del usuario');
-        $('html, body').animate({ scrollTop: 200 }, 'slow');
-        document.getElementById('strNombreUsuario').focus();
-        return false;
-    } else {
-        if ($('#strNombreUsuario').val().length > 15) {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
+    //? Si no esta definido viene de auto registro
+    if (typeof($('#strNombreUsuario').val()) != 'undefined') {
+        if ($('#strNombreUsuario').val() == '') {
+            alertify.error('Se debe ingresar el identificador del usuario.');
+            $('html, body').animate({ scrollTop: 100 }, 'slow');
             document.getElementById('strNombreUsuario').focus();
-            alertify.error('El nombre de usuario debe tener máximo 15 caracteres');
             return false;
-        }
-     }
-
-    // if ($('#UsuarioPregunta').val() == 0) {
-    //     alertify.error('Debe seleccionar una pregunta de seguridad');
-    //     $('html, body').animate({ scrollTop: 250 }, 'slow');
-    //     document.getElementById('UsuarioPregunta').focus();
-    //     return false;
-    // }
-
-    // if ($('#UsuarioRespuesta').val() == '') {
-    //     alertify.error('Se debe ingresar una respuesta a la pregunta');
-    //     $('html, body').animate({ scrollTop: 200 }, 'slow');
-    //     document.getElementById('UsuarioRespuesta').focus();
-    //     return false;
-    // } else {
-    //     if ($('#UsuarioRespuesta').val().length > 30) {
-    //         $('html, body').animate({ scrollTop: 0 }, 'slow');
-    //         document.getElementById('UsuarioRespuesta').focus();
-    //         alertify.error('La respuesta debe tener máximo 15 caracteres');
-    //         return false;
-    //     }
-    // }
-
-    if ($('#strContrasenia01').val() == '') {
-        alertify.error('Debe ingresar una contraseña');
-        $('html, body').animate({ scrollTop: 250 }, 'slow');
-        document.getElementById('strContrasenia01').focus();
-        return false;
-    } else {
-        if ($('#strContrasenia01').val().length > 20) {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-            document.getElementById('strContrasenia01').focus();
-            alertify.error('La contraseña debe tener máximo 20 caracteres.');
-            return false;
-        }
-
-        if ($('#strContrasenia01').val().length < 8) {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-            document.getElementById('strContrasenia01').focus();
-            alertify.error('La contraseña debe tener mínimo 8 caracteres.');
+        } else  if ($('#strNombreUsuario').val().length > 15) {  
+            $('html, body').animate({ scrollTop: 100 }, 'slow');
+            document.getElementById('strNombreUsuario').focus();
+            alertify.error('El nombre de usuario debe tener máximo 15 caracteres.');
             return false;
         }
     }
 
-    if ($('#strContrasenia02').val() == '') {
-        alertify.error('Debe ingresar la confirmación de la contraseña');
-        $('html, body').animate({ scrollTop: 250 }, 'slow');
-        document.getElementById('strContrasenia02').focus();
-        return false;
+    if (typeof($('#strContrasenia01').val()) != 'undefined') {
+        if ($('#strContrasenia01').val() == '') {
+           alertify.error('Debe ingresar una contraseña');
+           $('html, body').animate({ scrollTop: 100 }, 'slow');
+           document.getElementById('strContrasenia01').focus();
+           return false;
+       } else {
+           if ($('#strContrasenia01').val().length > 20) {
+               $('html, body').animate({ scrollTop: 0 }, 'slow');
+               document.getElementById('strContrasenia01').focus();
+               alertify.error('La contraseña debe tener máximo 20 caracteres.');
+               return false;
+           }
+   
+           if ($('#strContrasenia01').val().length < 8) {
+               $('html, body').animate({ scrollTop: 0 }, 'slow');
+               document.getElementById('strContrasenia01').focus();
+               alertify.error('La contraseña debe tener mínimo 8 caracteres.');
+               return false;
+           }
+       }
+   
+       if ($('#strContrasenia02').val() == '') {
+           alertify.error('Debe ingresar la confirmación de la contraseña');
+           $('html, body').animate({ scrollTop: 100 }, 'slow');
+           document.getElementById('strContrasenia02').focus();
+           return false;
+       }
+   
+       if ($('#strContrasenia01').val() != $('#strContrasenia02').val()) {
+           alertify.error('Las contraseña no coinciden.');
+           $('html, body').animate({ scrollTop: 100 }, 'slow');
+           document.getElementById('strContrasenia01').focus();
+           return false;
+       }
     }
 
-    if ($('#strContrasenia01').val() != $('#strContrasenia02').val()) {
-        alertify.error('Las contraseña no coinciden en alguno de los campos');
-        $('html, body').animate({ scrollTop: 300 }, 'slow');
-        document.getElementById('strContrasenia01').focus();
-        return false;
-    }
-    
 
-    //? Validación datos de cuenta según rol
-    
-    //? Si no son Moderador y no estan creando un nuevo usuario
-    if ($('#hideRol').val() != 3) {
-        
-        if ($('#intNum_Trabajador').val() == '') {
-            alertify.error('Debe ingresar un número de trabajador');
-            $('html, body').animate({ scrollTop: 250 }, 'slow');
-            document.getElementById('intNum_Trabajador').focus();
+    //! Validaciones según el rol
+
+    //? Instructor
+    if ($('#hideRol').val() == 2 || $('#intUsuarioRol').val() == 2) {
+        if($('#strSemblanza').val() == '') {
+            $('html, body').animate({ scrollTop: 100 }, 'slow');
+            document.getElementById('strSemblanza').focus();
+            alertify.error('Debe ingresar la semblanza del instructor.');
             return false;
         } else {
-            var numExp = /^([0-9])*$/;
-            if (numExp.test($('#intNum_Trabajador').val())) {
-            } else {
+            if ($('#strSemblanza').val().length > 500) {
                 $('html, body').animate({ scrollTop: 100 }, 'slow');
-                document.getElementById('intNum_Trabajador').focus();
-                alertify.error('El numero de trabajador de incluir unicamente números.');
+                document.getElementById('strSemblanza').focus();
+                alertify.error('Solo cuenta con 500 caractéres para su semblanza.');
                 return false;
             }
-            //? Esto significa que estan creando un nuevo usuario
-
-            if(typeof($('#hideRol').val()) == 'undefined') {
-                if ($('#intNum_Trabajador').val().length > 9 ) {
-                    $('html, body').animate({ scrollTop: 0 }, 'slow');
-                    document.getElementById('intNum_Trabajador').focus();
-                    alertify.error('El número de trabajador o número de cuenta debe tener máximo 9 cifras.');
-                    return false;
-                } else if ($('#intNum_Trabajador').val().length < 9 && $('#intNum_Trabajador').val().length > 6) {
-                    $('html, body').animate({ scrollTop: 0 }, 'slow');
-                    document.getElementById('intNum_Trabajador').focus();
-                    alertify.error('El número de trabajador o número de cuenta debe tener máximo 9 cifras.');
-                    return false;
-                } else if ($('#intNum_Trabajador').val().length < 6) {
-                    $('html, body').animate({ scrollTop: 0 }, 'slow');
-                    document.getElementById('intNum_Trabajador').focus();
-                    alertify.error('El número de trabajador es 6 cifras.');
-                    return false;
-                }
-
-            } else {
-                if ($('#intNum_Trabajador').val().length > 6) {
-                    $('html, body').animate({ scrollTop: 0 }, 'slow');
-                    document.getElementById('intNum_Trabajador').focus();
-                    alertify.error('El número de trabajador debe tener máximo 6 caracteres.');
-                    return false;
-                }
-            }
-
-        }
-    } else {
-        //? En caso de que se Moderador
-
-        //? Si hay algo en NumTrabjador y no hay nada en NumCuenta, ignoramos NumCuenta
-        if ($('#intNum_Trabajador').val() != '' && typeof($('#intNumCuenta').val()) == 'undefined') {
-            var numExp = /^([0-9])*$/;
-            if (numExp.test($('#intNum_Trabajador').val())) {
-            } else {
-                $('html, body').animate({ scrollTop: 100 }, 'slow');
-                document.getElementById('intNum_Trabajador').focus();
-                alertify.error('El numero de trabajador de incluir unicamente números.');
-                return false;
-            }
-            if ($('#intNum_Trabajador').val().length > 6 || $('#intNum_Trabajador').val().length < 6) {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('intNum_Trabajador').focus();
-                alertify.error('El número de trabajador debe tener 6 cifras.');
-                return false;
-            }
-        } else if (typeof($('#intNum_Trabajador').val()) == 'undefined' && $('#intNumCuenta').val() != '') {
-            if ($('#intNumCuenta').val().length < 9 || $('#intNumCuenta').val().length > 9 ) {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('intNumCuenta').focus();
-                alertify.error('El número de cuenta debe tener 9 cifras');
-                return false;
-            }
-        } else {
-            alertify.error('Debe ingresar el número de cuenta o de trabajador.');
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-            document.getElementById('strRFC').focus();
-            return false;
-        }
-    }
-
-    if ($('#strRFC').val() == '') {
-        alertify.error('Debe ingresar su RFC');
-        $('html, body').animate({ scrollTop: 0 }, 'slow');
-        document.getElementById('strRFC').focus();
-        return false;
-    } else {
-        if ($('#strRFC').val().length > 13) {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-            document.getElementById('strRFC').focus();
-            alertify.error('El RFC debe tener máximo 13 caracteres.');
-            return false;
-        } 
-        if ($('#strRFC').val().length < 10){
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-            document.getElementById('strRFC').focus();
-            alertify.error('El RFC debe tener al menos 10 caracteres.');
-            return false;
         }
         
-        if ($('#strRFC').val().length == 13) {
-            var rfcExp = /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/;
-            if (rfcExp.test($('#strRFC').val())) {
-            } else {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('strRFC').focus();
-                alertify.error('El RFC de ser con homoclave y mayusculas <br> El formato es (NNNN000000XXX).');
-                return false;
-            }
-        }            
-        if ($('#strRFC').val().length == 10) {
-            var rfcExp = /^([A-ZÑ\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1]))([A-Z\d]{3})?$/;
-            if (rfcExp.test($('#strRFC').val())) {
-            } else {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('strRFC').focus();
-                alertify.error('El RFC de ser con homoclave y mayusculas <br> El formato es (NNNN000000XXX).');
-                return false;
-            }
-        }
     }
-    
-    //TODO: Hacer validaciones de instructor
-    //? Los de moderador
 
-    if ($('#intUsuarioRol').val() == 3) {
+    //? Moderador
+    if ($('#hideRol').val() == 3 || $('#intUsuarioRol').val() == 3) {
         var algunSeleccionado = 0;
         var iCont = 1;
         while (iCont < 7) {
@@ -732,38 +727,6 @@ function validarFormularioUsuario() {
             $('html, body').animate({ scrollTop: 250 }, 'slow');
             document.getElementById('intNumCuenta').focus();
             return false;
-        } else {
-            /* //TODO: Falta modificar las validaciones
-            if ($('#intNumCuenta').val().length < 9) {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('intNumCuenta').focus();
-                alertify.error('El número de cuenta debe tener al menos 6 cifras');
-                return false;
-            }
-
-            if ($('#intNumCuenta').val().length > 6 && $('#intNumCuenta').val().length < 9) {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('intNumCuenta').focus();
-                alertify.error('El número de cuenta debe tener al menos 6 cifras y máximo 9');
-                return false;
-            }
-
-            if ($('#intNumCuenta').val().length > 9) {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('intNumCuenta').focus();
-                alertify.error('El número de cuenta debe tener máximo 10 cifras.');
-                return false;
-            }
-            
-            var numExp = /^([0-9])*$/;
-            if (numExp.test($('#intNumCuenta').val())) {
-            } else {
-                $('html, body').animate({ scrollTop: 100 }, 'slow');
-                document.getElementById('intNumCuenta').focus();
-                alertify.error('El numero de cuenta de incluir unicamente números.');
-                return false;
-            }
-            */
         }
 
         if ($('#strFechaInicio').val() == '') {
@@ -797,123 +760,63 @@ function validarFormularioUsuario() {
             alertify.error('La hora de fin no puede ser menor o igual a la inicial.');
             return false;
         }
-    }
 
-    if($('#intUsuarioRol').val() != 3 && typeof($('#intNum_Trabajador').val()) == 'undefined' ) {
-        if ($('#intNum_Trabajador').val().length < 6 || $('#intNum_Trabajador').val().length > 6) {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-            document.getElementById('intNum_Trabajador').focus();
-            alertify.error('El Número de trabajador es de 6 cifras.');
+        if ($('#strFechaInicio').val() > $('#strFechaFin').val()) {
+            $('html, body').animate({ scrollTop: 200 }, 'slow');
+            document.getElementById('strFechaInicio').focus();
+            alertify.error('La fecha inicial no puede ser mayor a la fecha final.');
             return false;
         }
     }
-    if ($('#intUsuarioRol').val() != 4 || $('#intUsuarioRol').val() == 2) {
-        if ($('#intNum_Trabajador').val() == '') {
-            alertify.error('Debe ingresar un número de trabajador');
-            $('html, body').animate({ scrollTop: 250 }, 'slow');
-            document.getElementById('intNum_Trabajador').focus();
+
+    //? Profesor
+    if ($('#hideRol').val() == 4 || $('#intUsuarioRol').val() == 4) {
+        var algunSeleccionado = 0;
+        var iCont = 1;
+        while (iCont <= 2) {
+            var isChecked = document.getElementById('strNivel' + iCont).checked;
+            if (isChecked) {
+                algunSeleccionado++;
+            }
+            iCont++;
+        }
+        if (algunSeleccionado == 0) {
+            alertify.error('Debe seleccionar al menos un nivel en el que se imparte clases.');
             return false;
-        } else {
-            var numExp = /^([0-9])*$/;
-            if (numExp.test($('#intNum_Trabajador').val())) {
-            } else {
-                $('html, body').animate({ scrollTop: 100 }, 'slow');
-                document.getElementById('intNum_Trabajador').focus();
-                alertify.error('El numero de trabajador de incluir unicamente números.');
-                return false;
-            }
-            if ($('#intNum_Trabajador').val().length > 10) {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('intNum_Trabajador').focus();
-                alertify.error('El número de trabajador debe tener máximo 6 cifras.');
-                return false;
-            }
         }
-        if ($('#strRFC').val() == '') {
-            alertify.error('Debe ingresar su RFC');
-            $('html, body').animate({ scrollTop: 250 }, 'slow');
-            document.getElementById('strRFC').focus();
+
+        var algunSeleccionado = 0;
+        var iCont = 1;
+        while (iCont <= 3) {
+            var isChecked = document.getElementById('strModalidad' + iCont).checked;
+            if (isChecked) {
+                algunSeleccionado++;
+            }
+            iCont++;
+        }
+        if (algunSeleccionado == 0) {
+            alertify.error('Debe seleccionar al menos una modalidad en la que imparta clases.');
             return false;
-        } else {
-            if ($('#strRFC').val().length > 13) {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('strRFC').focus();
-                alertify.error('El RFC debe tener máximo 13 caracteres.');
-                return false;
-            }
-            var rfcExp = /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/;
-            if (rfcExp.test($('#strRFC').val())) {
-            } else {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('strRFC').focus();
-                alertify.error('El RFC de ser con homoclave y mayusculas <br> El formato es (NNNN000000XXX).');
-                return false;
-            }
         }
 
-        //? La semblanza ya no es obligatorio
-        // if ($('#strSemblanza').val() == '') {
-        //     alertify.error('Debe ingresar su semblanza');
-        //     $('html, body').animate({ scrollTop: 250 }, 'slow');
-        //     document.getElementById('strSemblanza').focus();
-        //     return false;
-        // } else {
-        // }
-        if ($('#intUsuarioRol').val() == 2) {
-            if ($('#strSemblanza').val().length > 500) {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('strSemblanza').focus();
-                alertify.error('Solo cuenta con 500 caractéres para su semblanza.');
-                return false;
+        var algunSeleccionado = 0;
+        var iCont = 1;
+        while (iCont <= $('#numCoordinaciones').val()) {
+            var isChecked = document.getElementById('strCoordinacion' + iCont).checked;
+            if (isChecked) {
+                algunSeleccionado++;
             }
+            iCont++;
         }
-
-        if ($('#intUsuarioRol').val() == 4) {
-            var algunSeleccionado = 0;
-            var iCont = 1;
-            while (iCont <= 2) {
-                var isChecked = document.getElementById('strNivel' + iCont).checked;
-                if (isChecked) {
-                    algunSeleccionado++;
-                }
-                iCont++;
-            }
-            if (algunSeleccionado == 0) {
-                alertify.error('Debe seleccionar al menos un nivel en el que se imparte clases.');
-                return false;
-            }
-
-            var algunSeleccionado = 0;
-            var iCont = 1;
-            while (iCont <= 3) {
-                var isChecked = document.getElementById('strModalidad' + iCont).checked;
-                if (isChecked) {
-                    algunSeleccionado++;
-                }
-                iCont++;
-            }
-            if (algunSeleccionado == 0) {
-                alertify.error('Debe seleccionar al menos una modalidad en la que imparta clases.');
-                return false;
-            }
-
-            var algunSeleccionado = 0;
-            var iCont = 1;
-            while (iCont <= $('#numCoordinaciones').val()) {
-                var isChecked = document.getElementById('strCoordinacion' + iCont).checked;
-                if (isChecked) {
-                    algunSeleccionado++;
-                }
-                iCont++;
-            }
-            if (algunSeleccionado == 0) {
-                alertify.error('Debe seleccionar al menos una coordinación en la que participe.');
-                return false;
-            }
+        if (algunSeleccionado == 0) {
+            alertify.error('Debe seleccionar al menos una coordinación en la que participe.');
+            return false;
         }
     }
     return true;
 }
+
+
 //Mostrar contraseña index.php
 function hideOrShowPassword() {
   var x = document.getElementById('strContrasena');
