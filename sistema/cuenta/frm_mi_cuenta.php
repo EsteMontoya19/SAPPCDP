@@ -42,10 +42,6 @@ $arr_modalidades = $obj_Busqueda->selectModalidades();
 $arr_coordinaciones = $obj_Busqueda->selectCoordinaciones();
 
 
-// fwrite($file, count($grupos_profesor).PHP_EOL);
-// fwrite($file, $inscrito.PHP_EOL);
-
-
 // Validar entidad  //*? Se crean las variables para consultar en caso de no ser un nuevo registro.
 if (isset($_POST['persona']) && isset($_POST['id'])) {
     // Recuperar información de consulta
@@ -62,9 +58,9 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
             break;
 
         case 3: //Moderador
-            $file = fopen('Mensajes.txt', 'a');
             $obj_Moderador = new Moderador();
             $moderador = $obj_Moderador->buscarModerador($_POST['persona']);
+            $moderadorCuenta = $obj_Moderador -> buscarServidorSocial($_POST['persona']);
             $moderador_dia = $obj_Moderador->buscarModeradorDias($_POST['persona']);
             break;
           // Case 2: Instructor
@@ -145,7 +141,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                 <b>&nbsp;Datos de la cuenta</b>
               </div>
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                <?php if (isset($usuario) && $usuario->rol_id_rol == 1 || $usuario->rol_id_rol == 4) { ?>
+                <?php if (isset($usuario) && $usuario->rol_id_rol == 1 || $usuario->rol_id_rol == 2 || $usuario->rol_id_rol == 4) { ?>
                   <div id="num_trabajador" class="col-lg-6 form-group">
                 <?php } else { ?>
                   <div id="num_trabajador" class="col-lg-6 form-group" style="display: none;">
@@ -161,7 +157,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                                       }
                                   } ?>" id="intNum_Trabajador" type="text" class="form-control" name="intNum_Trabajador">
                   </div>
-                  <?php if (isset($usuario) && $usuario->rol_id_rol == 2 || $usuario->rol_id_rol == 4) { ?>
+                  <?php if (isset($usuario) && $usuario->rol_id_rol == 2 || $usuario->rol_id_rol == 1 || $usuario->rol_id_rol == 4) { ?>
                     <div id="rfc" class="col-lg-6 form-group">
                   <?php } else { ?>
                     <div id="rfc" class="col-lg-6 form-group" style="display: none;">
@@ -187,11 +183,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                   <div id="numCuenta" class="col-lg-6 form-group" style="display: none;">
                 <?php } ?>
                     <label for="numCuenta" class = "negritas">Número de cuenta:*</label>
-                      <input value="<?php echo isset($moderador) ? $moderador-> seso_num_cuenta : "";
-                      // TODO: Prueba Número de cuenta
-                                          // $file = fopen('Mensajes.txt', 'a');
-                                          // fwrite($file, "Número de cuenta: ".$moderador ['seso_num_cuenta'].PHP_EOL);
-                                          // fclose($file);?>" type="text"
+                      <input value="<?php echo isset($moderador) ? $moderadorCuenta-> seso_num_cuenta : "";?>" type="text"
                         class="form-control" name="lbNumCuenta"  id="intNumCuenta" disabled>
                   </div>
                 <?php if (isset($usuario) && $usuario->rol_id_rol == 3) { ?>
