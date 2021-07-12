@@ -102,17 +102,17 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                 <!-- Define los campos que estarán en una fila -->
                 <div class="col-lg-4 form-group">
                   <label for="strUsuarioNombre" class = "negritas">Nombre(s): *</label>
-                  <input type="text" class="form-control" id="strUsuarioNombre" name="strUsuarioNombre"
+                  <input readonly type="text" class="form-control" id="strUsuarioNombre" name="strUsuarioNombre"
                     value="<?php echo isset($persona) ? $persona->pers_nombre : ""; ?>">
                 </div>
                 <div class="col-lg-4 form-group">
                   <label for="strUsuarioPrimerApe" class = "negritas">Apellido Paterno: *</label>
-                  <input type="text" class="form-control" id="strUsuarioPrimerApe" name="strUsuarioPrimerApe"
+                  <input readonly type="text" class="form-control" id="strUsuarioPrimerApe" name="strUsuarioPrimerApe"
                     value="<?php echo isset($persona) ? $persona->pers_apellido_paterno : ""; ?>">
                 </div>
                 <div class="col-lg-4 form-group">
                   <label for="strUsuarioSegundoApe" class = "negritas">Apellido Materno:</label>
-                  <input type="text" class="form-control" id="strUsuarioSegundoApe" name="strUsuarioSegundoApe"
+                  <input readonly type="text" class="form-control" id="strUsuarioSegundoApe" name="strUsuarioSegundoApe"
                     value="<?php echo isset($persona) ? $persona->pers_apellido_materno : ""; ?>">
                 </div>
               </div>
@@ -120,13 +120,13 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
               <div class="col-lg-12 form-row">
                 <div class="col-lg-6 form-group">
                   <label for="strUsuarioCorreo" class = "negritas">Correo electrónico: *</label>
-                  <input type="text" class="form-control" id="strUsuarioCorreo" name="strUsuarioCorreo"
+                  <input readonly type="text" class="form-control" id="strUsuarioCorreo" name="strUsuarioCorreo"
                     placeholder="ej. ejemplo@dominio.com"
                     value="<?php echo isset($persona) ? $persona->pers_correo : ""; ?>">
                 </div>
                 <div class="col-lg-6 form-group">
                   <label for="strUsuarioTelefono" class = "negritas">Teléfono: *</label>
-                  <input type="text" class="form-control" id="strUsuarioTelefono" name="strUsuarioTelefono"
+                  <input readonly type="text" class="form-control" id="strUsuarioTelefono" name="strUsuarioTelefono"
                     placeholder="ej. 5511223344" value="<?php echo isset($persona) ? $persona->pers_telefono : ""; ?>">
                 </div>
               </div>
@@ -147,15 +147,15 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                   <div id="num_trabajador" class="col-lg-6 form-group" style="display: none;">
                 <?php } ?>
                     <label for="num_trabajador" class = "negritas">Número de trabajador:*</label>
-                    <input value="<?php if (isset($administrador)) {
+                    <input readonly value="<?php if (isset($administrador)) {
                                           echo($administrador-> prof_num_trabajador);
-                                  } else {
-                                      if (isset($profesor)) {
-                                            echo($profesor-> prof_num_trabajador);
-                                      } else {
-                                          echo("");
-                                      }
-                                  } ?>" id="intNum_Trabajador" type="text" class="form-control" name="intNum_Trabajador">
+                                           } else {
+                                               if (isset($profesor)) {
+                                                     echo($profesor-> prof_num_trabajador);
+                                               } else {
+                                                   echo("");
+                                               }
+                                           } ?>" id="intNum_Trabajador" type="text" class="form-control" name="intNum_Trabajador">
                   </div>
                   <?php if (isset($usuario) && $usuario->rol_id_rol == 2 || $usuario->rol_id_rol == 1 || $usuario->rol_id_rol == 4) { ?>
                     <div id="rfc" class="col-lg-6 form-group">
@@ -163,15 +163,15 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                     <div id="rfc" class="col-lg-6 form-group" style="display: none;">
                   <?php } ?>
                     <label for="rfc" class = "negritas">RFC: *</label>
-                    <input value="<?php if (isset($administrador)) {
+                    <input readonly value="<?php if (isset($administrador)) {
                                           echo($persona-> pers_rfc);
-                                  } else {
-                                      if (isset($profesor)) {
-                                            echo($persona-> pers_rfc);
-                                      } else {
-                                          echo("");
-                                      }
-                                  }?>"  type="text"
+                                           } else {
+                                               if (isset($profesor)) {
+                                                     echo($persona-> pers_rfc);
+                                               } else {
+                                                   echo("");
+                                               }
+                                           }?>"  type="text"
                         class="form-control" name="strRFC" id="strRFC">
                     </div>
               </div> <!-- Cierre div de datos row -->
@@ -183,7 +183,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                   <div id="numCuenta" class="col-lg-6 form-group" style="display: none;">
                 <?php } ?>
                     <label for="numCuenta" class = "negritas">Número de cuenta:*</label>
-                      <input value="<?php echo isset($moderador) ? $moderadorCuenta-> seso_num_cuenta : "";?>" type="text"
+                      <input readonly value="<?php echo isset($moderador) ? $moderadorCuenta-> seso_num_cuenta : "";?>" type="text"
                         class="form-control" name="lbNumCuenta"  id="intNumCuenta" disabled>
                   </div>
                 <?php if (isset($usuario) && $usuario->rol_id_rol == 3) { ?>
@@ -248,7 +248,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                   <div id="semblanza" class="col-lg-12 form-group" style="display: none;">
                 <?php } ?>
                   <label for="strSemblanza" class = "negritas">Semblanza:*</label>
-                  <textarea type="text" class="form-control" id="strSemblanza" name="strSemblanza"><?php echo isset($profesor) ? $profesor-> prof_semblanza: ""; ?></textarea>           
+                  <textarea readonly type="text" class="form-control" id="strSemblanza" name="strSemblanza"><?php echo isset($profesor) ? $profesor-> prof_semblanza: ""; ?></textarea>           
                   </div>
               </div> <!-- Cierre div de datos row -->
 
