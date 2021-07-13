@@ -39,8 +39,8 @@
     
     if($curso->moap_id_modalidad == 1){
         $modalidad = $obj_Grupo->buscarDatosPresencial($idGrupo);
-        $nombreLugar = 'Edificio: '.$modalidad->edif_nombre.'Salon: '.$modalidad->salo_nombre;
-        
+        $nombreLugar = 'Edificio: '.$modalidad->edif_nombre.'     Salon: '.$modalidad->salo_nombre;
+        $modalidadNombre = 'Modalidad: Presencial';
     } elseif ($curso->moap_id_modalidad == 2) {
         $modalidad = $obj_Grupo->buscarDatosEnLinea($idGrupo);
         $nombreLugar = 'Plataforma: '.$modalidad->plat_nombre;
