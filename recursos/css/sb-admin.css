@@ -10,6 +10,7 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -246,6 +247,16 @@ caption {
     color: #6c757d;
     text-align: left;
     caption-side: bottom;
+}
+
+.fit-image {
+    width: 100%;
+    object-fit: cover;
+    height: 700px;
+}
+
+.spacing_personalizado {
+    margin: 0 20%;
 }
 
 th {

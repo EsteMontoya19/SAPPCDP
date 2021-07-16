@@ -91,6 +91,7 @@
         "i",
         "id",
         "if",
+        "imagenes",
         "impartidosx",
         "ingresar",
         "ingrese",
@@ -206,11 +207,5 @@
         "webs",
         "where"
     ],
-    "cSpell.words": [
-        "Configuracion",
-        "Lalo",
-        "SAPPCDP",
-        "numsqls",
-        "sqls"
-    ]
+    "cSpell.words": ["Configuracion", "Lalo", "SAPPCDP", "numsqls", "sqls"]
 }
