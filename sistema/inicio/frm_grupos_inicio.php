@@ -8,18 +8,18 @@
   $arr_grupos = $obj_Grupo ->buscarGruposProfesores();
   $obj_Sesion = new Sesion();
   
-  if (isset($_POST['persona'])){
+if (isset($_POST['persona'])) {
     $idPersona = $_POST['persona'];
     $obj_profesor = new Profesor();
     $profesor = $obj_profesor->buscarInstructorxPersona($idPersona);
-    if(isset($profesor)){
-      $id_profesor=$profesor->usua_id_usuario;
+    if (isset($profesor)) {
+        $id_profesor=$profesor->usua_id_usuario;
     } else {
-      $id_profesor=0;
+        $id_profesor=0;
     }
-  } else {
+} else {
     $idPersona = 0;
-  }
+}
 
 ?>
 
@@ -39,12 +39,12 @@
         </div>
 
 
-        <h1 class = " principal">Bienvenido al Sistema de Apoyo al Programa Permanente de Capacitación a Distancia de Profesores de la FCA.</h1>
+        <h1 style="font-size: 2rem; color:#212529; margin:1% 0 2% 1%; text-align:left">Bienvenido al Sistema de Apoyo al Programa Permanente de Capacitación a Distancia de Profesores de la FCA.</h1>
         <p>
           <hr>
         </p>
 
-        <h2>Cursos disponibles</h2>
+        <h2 style="font-size: 1.5rem; color:#126e82; margin:1% 0 2% 1%">Cursos disponibles</h2>
         <div class="card mb-3">
           <div class="card-body">
             <div class="table-responsive">
@@ -72,11 +72,11 @@
                                                             permita inscribirse o verlo como posibilidad de grupo a inscribirse.
                                                           -->
                   <?php
-                  if(isset($arr_grupos)){ 
-                  foreach ($arr_grupos as $grupo) { 
-                    if($grupo['usua_id_usuario'] != $id_profesor) {
-                      $sesion = $obj_Sesion->numSesionesGrupo($grupo['grup_id_grupo']);
-                      $sesionUno = $obj_Sesion->buscarMinSesionDM($grupo['grup_id_grupo']);?>
+                    if (isset($arr_grupos)) {
+                        foreach ($arr_grupos as $grupo) {
+                            if ($grupo['usua_id_usuario'] != $id_profesor) {
+                                $sesion = $obj_Sesion->numSesionesGrupo($grupo['grup_id_grupo']);
+                                $sesionUno = $obj_Sesion->buscarMinSesionDM($grupo['grup_id_grupo']);?>
                       <tr>
                         <td><?php echo $grupo['grup_id_grupo'];?></td>
                         <td><?php echo $grupo['curs_nombre'];?></td>
@@ -94,7 +94,9 @@
                           </button>
                         </td>
                       </tr>
-                  <?php } } } ?>
+                            <?php }
+                        }
+                    } ?>
                   
                 </tbody>
               </table>
@@ -106,4 +108,3 @@
   </div>
 
   <script src="../sistema/profesor/control_profesores.js"></script>
-
