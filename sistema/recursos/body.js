@@ -1,7 +1,13 @@
-// Rutas
+if (document.getElementById("idRol").value == 4) {
+    window.onload =  $('#container').load('../sistema/inicio/frm_grupos_inicio.php', { persona: document.getElementById("idPersona").value });
+} else {
+    window.onload =  $('#container').load('../sistema/inicio/frm_inicio.php');
+}
+
+//? Rutas
 $(document).ready(function () {
     $('#btn_inicio').click(function () {
-        $('#container').load('../sistema/inicio/frm_inicio.php');
+        location.reload();
     });
 
     $('#btn_cursos').click(function () {

@@ -312,8 +312,13 @@ function cambioEstatus(id, estatus, nombre, apellido, rol) {
 
 //? Evita al Coordinador escribir la contraseña cuando se crea un Profesor
 function AsignarContrasena() {
-    document.getElementById("strContrasenia01").value = document.getElementById("strRFC").value;
-    document.getElementById("strContrasenia02").value = document.getElementById("strRFC").value;
+
+    var extension = document.getElementById("strContrasenia01").value;
+    if (extension.length < 6) {
+        document.getElementById("strContrasenia01").value = document.getElementById("strRFC").value;
+        document.getElementById("strContrasenia02").value = document.getElementById("strRFC").value;
+    }
+
 }
 
 
@@ -662,10 +667,10 @@ function validarFormularioUsuario() {
                return false;
            }
    
-           if ($('#strContrasenia01').val().length < 8) {
+           if ($('#strContrasenia01').val().length <= 6) {
                $('html, body').animate({ scrollTop: 0 }, 'slow');
                document.getElementById('strContrasenia01').focus();
-               alertify.error('La contraseña debe tener mínimo 8 caracteres.');
+               alertify.error('La contraseña debe tener mínimo 6 caracteres.');
                return false;
            }
        }
@@ -905,8 +910,8 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
         } else {
             $('#semblanza').hide();
             document.getElementById("strNombreUsuario").value = $('#intNum_Trabajador').val();
-            document.getElementById("strContrasenia01").value = $('#strRFC').val();
-            document.getElementById("strContrasenia02").value = $('#strRFC').val();
+            document.getElementById("strContrasenia01").value = $('#strRFC').val().substr(0,6);
+            document.getElementById("strContrasenia02").value = $('#strRFC').val().substr(0,6);
         }
     } else if (tipo_evento.startsWith(MODERADOR)) {
         /*$('#num_trabajador').hide();
