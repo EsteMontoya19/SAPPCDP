@@ -30,8 +30,8 @@
                 <thead class="thead-dark">
                   <tr>
                     <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Fecha Inicio</th>
+                    <th>Proser inscrito</th>
+                    <th>Grupo</th>
                     <th>Fecha Termino</th>
                     <th>Horario</th>
                     <th>Instructor</th>

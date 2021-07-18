@@ -667,7 +667,7 @@ function validarFormularioUsuario() {
                return false;
            }
    
-           if ($('#strContrasenia01').val().length <= 6) {
+           if ($('#strContrasenia01').val().length < 6) {
                $('html, body').animate({ scrollTop: 0 }, 'slow');
                document.getElementById('strContrasenia01').focus();
                alertify.error('La contraseña debe tener mínimo 6 caracteres.');

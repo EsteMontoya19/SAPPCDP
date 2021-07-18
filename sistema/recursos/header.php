@@ -76,12 +76,10 @@
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-shield"></i>&nbsp; Usuarios</a>
             </li>
 
-            <?php //TODO: Hacer las funciones de asistencia del Coordinador ?>
-            <!--
             <li id="btn_asist" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-graduate"></i>&nbsp; Asistencia</a>
             </li>
--->
+
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">

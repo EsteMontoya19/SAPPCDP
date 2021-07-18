@@ -95,13 +95,17 @@
                           <i class="fas fa-search-plus"></i>
                         </button>
                         <?php if($grupo['grup_num_inscritos'] != 0){ ?>
-                            <a href="../modulos/Control_PDF_Inscritos.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-primary btn-table" title="Lista" style="margin-top: 5px;background: #20560a">
-                              <i class="fas fa-list-alt"></i>
-                            </a>
-                          <?php } ?>
+                          <a href="../modulos/Control_PDF_Inscritos.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-primary btn-table" title="Lista" style="margin-top: 5px;background: #20560a">
+                          <i class="fas fa-list-alt"></i>
+                        </a>
+                        <?php } ?>
 
                         <button type="button" class="btn btn-danger btn-table" title="Constancias" style="margin-top: 5px">
                           <i class="fas fa-list-alt"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-info btn-table" title="Asistencias" <?php if ($grupo['grup_estado'] != 'Pendiente') {?> style="display: none;" <?php } ?> style="margin-top: 5px;" onclick="asistenciaGrupo(<?php echo $grupo['grup_id_grupo']?>)">
+                          <i class="fas fa-tasks"></i>
                         </button>
                       </td>
                     </tr>

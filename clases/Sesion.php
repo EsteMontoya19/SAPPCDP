@@ -53,8 +53,7 @@
         function buscarSesionesIDGrupo($id_grupo)
         {
 			$SQL_Bus_Sesion =
-			"	
-			SELECT sesi_id_sesiones, grup_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin
+			"SELECT sesi_id_sesiones, grup_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin
 			FROM sesion
 			WHERE grup_id_grupo = $id_grupo 
 			";

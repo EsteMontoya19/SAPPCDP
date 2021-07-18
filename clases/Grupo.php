@@ -1,6 +1,6 @@
 <?php
     class Grupo
-    //TODO Verificado todos los métodos utilizados actualmente en la BD 06/07/2021
+    //? Verificado todos los métodos utilizados actualmente en la BD 06/07/2021
     {
         //Permite agregar cualquier tipo de grupo
         //? Verificado en la BD 06/07/2021
@@ -51,8 +51,8 @@
         function buscarCorreosDeParticipantes($ID)
         {
             $SQL_Bus_Cursos = 
-            "   
-            SELECT ( Pers.pers_apellido_paterno || ' ' || pers_apellido_materno || ' ' || Pers.pers_nombre) AS nombre , Pers.pers_correo 
+            "SELECT ( Pers.pers_apellido_paterno || ' ' || pers_apellido_materno || ' ' || Pers.pers_nombre) AS nombre , Pers.pers_correo, 
+                    Prof.prof_id_profesor, Pers.pers_id_persona, I.insc_id_inscripcion
             FROM Persona Pers, Inscripcion I, Grupo G, Profesor Prof
             WHERE G.grup_id_grupo = $ID AND I.grup_id_grupo = G.grup_id_grupo AND I.prof_id_profesor = Prof.prof_id_profesor AND Prof.pers_id_persona = Pers.pers_id_persona
             ";
@@ -130,8 +130,7 @@
         function buscarGruposProfesores()
         {
             $SQL_Bus_Cursos = 
-            "   
-                SELECT g.grup_id_grupo, p.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
+            "SELECT g.grup_id_grupo, p.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
                     curs_nombre, curs_tipo, curs_nivel, curs_objetivos, grup_cupo,  grup_num_inscritos, g.moap_id_modalidad,
                     moap_nombre, to_char(grup_inicio_insc, 'DD') diaini, to_char(to_timestamp (to_char(grup_inicio_insc, 'MM')::text, 'MM'), 'TMmon') mesini, 
                     to_char(grup_fin_insc, 'DD') diafin, to_char(to_timestamp (to_char(grup_fin_insc, 'MM')::text, 'MM'), 'TMmon') mesfin
@@ -347,20 +346,42 @@
 
         function buscarGrupoCompleto($id){
             $SQL_Bus_Grupo = 
-            "
-                SELECT G.GRUP_ID_GRUPO, G.CURS_ID_CURSO, CURS_NOMBRE, CURS_TIPO, CURS_NIVEL, CURS_OBJETIVOS, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, 
-                    G.MOAP_ID_MODALIDAD, MOAP_NOMBRE, ESTA_NOMBRE, PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO, 
-                    GRUP_CUPO, GRUP_NUM_INSCRITOS, GRUP_INICIO_INSC, GRUP_FIN_INSC, GRUP_PUBLICADO, GRUP_TIPO
-                FROM GRUPO G, CURSO C, MODALIDAD_APRENDIZAJE M, ESTADO E, 
-                    PERSONAL_GRUPO PG, USUARIO U, PERSONA P
-                WHERE 	G.CURS_ID_CURSO = C.CURS_ID_CURSO 
-                    AND G.MOAP_ID_MODALIDAD = M.MOAP_ID_MODALIDAD
-                    AND G.ESTA_ID_ESTADO = E.ESTA_ID_ESTADO
-                    AND G.GRUP_ID_GRUPO = PG.GRUP_ID_GRUPO
-                    AND PG.USUA_ID_USUARIO = U.USUA_ID_USUARIO
-                    AND U.PERS_ID_PERSONA = P.PERS_ID_PERSONA
-                    AND ROL_ID_ROL = 2
-                    AND G.GRUP_ID_GRUPO = $id
+            "SELECT G.GRUP_ID_GRUPO, G.CURS_ID_CURSO, CURS_NOMBRE, CURS_TIPO, CURS_NIVEL, CURS_OBJETIVOS, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, 
+            G.MOAP_ID_MODALIDAD, MOAP_NOMBRE, ESTA_NOMBRE, PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO, 
+            GRUP_CUPO, GRUP_NUM_INSCRITOS, GRUP_INICIO_INSC, GRUP_FIN_INSC, GRUP_PUBLICADO, GRUP_TIPO, G.PLAT_ID_PLATAFORMA,
+            G.grup_id_acceso, G.grup_clave_acceso,
+            CALE_ID_CALENDARIO, GRUP_URL, GRUP_ID_ACCESO, GRUP_CLAVE_ACCESO, GRUP_CUPO, GRUP_NUM_INSCRITOS,
+            (SELECT P.plat_nombre
+             FROM Grupo G, Plataforma P
+             WHERE G.plat_id_plataforma = P.plat_id_plataforma
+                   AND G.grup_id_grupo = $id) AS plat_nombre,
+                   
+             (SELECT (S.salo_nombre || ' Edificio: ' || E.edif_nombre) AS salon
+              FROM Salon S, Grupo G, Edificio E
+              WHERE S.salo_id_salon = G.salo_id_salon
+                      AND G.grup_id_grupo = $id
+                     AND S.EDIF_ID_EDIFICIO = E.EDIF_ID_EDIFICIO) AS salo_nombre,
+            (SELECT count (sesi_id_sesiones)
+			  FROM Sesion 
+			  WHERE grup_id_grupo = $id
+			  GROUP BY grup_id_grupo) AS num_sesiones,
+            (SELECT MA.moap_nombre
+			 FROM Modalidad_Aprendizaje MA, Grupo G
+			 WHERE MA.moap_id_modalidad = G.moap_id_modalidad
+	   			 	AND G.grup_id_grupo = $id) AS moap_nombre
+                    
+        FROM GRUPO G, CURSO C, MODALIDAD_APRENDIZAJE M, ESTADO E, 
+            PERSONAL_GRUPO PG, USUARIO U, PERSONA P
+        WHERE 	G.CURS_ID_CURSO = C.CURS_ID_CURSO 
+            AND G.MOAP_ID_MODALIDAD = M.MOAP_ID_MODALIDAD
+            AND G.ESTA_ID_ESTADO = E.ESTA_ID_ESTADO
+            AND G.GRUP_ID_GRUPO = PG.GRUP_ID_GRUPO
+            AND PG.USUA_ID_USUARIO = U.USUA_ID_USUARIO
+            AND U.PERS_ID_PERSONA = P.PERS_ID_PERSONA
+            AND ROL_ID_ROL = 2
+            AND G.GRUP_ID_GRUPO = $id
+            
+
             ";
 
                 $bd = new BD();
