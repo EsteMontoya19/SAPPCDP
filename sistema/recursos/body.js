@@ -30,10 +30,6 @@ $(document).ready(function () {
         $('#container').load('../sistema/usuarios/frm_inicio_usuarios.php');
     });
 
-    $('#btn_asist').click(function () {
-        $('#container').load('../sistema/asistencia/frm_inicio_asistencia.php');
-    });
-
     $('#btn_profesor_grupos').click(function () {
         $('#container').load('../sistema/profesor/frm_inicio_profesores.php');
     });
@@ -82,6 +78,21 @@ function miCuenta(id, persona) {
         data: datos,
         type: 'POST',
         url: '../sistema/cuenta/frm_mi_cuenta.php',
+        success: function (data) {
+            $('#container').html(data);
+        },
+    });
+}
+//? Permite ver los cursos a moderar
+function asistenciasModerador(idUsuario) {
+    var datos = {
+        idUsuario: idUsuario,
+    };
+
+    $.ajax({
+        data: datos,
+        type: 'POST',
+        url: '../sistema/asistencia/frm_inicio_asistencia.php',
         success: function (data) {
             $('#container').html(data);
         },

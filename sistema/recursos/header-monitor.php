@@ -52,11 +52,12 @@
           <ul class="navbar-nav ml-auto">
          
           <?php //TODO: Hacer las funciones de Asistencia del Moderador ?>
-            <!--
-             <li id="btn_asist" class="nav-item">
-                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-graduate"></i>&nbsp; Asistencia</a>
-            </li>
--->
+            
+          <li id="btn_asist" class="nav-item">
+                <a class="nav-link" href="#" style="color:#FFFFFF" onclick = "asistenciasModerador(<?php echo isset($cuenta) ? $cuenta->usua_id_usuario : ''; ?>)">
+                <i class="fas fa-user-graduate"></i>&nbsp; Asistencia</a>
+          </li>
+
 
 
 

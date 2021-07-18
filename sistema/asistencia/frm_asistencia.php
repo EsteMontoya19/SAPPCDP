@@ -39,14 +39,23 @@
           <div class="card lg-12" style="padding: 15px;">
             <div class="col-lg-12 form-row">
 
-              <div class="col-lg-8 form-group">
+              <div class="col-lg-4 form-group">
                 <p><b>Nombre del curso: </b> <?php echo($grupo->curs_nombre); ?></p>
               </div>
-
+              
               <div class="col-lg-4 form-group">
                 <p><b>Nombre del Instructor: </b>
                   <?php echo($grupo->pers_nombre . " " . $grupo->pers_apellido_paterno . " " . $grupo-> pers_apellido_materno); ?>
                 </p>
+              </div>
+
+              <div class="col-lg-4 form-group">
+                <p><b>Moderador: </b> <?php 
+                                        if ($grupo->moderador != "") {
+                                          echo($grupo->moderador); 
+                                        } else { 
+                                          echo("No asignado."); 
+                                        }?></p>
               </div>
 
               <div class="col-lg-4 form-group">

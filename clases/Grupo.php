@@ -121,6 +121,31 @@
             return ($transaccion_1->traerRegistros());
         }
 
+        //? Se utiliza para saber que grupos se le asiganaron al moderador
+        function buscarTodosGruposAsignados($idUsuario)
+        {
+            $SQL_Bus_Cursos = 
+            "   SELECT g.grup_id_grupo, p.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
+                    g. curs_id_curso, curs_nombre, grup_num_inscritos,
+                    g.plat_id_plataforma, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo,  
+                    grup_publicado, moap_nombre grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, esta_nombre grup_estado
+                FROM grupo g, personal_grupo p, usuario u, persona pr, curso c, calendario ca, modalidad_aprendizaje m, estado e
+                WHERE rol_id_rol = 3 AND g.grup_id_grupo = p.grup_id_grupo AND p.usua_id_usuario = u.usua_id_usuario
+                    AND u.pers_id_persona = pr.pers_id_persona AND g.curs_id_curso = c.curs_id_curso 
+                    AND g.cale_id_calendario = ca.cale_id_calendario 
+                    AND m.moap_id_modalidad = g.moap_id_modalidad AND e.esta_id_estado = g.esta_id_estado
+                    AND U.usua_id_usuario = $idUsuario
+                ORDER BY g.grup_id_grupo DESC;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Cursos);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+        }
+
         /*
         Permite consultar todos los grupos que deben ser mostrados para 
         los profesores, para ello deben estar publicados, en Inscripciones(estado pendiente) y públicos
@@ -342,8 +367,7 @@
                 $bd->cerrarBD();
                 return ($transaccion_1->traerObjeto(0));
         }
-
-
+        
         function buscarGrupoCompleto($id){
             $SQL_Bus_Grupo = 
             "SELECT G.GRUP_ID_GRUPO, G.CURS_ID_CURSO, CURS_NOMBRE, CURS_TIPO, CURS_NIVEL, CURS_OBJETIVOS, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, 
@@ -368,7 +392,11 @@
             (SELECT MA.moap_nombre
 			 FROM Modalidad_Aprendizaje MA, Grupo G
 			 WHERE MA.moap_id_modalidad = G.moap_id_modalidad
-	   			 	AND G.grup_id_grupo = $id) AS moap_nombre
+	   			 	AND G.grup_id_grupo = $id) AS moap_nombre,
+            (SELECT (P.pers_nombre || ' ' || P.pers_apellido_paterno || ' ' || P.pers_apellido_materno) AS Moderador
+            FROM Personal_Grupo PG, Usuario U, Persona P
+            WHERE U.usua_id_usuario = PG.usua_id_usuario AND P.pers_id_persona = U.pers_id_persona 
+                AND U.rol_id_rol = 3 AND PG.grup_id_grupo = $id) AS moderador
                     
         FROM GRUPO G, CURSO C, MODALIDAD_APRENDIZAJE M, ESTADO E, 
             PERSONAL_GRUPO PG, USUARIO U, PERSONA P
@@ -392,7 +420,6 @@
                 $bd->cerrarBD();
                 return ($transaccion_1->traerObjeto(0));
         }
-
         function idUsuarioModeradorGrupo($id){
             $SQL_Bus_Grupo = 
             "

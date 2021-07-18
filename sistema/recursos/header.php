@@ -76,10 +76,6 @@
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-shield"></i>&nbsp; Usuarios</a>
             </li>
 
-            <li id="btn_asist" class="nav-item">
-                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-graduate"></i>&nbsp; Asistencia</a>
-            </li>
-
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
@@ -101,7 +97,7 @@
               </a>
               <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarUser">
                 <a class="dropdown-item disabled" href="*"><?php echo isset($cuenta) ? $cuenta->rol_nombre : ""; ?></a>
-                <a id="btn_cuenta" class="dropdown-item" href="#" onclick="miCuenta(<?php echo isset($cuenta) ? $cuenta->usua_id_usuario : "";?>, <?php echo isset($cuenta) ? $cuenta->pers_id_persona : ""; ?>)" > Mi cuenta</a>
+                <a id="btn_cuenta" class="dropdown-item" href="#" onclick="miCuenta(<?php echo isset($cuenta) ? $cuenta->usua_id_usuario : ""; ?>, <?php echo isset($cuenta) ? $cuenta->pers_id_persona : ""; ?>)" > Mi cuenta</a>
                 <?php //? Cambiar contraseña, no visible ?>
                 <!--
                 <a class="dropdown-item" href="#" onclick="cambiarContrasena(<?php echo isset($cuenta) ? $cuenta->usua_id_usuario : ""; ?>, <?php echo isset($cuenta) ? $cuenta->pers_id_persona : ""; ?>)" >Cambiar contraseña</a>
