@@ -224,7 +224,7 @@
     //verificar si hay inscripciones
     //Si no tiene inscripciones, buscar las sesiones y eliminarlas
 
-    $obj_Sesion->eliminarSesiones($IDGrupo);
+    //$obj_Sesion->eliminarSesiones($IDGrupo);
     $obj_Grupo->eliminarGrupo($IDGrupo);
 
     echo 1;

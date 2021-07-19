@@ -21,6 +21,23 @@
             $bd->cerrarBD();
         }
 
+        function buscarUltimo()
+        {
+        $bd = new BD();
+        $SQL_Bus_Inscripcion_Seq = 
+            "SELECT last_value
+            FROM inscripcion_insc_id_inscripcion_seq;"; //Que hace este last_value : Muestra el ultimo valor ingresado
+
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Bus_Inscripcion_Seq);
+        $obj_Inscripcion_Seq = $transaccion_1->traerObjeto(0);
+        $Inscripcion_Seq = $obj_Inscripcion_Seq->last_value;
+        $bd->cerrarBD();
+
+        return $Inscripcion_Seq;
+        }
+
         //Buscar una inscripción dado el id del grupo y del profesor
         //TODO Verificado en la BD 04/07/2021
         function buscarInscripcion($grupo, $profesor)

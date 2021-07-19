@@ -32,7 +32,8 @@
 
       <!-- Formulario -->
       <form name="form_asistencia" id="form_asistencia" method="POST">
-
+        <?php //? Se necesita saber estos datos para registrar las asistencias ?>
+        <input type="hidden" id = "idGrupo" name = "idGrupo" value = "<?php echo($grupo->grup_id_grupo); ?>">
       <div class="card mb-3">
         <div class="form-group">
           <!-- Datos generales -->
@@ -132,7 +133,10 @@
                       <?php
                         for ($iCont = 1 ; $iCont <= count($sesiones) ; $iCont++) { ?>
                         <td>
-                          <input id= "<?php echo($inscrito['insc_id_inscripcion']); ?>asistencia<?php echo($iCont);?>" type="checkbox" aria-label="Checkbox for following text input">
+                          <input type="checkbox" class="form-check-input" 
+                            id= "<?php echo($inscrito['insc_id_inscripcion']); ?>_asistencia_<?php echo($iCont);?>" 
+                            name= "<?php echo($inscrito['insc_id_inscripcion']); ?>_asistencia_<?php echo($iCont);?>"
+                            value="TRUE">
                         </td>
                       <?php } ?>
                     </tr>
@@ -149,7 +153,7 @@
         <!-- Botones -->
         <div class="col-lg-12" style="text-align: center;">
           <button id = "btn-regresar" type="button" class="btn btn-success btn-footer">Regresar</button>
-          <button type="button" class="btn btn-success btn-footer">Guardar</button>
+          <button id = "btn-registrar-asistencia" type="button" class="btn btn-success btn-footer">Guardar</button>
         </div>
     </div>
   </div>
