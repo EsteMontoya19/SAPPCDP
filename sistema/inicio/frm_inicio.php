@@ -32,7 +32,7 @@
               <?php
                 for ($iCont = 1; $iCont < count($comunicados) - 2; $iCont ++) { ?>
                   <div class="carousel-item">
-                    <img class="d-block img-fluid w-100 fit-image"  src="../recursos/imagenes/Carrusel/<?php
+                    <img class="d-block fit-image"  src="../recursos/imagenes/Carrusel/<?php
                         echo ($comunicados[$iCont]) ?>" alt='<?php echo("imagen".$iCont) ?>'>
                   </div> <?php
                 }
