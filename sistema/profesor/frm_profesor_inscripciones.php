@@ -57,6 +57,7 @@
                     <th>Fecha y Hora Sesión 1</th>
                     <th>Datos de acceso</th>
                     <th>Opciones</th>
+                    <th>Cancelar Inscripcion</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -106,6 +107,14 @@
                           <button type="button" class="btn btn-danger btn-table" title="Constancia" <?php if ($grupo['cons_id_constancias'] == Null) {?> style="display: none;" <?php } ?> style="margin-top: 5px;background: #20560a">
                             <i class="fas fa-file"></i>
                           </button> -->
+                        </td>
+                        <td>
+                          <?php if($grupo['insc_activo'] == 't'){ ?>
+                            <button id="btn-cancelar-inscripcion-grupo" type="button" class="btn btn-descarga" 
+                            onclick="cancelarInscripcion(<?php echo $grupo['grup_id_grupo']; ?>, <?php echo $profesor->prof_id_profesor; ?>, '<?php echo $sesionUno->fecha; ?>', '<?php echo $sesionUno->hora_ini; ?>', '<?php echo $grupo['curs_nombre'];?>', '<?php echo $grupo['curs_tipo'];?>', '<?php echo $grupo['curs_nivel'];?>')">Cancelar</button>
+                          <?php } else {
+                            echo ('<p class = aviso-azul>Cancelada</p>');
+                          } ?>
                         </td>
                       </tr>
                   <?php } } ?>
