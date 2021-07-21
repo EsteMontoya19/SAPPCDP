@@ -47,14 +47,13 @@
   $arr_coordinaciones = $obj_Busqueda->selectCoordinaciones();
 
   // Constantes de roles
-  define ("ADMINISTRADOR" , 1);
-  define ("INSTRUCTOR" , 2);
-  define ("MODERADOR" , 3);
-  define ("PROFESOR" , 4);
+  define("ADMINISTRADOR", 1);
+  define("INSTRUCTOR", 2);
+  define("MODERADOR", 3);
+  define("PROFESOR", 4);
   
   // Validar entidad  //*? Se crean las variables para consultar en caso de no ser un nuevo registro.
-  if (isset($_POST['persona']) && isset($_POST['id'])) { 
-
+if (isset($_POST['persona']) && isset($_POST['id'])) {
     // Recuperar información de consulta
     $obj_Persona = new Persona();
     $persona = $obj_Persona->buscarPersona($_POST['persona']);
@@ -65,37 +64,36 @@
     $obj_Moderador = new Moderador();
 
     switch ($usuario->rol_id_rol) {
+        case ADMINISTRADOR: //Administrador
+        case INSTRUCTOR: //Instructor
+        case PROFESOR: //Profesor
+            $profesor = $obj_Profesor->buscarProfesor($_POST['persona']);
+            $profesor_nivel = $obj_Profesor->buscarProfesorNiveles($profesor->prof_id_profesor);
+            $profesor_modalidad = $obj_Profesor->buscarProfesorModalidades($profesor->prof_id_profesor);
+            $profesor_coordinacion = $obj_Profesor->buscarProfesorCoordinaciones($profesor->prof_id_profesor);
+            ?>
+            <?php
+            break;
       
-      case ADMINISTRADOR: //Administrador
-      case INSTRUCTOR: //Instructor
-      case PROFESOR: //Profesor
-        $profesor = $obj_Profesor->buscarProfesor($_POST['persona']);
-        $profesor_nivel = $obj_Profesor->buscarProfesorNiveles($profesor->prof_id_profesor);
-        $profesor_modalidad = $obj_Profesor->buscarProfesorModalidades($profesor->prof_id_profesor);
-        $profesor_coordinacion = $obj_Profesor->buscarProfesorCoordinaciones($profesor->prof_id_profesor);
-        ?>
-        <?php
-      break;
-      
-      case MODERADOR: //Moderador
-        //? Si tienen más de un rol no tienen datos de Servidor_Social, sino de profesor
-        //? Este If valida eso y asigna las variables correspondientes
-        if ($obj_Moderador->buscarServidorSocial($_POST['persona'])) {
-          $servidorSocial = $obj_Moderador->buscarServidorSocial($_POST['persona']);
-        } else {
-          $profesor = $profesor = $obj_Profesor->buscarProfesor($_POST['persona']);
-        }
-        $moderador = $obj_Moderador->buscarModerador($_POST['persona']);
-        $moderador_dia = $obj_Moderador->buscarModeradorDias($_POST['persona']);
-      break;
+        case MODERADOR: //Moderador
+          //? Si tienen más de un rol no tienen datos de Servidor_Social, sino de profesor
+          //? Este If valida eso y asigna las variables correspondientes
+            if ($obj_Moderador->buscarServidorSocial($_POST['persona'])) {
+                $servidorSocial = $obj_Moderador->buscarServidorSocial($_POST['persona']);
+            } else {
+                $profesor = $profesor = $obj_Profesor->buscarProfesor($_POST['persona']);
+            }
+            $moderador = $obj_Moderador->buscarModerador($_POST['persona']);
+            $moderador_dia = $obj_Moderador->buscarModeradorDias($_POST['persona']);
+            break;
 
       //? Por los cambios del usuario ahora el Administrador tiene los mismos datos que un profesor
       // case 1: //Administrador
       //   $obj_Administrador = new Administrador();
       //   $administrador = $obj_Administrador->buscarAdministrador($_POST['persona']);
       // break;
-    }    
-  }
+    }
+}
 ?>
 
 <div id="wrapper">
@@ -108,11 +106,11 @@
         </li>
         <!-- Validación de la ruta (cinta de la pantalla) -->
         <?php if (isset($_POST['CRUD'])) { ?>
-          <?php if ($_POST['CRUD'] == 1) { ?>
+            <?php if ($_POST['CRUD'] == 1) { ?>
             <li class="breadcrumb-item active"><i class="fas fa-edit"></i>&nbsp; Actualizar registro</li>
-          <?php } elseif ($_POST['CRUD'] == 0) { ?>
+            <?php } elseif ($_POST['CRUD'] == 0) { ?>
             <li class="breadcrumb-item active"><i class="fas fa-search-plus"></i>&nbsp; Consultar registro</li>
-          <?php } ?>
+            <?php } ?>
         <?php } else { ?>
           <li class="breadcrumb-item active"><i class="fas fa-folder-plus"></i>&nbsp; Nuevo registro</li>
         <?php } ?>
@@ -126,9 +124,9 @@
       <input type="hidden" name="numCoordinaciones" id="numCoordinaciones" value=<?php echo(sizeof($arr_coordinaciones)); ?>>
         <!-- Desactivar formulario INICIO en caso de no ser un registro-->
         <?php if (isset($_POST['CRUD'])) { ?>
-          <?php if ($_POST['CRUD'] == 0) { ?>
+            <?php if ($_POST['CRUD'] == 0) { ?>
             <fieldset disabled>
-          <?php } ?>
+            <?php } ?>
         <?php } ?>
 
 
@@ -142,57 +140,61 @@
 
               <div class="col-lg-12 form-row">
                 <div id="numCuenta" class="col-lg-6 form-group">
-                <?php 
+                <?php
                  //? Si es un servidor socila debe aparecer número de cuenta, sino es el de trabajador
-                    if(isset($usuario) && $usuario->rol_id_rol == MODERADOR) {
-                      if(isset($servidorSocial)  ){ ?>
+                if (isset($usuario) && $usuario->rol_id_rol == MODERADOR) {
+                    if (isset($servidorSocial)) { ?>
                         <label for="numCuenta" class = "negritas">Número de cuenta:*</label>
                         <input value="<?php echo isset($servidorSocial) ? $servidorSocial-> seso_num_cuenta : ""; ?>" type="text" 
                           class="form-control" name="intNumCuenta"  id="intNumCuenta">
-                      <?php }  else { ?>
+                    <?php } else { ?>
                         <label for="intNum_Trabajador" class = "negritas">Número de trabajador:*</label>
                         <input value="<?php echo isset($profesor) ? $profesor-> prof_num_trabajador : ""; ?>" type="text" 
                         class="form-control" name="intNum_Trabajador"  id="intNum_Trabajador">
-                      <?php } 
-                    } else {?>
+                    <?php }
+                } else {?>
                       <label for="intNum_Trabajador" class = "negritas">Número de trabajador:*</label>
                       <input value="<?php echo isset($profesor) ? $profesor-> prof_num_trabajador : "" ; ?>" type="text" 
                         class="form-control" name="intNum_Trabajador"  id="intNum_Trabajador" 
                         <?php //? Evita al Coordinador escribir el Numero de trabajador cuando se crea un Profesor
-                            if(!isset($_POST['CRUD'])) {
-                              echo (' onblur="buscarProfesor()" ');
-                            }
-                      ?> >
-                    <?php } ?>
+                        if (!isset($_POST['CRUD'])) {
+                            echo (' onblur="buscarProfesor()" ');
+                        }
+                        ?> >
+                <?php } ?>
                   </div> 
 
                 <?php //? Si es Administrador, Profesor o Instructor?>
                   <div id="rfc" class="col-lg-6 form-group">
                   <label for="rfc" class = "negritas">RFC: *</label>
-                  <input value="<?php   if(isset($persona)){ 
+                  <input value="<?php   if (isset($persona)) {
                                           echo($persona-> pers_rfc);
-                                        } else {
-                                          echo("");
-                                        }?>"  type="text"
+                                } else {
+                                    echo("");
+                                }?>"  type="text"
                       class="form-control" name="strRFC" id="strRFC"
                       <?php //? Evita al Coordinador escribir el Numero de trabajador cuando se crea un Profesor
-                            if(!isset($_POST['CRUD'])) {
-                              echo (' onkeyup = "AsignarContrasena();" ');
-                            }
-                      ?> >
+                        if (!isset($_POST['CRUD'])) {
+                            echo (' onkeyup = "AsignarContrasena();" ');
+                        }
+                        ?> >
                   </div>
               </div>
 
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <!-- Define los campos que estarán en una fila -->
                 <div class="col-lg-4 form-group">
-                  <label for="strUsuarioNombre" class = "negritas">Nombre(s):<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></label>
+                  <label for="strUsuarioNombre" class = "negritas">Nombre(s):<?php if (isset($_POST['CRUD']) == false) {
+                        echo "*";
+                                                                             } ?></label>
                   <input type="text" class="form-control" id="strUsuarioNombre" name="strUsuarioNombre"
                     value="<?php echo isset($persona) ? $persona->pers_nombre : ""; ?>">
                 </div>
                 <div class="col-lg-4 form-group">
                   <label for="strUsuarioPrimerApe" class = "negritas">Apellido
-                      Paterno:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></label>
+                      Paterno:<?php if (isset($_POST['CRUD']) == false) {
+                            echo "*";
+                              } ?></label>
                   <input type="text" class="form-control" id="strUsuarioPrimerApe" name="strUsuarioPrimerApe"
                     value="<?php echo isset($persona) ? $persona->pers_apellido_paterno : ""; ?>">
                 </div>
@@ -206,14 +208,18 @@
               <div class="col-lg-12 form-row">
                 <div class="col-lg-6 form-group">
                   <label for="strUsuarioCorreo" class = "negritas">Correo
-                      electrónico:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></label>
+                      electrónico:<?php if (isset($_POST['CRUD']) == false) {
+                            echo "*";
+                                  } ?></label>
                   <input type="text" class="form-control" id="strUsuarioCorreo" name="strUsuarioCorreo"
                     placeholder="ej. ejemplo@dominio.com"
                     value="<?php echo isset($persona) ? $persona->pers_correo : ""; ?>">
                 </div>
                 <div class="col-lg-6 form-group">
                   <label
-                    for="strUsuarioTelefono" class = "negritas">Teléfono:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></label>
+                    for="strUsuarioTelefono" class = "negritas">Teléfono:<?php if (isset($_POST['CRUD']) == false) {
+                        echo "*";
+                                                                         } ?></label>
                   <input type="text" class="form-control" id="strUsuarioTelefono" name="strUsuarioTelefono"
                     placeholder="ej. 5511223344" value="<?php echo isset($persona) ? $persona->pers_telefono : ""; ?>">
                 </div>
@@ -232,14 +238,21 @@
               </div>
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <div class="col-lg-12 form-group">
-                  <label for="lbintUsuarioRol" class = "negritas">Rol:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></label>
-                  <select required='required' class="custom-select" id="intUsuarioRol" name="intUsuarioRol" <?php if (isset($_POST['CRUD']) == 1)  echo "disabled"; ?>>
+                  <label for="lbintUsuarioRol" class = "negritas">Rol:<?php if (isset($_POST['CRUD']) == false) {
+                        echo "*";
+                                                                      } ?></label>
+                  <select required='required' class="custom-select" id="intUsuarioRol" name="intUsuarioRol" <?php if (isset($_POST['CRUD']) == 1) {
+                        echo "disabled";
+                                                                                                            } ?>>
                     <option value="0">Seleccionar rol</option>
                     <?php foreach ($arr_roles as $rol) { ?>
                     <option value="<?php echo $rol['rol_id_rol']; ?>"
-                      <?php if(isset($usuario)) { if ($usuario->rol_id_rol == $rol['rol_id_rol']) { ?> selected
-                      <?php } }?>>
-                      <?php echo $rol['rol_nombre']; ?>
+                        <?php if (isset($usuario)) {
+                            if ($usuario->rol_id_rol == $rol['rol_id_rol']) {
+                                ?> selected
+                            <?php }
+                        }?>>
+                        <?php echo $rol['rol_nombre']; ?>
                     </option>
                     <?php } ?>
                   </select>
@@ -248,14 +261,24 @@
 
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <div class="col-lg-6 form-group">
-                  <label for="strNombreUsuario" class = "negritas">Nombre de usuario:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></label>
+                  <label for="strNombreUsuario" class = "negritas">Nombre de usuario:<?php if (isset($_POST['CRUD']) == false) {
+                        echo "*";
+                                                                                     } ?></label>
                   <input type="text" class="form-control" id="strNombreUsuario" name="strNombreUsuario"
                     value="<?php echo isset($usuario) ? $usuario->usua_num_usuario : ""; ?>">
                 </div>
                 <div class="col-lg-6 form-group">
-                  <label for="strContrasenia01" class = "negritas"><?php if (isset($_POST['CRUD']) == false)  {echo "Ingrese contraseña:*";} else {echo "Contraseña: ";} ?></label>
+                  <label for="strContrasenia01" class = "negritas"><?php if (isset($_POST['CRUD']) == false) {
+                        echo "Ingrese contraseña:*";
+                                                                   } else {
+                                                                       echo "Contraseña: ";
+                                                                   } ?></label>
                   <input type="password" class="form-control" id="strContrasenia01" name="strContrasenia01"
-                    <?php if (isset($_POST['CRUD']) == false){echo('placeholder=""');} else {echo('value= "' . $usuario->usua_contrasena . '"');} ?>>
+                    <?php if (isset($_POST['CRUD']) == false) {
+                        echo('placeholder=""');
+                    } else {
+                        echo('value= "' . $usuario->usua_contrasena . '"');
+                    } ?>>
                   <?php //? Aqui desbloqueamos consultas ?>
                   <div style="text-align: center; margin-top:5px">
                     <input type="checkbox" id="ver1" class="ver" onChange="hideOrShowPassword1()"/>
@@ -278,26 +301,44 @@
               <?php //! Apartado eliminado por solicitud del usuario ?>
               <!-- <div class="col-lg-12 form-row">
                 <div class="col-lg-6 form-group">
-                  <label for="UsuarioPregunta" class = "negritas">Pregunta de seguridad:<?php if (isset($_POST['CRUD']) == false)  echo "*"; ?></label>
+                  <label for="UsuarioPregunta" class = "negritas">Pregunta de seguridad:<?php if (isset($_POST['CRUD']) == false) {
+                        echo "*";
+                                                                                        } ?></label>
                   <select class="custom-select" id="UsuarioPregunta"name="UsuarioPregunta">
                     <option value="0">Seleccione una pregunta</option>
-                    <?php foreach ($arr_preguntas as $pregunta) { if ($pregunta['prse_activo'] == 't') { ?>
+                    <?php foreach ($arr_preguntas as $pregunta) {
+                        if ($pregunta['prse_activo'] == 't') { ?>
                       <option value="<?php echo $pregunta['prse_id_pregunta']; ?>"
-                        <?php if(isset($usuario)) { if ($usuario->prse_id_pregunta == $pregunta['prse_id_pregunta']) { ?>
-                        selected <?php } }?>>
-                        <?php echo $pregunta['prse_pregunta']; ?>
-                      </option>
-                    <?php } else { if(isset($usuario)) { if ($usuario->prse_id_pregunta == $pregunta['prse_id_pregunta']) {?>
-                          <option value="<?php echo $pregunta['prse_id_pregunta'];?>" selected>
+                                                    <?php if (isset($usuario)) {
+                                                        if ($usuario->prse_id_pregunta == $pregunta['prse_id_pregunta']) { ?>
+                                                        <?php }
+                                                    }?>>
                             <?php echo $pregunta['prse_pregunta']; ?>
+                      </option>
+                        <?php } else {
+                            if (isset($usuario)) {
+                                if ($usuario->prse_id_pregunta == $pregunta['prse_id_pregunta']) {?>
+                          <option value="<?php echo $pregunta['prse_id_pregunta'];?>" selected>
+                                        <?php echo $pregunta['prse_pregunta']; ?>
                           </option>
-                    <?php } } } }?>
+                                <?php }
+                            }
+                        }
+                    }?>
                   </select>
                 </div>
                 <div class="col-lg-6 form-group">
-                  <label for="UsuarioRespuesta" class = "negritas"><?php if (isset($_POST['CRUD']) == false) { echo "Proporcione la respuesta: *"; } else { echo "Respuesta";}?></label>
+                  <label for="UsuarioRespuesta" class = "negritas"><?php if (isset($_POST['CRUD']) == false) {
+                        echo "Proporcione la respuesta: *";
+                                                                   } else {
+                                                                       echo "Respuesta";
+                                                                   }?></label>
                   <input type="text" class="form-control" id="UsuarioRespuesta" name="UsuarioRespuesta"
-                    <?php if (isset($_POST['CRUD']) == false){echo('placeholder=""');} else {echo('value= "' . $usuario->usua_respuesta . '"');} ?>>
+                    <?php if (isset($_POST['CRUD']) == false) {
+                        echo('placeholder=""');
+                    } else {
+                        echo('value= "' . $usuario->usua_respuesta . '"');
+                    } ?>>
                 </div>
               </div> -->
             </div>
@@ -307,7 +348,7 @@
           <div id = "datosCuenta" class="form-group"                    
            <?php if (isset($usuario) && $usuario->rol_id_rol == ADMINISTRADOR) {
                       echo ('style="display: none;"');
-                    }
+           }
             ?> >
             <div class="card lg-12">
               <div class="card-header negritas">
@@ -319,17 +360,19 @@
               <div class="col-lg-12 form-row" style="margin-top: 15px;"> 
                 <?php if (isset($usuario) && $usuario->rol_id_rol == MODERADOR) { ?>
                   <div id="diasServicio" class="col-lg-12 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="diasServicio" class="col-lg-12 form-group" style="display: none;">
                 <?php } ?>
                     <label for="diasServicio" class = "negritas">Dias del servicio:*</label><br>
                     <?php foreach ($arr_dias as $dia) { ?>
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="strDiaServicio<?php echo ($dia['dia_id_dia']);?>" value="<?php echo ($dia['dia_id_dia']);?>" name="strDiaServicio<?php echo ($dia['dia_id_dia']);?>" 
-                          <?php if(isset($moderador_dia) && is_array($moderador_dia) || is_object($moderador_dia)) { 
-                            foreach ($moderador_dia as $diaModerador) {
-                              if ($diaModerador['dia_id_dia'] == $dia['dia_id_dia']) { ?> checked <?php } 
-                            }
+                          <?php if (isset($moderador_dia) && is_array($moderador_dia) || is_object($moderador_dia)) {
+                                foreach ($moderador_dia as $diaModerador) {
+                                    if ($diaModerador['dia_id_dia'] == $dia['dia_id_dia']) {
+                                        ?> checked <?php
+                                    }
+                                }
                           }?>>
                         <label class="form-check-label" for="inlineCheckbox1"><?php echo ($dia['dia_nombre']);?></label>
                       </div>
@@ -339,7 +382,7 @@
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <?php if (isset($usuario) && $usuario->rol_id_rol == MODERADOR) { ?>
                   <div id="fechaInicio" class="col-lg-3 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="fechaInicio" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="fechaInicio" class = "negritas">Fecha de inicio del servicio: *</label>
@@ -347,7 +390,7 @@
                   </div>
                 <?php if (isset($usuario) && $usuario->rol_id_rol == MODERADOR) { ?>
                   <div id="fechaFin" class="col-lg-3 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="fechaFin" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="fechaFin" class = "negritas">Fecha de fin del servicio:*</label>
@@ -355,7 +398,7 @@
                   </div>
                 <?php if (isset($usuario) && $usuario->rol_id_rol == MODERADOR) { ?>
                   <div id="horaInicio" class="col-lg-3 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="horaInicio" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="horaInicio" class = "negritas">Hora de inicio del servicio: *</label>
@@ -363,7 +406,7 @@
                   </div>
                 <?php if (isset($usuario) && $usuario->rol_id_rol == MODERADOR) { ?>
                   <div id="horaFin" class="col-lg-3 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="horaFin" class="col-lg-3 form-group" style="display: none;">
                 <?php } ?>
                     <label for="horaFin" class = "negritas">Hora de fin del servicio: *</label>
@@ -375,59 +418,58 @@
               <div class="col-lg-12 form-row" style="margin-top: 15px;">  
                 <?php if (isset($usuario) && $usuario->rol_id_rol == INSTRUCTOR) { ?>
                   <div id="semblanza" class="col-lg-12 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="semblanza" class="col-lg-12 form-group" style="display: none;">
                 <?php } ?>
                   <label for="strSemblanza" class = "negritas">Semblanza:*</label>
                   <textarea type="text" class="form-control" id="strSemblanza" name="strSemblanza"><?php echo isset($profesor) ? $profesor-> prof_semblanza: ""; ?></textarea>           
                   </div>
               </div> <!-- Cierre div de datos row -->
-              
+    
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <?php //? Si es Profesor  o Instructor ?>
                 <?php if (isset($usuario) && ($usuario->rol_id_rol == PROFESOR )) { ?>
                   <div id="nivelImparticion" class="col-lg-6 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="nivelImparticion" class="col-lg-6 form-group" style="display: none;">
                 <?php } ?>
                   <label for="nivelImparticion" class = "negritas">Nivel de impartición:*</label><br>
                     <?php foreach ($arr_niveles as $nivel) { ?>
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="strNivel<?php echo ($nivel['nive_id_nivel']);?>" name="strNivel<?php echo ($nivel['nive_id_nivel']);?>"
-                                value="<?php echo ($nivel['nive_id_nivel']);?>" 
-                          <?php if(isset($nivel) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) { 
-                            foreach ($profesor_nivel as $nivelProfesor) 
-                            {
-                              if ($nivelProfesor['nive_id_nivel'] == $nivel['nive_id_nivel']) { ?> 
-                                checked 
-                              <?php } 
-                            }
+                                value="<?php echo ($nivel['nive_id_nivel']);?>"
+                          <?php if (isset($nivel) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) {
+                                foreach ($profesor_nivel as $nivelProfesor) {
+                                    if ($nivelProfesor['nive_id_nivel'] == $nivel['nive_id_nivel']) { ?>
+                                checked
+                                    <?php }
+                                }
                           }?>>
                         <label class="form-check-label" for="inlineCheckbox1"><?php echo ($nivel['nive_nombre']);?></label>
                       </div>
                     <?php } ?>
-                  </div> 
+                  </div>
                 <?php //? Si es Profesor  o Instructor ?>
                 <?php if (isset($usuario) && ($usuario->rol_id_rol == PROFESOR)) { ?>
                   <div id="modalidadImparticion" class="col-lg-6 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="modalidadImparticion" class="col-lg-6 form-group" style="display: none;">
                 <?php } ?>
                   <label for="modalidadImparticion" class = "negritas">Modalidad en la que imparte clases : * </label><br>
                   <?php foreach ($arr_modalidades as $modalidad) { ?>
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="strModalidad<?php echo ($modalidad['moda_id_modalidad']);?>" name="strModalidad<?php echo ($modalidad['moda_id_modalidad']);?>"
-                                value="<?php echo ($modalidad['moda_id_modalidad']);?>" 
-                          <?php if(isset($modalidad) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) { 
-                            foreach ($profesor_modalidad as $modalidadProfesor) {
-                              if ($modalidadProfesor['moda_id_modalidad'] == $modalidad['moda_id_modalidad']) { ?> 
-                                checked 
-                              <?php } 
-                            }
+                                value="<?php echo ($modalidad['moda_id_modalidad']);?>"
+                          <?php if (isset($modalidad) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) {
+                                foreach ($profesor_modalidad as $modalidadProfesor) {
+                                    if ($modalidadProfesor['moda_id_modalidad'] == $modalidad['moda_id_modalidad']) { ?>
+                                checked
+                                    <?php }
+                                }
                           }?>>
                         <label class="form-check-label" for="inlineCheckbox1"><?php echo ($modalidad['moda_nombre']);?></label>
                       </div>
-                  <?php } ?>              
+                  <?php } ?>
                   </div>  <!-- Fin del campo-->
               </div> <!-- Fin del row-->
 
@@ -435,73 +477,66 @@
                 <?php //? Si es Profesor o Instructor ?>
                 <?php if (isset($usuario) && ($usuario->rol_id_rol == PROFESOR)) { ?>
                   <div id="coordinaciones" class="col-lg-12 form-group">
-                <?php }  else { ?>
+                <?php } else { ?>
                   <div id="coordinaciones" class="col-lg-12 form-group" style="display: none;">
                 <?php } ?>    
                 <label for="strCoordinacion" class = "negritas">Coordinaciones a las que pertenece: *</label><br>
                 <table> <?php //*? Esto lo creo para hacer columnas con los checkbox?>
                   <tr>
-                    <td>               
+                    <td>
                       <?php foreach ($arr_coordinaciones as $coordinacion) { ?> 
                             <div class="form-check">
                               <input class="form-check-input" type="checkbox" id="strCoordinacion<?php echo ($coordinacion['coor_id_coordinacion']);?>" name="strCoordinacion<?php echo ($coordinacion['coor_id_coordinacion']);?>"
                                       value="<?php echo ($coordinacion['coor_id_coordinacion']);?>" 
                                 <?php //? Lo de is_array e is_object es para eliminar warnings
-                                if(isset($coordinacion) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) { 
-                                  foreach ($profesor_coordinacion as $coordinacionProfesor) {
-                                    if ($coordinacionProfesor['coor_id_coordinacion'] == $coordinacion['coor_id_coordinacion']) { ?> 
+                                if (isset($coordinacion) && isset($usuario) && is_array($profesor_coordinacion) || is_object($profesor_coordinacion)) {
+                                    foreach ($profesor_coordinacion as $coordinacionProfesor) {
+                                        if ($coordinacionProfesor['coor_id_coordinacion'] == $coordinacion['coor_id_coordinacion']) { ?> 
                                       checked 
-                                    <?php } 
-                                  }
+                                        <?php }
+                                    }
                                 }?>>
                               <label class="form-check-label" for="inlineCheckbox1"><?php echo ($coordinacion['coor_nombre']);?></label> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                                 <?php //*? Esto lo creo para hacer dos columnas con las coordinaciones si se borra solo aparecen en una fila
                                   $tamano = sizeof($arr_coordinaciones);
                                   static $mostradas = 0;
-                                  if ($mostradas == 7 ){
-                                    echo("</td><td>"); 
+                                if ($mostradas == 7) {
+                                    echo("</td><td>");
                                     $mostradas = 0;
-                                  } else {
+                                } else {
                                     $mostradas++;
-                                  }
-                                  
+                                }
                                 ?>
                             </div>
                       <?php } ?>
                     </td>
-                  </tr>         
+                  </tr>
                 </table>
               </div>  <!-- Fin del campo-->
             </div>  <!-- Fin del card-->
           </div> <!-- Este es cierra todo el grupo de Datos de cuenta -->
-                                                            
-                                                              
-                                                              
-
-
-                                                              
 
         <!-- ID e Instrucciones -->
         <?php //? Al haber algo en el CRUD es que es una consulta ?>
         <?php if (isset($_POST['CRUD'])) { ?>
         <php ?/? Si es 1 significa una actualización ?></php>
-          <?php if ($_POST['CRUD'] == 1) { ?>
+            <?php if ($_POST['CRUD'] == 1) { ?>
             <input type="hidden" name="dml" value="update">
             <input type="hidden" id="idUsuario" name="idUsuario" value="<?php echo $_POST['id']; ?>">
             <input type="hidden" id="idPersona" name="idPersona" value="<?php echo $persona->pers_id_persona; ?>">
             <input type="hidden" name="hideRol" id="hideRol" value="<?php echo $usuario->rol_id_rol; ?>">
-          <?php } elseif ($_POST['CRUD'] == 0) { ?>
+            <?php } elseif ($_POST['CRUD'] == 0) { ?>
             <input type="hidden" name="dml" value="select">
-          <?php } ?>
+            <?php } ?>
         <?php } else { ?>
           <input type="hidden" name="dml" value="insert">
         <?php } ?>
 
         <!-- Desactivar formulario FIN -->
         <?php if (isset($_POST['CRUD'])) { ?>
-          <?php if ($_POST['CRUD'] == 0) { ?>
+            <?php if ($_POST['CRUD'] == 0) { ?>
             </fieldset>
-          <?php } ?>
+            <?php } ?>
         <?php } ?>
 
       </form>
@@ -512,9 +547,9 @@
 <div class="col-lg-12" style="text-align: center;">
   <button id="btn-regresar-usuario" type="button" class="btn btn-success btn-footer btn-regresar">Regresar</button>
   <?php if (isset($_POST['CRUD'])) { ?>
-    <?php if ($_POST['CRUD'] == 1) { ?>
+        <?php if ($_POST['CRUD'] == 1) { ?>
       <button id="btn-actualizar-usuario" type="button" class="btn btn-success btn-footer btn-aceptar">Actualizar</button>
-    <?php } ?>
+        <?php } ?>
   <?php } else { ?>
     <button id="btn-registrar-usuario" type="button" class="btn btn-success btn-footer btn-aceptar">Guardar</button>
   <?php } ?>
