@@ -55,6 +55,7 @@
                     Prof.prof_id_profesor, Pers.pers_id_persona, I.insc_id_inscripcion
             FROM Persona Pers, Inscripcion I, Grupo G, Profesor Prof
             WHERE G.grup_id_grupo = $ID AND I.grup_id_grupo = G.grup_id_grupo AND I.prof_id_profesor = Prof.prof_id_profesor AND Prof.pers_id_persona = Pers.pers_id_persona
+                  AND I.insc_activo = TRUE
             ";
 
             $bd = new BD();
@@ -198,8 +199,7 @@
         function gruposInscritosxProfesor($idProfesor)
         {
             $SQL_Act_Curso = 
-            "   
-                SELECT G.GRUP_ID_GRUPO, G.moap_id_modalidad, moap_nombre, CONS_ID_CONSTANCIAS,
+            " SELECT G.GRUP_ID_GRUPO, G.moap_id_modalidad, moap_nombre, CONS_ID_CONSTANCIAS,
                     CURS_NOMBRE, CALE_SEMESTRE, ESTA_NOMBRE, insc_activo, curs_nivel, curs_tipo
                 FROM INSCRIPCION I, GRUPO G, CURSO C, CALENDARIO CA, MODALIDAD_APRENDIZAJE M, ESTADO E
                 WHERE I.PROF_ID_PROFESOR = $idProfesor
@@ -208,6 +208,7 @@
                     AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO 
                     AND G.MOAP_ID_MODALIDAD = M.MOAP_ID_MODALIDAD
                     AND E.ESTA_ID_ESTADO = G.ESTA_ID_ESTADO
+                    /*AND I.insc_activo = TRUE*/
                 ORDER BY I.GRUP_ID_GRUPO ASC;
             ";
             
@@ -469,11 +470,11 @@
         function buscarInscripcionesxGrupo($ID)
         {
             $SQL_Bus_Cursos = 
-            "   
-            SELECT pers_apellido_paterno, pers_apellido_materno, pers_nombre, pers_correo
+            "SELECT pers_apellido_paterno, pers_apellido_materno, pers_nombre, pers_correo
             FROM Inscripcion I, Profesor p, Persona E 
             WHERE I.prof_id_profesor = P.prof_id_profesor 
-            AND P.pers_id_persona = E.pers_id_persona AND grup_id_grupo = $ID 
+                AND P.pers_id_persona = E.pers_id_persona AND grup_id_grupo = $ID 
+                AND I.insc_activo = TRUE
             ORDER BY pers_apellido_paterno ASC;
             ";
 
