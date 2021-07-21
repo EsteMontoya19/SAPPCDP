@@ -235,8 +235,10 @@ function validarFormularioGrupo() {
         return false;
     }
 
+    
     //Validaciones para las sesiones ingresadas acorde al grupo
     for (var iCon = 1; iCon <= $('#numSesiones').val(); iCon++) {
+        
         if ($('#SesionFecha' + iCon).val() == '') {
             $('html, body').animate({ scrollTop: 300 }, 'slow');
             document.getElementById('SesionFecha' + iCon).focus();
@@ -540,7 +542,7 @@ $(document).ready(function () {
                     } else if (respuesta == 2){
                         alertify.error('Llegué hasta aquí');
                     } else {
-                        alertify.error('Hubo un problema al actualizar al grupo');
+                        alertify.error('Hubo un problema al actualizar al grupo' + respuesta);
                     }
                 },
             });

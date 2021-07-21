@@ -414,6 +414,13 @@
       //? Dejar inscribir en este punto que termina el for each en caso de haber pasado todas las valoraciones de todos los grupos en caso de no funcionar el otro
     }
   }
+  if ($_POST['dml'] == 'cancelarInscripcion'){
+    $profesor = $_POST['profesor'];
+    $grupo = $_POST['grupo'];
+
+    $obj_Inscripcion->cancelarInscripcion($grupo, $profesor);
+    echo 1;
+  }
   //? Prueba para hacer las comparaciones
     /*$file = fopen('Mensajes.txt', 'a');
       fwrite($file, $grupo->grup_id_grupo.PHP_EOL);

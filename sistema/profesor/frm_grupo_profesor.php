@@ -406,7 +406,11 @@ if (isset($_POST['persona'])) {
                   onclick="inscribirGrupo(<?php echo $Grupo->grup_id_grupo?>, <?php echo $Grupo->grup_num_inscritos?>, <?php echo $Grupo->grup_cupo?>, <?php echo $persona->pers_id_persona?>, '<?php echo $Curso1->curs_nombre?>', '<?php echo $Curso1->curs_tipo?>', '<?php echo $Curso1->curs_nivel?>')">Inscribirse</button>
                             <?php } ?>
                         <?php } else {
+                          if ($inscrito->insc_activo == 't'){
                             echo ("<p class = 'aviso-rojo'>Ya se encuentra inscrito a este grupo</p>");
+                          } else {
+                            echo ("<p class = 'aviso-rojo'>Estaba inscrito a este grupo, pero cancelo su inscripción</p>");
+                          }
                         }
                     } else {
                         echo ("<p class = 'aviso-rojo'>El periodo de inscripción  a este grupo finalizo</p>");

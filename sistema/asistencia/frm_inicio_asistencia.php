@@ -58,7 +58,7 @@
                       <td> <?php echo $grupo['grup_estado'];?> </td>
                       <td><small><?php echo $grupo['pers_nombre'];?> <?php echo $grupo['pers_apellido_paterno'];?> <?php echo $grupo['pers_apellido_materno'];?></small></td>
                       <td>
-                        <button type="button" class="btn btn-info btn-table" title="Asistencias" <?php if ($grupo['grup_estado'] != 'Pendiente') {?> style="display: none;" <?php } ?> style="margin-top: 5px;" onclick="asistenciaGrupo(<?php echo $grupo['grup_id_grupo']?>)">
+                        <button type="button" class="btn btn-info btn-table" title="Asistencias" <?php if ($grupo['grup_estado'] != 'Pendiente') {?> style="display: none;" <?php } ?> style="margin-top: 5px;" onclick="asistenciaGrupo(<?php echo $grupo['grup_id_grupo']?> , true )">
                           <i class="fas fa-tasks"></i>
                         </button>
                       </td>
@@ -74,5 +74,5 @@
     </div>
   </div>
 
-  <script src="../sistema/asistencia/asistencias.js"></script>
+  <script src="../sistema/asistencia/control_asistencias.js"></script>
 

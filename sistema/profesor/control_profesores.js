@@ -152,3 +152,77 @@ $(document).ready(function () {
         ],
     });
 });
+
+function validarCancelacion(fecha, hora){
+    //Crea una constante con la fecha del día, en la hora que se intenta cancelar la inscripción
+    const objFechaHoy = new Date();
+
+    /* Primero se separa la cadena de la fecha para tener por separado el día, mes y año
+        Después se procede a formar el string de con el que se creara la fecha para posteriormente compararla
+        Finalmente se crea el objeto con el string ya formado
+    */
+    var separadorFecha = fecha.split('-');
+    var stringFecha = separadorFecha[2] + '-' + separadorFecha[1] + '-' + separadorFecha[0] + ' ' + hora;
+    var objFecha2 =  new Date(stringFecha);
+
+    /*Se compara si el momento en que se quiere hacer la cancelación de la inscripción es antes de la hora en que comienza la primer sesión
+        Ya que en caso de haber comenzado la primer sesión ya no se le permitirá al profesor cancelar su inscripción
+     */
+    if (objFechaHoy <= objFecha2 ){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function cancelarInscripcion(grupo, profesor, fecha, hora, nombre, tipo, nivel){
+
+    if(validarCancelacion(fecha, hora)){
+        var mensaje = '¿Esta seguro que desea cancelar su inscripción al ';
+        mensaje = mensaje.concat(tipo);
+        mensaje = mensaje.concat(' ');
+        mensaje = mensaje.concat(nombre);
+        mensaje = mensaje.concat('<br> Nivel ');
+        mensaje = mensaje.concat(nivel);
+        mensaje = mensaje.concat('?');
+        mensaje = mensaje.concat('<br> Una vez confirmado ya no se podrá deshacer la cancelación, por lo que no podrá inscribirse a este grupo y deberá hacerlo en otro diferente si quiere acceder al curso');
+
+        var titulo = 'Cancelación de Inscripción';
+        alertify.confirm(
+            titulo,
+            mensaje,
+            function () {
+                var dml = 'cancelarInscripcion';
+                var datos = {
+                    grupo: grupo,
+                    profesor: profesor,
+                    dml: dml,
+                };
+                $.ajax({
+                    data: datos,
+                    type: 'POST',
+                    url: '../modulos/Control_Grupo.php',
+                    success: function (respuesta) {
+                        console.log(respuesta);
+                        if (respuesta.endsWith('1')) {
+                            alertify.success('Su inscripción fue cancelada exitosamente');
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500);
+                        } else if (respuesta.endsWith('2')) {
+                            alertify.error('Lo sentimos no se pudo cancelar su inscripción');
+                        } else {
+                            alertify.error('Ocurrio un problema con la cancelación de su inscripción' + respuesta);
+                        }
+                    },
+                });
+            },
+            function () {
+                alertify.confirm().close();
+            }
+        );
+
+    } else {
+        alertify.error('Lo siento no puedes cancelar una inscripción después de que ha comenzado la primer sesión del grupo al que te inscribiste');
+    }
+}

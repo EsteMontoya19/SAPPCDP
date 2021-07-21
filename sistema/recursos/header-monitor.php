@@ -50,8 +50,7 @@
       <!-- Navbar Search -->
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav ml-auto">
-         
-          <?php //TODO: Hacer las funciones de Asistencia del Moderador ?>
+       
             
           <li id="btn_asist" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF" onclick = "asistenciasModerador(<?php echo isset($cuenta) ? $cuenta->usua_id_usuario : ''; ?>)">

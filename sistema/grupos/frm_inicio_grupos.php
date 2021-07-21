@@ -104,7 +104,7 @@
                           <i class="fas fa-list-alt"></i>
                         </button>
 
-                        <button type="button" class="btn btn-info btn-table" title="Asistencias" <?php if ($grupo['grup_estado'] != 'Pendiente') {?> style="display: none;" <?php } ?> style="margin-top: 5px;" onclick="asistenciaGrupo(<?php echo $grupo['grup_id_grupo']?>)">
+                        <button type="button" class="btn btn-info btn-table" title="Asistencias" <?php if ($grupo['grup_estado'] != 'Pendiente' || $grupo['grup_publicado'] != "t") {?> style="display: none;" <?php } ?> style="margin-top: 5px;" onclick="asistenciaGrupo(<?php echo $grupo['grup_id_grupo']?>)">
                           <i class="fas fa-tasks"></i>
                         </button>
                       </td>
