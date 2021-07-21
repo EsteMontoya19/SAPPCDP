@@ -200,7 +200,7 @@
             $SQL_Act_Curso = 
             "   
                 SELECT G.GRUP_ID_GRUPO, G.moap_id_modalidad, moap_nombre, CONS_ID_CONSTANCIAS,
-                    CURS_NOMBRE, CALE_SEMESTRE, ESTA_NOMBRE
+                    CURS_NOMBRE, CALE_SEMESTRE, ESTA_NOMBRE, insc_activo, curs_nivel, curs_tipo
                 FROM INSCRIPCION I, GRUPO G, CURSO C, CALENDARIO CA, MODALIDAD_APRENDIZAJE M, ESTADO E
                 WHERE I.PROF_ID_PROFESOR = $idProfesor
                     AND I.GRUP_ID_GRUPO = G.GRUP_ID_GRUPO 

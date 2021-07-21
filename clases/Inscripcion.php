@@ -43,7 +43,7 @@
         function buscarInscripcion($grupo, $profesor)
         {
             $SQL_Bus_Inscripcion =
-			"SELECT insc_id_inscripcion, cons_id_constancias, grup_id_grupo, prof_id_profesor
+			"SELECT insc_id_inscripcion, cons_id_constancias, grup_id_grupo, prof_id_profesor, insc_activo
             FROM inscripcion
             WHERE grup_id_grupo = $grupo AND prof_id_profesor = $profesor
             ";
@@ -114,6 +114,26 @@
             $obj_Usuario = $transaccion_1->traerObjeto(0);
             $bd->cerrarBD();
             return ($transaccion_1->traerObjeto(0));
+        }
+
+        //Permte cancelar la inscripción de un profesor a un grupo, a partir del id del grupo y su id de profesor.
+        function cancelarInscripcion($grupo, $profesor)
+        {
+            $SQL_Canc_Insc = 
+            "UPDATE Inscripcion
+            SET insc_activo = false
+            WHERE grup_id_grupo = $grupo AND prof_id_profesor = $profesor;
+                        
+            UPDATE Grupo
+            SET grup_num_inscritos =  grup_num_inscritos - 1
+            WHERE grup_id_grupo = $grupo;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Canc_Insc);
+            $bd->cerrarBD();
         }
     }
 ?>

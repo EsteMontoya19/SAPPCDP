@@ -21,6 +21,11 @@
   font-weight: bolder;
 }
 
+.aviso-azul{
+  color: #015ABD;
+  font-weight: bolder;
+}
+
 .btn-ingreso:hover{
   color: #fff;
   background-color: #4fd3d8;
