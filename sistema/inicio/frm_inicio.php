@@ -19,7 +19,7 @@
               <li data-target="#comunicados" data-slide-to="0" class="active"></li>
               <?php
               $comunicados = scandir("../../recursos/imagenes/Carrusel/", 1);
-              for ($iCont = 1; $iCont < count($comunicados) - 2; $iCont ++) { ?> 
+              for ($iCont = 1; $iCont < count($comunicados) - 2; $iCont ++) { ?>
                 <li data-target= '#comunicados' data-slide-to= '<?php echo($iCont) ?>'></li> <?php
               }
                 ?>

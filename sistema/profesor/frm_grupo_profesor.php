@@ -409,7 +409,7 @@ if (isset($_POST['persona'])) {
                             echo ("<p class = 'aviso-rojo'>Ya se encuentra inscrito a este grupo</p>");
                         }
                     } else {
-                        echo ("<p class = 'aviso-rojo'>El perido de inscripción  a este grupo finalizo</p>");
+                        echo ("<p class = 'aviso-rojo'>El periodo de inscripción  a este grupo finalizo</p>");
                     }?>
                 <?php } ?>
             <?php } ?>

@@ -356,9 +356,9 @@ if (isset($_POST['persona'])) {
 
                   //? Se verifica que el periodo de inscripción del grupo se vigente, si no no aparece nada
                     if (!isset($periodoInscripcion)) {
-                        echo ("<p class = 'aviso-rojo'>El perido de inscripción  a este grupo finalizo</p>");
+                        echo ("<p class = 'aviso-rojo'>El periodo de inscripción  a este grupo finalizo</p>");
                     } else {
-                        echo ("<p class = 'aviso-verde'>El perido de inscripción  a este grupo continúa</p>");
+                        echo ("<p class = 'aviso-verde'>El periodo de inscripción  a este grupo continúa</p>");
                     }
                     if ($Grupo->grup_cupo - $Grupo->grup_num_inscritos == 0) {
                         echo ("<p class = 'aviso-rojo'>Ya no quedan lugares para este grupo</p>");
