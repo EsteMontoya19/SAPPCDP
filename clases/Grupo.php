@@ -101,7 +101,7 @@
         function buscarTodosGrupos()
         {
             $SQL_Bus_Cursos = 
-            "   SELECT g.grup_id_grupo, p.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
+            "   SELECT DISTINCT g.grup_id_grupo, p.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
                     g. curs_id_curso, curs_nombre, grup_num_inscritos,
                     g.plat_id_plataforma, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo,  
                     grup_publicado, moap_nombre grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, esta_nombre grup_estado
@@ -445,7 +445,7 @@
         function buscarGruposImpartidosxInstructor($id){
 			$SQL_Bus_Grupos =
             "	
-                SELECT G.GRUP_ID_GRUPO, M.moap_id_modalidad, moap_nombre,
+                SELECT G.GRUP_ID_GRUPO, G.grup_publicado, M.moap_id_modalidad, moap_nombre,
                     CURS_NOMBRE, CALE_SEMESTRE, grup_num_inscritos, esta_nombre
                 FROM Personal_Grupo P, GRUPO G, CURSO C, Modalidad_Aprendizaje M, CALENDARIO CA, Estado E
                 WHERE P.usua_id_usuario = $id

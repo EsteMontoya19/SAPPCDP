@@ -57,7 +57,7 @@
             $SQL_Act_Instructor = 
             "   UPDATE personal_grupo
                 SET usua_id_usuario = $idusuario
-                WHERE grup_id_grupo = $grupo AND usua_id_usuario = (SELECT p.usua_id_usuario
+                WHERE grup_id_grupo = $grupo AND usua_id_usuario = (SELECT DISTINCT p.usua_id_usuario
                                                             FROM personal_grupo p, usuario u
                                                             WHERE grup_id_grupo = $grupo AND rol_id_rol = 2 
                                                                 AND p.usua_id_usuario = u.usua_id_usuario);

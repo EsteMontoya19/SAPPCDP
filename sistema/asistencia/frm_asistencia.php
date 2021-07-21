@@ -3,12 +3,15 @@
   include('../../clases/Busqueda.php');
   include('../../clases/Grupo.php');
   include('../../clases/Sesion.php');
+  include('../../clases/Asistencia.php');
+
   include('../../clases/Curso.php');
   include('../../clases/Instructor.php');
   include('../../clases/Moderador.php');
 
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
+  $obj_Asistencia = new Asistencia();
 
 
   $grupo = $obj_Grupo->buscarGrupoCompleto($_POST['grupo']);
@@ -30,6 +33,11 @@
         <hr>
       </p>
 
+      <?php 
+        if (isset($_POST['moderador'])) {
+          echo ('<p class = "aviso-amarillo">Recuerde que unicamente el Coordinador y el Instructor del curso pueden modificar asistencias de sesiones pasadas.</p>');
+        }
+      ?>
       <!-- Formulario -->
       <form name="form_asistencia" id="form_asistencia" method="POST">
         <?php //? Se necesita saber estos datos para registrar las asistencias ?>
@@ -131,12 +139,36 @@
                       <td><?php echo($inscrito['prof_id_profesor']); ?></td>
                       <td><?php echo($inscrito['nombre']); ?></td>
                       <?php
-                        for ($iCont = 1 ; $iCont <= count($sesiones) ; $iCont++) { ?>
+                        foreach ($sesiones as $iCont => $sesion) {  ?>
                         <td>
                           <input type="checkbox" class="form-check-input" 
-                            id= "<?php echo($inscrito['insc_id_inscripcion']); ?>_asistencia_<?php echo($iCont);?>" 
-                            name= "<?php echo($inscrito['insc_id_inscripcion']); ?>_asistencia_<?php echo($iCont);?>"
-                            value="TRUE">
+                            id= "<?php echo($inscrito['insc_id_inscripcion']); ?>_asistencia_<?php echo($iCont + 1);?>" 
+                            name= "<?php echo($inscrito['insc_id_inscripcion']); ?>_asistencia_<?php echo($iCont + 1);?>"
+                            value="TRUE" 
+                            <?php 
+                              $asistencia = $obj_Asistencia->buscarAsistenciaSesion($sesion['sesi_id_sesiones'],$inscrito['insc_id_inscripcion']);
+                              if (isset ($asistencia) ) {
+                                //? Si estuvo presente marcamos la casilla sino, se queda desactivada
+                                if ($asistencia->asis_presente == "t") {
+                                  echo (" checked");
+                                }
+                              
+                                //? Si es en un futuro
+                                if ($sesion['sesi_fecha'] >  date("Y")."-".date("m")."-".date("d") ) {
+                                  echo (' disabled');
+                                }
+                                
+                                //? Si viene de moderador no puede cambiar registros historicos
+                                if (isset($_POST['moderador'])) {
+                                  //? Si ya paso el dia de la asistencia
+                                  if ($sesion['sesi_fecha'] <  date("Y")."-".date("m")."-".date("d") ) {
+                                    echo (' class = "disabled" readonly="readonly" onclick="javascript: return false;"');
+                                  }
+                                }
+                              }
+                              //TODO: Aqui se pueden validar que las asistencias no se tomen en un futuro
+                              
+                            ?> >
                         </td>
                       <?php } ?>
                     </tr>
@@ -159,4 +191,4 @@
   </div>
 </div>
 
-<script src="../sistema/asistencia/asistencias.js"></script>
+<script src="../sistema/asistencia/control_asistencias.js"></script>

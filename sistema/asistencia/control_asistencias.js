@@ -1,7 +1,6 @@
 //? Acciones de los botónes
 $('#btn-regresar').click(function () {
-  $('html, body').animate({ scrollTop: 0 }, 0);
-  $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
+  location.reload();
 });
 
 
@@ -31,25 +30,17 @@ $(document).ready(function () {
                   if (respuesta == 1) {
                       alertify.success('El registro se realizó correctamente');
                       setTimeout(function () {
-                          $('html, body').animate({ scrollTop: 0 }, 0);
-                          $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
+                         location.reload();
                       }, 1500);
-                  } else if (respuesta == 2){
-                      alertify.error('No hay Profesores inscritos en el grupo.');
-                  } else if (respuesta == 3){
-                      alertify.error('No se puede registrar un grupo con sesiones en dias inhabiles o festivos');
-                  } else if (respuesta == 4){
-                      alertify.error('No se puede registrar un grupo con sesiones en el periodo de vacaciones administrativas');
-                  } else if (respuesta == 5){
-                      alertify.error('No se puede registrar un grupo con sesiones en asueto academico');
                   } else {
                       $('html, body').animate({ scrollTop: 0 }, 0);
-                      alertify.error('Hubo un problema al registrar el grupo' + respuesta);
+                      alertify.error('Hubo un problema al registrar la asistencia');
                   }
               },
           }); 
           return false;
   });
+
 
 
   //?Tabla inicio dinamica
@@ -68,11 +59,16 @@ $(document).ready(function () {
 
 
 //! Funciones
+function bloqueoCambioPasado () {
+    alertify.error('No tiene permiso de registrar asistencias de sesiones pasadas.');
+    return false;
+}
 
-function asistenciaGrupo (grupo) {
-  var datos = {
+function asistenciaGrupo (grupo , moderador) {
+    var datos = {
       grupo: grupo,
-  };
+      moderador: moderador,
+    };
 
   $.ajax({
       data: datos,
