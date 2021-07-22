@@ -20,8 +20,10 @@
     $obj_Plataforma = new Plataforma();
     $obj_Busqueda = new Busqueda();
     $obj_Personal = new Personal_Grupo();
+
     $arr_Inscritos = $obj_Grupo->buscarInscripcionesxGrupo($idGrupo);
     $arr_sesiones = $obj_Sesion->buscarDiaMesSesiones($idGrupo);
+    
     $curso = $obj_Grupo->buscarNombreCursoxGrupo($idGrupo);
     $sesion = $obj_Sesion->numSesionesGrupo($idGrupo);
     $numSesiones = $sesion->numero;
@@ -31,6 +33,7 @@
     $instructor = $obj_Personal->buscarPersonal($idGrupo, 2);
     $moderador = $obj_Personal->buscarPersonal($idGrupo, 3);
     $nombreInstructor='Instructor: '.$instructor->pers_nombre.' '.$instructor->pers_apellido_paterno.' '.$instructor->pers_apellido_materno;
+    
     if(isset($moderador)){
         $nombreModerador='Moderador: '.$moderador->pers_nombre.' '.$moderador->pers_apellido_paterno.' '.$moderador->pers_apellido_materno; 
     } else {
