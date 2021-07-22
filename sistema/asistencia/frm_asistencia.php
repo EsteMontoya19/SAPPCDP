@@ -15,8 +15,8 @@
 
 
   $grupo = $obj_Grupo->buscarGrupoCompleto($_POST['grupo']);
-  $sesiones = $obj_Sesion->buscarSesionesIDGrupo($_POST['grupo']); 
-  $inscritos = $obj_Grupo->buscarCorreosDeParticipantes($_POST['grupo']); 
+  $sesiones = $obj_Sesion->buscarSesionesIDGrupo($_POST['grupo']);
+  $inscritos = $obj_Grupo->buscarCorreosDeParticipantes($_POST['grupo']);
 
 ?>
 
@@ -33,11 +33,11 @@
         <hr>
       </p>
 
-      <?php 
+      <?php
         if (isset($_POST['moderador'])) {
-          echo ('<p class = "aviso-amarillo">Recuerde que unicamente el Coordinador y el Instructor del curso pueden modificar asistencias de sesiones pasadas.</p>');
+            echo ('<p class = "aviso-amarillo">Recuerde que unicamente el Coordinador y el Instructor del curso pueden modificar asistencias de sesiones pasadas.</p>');
         }
-      ?>
+        ?>
       <!-- Formulario -->
       <form name="form_asistencia" id="form_asistencia" method="POST">
         <?php //? Se necesita saber estos datos para registrar las asistencias ?>
@@ -59,40 +59,41 @@
               </div>
 
               <div class="col-lg-4 form-group">
-                <p><b>Moderador: </b> <?php 
-                                        if ($grupo->moderador != "") {
-                                          echo($grupo->moderador); 
-                                        } else { 
-                                          echo("No asignado."); 
-                                        }?></p>
+                <p><b>Moderador: </b> <?php
+                if ($grupo->moderador != "") {
+                    echo($grupo->moderador);
+                } else {
+                    echo("No asignado.");
+                }?></p>
               </div>
 
               <div class="col-lg-4 form-group">
-                <p><b><?php 
-                    if($grupo->moap_id_modalidad == 1 ) {
-                      echo("Salón: </b>".$grupo->salo_nombre);
-                    } elseif ($grupo->moap_id_modalidad == 2 || $grupo->moap_id_modalidad == 3) {
-                      echo("Enlace: </b><a href target = '_blank'>".$grupo->grup_url."</a>"); 
-
-                    }?></p>
+                <p><b><?php
+                if ($grupo->moap_id_modalidad == 1) {
+                    echo("Salón: </b>".$grupo->salo_nombre);
+                } elseif ($grupo->moap_id_modalidad == 2 || $grupo->moap_id_modalidad == 3) {
+                    echo("Enlace: </b><a href target = '_blank'>".$grupo->grup_url."</a>");
+                }?></p>
               </div>
 
               <?php if ($grupo->moap_id_modalidad == 2) {?>
               <div class="col-lg-4 form-group">
-                <p><b>ID: </b> <?php if ($grupo->grup_id_acceso != "") { 
-                                    echo($grupo->grup_id_acceso); 
-                                  } else {
-                                    echo("No registrado");} ?></p>
+                <p><b>ID: </b> <?php if ($grupo->grup_id_acceso != "") {
+                                    echo($grupo->grup_id_acceso);
+                               } else {
+                                   echo("No registrado");
+                               } ?></p>
                 </p>
               </div>
               <?php }?>
 
               <?php if ($grupo->moap_id_modalidad == 2) {?>
               <div class="col-lg-4 form-group">
-                <p><b>Código: </b><?php if ($grupo->grup_clave_acceso != "") { 
-                                    echo($grupo->grup_clave_acceso); 
+                <p><b>Código: </b><?php if ($grupo->grup_clave_acceso != "") {
+                                    echo($grupo->grup_clave_acceso);
                                   } else {
-                                    echo("No registrado");} ?></p>
+                                      echo("No registrado");
+                                  } ?></p>
               </div>
               <?php }?>
 
@@ -124,55 +125,55 @@
                   <th>ID</th>
                   <th>Nombre del alumno</th>
                   <?php
-                    foreach ($sesiones as $key => $valor) { 
-                      $key = $key + 1;
-                      echo ("<th> Sesión ".$key.":<br>".$valor['sesi_fecha']."</th>");   
+                    foreach ($sesiones as $key => $valor) {
+                        $key = $key + 1;
+                        echo ("<th> Sesión ".$key.":<br>".$valor['sesi_fecha']."</th>");
                     }
-                  ?>
+                    ?>
                 </tr>
               </thead>
               <tbody>
-                <?php 
+                <?php
                 if (isset($inscritos)) {
-                  foreach ($inscritos as $inscrito) { ?>
+                    foreach ($inscritos as $inscrito) { ?>
                     <tr>
                       <td><?php echo($inscrito['prof_id_profesor']); ?></td>
                       <td><?php echo($inscrito['nombre']); ?></td>
-                      <?php
+                        <?php
                         foreach ($sesiones as $iCont => $sesion) {  ?>
                         <td>
                           <input type="checkbox" class="form-check-input" 
                             id= "<?php echo($inscrito['insc_id_inscripcion']); ?>_asistencia_<?php echo($iCont + 1);?>" 
                             name= "<?php echo($inscrito['insc_id_inscripcion']); ?>_asistencia_<?php echo($iCont + 1);?>"
                             value="TRUE" 
-                            <?php 
-                              $asistencia = $obj_Asistencia->buscarAsistenciaSesion($sesion['sesi_id_sesiones'],$inscrito['insc_id_inscripcion']);
-                              if (isset ($asistencia) ) {
+                            <?php
+                              $asistencia = $obj_Asistencia->buscarAsistenciaSesion($sesion['sesi_id_sesiones'], $inscrito['insc_id_inscripcion']);
+                            if (isset($asistencia)) {
                                 //? Si estuvo presente marcamos la casilla sino, se queda desactivada
                                 if ($asistencia->asis_presente == "t") {
-                                  echo (" checked");
+                                    echo (" checked");
                                 }
                               
                                 //? Si es en un futuro
-                                if ($sesion['sesi_fecha'] >  date("Y")."-".date("m")."-".date("d") ) {
-                                  echo (' disabled');
+                                if ($sesion['sesi_fecha'] >  date("Y")."-".date("m")."-".date("d")) {
+                                    echo (' disabled');
                                 }
                                 
                                 //? Si viene de moderador no puede cambiar registros historicos
                                 if (isset($_POST['moderador'])) {
                                   //? Si ya paso el dia de la asistencia
-                                  if ($sesion['sesi_fecha'] <  date("Y")."-".date("m")."-".date("d") ) {
-                                    echo (' class = "disabled" readonly="readonly" onclick="javascript: return false;"');
-                                  }
+                                    if ($sesion['sesi_fecha'] <  date("Y")."-".date("m")."-".date("d")) {
+                                        echo (' class = "disabled" readonly="readonly" onclick="javascript: return false;"');
+                                    }
                                 }
-                              }
+                            }
                               //TODO: Aqui se pueden validar que las asistencias no se tomen en un futuro
                               
                             ?> >
                         </td>
-                      <?php } ?>
+                        <?php } ?>
                     </tr>
-                  <?php } ?>
+                    <?php } ?>
 
                 <?php } ?>
               </tbody>

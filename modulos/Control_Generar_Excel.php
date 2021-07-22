@@ -2,10 +2,12 @@
     include('../clases/BD.php');
     include('../clases/Grupo.php');
     include('../clases/Sesion.php');
+    include('../clases/Asistencia.php');
 
     $idGrupo = $_GET['idGrupo'];
     $obj_Grupo = new Grupo();
     $obj_Sesion = new Sesion();
+    $obj_Asistencia = new Asistencia();
     $arr_Inscritos = $obj_Grupo->buscarCorreosDeParticipantes($idGrupo);
     $curso = $obj_Grupo->buscarNombreCursoxGrupo($idGrupo);
     $grupo = $obj_Grupo->buscarGrupo($idGrupo);
@@ -13,6 +15,7 @@
     $arr_sesiones = $obj_Sesion->buscarFechaSesiones($idGrupo);
     $numSesiones = $sesion->numero;
     $arr_fechas = [];
+    $sesiones = $obj_Sesion->buscarSesionesIDGrupo($idGrupo);
 
     //Se inicializa el contador en 0. Servirá para indicar el lugar en el que se guardará una consulta
     $i=0;
@@ -61,7 +64,7 @@ foreach ($arr_sesiones as $sesion) {
     // Definition: Esta parte escribe dentro de cada celda, con las cordenadas [A: Columna ,1: Fila]
     $hoja -> setCellValueByColumnAndRow(1, 1, "Relación de participantes");
     $hoja -> setCellValueByColumnAndRow(2, 3, 'Curso: '.$curso->curs_nombre);
-    $hoja -> setCellValueByColumnAndRow(2, 4, "Instructor: ".$grupo->pers_apellido_paterno." ".$grupo->pers_apellido_materno." ".$grupo->pers_nombre);
+    $hoja ->setCellValueByColumnAndRow(2, 4, "Instructor: ".$grupo->pers_apellido_paterno." ".$grupo->pers_apellido_materno." ".$grupo->pers_nombre);
     $hoja -> setCellValueByColumnAndRow(2, 5, "Moderador: ".$grupo->moderador);
     $hoja -> setCellValueByColumnAndRow(2, 6, "Fecha de la primera sesión: ".$arr_fechas[0]);
 
@@ -108,7 +111,7 @@ foreach ($arr_sesiones as $sesion) {
     $hoja -> setCellValueByColumnAndRow($numSesiones + 4, 8, "Constancia");
 
     //* Inicia la sección de datos.
-    // Definition: El ciclo for se adapta al número de inscritos.
+    // Definition: El ciclo for se adapta al número de inscritos
     $k=9;
     foreach ($arr_Inscritos as $inscrito) {
         $nombrePersona=$inscrito['nombre'];
@@ -116,7 +119,27 @@ foreach ($arr_sesiones as $sesion) {
         $hoja -> setCellValueByColumnAndRow(1, $k, $k-8);
         $hoja -> setCellValueByColumnAndRow(2, $k, $nombrePersona);
         $hoja -> setCellValueByColumnAndRow(3, $k, $correoPersona);
-        $k++;
+
+        foreach ($sesiones as $iCont => $sesion) {
+            $asistencia = $obj_Asistencia->buscarAsistenciaSesion($sesion['sesi_id_sesiones'], $inscrito['insc_id_inscripcion']);
+            if (isset($asistencia)) {
+                if ($asistencia->asis_presente =='t') {
+                    //? Si estuvo presente marcamos la casilla sino, se queda depintada
+                    $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+4, $k)->getFill()->setFillType(
+                        \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
+                    )->getStartColor()->setARGB('C9E4C5');
+                    $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+4, $k)->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM);
+                } else {
+                    $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+4, $k)->getFill()->setFillType(
+                        \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
+                    )->getStartColor()->setARGB('F54748');
+                    $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+4, $k)->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM);
+                }
+            }
+        }
+        if () {
+            $k++;
+        }
     }
 
     $documento->getActiveSheet()->freezePane('D9', 'D9');
