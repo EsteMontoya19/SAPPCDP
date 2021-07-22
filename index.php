@@ -100,7 +100,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title col-lg-12" id="exampleModalLabel"
-            style="background: #5d2860;color: #fff;padding: 10px">Registrar Profesor</h5>
+            style="background: #132c33;color: #fff;padding: 10px">Registrar Profesor</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -110,7 +110,6 @@
             <div class="row">
               <div class="col-lg-12">
               <section id = "Auto-registro">
-                
               </section>
               </div>
             </div>

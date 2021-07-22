@@ -1,74 +1,76 @@
-.btn-ingreso{
-  color: #fff;
-  background-color: #004c94;
-  border-color: #4d668b;
-}
-
-.aviso-rojo {
-  color:red; 
-  font-weight: bolder;
-}
-
-.aviso-amarillo {
-  color:#db9806; 
-  font-weight: bolder;
-  text-align: center;
-  text-decoration:underline ;
-}
-
-.aviso-verde {
-  color: #189e2e ; 
-  font-weight: bolder;
-}
-
-.aviso-azul{
-  color: #015ABD;
-  font-weight: bolder;
-}
-
-.btn-ingreso:hover{
-  color: #fff;
-  background-color: #4fd3d8;
-  border-color: #004c94;
-}
-
-.btn-descarga{
+.btn-ingreso {
     color: #fff;
     background-color: #004c94;
     border-color: #4d668b;
-  }
-  
-  .btn-descarga:hover{
+}
+
+.aviso-rojo {
+    color: red;
+    font-weight: bolder;
+}
+
+.aviso-amarillo {
+    color: #db9806;
+    font-weight: bolder;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.aviso-verde {
+    color: #189e2e;
+    font-weight: bolder;
+}
+
+.aviso-azul {
+    color: #015abd;
+    font-weight: bolder;
+}
+
+.btn-ingreso:hover {
     color: #fff;
     background-color: #4fd3d8;
     border-color: #004c94;
-  }
-  .btn-aceptar{
-    color: #fff;
-    background-color: #db9806;
-    border-color: #2e230d;
-  }
-  
-  .btn-aceptar:hover{
-    color: #fff;
-    background-color: #07a01b;
-    border-color: #2b5f00;
-  }  
-  .btn-regresar:hover{
-    color: #fff;
-    background-color: #c91616;
-    border-color: #8f0202;
-  }
-  .centrado{
-    text-align: center;
-    margin:auto;
-  }
+}
 
-  .derecho{
+.btn-descarga {
+    color: #fff;
+    background-color: #004c94;
+    border-color: #4d668b;
+}
+
+.btn-descarga:hover {
+    color: #fff;
+    background-color: #4fd3d8;
+    border-color: #004c94;
+}
+.btn-aceptar {
+    color: #fff;
+    background-color: #004c94;
+    border-color: #4d668b;
+}
+
+.btn-aceptar:hover {
+    color: #fff;
+    background-color: #4fd3d8;
+    border-color: #004c94;
+}
+
+.btn-regresar:hover {
+    color: #fff;
+    background-color: #132c33;
+    border-color: rgba(0, 123, 255, 0.5);
+}
+.centrado {
+    text-align: center;
+    margin: auto;
+}
+
+.derecho {
     text-align: left;
     margin-bottom: 1%;
-  }
+}
 
-  .col-form-label, .negritas {
+.col-form-label,
+.negritas {
     font-weight: bold;
-  }
+}
