@@ -16,6 +16,7 @@
     $numSesiones = $sesion->numero;
     $arr_fechas = [];
     $sesiones = $obj_Sesion->buscarSesionesIDGrupo($idGrupo);
+    $constancia = $obj_Asistencia->buscarAcreedorConstancia($idGrupo);
 
     //Se inicializa el contador en 0. Servirá para indicar el lugar en el que se guardará una consulta
     $i=0;
@@ -114,12 +115,15 @@ foreach ($arr_sesiones as $sesion) {
     // Definition: El ciclo for se adapta al número de inscritos
     $k=9;
     foreach ($arr_Inscritos as $inscrito) {
+        // Section: Columna de ID -> Nombre -> Correo
         $nombrePersona=$inscrito['nombre'];
         $correoPersona=$inscrito['pers_correo'];
         $hoja -> setCellValueByColumnAndRow(1, $k, $k-8);
         $hoja -> setCellValueByColumnAndRow(2, $k, $nombrePersona);
         $hoja -> setCellValueByColumnAndRow(3, $k, $correoPersona);
 
+
+        // Section: Columna de asistencias
         foreach ($sesiones as $iCont => $sesion) {
             $asistencia = $obj_Asistencia->buscarAsistenciaSesion($sesion['sesi_id_sesiones'], $inscrito['insc_id_inscripcion']);
             if (isset($asistencia)) {
@@ -128,18 +132,30 @@ foreach ($arr_sesiones as $sesion) {
                     $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+4, $k)->getFill()->setFillType(
                         \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
                     )->getStartColor()->setARGB('C9E4C5');
-                    $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+4, $k)->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM);
+                    // $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+4, $k)->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM);
                 } else {
                     $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+4, $k)->getFill()->setFillType(
                         \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
                     )->getStartColor()->setARGB('F54748');
-                    $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+4, $k)->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM);
+                    // $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+4, $k)->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM);
                 }
             }
         }
-        if () {
-            $k++;
+
+
+        // Section: Columna de constancias
+        if ($constancia->insc_id_inscripcion == $inscrito['insc_id_inscripcion']) {
+            $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+5, $k)->getFill()->setFillType(
+                \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
+            )->getStartColor()->setARGB('C9E4C5');
+                    // $documento->getActiveSheet()->getStyleByColumnAndRow($sesion['sesi_id_sesiones']+5, $k)->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM);
+        } else {
+            $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+5, $k)->getFill()->setFillType(
+                \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
+            )->getStartColor()->setARGB('F54748');
+                    // $documento->getActiveSheet()->getStyleByColumnAndRow($sesion['sesi_id_sesiones']+5, $k)->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM);
         }
+        $k++;
     }
 
     $documento->getActiveSheet()->freezePane('D9', 'D9');

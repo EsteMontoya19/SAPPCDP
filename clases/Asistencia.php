@@ -55,13 +55,26 @@ class Asistencia
         return ($transaccion_1->traerObjeto(0));
     }
 
-    function buscarAsistenciaSesionLista($idSesion, $inscripcion)
+    function buscarAcreedorConstancia($idGrupo)
     {
         $SQL_Asistencia_Sesion =
-        "SELECT * FROM Asistencia
-		WHERE sesi_id_sesiones = 1
-		AND insc_id_inscripcion = 5
-		AND asis_presente = true
+        "SELECT DISTINCT P.pers_id_persona, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno, A.sesi_id_sesiones, I.insc_id_inscripcion
+		FROM Persona P, Profesor Prof, Inscripcion I, Asistencia A
+		WHERE P.pers_id_persona = Prof.pers_id_persona
+		AND I. prof_id_profesor = Prof.prof_id_profesor
+		AND I.insc_id_inscripcion = A.insc_id_inscripcion
+		AND I.grup_id_grupo = $idGrupo
+		AND P.pers_id_persona NOT IN (SELECT P.pers_id_persona
+								FROM Persona P, Profesor Prof , Inscripcion I, Asistencia A, Sesion S
+								WHERE P. pers_id_persona = Prof.pers_id_persona
+								AND I. prof_id_profesor = Prof.prof_id_profesor
+								AND I.insc_id_inscripcion = A.insc_id_inscripcion
+								AND S.sesi_id_sesiones = A.sesi_id_sesiones
+								AND I.insc_activo = TRUE
+								AND I.grup_id_grupo = $idGrupo
+								AND A.asis_presente = FALSE
+								GROUP BY P.pers_id_persona, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno, 
+										A.asis_presente);
 			";
 
         $bd = new BD();
