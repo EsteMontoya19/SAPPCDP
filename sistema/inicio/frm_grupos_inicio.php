@@ -74,10 +74,7 @@ if (isset($_POST['persona'])) {
                   <?php
                     if (isset($arr_grupos)) {
                       foreach ($arr_grupos as $grupo) {
-                        $file = fopen("Mensajes.txt" , "a");
-                          fwrite($file, "Prueba".PHP_EOL);
-                          fwrite($file, $grupo['grup_id_grupo'].PHP_EOL);
-                          fclose($file);
+ 
                         if ($grupo['usua_id_usuario'] != $id_profesor) {
                           $sesion = $obj_Sesion->numSesionesGrupo($grupo['grup_id_grupo']);
                           $sesionUno = $obj_Sesion->buscarMinSesionDM($grupo['grup_id_grupo']);?>

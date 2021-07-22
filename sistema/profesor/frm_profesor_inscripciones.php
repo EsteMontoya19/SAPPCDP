@@ -62,11 +62,15 @@
                 </thead>
                 <tbody>
                 <?php
+
                 if (isset($arr_grupos)) {
+
                   foreach ($arr_grupos as $grupo) {
+
                     $idGrupo = $grupo['grup_id_grupo'];
                     $sesion = $obj_Sesion->numSesionesGrupo($idGrupo);
                     $sesionUno = $obj_Sesion->buscarMinSesion($idGrupo);
+                    
                     if($grupo['moap_id_modalidad'] == 1){
                       $modalidad=$obj_Grupo->buscarDatosPresencial($idGrupo);
                     } elseif ($grupo['moap_id_modalidad'] == 2) {
@@ -100,7 +104,11 @@
                           <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupoInscrito(<?php echo $grupo['grup_id_grupo']?>,<?php echo $idPersona?>, <?php echo $grupo['moap_id_modalidad']?>)">
                             <i class="fas fa-search-plus"></i>
                           </button>
-                          <a class = "btn btn-pdf" target="_blank" title="Comprobante inscripción" href="../modulos/Control_PDF.php?tipo=comprobante&idP=<?php echo($idPersona); ?>&idG=<?php echo($grupo['grup_id_grupo']); ?>" role="button"><i class="far fa-file-pdf"></i></i></a>
+                          <?php
+                            if($grupo['insc_activo'] == "t") { ?>
+                              <a class = "btn btn-pdf" target="_blank" title="Comprobante inscripción" href="../modulos/Control_PDF.php?tipo=comprobante&idP=<?php echo($idPersona); ?>&idG=<?php echo($grupo['grup_id_grupo']); ?>" role="button"><i class="far fa-file-pdf"></i></i></a>
+
+                           <?php } ?>
                           <!-- <button type="button" class="btn btn-primary btn-table" title="Comprobante" style="margin-top: 5px;">
                             <i class="fas fa-list-alt"></i>
                           </button>
