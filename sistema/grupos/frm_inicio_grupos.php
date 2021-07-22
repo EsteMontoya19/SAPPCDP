@@ -55,17 +55,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                <?php 
-                if(isset($arr_grupos)){
-                foreach ($arr_grupos as $grupo) { ?>
+                <?php
+                if (isset($arr_grupos)) {
+                    foreach ($arr_grupos as $grupo) { ?>
                     <tr>
-                      <?php $activo++; ?>
+                          <?php $activo++; ?>
                       <td><?php echo $grupo['grup_id_grupo'];?></td>
                       <td><?php echo $grupo['grup_tipo'];?></td>
                       <td><?php echo $grupo['curs_nombre'];?></td>
                       <td><?php echo $grupo['grup_modalidad'];?></td>
                       <td>
-                      <?php echo $grupo['grup_estado'];?>
+                          <?php echo $grupo['grup_estado'];?>
                       <!-- Comenta este código 
                         <//?php if($grupo['esgr_nombre'] == 'Abierto'){ ?>
                           <div class="alert alert-success" role="alert">
@@ -77,39 +77,54 @@
                           </div>
                         <//?php } ?>
                         -->
-                      
+
                       </td>
                       <td><?php echo ($grupo['grup_cupo'] - $grupo['grup_num_inscritos']);?></td>
                       <td><small><?php echo $grupo['pers_nombre'];?> <?php echo $grupo['pers_apellido_paterno'];?> <?php echo $grupo['pers_apellido_materno'];?></small></td>
                       <td>
-                        <div class="custom-control custom-switch">                          
-                          <input type="checkbox" class="custom-control-input" id="estatusGrupo<?php echo $activo ?>" <?php if ($grupo['grup_publicado'] == 't') { ?> checked <?php } ?> onclick="cambioPublicacion(<?php echo $grupo['grup_id_grupo'] ?> , '<?php echo $grupo['grup_publicado']; ?>', '<?php echo $grupo['curs_nombre']; ?>', '<?php echo $grupo['grup_modalidad']; ?>')">
+                        <div class="custom-control custom-switch">
+                          <input type="checkbox" class="custom-control-input" id="estatusGrupo<?php echo $activo ?>" <?php if ($grupo['grup_publicado'] == 't') {
+                                ?> checked <?php
+                                                                                              } ?> onclick="cambioPublicacion(<?php echo $grupo['grup_id_grupo'] ?> , '<?php echo $grupo['grup_publicado']; ?>', '<?php echo $grupo['curs_nombre']; ?>', '<?php echo $grupo['grup_modalidad']; ?>')">
                           <label class="custom-control-label" for="estatusGrupo<?php echo $activo ?>"></label>
                         </div>
                       </td>
-                      <td>
-                        <button type="button" class="btn btn-primary btn-table" title="Actualizar" <?php if ($grupo['grup_publicado'] == 't') {?> style="display: none;" <?php } ?>style="margin-top: 5px;" onclick="actualizarGrupo(<?php echo $grupo['grup_id_grupo']?>)">
-                          <i class="fas fa-edit"></i>
-                        </button>
-                        <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupo(<?php echo $grupo['grup_id_grupo']?>, '<?php echo $grupo['grup_modalidad']?>')">
-                          <i class="fas fa-search-plus"></i>
-                        </button>
-                        <?php if($grupo['grup_num_inscritos'] != 0){ ?>
-                          <a href="../modulos/Control_PDF_Inscritos.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-primary btn-table" title="Lista" style="margin-top: 5px;background: #20560a">
-                          <i class="fas fa-list-alt"></i>
-                        </a>
-                        <?php } ?>
 
-                        <button type="button" class="btn btn-danger btn-table" title="Constancias" style="margin-top: 5px">
-                          <i class="fas fa-list-alt"></i>
-                        </button>
+                      <!-- //Section: Columna de opciones. -->
+                      <td >
 
-                        <button type="button" class="btn btn-info btn-table" title="Asistencias" <?php if ($grupo['grup_estado'] != 'Pendiente' || $grupo['grup_publicado'] != "t") {?> style="display: none;" <?php } ?> style="margin-top: 5px;" onclick="asistenciaGrupo(<?php echo $grupo['grup_id_grupo']?>)">
-                          <i class="fas fa-tasks"></i>
-                        </button>
+                        <div align="right" >
+                          <div align='left' style="width: 80%;">
+                            <button type="button" class="btn btn-primary btn-table" title="Actualizar" <?php if ($grupo['grup_publicado'] == 't') {
+                                ?> style="display: none;" <?php
+                                                                                                       } ?>style="margin-top: 5px;" onclick="actualizarGrupo(<?php echo $grupo['grup_id_grupo']?>)">
+                            <i class="fas fa-edit"></i>
+                          </button>
+
+                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupo(<?php echo $grupo['grup_id_grupo']?>, '<?php echo $grupo['grup_modalidad']?>')">
+                            <i class="fas fa-search-plus"></i>
+                          </button>
+                              <?php if ($grupo['grup_num_inscritos'] != 0) { ?>
+                            <a href="../modulos/Control_PDF_Inscritos.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-primary btn-table" title="Lista" style="margin-top: 5px;background: #20560a">
+                            <i class="fas fa-list-alt"></i>
+                          </a>
+                              <?php } ?>
+
+                          <button type="button" class="btn btn-danger btn-table" title="Constancias" style="margin-top: 5px">
+                            <i class="fas fa-list-alt"></i>
+                          </button>
+
+                          <button type="button" class="btn btn-info btn-table" title="Asistencias" <?php if ($grupo['grup_estado'] != 'Pendiente' || $grupo['grup_publicado'] != "t") {
+                                ?> style="display: none;" <?php
+                                                                                                   } ?> style="margin-top: 5px;" onclick="asistenciaGrupo(<?php echo $grupo['grup_id_grupo']?>)">
+                            <i class="fas fa-tasks"></i>
+                          </button>
+                        </div>
+                        </div>
                       </td>
                     </tr>
-                  <?php } }?>
+                    <?php }
+                }?>
 
                 </tbody>
               </table>
@@ -121,4 +136,3 @@
   </div>
 
   <script src="../sistema/grupos/control_grupos.js"></script>
-

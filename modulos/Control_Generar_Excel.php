@@ -17,7 +17,8 @@
     //Se inicializa el contador en 0. Servirá para indicar el lugar en el que se guardará una consulta
     $i=0;
 
-    //Se pasa el arreglo de la consulta sql a un arreglo numérico. Ya que el KEY numérico en este caso es más fácil de consultar
+    //Se pasa el arreglo de la consulta sql a un arreglo numérico
+    // ya que el KEY numérico en este caso es más fácil de consultar
 foreach ($arr_sesiones as $sesion) {
     $arr_fechas[$i] = $sesion['fecha'];
     $i++;

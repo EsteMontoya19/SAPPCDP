@@ -58,7 +58,7 @@ $arr_modalidades = $obj_Busqueda->selectModalidades();
     </div>
 
     <h5 class="modal-title col-lg-12 negritas" id="exampleModalLabel"
-      style="background: #5d2860;color: #fff;padding: 10px">Datos de profesor</h5>
+      style="background: #132c33;color: #fff;padding: 10px">Datos de profesor</h5>
 
     <div class="form-group row">
       <label for="numTrab" class="col-sm-6 col-form-label">Número trabajador: *</label>
@@ -123,12 +123,12 @@ $arr_modalidades = $obj_Busqueda->selectModalidades();
                         <?php //*? Esto lo creo para hacer dos columnas con las coordinaciones si se borra solo aparecen en una fila
                           $tamano = sizeof($arr_coordinaciones);
                           static $mostradas = 0;
-                          if ($mostradas == 12 ){
+                        if ($mostradas == 12) {
                             echo("</td><td>");
                             $mostradas = 0;
-                          } else {
+                        } else {
                             $mostradas++;
-                          }
+                        }
                         ?>
                     </div>
               <?php } ?>
@@ -169,11 +169,13 @@ $arr_modalidades = $obj_Busqueda->selectModalidades();
       <div class="col-sm-12">
         <select class="custom-select" id="UsuarioPregunta"name="UsuarioPregunta">
         <option value="0">Seleccione una pregunta</option>
-        <?php foreach ($arr_preguntas as $pregunta) { if ($pregunta['prse_activo'] == 't') { ?>
+        <?php foreach ($arr_preguntas as $pregunta) {
+            if ($pregunta['prse_activo'] == 't') { ?>
           <option value="<?php echo $pregunta['prse_id_pregunta']; ?>">
-            <?php echo $pregunta['prse_pregunta']; ?>
+                            <?php echo $pregunta['prse_pregunta']; ?>
           </option>
-        <?php } }?>
+            <?php }
+        }?>
       </select>
       </div>
     </div>
