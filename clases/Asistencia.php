@@ -108,4 +108,25 @@ class Asistencia
         $bd->cerrarBD();
         return ($transaccion_1->traerRegistros());
     }
+
+    //Buscar los registros de asistencia por el id el grupo y el id de inscripción
+    function buscarAsistenciasInscripcion($id_grupo, $id_inscripcion)
+    {
+        $SQL_Bus_Asistencia =
+        "
+            SELECT I.INSC_ID_INSCRIPCION, SESI_ID_SESIONES, ASIS_PRESENTE
+            FROM ASISTENCIA A, INSCRIPCION I
+            WHERE A.INSC_ID_INSCRIPCION = I.INSC_ID_INSCRIPCION AND GRUP_ID_GRUPO = $id_grupo AND I.INSC_ID_INSCRIPCION = $id_inscripcion            
+            ORDER BY SESI_ID_SESIONES
+        ";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Bus_Asistencia);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerRegistros());
+    }
+
+    
 }
