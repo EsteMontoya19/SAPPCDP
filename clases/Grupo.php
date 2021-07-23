@@ -485,13 +485,14 @@ class Grupo
     function buscarInscripcionesxGrupo($ID)
     {
         $SQL_Bus_Cursos =
-        "SELECT pers_apellido_paterno, pers_apellido_materno, pers_nombre, pers_correo
+        "
+            SELECT insc_id_inscripcion, pers_apellido_paterno, pers_apellido_materno, pers_nombre, pers_correo
             FROM Inscripcion I, Profesor p, Persona E 
             WHERE I.prof_id_profesor = P.prof_id_profesor 
                 AND P.pers_id_persona = E.pers_id_persona AND grup_id_grupo = $ID 
                 AND I.insc_activo = TRUE
             ORDER BY pers_apellido_paterno ASC;
-            ";
+        ";
 
         $bd = new BD();
         $bd->abrirBD();

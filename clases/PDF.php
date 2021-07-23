@@ -1,14 +1,16 @@
 <?php
 require('../recursos/fpdf/fpdf.php');
 
-class PDF extends FPDF {
-    function Header() {
+class PDF extends FPDF
+{
+    function Header()
+    {
 
         //? AddLink
         /*
         Funciones: Crea una referencia interna a cualquier sitio
         Parametros: No tiene
-        Descripción: 
+        Descripción:
         -------------------------------------------------------------*/
         $this->AddLink();
 
@@ -16,7 +18,7 @@ class PDF extends FPDF {
         /*
         Funciones: Imprime una imagen en el archivo
         Parametros: Obligatorios
-        Descripción: 
+        Descripción:
         -------------------------------------------------------------
         file: (Ruta de la imagen)
         x: (Espacio entre el borde izquierdo y la imagen) - null
@@ -29,36 +31,34 @@ class PDF extends FPDF {
         type: (Se puede deducir según su extensión)
         link: Identificador de AddLink
         -------------------------------------------------------------*/
-        $this->Image("../recursos/imagenes/fca.png",20,10,20,20,"","");
-        $this->Image("../recursos/imagenes/unam.png",170,10,20,20,"","");
-        $this->SetFont("Times","B", 14);
+        $this->Image("../recursos/imagenes/fca.png", 20, 10, 20, 20, "", "");
+        $this->Image("../recursos/imagenes/unam.png", 170, 10, 20, 20, "", "");
+        $this->SetFont("Times", "B", 14);
         $this->Cell(80);
-        $this->Cell(30,10,utf8_decode("Facultad de Contaduría y Administración"),0,1,"C");
+        $this->Cell(30, 10, utf8_decode("Facultad de Contaduría y Administración"), 0, 1, "C");
 
-        $this->SetFont("Times","", 13);
+        $this->SetFont("Times", "", 13);
         $this->Cell(80);
-        $this->Cell(30,10,utf8_decode("Universidad Nacional Autónoma de México"),0,1,"C");
-        $this->Ln(10);        
+        $this->Cell(30, 10, utf8_decode("Universidad Nacional Autónoma de México"), 0, 1, "C");
+        $this->Ln(10);
     }
 
-    function Footer() {
+    function Footer()
+    {
 
         //? SetY
         /*
-        Funciones: Establece la ordenada y de forma opcional mueve la abscisa al margen izquierdo. 
-                   Si el valor pasado es negativo, esta es relativa a la parte inferior de la página. 
+        Funciones: Establece la ordenada y de forma opcional mueve la abscisa al margen izquierdo.
+                   Si el valor pasado es negativo, esta es relativa a la parte inferior de la página.
         Parametros: Obligatorios
-        Descripción: 
+        Descripción:
         ----------------------------------------------------------------
         y: El valor de la ordenada (vertical) si es negativo se centra.
 
         ----------------------------------------------------------------*/
         $this->SetY(-18);
 
-        $this->SetFont("Times","", 13);
+        $this->SetFont("Times", "", 13);
         $this->Cell(0, 10, utf8_decode('Página '.$this->PageNo().' de {nb}'), 0, 0, 'C');
     }
-
 }
-
-?>
