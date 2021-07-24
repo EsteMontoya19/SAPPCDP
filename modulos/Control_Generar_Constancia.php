@@ -20,6 +20,7 @@
     $curso = $obj_Grupo->buscarNombreCursoxGrupo($idGrupo);
     $arr_inscritos = $obj_Grupo->buscarAcreedorConstancia($idGrupo);
     $arr_periodo_del_curso= $obj_Sesion -> buscarMinAndMaxSesion($idGrupo);
+    $horasTotalesString = $obj_Sesion -> horasTotales($idGrupo);
 
     // Definition: Este arreglo tiene los estilos que se le dan a cada celda para que permanezcan centrados
     $styleArray = [
@@ -41,7 +42,6 @@
     $hoja -> getDefaultColumnDimension()->setWidth(30, 'cm');
     $hoja -> getColumnDimension('C')->setWidth(60, 'cm');
     $hoja -> getColumnDimension('H')->setWidth(60, 'cm');
-    // $hoja -> getRowDimension(2)->setRowHeight(50, 'cm');
     $hoja -> setTitle("Constancias");
 
 
@@ -57,11 +57,10 @@
     $hoja -> setCellValueByColumnAndRow(8, 1, "Firmante");
     $hoja -> setCellValueByColumnAndRow(9, 1, "Puesto");
 
-    // //! Documento de pruebas.
-    // $file = fopen('Mensajes.txt', 'a');
-    // fwrite($file, 'Nombre: '.$arr_meses[3].PHP_EOL);
-    // fclose($file);
-    // //! Documento de pruebas.
+    // Definition: Convertimos las horas de un tipo String a un Int.
+    //! Esta es una solución en fase de prueba.
+    $horasTotales = substr($horasTotalesString->horas, 0, 2);
+    $horasTotales = (int) $horasTotales;
 
     $k=0;
     foreach ($arr_inscritos as $inscrito) {
@@ -87,46 +86,26 @@
 
         // Definition aquí comprobaremos cuatro puntos clave.
         if (sizeof($arr_periodo_del_curso)==1) {
-            //! Documento de pruebas.
-            $file = fopen('Mensajes.txt', 'a');
-            fwrite($file, 'Primer IF'.PHP_EOL);
-            fclose($file);
-            //! Documento de pruebas.
             //* Sólo tiene una sesión.
-            $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea ".$curso->curs_nombre." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido el ".$diaInicio." de ".$mesFin." con una duración de ".'15 '."horas.");
-            $hoja -> setCellValueByColumnAndRow(4, $k+2, "El ".$diaInicio." de ".$mesFin);
+            $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea ".$curso->curs_nombre." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido el ".$diaInicio." de ".$mesFin." con una duración de ".$horasTotales.' '."horas.");
+            $hoja -> setCellValueByColumnAndRow(4, $k+2, $diaInicio." de ".$mesFin);
         } elseif (sizeof($arr_periodo_del_curso) > 1 && $mesInicio==$mesFin) {
-            //! Documento de pruebas.
-            $file = fopen('Mensajes.txt', 'a');
-            fwrite($file, 'Segundo IF'.PHP_EOL);
-            fclose($file);
-            //! Documento de pruebas.
             //* Tiene más de una sesión y ambas son el mismo mes.
-            $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea ".$curso->curs_nombre." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido del ".$diaInicio." al ".$diaFin." de ".$mesFin." con una duración de ".'15 '."horas.");
+            $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea ".$curso->curs_nombre." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido del ".$diaInicio." al ".$diaFin." de ".$mesFin." con una duración de ".$horasTotales.' '."horas.");
             $hoja -> setCellValueByColumnAndRow(4, $k+2, "Del ".$diaInicio." al ".$diaFin." de ".$mesFin);
         } elseif (sizeof($arr_periodo_del_curso) >1 && $mesInicio != $mesFin && $anioInicio == $anioFin) {
-            //! Documento de pruebas.
-            $file = fopen('Mensajes.txt', 'a');
-            fwrite($file, 'Tercer IF'.PHP_EOL);
-            fclose($file);
-            //! Documento de pruebas.
             //* Tiene más de una sesión y no son el mismo mes.
-            $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea ".$curso->curs_nombre." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido del ".$diaInicio." de ".$mesInicio." al ".$diaFin." de ".$mesFin." con una duración de ".'15 '."horas.");
+            $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea ".$curso->curs_nombre." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido del ".$diaInicio." de ".$mesInicio." al ".$diaFin." de ".$mesFin." con una duración de ".$horasTotales.' '."horas.");
             $hoja -> setCellValueByColumnAndRow(4, $k+2, "Del ".$diaInicio." de ".$mesInicio." al ".$diaFin." de ".$mesFin);
         } elseif (sizeof($arr_periodo_del_curso) >1 && $anioInicio != $anioFin) {
-            //! Documento de pruebas.
-            $file = fopen('Mensajes.txt', 'a');
-            fwrite($file, 'Cuarto IF'.PHP_EOL);
-            fclose($file);
-            //! Documento de pruebas.
             //* No es el mismo año.
-            $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea ".$curso->curs_nombre." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido del ".$diaInicio." de ".$mesInicio." del ".$anioInicio." al ".$diaFin." de ".$mesFin." del ".$anioFin." con una duración de ".'15 '."horas.");
+            $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea ".$curso->curs_nombre." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido del ".$diaInicio." de ".$mesInicio." del ".$anioInicio." al ".$diaFin." de ".$mesFin." del ".$anioFin." con una duración de ".$horasTotales.' '."horas.");
             $hoja -> setCellValueByColumnAndRow(4, $k+2, "Del ".$diaInicio." de ".$mesInicio." del ".$anioInicio." al ".$diaFin." de ".$mesFin."del".$anioFin);
         }
 
         $hoja -> setCellValueByColumnAndRow(5, $k+2, $mesFin." del ".$anioFin);
-        $hoja -> setCellValueByColumnAndRow(6, $k+2, "15");
-        $hoja -> setCellValueByColumnAndRow(7, $k+2, "15");
+        $hoja -> setCellValueByColumnAndRow(6, $k+2, $horasTotales.' horas');
+        $hoja -> setCellValueByColumnAndRow(7, $k+2, "");
         $hoja -> setCellValueByColumnAndRow(8, $k+2, "Mtro. Tomás Humberto Rubio Pérez");
         $hoja -> setCellValueByColumnAndRow(9, $k+2, "Director");
         $k++;

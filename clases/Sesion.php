@@ -167,6 +167,21 @@ class Sesion
         return ($transaccion_1->traerRegistros(0));
     }
 
+    function horasTotales($idGrupo)
+    {
+        $SQL_Horas_Sesion=
+        "SELECT SUM (sesi_hora_fin - sesi_hora_inicio) as horas
+        FROM sesion
+        WHERE grup_id_grupo = $idGrupo";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Horas_Sesion);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerObjeto(0));
+    }
+
 
     // Busca las fechas y hora de sesiones de un grupo
     function buscarFechaSesiones($idGrupo)
