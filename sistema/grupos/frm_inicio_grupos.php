@@ -118,15 +118,20 @@
                               <i class="fa fa-file-pdf"></i>
                             </a>
                               <?php } ?>
+
                           <?php if ($grupo['grup_num_inscritos'] != 0) { ?>
                             <a href="../modulos/Control_Generar_Excel.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-table btn-excel" title="Descargar Excel" style="margin-top: 5px;">
                               <i class="fa fa-table"></i>
                             </a>
                           <?php } ?>
 
-                          <button type="button" class="btn btn-danger btn-table" title="Constancias" style="margin-top: 5px">
-                            <i class="fas fa-list-alt"></i>
-                          </button>
+
+                          <?php if ($grupo['grup_num_inscritos'] != 0) { ?>
+                            <a href="../modulos/Control_Generar_Constancia.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-info btn-table" title="Descargar Excel" style="margin-top: 5px;">
+                              <i class="fa fa-table"></i>
+                            </a>
+                          <?php } ?>
+
 
                           <button type="button" class="btn btn-info btn-table" title="Asistencias" <?php if ($grupo['grup_estado'] != 'Pendiente' || $grupo['grup_publicado'] != "t") {
                                 ?> style="display: none;" <?php

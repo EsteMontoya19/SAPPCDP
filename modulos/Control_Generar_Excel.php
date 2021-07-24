@@ -64,7 +64,7 @@ foreach ($arr_sesiones as $sesion) {
 
     // Definition: Esta parte escribe dentro de cada celda, con las cordenadas [A: Columna ,1: Fila]
     $hoja -> setCellValueByColumnAndRow(1, 1, "Relación de participantes");
-    $hoja -> setCellValueByColumnAndRow(2, 3, 'Curso: '.$curso->curs_nombre);
+    $hoja -> setCellValueByColumnAndRow(2, 3, $curso->curs_tipo.': '.$curso->curs_nombre);
     $hoja ->setCellValueByColumnAndRow(2, 4, "Instructor: ".$grupo->pers_apellido_paterno." ".$grupo->pers_apellido_materno." ".$grupo->pers_nombre);
     $hoja -> setCellValueByColumnAndRow(2, 5, "Moderador: ".$grupo->moderador);
     $hoja -> setCellValueByColumnAndRow(2, 6, "Fecha de la primera sesión: ".$arr_fechas[0]);

@@ -58,7 +58,7 @@ class Asistencia
     function buscarAcreedorConstancia($idGrupo)
     {
         $SQL_Asistencia_Sesion =
-        "SELECT DISTINCT P.pers_id_persona, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno, A.sesi_id_sesiones, I.insc_id_inscripcion
+        "SELECT DISTINCT ( P.pers_apellido_paterno || ' ' || P.pers_apellido_materno || ' ' || P.pers_nombre) AS nombre, Prof.prof_id_profesor,P.pers_id_persona, I.insc_id_inscripcion 
 		FROM Persona P, Profesor Prof, Inscripcion I, Asistencia A
 		WHERE P.pers_id_persona = Prof.pers_id_persona
 		AND I. prof_id_profesor = Prof.prof_id_profesor

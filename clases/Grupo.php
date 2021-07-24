@@ -77,6 +77,36 @@ class Grupo
         return ($transaccion_1->traerRegistros());
     }
 
+    function buscarAcreedorConstancia($idGrupo)
+    {
+        $SQL_Acreedor_Constancia =
+        "SELECT DISTINCT ( P.pers_apellido_paterno || ' ' || P.pers_apellido_materno || ' ' || P.pers_nombre) AS nombre, Prof.prof_id_profesor,P.pers_id_persona, I.insc_id_inscripcion 
+		FROM Persona P, Profesor Prof, Inscripcion I, Asistencia A
+		WHERE P.pers_id_persona = Prof.pers_id_persona
+		AND I. prof_id_profesor = Prof.prof_id_profesor
+		AND I.insc_id_inscripcion = A.insc_id_inscripcion
+		AND I.grup_id_grupo = $idGrupo
+		AND P.pers_id_persona NOT IN (SELECT P.pers_id_persona
+								FROM Persona P, Profesor Prof , Inscripcion I, Asistencia A, Sesion S
+								WHERE P. pers_id_persona = Prof.pers_id_persona
+								AND I. prof_id_profesor = Prof.prof_id_profesor
+								AND I.insc_id_inscripcion = A.insc_id_inscripcion
+								AND S.sesi_id_sesiones = A.sesi_id_sesiones
+								AND I.insc_activo = TRUE
+								AND I.grup_id_grupo = $idGrupo
+								AND A.asis_presente = FALSE
+								GROUP BY P.pers_id_persona, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno, 
+										A.asis_presente);
+			";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Acreedor_Constancia);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerRegistros(0));
+    }
+
     //Permite Consultar cualquier tipo de grupo
     //?Verificado en la BD 06/07/2021
     function buscarGrupo($id)
@@ -84,7 +114,7 @@ class Grupo
         $SQL_Bus_Curso =
         "   SELECT g.grup_id_grupo, p.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
                     g.curs_id_curso, curs_nombre, curs_tipo, curs_nivel,  curs_num_sesiones,
-                    g.plat_id_plataforma, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo,  
+                    g.plat_id_plataforma, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo,
                     grup_publicado, moap_id_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, esta_id_estado,
                     (SELECT pers_apellido_paterno || ' ' || pers_apellido_materno || ' ' || pers_nombre
                     FROM personal_grupo g, usuario u, persona p

@@ -151,14 +151,31 @@ class Sesion
         return ($transaccion_1->traerObjeto(0));
     }
 
+    function buscarMinAndMaxSesion($idGrupo)
+    {
+        $SQL_Bus_Sesion =
+        "
+			SELECT to_char(sesi_fecha, 'DD') dia, to_char(sesi_fecha, 'MM')  mes, to_char(sesi_fecha, 'YYYY')  anio
+			FROM sesion
+			WHERE grup_id_grupo =$idGrupo ORDER BY dia";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Bus_Sesion);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerRegistros(0));
+    }
+
+
     // Busca las fechas y hora de sesiones de un grupo
     function buscarFechaSesiones($idGrupo)
     {
         $SQL_Bus_Sesion =
         "SELECT to_char(sesi_fecha, 'DD-MM-YYYY') fecha, sesi_hora_inicio, sesi_hora_fin
-			 FROM SESION 
-			 WHERE GRUP_ID_GRUPO = $idGrupo
-			";
+             FROM SESION
+             WHERE GRUP_ID_GRUPO = $idGrupo
+            ";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -172,10 +189,10 @@ class Sesion
     function buscarDiaMesSesiones($idGrupo)
     {
         $SQL_Bus_Sesion =
-        "SELECT to_char(sesi_fecha, 'DD') dia, to_char(to_timestamp (to_char(sesi_fecha, 'MM')::text, 'MM'), 'TMmon') mes
-			 FROM SESION 
-			 WHERE GRUP_ID_GRUPO = $idGrupo
-			";
+        "SELECT to_char(sesi_fecha, 'DD') dia, to_char(to_timestamp(to_char(sesi_fecha, 'MM')::text, 'MM'), 'TMmon') mes
+             FROM SESION
+             WHERE GRUP_ID_GRUPO = $idGrupo
+            ";
 
         $bd = new BD();
         $bd->abrirBD();
