@@ -58,6 +58,10 @@ $(document).ready(function () {
         $('#container').load('../sistema/plataformas/frm_inicio_plataformas.php');
     });
 
+    $('#btn_coordinacion').click(function () {
+        $('#container').load('../sistema/coordinaciones/frm_inicio_coordinaciones.php');
+    });
+
     $('#btn_calendario').click(function () {
         $('#container').load('../sistema/calendarios/frm_inicio_calendarios.php');
     });
