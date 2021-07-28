@@ -440,7 +440,7 @@ if (isset($_POST['id'])) {
                     $idSesion = "idSesion".$i;
                     $SesionFecha = "SesionFecha".$i;
                     $SesionHoraInicio = "SesionHoraInicio".$i;
-                    $SesionHoraFin = "SesionHoraFin".$i; 
+                    $SesionHoraFin = "SesionHoraFin".$i;
                     $SesionNombre = "Sesion".$i;
                     $Hora = "Hora".$i;
                     ?>

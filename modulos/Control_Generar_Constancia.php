@@ -87,7 +87,11 @@
         // Definition aquí comprobaremos cuatro puntos clave.
         if (sizeof($arr_periodo_del_curso)==1) {
             //* Sólo tiene una sesión.
-            $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea ".$curso->curs_nombre." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido el ".$diaInicio." de ".$mesFin." con una duración de ".$horasTotales.' '."horas.");
+            if ($horasTotales > 1) {
+                $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea ".$curso->curs_nombre." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido el ".$diaInicio." de ".$mesFin." con una duración de ".$horasTotales.' '."horas.");
+            } else {
+                $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea ".$curso->curs_nombre." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido el ".$diaInicio." de ".$mesFin." con una duración de ".$horasTotales.' '."hora.");
+            }
             $hoja -> setCellValueByColumnAndRow(4, $k+2, $diaInicio." de ".$mesFin);
         } elseif (sizeof($arr_periodo_del_curso) > 1 && $mesInicio==$mesFin) {
             //* Tiene más de una sesión y ambas son el mismo mes.
