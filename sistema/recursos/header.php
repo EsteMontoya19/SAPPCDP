@@ -23,7 +23,7 @@
 
     <link rel="stylesheet" type="text/css" href="../recursos/alertify/css/alertify.css">
     <link rel="stylesheet" type="text/css" href="../recursos/alertify/css/alertify.rtl.css">
-	  <link rel="stylesheet" type="text/css" href="../recursos/alertify/css/themes/bootstrap.css">
+      <link rel="stylesheet" type="text/css" href="../recursos/alertify/css/themes/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../recursos/alertify/css/themes/bootstrap.rtl.css">
 
     <!-- Bootstrap 4 -->
@@ -64,17 +64,16 @@
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-lightbulb"></i>&nbsp; Propuestas</a>
             </li>
 -->
-
-            <?php //TODO: Hacer las funciones de Reportes del Coordinador ?>
-            <!--
-            <li id="" class="nav-item">
-                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-file-alt"></i>&nbsp; Reportes</a>
-            </li>
--->
-
             <li id="btn_usuarios" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-shield"></i>&nbsp; Usuarios</a>
             </li>
+
+
+            <li id="btn_constancias" class="nav-item">
+                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fa fa-file-alt"></i>&nbsp; Constancias</a>
+            </li>
+
+
 
 
             <li class="nav-item dropdown">

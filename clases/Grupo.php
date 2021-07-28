@@ -44,7 +44,7 @@ class Grupo
     {
         $SQL_Actua_Grupo =
         "   UPDATE grupo
-                SET grup_tipo = '$tipo_grupo', esta_id_estado = '$estado', 
+                SET grup_tipo = '$tipo_grupo', esta_id_estado = '$estado',
                 grup_cupo = $cupo, grup_inicio_insc = '$inicio_insc', grup_fin_insc = '$fin_insc',
                 salo_id_salon = $salon, plat_id_plataforma = $plataforma, grup_url = '$url', grup_id_acceso = '$acceso', grup_clave_acceso = '$clave'
                 WHERE grup_id_grupo = $grupo;

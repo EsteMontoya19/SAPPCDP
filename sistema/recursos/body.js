@@ -1,7 +1,7 @@
-if (document.getElementById("idRol").value == 4) {
-    window.onload =  $('#container').load('../sistema/inicio/frm_grupos_inicio.php', { persona: document.getElementById("idPersona").value });
+if (document.getElementById('idRol').value == 4) {
+    window.onload = $('#container').load('../sistema/inicio/frm_grupos_inicio.php', { persona: document.getElementById('idPersona').value });
 } else {
-    window.onload =  $('#container').load('../sistema/inicio/frm_inicio.php');
+    window.onload = $('#container').load('../sistema/inicio/frm_inicio.php');
 }
 
 //? Rutas
@@ -30,6 +30,10 @@ $(document).ready(function () {
         $('#container').load('../sistema/usuarios/frm_inicio_usuarios.php');
     });
 
+    $('#btn_constancias').click(function () {
+        $('#container').load('../sistema/constancia/frm_constancia.php');
+    });
+
     $('#btn_profesor_grupos').click(function () {
         $('#container').load('../sistema/profesor/frm_inicio_profesores.php');
     });
@@ -41,7 +45,7 @@ $(document).ready(function () {
     $('#btn_instructor_grupos_impartir').click(function () {
         $('#container').load('../sistema/instructor/frm_inicio_instructor.php');
     });
-    
+
     $('#btn_regProp').click(function () {
         $('#container').load('../sistema/propuestas/frm_propuestas.php');
     });
@@ -136,7 +140,7 @@ function gruposInscritos(persona) {
     var datos = {
         persona: persona,
     };
-    
+
     $.ajax({
         data: datos,
         type: 'POST',
@@ -151,7 +155,7 @@ function gruposImpartir(persona) {
     var datos = {
         persona: persona,
     };
-    
+
     $.ajax({
         data: datos,
         type: 'POST',
@@ -161,5 +165,3 @@ function gruposImpartir(persona) {
         },
     });
 }
-
-

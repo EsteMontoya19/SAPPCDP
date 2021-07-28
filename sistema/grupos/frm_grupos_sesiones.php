@@ -1,6 +1,6 @@
 <!-- Inicio de Sección: Sesiones -->
 <?php
-if (isset($_POST['curs_num_sesiones'])) { 
+if (isset($_POST['curs_num_sesiones'])) {
     $numSesiones = $_POST['curs_num_sesiones'];
 } else {
     $numSesiones = 0;
@@ -9,12 +9,12 @@ if (isset($_POST['curs_num_sesiones'])) {
 
 <?php
 
-    for ($i = 1; $i <= $numSesiones; $i++){ 
-        $SesionFecha = "SesionFecha".$i;
-        $SesionHoraInicio = "SesionHoraInicio".$i;
-        $SesionHoraFin = "SesionHoraFin".$i; 
-        $Sesion = "Sesion".$i;
-        $Hora = "Hora".$i?>
+for ($i = 1; $i <= $numSesiones; $i++) {
+    $SesionFecha = "SesionFecha".$i;
+    $SesionHoraInicio = "SesionHoraInicio".$i;
+    $SesionHoraFin = "SesionHoraFin".$i;
+    $Sesion = "Sesion".$i;
+    $Hora = "Hora".$i?>
 
         <div class="card lg-12">
         <div class="card-header"> 
@@ -27,18 +27,22 @@ if (isset($_POST['curs_num_sesiones'])) {
                 placeholder="0" min="0">
             </div>
             <div id="<?php echo $Hora;?>"class="col-lg-3 form-group">
-            <label for="<?php echo $SesionHoraInicio;?>"><b>Hora inicio:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
+            <label for="<?php echo $SesionHoraInicio;?>"><b>Hora inicio:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) {
+                echo "*";
+                        } ?></b></label>
                 <input type="time" class="form-control" id="<?php echo $SesionHoraInicio;?>" name="<?php echo $SesionHoraInicio;?>"
                 placeholder="0" min="0">
             </div>
             <div id="<?php echo $Hora;?>"class="col-lg-3 form-group">
-            <label for="<?php echo $SesionHoraFin;?>"><b>Hora fin:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1)  echo "*"; ?></b></label>
+            <label for="<?php echo $SesionHoraFin;?>"><b>Hora fin:<?php if (isset($_POST['CRUD']) == false || ($_POST['CRUD']) == 1) {
+                echo "*";
+                        } ?></b></label>
                 <input type="time" class="form-control" id="<?php echo $SesionHoraFin;?>" name="<?php echo $SesionHoraFin;?>"
                 placeholder="0" min="0">
-            </div>     
+            </div>
         </div>
     </div>
-    <?php } ?> 
+<?php } ?>
     <input type="hidden" name="numSesiones" id="numSesiones" value= <?php echo ($numSesiones) ?>>
-    
+
 <!-- Fin de Sección: Sesiones -->

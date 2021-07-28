@@ -35,7 +35,7 @@ $arr_roles = $obj_Busqueda->selectRoles();
 $arr_preguntas = $obj_Busqueda->selectPregunta();
 
 // Validar entidad  //*? Se crean las variables para consultar en caso de no ser un nuevo registro.
-if (isset($_POST['persona']) && isset($_POST['id'])) { 
+if (isset($_POST['persona']) && isset($_POST['id'])) {
 
     // Recuperar información de consulta
     $obj_Persona = new Persona();

@@ -4,10 +4,10 @@ include('../../clases/Plataforma.php');
 
 $obj_plataforma = new Plataforma();
 
-  if (isset($_POST['id'])) {
+if (isset($_POST['id'])) {
     // Recuperar información de consulta
     $platarforma = $obj_plataforma->buscarPlataforma($_POST['id']);
-  }
+}
 ?>
 
 <div id="wrapper">
@@ -20,9 +20,9 @@ $obj_plataforma = new Plataforma();
         </li>
         <!-- Validación de la ruta -->
         <?php if (isset($_POST['CRUD'])) { ?>
-        <?php if ($_POST['CRUD'] == 1) { ?>
+            <?php if ($_POST['CRUD'] == 1) { ?>
         <li class="breadcrumb-item active"><i class="fas fa-edit"></i>&nbsp; Actualizar registro</li>
-        <?php }
+            <?php }
         } else { ?>
         <li class="breadcrumb-item active"><i class="fas fa-folder-plus"></i>&nbsp; Nuevo registro</li>
         <?php } ?>
@@ -43,10 +43,10 @@ $obj_plataforma = new Plataforma();
 
         <!-- Desactivar formulario INICIO en caso de no ser un registro-->
         <?php if (isset($_POST['CRUD'])) { ?>
-        <?php if ($_POST['CRUD'] == 0) { ?>
+            <?php if ($_POST['CRUD'] == 0) { ?>
         <fieldset disabled>
-          <?php } ?>
-          <?php } ?>
+            <?php } ?>
+        <?php } ?>
 
           <!-- Datos generales -->
           <div class="form-group">
@@ -69,10 +69,11 @@ $obj_plataforma = new Plataforma();
 
           <!-- ID e Instrucciones -->
           <?php if (isset($_POST['CRUD'])) { ?>
-          <?php if ($_POST['CRUD'] == 1) { ?>
+                <?php if ($_POST['CRUD'] == 1) { ?>
             <input type="hidden" name="dml" value="update"/>
             <input type="hidden" id="id_Plataforma" name="id_Plataforma" value="<?php echo $_POST['id'];?>">
-          <?php }} else { ?>
+                <?php }
+          } else { ?>
             <input type="hidden" name="dml" value="insert" />
             <input type="hidden" id="EstatusPlataforma" name="EstatusPlataforma" value="true">
           <?php } ?>
@@ -81,10 +82,10 @@ $obj_plataforma = new Plataforma();
 
           <!-- Desactivar formulario FIN -->
           <?php if (isset($_POST['CRUD'])) { ?>
-          <?php if ($_POST['CRUD'] == 0) { ?>
+                <?php if ($_POST['CRUD'] == 0) { ?>
         </fieldset>
-        <?php } ?>
-        <?php } ?>
+                <?php } ?>
+          <?php } ?>
 
       </form>
       
@@ -92,10 +93,10 @@ $obj_plataforma = new Plataforma();
       <div class="col-lg-12" style="text-align: center;">
         <button id="btn-regresar-plataforma" type="button" class="btn btn-success btn-footer btn-regresar">Regresar</button>
         <?php if (isset($_POST['CRUD'])) { ?>
-        <?php if ($_POST['CRUD'] == 1) { ?>
+            <?php if ($_POST['CRUD'] == 1) { ?>
         <button id="btn-actualizar-plataforma" type="button"
           class="btn btn-success btn-footer btn-aceptar">Actualizar</button>
-        <?php } ?>
+            <?php } ?>
         <?php } else { ?>
         <button id="btn-registrar-plataforma" type="button" form="form_plataformas"
           class="btn btn-success btn-footer btn-aceptar">Guardar</button>
