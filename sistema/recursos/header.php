@@ -84,6 +84,7 @@
                 <a class="dropdown-item disabled" href="#"></a>
                 <a class="dropdown-item" type="button"  id="btn_preguntaseguridad">Preguntas de seguridad</a>
                 <a class="dropdown-item" type="button"  id="btn_plataforma">Plataforma</a>
+                <a class="dropdown-item" type="button"  id="btn_coordinacion">Coordinacion</a>
                 <?php //TODO: Hacer las funciones de Calendario del Coordinador ?>
                <!-- <a class="dropdown-item" type="button"  id="btn_calendario">Calendario</a>  -->
               </div>
