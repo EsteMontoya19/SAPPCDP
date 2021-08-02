@@ -382,6 +382,8 @@ function buscarProfesor () {
                     $('#strUsuarioSegundoApe').val("");
                     $('#strUsuarioCorreo').val("");
                     $('#strUsuarioTelefono').val("");
+                    $('#strContrasenia01').val("");
+                    $('#strContrasenia02').val("");
 
                     alertify.success('No se encontró otro profesor con ese Número de trabajador.');
                 }
@@ -870,6 +872,9 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
     const MODERADOR = 3;
     const PROFESOR = 4;
 
+    document.getElementById("strContrasenia01").value = $('#strRFC').val().substr(0,6);
+    document.getElementById("strContrasenia02").value = $('#strRFC').val().substr(0,6);
+
     var tipo_evento = $('#intUsuarioRol').val();
     if (tipo_evento.startsWith(ADMINISTRADOR)) {
        /* $('#num_trabajador').show();
@@ -910,8 +915,7 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
         } else {
             $('#semblanza').hide();
             document.getElementById("strNombreUsuario").value = $('#intNum_Trabajador').val();
-            document.getElementById("strContrasenia01").value = $('#strRFC').val().substr(0,6);
-            document.getElementById("strContrasenia02").value = $('#strRFC').val().substr(0,6);
+            //? Aqui estaba las lineas de autocpmpletado de contraseña
         }
     } else if (tipo_evento.startsWith(MODERADOR)) {
         /*$('#num_trabajador').hide();

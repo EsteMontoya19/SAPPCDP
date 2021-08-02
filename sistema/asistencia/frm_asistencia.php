@@ -130,6 +130,7 @@
                         echo ("<th> Sesión ".$key.":<br>".$valor['sesi_fecha']."</th>");
                     }
                     ?>
+                  <th>Observaciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -139,6 +140,7 @@
                     <tr>
                       <td><?php echo($inscrito['prof_id_profesor']); ?></td>
                       <td><?php echo($inscrito['nombre']); ?></td>
+
                         <?php
                         foreach ($sesiones as $iCont => $sesion) {  ?>
                         <td>
@@ -148,33 +150,32 @@
                             value="TRUE" 
                             <?php
                               $asistencia = $obj_Asistencia->buscarAsistenciaSesion($sesion['sesi_id_sesiones'], $inscrito['insc_id_inscripcion']);
-                            if (isset($asistencia)) {
+                            
+                              //? Si es en un futuro
+                                if ($sesion['sesi_fecha'] >  date("Y")."-".date("m")."-".date("d")) {
+                                    echo (' disabled');
+                                }
+                            
+                              if (isset($asistencia)) {
                                 //? Si estuvo presente marcamos la casilla sino, se queda desactivada
                                 if ($asistencia->asis_presente == "t") {
                                     echo (" checked");
                                 }
-                              
-                                //? Si es en un futuro
-                                if ($sesion['sesi_fecha'] >  date("Y")."-".date("m")."-".date("d")) {
-                                    echo (' disabled');
-                                }
                                 
-                                //? Si viene de moderador no puede cambiar registros historicos
-                                if (isset($_POST['moderador'])) {
+                                //? Si viene de moderador o del instructor no puede cambiar registros historicos
+                                if (isset($_POST['moderador']) || isset($_POST['instructor'])) {
                                   //? Si ya paso el dia de la asistencia
                                     if ($sesion['sesi_fecha'] <  date("Y")."-".date("m")."-".date("d")) {
                                         echo (' class = "disabled" readonly="readonly" onclick="javascript: return false;"');
                                     }
                                 }
-                            }
-                              //TODO: Aqui se pueden validar que las asistencias no se tomen en un futuro
-                              
-                            ?> >
+                            }                              
+                            ?>>
                         </td>
                         <?php } ?>
+                        <td><textarea class="observaciones" id="observacion_<?php echo($inscrito['insc_id_inscripcion']); ?>" name="observacion_<?php echo($inscrito['insc_id_inscripcion']); ?>" rows="2"><?php echo($inscrito['insc_observacion']); ?></textarea></td>
                     </tr>
                     <?php } ?>
-
                 <?php } ?>
               </tbody>
             </table>

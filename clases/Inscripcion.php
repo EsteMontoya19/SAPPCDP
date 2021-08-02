@@ -1,8 +1,23 @@
 <?php
     class Inscripcion
     {
+        //? Agrega uan observación la cual se describe en la toma de asistencias
+        function agregarObservaciones ($inscripcion , $observacion) {
+            $SQL_Ins_Ins =
+            "UPDATE Inscripcion
+             SET insc_observacion = '$observacion'
+             WHERE insc_id_inscripcion = $inscripcion;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Ins_Ins);
+            $bd->cerrarBD();
+        }
+        
         //Registrar una inscripción
-        //TODO Verificado en la BD 04/07/2021
+        //? Verificado en la BD 04/07/2021
         function agregarInscripcion($grupo, $profesor)
         {
             /*Se modifico esta función borrando la sub-consulta para hacer más eficiente el programa y ahorrarse esa sub-consulta por cada ejecución de la función*/
@@ -39,7 +54,7 @@
         }
 
         //Buscar una inscripción dado el id del grupo y del profesor
-        //TODO Verificado en la BD 04/07/2021
+        //? Verificado en la BD 04/07/2021
         function buscarInscripcion($grupo, $profesor)
         {
             $SQL_Bus_Inscripcion =
@@ -58,7 +73,7 @@
         }
 
         //Busca todos los datos de un grupo dado el id, además de que el día actual se encuentre dentro del rango de fechas de inscripcion.
-        //TODO Verificado en la BD 04/07/2021
+        //? Verificado en la BD 04/07/2021
         function buscarVigenciaInscripcion($grupo)
         {
             $SQL_Bus_Inscripcion =

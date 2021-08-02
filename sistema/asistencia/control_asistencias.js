@@ -18,7 +18,7 @@ $(document).ready(function () {
   $('#btn-registrar-asistencia').click(function () {
           datos = $('#form_asistencia').serialize();
           console.log(datos);
-
+          
           //? Adaptar para que registre asistencias
           $.ajax({
               type: 'POST',

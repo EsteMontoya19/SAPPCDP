@@ -169,10 +169,9 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                   <label for="rfc" class = "negritas">RFC: *</label>
                   <input value="<?php   if (isset($persona)) {
                                           echo($persona-> pers_rfc);
-                                } else {
-                                    echo("");
-                                }?>"  type="text"
-                      class="form-control" name="strRFC" id="strRFC"
+                                        } else {
+                                          echo("");
+                                        }?>"  type="text" class="form-control" name="strRFC" id="strRFC"
                       <?php //? Evita al Coordinador escribir el Numero de trabajador cuando se crea un Profesor
                         if (!isset($_POST['CRUD'])) {
                             echo (' onkeyup = "AsignarContrasena();" ');

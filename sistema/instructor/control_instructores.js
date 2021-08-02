@@ -29,9 +29,10 @@ function consultarGrupoImpartir(id, persona, modalidad) {
     });
 }
 
-function asistenciaGrupo (grupo ) {
+function asistenciaGrupo (grupo, instructor) {
     var datos = {
       grupo: grupo,
+      instructor: instructor,
     };
 
   $.ajax({

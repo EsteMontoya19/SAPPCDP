@@ -320,7 +320,8 @@ create table INSCRIPCION (
    PROF_ID_PROFESOR     INT4                 null,
    CONS_ID_CONSTANCIAS  INT4                 null,
    INSC_ACTIVO          BOOL                 not null,
-   INSC_APROBADO        BOOL                 null,
+   INSC_OBSERVACION     VARCHAR(300)         null,
+
    constraint PK_INSCRIPCION primary key (INSC_ID_INSCRIPCION)
 );
 

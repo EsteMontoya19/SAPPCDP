@@ -1,7 +1,26 @@
 <?php
 class Grupo
-    //? Verificado todos los métodos utilizados actualmente en la BD 06/07/2021
 {
+
+    //? 
+
+    function buscarModeradorGrupo ($grupo) {
+        $SQL_Bus_Grupo =
+        "SELECT U.usua_id_usuario, P.pers_id_persona, PG.grup_id_grupo, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno
+        FROM Personal_Grupo PG, Usuario U, Persona P
+        WHERE PG.usua_id_usuario = U.usua_id_usuario  AND P.pers_id_persona = U.pers_id_persona
+                AND U.rol_id_rol = 3 AND PG.grup_id_grupo = $grupo
+            ";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Bus_Grupo);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerObjeto(0));
+
+    }
+
     //Permite agregar cualquier tipo de grupo
     //? Verificado en la BD 06/07/2021
     /*No agrega el instructor ni moderador en este método, en el caso de estado y modalidad ahora manda ID*/
@@ -63,7 +82,7 @@ class Grupo
     {
         $SQL_Bus_Cursos =
         "SELECT ( Pers.pers_apellido_paterno || ' ' || pers_apellido_materno || ' ' || Pers.pers_nombre) AS nombre , Pers.pers_correo, 
-                    Prof.prof_id_profesor, Pers.pers_id_persona, I.insc_id_inscripcion
+                    Prof.prof_id_profesor, Pers.pers_id_persona, I.insc_id_inscripcion, I.insc_observacion
             FROM Persona Pers, Inscripcion I, Grupo G, Profesor Prof
             WHERE G.grup_id_grupo = $ID AND I.grup_id_grupo = G.grup_id_grupo AND I.prof_id_profesor = Prof.prof_id_profesor AND Prof.pers_id_persona = Pers.pers_id_persona
                   AND I.insc_activo = TRUE ORDER BY nombre
@@ -490,8 +509,7 @@ class Grupo
     function buscarGruposImpartidosxInstructor($id)
     {
         $SQL_Bus_Grupos =
-        "	
-                SELECT G.GRUP_ID_GRUPO, G.grup_publicado, M.moap_id_modalidad, moap_nombre,
+        "SELECT G.GRUP_ID_GRUPO, G.grup_publicado, M.moap_id_modalidad, moap_nombre,
                     CURS_NOMBRE, CALE_SEMESTRE, grup_num_inscritos, esta_nombre
                 FROM Personal_Grupo P, GRUPO G, CURSO C, Modalidad_Aprendizaje M, CALENDARIO CA, Estado E
                 WHERE P.usua_id_usuario = $id

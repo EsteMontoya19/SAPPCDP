@@ -39,6 +39,7 @@
         //? Obtenemos los datos de la inscripción
         $inscripcion = $obj_Inscripcion->buscarInscripcion($_POST['idGrupo'] , $inscrito['prof_id_profesor']);
         
+        $obj_Inscripcion -> agregarObservaciones($inscripcion->insc_id_inscripcion , $_POST['observacion_'. $inscripcion->insc_id_inscripcion]);
         
         //? Creamos asistencia para cada sesion
         foreach ($sesiones as $jCont => $sesion) {
