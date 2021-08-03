@@ -79,10 +79,6 @@
                       <button type="button" class="btn btn-primary btn-table" title="Actualizares" onclick="actualizarCalendario(<?php echo $calendario['cale_id_calendario'] ?>)">
                         <i class="fas fa-edit"></i>
                       </button>
-                      
-                      <button type="button" class="btn btn-danger btn-table" title="Eliminar">
-                        <i class="fas fa-trash-alt"></i>
-                      </button>
 
                     </td>
                   </tr>

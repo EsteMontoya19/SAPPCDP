@@ -66,9 +66,6 @@
             for ($iCont = 0 ; $bandera ; $iCont ++) {
                 if(isset ($_POST['diaFestivo'.($iCont + 1)]) && $_POST['diaFestivo'.($iCont + 1)] != '') {
                     $diasInhabiles[$iCont] = $_POST['diaFestivo'.($iCont + 1)];
-                    $file = fopen ("Mensajes.txt" , "a");
-                    fwrite($file, $_POST['diaFestivo'.($iCont + 1)].PHP_EOL);
-                    fclose($file);
 
                 } else {
                     $bandera = false;

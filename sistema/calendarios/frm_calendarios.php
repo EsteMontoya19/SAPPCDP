@@ -227,7 +227,18 @@ if (isset($_POST['CRUD'])) {
                 </div>
              <?php }
 
-            }?>
+            } elseif ($_POST['CRUD'] == 1) {
+                 
+                 foreach ($arr_Inhabiles as $iCont => $diaInhabil) { ?>
+
+                  <tr id = "row<?php echo ($iCont + 1); ?>">
+                  <br>
+                  <td><input type="date" class="form-control" placeholder="0" id="diaFestivo<?php echo (($iCont + 1)); ?>" name="diaFestivo<?php echo (($iCont + 1)); ?>"
+                        value="<?php echo ($diaInhabil['dife_fecha']); ?>" <?php echo($habilitado); ?>> </td>
+                  </tr>
+                <?php } ?>
+              
+            <?php } ?>
             </div>
           </div>
           <?php 
