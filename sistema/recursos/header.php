@@ -85,7 +85,8 @@
                 <?php //! Se descontinuo preguntas de seguridad ?>
                 <!--<a class="dropdown-item" type="button"  id="btn_preguntaseguridad">Preguntas de seguridad</a> -->
                 <a class="dropdown-item" type="button"  id="btn_plataforma">Plataforma</a>
-               <a class="dropdown-item" type="button"  id="btn_calendario">Calendario</a> 
+               <a class="dropdown-item" type="button"  id="btn_calendario">Calendario</a>
+               <a class="dropdown-item" type="button"  id="btn_coordinacion">Coordinacion</a> 
               </div>
             </li>
 
