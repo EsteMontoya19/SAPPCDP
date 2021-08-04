@@ -101,8 +101,7 @@ class Usuario
     function buscarUsuario($intIdUsuario)
     {
         $SQL_Bus_Usuario =
-        "	
-				SELECT U.usua_id_usuario, U.rol_id_rol, R.rol_nombre, U.usua_num_usuario, U.usua_contrasena, U.usua_activo
+        "SELECT U.usua_id_usuario, U.rol_id_rol, R.rol_nombre, U.usua_num_usuario, U.usua_contrasena, U.usua_activo
 				FROM Rol R, Usuario U
 				WHERE R.rol_id_rol = U.rol_id_rol AND U.usua_id_usuario = $intIdUsuario;
 			";

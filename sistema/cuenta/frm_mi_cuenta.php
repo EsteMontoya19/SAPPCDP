@@ -34,6 +34,7 @@ $moderador_dia = null;
 
 // Catálogos
 $obj_Busqueda = new Busqueda();
+$obj_Profesor = new Profesor();
 $arr_roles = $obj_Busqueda->selectRoles();
 $arr_preguntas = $obj_Busqueda->selectPregunta();
 $arr_dias = $obj_Busqueda->selectDias();
@@ -61,12 +62,16 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
             $obj_Moderador = new Moderador();
             $moderador = $obj_Moderador->buscarModerador($_POST['persona']);
             $moderadorCuenta = $obj_Moderador -> buscarServidorSocial($_POST['persona']);
+            
+            //? Puede ser que no haya un servidor social
+            if(!isset($moderadorCuenta)) {
+              $profesor = $obj_Profesor -> buscarProfesor($_POST['persona']);
+            }
             $moderador_dia = $obj_Moderador->buscarModeradorDias($_POST['persona']);
             break;
           // Case 2: Instructor
         case 2:
         case 4: //Profesor
-            $obj_Profesor = new Profesor();
             $profesor = $obj_Profesor->buscarProfesor($_POST['persona']);
             $profesor_nivel = $obj_Profesor->buscarProfesorNiveles($profesor->prof_id_profesor);
             $profesor_modalidad = $obj_Profesor->buscarProfesorModalidades($profesor->prof_id_profesor);
@@ -141,7 +146,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                 <b>&nbsp;Datos de la cuenta</b>
               </div>
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                <?php if (isset($usuario) && $usuario->rol_id_rol == 1 || $usuario->rol_id_rol == 2 || $usuario->rol_id_rol == 4) { ?>
+                <?php if (isset($usuario) && isset($profesor) || $usuario->rol_id_rol == 1 || $usuario->rol_id_rol == 2 || $usuario->rol_id_rol == 4) { ?>
                   <div id="num_trabajador" class="col-lg-6 form-group">
                 <?php } else { ?>
                   <div id="num_trabajador" class="col-lg-6 form-group" style="display: none;">
@@ -177,13 +182,13 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
               </div> <!-- Cierre div de datos row -->
 
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                <?php if (isset($usuario) && $usuario->rol_id_rol == 3) { ?>
+                <?php if (isset($usuario) && isset($moderadorCuenta) && $usuario->rol_id_rol == 3) { ?>
                   <div id="numCuenta" class="col-lg-6 form-group">
                 <?php } else { ?>
                   <div id="numCuenta" class="col-lg-6 form-group" style="display: none;">
                 <?php } ?>
                     <label for="numCuenta" class = "negritas">Número de cuenta:*</label>
-                      <input readonly value="<?php echo isset($moderador) ? $moderadorCuenta-> seso_num_cuenta : "";?>" type="text"
+                      <input readonly value="<?php echo isset($moderadorCuenta) ? $moderadorCuenta-> seso_num_cuenta : "Trabajador";?>" type="text"
                         class="form-control" name="lbNumCuenta"  id="intNumCuenta" disabled>
                   </div>
                 <?php if (isset($usuario) && $usuario->rol_id_rol == 3) { ?>
