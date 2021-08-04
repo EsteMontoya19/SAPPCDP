@@ -1,10 +1,11 @@
 //? Enlace a los formularios y campos dinamicos
+var i = 0;
 $(document).ready(function () {
   //? Esta variable sirve para los campos dinamicos
   if (typeof($('#diasActualizacion').val()) != 'undefined') {
-      var i = $('#diasActualizacion').val();
+      i = $('#diasActualizacion').val();
   } else{
-    var i=0;
+    i=0;
         
   }
     
@@ -194,5 +195,142 @@ function cambioEstatus(id, estatus, semestre) {
 }
 
 function validarFormulario () {
+    //Validación del nombre del semestre
+    if ($('#NombreSem').val() == '') {
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+        document.getElementById('NombreSem').focus();
+        alertify.error('Debe ingresar el semestre al que correspone el calendario. Ej: 2021-2');
+        return false;
+    } else {
+        let semExpReg = /\d{4}\-[1-2]$/;
+        if (semExpReg.test($('#NombreSem').val())) {
+        } else {
+            $('html, body').animate({ scrollTop: 100 }, 'slow');
+            document.getElementById('NombreSem').focus();
+            alertify.error('El nombre del semestre debe estar escrito en el siguiente formato 0000-0 terminando en 1 o 2. Ej 2021-1');
+            return false;
+        }
+    }
+
+    //Validación de las fechas correspondientes al inicio y fin del ciclo escolar
+    if ($('#inicioCiclo').val() == '') {
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('inicioCiclo').focus();
+        alertify.error('Debe ingresar la fecha de inicio para el semestre escolar');
+        return false;
+    }
+
+    if ($('#finCiclo').val() == '') {
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('finCiclo').focus();
+        alertify.error('Debe ingresar la fecha de termino para el semestre escolar');
+        return false;
+    }
+
+    if ($('#inicioCiclo').val() >= $('#finCiclo').val()) {
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('inicioCiclo').focus();
+        alertify.error('La fecha de inicio del ciclo escolar debe ser menor a la del fin');
+        return false;
+    }
+
+    //Validación de las fechas correspondientes al periodo de examenes
+    if ($('#inicioExamenes').val() == '') {
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('inicioExamenes').focus();
+        alertify.error('Debe ingresar la fecha de inicio para el periodo de exámenes');
+        return false;
+    }
+
+    if ($('#finExamenes').val() == '') {
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('finExamenes').focus();
+        alertify.error('Debe ingresar la fecha de termino para el periodo de examenes');
+        return false;
+    }
+
+    if ($('#inicioExamenes').val() >= $('#finExamenes').val()) {
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('inicioExamenes').focus();
+        alertify.error('La fecha de inicio del periodo de examenes debe ser menor a la del fin');
+        return false;
+    }
+
+    //Validación de las fechas correspondientes al periodo intersemestral
+    if ($('#inicioInter').val() == '') {
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('inicioInter').focus();
+        alertify.error('Debe ingresar la fecha de inicio para el periodo intersemestral');
+        return false;
+    }
+
+    if ($('#finInter').val() == '') {
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('finInter').focus();
+        alertify.error('Debe ingresar la fecha de termino para el periodo intersemestral');
+        return false;
+    }
+
+    if ($('#inicioInter').val() >= $('#finInter').val()) {
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('inicioInter').focus();
+        alertify.error('La fecha de inicio del periodo intersemestral debe ser menor a la del fin');
+        return false;
+    }
+
+    //Validación de las fechas correspondientes al Asueto Académico (vacaciones de los alumnos)
+    if ($('#inicioAsueto').val() == '') {
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('inicioAsueto').focus();
+        alertify.error('Debe ingresar la fecha de inicio para el asueto académico');
+        return false;
+    }
+
+    if ($('#finAsueto').val() == '') {
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('finAsueto').focus();
+        alertify.error('Debe ingresar la fecha de termino para el asueto académico');
+        return false;
+    }
+
+    if ($('#inicioAsueto').val() >= $('#finAsueto').val()) {
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('inicioAsueto').focus();
+        alertify.error('La fecha de inicio del asueto académico debe ser menor a la del fin');
+        return false;
+    }
+
+    //Validación de las fechas correspondientes al periodo de vacaciones administrativas
+    if ($('#inicioAdmin').val() == '') {
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('inicioAdmin').focus();
+        alertify.error('Debe ingresar la fecha de inicio para el periodo de vacaciones administrativas');
+        return false;
+    }
+
+    if ($('#finAdmin').val() == '') {
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('finAdmin').focus();
+        alertify.error('Debe ingresar la fecha de termino para el periodo de vacaciones administrativas');
+        return false;
+    }
+
+    if ($('#inicioAdmin').val() >= $('#finAdmin').val()) {
+        $('html, body').animate({ scrollTop: 200 }, 'slow');
+        document.getElementById('inicioAdmin').focus();
+        alertify.error('La fecha de inicio del periodo de vacaciones administrativas debe ser menor a la del fin');
+        return false;
+    }
+
+    //valida que los dias festivos agregados no estén vacíos
+    for (var iCon = 0; iCon <= i; iCon++){
+        if ($('#diaFestivo' + iCon).val() == '') {
+            $('html, body').animate({ scrollTop: 300 }, 'slow');
+            document.getElementById('diaFestivo' + iCon).focus();
+            alertify.error('La fecha del dia inhábil ' + iCon + ' no puede estar vacía, favor de ingresar una fecha');
+            return false;
+        }
+    }
+
     return true;
 }
