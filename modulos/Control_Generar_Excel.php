@@ -32,7 +32,7 @@ foreach ($arr_sesiones as $sesion) {
 
     // ? Variables para permitir conseguir la coordenada X de una celda en número.
     $numero = $numSesiones + 4;
-    $letra= chr($numero+64);
+    $letra= chr($numero+65);
 
 
     require_once "../recursos/Excel/vendor/autoload.php";
@@ -98,8 +98,9 @@ foreach ($arr_sesiones as $sesion) {
     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
     ->getStartColor()
     ->setARGB('77ACF1');
-    $hoja -> getStyle("A1:".$letra."1") -> applyFromArray($styleArray);
-    $hoja -> getStyle("A8:".$letra."8") -> applyFromArray($styleArray);
+    // $hoja -> getStyle("A1:".$letra."1") -> applyFromArray($styleArray);
+    // $hoja -> getStyle("A8:".$letra."8") -> applyFromArray($styleArray);
+    $hoja -> getStyleByColumnAndRow(1, 13, 3, 16) -> applyFromArray($styleArray);
     $hoja -> mergeCells("A7:E7");
     $hoja -> setCellValueByColumnAndRow(1, 8, "#");
     $hoja -> setCellValueByColumnAndRow(2, 8, "Profesor");
@@ -110,10 +111,12 @@ foreach ($arr_sesiones as $sesion) {
     }
     // Definition: Se coloca el apartado de constancia.
     $hoja -> setCellValueByColumnAndRow($numSesiones + 4, 8, "Constancia");
+    $hoja -> setCellValueByColumnAndRow($numSesiones + 5, 8, "Observaciones");
 
     //* Inicia la sección de datos.
     // Definition: El ciclo for se adapta al número de inscritos
     $k=9;
+    $columnaObservaciones;
     foreach ($arr_Inscritos as $inscrito) {
         // Section: Columna de ID -> Nombre -> Correo
         $nombrePersona=$inscrito['nombre'];
@@ -155,8 +158,13 @@ foreach ($arr_sesiones as $sesion) {
             )->getStartColor()->setARGB('F54748');
                     // $documento->getActiveSheet()->getStyleByColumnAndRow($sesion['sesi_id_sesiones']+5, $k)->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM);
         }
+
+        // Section: Columna de observaciones.
+        $hoja -> setCellValueByColumnAndRow($iCont+6, $k, $inscrito['insc_observacion']);
+
         $k++;
     }
+
 
     $documento->getActiveSheet()->freezePane('D9', 'D9');
     ob_clean();
