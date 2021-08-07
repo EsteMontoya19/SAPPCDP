@@ -523,6 +523,22 @@ function asistenciaGrupo (grupo) {
     });
 }
 
+function registrarConstancias(grupo){
+    var datos = {
+        grupo: grupo,
+    };
+
+    $.ajax({
+        data: datos,
+        type: 'POST',
+        url: '../sistema/constancia/frm_registrar_constancia.php',
+        success: function (data) {
+            $('html, body').animate({ scrollTop: 0 }, 0);
+            $('#container').html(data);
+        },
+    });
+}
+
 $(document).ready(function () {
     $('#btn-actualizar-grupo').click(function () {
         if (validarFormularioGrupo()) {

@@ -9,6 +9,10 @@ $(document).ready(function () {
     });
 });
 
+function validarFormularioConstancia() {
+    return true;
+}
+
 function generarConstancia(fechaInicio, fechaFin) {
     var datos = {
         fechaInicio: fechaInicio,
@@ -26,3 +30,33 @@ function generarConstancia(fechaInicio, fechaFin) {
         },
     });
 }
+
+//Insertar Cosntancia
+$(document).ready(function () {
+    $('#btn-registrar-constancia').click(function () {
+        if (validarFormularioConstancia()) {
+            datos = new FormData($('#form_constancia')[0]);
+            $.ajax({
+                type: 'POST',
+                url: '../modulos/Control_Constancia.php',
+                data: datos,
+                contentType: false,
+                processData: false,
+
+                success: function (respuesta) {
+                    console.log(respuesta);
+                    if (respuesta.endsWith('1')) {
+                        alertify.success('El registro se realizó correctamente');
+                        setTimeout(function () {
+                            $('html, body').animate({ scrollTop: 0 }, 0);
+                            $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
+                        }, 1500);
+                    } else {
+                        alertify.error('Hubo un problema al registrar el constancia');
+                    }
+                },
+            });
+            return false;
+        }
+    });
+});
