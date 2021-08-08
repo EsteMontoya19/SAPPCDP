@@ -31,8 +31,8 @@
                             <label for="constancia"><b>Constancias: *</b></label>
                             <div class="custom-file">
                                 <input type="file" id="constancia" name="constancia" class="custom-file-input" accept="application/zip" required>
-                                <label class="custom-file-label"
-                                for="constancia"></label>
+                                <label class="custom-file-label" for="constancia"> 
+                                    <?php echo isset($idGrupo) ? "": ""; ?></label>
                             </div>
                         </div>
                         <!-- Botones -->

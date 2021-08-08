@@ -31,7 +31,7 @@ function generarConstancia(fechaInicio, fechaFin) {
     });
 }
 
-//Insertar Cosntancia
+//Insertar Constancia
 $(document).ready(function () {
     $('#btn-registrar-constancia').click(function () {
         if (validarFormularioConstancia()) {

@@ -13,12 +13,33 @@ if($_POST['dml'] == 'insert'){
 
     //Existe la ruta? si no, la crea
     if(file_exists("../recursos/PDF/Constancias/".$idGrupo."/") == false){
-        mkdir($rutaNueva, 0755); //0755 (Rwxr-xr-x) 
+        mkdir($rutaNueva, 0755); //0755 Rwxr-xr-x
     }
 
     //Hay un archivo? Lo carga al sistema
     if (isset($_FILES['constancia']['name']) && $_FILES['constancia']['name'] != '') { //? Si lleno el constancia
-        
+        //Nombre del archivo
+        $fileName = $_FILES['constancia']['name'];
+        //Almacena en un arreglo el nombre
+        $fileNameArr=explode(".",$fileName);
+        //Si la terminación es zip
+        if($fileNameArr[count($fileNameArr)-1]=='zip'){
+            //crea el objeto zip
+            $zip = new ZipArchive();
+            //abre el archivo zip
+            if($zip->open($_FILES['file']['tmp_name'])===TRUE){
+                //Extrae en
+                $zip->extractTo("../recursos/PDF/Constancias/$idGrupo/");
+                $zip->close();
+                $files=scandir("../recursos/PDF/Constancias/$idGrupo/");
+            }
+        }
+
+        $file = fopen ("Mensajes.txt", "a");
+        fwrite($file, $_FILES['file']['tmp_name'].PHP_EOL);
+        fclose($file);
+
+        /*
         $file = is_uploaded_file($_FILES['constancia']['tmp_name']);
         $rutaTemporal = $_FILES['constancia']['tmp_name'];
         $rutaNueva = "../recursos/PDF/Constancias/".$idGrupo."/";
@@ -26,10 +47,12 @@ if($_POST['dml'] == 'insert'){
         move_uploaded_file($_FILES['constancia']['tmp_name'], $rutaNueva.$nuevoNombre);
         $constancia = $rutaNueva.$nuevoNombre;
 
-        $file = fopen ("Mensajes.txt", "a");
-        fwrite($file, $rutaTemporal.PHP_EOL);
-        fwrite($file, $constancia.PHP_EOL);
-        fclose($file);
+        
+        */
+
+        exit("1");
+        
+        
     }
 
     /*
@@ -51,12 +74,12 @@ if($_POST['dml'] == 'insert'){
 
     $arr_Inscritos = $obj_Grupo->buscarCorreosDeParticipantes($idGrupo); // Revisar
 
-    
+
 
     // Enlazar la dirección del archivo con su inscripción
 
     */
 
-    exit("1");
+    
 }
 ?>
