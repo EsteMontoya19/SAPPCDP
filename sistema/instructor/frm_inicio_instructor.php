@@ -100,18 +100,20 @@
                             <i class="fas fa-search-plus"></i>
                           </button>
                           <?php if($grupo['grup_num_inscritos'] != 0){ ?>
-                            <a href="../modulos/Control_PDF_Inscritos.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-table btn-pdf" title="Descargar PDF" style="margin-top: 5px;">
+                            <a href="../modulos/Control_PDF_Inscritos.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-table btn-pdf" title="PDF Inscritos" style="margin-top: 5px;">
                               <i class="fa fa-file-pdf"></i>
                             </a>
                           <?php } ?>
                           <?php if($grupo['grup_num_inscritos'] != 0){ ?>
-                            <a href="../modulos/Control_Generar_Excel.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-table btn-excel" title="Descargar Excel" style="margin-top: 5px;">
+                            <a href="../modulos/Control_Generar_Excel.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-table btn-excel" title="Asistencia Excel" <?php if ($grupo['esta_nombre'] == 'Pendiente') {?> style="display: none;" <?php } ?>
+                              style="margin-top: 5px;">
                               <i class="fa fa-table"></i>
                             </a>
                           <?php } 
                           
                             //? Por cambios de la coordinadora, tampoco los instructores pueden cambiar asistencias pasadas de los cursos ?>
-                          <button type="button" class="btn btn-info btn-table" title="Asistencias" <?php if ($grupo['esta_nombre'] != 'Pendiente' || $grupo['grup_publicado'] != "t" || null !== $obj_Grupo->buscarModeradorGrupo($grupo['grup_id_grupo']) ) {?> style="display: none;" <?php } ?> style="margin-top: 5px;" onclick="asistenciaGrupo(<?php echo $grupo['grup_id_grupo']?> , true)">
+                          <button type="button" class="btn btn-info btn-table" title="Asistencias" <?php if ($grupo['esta_nombre'] == 'Pendiente' || $grupo['grup_publicado'] != "t" || null !== $obj_Grupo->buscarModeradorGrupo($grupo['grup_id_grupo']) ) {?> style="display: none;" <?php } ?> 
+                            style="margin-top: 5px;" onclick="asistenciaGrupo(<?php echo $grupo['grup_id_grupo']?> , true)">
                             <i class="fas fa-tasks"></i>
                           </button>
                           <!-- <button type="button" class="btn btn-primary btn-table" title="Comprobante" style="margin-top: 5px;">

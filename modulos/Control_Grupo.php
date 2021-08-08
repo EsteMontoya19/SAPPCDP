@@ -253,7 +253,9 @@ if ($_POST['dml'] == 'insert') {
         if (!isset($grupoActual->usr_instructor)) {
             exit('3');
         } elseif ($grupoActual->esta_id_estado == 4) {
-            exit('4');
+          exit('4');
+        } elseif ($grupoActual->esta_id_estado == 1) {
+          exit('5');
         }
         $estatus = 'TRUE';
         $obj_Grupo->cambiarEstatus($grupo, $estatus);

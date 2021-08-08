@@ -65,7 +65,7 @@ if (isset($_POST['persona'])) {
         <li id="btn-inicio-grupo" class="breadcrumb-item">
         <?php if (isset($_POST['CRUD'])) { ?>
             <?php if ($_POST['CRUD'] == 0) { ?>
-            <a href="#"><i class="fas fa-user-shield"></i>&nbsp; Grupos inscritos</a>
+            <a href="#"><i class="fas fa-user-shield"></i>&nbsp; Grupos a impartir</a>
             <?php }
         } ?>
         </li>
@@ -174,7 +174,8 @@ if (isset($_POST['persona'])) {
           <div class="col-lg-6 form-group">
             <label for="ID_Moderador"><b>Moderador:</b></label>
             <select class="custom-select" id="ID_Moderador" name="ID_Moderador" disabled>
-              <option value='0' selected ><?php echo $moderador->pers_nombre." ".$moderador->pers_apellido_paterno." ".$moderador->pers_apellido_materno; ?></option>
+              <option value='0' selected ><?php if(isset($moderador)){ echo ($moderador->pers_nombre." ".$moderador->pers_apellido_paterno." ".$moderador->pers_apellido_materno);} 
+                                                else { echo("Sin moderador");} ?></option>
             </select>
           </div>
         </div>
