@@ -147,7 +147,7 @@ foreach ($arr_sesiones as $sesion) {
 
 
         // Section: Columna de constancias
-        if ($constancia->insc_id_inscripcion == $inscrito['insc_id_inscripcion']) {
+        if (isset($constancia->insc_id_inscripcion) && $constancia->insc_id_inscripcion == $inscrito['insc_id_inscripcion']) {
             $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+5, $k)->getFill()->setFillType(
                 \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
             )->getStartColor()->setARGB('C9E4C5');
