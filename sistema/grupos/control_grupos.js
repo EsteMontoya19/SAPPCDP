@@ -744,9 +744,9 @@ function listaAlumnos(id) {
 
 // Cambiar estatus_activo del grupo
 function cambioPublicacion(id, estatus, nombreCurso, modalidad) {
-    var mensaje = '¿Está seguro que desea cambiar el  estado de publicación del grupo: ';
+    var mensaje = '¿Está seguro que desea cambiar el  estado del Curso: ';
     mensaje = mensaje.concat(id);
-    mensaje = mensaje.concat(' del curso: ');
+    mensaje = mensaje.concat(' ');
     mensaje = mensaje.concat(nombreCurso);
     mensaje = mensaje.concat(' con modalidad ');
     mensaje = mensaje.concat(modalidad);
@@ -780,6 +780,8 @@ function cambioPublicacion(id, estatus, nombreCurso, modalidad) {
                         alertify.error('El grupo debe tener un Profesor asignado.');
                     } else if (respuesta == 4) {
                         alertify.error('Un grupo Finalizado ya no se puede publicar de nuevo');
+                    }  else if (respuesta == 5) {
+                        alertify.error('Un grupo Cancelado ya no se puede publicar de nuevo');
                     } else {
                         alertify.error('Hubo un problema al registrar el grupo.');
                     }
@@ -840,6 +842,7 @@ $(document).ready(function () {
             url: '//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json',
         },
         pageLength: 10,
+        order: [ 0, 'desc' ],
         lengthMenu: [
             [5, 10, 20, 50, -1],
             [5, 10, 20, 50, 'Todos'],
