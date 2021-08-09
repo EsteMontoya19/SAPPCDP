@@ -220,19 +220,22 @@ INSERT INTO Constancia (cons_url, cons_estado, cons_fecha, cons_hora) VALUES
 		(null, 'Pendiente', null, null), 
 		(null, 'Pendiente', null, null), 
 		(null, 'Pendiente', null, null), 
-		(null, 'Pendiente', null, null), 
-		(null, 'Pendiente', null, null), 
-		(null, 'Pendiente', null, null), 
-		(null, 'Pendiente', null, null), 
-		(null, 'Pendiente', null, null), 
-		(null, 'Pendiente', null, null), 
-		(null, 'Pendiente', null, null), 
-		(null, 'Pendiente', null, null), 
-		(null, 'Pendiente', null, null), 
-		(null, 'Pendiente', null, null), 
-		(null, 'Pendiente', null, null), 
-		(null, 'Pendiente', null, null), 
-	
+		
+        /*Finalizados*/
+            ('../recursos/PDF/Constancia/Profesores/Temporal_Profesor.pdf', 'Cargada', '2021/08/09','09:00:00'), 
+            ('../recursos/PDF/Constancia/Profesores/Temporal_Profesor.pdf', 'Cargada', '2021/08/09','09:00:00'), 
+            ('../recursos/PDF/Constancia/Profesores/Temporal_Profesor.pdf', 'Cargada', '2021/08/09','09:00:00'), 
+            (null, 'No acreditada', null, null), 
+            ('../recursos/PDF/Constancia/Profesores/Temporal_Profesor.pdf', 'Cargada', '2021/08/09','09:00:00'),
+            ('../recursos/PDF/Constancia/Profesores/Temporal_Profesor.pdf', 'Cargada', '2021/08/09','09:00:00'), 
+
+            (null, 'En curso', null, null), 
+            (null, 'En curso', null, null), 
+            (null, 'En curso', null, null), 
+             
+            (null, 'No acreditada', null, null), 
+            (null, 'En curso', null, null), 
+            (null, 'En curso', null, null), 
     
     /*Instructores: [37 - 44]*/
 		(null, 'Pendiente', null, null), 
@@ -286,15 +289,17 @@ INSERT INTO INSCRIPCION (GRUP_ID_GRUPO,PROF_ID_PROFESOR,INSC_ACTIVO, CONS_ID_CON
     /*Profesores inscritos: [1 - 8]*/
     (1, 1, 'TRUE', 1, null),
     (2, 1, 'TRUE',  2, null), (2, 2, 'TRUE', 3, null), (2, 3, 'TRUE', 4, null), (2, 4, 'TRUE', 5, null), (2, 5, 'TRUE', 6, null),
-    (3, 6, 'TRUE', 7, null), (3, 6, 'TRUE', 8, null), (3, 1, 'FALSE', 9, null), 
+    (3, 6, 'TRUE', 7, null), (3, 1, 'FALSE', 9, null), 
     (4, 7, 'TRUE', 10, null), (4, 8, 'TRUE', 11, null), (4, 2, 'FALSE', 12, null), 
     (5, 4, 'TRUE', 13, null), (5, 5, 'TRUE', 14, null), 
     (6, 3, 'TRUE', 15, null), (6, 4, 'TRUE', 16, null), (6, 5, 'TRUE', 17, null), (6, 6, 'TRUE', 18, null), (6, 7, 'TRUE', 19, null),
     (7, 8, 'TRUE', 20, null), (7, 3, 'TRUE', 21, null), (7, 2, 'FALSE', 22, null), 
     (8, 5, 'TRUE', 23, null), (8, 6, 'TRUE', 24, null), 
-    (9, 7, 'TRUE', 25, null), (9, 4, 'TRUE', 26, null), (9, 5, 'TRUE', 27, null), (9, 6, 'TRUE', 28, 'No puso atención al curso.'), (9, 3, 'TRUE', 29, null), (9, 8, 'FALSE', 30, null), 
-    (10,1, 'TRUE', 31, null), (10, 2, 'TRUE', 32, null), (10, 7, 'FALSE', 33, null), 
-    (11, 1, 'TRUE', 34, null), (11, 4, 'TRUE', 35, null), (11, 3, 'FALSE', 36, null);
+    
+    /*Finalizados*/
+        (9, 7, 'TRUE', 25, null), (9, 4, 'TRUE', 26, null), (9, 5, 'TRUE', 27, null), (9, 6, 'TRUE', 28, 'No puso atención al curso.'), (9, 3, 'TRUE', 29, null), (9, 8, 'FALSE', 30, null), 
+        (10,1, 'TRUE', 31, null), (10, 2, 'TRUE', 32, null), (10, 7, 'FALSE', 33, null), 
+        (11, 1, 'TRUE', 34, 'Entro 30 minutos tarde.'), (11, 4, 'TRUE', 35, null), (11, 3, 'FALSE', 36, null);
 
 INSERT INTO Asistencia (SESI_ID_SESIONES, INSC_ID_INSCRIPCION, ASIS_PRESENTE) VALUES 
     
