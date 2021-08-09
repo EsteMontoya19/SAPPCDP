@@ -17,6 +17,7 @@
   $grupo = $obj_Grupo->buscarGrupoCompleto($_POST['grupo']);
   $sesiones = $obj_Sesion->buscarSesionesIDGrupo($_POST['grupo']);
   $inscritos = $obj_Grupo->buscarCorreosDeParticipantes($_POST['grupo']);
+  $datosInstructor = $obj_Grupo->buscarDatosInstructorGrupo(($_POST['grupo']));
 
 ?>
 
@@ -46,7 +47,11 @@
         <div class="form-group">
           <!-- Datos generales -->
           <div class="card lg-12" style="padding: 15px;">
+            
             <div class="col-lg-12 form-row">
+              <div class="col-lg-4 form-group">
+                <p><b>ID del grupo: </b> <?php echo($grupo->grup_id_grupo); ?></p>
+              </div>
 
               <div class="col-lg-4 form-group">
                 <p><b>Nombre del curso: </b> <?php echo($grupo->curs_nombre); ?></p>
@@ -57,16 +62,24 @@
                   <?php echo($grupo->pers_nombre . " " . $grupo->pers_apellido_paterno . " " . $grupo-> pers_apellido_materno); ?>
                 </p>
               </div>
+            </div>
 
-              <div class="col-lg-4 form-group">
+          <div class="col-lg-12 form-row">
+            <div class="col-lg-4 form-group">
                 <p><b>Moderador: </b> <?php
                 if ($grupo->moderador != "") {
                     echo($grupo->moderador);
                 } else {
                     echo("No asignado.");
                 }?></p>
-              </div>
+            </div>
 
+            <div class="col-lg-8 form-group">
+                <p><b>Semblanza del instructor: </b><br><?php if(isset($datosInstructor->prof_semblanza)) { echo($datosInstructor->prof_semblanza); } else {echo("Sin semblanza registrada por el instructor.");}?></p>
+            </div>
+          </div><hr><br>
+
+            <div class="col-lg-12 form-row">
               <div class="col-lg-4 form-group">
                 <p><b><?php
                 if ($grupo->moap_id_modalidad == 1) {
@@ -96,7 +109,9 @@
                                   } ?></p>
               </div>
               <?php }?>
+            </div>
 
+            <div class="col-lg-12 form-row">
               <div class="col-lg-4 form-group">
                 <p><b>Número de inscritos: </b><?php echo($grupo->grup_num_inscritos); ?></p>
 
@@ -109,10 +124,10 @@
               <div class="col-lg-4 form-group">
                 <p><b>Modalidad: </b><?php echo($grupo->moap_nombre); ?></p>
               </div>
+            </div>
       
               
               <!-- Aqui estaba la tabla -->
-            </div>
           </div>
         </div>
         
