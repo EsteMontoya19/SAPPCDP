@@ -52,12 +52,29 @@ class Persona
     {
 
         $SQL_Act_Persona =
-        "
-        UPDATE Persona
-        SET pers_nombre = '$nombre', pers_apellido_paterno = '$apellidoPaterno',
-        pers_apellido_materno = '$apellidoMaterno', pers_correo = '$correo',
-        pers_telefono = '$telefono', pers_rfc = '$rfc'
-        WHERE pers_id_persona = $persona;
+        "UPDATE Persona
+         SET pers_nombre = '$nombre', pers_apellido_paterno = '$apellidoPaterno',
+            pers_apellido_materno = '$apellidoMaterno', pers_correo = '$correo',
+            pers_telefono = '$telefono', pers_rfc = '$rfc'
+         WHERE pers_id_persona = $persona;
+      ";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Act_Persona);
+        $bd->cerrarBD();
+        $this->id_persona = Persona::buscarUltimo();
+    }
+
+    //? Se utiliza para actualizar los datos posibles desde la interfaz de Mi Cuenta
+    function actualizarPersonaCuenta($persona, $correo, $telefono)
+    {
+
+        $SQL_Act_Persona =
+        "UPDATE Persona
+         SET pers_correo = '$correo', pers_telefono = '$telefono'
+         WHERE pers_id_persona = $persona;
       ";
 
         $bd = new BD();

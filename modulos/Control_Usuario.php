@@ -269,151 +269,145 @@
       }
 
       if(!isset($usuario_existente->usua_num_usuario) || $esElMismo == 1) {
-      //?Datos de persona
-      $nombre = $_POST['strUsuarioNombre'];
-      $apellidoPaterno = $_POST['strUsuarioPrimerApe'];
-      $apellidoMaterno = $_POST['strUsuarioSegundoApe'];
-      $correo = $_POST['strUsuarioCorreo'];
-      $telefono = $_POST['strUsuarioTelefono'];
-      $rfc = $_POST['strRFC'];
-      
-      //? Datos de usuario
-      $nombreUsuario = $_POST['strNombreUsuario'];
-      $rol = (integer) $_POST['hideRol'];
-      //? Por petición del usuario se eliminaron las preguntas de seguridad 
-      $pregunta = null;
-      $recuperacion = null;
-      $contrasenia = $_POST['strContrasenia01'];
-      $estado = isset($_POST['bEstado']) ? $_POST['bEstado'] : "TRUE"; //? El admin los crea en activo, debo poner en profesor el estado como false
-      
-      //?Datos según rol
-      if($rol == ADMINISTRADOR || $rol == INSTRUCTOR || $rol == PROFESOR) {
-        $num_trabajador = $_POST['intNum_Trabajador'];
-
-        if($rol == INSTRUCTOR) {
-          $semblanza = $_POST['strSemblanza'];
-        }
-        //*? Creado para guardar los inputs. Solo guarda los que tienen algo
-        $nivelesProfesor=array();
-        $bandera =  1; 
-        foreach($arr_niveles as $nivel){
-          if(isset($_POST['strNivel'.$bandera]) && $_POST['strNivel'.$bandera] != "" ) {
-            $nivelesProfesor[$bandera] = $_POST['strNivel'.$bandera];
-          } 
-          $bandera++;
-        }
-        $modalidadesProfesor=array();
-        $bandera =  1; 
-        foreach($arr_modalidades as $modalidad){
-          if(isset($_POST['strModalidad'.$bandera]) && $_POST['strModalidad'.$bandera] != "" ) {
-            $modalidadesProfesor[$bandera] = $_POST['strModalidad'.$bandera];
-          } 
-          $bandera++;
-        }
-
-        $coordinacionesProfesor=array();
-        $bandera =  1; 
-        foreach($arr_coordinaciones as $coordinacion){
-          if(isset($_POST['strCoordinacion'.$bandera]) && $_POST['strCoordinacion'.$bandera] != "" ) {
-            $coordinacionesProfesor[$bandera] = $_POST['strCoordinacion'.$bandera];
-          } 
-          $bandera++;
-        } 
-      }
-
-      if($rol == MODERADOR) {
-        //*? Creado para guardar los inputs. Solo guarda los que tienen algo
-        $fechaInicio = $_POST['strFechaInicio'];
-        $fechaFin = $_POST['strFechaFin']; 
-        $horaInicio = $_POST['strHoraInicio']; 
-        $horaFin = $_POST['strHoraFin'];
-
-        $diasModerador=array();
-        foreach($arr_dias as $dia){
-          static $bandera =  1; 
-          if(isset($_POST['strDiaServicio'.$bandera]) && $_POST['strDiaServicio'.$bandera] != "" ) {
-            $diasModerador[$bandera] = $_POST['strDiaServicio'.$bandera];
-          } 
-          $bandera++;
-        }
-        //? Si existe un registro como Servidor Social, llamo al id para usar el isset
-        if (isset($obj_Moderador->buscarServidorSocial($_POST['idPersona'])->seso_id_servidor)) {
-          $num_cuenta = $_POST['intNumCuenta'];
-        } else {
+        //?Datos de persona
+        $nombre = $_POST['strUsuarioNombre'];
+        $apellidoPaterno = $_POST['strUsuarioPrimerApe'];
+        $apellidoMaterno = $_POST['strUsuarioSegundoApe'];
+        $correo = $_POST['strUsuarioCorreo'];
+        $telefono = $_POST['strUsuarioTelefono'];
+        $rfc = $_POST['strRFC'];
+        
+        //? Datos de usuario
+        $nombreUsuario = $_POST['strNombreUsuario'];
+        $rol = (integer) $_POST['hideRol'];
+        //? Por petición del usuario se eliminaron las preguntas de seguridad 
+        $pregunta = null;
+        $recuperacion = null;
+        $contrasenia = $_POST['strContrasenia01'];
+        $estado = isset($_POST['bEstado']) ? $_POST['bEstado'] : "TRUE"; //? El admin los crea en activo, debo poner en profesor el estado como false
+        
+        //?Datos según rol
+        if($rol == ADMINISTRADOR || $rol == INSTRUCTOR || $rol == PROFESOR) {
           $num_trabajador = $_POST['intNum_Trabajador'];
-          $rfc = $_POST['strRFC'];
-        }
-      }
-      
-      $obj_Persona->actualizarPersona($idPersona, $nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc);
-      
-      $obj_Usuario->actualizarUsuario($idPersona, $rol, $pregunta, $nombreUsuario, $contrasenia);
 
-      switch($rol){
-        case ADMINISTRADOR:
-          $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, null);
-        break;
-
-        case MODERADOR:
-          //? Primero debemos de saber si es un moderador Profesor o Servidor Social
-          if(isset($num_trabajador)) {
-            //? Si el número de trabajador es diferente a 6 es un error por que no se puede haber registrado
-            //? a un profesor y despues cambiarlo a serviddr social
-            if (strlen($num_trabajador) < 6 || strlen($num_trabajador) > 6) {
-              exit("3");
-            }
-            $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, null);
-
-            //? Si tiene número de cuenta es un servidor social
-          } elseif (isset($num_cuenta)) {
-            //? Si el número de cuenta es diferente a 9 es un error por que no se puede haber registrado
-            //? a un Servidor Social  y despues cambiarlo a Profesora
-            if (strlen($num_cuenta) < 9 || strlen($num_cuenta) > 9) {
-              exit("4");
-            }
-            $obj_Moderador->actualizarServidor($idPersona , $num_cuenta);
+          if($rol == INSTRUCTOR) {
+            $semblanza = $_POST['strSemblanza'];
+          }
+          //*? Creado para guardar los inputs. Solo guarda los que tienen algo
+          $nivelesProfesor=array();
+          $bandera =  1; 
+          foreach($arr_niveles as $nivel){
+            if(isset($_POST['strNivel'.$bandera]) && $_POST['strNivel'.$bandera] != "" ) {
+              $nivelesProfesor[$bandera] = $_POST['strNivel'.$bandera];
+            } 
+            $bandera++;
+          }
+          $modalidadesProfesor=array();
+          $bandera =  1; 
+          foreach($arr_modalidades as $modalidad){
+            if(isset($_POST['strModalidad'.$bandera]) && $_POST['strModalidad'.$bandera] != "" ) {
+              $modalidadesProfesor[$bandera] = $_POST['strModalidad'.$bandera];
+            } 
+            $bandera++;
           }
 
-          $obj_Moderador->actualizarModerador($idPersona, $fechaInicio, $fechaFin, $horaInicio, $horaFin);
-          $obj_Moderador->eliminarDiasModerador($idPersona);
-
-          foreach($diasModerador as $id){
-            $obj_Moderador->agregarDiasModerador($idPersona, $id);
+          $coordinacionesProfesor=array();
+          $bandera =  1; 
+          foreach($arr_coordinaciones as $coordinacion){
+            if(isset($_POST['strCoordinacion'.$bandera]) && $_POST['strCoordinacion'.$bandera] != "" ) {
+              $coordinacionesProfesor[$bandera] = $_POST['strCoordinacion'.$bandera];
+            } 
+            $bandera++;
           } 
-        break; 
+        }
 
-        case PROFESOR:
-          $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, null);
-          
-          $obj_Profesor->eliminarNivelesProfesor($idPersona);
-          foreach($nivelesProfesor as $id){
-            $obj_Profesor->agregarNivelesProfesor($idPersona, $id);
-          }
-          $obj_Profesor->eliminarModalidadesProfesor($idPersona);
-          foreach($modalidadesProfesor as $id){
-            $obj_Profesor->agregarModalidadesProfesor($idPersona, $id);
-          }
-          $obj_Profesor->eliminarCoordinacionesProfesor($idPersona);
-          foreach($coordinacionesProfesor as $id){
-            $obj_Profesor->agregarCoordinacionesProfesor($idPersona, $id);
-          }
-        break;
+        if($rol == MODERADOR) {
+          //*? Creado para guardar los inputs. Solo guarda los que tienen algo
+          $fechaInicio = $_POST['strFechaInicio'];
+          $fechaFin = $_POST['strFechaFin']; 
+          $horaInicio = $_POST['strHoraInicio']; 
+          $horaFin = $_POST['strHoraFin'];
 
-        case INSTRUCTOR:
-          $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, $semblanza);
-        break;
-      }
+          $diasModerador=array();
+          foreach($arr_dias as $dia){
+            static $bandera =  1; 
+            if(isset($_POST['strDiaServicio'.$bandera]) && $_POST['strDiaServicio'.$bandera] != "" ) {
+              $diasModerador[$bandera] = $_POST['strDiaServicio'.$bandera];
+            } 
+            $bandera++;
+          }
+          //? Si existe un registro como Servidor Social, llamo al id para usar el isset
+          if (isset($obj_Moderador->buscarServidorSocial($_POST['idPersona'])->seso_id_servidor)) {
+            $num_cuenta = $_POST['intNumCuenta'];
+          } else {
+            $num_trabajador = $_POST['intNum_Trabajador'];
+            $rfc = $_POST['strRFC'];
+          }
+        }
+        
+        $obj_Persona->actualizarPersona($idPersona, $nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc);
+        
+        $obj_Usuario->actualizarUsuario($idPersona, $rol, $pregunta, $nombreUsuario, $contrasenia);
 
-        if (isset($_POST['procedencia']) && $_POST['procedencia'] = "mi_cuenta") {
-          exit ("10");
-        } else {
-          exit ("1");
+        switch($rol){
+          case ADMINISTRADOR:
+            $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, null);
+          break;
+
+          case MODERADOR:
+            //? Primero debemos de saber si es un moderador Profesor o Servidor Social
+            if(isset($num_trabajador)) {
+              //? Si el número de trabajador es diferente a 6 es un error por que no se puede haber registrado
+              //? a un profesor y despues cambiarlo a serviddr social
+              if (strlen($num_trabajador) < 6 || strlen($num_trabajador) > 6) {
+                exit("3");
+              }
+              $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, null);
+
+              //? Si tiene número de cuenta es un servidor social
+            } elseif (isset($num_cuenta)) {
+              //? Si el número de cuenta es diferente a 9 es un error por que no se puede haber registrado
+              //? a un Servidor Social  y despues cambiarlo a Profesora
+              if (strlen($num_cuenta) < 9 || strlen($num_cuenta) > 9) {
+                exit("4");
+              }
+              $obj_Moderador->actualizarServidor($idPersona , $num_cuenta);
+            }
+
+            $obj_Moderador->actualizarModerador($idPersona, $fechaInicio, $fechaFin, $horaInicio, $horaFin);
+            $obj_Moderador->eliminarDiasModerador($idPersona);
+
+            foreach($diasModerador as $id){
+              $obj_Moderador->agregarDiasModerador($idPersona, $id);
+            } 
+          break; 
+
+          case PROFESOR:
+            $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, null);
+            
+            $obj_Profesor->eliminarNivelesProfesor($idPersona);
+            foreach($nivelesProfesor as $id){
+              $obj_Profesor->agregarNivelesProfesor($idPersona, $id);
+            }
+            $obj_Profesor->eliminarModalidadesProfesor($idPersona);
+            foreach($modalidadesProfesor as $id){
+              $obj_Profesor->agregarModalidadesProfesor($idPersona, $id);
+            }
+            $obj_Profesor->eliminarCoordinacionesProfesor($idPersona);
+            foreach($coordinacionesProfesor as $id){
+              $obj_Profesor->agregarCoordinacionesProfesor($idPersona, $id);
+            }
+          break;
+
+          case INSTRUCTOR:
+            $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, $semblanza);
+          break;
         }
       } else {
         exit("2");
       }
     }
-    elseif($_POST['dml'] == 'delete')
+    elseif($_POST['dml'] == 'deleteDeprecated')
     {
       $usuario = $_POST['id'];
       $persona = $_POST['persona'];
@@ -474,11 +468,9 @@
     }
     elseif($_POST['dml'] == 'llenadoProfesor')
     {
-
         $resultado = array();
         $profesor = $obj_Profesor->buscarNumTrabajador($_POST['numTrabajador'], null);
-        
-        
+      
         if (isset($profesor->prof_id_profesor)) {
   
           //? Asignamos al arreglo Json los datos del profesor
@@ -501,8 +493,12 @@
         } 
         echo json_encode($resultado);
         
-    }else {
+    }else if($_POST['dml'] == 'updateCuenta'){
+      $obj_Persona->actualizarPersonaCuenta($_POST['idPersona'], $_POST['strUsuarioCorreo'], $_POST['strUsuarioTelefono']);
+
+      exit("1");
+    } else {
       exit("3");
-    } 
+    }
   }
 ?>

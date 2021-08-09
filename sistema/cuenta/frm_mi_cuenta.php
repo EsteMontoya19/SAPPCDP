@@ -9,29 +9,6 @@ include('../../clases/Administrador.php');
 include('../../clases/Moderador.php');
 include('../../clases/Profesor.php');
 
-//*! Se inicializan variables para evitar el Notice en PHP en caso de afectar en algo eliminar
-$usuario = new Usuario();
-$usuario->pers_id_persona = null;
-$usuario->rol_id_rol = null;
-$usuario->prse_id_pregunta = null;
-$usuario->usua_num_usuario = null;
-$usuario->usua_contrasena = null;
-$usuario->usua_respuesta = null;
-$usuario->usua_activo = null;
-
-$persona = new Persona();
-$persona->pers_id_persona = null;
-$persona->pers_nombre = null;
-$persona->pers_apellido_materno = null;
-$persona->pers_apellido_paterno = null;
-$persona->pers_correo = null;
-$persona->pers_telefono = null;
-
-$profesor = null;
-$profesor_coordinacion = null;
-$moderador_dia = null;
-
-
 // Catálogos
 $obj_Busqueda = new Busqueda();
 $obj_Profesor = new Profesor();
@@ -125,13 +102,13 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
               <div class="col-lg-12 form-row">
                 <div class="col-lg-6 form-group">
                   <label for="strUsuarioCorreo" class = "negritas">Correo electrónico: *</label>
-                  <input readonly type="text" class="form-control" id="strUsuarioCorreo" name="strUsuarioCorreo"
+                  <input type="text" class="form-control" id="strUsuarioCorreo" name="strUsuarioCorreo"
                     placeholder="ej. ejemplo@dominio.com"
-                    value="<?php echo isset($persona) ? $persona->pers_correo : ""; ?>">
+                    value="<?php echo isset($persona) ? $persona->pers_correo : ""; ?>" enabled>
                 </div>
                 <div class="col-lg-6 form-group">
                   <label for="strUsuarioTelefono" class = "negritas">Teléfono: *</label>
-                  <input readonly type="text" class="form-control" id="strUsuarioTelefono" name="strUsuarioTelefono"
+                  <input type="text" class="form-control" id="strUsuarioTelefono" name="strUsuarioTelefono"
                     placeholder="ej. 5511223344" value="<?php echo isset($persona) ? $persona->pers_telefono : ""; ?>">
                 </div>
               </div>
@@ -274,7 +251,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                                 checked
                                     <?php }
                                 }
-                          }?>>
+                          }?> disabled>
                         <label class="form-check-label" for="inlineCheckbox1"><?php echo ($nivel['nive_nombre']);?></label>
                       </div>
                     <?php } ?>
@@ -295,7 +272,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                                 checked
                                     <?php }
                                 }
-                          }?>>
+                          }?> disabled>
                         <label class="form-check-label" for="inlineCheckbox1"><?php echo ($modalidad['moda_nombre']);?></label>
                       </div>
                   <?php } ?>
@@ -323,7 +300,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                                       checked
                                         <?php }
                                     }
-                                }?>>
+                                }?> disabled>
                               <label class="form-check-label" for="inlineCheckbox1"><?php echo ($coordinacion['coor_nombre']);?></label> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                                 <?php //*? Esto lo creo para hacer dos columnas con las coordinaciones si se borra solo aparecen en una fila
                                   $tamano = sizeof($arr_coordinaciones);
@@ -345,16 +322,13 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
 
 
         <!-- Necesarios para actualizar -->
-        <input type="hidden" name="dml" value="update">
-        <input type="hidden" name="procedencia" value="mi_cuenta">
-        <input type="hidden" id="idUsuario" name="idUsuario" value="<?php echo $_POST['id']; ?>">
+        <input type="hidden" name="dml" value="updateCuenta">
         <input type="hidden" id="idPersona" name="idPersona" value="<?php echo $persona->pers_id_persona; ?>">
-        <input type="hidden" name="hideRol" id="hideRol" value="<?php echo $usuario->rol_id_rol; ?>">
       </form>
       <!-- Botones -->
       <div class="col-lg-12" style="text-align: center;">
         <button id="btn-regresar-usuario" type="button" class="btn btn-success btn-footer btn-regresar">Regresar</button>
-        <button id="btn-actualizar-usuario-mi-cuenta" type="button" class="btn btn-success btn-footer btn-aceptar">Guardar</button>
+        <button id="btn-actualizar-usuario-mi-cuenta" type="button" class="btn btn-success btn-footer btn-aceptar">Actualizar</button>
       </div>
     </div>
   </div>

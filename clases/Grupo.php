@@ -2,8 +2,25 @@
 class Grupo
 {
 
-    //? 
+    function buscarDatosInstructorGrupo ($grupo) {
+        $SQL_Bus_Grupo =
+        "SELECT P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno, P.pers_correo, P.pers_telefono, P.pers_rfc, Pr.prof_semblanza
+        FROM Grupo G, Personal_Grupo PG, Usuario U, Persona P, Profesor Pr
+        WHERE G.grup_id_grupo = PG.grup_id_grupo AND U.usua_id_usuario = PG.usua_id_usuario AND P.pers_id_persona = U.pers_id_persona
+            AND Pr.pers_id_persona = P.pers_id_persona 
+            AND G.grup_id_grupo = $grupo AND U.rol_id_rol = 2;
+        ";
 
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Bus_Grupo);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerObjeto(0));
+
+    }
+
+    //? Busca el moderador asignado para un grupo
     function buscarModeradorGrupo ($grupo) {
         $SQL_Bus_Grupo =
         "SELECT U.usua_id_usuario, P.pers_id_persona, PG.grup_id_grupo, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno
