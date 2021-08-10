@@ -62,6 +62,10 @@ if (isset($_POST['modalidad'])) {
 if (isset($_POST['persona'])) {
     // Recuperar información la persona que consulta
     $persona = $obj_Persona->buscarPersona($_POST['persona']);
+    if (isset($_POST['CRUD'])) {
+      $profesor = $obj_Profesor->buscarProfesor($persona->pers_id_persona);
+      $inscrito =  $obj_Inscripcion->buscarInscripcion($Grupo->grup_id_grupo, $profesor->prof_id_profesor);
+    }
 }
 
   
@@ -286,7 +290,7 @@ if (isset($_POST['persona'])) {
                 </select>
             </div>
             
-            <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2 && $_POST['CRUD'] == 1 && $Grupo->esta_nombre == 'En curso') { ?>
+            <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2 && $_POST['CRUD'] == 1 && $Grupo->esta_nombre == 'En curso' && (isset($inscrito) && $inscrito->insc_activo == 't')) { ?>
             <div id="URL" class="col-lg-12 form-group">
             <?php } else {?>
             <div id="URL" class="col-lg-12 form-group" style="display: none;">
@@ -296,7 +300,7 @@ if (isset($_POST['persona'])) {
                         value="<?php echo isset($modalidad) ? $modalidad->grup_url : ""; ?>">
             </div>
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
-              <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2 && $_POST['CRUD'] == 1 && $Grupo->esta_nombre == 'En curso') { ?>
+              <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2 && $_POST['CRUD'] == 1 && $Grupo->esta_nombre == 'En curso' && (isset($inscrito) && $inscrito->insc_activo == 't')) { ?>
               <div id="ID_Acceso" class="col-lg-6 form-group">
               <?php } else {?>
               <div id="Reunion" class="col-lg-6 form-group" style="display: none;">
@@ -305,7 +309,7 @@ if (isset($_POST['persona'])) {
                 <input type="text" class="form-control" id="ID_Acceso" name="ID_Acceso" 
                   value="<?php echo isset($modalidad) ? $modalidad->grup_id_acceso: ""; ?>">
               </div>
-              <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2 && $_POST['CRUD'] == 1 && $Grupo->esta_nombre == 'En curso') { ?>
+              <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2 && $_POST['CRUD'] == 1 && $Grupo->esta_nombre == 'En curso' && (isset($inscrito) && $inscrito->insc_activo == 't')) { ?>
               <div id="Clave" class="col-lg-6 form-group">
               <?php } else {?>
               <div id="Clave" class="col-lg-6 form-group" style="display: none;">
@@ -390,8 +394,7 @@ if (isset($_POST['persona'])) {
 
                 <?php
                 if (isset($persona)  && isset($Grupo)) {
-                    $profesor = $obj_Profesor->buscarProfesor($persona->pers_id_persona);
-                    $inscrito =  $obj_Inscripcion->buscarInscripcion($Grupo->grup_id_grupo, $profesor->prof_id_profesor);
+
                     $periodoInscripcion = $obj_Inscripcion->buscarVigenciaInscripcion($Grupo->grup_id_grupo);
 
                   //? Se verifica que el periodo de inscripción del grupo se vigente, si no no aparece nada
