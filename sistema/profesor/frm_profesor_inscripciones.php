@@ -88,14 +88,16 @@
                         <td><?php echo $sesionUno->fecha.'  '.$sesionUno->hora_ini.'-'.$sesionUno->hora_fin;?></td>
                         <td><?php 
                         if ($grupo['esta_nombre'] == 'En curso'){
-                          if($grupo['moap_id_modalidad'] == 2){?>
+                          if($grupo['moap_id_modalidad'] == 2 && $grupo['insc_activo'] == 't'){?>
                             <a href="<?php echo $modalidad->grup_url;?>" target="_blank"><?php echo $modalidad->plat_nombre;?></a>
                           <?php
-                          } elseif($grupo['moap_id_modalidad'] == 1) { 
+                          } elseif($grupo['moap_id_modalidad'] == 1 && $grupo['insc_activo'] == 't') { 
                             echo "Edificio: ".$modalidad->edif_nombre." Salón: ".$modalidad->salo_nombre;
-                          } elseif($grupo['moap_id_modalidad'] == 3) { ?>
+                          } elseif($grupo['moap_id_modalidad'] == 3 && $grupo['insc_activo'] == 't') { ?>
                             <a href="<?php echo $modalidad->grup_url;?>" target="_blank">Plataforma externa</a>
                           <?php
+                          } else {
+                            echo ('<p class = aviso-azul>Sin acceso</p>');
                           }
                         } else {
                           echo $grupo['esta_nombre'];
