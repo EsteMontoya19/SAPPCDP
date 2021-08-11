@@ -18,12 +18,13 @@
         
         //Registrar una inscripción
         //? Verificado en la BD 04/07/2021
-        function agregarInscripcion($grupo, $profesor)
+        function agregarInscripcion($grupo, $profesor, $constancia)
         {
             /*Se modifico esta función borrando la sub-consulta para hacer más eficiente el programa y ahorrarse esa sub-consulta por cada ejecución de la función*/
             $SQL_Ins_Ins =
-            "INSERT INTO Inscripcion(grup_id_grupo, prof_id_profesor,insc_activo)
-            VALUES ($grupo, $profesor, true);
+            "INSERT INTO Inscripcion(grup_id_grupo, prof_id_profesor,insc_activo, cons_id_constancias)
+            VALUES ($grupo, $profesor, true, $constancia);
+
             UPDATE Grupo
             SET grup_num_inscritos =  grup_num_inscritos + 1
             WHERE grup_id_grupo = $grupo

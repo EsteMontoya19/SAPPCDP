@@ -23,7 +23,7 @@ function consultarGrupo(id, persona, modalidad) {
         id: id,
         CRUD: 0,
         persona: persona,
-        modalidad:modalidad,
+        modalidad: modalidad,
     };
     $.ajax({
         data: datos,
@@ -41,7 +41,7 @@ function consultarGrupoInscrito(id, persona, modalidad) {
         id: id,
         CRUD: 1,
         persona: persona,
-        modalidad:modalidad,
+        modalidad: modalidad,
     };
     $.ajax({
         data: datos,
@@ -121,10 +121,10 @@ function inscribirGrupo(grupo, inscritos, cupo, persona, nombre, tipo, nivel) {
 }
 
 function listaInscritos(idGrupo, tipoLista) {
-    alert("entra");
+    alert('entra');
     var datos = {
         idGrupo: idGrupo,
-        tipoLista: tipoLista
+        tipoLista: tipoLista,
     };
     alert(tipoLista);
     $.ajax({
@@ -132,13 +132,11 @@ function listaInscritos(idGrupo, tipoLista) {
         type: 'POST',
         url: '../modulos/Control_PDF.php',
         success: function (respuesta) {
-            alertify.success("Si entra y sale" + respuesta);
+            alertify.success('Si entra y sale' + respuesta);
             console.log(respuesta);
-            
         },
     });
 }
-
 
 $(document).ready(function () {
     $('#tabla_grupos').DataTable({
@@ -146,6 +144,7 @@ $(document).ready(function () {
             url: '//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json',
         },
         pageLength: 10,
+        order: [0, 'desc'],
         lengthMenu: [
             [5, 10, 20, 50, -1],
             [5, 10, 20, 50, 'Todos'],
@@ -153,7 +152,7 @@ $(document).ready(function () {
     });
 });
 
-function validarCancelacion(fecha, hora){
+function validarCancelacion(fecha, hora) {
     //Crea una constante con la fecha del día, en la hora que se intenta cancelar la inscripción
     const objFechaHoy = new Date();
 
@@ -163,21 +162,20 @@ function validarCancelacion(fecha, hora){
     */
     var separadorFecha = fecha.split('-');
     var stringFecha = separadorFecha[2] + '-' + separadorFecha[1] + '-' + separadorFecha[0] + ' ' + hora;
-    var objFecha2 =  new Date(stringFecha);
+    var objFecha2 = new Date(stringFecha);
 
     /*Se compara si el momento en que se quiere hacer la cancelación de la inscripción es antes de la hora en que comienza la primer sesión
         Ya que en caso de haber comenzado la primer sesión ya no se le permitirá al profesor cancelar su inscripción
      */
-    if (objFechaHoy <= objFecha2 ){
+    if (objFechaHoy <= objFecha2) {
         return true;
     } else {
         return false;
     }
 }
 
-function cancelarInscripcion(grupo, profesor, fecha, hora, nombre, tipo, nivel){
-
-    if(validarCancelacion(fecha, hora)){
+function cancelarInscripcion(grupo, profesor, fecha, hora, nombre, tipo, nivel) {
+    if (validarCancelacion(fecha, hora)) {
         var mensaje = '¿Esta seguro que desea cancelar su inscripción al ';
         mensaje = mensaje.concat(tipo);
         mensaje = mensaje.concat(' ');
@@ -221,7 +219,6 @@ function cancelarInscripcion(grupo, profesor, fecha, hora, nombre, tipo, nivel){
                 alertify.confirm().close();
             }
         );
-
     } else {
         alertify.error('Lo siento no puedes cancelar una inscripción después de que ha comenzado la primer sesión del grupo al que te inscribiste');
     }

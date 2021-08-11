@@ -42,7 +42,7 @@
     $hoja -> getDefaultColumnDimension()->setWidth(30, 'cm');
     $hoja -> getColumnDimension('C')->setWidth(60, 'cm');
     $hoja -> getColumnDimension('H')->setWidth(60, 'cm');
-    $hoja -> setTitle("Constancias");
+    $hoja -> setTitle("Constancias ".$curso->curs_tipo.' '.$idGrupo);
 
 
     //? Esta parte escribe dentro de cada celda, con las cordenadas [A: Columna ,1: Fila]
@@ -122,7 +122,7 @@
     ob_clean();
     $writer = new Xlsx($documento);
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment; filename="Lista Constancias".xlsx');
+    header('Content-Disposition: attachment; filename=Constancias_'.$curso->curs_tipo.'_'.$idGrupo.'.xlsx');
     header('Cache-Control: max-age=0');
     $writer->save('php://output');
     exit;
