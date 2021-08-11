@@ -98,9 +98,8 @@ foreach ($arr_sesiones as $sesion) {
     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
     ->getStartColor()
     ->setARGB('77ACF1');
-    // $hoja -> getStyle("A1:".$letra."1") -> applyFromArray($styleArray);
-    // $hoja -> getStyle("A8:".$letra."8") -> applyFromArray($styleArray);
-    $hoja -> getStyleByColumnAndRow(1, 13, 3, 16) -> applyFromArray($styleArray);
+
+
     $hoja -> mergeCells("A7:E7");
     $hoja -> setCellValueByColumnAndRow(1, 8, "#");
     $hoja -> setCellValueByColumnAndRow(2, 8, "Profesor");
@@ -128,13 +127,15 @@ foreach ($arr_sesiones as $sesion) {
 
         // Section: Columna de asistencias
         foreach ($sesiones as $iCont => $sesion) {
+            $countSesiones;
             $asistencia = $obj_Asistencia->buscarAsistenciaSesion($sesion['sesi_id_sesiones'], $inscrito['insc_id_inscripcion']);
             if (isset($asistencia)) {
                 if ($asistencia->asis_presente =='t') {
-                    //? Si estuvo presente marcamos la casilla sino, se queda depintada
+                    //? Si estuvo presente marcamos la casilla sino, se queda despintada
                     $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+4, $k)->getFill()->setFillType(
                         \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
                     )->getStartColor()->setARGB('C9E4C5');
+                    $countSesiones++;
                     // $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+4, $k)->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM);
                 } else {
                     $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+4, $k)->getFill()->setFillType(
@@ -145,9 +146,13 @@ foreach ($arr_sesiones as $sesion) {
             }
         }
 
+        $file = fopen('Mensajes.txt', 'a');
+        fwrite($file, 'Asistencias registradas: '. $countSesiones.PHP_EOL);
+        fwrite($file, 'Asistencias reales: '. $numSesiones.PHP_EOL);
+        fclose($file);
 
         // Section: Columna de constancias
-        if (isset($constancia->insc_id_inscripcion) && $constancia->insc_id_inscripcion == $inscrito['insc_id_inscripcion']) {
+        if ($countSesiones == $numSesiones) {
             $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+5, $k)->getFill()->setFillType(
                 \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
             )->getStartColor()->setARGB('C9E4C5');
@@ -163,6 +168,7 @@ foreach ($arr_sesiones as $sesion) {
         $hoja -> setCellValueByColumnAndRow($iCont+6, $k, $inscrito['insc_observacion']);
 
         $k++;
+        $countSesiones = 0;
     }
 
 
@@ -171,7 +177,7 @@ foreach ($arr_sesiones as $sesion) {
     $writer = new Xlsx($documento);
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment; filename="Lista de Asistencia".xlsx');
+    header('Content-Disposition: attachment; filename=Lista_Asistencia_'.$curso->curs_tipo.'_'.$idGrupo.'.xlsx');
     header('Cache-Control: max-age=0');
     $writer->save('php://output');
     exit;
