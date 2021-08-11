@@ -8,18 +8,18 @@
   $arr_grupos = $obj_Grupo ->buscarGruposProfesores();
   $obj_Sesion = new Sesion();
   
-  if (isset($_POST['persona'])){
+if (isset($_POST['persona'])) {
     $idPersona = $_POST['persona'];
     $obj_profesor = new Profesor();
     $profesor = $obj_profesor->buscarInstructorxPersona($idPersona);
-    if(isset($profesor)){
-      $id_profesor=$profesor->usua_id_usuario;
+    if (isset($profesor)) {
+        $id_profesor=$profesor->usua_id_usuario;
     } else {
-      $id_profesor=0;
+        $id_profesor=0;
     }
-  } else {
+} else {
     $idPersona = 0;
-  }
+}
 
 ?>
 
@@ -72,11 +72,11 @@
                                                             permita inscribirse o verlo como posibilidad de grupo a inscribirse.
                                                           -->
                   <?php
-                  if(isset($arr_grupos)){ 
-                  foreach ($arr_grupos as $grupo) { 
-                    if($grupo['usua_id_usuario'] != $id_profesor) {
-                      $sesion = $obj_Sesion->numSesionesGrupo($grupo['grup_id_grupo']);
-                      $sesionUno = $obj_Sesion->buscarMinSesionDM($grupo['grup_id_grupo']);?>
+                    if (isset($arr_grupos)) {
+                        foreach ($arr_grupos as $grupo) {
+                            if ($grupo['usua_id_usuario'] != $id_profesor) {
+                                $sesion = $obj_Sesion->numSesionesGrupo($grupo['grup_id_grupo']);
+                                $sesionUno = $obj_Sesion->buscarMinSesionDM($grupo['grup_id_grupo']);?>
                       <tr>
                         <td><?php echo $grupo['grup_id_grupo'];?></td>
                         <td><?php echo $grupo['curs_nombre'];?></td>
@@ -94,7 +94,9 @@
                           </button>
                         </td>
                       </tr>
-                  <?php } } } ?>
+                            <?php }
+                        }
+                    } ?>
                   
                 </tbody>
               </table>
@@ -106,4 +108,3 @@
   </div>
 
   <script src="../sistema/profesor/control_profesores.js"></script>
-

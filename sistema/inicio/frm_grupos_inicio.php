@@ -73,11 +73,10 @@ if (isset($_POST['persona'])) {
                                                           -->
                   <?php
                     if (isset($arr_grupos)) {
-                      foreach ($arr_grupos as $grupo) {
- 
-                        if ($grupo['usua_id_usuario'] != $id_profesor) {
-                          $sesion = $obj_Sesion->numSesionesGrupo($grupo['grup_id_grupo']);
-                          $sesionUno = $obj_Sesion->buscarMinSesionDM($grupo['grup_id_grupo']);?>
+                        foreach ($arr_grupos as $grupo) {
+                            if ($grupo['usua_id_usuario'] != $id_profesor) {
+                                $sesion = $obj_Sesion->numSesionesGrupo($grupo['grup_id_grupo']);
+                                $sesionUno = $obj_Sesion->buscarMinSesionDM($grupo['grup_id_grupo']);?>
                         <tr>
                           <td><?php echo $grupo['grup_id_grupo'];?></td>
                           <td><?php echo $grupo['curs_nombre'];?></td>
@@ -89,14 +88,16 @@ if (isset($_POST['persona'])) {
                           <td><?php echo $sesion->numero;?></td>
                           <td><?php echo $sesionUno->dia.'-'.$sesionUno->mes;?></td>
                           <td>
-
+                              <div align="left">
                             <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupo(<?php echo $grupo['grup_id_grupo']?>, <?php echo $idPersona?>, <?php echo $grupo['moap_id_modalidad']?>)">
                               <i class="fas fa-search-plus"></i>
                             </button>
+                          </div>
                           </td>
+                          
                         </tr>
-                      <?php } 
-                      }
+                            <?php }
+                        }
                     } ?>
                   
                 </tbody>
