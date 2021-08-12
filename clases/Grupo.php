@@ -271,9 +271,35 @@ class Grupo
         $bd->cerrarBD();
     }
 
-    //Permite obtener los grupos a los cuales se ha inscrito un profesor
+    //Permite obtener los grupos a los cuales se ha inscrito un profesor y se encuentran en curso o están por comenzar (Pendientes)
     //? Verificado en la BD 06/07/2021
     function gruposInscritosxProfesor($idProfesor)
+    {
+        $SQL_Act_Curso =
+        " SELECT G.GRUP_ID_GRUPO, G.moap_id_modalidad, moap_nombre, 
+                    CURS_NOMBRE, CALE_SEMESTRE, ESTA_NOMBRE, insc_activo, curs_nivel, curs_tipo
+                FROM INSCRIPCION I, GRUPO G, CURSO C, CALENDARIO CA, MODALIDAD_APRENDIZAJE M, ESTADO E
+                WHERE I.PROF_ID_PROFESOR = $idProfesor
+                    AND I.GRUP_ID_GRUPO = G.GRUP_ID_GRUPO 
+                    AND G.CURS_ID_CURSO = C.CURS_ID_CURSO  
+                    AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO 
+                    AND G.MOAP_ID_MODALIDAD = M.MOAP_ID_MODALIDAD
+                    AND E.ESTA_ID_ESTADO = G.ESTA_ID_ESTADO
+                    AND (G.ESTA_ID_ESTADO = 2 OR G.ESTA_ID_ESTADO = 3)
+                ORDER BY I.GRUP_ID_GRUPO ASC;
+            ";
+            
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Act_Curso);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerRegistros());
+    }
+
+    //Permite obtener los grupos a los cuales se ha inscrito un profesor y ya han finalizado o fueron cancelados
+    //? Verificado en la BD 06/07/2021
+    function gruposInscritosxProfesorHistoricos($idProfesor)
     {
         $SQL_Act_Curso =
         " SELECT G.GRUP_ID_GRUPO, G.moap_id_modalidad, moap_nombre, CONS_ID_CONSTANCIAS,
@@ -285,7 +311,7 @@ class Grupo
                     AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO 
                     AND G.MOAP_ID_MODALIDAD = M.MOAP_ID_MODALIDAD
                     AND E.ESTA_ID_ESTADO = G.ESTA_ID_ESTADO
-                    /*AND I.insc_activo = TRUE*/
+                    AND (G.ESTA_ID_ESTADO = 1 OR G.ESTA_ID_ESTADO = 4)
                 ORDER BY I.GRUP_ID_GRUPO ASC;
             ";
             

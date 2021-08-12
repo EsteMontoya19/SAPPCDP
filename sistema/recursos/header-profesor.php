@@ -50,11 +50,16 @@
       <!-- Navbar Search -->
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav ml-auto">
-
-            <li id = "btn_profesor_grupos_inscritos" class="nav-item">
-                <a id = "btn_profesor_grupos_inscritos" class="nav-link" href="#" style="color:#FFFFFF" 
-                onclick="gruposInscritos(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)">
-                  <i class="fas fa-chalkboard"></i>&nbsp; Mis grupos</a>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarGroups" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
+                <i class="fas fa-chalkboard"></i>
+                &nbsp; <?php echo "Mis Grupos"; ?>
+              </a>
+              <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarGroups">
+                <a class="dropdown-item" href="#" onclick="gruposInscritos(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)"> En Curso</a>
+                <a class="dropdown-item" href="#" onclick="gruposInscritosHistoricos(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)">Históricos</a>
+              </div>
             </li>
 
             <li id = "btn_profesor_grupos_publicados" class="nav-item">
@@ -68,7 +73,7 @@
             <li id="btn_regProp" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-file"></i>&nbsp; Propuestas</a>
             </li>
--->
+            -->
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
                 <i class="fas fa-user-circle"></i>

@@ -361,5 +361,24 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerObjeto(0));
         }
+
+        //Consulta una constancia a través de su ID
+        function selectConstanciaID($id)
+        {
+            $SQL_Bus_Constancia =
+            "   
+                SELECT cons_id_constancias, cons_url, cons_estado 
+                FROM Constancia
+                WHERE cons_id_constancias = $id;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Constancia);
+            $obj_Busqueda = $transaccion_1->traerObjeto(0);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
+        }
     }
 ?>

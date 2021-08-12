@@ -139,7 +139,7 @@ function gruposPublicados(persona) {
     });
 }
 
-//Listar Grupos inscritos
+//Listar Grupos inscritos en Curso o Pendientes
 function gruposInscritos(persona) {
     var datos = {
         persona: persona,
@@ -149,6 +149,22 @@ function gruposInscritos(persona) {
         data: datos,
         type: 'POST',
         url: '../sistema/profesor/frm_profesor_inscripciones.php',
+        success: function (data) {
+            $('#container').html(data);
+        },
+    });
+}
+
+//Listar Grupos inscritos Históricos
+function gruposInscritosHistoricos(persona) {
+    var datos = {
+        persona: persona,
+    };
+
+    $.ajax({
+        data: datos,
+        type: 'POST',
+        url: '../sistema/profesor/frm_profesor_historicos.php',
         success: function (data) {
             $('#container').html(data);
         },

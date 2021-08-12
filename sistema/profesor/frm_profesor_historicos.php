@@ -3,10 +3,12 @@
   include('../../clases/Grupo.php');
   include('../../clases/Sesion.php');
   include('../../clases/Profesor.php');
+  include('../../clases/Busqueda.php');
 
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
   $obj_Profesor = new Profesor();
+  $obj_Busqueda = new Busqueda();
 
   $arr_grupos = null;
 
@@ -14,7 +16,7 @@
     $idPersona = $_POST['persona'];
     $profesor = $obj_Profesor->buscarProfesorxPersona($idPersona);
     if(isset($profesor)){
-      $arr_grupos = $obj_Grupo->gruposInscritosxProfesor($profesor->prof_id_profesor);
+      $arr_grupos = $obj_Grupo->gruposInscritosxProfesorHistoricos($profesor->prof_id_profesor);
     }
   } else {
     $idPersona = 0;
@@ -30,7 +32,7 @@
           <div class="col-sm-12">
             <ol class="breadcrumb">
             <li class="breadcrumb-item active">
-              <i class="fas fa-users"></i>&nbsp; Grupos inscritos
+              <i class="fas fa-users"></i>&nbsp; Grupos Históricos
             </li>
             </ol>
           </div>
@@ -54,10 +56,9 @@
                     <th>Nombre</th>
                     <th>Modalidad</th>
                     <th>Número de sesiones</th>
-                    <th>Fecha y Hora Sesión 1</th>
-                    <th>Datos de acceso</th>
-                    <th>Opciones</th>
-                    <th>Cancelar Inscripcion</th>
+                    <th>Estado</th>
+                    <th>Información</th>
+                    <th>Constancia</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -85,33 +86,11 @@
                         <td><?php echo $grupo['curs_nombre'];?></td>
                         <td><?php echo $grupo['moap_nombre'];?></td>
                         <td><?php echo $sesion->numero;?></td>
-                        <td><?php echo $sesionUno->fecha.'  '.$sesionUno->hora_ini.'-'.$sesionUno->hora_fin;?></td>
-                        <td><?php 
-                        if ($grupo['esta_nombre'] == 'En curso'){
-                          if($grupo['moap_id_modalidad'] == 2 && $grupo['insc_activo'] == 't'){?>
-                            <a href="<?php echo $modalidad->grup_url;?>" target="_blank"><?php echo $modalidad->plat_nombre;?></a>
-                          <?php
-                          } elseif($grupo['moap_id_modalidad'] == 1 && $grupo['insc_activo'] == 't') { 
-                            echo "Edificio: ".$modalidad->edif_nombre." Salón: ".$modalidad->salo_nombre;
-                          } elseif($grupo['moap_id_modalidad'] == 3 && $grupo['insc_activo'] == 't') { ?>
-                            <a href="<?php echo $modalidad->grup_url;?>" target="_blank">Plataforma externa</a>
-                          <?php
-                          } else {
-                            echo ('<p class = aviso-azul>Sin acceso</p>');
-                          }
-                        } else {
-                          echo $grupo['esta_nombre'];
-                        }?>
-                        </td>
+                        <td><?php echo $grupo['esta_nombre'];?>
                         <td>
                           <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupoInscrito(<?php echo $grupo['grup_id_grupo']?>,<?php echo $idPersona?>, <?php echo $grupo['moap_id_modalidad']?>)">
                             <i class="fas fa-search-plus"></i>
                           </button>
-                          <?php
-                            if($grupo['insc_activo'] == "t") { ?>
-                              <a class = "btn btn-pdf" target="_blank" title="Comprobante inscripción" href="../modulos/Control_PDF.php?tipo=comprobante&idP=<?php echo($idPersona); ?>&idG=<?php echo($grupo['grup_id_grupo']); ?>" role="button"><i class="far fa-file-pdf"></i></i></a>
-
-                           <?php } ?>
                           <!-- <button type="button" class="btn btn-primary btn-table" title="Comprobante" style="margin-top: 5px;">
                             <i class="fas fa-list-alt"></i>
                           </button>
@@ -121,11 +100,29 @@
                         </td>
                         <td>
                           <?php if($grupo['insc_activo'] == 't'){ ?>
-                            <button id="btn-cancelar-inscripcion-grupo" type="button" class="btn btn-descarga" 
-                            onclick="cancelarInscripcion(<?php echo $grupo['grup_id_grupo']; ?>, <?php echo $profesor->prof_id_profesor; ?>, '<?php echo $sesionUno->fecha; ?>', '<?php echo $sesionUno->hora_ini; ?>', '<?php echo $grupo['curs_nombre'];?>', '<?php echo $grupo['curs_tipo'];?>', '<?php echo $grupo['curs_nivel'];?>')">Cancelar</button>
+                            <?php if ($grupo['esta_nombre'] == 'Finalizado') {
+                              if($grupo['cons_id_constancias'] == '') { 
+                                echo "Pendiente carga de constancia";
+                              } else {
+                                $constancia = $obj_Busqueda->selectConstanciaID($grupo['cons_id_constancias']); 
+                                if (isset($constancia)) { 
+                                  if ($constancia->cons_estado == 'Cargada') {?>
+                            <a id="btn-constancia" href="<?php echo $constancia->cons_url ?>" download
+                            class="btn btn-descarga" role="button"><i class="fas fa-file-download"
+                            style="padding-right: 10px;"></i>Descargar Constancia</a>
+                            <?php } elseif ($constancia->cons_estado == 'No aplica') { 
+                                    echo ('<p class = aviso-azul>No Aplica</p>');
+                                  } else {
+                                    echo ($constancia->cons_estado);
+                                  }
+                                } 
+                              } 
+                            } else {
+                              echo ('<p class = aviso-rojo>No aplica a grupos cancelados</p>');
+                            }?>
                           <?php } else {
-                            echo ('<p class = aviso-azul>Cancelada</p>');
-                          } ?>
+                              echo ('<p class = aviso-azul>Inscripción Cancelada</p>');
+                           } ?>
                         </td>
                       </tr>
                   <?php } } ?>
