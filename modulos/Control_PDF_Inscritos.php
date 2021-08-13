@@ -40,7 +40,7 @@
     $arr_sesiones = $obj_Sesion->buscarDiaMesSesiones($idGrupo);
     /*
         Se obtiene los siguientes datos de un grupo:
-            curs_nombre, curs_nivel, curs_tipo, 
+            curs_nombre, curs_nivel, esta_id_estado, curs_tipo, 
             P.usua_id_usuario, 
             plat_id_plataforma, salo_id_salon, 
             M.moap_id_modalidad, moap_nombre, 
@@ -175,12 +175,15 @@
         $pdf es la instancia que estamos ocupando para imprimir el PDF 
         Devuelve $j para conocer el lugar siguiente del arreglo por si existe un siguiente ciclo y continúe en ese lugar.
     */
+    
     function imprimirColumnasFecha($contador, $pdf, $arreglo, $j, $numSesiones){
         for($i=$contador; $i>0; $i--){
             //El arreglo tiene un valor y es menor al numero de sesiones
             if(isset($arreglo) && $j<$numSesiones){
                 if($arreglo[$j] == 't'){
                     $pdf->SetFillColor(201, 228, 197); //verde
+                    global $conAsistencias;
+                    $conAsistencias++;
                 } elseif($arreglo[$j] == 'f') {
                     $pdf->SetFillColor(245, 71, 72); // Rojo
                 }
@@ -233,9 +236,9 @@
             //Datos del inscrito: Numero de Lista, Nombre y Correo
             $pdf->Cell(8,5,$k,1,0,'C');
             $nombreCompleto=$inscrito['pers_apellido_paterno'].' '.$inscrito['pers_apellido_materno'].' '.$inscrito['pers_nombre'];
-            $pdf->Cell(94,5,$nombreCompleto,1,0,'L');
+            $pdf->Cell(94,5,utf8_decode($nombreCompleto),1,0,'L');
             $correo=$inscrito['pers_correo'];
-            $pdf->Cell(94,5,$correo,1,0,'L');
+            $pdf->Cell(94,5,utf8_decode($correo),1,0,'L');
 
             /* 
                 Se obtienen los siguientes datos de una inscripcion:
@@ -258,6 +261,7 @@
             $m=0;
             //Se imprimen las columnas de asistencia de un inscrito
             if($i>0){
+                $conAsistencias = 0;
                 $m = imprimirColumnasFecha($numeroTres, $pdf, $asistencias, $m, $numSesiones);
             }
             
@@ -269,14 +273,19 @@
                         false = rojo
                         null = amarillo
             */
+            
             if($i==1){
-                if(isset($inscrito['insc_aprobado'])){
-                    if($inscrito['insc_aprobado']=='true'){
-                        $pdf->SetFillColor(201, 228, 197); //verde
+                //Si el total de asietencia difiere de 0 o el estado es diferente de 4 (Finalizado)
+                if($conAsistencias != 0 || $curso->esta_id_estado == 4){
+                    //El curso ya finalizó 
+                    // Tuvo todas las asistencias
+                    if($conAsistencias == $numSesiones){
+                        $pdf->SetFillColor(201, 228, 197); //Verde
                     } else {
                         $pdf->SetFillColor(245, 71, 72); // Rojo
                     }
                 } else {
+                    //El curso no ha terminado 
                     $pdf->SetFillColor(238, 232, 170); // Amarillo
                 }
                 $pdf->Cell(25,5,'',1,0,'L', 1);

@@ -576,7 +576,7 @@ class Grupo
     {
         $SQL_Bus_Curso =
         "   
-                SELECT curs_nombre, curs_nivel, curs_tipo, P.usua_id_usuario, plat_id_plataforma, salo_id_salon, M.moap_id_modalidad, moap_nombre, 
+                SELECT curs_nombre, curs_nivel, esta_id_estado, curs_tipo, P.usua_id_usuario, plat_id_plataforma, salo_id_salon, M.moap_id_modalidad, moap_nombre, 
                     (SELECT P.usua_id_usuario
                     FROM Personal_grupo P, Usuario U
                     WHERE P.usua_id_usuario = U.usua_id_usuario AND rol_id_rol = 3 AND p.grup_id_grupo = $ID) as id_moderador
