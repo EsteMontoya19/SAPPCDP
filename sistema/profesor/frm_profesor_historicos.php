@@ -106,7 +106,7 @@
                               } else {
                                 $constancia = $obj_Busqueda->selectConstanciaID($grupo['cons_id_constancias']); 
                                 if (isset($constancia)) { 
-                                  if ($constancia->cons_estado == 'Cargada') {?>
+                                  if ($constancia->cons_estado == 'Disponible') {?>
                             <a id="btn-constancia" href="<?php echo $constancia->cons_url ?>" download
                             class="btn btn-descarga" role="button"><i class="fas fa-file-download"
                             style="padding-right: 10px;"></i>Descargar Constancia</a>
