@@ -4,6 +4,7 @@
   include('../clases/Sesion.php');
   include('../clases/Curso.php');
   include('../clases/Inscripcion.php');
+  include('../clases/Constancias.php');
   include('../clases/Profesor.php');
   include('../clases/Calendario.php');
   include('../clases/Festivo.php');
@@ -13,6 +14,7 @@
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
   $obj_Inscripcion = new Inscripcion();
+  $obj_Constancia = new Constancias();
   $obj_Profesor = new Profesor();
   $obj_personal_grupo = new Personal_Grupo();
   $obj_Busqueda = new Busqueda();
@@ -314,7 +316,9 @@ if ($_POST['dml'] == 'inscripcion') {
       //? En caso de que el profesor no tenga ningún grupo inscrito, en automatico debe inscribir ya que no hay
       //? translape ni nada que validar
         if (!isset($grupos_profesor) || $grupos_profesor == '') {
-            $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
+
+            $constancia = $obj_Constancia->agregarConstancia();
+            $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor, $constancia);
             exit('1');
         }
       //Obtiene todas las sesiones del grupo al que se desea inscribir
@@ -340,7 +344,8 @@ if ($_POST['dml'] == 'inscripcion') {
               /*solo si se ha terminado de reccorrer la lista de grupos inscritos del profesor se permite inscribir*/
                 if ($contador_grupo == $cantidad_grupos_profesor) {
                     //? Esto lo inscribe
-                    $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
+                    $constancia = $obj_Constancia->agregarConstancia();
+                    $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor, $constancia);
                     exit('1');
                 }
             } else {
@@ -354,7 +359,8 @@ if ($_POST['dml'] == 'inscripcion') {
                     $sesiones_inscritas[$ultima_sesion_inscritas]['sesi_hora_inicio'] >= $sesiones_nuevo[$primera_sesion]['sesi_hora_fin']) {
                         if ($contador_grupo == $cantidad_grupos_profesor) {
                         //? Esto Lo inscribe
-                            $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
+                            $constancia = $obj_Constancia->agregarConstancia();
+                            $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor, $constancia);
                             exit('1');
                         }
                     } else {
@@ -366,7 +372,8 @@ if ($_POST['dml'] == 'inscripcion') {
                     if ($sesiones_inscritas[$primera_sesion]['sesi_fecha'] > $sesiones_nuevo[$ultima_sesion_nuevo]['sesi_fecha']) {
                         if ($contador_grupo == $cantidad_grupos_profesor) {
                               //? Esto lo inscribe
-                              $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
+                              $constancia = $obj_Constancia->agregarConstancia();
+                              $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor, $constancia);
                               exit('1');
                         }
                     } else {
@@ -378,9 +385,10 @@ if ($_POST['dml'] == 'inscripcion') {
                             if ($sesiones_inscritas[$primera_sesion]['sesi_hora_fin'] <= $sesiones_nuevo[$ultima_sesion_nuevo]['sesi_hora_inicio'] ||
                             $sesiones_inscritas[$primera_sesion]['sesi_hora_inicio'] >= $sesiones_nuevo[$ultima_sesion_nuevo]['sesi_hora_fin']) {
                                 if ($contador_grupo == $cantidad_grupos_profesor) {
-                              //?
-                                    $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
-                                    exit('1');
+                              
+                                  $constancia = $obj_Constancia->agregarConstancia();
+                                  $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor, $constancia);
+                                  exit('1');
                                 }
                             } else {
                                 exit('3');
@@ -402,11 +410,12 @@ if ($_POST['dml'] == 'inscripcion') {
                                 }
                             }
                           /*Ahora si termino las validaciones y no hay traslape, solo si se ha terminado de reccorrer la lista de grupos inscritos del profesor se permite inscribir*/
-                            if ($contador_grupo == $cantidad_grupos_profesor) {
+                          if ($contador_grupo == $cantidad_grupos_profesor) {
                           //? Esto lo permite inscribir
-                                $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor);
-                                exit('1');
-                            }
+                            $constancia = $obj_Constancia->agregarConstancia();
+                            $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor, $constancia);
+                            exit('1');
+                          }
                         }
                     }
                 }

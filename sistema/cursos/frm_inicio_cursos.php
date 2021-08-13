@@ -58,11 +58,11 @@ $x = 0;
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
-                                if(isset($arr_cursos)){
-                                foreach ($arr_cursos as $cursos) { ?>
+                                <?php
+                                if (isset($arr_cursos)) {
+                                    foreach ($arr_cursos as $cursos) { ?>
                                 <tr>
-                                    <?php $x++; ?>
+                                        <?php $x++; ?>
                                     <td><?php echo $cursos['curs_id_curso']; ?></td>
                                     <td><?php echo $cursos['curs_nombre']; ?></td>
                                     <td><?php echo $cursos['curs_tipo']; ?></td>
@@ -72,7 +72,9 @@ $x = 0;
                                         <div class="custom-control custom-switch">
                                             <input type="checkbox" class="custom-control-input"
                                                 id="estatusCurso<?php echo $x ?>"
-                                                <?php if ($cursos['curs_activo'] == 't') { ?> checked <?php } ?>
+                                                    <?php if ($cursos['curs_activo'] == 't') {
+                                                        ?> checked <?php
+                                                    } ?>
                                                 onclick="cambioEstatus(<?php echo $cursos['curs_id_curso'] ?> , '<?php echo $cursos['curs_activo']; ?>', '<?php echo $cursos['curs_nombre']; ?>')">
                                             <label class="custom-control-label"
                                                 for="estatusCurso<?php echo $x ?>"></label>
@@ -89,7 +91,8 @@ $x = 0;
                                         </button>
                                     </td>
                                 </tr>
-                                <?php } }?>
+                                    <?php }
+                                }?>
                             </tbody>
                         </table>
                     </div>

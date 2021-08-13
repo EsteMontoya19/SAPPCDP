@@ -82,7 +82,7 @@ class Asistencia
         $transaccion_1 = new Transaccion($bd->conexion);
         $transaccion_1->enviarQuery($SQL_Asistencia_Sesion);
         $bd->cerrarBD();
-        return ($transaccion_1->traerObjeto(0));
+        return ($transaccion_1->traerRegistros());
     }
 
 
@@ -127,6 +127,4 @@ class Asistencia
         $bd->cerrarBD();
         return ($transaccion_1->traerRegistros());
     }
-
-    
 }

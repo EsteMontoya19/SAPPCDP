@@ -71,8 +71,8 @@
         //Actualiza el estatus de un curso dado el id y el estatus
         function modificarEstatus($curso, $estatus)
 		{
-			$SQL_Curso_Est="
-			UPDATE Curso
+			$SQL_Curso_Est=
+            "UPDATE Curso
 			SET curs_activo = $estatus
 			WHERE CURS_ID_CURSO = $curso;";
 
