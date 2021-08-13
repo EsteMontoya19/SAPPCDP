@@ -138,7 +138,7 @@
                             <i class="fas fa-tasks"></i>
                           </button>
 
-                          <button type="button" class="btn btn-info btn-table" title="Constancias" <?php if ($grupo['grup_estado'] != 'Finalizado') {
+                          <button type="button" class="btn btn-info btn-table" title="Subir Constancias" <?php if ($grupo['grup_estado'] != 'Finalizado') {
                                 ?> style="display: none;" <?php } ?> style="margin-top: 5px;" onclick="registrarConstancias(<?php echo $grupo['grup_id_grupo']?>)">
                             <i class="fas fa-file-upload"></i>
                           </button>

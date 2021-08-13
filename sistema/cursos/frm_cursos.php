@@ -137,7 +137,8 @@ $curso -> curs_temario=null;
                     id="strNumeroSesiones" name="strNumeroSesiones"
                     value="<?php echo isset($curso) ? $curso->curs_num_sesiones : ""; ?>">
                 </div>
-
+                 
+                <!-- Para que esto funcione hay una función change en JS y modificar los datos de AJAX y los campos del Form  -->
                 <div class="col-lg-6 form-group">
                   <label for="temario"><b>Temario: *</b></label>
                   <div class="custom-file">
@@ -147,6 +148,7 @@ $curso -> curs_temario=null;
                       for="temario"><?php echo isset($curso) ? $curso -> curs_temario: ""; ?></label>
                   </div>
                 </div>
+                
               </div>
             </div>
           </div>

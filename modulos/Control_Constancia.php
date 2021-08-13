@@ -11,75 +11,69 @@ if($_POST['dml'] == 'insert'){
 
     $idGrupo = $_POST['id'];
 
-    //Existe la ruta? si no, la crea
-    if(file_exists("../recursos/PDF/Constancias/".$idGrupo."/") == false){
-        mkdir($rutaNueva, 0755); //0755 Rwxr-xr-x
-    }
+    //? Busca acredores del grupo solicitado, es el mismo que se utiliza para las listas de constancias.
+	$arr_Acreedores = $obj_Grupo->buscarAcreedorConstancia($idGrupo); 
 
-    //Hay un archivo? Lo carga al sistema
-    if (isset($_FILES['constancia']['name']) && $_FILES['constancia']['name'] != '') { //? Si lleno el constancia
-        //Nombre del archivo
-        $fileName = $_FILES['constancia']['name'];
-        //Almacena en un arreglo el nombre
-        $fileNameArr=explode(".",$fileName);
-        //Si la terminación es zip
-        if($fileNameArr[count($fileNameArr)-1]=='zip'){
-            //crea el objeto zip
-            $zip = new ZipArchive();
-            //abre el archivo zip
-            if($zip->open($_FILES['file']['tmp_name'])===TRUE){
-                //Extrae en
-                $zip->extractTo("../recursos/PDF/Constancias/$idGrupo/");
+    //? Validamos que si hayan subido algo y no este todo en blanco.
+    if (isset($_FILES['constancias']['name']) && $_FILES['constancias']['name'] != '') {
+        $nombreArchivo = $_FILES['constancias']['name'];
+
+        //? Comprobamos que la extensión sea .zip
+        if(substr($nombreArchivo, -4) == ".zip") {
+            
+            $zip=new ZipArchive();
+            //? Guardamos la direccion de la carpeta donde se descomprimira todo
+            $direccion = "../recursos/PDF/Constancias/Profesores/$idGrupo/";
+
+            //? Existe la dirección temporal?
+            if($zip->open($_FILES['constancias']['tmp_name'])===TRUE) {
+                $direccionTemporal = "../recursos/PDF/Constancias/Profesores/".substr($nombreArchivo, 0 , -4)."/";
+                
+                //? Si ya existe una carpeta con el id del grupo elimina para sobrescribir
+                if(file_exists("../recursos/PDF/Constancias/Profesores/".$idGrupo."/")) {
+                    $archivosDirectorio = scandir("../recursos/PDF/Constancias/Profesores/".$idGrupo."/");
+                    foreach ($archivosDirectorio as $iCont => $archivo) {
+                        if ($iCont <= 2) {
+                            unlink("../recursos/PDF/Constancias/Profesores/".$idGrupo."/".$archivo);
+                        }
+                    }
+                    rmdir("../recursos/PDF/Constancias/Profesores/".$idGrupo."/");
+                }
+
+                //? Extrae los archivos pero nombra la carpeta como el .zip
+                $zip->extractTo("../recursos/PDF/Constancias/Profesores/");
+
+                //? Se renombra la carpeta con el id del grupo
+                rename($direccionTemporal, $direccion);
                 $zip->close();
-                $files=scandir("../recursos/PDF/Constancias/$idGrupo/");
+
+                //? Se crea un arreglo con los archivos de la carpeta
+                $files = scandir($direccion); //Por default se ordena asc y empieza apartir del [2] las direcciones de archivos
+                
+                //? Se renombran los archivo con el formato de dos digitos 00
+                foreach($files as $nombre){
+                    $obj_Constancia->renombrarConstancia($nombre, $direccion);
+                }
+                //? Se guardan los nuevos nombres de archivos en un arreglo 
+                $files= scandir($direccion);
+                
+                foreach ($arr_Acreedores as $iCont => $acreedor) {
+                    $obj_Constancia->cargarConstancia($acreedor['cons_id_constancias'], $direccion.$files[$iCont + 2]);
+                    
+                }
+                
+                exit("1");
             }
-        }
 
-        $file = fopen ("Mensajes.txt", "a");
-        fwrite($file, $_FILES['file']['tmp_name'].PHP_EOL);
-        fclose($file);
-
-        /*
-        $file = is_uploaded_file($_FILES['constancia']['tmp_name']);
-        $rutaTemporal = $_FILES['constancia']['tmp_name'];
-        $rutaNueva = "../recursos/PDF/Constancias/".$idGrupo."/";
-        $nuevoNombre = "constancia_".$idGrupo.".zip";
-        move_uploaded_file($_FILES['constancia']['tmp_name'], $rutaNueva.$nuevoNombre);
-        $constancia = $rutaNueva.$nuevoNombre;
-
-        
-        */
-
-        exit("1");
-        
-        
-    }
-
-    /*
-
-    // Descomprimir el archivo y eliminar el zip
-    
-    if (extractTo($rutaNueva, $constancia) == false){
-        exit("2");
-    } else {
-        if (unlink($constancia)) {
-            // file was successfully deleted
         } else {
-            // there was a problem deleting the file
-            exit("3");
+            exit("2");
         }
+    } else {
+        exit("2");
     }
 
-    // Realizar la consulta que generó el archivo de constancias 
+    exit("2");
 
-    $arr_Inscritos = $obj_Grupo->buscarCorreosDeParticipantes($idGrupo); // Revisar
-
-
-
-    // Enlazar la dirección del archivo con su inscripción
-
-    */
-
-    
-}
+        
+}    
 ?>
