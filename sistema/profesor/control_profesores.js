@@ -9,6 +9,9 @@ $(document).ready(function () {
     });
 });
 
+function descargaConstancia () {
+    alert("Insertar código de cambio de esatdo de descarga de la constancia.");
+}
 function validarInscripcion(inscritos, cupo) {
     if (cupo <= inscritos) {
         return false;

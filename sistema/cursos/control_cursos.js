@@ -299,6 +299,12 @@ function cambioEstatus(id, estatus, nombre) {
     }, 1500);
 }
 
+//! Importante, sin esto el archivo PDF no se puede cargar
+$('.custom-file-input').on('change', function () {
+    var fileName = $(this).val().split('\\').pop();
+    $(this).siblings('.custom-file-label').addClass('selected').html(fileName);
+});
+
 // Tabla dinámica
 $(document).ready(function () {
     $('#tabla_cursos').DataTable({
@@ -312,10 +318,4 @@ $(document).ready(function () {
             [5, 10, 20, 50, 'Todos'],
         ],
     });
-});
-
-//! Importante, sin esto el archivo no se puede cargar
-$('.custom-file-input').on('change', function () {
-    var fileName = $(this).val().split('\\').pop();
-    $(this).siblings('.custom-file-label').addClass('selected').html(fileName);
 });

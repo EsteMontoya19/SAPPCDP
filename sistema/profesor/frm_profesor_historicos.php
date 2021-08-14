@@ -108,7 +108,7 @@
                                 if (isset($constancia)) { 
                                   if ($constancia->cons_estado == 'Disponible') {?>
                             <a id="btn-constancia" href="<?php echo $constancia->cons_url ?>" download
-                            class="btn btn-descarga" role="button"><i class="fas fa-file-download"
+                            class="btn btn-descarga" onclick="descargaConstancia()" role="button"><i class="fas fa-file-download"
                             style="padding-right: 10px;"></i>Descargar Constancia</a>
                             <?php } elseif ($constancia->cons_estado == 'No aplica') { 
                                     echo ('<p class = aviso-azul>No Aplica</p>');
