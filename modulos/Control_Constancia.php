@@ -31,9 +31,11 @@ if($_POST['dml'] == 'insert'){
                 
                 //? Si ya existe una carpeta con el id del grupo elimina para sobrescribir
                 if(file_exists("../recursos/PDF/Constancias/Profesores/".$idGrupo."/")) {
+                
                     $archivosDirectorio = scandir("../recursos/PDF/Constancias/Profesores/".$idGrupo."/");
+                    
                     foreach ($archivosDirectorio as $iCont => $archivo) {
-                        if ($iCont <= 2) {
+                        if ($iCont >= 2) {
                             unlink("../recursos/PDF/Constancias/Profesores/".$idGrupo."/".$archivo);
                         }
                     }
