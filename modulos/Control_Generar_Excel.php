@@ -146,11 +146,6 @@ foreach ($arr_sesiones as $sesion) {
             }
         }
 
-        $file = fopen('Mensajes.txt', 'a');
-        fwrite($file, 'Asistencias registradas: '. $countSesiones.PHP_EOL);
-        fwrite($file, 'Asistencias reales: '. $numSesiones.PHP_EOL);
-        fclose($file);
-
         // Section: Columna de constancias
         if ($countSesiones == $numSesiones) {
             $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+5, $k)->getFill()->setFillType(
