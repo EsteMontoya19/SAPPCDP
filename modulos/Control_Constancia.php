@@ -77,5 +77,41 @@ if($_POST['dml'] == 'insert'){
     exit("2");
 
         
-}    
+} elseif($_POST['dml'] == 'insertPersonal'){
+
+    $periodoInicio = $_POST['PeriodoInicio'];
+    $periodoFinal = $_POST['PeriodoFinal'];
+
+    //? Busca acredores (Inductores y Moderadores) del periodo solicitado, es el mismo que se utiliza para las listas de constancias.
+	
+
+    //? Validamos que si hayan subido algo y no este todo en blanco.
+    if (isset($_FILES['constanciasInstructor']['name']) && $_FILES['constanciasInstructor']['name'] != '') {
+        $nombreArchivo = $_FILES['constanciasInstructor']['name'];
+
+        //? Comprobamos que la extensión sea .zip
+        if(substr($nombreArchivo, -4) == ".zip") {
+            
+            $zip=new ZipArchive();
+            //? Guardamos la direccion de la carpeta donde se descomprimira todo
+            $direccion = "../recursos/PDF/Constancias/Instructores/"; // Falta asignar un serial a la carpeta
+
+            //? Existe la dirección temporal?
+            if($zip->open($_FILES['constanciasInstructor']['tmp_name'])===TRUE) {
+                
+                
+                
+                exit("1");
+            }
+
+        } else {
+            exit("2");
+        }
+    } else {
+        exit("2");
+    }
+
+    exit("2");
+
+}   
 ?>
