@@ -9,9 +9,29 @@ $(document).ready(function () {
     });
 });
 
-function descargaConstancia () {
-    alert("Insertar código de cambio de esatdo de descarga de la constancia.");
+function descargaConstancia (id) {
+    
+    var dml = 'cambioEstadoDescargada';
+    var datos = {
+        dml: dml,
+        consID: id,
+    };
+
+    $.ajax({
+        data: datos,
+        type: 'POST',
+        url: '../modulos/Control_Constancia.php',
+        success: function (respuesta) {
+            console.log(respuesta);
+            if(respuesta == 1){
+                alertify.success('Felicitaciones ha descargado su constancia');
+            } else {
+                alertify.error('Hubo un problema' + respuesta);
+            }
+        },
+    });
 }
+
 function validarInscripcion(inscritos, cupo) {
     if (cupo <= inscritos) {
         return false;

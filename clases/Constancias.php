@@ -119,4 +119,20 @@ class Constancias
         $bd->cerrarBD();
         return ($transaccion_1->traerRegistros(0));
     }
+
+    function actualizarEstadoConstanciaDescargada($id)
+    {
+        $SQL_Act_Est_Constancia = 
+        "
+        UPDATE Constancia
+        SET cons_descargada = true
+        WHERE cons_id_constancias = $id
+        ";
+        
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Act_Est_Constancia);
+        $bd->cerrarBD();
+    }
 }

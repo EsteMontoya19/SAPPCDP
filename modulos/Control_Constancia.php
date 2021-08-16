@@ -77,5 +77,11 @@ if($_POST['dml'] == 'insert'){
     exit("2");
 
         
-}    
+} elseif ($_POST['dml'] == 'cambioEstadoDescargada') {
+    $id = $_POST['consID'];
+
+    $obj_Constancia->actualizarEstadoConstanciaDescargada($id);
+
+    exit('1');
+}
 ?>
