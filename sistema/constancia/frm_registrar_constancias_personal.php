@@ -47,7 +47,7 @@
 
                     <div class="col-lg-12" style="text-align: center;">
                         <button id="btn-regresar-constancia" type="button" class="btn btn-secondary btn-footer btn-regresar">Regresar</button>
-                        <button id="btn-registrar-constancia" type="button" form="form_constancias_personal"
+                        <button id="btn-registrar-constancia_personal" type="button" form="form_constancias_personal"
                             class="btn btn-success btn-footer btn-aceptar">Guardar</button>
                     </div>
                 </div>
