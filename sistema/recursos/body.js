@@ -30,8 +30,12 @@ $(document).ready(function () {
         $('#container').load('../sistema/usuarios/frm_inicio_usuarios.php');
     });
 
-    $('#btn_constancias').click(function () {
+    $('#btn_DescargarExcel').click(function () {
         $('#container').load('../sistema/constancia/frm_constancia.php');
+    });
+
+    $('#btn_SubirConstancias').click(function () {
+        $('#container').load('../sistema/constancia/frm_registrar_constancias_personal.php');
     });
 
     $('#btn_profesor_grupos').click(function () {

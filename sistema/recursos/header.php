@@ -68,9 +68,14 @@
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-shield"></i>&nbsp; Usuarios</a>
             </li>
 
-
-            <li id="btn_constancias" class="nav-item">
-                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fa fa-file-alt"></i>&nbsp; Constancias</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
+                <i class="fa fa-file-alt"><div style="width: 20px;"></div></i>Constancias
+              </a>
+              <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarUser">
+                <a class="dropdown-item" type="button"  id="btn_DescargarExcel">Descargar Excel</a>
+                <a class="dropdown-item" type="button"  id="btn_SubirConstancias">Cargar Zip</a>
+              </div>
             </li>
 
 
@@ -85,8 +90,8 @@
                 <?php //! Se descontinuo preguntas de seguridad ?>
                 <!--<a class="dropdown-item" type="button"  id="btn_preguntaseguridad">Preguntas de seguridad</a> -->
                 <a class="dropdown-item" type="button"  id="btn_plataforma">Plataforma</a>
-               <a class="dropdown-item" type="button"  id="btn_calendario">Calendario</a>
-               <a class="dropdown-item" type="button"  id="btn_coordinacion">Coordinacion</a> 
+                <a class="dropdown-item" type="button"  id="btn_calendario">Calendario</a>
+                <a class="dropdown-item" type="button"  id="btn_coordinacion">Coordinacion</a> 
               </div>
             </li>
 
