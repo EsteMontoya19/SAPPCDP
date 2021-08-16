@@ -60,6 +60,39 @@ $(document).ready(function () {
     });
 });
 
+//Insertar Constancia Personal
+$(document).ready(function () {
+    $('#btn-registrar-constancia_personal').click(function () {
+        
+        datos = new FormData($('#form_constancias_personal')[0]);
+        $.ajax({
+            type: 'POST',
+            url: '../modulos/Control_Constancia.php',
+            data: datos,
+            contentType: false,
+            processData: false,
+
+            success: function (respuesta) {
+                console.log(respuesta);
+                if (respuesta.endsWith('1')) {
+                    alertify.success('El registro se realizó correctamente');
+                    setTimeout(function () {
+                        $('html, body').animate({ scrollTop: 0 }, 0);
+                        $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
+                    }, 1500);
+                } else if (respuesta.endsWith('2')) {
+                    alertify.error('Debe seleccionar un archivo .zip');
+                } else if (respuesta.endsWith('3')) {
+                    alertify.error('Solo se aceptan archivos con extensión .zip');
+                } else if (respuesta.endsWith('4')) {
+                    alertify.error('Ya se han cargado constancias para este curso.');
+                }
+            },
+        });
+        return false;
+    });
+});
+
 //! Importante, sin esto el archivo no se puede cargar
 $('.custom-file-input').on('change', function () {
     var fileName = $(this).val().split('\\').pop();
