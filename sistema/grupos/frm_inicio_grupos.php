@@ -143,6 +143,10 @@
                             <i class="fas fa-file-upload"></i>
                           </button>
 
+                          <button type="button" class="btn btn-info btn-table" title="Constancias Descargadas" <?php if ($grupo['grup_estado'] != 'Finalizado') {
+                                ?> style="display: none;" <?php } ?> style="margin-top: 5px;" onclick="verificarDescargasConstancias(<?php echo $grupo['grup_id_grupo']?>)">
+                            <i class="fas fa-clipboard-check"></i>
+                          </button>
 
                         </div>
                         </div>

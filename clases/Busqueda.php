@@ -367,7 +367,7 @@
         {
             $SQL_Bus_Constancia =
             "   
-                SELECT cons_id_constancias, cons_url, cons_estado 
+                SELECT cons_id_constancias, cons_url, cons_estado, cons_descargada 
                 FROM Constancia
                 WHERE cons_id_constancias = $id;
             ";
