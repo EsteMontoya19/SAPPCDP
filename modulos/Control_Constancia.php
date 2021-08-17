@@ -12,7 +12,8 @@ if($_POST['dml'] == 'insert'){
     $idGrupo = $_POST['id'];
 
     //? Busca acredores del grupo solicitado, es el mismo que se utiliza para las listas de constancias.
-	$arr_Acreedores = $obj_Grupo->buscarAcreedorConstancia($idGrupo); 
+	$arr_Acreedores = $obj_Grupo->buscarAcreedorConstancia($idGrupo);
+    $arr_NoAcreedores = $obj_Grupo->buscarNoAcreedoresConstancia($idGrupo); 
 
     //? Validamos que si hayan subido algo y no este todo en blanco.
     if (isset($_FILES['constancias']['name']) && $_FILES['constancias']['name'] != '') {
@@ -59,8 +60,15 @@ if($_POST['dml'] == 'insert'){
                 //? Se guardan los nuevos nombres de archivos en un arreglo 
                 $files= scandir($direccion);
                 
+                //? Asignamos las constancias a los acreedores
                 foreach ($arr_Acreedores as $iCont => $acreedor) {
                     $obj_Constancia->cargarConstancia($acreedor['cons_id_constancias'], $direccion.$files[$iCont + 2]);
+                    
+                }
+
+                //? Asignamos el No aplica constancia a los no acreedores
+                foreach ($arr_NoAcreedores as $iCont => $noAcreedor) {
+                    $obj_Constancia->negarConstancia($noAcreedor['cons_id_constancias']);
                     
                 }
                 

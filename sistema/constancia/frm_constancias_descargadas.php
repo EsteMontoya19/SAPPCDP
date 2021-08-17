@@ -180,14 +180,14 @@
                               echo (" checked"); 
                             } else { 
                               echo (" unchecked disabled"); 
-                            } }?>>
+                            } }?> readonly="readonly" onclick="javascript: return false;">
                       </td>
-                      <td><textarea class="observaciones" id="observacion_<?php echo($inscrito["insc_id_inscripcion"]); ?>" name="observacion_<?php echo($inscrito["insc_id_inscripcion"]); ?>" rows="2"><?php echo($inscrito["insc_observacion"]); ?></textarea></td>
+                      <td><textarea disabled class="observaciones" id="observacion_<?php echo($inscrito["insc_id_inscripcion"]); ?>" name="observacion_<?php echo($inscrito["insc_id_inscripcion"]); ?>" rows="2"><?php echo($inscrito["insc_observacion"]); ?></textarea></td>
                     </tr>
                     <?php } ?>
                 <?php } ?>
               </tbody>
-            </table>
+            </table
           </div>
         </div>
       </div>
@@ -195,8 +195,7 @@
 
         <!-- Botones -->
         <div class="col-lg-12" style="text-align: center;">
-          <button id = "btn-regresar" type="button" class="btn btn-success btn-footer">Regresar</button>
-          <button id = "btn-registrar-asistencia" type="button" class="btn btn-success btn-footer">Guardar</button>
+          <button id = "btn-regresar-constancia" type="button" class="btn btn-success btn-footer">Aceptar</button>
         </div>
     </div>
   </div>

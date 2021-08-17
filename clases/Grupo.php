@@ -113,6 +113,45 @@ class Grupo
         return ($transaccion_1->traerRegistros());
     }
 
+    function buscarNoAcreedoresConstancia($idGrupo)
+    {
+        $SQL_Acreedor_Constancia =
+        "SELECT ( P.pers_apellido_paterno || ' ' || P.pers_apellido_materno || ' ' || P.pers_nombre) AS nombre, Prof.prof_id_profesor,P.pers_id_persona, I.insc_id_inscripcion, C.cons_id_constancias 
+        FROM Inscripcion I, Profesor Prof, Persona P, Constancia C
+        WHERE Prof.prof_id_profesor = I.prof_id_profesor
+            AND P.pers_id_persona = Prof.pers_id_persona
+            AND C.cons_id_constancias = I.cons_id_constancias
+            AND I.insc_activo = TRUE
+            AND grup_id_grupo = $idGrupo
+            AND I.insc_id_inscripcion NOT IN (SELECT DISTINCT I.insc_id_inscripcion
+                                                FROM Persona P, Profesor Prof, Inscripcion I, Asistencia A, Constancia C
+                                                WHERE P.pers_id_persona = Prof.pers_id_persona
+                                                        AND C.cons_id_constancias = I.cons_id_constancias
+                                                        AND I. prof_id_profesor = Prof.prof_id_profesor
+                                                        AND I.insc_id_inscripcion = A.insc_id_inscripcion
+                                                        AND I.grup_id_grupo = $idGrupo
+                                                        AND I.insc_activo = TRUE
+                                                        AND P.pers_id_persona NOT IN (SELECT P.pers_id_persona
+                                                                                FROM Persona P, Profesor Prof , Inscripcion I, Asistencia A, Sesion S
+                                                                                WHERE P. pers_id_persona = Prof.pers_id_persona
+                                                                                AND I. prof_id_profesor = Prof.prof_id_profesor
+                                                                                AND I.insc_id_inscripcion = A.insc_id_inscripcion
+                                                                                AND S.sesi_id_sesiones = A.sesi_id_sesiones
+                                                                                AND I.insc_activo = TRUE
+                                                                                AND I.grup_id_grupo = $idGrupo
+                                                                                AND A.asis_presente = FALSE
+                                                                                GROUP BY P.pers_id_persona, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno, 
+                                                                                        A.asis_presente));
+			";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Acreedor_Constancia);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerRegistros(0));
+    }
+
     function buscarAcreedorConstancia($idGrupo)
     {
         $SQL_Acreedor_Constancia =
@@ -123,6 +162,7 @@ class Grupo
                 AND I. prof_id_profesor = Prof.prof_id_profesor
                 AND I.insc_id_inscripcion = A.insc_id_inscripcion
                 AND I.grup_id_grupo = $idGrupo
+                AND I.insc_activo = TRUE
                 AND P.pers_id_persona NOT IN (SELECT P.pers_id_persona
                                         FROM Persona P, Profesor Prof , Inscripcion I, Asistencia A, Sesion S
                                         WHERE P. pers_id_persona = Prof.pers_id_persona

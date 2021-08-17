@@ -222,18 +222,19 @@ INSERT INTO Constancia (cons_url, cons_estado, cons_fecha, cons_hora) VALUES
 		(null, 'En trámite', null, null), 
 		
         /*Finalizados*/
-            ('../recursos/PDF/Constancia/Profesores/Temporal_Profesor.pdf', 'Disponible', '2021/08/09','09:00:00'), 
-            ('../recursos/PDF/Constancia/Profesores/Temporal_Profesor.pdf', 'Disponible', '2021/08/09','09:00:00'), 
-            ('../recursos/PDF/Constancia/Profesores/Temporal_Profesor.pdf', 'Disponible', '2021/08/09','09:00:00'), 
-            (null, 'No acreditada', null, null), 
-            ('../recursos/PDF/Constancia/Profesores/Temporal_Profesor.pdf', 'Disponible', '2021/08/09','09:00:00'),
-            ('../recursos/PDF/Constancia/Profesores/Temporal_Profesor.pdf', 'Disponible', '2021/08/09','09:00:00'), 
+            (null, 'En trámite', null, null), 
+            (null, 'En trámite', null, null), 
+            (null, 'En trámite', null, null), 
+            (null, 'En trámite', null, null), 
+            (null, 'En trámite', null, null), 
+            (null, 'En trámite', null, null), 
+            
 
             (null, 'En trámite', null, null), 
             (null, 'En trámite', null, null), 
             (null, 'En trámite', null, null), 
              
-            (null, 'No acreditada', null, null), 
+            (null, 'En trámite', null, null), 
             (null, 'En trámite', null, null), 
             (null, 'En trámite', null, null), 
     
@@ -247,16 +248,16 @@ INSERT INTO Constancia (cons_url, cons_estado, cons_fecha, cons_hora) VALUES
 		(null, 'Pendiente', null, null), 
 		(null, 'Pendiente', null, null), 
 		/*Finalizados: [45 - 47]*/
-			('../recursos/PDF/Constancia/Instructores/Temporal_Instructor.pdf', 'En trámite', '2021/08/07','09:00:00'),
-			('../recursos/PDF/Constancia/Instructores/Temporal_Instructor.pdf', 'Disponible', '2021/08/07','09:00:00'),
-			('../recursos/PDF/Constancia/Instructores/Temporal_Instructor.pdf', 'Disponible', '2021/08/07','09:00:00'),
+			(null, 'En trámite', null, null), 
+			(null, 'En trámite', null, null), 
+			(null, 'En trámite', null, null), 
 			
 		/*Moderadores: [48 - 50]*/
 		(null, 'En trámite', null, null), 
 		(null, 'En trámite', null, null), 
 		(null, 'En trámite', null, null), 
 		    /*Finalizados: [51]*/
-			    ('../recursos/PDF/Constancia/Moderadores/Temporal_Moderador.pdf', 'Disponible', '2021/08/07','09:00:00');
+			    (null, 'En trámite', null, null);
 
 INSERT INTO PERSONAL_GRUPO (GRUP_ID_GRUPO,USUA_ID_USUARIO,CONS_ID_CONSTANCIAS) VALUES
     /*Instructores 2 , 3, 4*/    
