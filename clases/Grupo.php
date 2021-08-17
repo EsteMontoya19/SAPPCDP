@@ -99,7 +99,7 @@ class Grupo
     {
         $SQL_Bus_Cursos =
         "SELECT ( Pers.pers_apellido_paterno || ' ' || pers_apellido_materno || ' ' || Pers.pers_nombre) AS nombre , Pers.pers_correo, 
-                    Prof.prof_id_profesor, Pers.pers_id_persona, I.insc_id_inscripcion, I.insc_observacion
+                    Prof.prof_id_profesor, Pers.pers_id_persona, I.insc_id_inscripcion, I.insc_observacion, cons_id_constancias
             FROM Persona Pers, Inscripcion I, Grupo G, Profesor Prof
             WHERE G.grup_id_grupo = $ID AND I.grup_id_grupo = G.grup_id_grupo AND I.prof_id_profesor = Prof.prof_id_profesor AND Prof.pers_id_persona = Pers.pers_id_persona
                   AND I.insc_activo = TRUE ORDER BY nombre

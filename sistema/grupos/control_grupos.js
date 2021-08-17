@@ -835,6 +835,23 @@ function Publicar(id, estatus) {
     );
 }
 
+function verificarDescargasConstancias (grupo) {
+    var datos = {
+        grupo: grupo,
+    };
+
+    $.ajax({
+        data: datos,
+        type: 'POST',
+        url: '../sistema/constancia/frm_constancias_descargadas.php',
+        success: function (data) {
+            $('html, body').animate({ scrollTop: 0 }, 0);
+            $('#container').html(data);
+        },
+    });
+}
+
+
 // Tabla dinámica
 $(document).ready(function () {
     $('#tabla_grupos').DataTable({
