@@ -50,10 +50,16 @@
       <!-- Navbar Search -->
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav ml-auto">
-            <li id = "btn_instructor_grupos_impartir" class="nav-item">
-                <a id = "btn_instructor_grupos_impartir" class="nav-link" href="#" style="color:#FFFFFF" 
-                onclick="gruposImpartir(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)">
-                  <i class="fas fa-chalkboard"></i>&nbsp; Mis grupos</a>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarGroups" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
+                <i class="fas fa-chalkboard"></i>
+                &nbsp; <?php echo "Mis Grupos"; ?>
+              </a>
+              <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarGroups">
+                <a class="dropdown-item" href="#" onclick="gruposImpartir(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)"> En Curso</a>
+                <a class="dropdown-item" href="#" onclick="gruposImpartirHistoricos(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)">Históricos</a>
+              </div>
             </li>
 
             <?php //TODO: Hacer las funciones de Propuesta del Profesor ?>
