@@ -5,7 +5,8 @@ $(document).ready(function () {
     });
     $('#btn-consultar-constancias').click(function () {
         $('html, body').animate({ scrollTop: 0 }, 0);
-        $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
+        $('#container').load('../sistema/constancia/frm_constancia.php');
+        alertify.success('Lista de constancias generadas.');
     });
 });
 
