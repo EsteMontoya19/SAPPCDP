@@ -2,7 +2,7 @@
 class Moderador
 {
     //Eliminar un moderador dado el id de una persona
-    //TODO Verificado en la BD 02/07/2021
+    //? Verificado  en la BD 02/07/2021
     function eliminarModerador($persona)
     {
       
@@ -106,7 +106,7 @@ class Moderador
     }
 
     //Buscar todos los moderadores activos
-    //TODO Verificado en la BD 02/07/2021
+    //? Verificado  en la BD 02/07/2021
     function buscarModeradoresActivos()
     {
         $SQL_Buscar_Moderador =
@@ -126,7 +126,7 @@ class Moderador
     }
 
     //Agregar un moderador
-    //TODO Verificado en la BD 02/07/2021
+    //? Verificado  en la BD 02/07/2021
     //? Se quitó el campo $numCuenta(número de cuenta)
     function agregarModerador ($persona, $fechaInicio, $fechaFin, $horaInicio, $horaFin) {
 
@@ -157,7 +157,7 @@ class Moderador
     }
     
     //Agregar los días de un moderador
-    //TODO Verificado en la BD 02/07/2021
+    //? Verificado  en la BD 02/07/2021
     function agregarDiasModerador($persona, $dia)
     {
 
@@ -189,7 +189,7 @@ class Moderador
     }
 
     //Actualiza todos los datos de un moderador dado el id
-    //TODO Verificado en la BD 02/07/2021
+    //? Verificado  en la BD 02/07/2021
     //? Se cambió pers_id_persona por usua_id_usuario, se quitó mode_num_cuenta
     function actualizarModerador($persona, $fechaInicio, $fechaFin, $horaInicio, $horaFin)
     {
@@ -249,7 +249,7 @@ class Moderador
     }
 
     //Busca el nombre del moderador dado el id de moderador
-    //TODO Verificado en la BD 02/07/2021
+    //? Verificado  en la BD 02/07/2021
     function buscarModeradorNombre($id)
     {
             $SQL_Bus_Moderador =
@@ -267,7 +267,7 @@ class Moderador
             return ($transaccion_1->traerObjeto(0));
     }
 
-    //TODO Verificado en la BD 07/07/2021
+    //? Verificado  en la BD 07/07/2021
     //Buscar Moderador dado el id de usuario
     function buscarModeradorIDUsuario($id)
     {

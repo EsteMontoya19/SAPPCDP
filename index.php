@@ -84,8 +84,6 @@
             <button type="submit" class="btn btn-sy01 btn-block" id="btn-inicio">Ingresar</button>
           </form>
           <div class="col-12 text-center negritas">
-            <?php //TODO: Hacer que funcione el olvidaste tu contraseña ?>
-          <!--  <a class="d-block small" href="#" style="color:#DB9501">¿Olvidaste tu contraseña?</a> -->
             <a id="Auto-regstro-profesor"  onClick='FormularioAutoRegistro()' class="d-block small" href="#" style="color:#126E82" type="button" data-toggle="modal"
             data-target="#exampleModal" >Registrar Profesor</a>
           </div>

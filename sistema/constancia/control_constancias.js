@@ -53,7 +53,7 @@ $(document).ready(function () {
                 } else if (respuesta.endsWith('3')) {
                     alertify.error('Solo se aceptan archivos con extensión .zip');
                 } else if (respuesta.endsWith('4')) {
-                    alertify.error('Ya se han cargado constancias para este curso.');
+                    alertify.error('El número de constancias dentro del zip es diferente al número de acreedores. Verifique el documento.');
                 }
             },
         });

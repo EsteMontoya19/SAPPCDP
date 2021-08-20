@@ -8,8 +8,6 @@ $obj_Busqueda = new Busqueda();
 $arr_coordinaciones = $obj_Busqueda->selectCoordinaciones();
 $arr_niveles = $obj_Busqueda->selectNiveles();
 $arr_modalidades = $obj_Busqueda->selectModalidades();
-// TODO: Preguntar si esto es requerido.
-// $arr_preguntas = $obj_Busqueda->selectPregunta();
 ?>
 
 

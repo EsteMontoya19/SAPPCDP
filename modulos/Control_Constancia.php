@@ -59,6 +59,11 @@ if($_POST['dml'] == 'insert'){
                 }
                 //? Se guardan los nuevos nombres de archivos en un arreglo 
                 $files= scandir($direccion);
+
+                //? Validación solicitada por la Coordinadora del programa en la reunión del 17/08/2021
+                if (count($arr_Acreedores) != count($files) - 2) {
+                    exit("4");
+                }
                 
                 //? Asignamos las constancias a los acreedores
                 foreach ($arr_Acreedores as $iCont => $acreedor) {

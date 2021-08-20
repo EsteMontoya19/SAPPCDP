@@ -2,7 +2,7 @@
     class Festivo
     {
         //Permite Consultar todos los dias festivos de un calendario 
-        //TODO Verificado en la BD 02/07/2021
+        //? Verificado  en la BD 02/07/2021
         function buscarDiasFestivos($id_calendario)
         {
             $SQL_Bus_Festivos = 
@@ -21,7 +21,7 @@
         }
         
         //Permite Consultar todos los dias festivos del calendario activo
-        //TODO Verificado en la BD 02/07/2021
+        //? Verificado  en la BD 02/07/2021
         function buscarDiasFestivosActivos()
         {
             $SQL_Bus_Festivos = 
@@ -40,7 +40,7 @@
         }
 
         //Permite insertar un dia festivo en la base de datos
-        //TODO Verificado en la BD 02/07/2021
+        //? Verificado  en la BD 02/07/2021
         function agregarDiaFestivo($id_calendario, $fecha)
         {
 
@@ -58,7 +58,7 @@
         }
 
         //Permite actualizar un dia festivo en la base de datos
-        //TODO Verificado en la BD 02/07/2021
+        //? Verificado  en la BD 02/07/2021
         function actualizarDiaFestivo($id_dia_festivo, $id_calendario, $fecha)
         {
 

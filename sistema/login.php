@@ -98,7 +98,7 @@
             </form>
             <div class="col-12 text-center">
               <br>
-              <?php //TODO: Hacer que funcione el olvidaste tu contraseña ?>
+              <?php //? Por solicitud de la Coordinadora no habrá Olvidaste tu contraseña ?>
               <!-- <a class="d-block small" href="#">¿Olvidaste tu contraseña?</a>  -->
             </div>
           </div>

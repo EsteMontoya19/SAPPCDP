@@ -2,7 +2,7 @@
   class Administrador
   {
     //Buscar los datos de un administrador dado el id persona
-    //TODO Verificado en la BD 02/07/2021
+    //? Verificado en la BD 02/07/2021
     //? La original Administrador(Tabla) ya no se incluye en la nueva versión de BD
     function buscarAdministrador($persona)
 		{
@@ -23,7 +23,7 @@
 		}
 
     //Buscar el npumero de administradores activos
-    //TODO Verificado en la BD 02/07/2021
+    //? Verificado en la BD 02/07/2021
     //? La original Administrador(Tabla) ya no se incluye en la nueva versión de BD
     function administradoresActivos () {
       $SQL_Bus_Administrador = 
@@ -43,7 +43,7 @@
 			return ($obj_Persona->count);
     }
 
-    //TODO Funciones ya no necesarias 02/07/2021
+    //? Funciones ya no necesarias 02/07/2021
     /*
     //Agregar un administrador
     function agregarAdministrador($persona, $num_trabajador, $rfc)

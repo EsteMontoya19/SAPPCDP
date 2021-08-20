@@ -105,7 +105,7 @@
         
 
         //? Datos de usuario
-        //TODO: Preguntar por solictud de usuario se quita pregunta de seguridad
+          //? Por solictud de usuario se quita pregunta de seguridad
         $pregunta = null;
         $recuperacion = null;
         // $pregunta = (integer) $_POST['UsuarioPregunta'];
