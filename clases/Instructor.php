@@ -2,7 +2,7 @@
     class Instructor
     {
 		//Buscar un Instructor dado el id
-		//TODO Verificado en la BD 03/07/2021
+		//? Verificado  en la BD 03/07/2021
     	//? El atributo rfc ahora pertenece a la tabla Persona
 		function buscarInstructor($persona)
 		{
@@ -26,7 +26,7 @@
 
 		
 		//Buscar el id de todos los grupos que imparte un Instructor dado el id de profesor 
-		//TODO Verificado en la BD 03/07/2021
+		//? Verificado  en la BD 03/07/2021
         function buscarGruposInstructor($instructor)
 		{
 			$SQL_Bus_Instructor = 
@@ -47,7 +47,7 @@
 		}
 
 		//buscar todos los profesores activos
-		//TODO Verificado en la BD 03/07/2021
+		//? Verificado  en la BD 03/07/2021
 		function buscarInstructoresActivos(){
 			$SQL_Bus_Instructores =
             "	
@@ -66,7 +66,7 @@
 		}
 
 		//Busca el nombre del Instructor dado el id de profesor
-		//TODO Verificado en la BD 03/07/2021
+		//? Verificado  en la BD 03/07/2021
 		function buscarInstructorNombre($id){
 			$SQL_Bus_Instructor = 
 			"	

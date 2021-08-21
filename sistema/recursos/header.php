@@ -58,12 +58,6 @@
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-users"></i>&nbsp; Grupos</a>
             </li>
 
-            <?php //TODO: Hacer las funciones de Propuestas del Coordinador ?>
-            <!--
-            <li id="btn_propuestas" class="nav-item">
-                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-lightbulb"></i>&nbsp; Propuestas</a>
-            </li>
--->
             <li id="btn_usuarios" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-shield"></i>&nbsp; Usuarios</a>
             </li>

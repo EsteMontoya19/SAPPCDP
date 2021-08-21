@@ -189,3 +189,18 @@ function gruposImpartir(persona) {
         },
     });
 }
+
+function gruposImpartirHistoricos(persona) {
+    var datos = {
+        persona: persona,
+    };
+
+    $.ajax({
+        data: datos,
+        type: 'POST',
+        url: '../sistema/instructor/frm_historicos_instructor.php',
+        success: function (data) {
+            $('#container').html(data);
+        },
+    });
+}

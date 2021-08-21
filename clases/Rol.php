@@ -2,7 +2,7 @@
     class Rol
     {
         //Buscar todos los roles
-        //TODO Verificado en la BD 02/07/2021
+        //? Verificado en la BD 02/07/2021
         function buscarRoles()
         {
             $SQL_Bus_Rol = 
@@ -20,7 +20,7 @@
         }
 
         //Buscar el rol dado el id de usuario
-        //TODO Verificado en la BD 02/07/2021
+        //? Verificado en la BD 02/07/2021
         function rolUsuario ($usuario) {
 
             $SQL_Rol_Usuario = 

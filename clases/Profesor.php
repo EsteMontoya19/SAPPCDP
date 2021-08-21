@@ -2,7 +2,7 @@
     class Profesor
     {
 		//Buscar un profesor dado el id
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado  en la BD 02/07/2021
     	//? El atributo rfc ahora pertenece a la tabla Persona
 		function buscarProfesor($persona)
 		{
@@ -26,7 +26,7 @@
         }
 
 		//Busca los datos de un Instructor, dado el id de persona
-		//TODO Verificado en la BD 07/07/2021
+		//? Verificado  en la BD 07/07/2021
 		function buscarInstructorxPersona($persona)
 		{
 			$SQL_Bus_Profesor =
@@ -46,7 +46,7 @@
         }
 
 		//Busca los datos de un profesor, dado el id de persona
-		//TODO Verificado en la BD 07/07/2021
+		//? Verificado  en la BD 07/07/2021
 		function buscarProfesorxPersona($persona)
 		{
 			$SQL_Bus_Profesor =
@@ -69,7 +69,7 @@
         }
 
 		//Busca los datos de un profesor, dado el id de usuario
-		//TODO Verificado en la BD 07/07/2021
+		//? Verificado  en la BD 07/07/2021
 		function buscarProfesorxUsuario($usuario)
 		{
 			$SQL_Bus_Profesor =
@@ -91,7 +91,7 @@
         }
 
 		//Buscar los niveles de un profesor dado el id del profesor
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado  en la BD 02/07/2021
 		function buscarProfesorNiveles ($profesor) {
 			$SQL_Bus_Niveles = 
 			"
@@ -110,7 +110,7 @@
 		}
 
 		//Buscar las modalidades de un profesor dado el id del profesor
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado  en la BD 02/07/2021
 		function buscarProfesorModalidades ($profesor) {
 			$SQL_Bus_Niveles = 
 			"
@@ -129,7 +129,7 @@
 		}
 
 		//Buscar las coordinaciones de un profesor dado el id del profesor
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado  en la BD 02/07/2021
 		function buscarProfesorCoordinaciones ($profesor) {
 			$SQL_Bus_Niveles = 
 			"
@@ -148,7 +148,7 @@
 		}
 
 		//Agregar el registro de un profesor
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado  en la BD 02/07/2021
 		//? el atributo rfc pertenece a persona
 		function agregarProfesor($persona, $numTrabajador, $semblanza)
 		{
@@ -172,7 +172,7 @@
 		}
 
 		//Agregar el nivel de un profesor dado su id
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado  en la BD 02/07/2021
 		function agregarNivelesProfesor($persona, $nivel) {
 	
 			$SQL_REGISTRO_NIVEL_PROFESOR = 
@@ -189,7 +189,7 @@
 		}
 
 		//Agregar la modalidad de un profesor dado su id
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado  en la BD 02/07/2021
 		function agregarModalidadesProfesor($persona, $modalidad) {
 			$SQL_REGISTRO_MODALIDAD_PROFESOR = 
 			  "INSERT INTO Profesor_Modalidad (prof_id_profesor, moda_id_modalidad) VALUES ((SELECT prof_id_profesor
@@ -204,7 +204,7 @@
 		}
 
 		//Agregar la coordinación de un profesor dado su id
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado  en la BD 02/07/2021
 		function agregarCoordinacionesProfesor($persona, $coordinacion) {
 			$SQL_REGISTRO_COORDINACION_PROFESOR = 
 			  "INSERT INTO Profesor_Coordinacion (prof_id_profesor, coor_id_coordinacion) VALUES ((SELECT prof_id_profesor
@@ -219,7 +219,7 @@
 		}
 
 		//Actualizar el registro de un profesor dado su id
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado  en la BD 02/07/2021
 		//? el atributo rfc pertenece a persona
 		function actualizarProfesor($persona, $num_trabajador, $semblanza)
 		{
@@ -262,7 +262,7 @@
         }
 
 		//Eliminar el registro de un profesor dado el id de una persona
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado  en la BD 02/07/2021
 		function eliminarNivelesProfesor ($persona) {
         
 			$SQL_BORRAR_NIVELES_PROFESOR= 
@@ -279,7 +279,7 @@
 		}
 
 		//Eliminar la modalidad de un profesor dado su id
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado  en la BD 02/07/2021
 		function eliminarModalidadesProfesor ($persona) {
         
 			$SQL_BORRAR_MODALIDADES_PROFESOR= 
@@ -296,7 +296,7 @@
 		}
 
 		//Eliminar la coordinación de un profesor dado su id
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado  en la BD 02/07/2021
 		function eliminarCoordinacionesProfesor ($persona) {
         
 			$SQL_BORRAR_COORDINACIONES_PROFESOR= 
@@ -313,7 +313,7 @@
 		}
 
 		//Eliminar el registro de un profesor dado el id del profesor
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado  en la BD 02/07/2021
         function eliminarProfesor($profesor)
 		{
 			$SQL_Eli_Profesor = 
@@ -329,7 +329,7 @@
 		}
         
 		//Buscar el id de todos los grupos que imparte un profesor dado el id de profesor 
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado  en la BD 02/07/2021
         function buscarGruposProfesor($profesor)
 		{
 			$SQL_Bus_Profesor = 
@@ -388,7 +388,7 @@
 		}
 
 		//buscar todos los profesores activos
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado  en la BD 02/07/2021
 		function buscarProfesoresActivos(){
 			$SQL_Bus_Profesores =
             "	
@@ -440,7 +440,7 @@
 
 		//!Crear otro para poder buscarsus datos con numero de trabajador 
 		//Busca el nombre del profesor dado el id de profesor
-		//TODO Verificado en la BD 02/07/2021
+		//? Verificado  en la BD 02/07/2021
 		function buscarProfesorNombre($id){
 			$SQL_Bus_Profesor = 
 			"	

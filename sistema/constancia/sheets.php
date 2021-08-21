@@ -5,12 +5,38 @@
     include('../../clases/Sesion.php');
     include('../../clases/Constancias.php');
 
-    $fechaInicio =  $_POST["GrupoInicioInscripcion"];
-    $fechaFin =  $_POST["GrupoFinInscripcion"];
+    // Objetos
     $obj_Grupo = new Grupo();
     $obj_Sesion = new Sesion();
     $obj_Asistencia = new Asistencia();
     $obj_Constancia = new Constancias();
+    
+    // Inputs
+    $fechaInicio =  $_POST["mesConstancia"];
+
+    //? Se le da el formato a la fecha para restringir los periodos a un mes
+    $fechaFin = substr($fechaInicio,-2);
+
+    if($fechaFin == 12) {
+        $fechaFin = substr($fechaInicio, 0, 4);
+        $fechaFin += 1;
+        $fechaFin = $fechaFin . "-01-01";
+    } else {
+        $fechaFin += 1;
+        if ($fechaFin < 10) {
+            $fechaFin = "0" . $fechaFin;
+        }
+        $fechaFin = substr($fechaInicio, 0 , 4) . "-" . $fechaFin;
+        $fechaFin = $fechaFin . "-01";
+    }
+    $fechaInicio = $fechaInicio . "-01";
+
+    
+    $mensajes = fopen("Mensajes.txt" , "a");
+    fwrite($mensajes, $fechaInicio.PHP_EOL);
+    fwrite($mensajes, $fechaFin.PHP_EOL);
+    fclose($mensajes);
+
 
     $instructores = $obj_Constancia->consultarConstanciaInstructores($fechaInicio, $fechaFin);
     $moderadores = $obj_Constancia->consultarConstanciaModeradores($fechaInicio, $fechaFin);

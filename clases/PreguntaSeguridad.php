@@ -1,5 +1,5 @@
 <?php
-	//TODO Verificado que toda la clase funciona en la BD 01/07/2021
+	//? Verificado  que toda la clase funciona en la BD 01/07/2021
 	class PreguntaSeguridad
   	{
         //Agregar PreguntaSeguridad

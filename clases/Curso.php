@@ -1,6 +1,6 @@
 <?php
     //Usar este tipo de comentarios para confirmar que se ha verificado, ponerlo por funcion o justo debajo de la clase si ya se tiene completa
-    //TODO Verificado que toda la clase funciona en la BD 01/07/2021
+    //? Verificado que toda la clase funciona en la BD 01/07/2021
     class Curso {
         // Esta función Busca un Curso y obtiene un objeto con ID, Nombre y Número de sesiones
         function buscarCurso($id) {

@@ -1,6 +1,6 @@
 <?php
 
-// Clases BD, Grupo, Sesiones, Curso, Profesor, Moderador, Busqueda(Plataforma, Salón*, Calendario)
+// Clases
 include('../../clases/BD.php');
 include('../../clases/Busqueda.php');
 include('../../clases/Grupo.php');
@@ -54,12 +54,16 @@ $Grupo = $obj_Grupo->grup_id_grupo = null;
                             </div>
                             <div class="col-lg-12 form-row" style="margin-top: 15px;">
                                 <div class="col-lg-6 form-group">
-                                    <label for ="GrupoInicioInscripcion"><b>Inicio del periodo:</b></label>
-                                    <input type="date" class="form-control" id="GrupoInicioInscripcion" name="GrupoInicioInscripcion" placeholder="0" min="0" value="<?php echo isset($Grupo) ? $Grupo->grup_inicio_insc : ""; ?>">
-                                </div>
-                                <div class="col-lg-6 form-group">
-                                    <label for ="GrupoFinInscripcion"><b>Fin del periodo:</b></label>
-                                    <input type="date" class="form-control" id="GrupoFinInscripcion" name="GrupoFinInscripcion" placeholder="0" min="0" value="<?php echo isset($Grupo) ? $Grupo->grup_fin_insc : ""; ?>">
+                                    <label for ="mesConstancia"><b>Mes de las constancias:</b></label>
+                                    <input type="month" class="form-control" id="mesConstancia" name="mesConstancia" placeholder="0" min="0" value="<?php echo isset($Grupo) ? $Grupo->grup_inicio_insc : ""; ?>"
+                                        max = "<?php 
+                                                $fecha =  date('m');
+                                                $fecha -= 1;
+                                                if ($fecha < 10) {
+                                                    $fecha = '0' . $fecha;
+                                                }
+                                                $fecha = date('Y') . "-" . $fecha;
+                                                echo($fecha); ?>";
                                 </div>
                             </div>
                         </div>

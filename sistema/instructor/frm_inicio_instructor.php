@@ -116,12 +116,7 @@
                             style="margin-top: 5px;" onclick="asistenciaGrupo(<?php echo $grupo['grup_id_grupo']?> , true)">
                             <i class="fas fa-tasks"></i>
                           </button>
-                          <!-- <button type="button" class="btn btn-primary btn-table" title="Comprobante" style="margin-top: 5px;">
-                            <i class="fas fa-list-alt"></i>
-                          </button>
-                          <button type="button" class="btn btn-danger btn-table" title="Constancia" <?php if ($grupo['cons_id_constancias'] == Null) {?> style="display: none;" <?php } ?> style="margin-top: 5px;background: #20560a">
-                            <i class="fas fa-file"></i>
-                          </button> -->
+                          
                         </td>
                       </tr>
                   <?php } } ?>

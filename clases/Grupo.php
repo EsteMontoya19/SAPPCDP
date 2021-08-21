@@ -587,7 +587,7 @@ class Grupo
             return ($transaccion_1->traerObjeto(0));
     }
 
-    //Busca los grupos que imparte un profesor
+    //Busca los grupos que imparte un profesor y se encuentran activos o a punto de comenzar
     //? Verificado en la BD 06/07/2021
     //? Se cambia la logica ahora el id hace referencia al id de usuario del profesor
     function buscarGruposImpartidosxInstructor($id)
@@ -601,6 +601,31 @@ class Grupo
                     AND G.moap_id_modalidad = M.moap_id_modalidad
                     AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO
                     AND G.ESTA_ID_ESTADO = E.ESTA_ID_ESTADO
+                    AND (g.esta_id_estado = 2 OR g.esta_id_estado = 3)
+                ORDER BY GRUP_ID_GRUPO ASC;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Grupos);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+    }
+
+    //Busca los grupos que imparte un profesor y se encuentran activos o a punto de comenzar
+    function buscarGruposImpartidosxInstructorHistoricos($id)
+    {
+        $SQL_Bus_Grupos =
+        "SELECT G.GRUP_ID_GRUPO, G.grup_publicado, M.moap_id_modalidad, moap_nombre,
+                    CURS_NOMBRE, CALE_SEMESTRE, grup_num_inscritos, esta_nombre, cons_id_constancias
+                FROM Personal_Grupo P, GRUPO G, CURSO C, Modalidad_Aprendizaje M, CALENDARIO CA, Estado E
+                WHERE P.usua_id_usuario = $id
+                    AND G.CURS_ID_CURSO = C.CURS_ID_CURSO AND G.grup_id_grupo = P.grup_id_grupo
+                    AND G.moap_id_modalidad = M.moap_id_modalidad
+                    AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO
+                    AND G.ESTA_ID_ESTADO = E.ESTA_ID_ESTADO
+                    AND (g.esta_id_estado = 1 OR g.esta_id_estado = 4)
                 ORDER BY GRUP_ID_GRUPO ASC;
             ";
 

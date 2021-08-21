@@ -74,7 +74,7 @@
         }
 
         //Consultar roles: id y nombre.
-        //TODO Verificado en la BD 01/07/2021
+        //?Verificado en la BD 01/07/2021
         function selectRoles()
         {
             $SQL_Bus_Rol = 
@@ -107,7 +107,7 @@
         }
 
         //Consultar los salones: id, edificio al que pertenece y el nombre del salón.
-        //TODO Verificado en la BD 01/07/2021
+        //?Verificado en la BD 01/07/2021
         function selectSalones()
         {
             $SQL_Bus_Salones =
@@ -127,7 +127,7 @@
         }  
 
         //Consultarn las plataformas: id, nombre y estado.
-        //TODO Verificado en la BD 01/07/2021
+        //?Verificado en la BD 01/07/2021
         //?Falta PLAT_ACTIVO
         function selectPlataformas()
         {
@@ -147,7 +147,7 @@
         }
 
         //Consultarn cursos activos: id, nombre, número de sesiones, tipo y nivel.
-        //TODO Verificado en la BD 01/07/2021  
+        //?Verificado en la BD 01/07/2021  
         function selectCursosActivos()
         {
             $SQL_Bus_Cursos =
@@ -167,7 +167,7 @@
         }
 
         //Consulta un salon y el edificio al que pertenece dado el id del salón
-        //TODO Verificado en la BD 01/07/2021
+        //?Verificado en la BD 01/07/2021
         function selectSalon($id)
         {
             $SQL_Bus_Salon =
@@ -187,7 +187,7 @@
         }
 
         //Consulta Todos los estados que puede tener un grupo
-        //TODO Verificado en la BD 01/07/2021
+        //?Verificado en la BD 01/07/2021
         function selectEstadosGrupo()
         {
             $SQL_Bus_Estados =
@@ -205,7 +205,7 @@
         }
 
         //Consulta un estado de un grupo por ID
-        //TODO Verificado en la BD 01/07/2021
+        //?Verificado en la BD 01/07/2021
         function selectEstadoGrupo($id)
         {
             $SQL_Bus_Estado =
@@ -225,7 +225,7 @@
         }
 
         //Consulta un estado de un grupo por nombre
-        //TODO Verificado en la BD 01/07/2021
+        //?Verificado en la BD 01/07/2021
         function selectEstadoGrupoxNombre($nombre)
         {
             $SQL_Bus_Estado =
@@ -245,7 +245,7 @@
         }
 
         //Consulta todas las modalidades de aprendizaje
-        //TODO Verificado en la BD 01/07/2021
+        //?Verificado en la BD 01/07/2021
         function selectModalidadesAprendizaje()
         {
             $SQL_Bus_Modalidades_Aprendizaje =
@@ -263,7 +263,7 @@
         }
 
         //Consulta todas las modalidades de aprendizaje activas
-        //TODO Verificado en la BD 01/07/2021
+        //?Verificado en la BD 01/07/2021
         function selectModalidadesAprendizajeActivas()
         {
             $SQL_Bus_Modalidades_Aprendizaje =
@@ -282,7 +282,7 @@
         }
 
         //Consulta una modalidad de aprendizaje por ID
-        //TODO Verificado en la BD 01/07/2021
+        //?Verificado en la BD 01/07/2021
         function selectModalidadAprendizaje($id)
         {
             $SQL_Bus_Modalidad_Aprendizaje =
@@ -302,7 +302,7 @@
         }
 
         //Consulta una modalidad de aprendizaje por nombre
-        //TODO Verificado en la BD 01/07/2021
+        //?Verificado en la BD 01/07/2021
         function selectModalidadAprendizajexNombre($nombre)
         {
             $SQL_Bus_Modalidad_Aprendizaje =

@@ -120,6 +120,7 @@ if ($_GET['tipo'] == "comprobante") {
 
     if ($grupo->moap_id_modalidad == 1) {
         //TODO: Falta asignarles variables
+        //! Preguntar si para la liberación del 27 se debe de incluir ya los presenciales.
         $pdf->SetFont("Times", "B", 12);
         $pdf->Cell(28, 5, utf8_decode("Edificio: "), 1, 0, "L", false);
         $pdf->SetFont("Times", "", 12);
