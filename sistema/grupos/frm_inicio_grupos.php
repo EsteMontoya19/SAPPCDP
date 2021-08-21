@@ -59,7 +59,7 @@
                 if (isset($arr_grupos)) {
                     foreach ($arr_grupos as $grupo) { ?>
                     <tr>
-                      <?php $activo++; ?>
+                        <?php $activo++; ?>
                       <td><?php echo $grupo['grup_id_grupo'];?></td>
                       <td><?php echo $grupo['grup_tipo'];?></td>
                       <td><?php echo $grupo['curs_nombre'];?></td>
@@ -83,8 +83,9 @@
                       <td><small><?php echo $grupo['pers_nombre'];?> <?php echo $grupo['pers_apellido_paterno'];?> <?php echo $grupo['pers_apellido_materno'];?></small></td>
                       <td>
                         <div class="custom-control custom-switch">
-                          <input type="checkbox" class="custom-control-input" id="estatusGrupo<?php echo $activo ?>" <?php if ($grupo['grup_publicado'] == 't') {?> checked 
-                             <?php } ?> onclick="cambioPublicacion(<?php echo $grupo['grup_id_grupo'] ?> , '<?php echo $grupo['grup_publicado']; ?>', '<?php echo $grupo['curs_nombre']; ?>', '<?php echo $grupo['grup_modalidad']; ?>')">
+                          <input type="checkbox" class="custom-control-input" id="estatusGrupo<?php echo $activo ?>" <?php if ($grupo['grup_publicado'] == 't') {
+                                ?> checked 
+                                                                                              <?php } ?> onclick="cambioPublicacion(<?php echo $grupo['grup_id_grupo'] ?> , '<?php echo $grupo['grup_publicado']; ?>', '<?php echo $grupo['curs_nombre']; ?>', '<?php echo $grupo['grup_modalidad']; ?>')">
                           <label class="custom-control-label" for="estatusGrupo<?php echo $activo ?>"></label>
                         </div>
                       </td>
@@ -94,8 +95,9 @@
 
                         <div align="right" >
                           <div align='left' style="width: 80%;">
-                            <button type="button" class="btn btn-primary btn-table" title="Actualizar" <?php if ($grupo['grup_publicado'] == 't' || $grupo['grup_estado'] == 'Finalizado'  || $grupo['grup_estado'] == 'Cancelado') {?> style="display: none;" 
-                              <?php } ?>style="margin-top: 5px;" onclick="actualizarGrupo(<?php echo $grupo['grup_id_grupo']?>)">
+                            <button type="button" class="btn btn-primary btn-table" title="Actualizar" <?php if ($grupo['grup_publicado'] == 't' || $grupo['grup_estado'] == 'Finalizado'  || $grupo['grup_estado'] == 'Cancelado') {
+                                ?> style="display: none;" 
+                                                                                                       <?php } ?>style="margin-top: 5px;" onclick="actualizarGrupo(<?php echo $grupo['grup_id_grupo']?>)">
                             <i class="fas fa-edit"></i>
                           </button>
 
@@ -118,7 +120,9 @@
                               <?php } ?>
 
                           <?php if ($grupo['grup_num_inscritos'] != 0) { ?>
-                            <a href="../modulos/Control_Generar_Excel.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-table btn-excel" title="Excel Asistencia" <?php if ($grupo['grup_estado'] == 'Pendiente') {?> style="display: none;" <?php } ?> 
+                            <a href="../modulos/Control_Generar_Excel.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-table btn-excel" title="Excel Asistencia" <?php if ($grupo['grup_estado'] == 'Pendiente') {
+                                ?> style="display: none;" <?php
+                                                                                  } ?> 
                               style="margin-top: 5px;">
                               <i class="fas fa-clipboard-list"></i>
                             </a>
@@ -126,25 +130,31 @@
 
 
                           <?php if ($grupo['grup_num_inscritos'] != 0) { ?>
-                            <a href="../modulos/Control_Generar_Constancia.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-info btn-table" title="Excel Constancias" <?php if ($grupo['grup_estado'] != 'Finalizado') {?> style="display: none;" <?php } ?>
+                            <a href="../modulos/Control_Generar_Constancia.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-opciones btn-table" title="Excel Constancias" <?php if ($grupo['grup_estado'] != 'Finalizado') {
+                                ?> style="display: none;" <?php
+                                                                                       } ?>
                               style="margin-top: 5px;">
                               <i class="fa fa-table"></i>
                             </a>
                           <?php } ?>
 
 
-                          <button type="button" class="btn btn-info btn-table" title="Asistencias" <?php if ($grupo['grup_estado'] == 'Pendiente' || $grupo['grup_estado'] == 'Cancelado' ||  $grupo['grup_publicado'] != "t") {?> style="display: none;" <?php } ?> 
+                          <button type="button" class="btn btn-info btn-table" title="Asistencias" <?php if ($grupo['grup_estado'] == 'Pendiente' || $grupo['grup_estado'] == 'Cancelado' ||  $grupo['grup_publicado'] != "t") {
+                                ?> style="display: none;" <?php
+                                                                                                   } ?> 
                             style="margin-top: 5px;" onclick="asistenciaGrupo(<?php echo $grupo['grup_id_grupo']?>)">
                             <i class="fas fa-tasks"></i>
                           </button>
 
                           <button type="button" class="btn btn-info btn-table" title="Subir Constancias" <?php if ($grupo['grup_estado'] != 'Finalizado') {
-                                ?> style="display: none;" <?php } ?> style="margin-top: 5px;" onclick="registrarConstancias(<?php echo $grupo['grup_id_grupo']?>)">
+                                ?> style="display: none;" <?php
+                                                                                                         } ?> style="margin-top: 5px;" onclick="registrarConstancias(<?php echo $grupo['grup_id_grupo']?>)">
                             <i class="fas fa-file-upload"></i>
                           </button>
 
                           <button type="button" class="btn btn-info btn-table" title="Constancias Descargadas" <?php if ($grupo['grup_estado'] != 'Finalizado') {
-                                ?> style="display: none;" <?php } ?> style="margin-top: 5px;" onclick="verificarDescargasConstancias(<?php echo $grupo['grup_id_grupo']?>)">
+                                ?> style="display: none;" <?php
+                                                                                                               } ?> style="margin-top: 5px;" onclick="verificarDescargasConstancias(<?php echo $grupo['grup_id_grupo']?>)">
                             <i class="fas fa-clipboard-check"></i>
                           </button>
 

@@ -223,6 +223,9 @@
             $k++;
         }
 
+        $mesFinNum = (integer) $arr_periodo_del_curso[0]['mes']-1;
+        $mesFin = $arr_meses[$mesFinNum];
+
     // Definition: esta línea sirve para dejar el cursor al inicio del primer nombre registrado.
         $documento->setActiveSheetIndex(0)->setSelectedCell('A2');
         $hojaMonitores->setSelectedCell('A2');
@@ -232,7 +235,7 @@
         $writer = new Xlsx($documento);
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="Lista reconocimientos Moderadores e Insctructores".xlsx');
+        header('Content-Disposition: attachment; filename="Lista reconocimientos Moderadores e Instructores -'.$mesFin.'.xlsx');
         header('Cache-Control: max-age=0');
         $writer->save('php://output');
         exit;
