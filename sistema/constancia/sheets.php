@@ -31,12 +31,6 @@
     }
     $fechaInicio = $fechaInicio . "-01";
 
-    
-    $mensajes = fopen("Mensajes.txt" , "a");
-    fwrite($mensajes, $fechaInicio.PHP_EOL);
-    fwrite($mensajes, $fechaFin.PHP_EOL);
-    fclose($mensajes);
-
 
     $instructores = $obj_Constancia->consultarConstanciaInstructores($fechaInicio, $fechaFin);
     $moderadores = $obj_Constancia->consultarConstanciaModeradores($fechaInicio, $fechaFin);

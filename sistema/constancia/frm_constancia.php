@@ -63,7 +63,7 @@ $Grupo = $obj_Grupo->grup_id_grupo = null;
                                                     $fecha = '0' . $fecha;
                                                 }
                                                 $fecha = date('Y') . "-" . $fecha;
-                                                echo($fecha); ?>";
+                                                echo($fecha); ?>">
                                 </div>
                             </div>
                         </div>
