@@ -376,7 +376,44 @@
             $bd->abrirBD();
             $transaccion_1 = new Transaccion($bd->conexion);
             $transaccion_1->enviarQuery($SQL_Bus_Constancia);
-            $obj_Busqueda = $transaccion_1->traerObjeto(0);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
+        }
+
+        //Consulta un id de profesor a través de su id de usuario
+        function buscarProfesorID($id)
+        {
+            $SQL_Bus_IDProfesor =
+            "   
+                SELECT prof_id_profesor 
+                FROM usuario u, profesor p
+                WHERE u.pers_id_persona = p.pers_id_persona
+                    AND usua_id_usuario = $id
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_IDProfesor);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
+        }
+
+        //Consulta un id de constancia de personal a partir de su id de usuario
+        function buscarConstanciaPersonal($idUsuario, $idGrupo)
+        {
+            $SQL_Bus_Constancia =
+            "   
+            SELECT p.cons_id_constancias, cons_estado, cons_url 
+            FROM personal_grupo p, Constancia c
+            WHERE c.cons_id_constancias = p.cons_id_constancias AND grup_id_grupo = $idGrupo
+                AND usua_id_usuario = $idUsuario
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Constancia);
             $bd->cerrarBD();
             return ($transaccion_1->traerObjeto(0));
         }

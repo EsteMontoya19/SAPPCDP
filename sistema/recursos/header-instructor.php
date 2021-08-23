@@ -52,11 +52,11 @@
           <ul class="navbar-nav ml-auto">
 
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarGroups" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarGroupsTeacher" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
                 <i class="fas fa-chalkboard"></i>
                 &nbsp; <?php echo "Mis Grupos"; ?>
               </a>
-              <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarGroups">
+              <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarGroupsTeacher">
                 <a class="dropdown-item" href="#" onclick="gruposImpartir(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)"> En Curso</a>
                 <a class="dropdown-item" href="#" onclick="gruposImpartirHistoricos(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)">Históricos</a>
               </div>

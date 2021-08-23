@@ -1,10 +1,13 @@
 <?php
   include('../../clases/BD.php');
   include('../../clases/Grupo.php');
-  
+  include('../../clases/Busqueda.php');
+
   $obj_Grupo = new Grupo();
   $arr_grupos = $obj_Grupo ->buscarTodosGruposAsignados($_POST['idUsuario']);
   $activo = 0;
+  $obj_Busqueda = new Busqueda();
+  $esProfesor = $obj_Busqueda->buscarProfesorID($_POST['idUsuario']);
 
 ?>
 
@@ -45,6 +48,9 @@
                     <th>Estado</th>
                     <th>Profesor</th>
                     <th>Opciones</th>
+                    <?php if(isset($esProfesor)) { ?>
+                    <th>Constancia</th>
+                    <?php } ?>
                   </tr>
                 </thead>
                 <tbody>
@@ -66,9 +72,30 @@
                         </button>
                         </div>
                       </td>
+                      <?php if(isset($esProfesor)) { ?>
+                      <td>
+                          <?php if($grupo['grup_estado'] == 'Finalizado') {
+                          $constancia = $obj_Busqueda->buscarConstanciaPersonal($_POST['idUsuario'], $grupo['grup_id_grupo']);
+                          if(isset($constancia)){
+                            if (isset($constancia)) { 
+                              if ($constancia->cons_estado == 'Disponible') {?>
+                        <a id="btn-constancia" href="<?php echo $constancia->cons_url ?>" download
+                        class="btn btn-descarga" onclick="descargaConstancia(<?php echo $constancia->cons_id_constancias ?>)" role="button"><i class="fas fa-file-download"
+                        style="padding-right: 10px;"></i>Descargar Constancia</a>
+                        <?php } elseif ($constancia->cons_estado == 'No aplica') { 
+                                echo ('<p class = aviso-azul>No Aplica</p>');
+                              } else {
+                                echo ($constancia->cons_estado);
+                              }
+                          }
+                        ?>
+                      <?php } } elseif ($grupo['grup_estado'] == 'Cancelado') {
+                        echo ('<p class = aviso-rojo>No aplica a grupos cancelados</p>');
+                        } else { echo "Pendiente"; } ?>
+                      </td>
                     </tr>
                     <?php }
-                }?>
+                } }?>
 
                 </tbody>
               </table>

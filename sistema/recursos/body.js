@@ -110,6 +110,8 @@ function asistenciasModerador(idUsuario) {
         },
     });
 }
+
+
 // Cambio de contraseña y datos de usuario
 function cambiarContrasena(id, persona) {
     var datos = {
@@ -190,6 +192,7 @@ function gruposImpartir(persona) {
     });
 }
 
+//Listar grupos historicos de un instructor
 function gruposImpartirHistoricos(persona) {
     var datos = {
         persona: persona,
