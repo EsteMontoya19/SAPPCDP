@@ -88,6 +88,17 @@ class Constancias
         }
     }
 
+    function eliminarDirectorio($direccion){
+        $archivosDirectorio = scandir($direccion);
+                    
+                    foreach ($archivosDirectorio as $iCont => $archivo) {
+                        if ($iCont >= 2) {
+                            unlink($direccion.$archivo);
+                        }
+                    }
+                    rmdir($direccion);
+    }
+
     public function consultarConstanciaInstructores($fechaInicio, $fechaFin)
     {
         $SQL_Ins_Horario =

@@ -23,12 +23,16 @@
 
                         <div class="col-lg-12 form-row" style="margin-top: 15px;">
                             <div class="col-lg-6 form-group">
-                                <label for ="PeriodoInicio"><b>Inicio del periodo: *</b></label>
-                                <input type="date" class="form-control" id="PeriodoInicio" name="PeriodoInicio" placeholder="0" min="0" value="<?php echo isset($Grupo) ? $Grupo->grup_inicio_insc : ""; ?>">
-                            </div>
-                            <div class="col-lg-6 form-group">
-                                <label for ="PeriodoFinal"><b>Fin del periodo: *</b></label>
-                                <input type="date" class="form-control" id="PeriodoFinal" name="PeriodoFinal" placeholder="0" min="0" value="<?php echo isset($Grupo) ? $Grupo->grup_fin_insc : ""; ?>">
+                                <label for ="ConstanciasMes"><b>Fin del periodo: *</b></label>
+                                <input type="month" class="form-control" id="ConstanciasMes" name="ConstanciasMes" placeholder="0" min="0" value=""
+                                        max = "<?php 
+                                                $fecha =  date('m');
+                                                $fecha -= 1;
+                                                if ($fecha < 10) {
+                                                    $fecha = '0' . $fecha;
+                                                }
+                                                $fecha = date('Y') . "-" . $fecha;
+                                                echo($fecha); ?>">
                             </div>
                         </div>
                     </div>
@@ -39,7 +43,7 @@
                         </div>
 
                         <div class="col-lg-6 form-group">
-                            <label for="constanciasInstructor"><b>Seleccione el archivo zip de las constancias del periodo seleccionado anteriormente: *</b></label>
+                            <label for="constanciasInstructor"><b>Seleccione el archivo zip de las constancias del mes seleccionado anteriormente: *</b></label>
                             <div class="custom-file">
                                 <input type="file" id="constanciasInstructor" name="constanciasInstructor"  class="custom-file-input" accept="application/zip" required>
                                 <label class="custom-file-label" for="constanciasInstructor"></label>
@@ -54,14 +58,13 @@
                         </div>
 
                         <div class="col-lg-6 form-group">
-                            <label for="constanciasModerador"><b>Seleccione el archivo zip de las constancias del periodo seleccionado anteriormente: *</b></label>
+                            <label for="constanciasModerador"><b>Seleccione el archivo zip de las constancias del mes seleccionado anteriormente: *</b></label>
                             <div class="custom-file">
                                 <input type="file" id="constanciasModerador" name="constanciasModerador"  class="custom-file-input" accept="application/zip" required>
                                 <label class="custom-file-label" for="constanciasModerador"></label>
                             </div>
                         </div>
                     </div>       
-  
 
                     <!-- Botones -->
                     <input type="hidden" name="dml" value="insertPersonal" />

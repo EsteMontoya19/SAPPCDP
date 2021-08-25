@@ -1,0 +1,6 @@
+C:\wamp64\tmp\php314F.tmp
+C:\wamp64\tmp\php316F.tmp
+C:\wamp64\tmp\phpD519.tmp
+C:\wamp64\tmp\phpD51A.tmp
+C:\wamp64\tmp\php2984.tmp
+C:\wamp64\tmp\php2995.tmp
