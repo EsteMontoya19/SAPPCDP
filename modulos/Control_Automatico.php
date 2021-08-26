@@ -15,9 +15,11 @@ $obj_Grupo = new Grupo();
 $arr_GruposPendientes = $obj_Actualizacion->buscarCursosPendientes();
 $arr_GruposEnCurso = $obj_Actualizacion->buscarCursosEnCurso();
 $arr_GruposFinalizados = $obj_Actualizacion->buscarCursosFinalizados();
+$arr_GruposCancelados = $obj_Actualizacion->buscarCursosCancelados();
 $arr_GruposCancelarPresencial = $obj_Actualizacion->buscarCursosPorCancelarPresencial();
 $arr_GruposCancelarEnLinea = $obj_Actualizacion->buscarCursosPorCancelarEnLinea();
 $arr_GruposCancelarAutogestivos = $obj_Actualizacion->buscarCursosPorCancelarAutogestivos();
+$arr_ConstanciasVencidas = $obj_Actualizacion->buscarConstanciasVencidas();
 
 
 
@@ -47,10 +49,19 @@ if($_POST['origen'] == 'grupos') {
     foreach ($arr_GruposFinalizados as $iCont => $grupo) {
         $obj_Grupo->cambiarEstatus($grupo['grup_id_grupo'], "FALSE");
     }
+    //? Los grupos cancelados no deben de estar publicados
+    foreach ($arr_GruposCancelados as $iCont => $grupo) {
+        $obj_Grupo->cambiarEstatus($grupo['grup_id_grupo'], "FALSE");
+    }
 
     exit("1");
 
-} else {
+} elseif ($_POST['origen'] == 'constancias') {
+    //TODO: Falta consultar como se llevara a cabo la baja de constancias después del año 
+    foreach ($arr_ConstanciasVencidas as $iCont => $constancia) {
+        # code...
+    }
+} else  {
     exit('2');
 }
     

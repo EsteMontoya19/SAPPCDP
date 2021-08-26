@@ -2,7 +2,22 @@
 
 class Constancias
 {
-    
+    //TODO: Falta consultar como se llevara a cabo la baja de constancias después del año.
+    function eliminarConstancia($constancia)
+    {   
+
+        $SQL_BUS_CONSTANCIA =
+        "UPDATE Constancia
+        SET cons_url = null, cons_estado = 'No aplica', cons_fecha = null, cons_hora = null
+        WHERE cons_id_constancias = $constancia";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_BUS_CONSTANCIA);
+        $bd->cerrarBD();
+    }
+
     function agregarConstancia()
     {
       //Aquí iría una validación pero puede ser que ya se esté haciendo en otra parte

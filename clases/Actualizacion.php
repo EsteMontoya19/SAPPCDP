@@ -3,6 +3,20 @@
     class Actualizacion
     {
         //? Funciones para lso cambios de estado automaticos
+        function buscarConstanciasVencidas() {
+            $SQL_Bus_Constancias =
+            "SELECT * 
+            FROM Constancia C
+            WHERE current_date >= C.cons_fecha + interval '1year' 
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Constancias);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+        }
         function buscarCursosPorCancelarAutogestivos() {
             $SQL_Bus_Grupo =
             "SELECT G.grup_id_grupo, MIN(sesi_fecha) AS primer_sesion, sesi_hora_fin
@@ -60,11 +74,25 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }
+        function buscarCursosCancelados () {
+            $SQL_Bus_Grupo =
+            "SELECT * 
+            FROM Grupo 
+            WHERE esta_id_estado = 1 AND grup_publicado = 'TRUE';
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Grupo);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+        }
         function buscarCursosFinalizados () {
             $SQL_Bus_Grupo =
             "SELECT * 
             FROM Grupo 
-            WHERE esta_id_estado = 4
+            WHERE esta_id_estado = 4 AND grup_publicado = 'TRUE';
             ";
 
             $bd = new BD();
