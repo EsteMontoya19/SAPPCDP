@@ -1,7 +1,20 @@
 <?php
 class Grupo
 {
+    //? Se utiliza para cambiar el estado de manera automatica
+    function cambiarEstadoGrupo ($grupo, $estado) {
+        $SQL_Bus_Grupo =
+        "UPDATE Grupo
+        SET esta_id_estado = $estado
+        WHERE grup_id_grupo = $grupo;
+        ";
 
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Bus_Grupo);
+        $bd->cerrarBD();
+    }
     function buscarDatosInstructorGrupo ($grupo) {
         $SQL_Bus_Grupo =
         "SELECT P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno, P.pers_correo, P.pers_telefono, P.pers_rfc, Pr.prof_semblanza
@@ -80,10 +93,10 @@ class Grupo
     {
         $SQL_Actua_Grupo =
         "   UPDATE grupo
-                SET grup_tipo = '$tipo_grupo', esta_id_estado = '$estado',
+            SET grup_tipo = '$tipo_grupo', esta_id_estado = '$estado',
                 grup_cupo = $cupo, grup_inicio_insc = '$inicio_insc', grup_fin_insc = '$fin_insc',
                 salo_id_salon = $salon, plat_id_plataforma = $plataforma, grup_url = '$url', grup_id_acceso = '$acceso', grup_clave_acceso = '$clave'
-                WHERE grup_id_grupo = $grupo;
+            WHERE grup_id_grupo = $grupo;
             ";
 
         $bd = new BD();

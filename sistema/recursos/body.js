@@ -1,3 +1,12 @@
+//? Cambios de estados automaticos
+// window.onload = function () {
+//     alert ("Al cargar esta funcionando.");
+
+//     setTimeout(function () {
+//         alert("Esto se agregó a la fila y se muestra despues de un tiempo");
+//     }, 5000);
+// }
+
 if (document.getElementById('idRol').value == 4) {
     window.onload = $('#container').load('../sistema/inicio/frm_grupos_inicio.php', { persona: document.getElementById('idPersona').value });
 } else {
@@ -15,7 +24,25 @@ $(document).ready(function () {
     });
 
     $('#btn_grupos').click(function () {
-        $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
+        var datos = {
+            origen : "grupos",
+        };
+    
+        $.ajax({
+            data: datos,
+            type: 'POST',
+            url: '../modulos/Control_Automatico.php',
+            success: function (respuesta) {
+                // console.log(respuesta);
+                if (respuesta.endsWith("1")) {
+                    alertify.success('Grupos actualizados.');                     
+                } else if (respuesta == 2) {
+                    alertify.error('Error al actualizar estados grupo.');
+                }
+                    $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
+            },
+        });
+        
     });
 
     $('#btn_propuestas').click(function () {
