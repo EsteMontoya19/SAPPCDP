@@ -417,5 +417,48 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerObjeto(0));
         }
+
+        //Consulta el horario del moderador a partir de un id de usuario
+        function buscarHorarioModerador($idUsuario)
+        {
+            $SQL_Bus_Horario =
+            "   
+            SELECT mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin, mode_id_moderador 
+            FROM horario_moderador
+            WHERE usua_id_usuario = $idUsuario
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Horario);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
+        }
+
+        /*
+        Este método permite consultar los días en que un moderador está disponible
+        (Lunes-Sábado), en orden de 1 - 6 respectivamente. 
+        Para evitar afectar otras modalidades se recomienda dejarlo de esta manera
+        y no modificar la tabla dia, ya que si se cambia el valor que fue asignado 
+        ya no funcionará la validación de los dias que un moderador se encuentra 
+        disponible al momento de asignarle un grupo
+        */
+        function buscarDiasModerador($idModerador)
+        {
+            $SQL_Bus_Dias_Moderador =
+            "   
+                SELECT dia_id_dia 
+                FROM Moderador_dia
+                WHERE mode_id_moderador = $idModerador
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Dias_Moderador);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+        }
     }
 ?>
