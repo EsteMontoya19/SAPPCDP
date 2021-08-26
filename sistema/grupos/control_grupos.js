@@ -326,6 +326,77 @@ function validarFormularioGrupo() {
                 alertify.error('El horario de termino de la sesión ' + iCon + ' no puede ser menor ni igual al horario de inicio de la sesión.');
                 return false;
             }
+
+            //Valida que la fecha de la sesión se encuentre dentro del periodo del moderador asignado
+            if ($('#ID_Moderador').val() > 0) {
+                if($('#modeFechaInicio').val() > $('#SesionFecha'+iCon).val()) {
+                    document.getElementById('ID_Moderador').focus();
+                    alertify.error('La fecha de inicio del periodo de servicio del moderador comienza después de la fecha de la sesión ' + iCon);
+                    return false;
+                }
+                if($('#modeFechaFin').val() < $('#SesionFecha'+iCon).val()) {
+                    document.getElementById('ID_Moderador').focus();
+                    alertify.error('La fecha de fin del periodo de servicio del moderador concluye antes de la fecha de la sesión ' + iCon);
+                    return false;
+                }
+
+                //Se valida que este dentro de los dias de servicio del moderador (Lunes - Sábado posibles)
+                /*Se reutiliza variable objFecha2 porque ya está preparado para obtener el índice del día 
+                 de la sesión que se está verificando (1-6)*/
+                var stringDias = '' + objFecha2.getDay();
+                if($('#modeDias').val().includes(stringDias)){} else {
+                    var stringDiaNoDisponible = '';
+                    switch(stringDias) {
+                        case '1':
+                            stringDiaNoDisponible = 'Lunes';
+                            break;
+                        case '2':
+                            stringDiaNoDisponible = 'Martes';
+                            break;
+                        case '3':
+                            stringDiaNoDisponible = 'Miércoles';
+                            break;
+                        case '4':
+                            stringDiaNoDisponible = 'Jueves';
+                            break;
+                        case '5':
+                            stringDiaNoDisponible = 'Viernes';
+                            break;
+                        case '6':
+                            stringDiaNoDisponible = 'Sábado';
+                            break;
+
+                    }
+                    document.getElementById('ID_Moderador').focus();
+                    alertify.error("El moderador que asigno no se encuentra disponible el día " + stringDiaNoDisponible + ' en que se da la sesión ' + iCon);
+                    return false;
+                }
+
+                //Se valida que la hora en que se asigna la sesión se encuentra dentro del horario del moderador
+                //Preparación de variables para las fechas con los datos de la sesión
+                stringFecha =  $('#SesionFecha' + iCon).val() + ' ' + $('#SesionHoraInicio' + iCon).val();
+                objFecha3 = new Date(stringFecha)
+                
+                stringFecha =  $('#SesionFecha' + iCon).val() + ' ' + $('#SesionHoraFin' + iCon).val();
+                objFecha4 = new Date(stringFecha);
+                
+                stringFecha = $('#SesionFecha' + iCon).val() + ' ' + $('#modeHoraInicio').val();
+                var objFecha5 = new Date(stringFecha);
+                
+                stringFecha = $('#SesionFecha' + iCon).val() + ' ' + $('#modeHoraFin').val();
+                var objFecha6 = new Date(stringFecha);
+                if(objFecha3 < objFecha5){
+                    document.getElementById('ID_Moderador').focus();
+                    alertify.error("El moderador que has seleccionado para el grupo no se encuentra disponible en dicho horario, su horario comienza a las " + $('#modeHoraInicio').val());
+                    return false;
+                }
+
+                if(objFecha4 > objFecha6){
+                    document.getElementById('ID_Moderador').focus();
+                    alertify.error("El moderador que has seleccionado para el grupo no se encuentra disponible en dicho horario, su horario concluye a las " + $('#modeHoraFin').val());
+                    return false;
+                }
+            }
     
         }
 
@@ -912,4 +983,41 @@ $(document).on('change', '#ID_Curso', function SesionesCurso() {
             $('#contenedorSesiones').load('../sistema/grupos/frm_grupos_sesiones.php', { curs_num_sesiones: respuesta });
         },
     });
+});
+
+/*
+Actualiza los datos del moderador automaticamente para que cuando se hace el registro
+o se realiza la actualización se pueda validar que el moderador asignado está en 
+servicio en las horas del grupo asignado
+*/
+$(document).on('change', '#ID_Moderador', function buscarHorarioModerador(){
+    var dml = 'horarioModerador';
+    var idModerador = document.getElementById('ID_Moderador').value;
+
+    //Solo deberá hacerse para el caso en que se selecciona un moderador
+    if (idModerador > 0){
+        var datos = {
+            idModerador: idModerador,
+            dml: dml
+        };
+
+        $.ajax({
+            data: datos,
+            type: 'POST',
+            dataType: 'json',
+            url: '../modulos/Control_Grupo.php',
+            success: function (respuesta){
+                if (respuesta.estado == 'Encontrado'){
+                    $('#modeFechaInicio').val(respuesta.fechaInicio);
+                    $('#modeFechaFin').val(respuesta.fechaFin);
+                    $('#modeHoraInicio').val(respuesta.horaInicio);
+                    $('#modeHoraFin').val(respuesta.horaFin);
+                    $('#modeHoraFin').val(respuesta.horaFin);
+                    $('#modeDias').val(respuesta.dias);
+                } else if (respuesta.estado == 'Nulo'){
+                    alertify.error('No se encontro el horario del moderador');
+                }
+            },
+        });
+    }
 });

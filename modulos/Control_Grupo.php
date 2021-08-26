@@ -265,7 +265,7 @@ if ($_POST['dml'] == 'insert') {
     exit('1');
 }
 
-if ($_POST['dml'] == 'sesiones') {
+elseif ($_POST['dml'] == 'sesiones') {
     $idCurso = $_POST['idCurso'];
 
     $obj_Curso = new Curso();
@@ -278,7 +278,7 @@ if ($_POST['dml'] == 'sesiones') {
     }
 }
 
-if ($_POST['dml'] == 'inscripcion') {
+elseif ($_POST['dml'] == 'inscripcion') {
     $persona = $_POST['persona'];
     $grupo = $obj_Grupo->buscarGrupo($_POST['grupo']);
     $profesor = $obj_Profesor->buscarProfesor($persona);
@@ -424,13 +424,43 @@ if ($_POST['dml'] == 'inscripcion') {
       //? Dejar inscribir en este punto que termina el for each en caso de haber pasado todas las valoraciones de todos los grupos en caso de no funcionar el otro
     }
 }
-if ($_POST['dml'] == 'cancelarInscripcion') {
+elseif ($_POST['dml'] == 'cancelarInscripcion') {
     $profesor = $_POST['profesor'];
     $grupo = $_POST['grupo'];
 
     $obj_Inscripcion->cancelarInscripcion($grupo, $profesor);
     echo 1;
 }
+
+elseif($_POST['dml'] == 'horarioModerador'){
+  
+  $resultado =  array();
+  $moderador = $obj_Busqueda->buscarHorarioModerador($_POST['idModerador']);
+
+  if(isset($moderador)){
+
+    $resultado['estado'] = 'Encontrado';
+    $resultado['fechaInicio'] = $moderador->mode_fecha_inicio;
+    $resultado['fechaFin'] = $moderador->mode_fecha_fin;
+    $resultado['horaInicio'] = $moderador->mode_hora_inicio;
+    $resultado['horaFin'] = $moderador->mode_hora_fin;
+
+    $dias = $obj_Busqueda->buscarDiasModerador($moderador->mode_id_moderador);
+
+    $cadenaDias = '';
+    foreach($dias as $dia){
+      $cadenaDias .= $dia['dia_id_dia'];
+      $cadenaDias .= '-';
+    }
+    $resultado['dias'] = $cadenaDias;
+
+  } else {
+    $resultado['estado'] = 'Nulo';
+  }
+
+  echo json_encode($resultado);
+}
+
   //? Prueba para hacer las comparaciones
     /*$file = fopen('Mensajes.txt', 'a');
       fwrite($file, $grupo->grup_id_grupo.PHP_EOL);
