@@ -66,6 +66,20 @@ class Constancias
         $transaccion_1->enviarQuery($SQL_BUS_CONSTANCIA);
         $bd->cerrarBD();
     }
+    function desactivarConstancia($constancia)
+    {   
+
+        $SQL_BUS_CONSTANCIA =
+        "UPDATE Constancia
+        SET  cons_estado = 'No disponible'
+        WHERE cons_id_constancias = $constancia";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_BUS_CONSTANCIA);
+        $bd->cerrarBD();
+    }
 
 
 
@@ -125,6 +139,7 @@ class Constancias
         AND P.pers_id_persona = U.pers_id_persona 
         AND G.curs_id_curso = C.curs_id_curso
         AND U.rol_id_rol = 2 
+        AND G.esta_id_estado != 1
         AND G.grup_id_grupo IN(SELECT grup_id_grupo
                         FROM Sesion S
                         GROUP BY grup_id_grupo

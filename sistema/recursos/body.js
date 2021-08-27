@@ -125,15 +125,27 @@ function miCuenta(id, persona) {
 //? Permite ver los cursos a moderar
 function asistenciasModerador(idUsuario) {
     var datos = {
-        idUsuario: idUsuario,
+        origen : "constancias",
     };
 
+    //?     El primer AJAX busca actualizar los estados de las contancias
     $.ajax({
         data: datos,
         type: 'POST',
-        url: '../sistema/asistencia/frm_inicio_asistencia.php',
-        success: function (data) {
-            $('#container').html(data);
+        url: '../modulos/Control_Automatico.php',
+        success: function () {
+            var datos2 = {
+                idUsuario: idUsuario,
+            };
+        
+            $.ajax({
+                data: datos2,
+                type: 'POST',
+                url: '../sistema/asistencia/frm_inicio_asistencia.php',
+                success: function (data) {
+                    $('#container').html(data);
+                },
+            });
         },
     });
 }
@@ -191,15 +203,27 @@ function gruposInscritos(persona) {
 //Listar Grupos inscritos Históricos
 function gruposInscritosHistoricos(persona) {
     var datos = {
-        persona: persona,
+        origen : "constancias",
     };
 
+    //?     El primer AJAX busca actualizar los estados de las contancias
     $.ajax({
         data: datos,
         type: 'POST',
-        url: '../sistema/profesor/frm_profesor_historicos.php',
-        success: function (data) {
-            $('#container').html(data);
+        url: '../modulos/Control_Automatico.php',
+        success: function () {
+            var datos2 = {
+                persona: persona,
+            };
+        
+            $.ajax({
+                data: datos2,
+                type: 'POST',
+                url: '../sistema/profesor/frm_profesor_historicos.php',
+                success: function (data) {
+                    $('#container').html(data);
+                },
+            });
         },
     });
 }
@@ -222,15 +246,27 @@ function gruposImpartir(persona) {
 //Listar grupos historicos de un instructor
 function gruposImpartirHistoricos(persona) {
     var datos = {
-        persona: persona,
+        origen : "constancias",
     };
 
+    //?     El primer AJAX busca actualizar los estados de las contancias
     $.ajax({
         data: datos,
         type: 'POST',
-        url: '../sistema/instructor/frm_historicos_instructor.php',
-        success: function (data) {
-            $('#container').html(data);
+        url: '../modulos/Control_Automatico.php',
+        success: function (respuesta) {
+            var datos2 = {
+                persona: persona,
+            };
+        
+            $.ajax({
+                data: datos2,
+                type: 'POST',
+                url: '../sistema/instructor/frm_historicos_instructor.php',
+                success: function (data) {
+                    $('#container').html(data);
+                },
+            });
         },
     });
 }

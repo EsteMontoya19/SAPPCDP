@@ -6,10 +6,12 @@ include('../clases/Curso.php');
 include('../clases/Grupo.php');
 include('../clases/Sesion.php');
 include('../clases/Actualizacion.php');
+include('../clases/Constancias.php');
 
 // Objetos
 $obj_Actualizacion = new Actualizacion();
 $obj_Grupo = new Grupo();
+$obj_Constancia = new Constancias();
 
 //Arreglos
 $arr_GruposPendientes = $obj_Actualizacion->buscarCursosPendientes();
@@ -22,8 +24,8 @@ $arr_GruposCancelarAutogestivos = $obj_Actualizacion->buscarCursosPorCancelarAut
 $arr_ConstanciasVencidas = $obj_Actualizacion->buscarConstanciasVencidas();
 
 
-
-if($_POST['origen'] == 'grupos') {
+//! Quitarle el numero a origen para que vuelva a funcionar
+if($_POST['origen0'] == 'grupos') {
     //? Los grupos Pendientes que ya inició su sesión principal se deben convertir en En curso
     foreach ($arr_GruposPendientes as $iCont => $grupo) {
         $obj_Grupo->cambiarEstadoGrupo($grupo['grup_id_grupo'], 2);
@@ -59,7 +61,7 @@ if($_POST['origen'] == 'grupos') {
 } elseif ($_POST['origen'] == 'constancias') {
     //TODO: Falta consultar como se llevara a cabo la baja de constancias después del año 
     foreach ($arr_ConstanciasVencidas as $iCont => $constancia) {
-        # code...
+        $obj_Constancia->desactivarConstancia($constancia['cons_id_constancias']);
     }
 } else  {
     exit('2');

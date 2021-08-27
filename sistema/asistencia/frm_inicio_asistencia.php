@@ -79,11 +79,14 @@
                           if(isset($constancia)){
                             if (isset($constancia)) { 
                               if ($constancia->cons_estado == 'Disponible') {?>
-                        <a id="btn-constancia" href="<?php echo $constancia->cons_url ?>" download
-                        class="btn btn-descarga" onclick="descargaConstancia(<?php echo $constancia->cons_id_constancias ?>)" role="button"><i class="fas fa-file-download"
-                        style="padding-right: 10px;"></i>Descargar Constancia</a>
-                        <?php } elseif ($constancia->cons_estado == 'No aplica') { 
+                                <a id="btn-constancia" href="<?php echo $constancia->cons_url ?>" download
+                                class="btn btn-descarga" onclick="descargaConstancia(<?php echo $constancia->cons_id_constancias ?>)" role="button"><i class="fas fa-file-download"
+                                style="padding-right: 10px;"></i>Descargar Constancia</a>
+                              <?php 
+                              } elseif ($constancia->cons_estado == 'No aplica') { 
                                 echo ('<p class = aviso-azul>No Aplica</p>');
+                              }elseif ($constancia->cons_estado == 'No disponible') { 
+                                echo ('<p class = aviso-azul>Constancia no disponible</p>');
                               } else {
                                 echo ($constancia->cons_estado);
                               }
