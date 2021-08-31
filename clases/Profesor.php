@@ -9,7 +9,7 @@
 			$SQL_Bus_Profesor =
 			"SELECT U.usua_id_usuario, P.prof_id_profesor, P.pers_id_persona, P.prof_num_trabajador, 
 				P.prof_semblanza, PE.pers_rfc, PE.pers_nombre,
-				PE.pers_apellido_paterno, PE.pers_apellido_materno
+				PE.pers_apellido_paterno, PE.pers_apellido_materno, P.nomb_id_nombramiento
 			FROM Profesor P, Persona PE, Usuario U
 			WHERE U.pers_id_persona = PE.pers_id_persona 
 				AND P.pers_id_persona = PE.pers_id_persona 
@@ -150,18 +150,26 @@
 		//Agregar el registro de un profesor
 		//? Verificado  en la BD 02/07/2021
 		//? el atributo rfc pertenece a persona
-		function agregarProfesor($persona, $numTrabajador, $semblanza)
+		function agregarProfesor($persona, $numTrabajador, $semblanza, $nombramiento)
 		{
 			if (isset($semblanza)) {
 				$SQL_Ins_Profesor =
-				" INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza) VALUES 
-					($persona,'$numTrabajador', '$semblanza');
+				" INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza, nomb_id_nombramiento) VALUES 
+					($persona,'$numTrabajador', '$semblanza', null);
 				";
 			} else {
-				$SQL_Ins_Profesor =
-				" INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza) VALUES 
-					($persona,'$numTrabajador', 'null');
-				";
+				if(isset($nombramiento)) {
+					$SQL_Ins_Profesor =
+					" INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza, nomb_id_nombramiento) VALUES 
+						($persona,'$numTrabajador', 'null', $nombramiento);
+					";
+
+				} else {
+					$SQL_Ins_Profesor =
+					" INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza, nomb_id_nombramiento) VALUES 
+						($persona,'$numTrabajador', 'null', 'null');
+					";
+				}
 			}
 		
 			$bd = new BD();
@@ -221,7 +229,7 @@
 		//Actualizar el registro de un profesor dado su id
 		//? Verificado  en la BD 02/07/2021
 		//? el atributo rfc pertenece a persona
-		function actualizarProfesor($persona, $num_trabajador, $semblanza)
+		function actualizarProfesor($persona, $num_trabajador, $semblanza, $nombramiento)
 		{
 			//? Validamos si ya tiene otro registro
 			$SQL_VALIDACION_PROFESOR = 
@@ -245,11 +253,20 @@
 						WHERE pers_id_persona = $persona;
 					";
 				} else {
-					$SQL_Act_Profesor = 
-					" 	UPDATE Profesor
-						SET prof_num_trabajador = '$num_trabajador'
-						WHERE pers_id_persona = $persona;
-					";
+					if (isset($nombramiento)) {
+						$SQL_Act_Profesor = 
+						" 	UPDATE Profesor
+							SET prof_num_trabajador = '$num_trabajador', nomb_id_nombramiento = $nombramiento
+							WHERE pers_id_persona = $persona;
+						";
+					} else {
+
+						$SQL_Act_Profesor = 
+						" 	UPDATE Profesor
+							SET prof_num_trabajador = '$num_trabajador'
+							WHERE pers_id_persona = $persona;
+						";
+					}
 				}
 				$bd = new BD();
 				$bd->abrirBD();
@@ -257,7 +274,7 @@
 				$transaccion_1->enviarQuery($SQL_Act_Profesor);
 				$bd->cerrarBD();
 			} else {
-				$this->agregarProfesor($persona, $num_trabajador, $semblanza);
+				$this->agregarProfesor($persona, $num_trabajador, $semblanza, $nombramiento);
 			}
         }
 
@@ -415,7 +432,7 @@
 
 				$SQL_Bus_Profesor = 
 				"SELECT DISTINCT prof_id_profesor, P.pers_id_persona, prof_num_trabajador, prof_semblanza, pers_rfc, pers_nombre,
-						pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono
+						pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono, pers_sexo
 				FROM Profesor P, Persona PE, Usuario U
 				WHERE P.pers_id_persona = PE.pers_id_persona AND U.pers_id_persona = P.pers_id_persona AND P.prof_num_trabajador = '$numTrabajador' AND U.rol_id_rol = $rol
 				";

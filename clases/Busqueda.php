@@ -1,6 +1,22 @@
 <?php
     class Busqueda
-    {
+    {   
+
+        function selectNombramientos()
+        {
+            $SQL_Bus_Plataformas =
+            " SELECT nomb_id_nombramiento, nomb_descripcion
+              FROM Nombramiento
+              ORDER BY nomb_descripcion
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Plataformas);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerRegistros());
+        }
         //Consultar coordinaciones: id y nombre.
         //? Verificado en la BD 01/07/2021
         function selectCoordinaciones()
@@ -128,7 +144,6 @@
 
         //Consultarn las plataformas: id, nombre y estado.
         //?Verificado en la BD 01/07/2021
-        //?Falta PLAT_ACTIVO
         function selectPlataformas()
         {
             $SQL_Bus_Plataformas =

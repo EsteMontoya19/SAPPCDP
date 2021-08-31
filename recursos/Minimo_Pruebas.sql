@@ -37,26 +37,28 @@ INSERT INTO PLATAFORMA (PLAT_NOMBRE, PLAT_ACTIVO) VALUES
 INSERT INTO dia_festivo (cale_id_calendario, dife_fecha) VALUES
     (1, '2021/09/15'), (1,'2021/09/16');
                 
-INSERT INTO Persona (pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono, PERS_RFC) VALUES 
-    ('Rocío Ayme', 'García', 'Castillo', 'persona1@gmail.com', '5501010101', 'AAAA990115A01'),
-    ('Esteban', 'Montoya', 'Maya', 'persona2@gmail.com', '5501010102', 'BBBB990115A02'),
-    ('Karen', 'Fuentez', 'Aguilar', 'person3@gmail.com', '5501010103', 'CCCC990115A03'),
-    ('Samuel', 'Alcantara', 'Chavez', 'persona4@gmail.com', '5501010104', 'DDDD990115A04'),
-    ('Luis Antonio', 'Gutierrez', 'Castro', 'persona5@gmail.com', '5501010105', 'EEEE990115A05'),
-    ('Gabriel', 'Guevara', 'Gutierrez', 'persona6@gmail.com', '5501010106', 'GGGG990115A06'),
-    ('Fernanda', 'Fuentez', 'Fuentez', 'persona7@gmail.com', '5501010107', 'FFFF990115A07'),
-    ('Ana Patricia', 'Aguilar', 'Aguilar', 'persona8@gmail.com', '5501010108', 'HHHH990115A08'),
-    ('Luna', 'Mesa', 'Carrillo', 'persona9@gmail.com', '5501010109', 'IIII990115A09');
+INSERT INTO Persona (pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono, PERS_RFC, pers_sexo) VALUES 
+    ('Rocío Ayme', 'García', 'Castillo', 'persona1@gmail.com', '5501010101', 'AAAA990115A01', 'Mujer'),
+    ('Esteban', 'Montoya', 'Maya', 'persona2@gmail.com', '5501010102', 'BBBB990115A02', 'Hombre'),
+    ('Karen', 'Fuentez', 'Aguilar', 'person3@gmail.com', '5501010103', 'CCCC990115A03', 'Mujer'),
+    ('Samuel', 'Alcantara', 'Chavez', 'persona4@gmail.com', '5501010104', 'DDDD990115A04', 'Hombre'),
+    ('Luis Antonio', 'Gutierrez', 'Castro', 'persona5@gmail.com', '5501010105', 'EEEE990115A05', 'Hombre'),
+    ('Gabriel', 'Guevara', 'Gutierrez', 'persona6@gmail.com', '5501010106', 'GGGG990115A06', 'Hombre'),
+    ('Fernanda', 'Fuentez', 'Fuentez', 'persona7@gmail.com', '5501010107', 'FFFF990115A07', 'Mujer'),
+    ('Ana Patricia', 'Aguilar', 'Aguilar', 'persona8@gmail.com', '5501010108', 'HHHH990115A08', 'Mujer'),
+    ('Luna', 'Mesa', 'Carrillo', 'persona9@gmail.com', '5501010109', 'IIII990115A09', 'Mujer');
 
-INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza) VALUES 
-    (1,'111111', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber'),
-    (2,'222222','Profesor de informatica con experiencia en IOS y MACOS'),
-    (3,'333333',null),
-    (4,'444444',null),
-    (5,'555555',null),
-    (6,'666666',null),
-    (7,'777777',null),
-    (8,'888888',null);
+INSERT INTO Nombramiento (nomb_descripcion) VALUES ('Academico'), ('Tecnico'), ('De carrera');
+
+INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza, nomb_id_nombramiento) VALUES 
+    (1,'111111', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber', 1),
+    (2,'222222','Profesor de informatica con experiencia en IOS y MACOS',1),
+    (3,'333333',null, 1),
+    (4,'444444',null, 2),
+    (5,'555555',null, 2),
+    (6,'666666',null, 2),
+    (7,'777777',null, 3),
+    (8,'888888',null, 3);
 
 INSERT INTO Profesor_Nivel (prof_id_profesor, nive_id_nivel) VALUES
     (1, 1), (1, 2),(2, 1), (3, 2), (4, 1), (5, 2),(6, 1), (7, 2), (8,2);
