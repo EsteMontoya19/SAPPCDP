@@ -1,6 +1,24 @@
 <?php
 class Grupo
 {
+    //? Trea los datos necesario para mostrar los cursos privados qie se encuentran Pendientes
+    function buscarGruposPrivados () {
+        $SQL_GRUPO = 
+        "SELECT G.grup_id_grupo, C.curs_nombre, C.curs_tipo, C.curs_nivel, G.curs_id_curso, G.plat_id_plataforma, G.cale_id_calendario, G.salo_id_salon,
+                G.esta_id_estado, G.moap_id_modalidad, G.grup_url, G.grup_id_acceso, G.grup_clave_acceso, G.grup_cupo, 
+                G.grup_num_inscritos, G.grup_publicado, G.grup_tipo, G.grup_inicio_insc, G.grup_fin_insc
+        FROM Grupo G, Curso C
+        WHERE grup_tipo LIKE 'Privado'
+            AND esta_id_estado = 3
+            AND C.curs_id_curso = G.curs_id_curso;";
+        
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_GRUPO);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerRegistros(0));
+    }
     //? Se utiliza para cambiar el estado de manera automatica
     function cambiarEstadoGrupo ($grupo, $estado) {
         $SQL_Bus_Grupo =
@@ -17,7 +35,7 @@ class Grupo
     }
     function buscarDatosInstructorGrupo ($grupo) {
         $SQL_Bus_Grupo =
-        "SELECT P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno, P.pers_correo, P.pers_telefono, P.pers_rfc, Pr.prof_semblanza
+        "SELECT P.pers_id_persona, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno, P.pers_correo, P.pers_telefono, P.pers_rfc, Pr.prof_semblanza
         FROM Grupo G, Personal_Grupo PG, Usuario U, Persona P, Profesor Pr
         WHERE G.grup_id_grupo = PG.grup_id_grupo AND U.usua_id_usuario = PG.usua_id_usuario AND P.pers_id_persona = U.pers_id_persona
             AND Pr.pers_id_persona = P.pers_id_persona 
@@ -54,21 +72,8 @@ class Grupo
     //Permite agregar cualquier tipo de grupo
     //? Verificado en la BD 06/07/2021
     /*No agrega el instructor ni moderador en este método, en el caso de estado y modalidad ahora manda ID*/
-    function agregarGrupo(
-        $curso,
-        $salon,
-        $plataforma,
-        $url,
-        $acceso,
-        $clave,
-        $cupo,
-        $estado,
-        $activo,
-        $modalidad,
-        $tipo_grupo,
-        $inicio_insc,
-        $fin_insc
-    ) {
+    function agregarGrupo($curso,$salon,$plataforma,$url,$acceso,$clave,$cupo,$estado,
+                        $activo,$modalidad,$tipo_grupo,$inicio_insc,$fin_insc) {
         $SQL_Ins_Grupo =
         "   INSERT INTO Grupo (curs_id_curso, salo_id_salon, cale_id_calendario, plat_id_plataforma, grup_url, grup_id_acceso, grup_clave_acceso,  
                             grup_cupo, esta_id_estado, grup_publicado, moap_id_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc)
@@ -89,8 +94,7 @@ class Grupo
     //? Verificado en la BD 06/07/2021
     /*No actualiza curs_id_cursos, grup_modalidad, grup_activo ni cale_id_calendario. Por los requerimientos del sistema.
     El estado debe mandar el ID, el instructor y moderador se actualizan en otro método de personal_grupo*/
-    function actualizarGrupo($grupo, $tipo_grupo, $estado, $cupo, $inicio_insc, $fin_insc, $salon, $plataforma, $url, $acceso, $clave)
-    {
+    function actualizarGrupo($grupo, $tipo_grupo, $estado, $cupo, $inicio_insc, $fin_insc, $salon, $plataforma, $url, $acceso, $clave) {
         $SQL_Actua_Grupo =
         "   UPDATE grupo
             SET grup_tipo = '$tipo_grupo', esta_id_estado = '$estado',
@@ -108,13 +112,12 @@ class Grupo
 
     //Busca los correos de los profesores inscritos a un grupo.
     //? Verificado en la BD 06/07/2021
-    function buscarCorreosDeParticipantes($ID)
-    {
+    function buscarCorreosDeParticipantes($grupo) {
         $SQL_Bus_Cursos =
         "SELECT ( Pers.pers_apellido_paterno || ' ' || pers_apellido_materno || ' ' || Pers.pers_nombre) AS nombre , Pers.pers_correo, 
                     Prof.prof_id_profesor, Pers.pers_id_persona, I.insc_id_inscripcion, I.insc_observacion, cons_id_constancias
             FROM Persona Pers, Inscripcion I, Grupo G, Profesor Prof
-            WHERE G.grup_id_grupo = $ID AND I.grup_id_grupo = G.grup_id_grupo AND I.prof_id_profesor = Prof.prof_id_profesor AND Prof.pers_id_persona = Pers.pers_id_persona
+            WHERE G.grup_id_grupo = $grupo AND I.grup_id_grupo = G.grup_id_grupo AND I.prof_id_profesor = Prof.prof_id_profesor AND Prof.pers_id_persona = Pers.pers_id_persona
                   AND I.insc_activo = TRUE ORDER BY nombre
             ";
 
@@ -126,8 +129,7 @@ class Grupo
         return ($transaccion_1->traerRegistros());
     }
 
-    function buscarNoAcreedoresConstancia($idGrupo)
-    {
+    function buscarNoAcreedoresConstancia($idGrupo) {
         $SQL_Acreedor_Constancia =
         "SELECT ( P.pers_apellido_paterno || ' ' || P.pers_apellido_materno || ' ' || P.pers_nombre) AS nombre, Prof.prof_id_profesor,P.pers_id_persona, I.insc_id_inscripcion, C.cons_id_constancias 
         FROM Inscripcion I, Profesor Prof, Persona P, Constancia C
@@ -165,8 +167,7 @@ class Grupo
         return ($transaccion_1->traerRegistros(0));
     }
 
-    function buscarAcreedorConstancia($idGrupo)
-    {
+    function buscarAcreedorConstancia($idGrupo){
         $SQL_Acreedor_Constancia =
         "SELECT DISTINCT ( P.pers_apellido_paterno || ' ' || P.pers_apellido_materno || ' ' || P.pers_nombre) AS nombre, Prof.prof_id_profesor,P.pers_id_persona, I.insc_id_inscripcion, C.cons_id_constancias 
         FROM Persona P, Profesor Prof, Inscripcion I, Asistencia A, Constancia C

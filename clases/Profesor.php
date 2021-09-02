@@ -142,7 +142,6 @@
 			$bd->abrirBD();
 			$transaccion_1 = new Transaccion($bd->conexion);
 			$transaccion_1->enviarQuery($SQL_Bus_Niveles);
-			$obj_Profesor = $transaccion_1->traerObjeto(0);
 			$bd->cerrarBD();
 			return ($transaccion_1->traerRegistros());
 		}
@@ -408,11 +407,11 @@
 		//? Verificado  en la BD 02/07/2021
 		function buscarProfesoresActivos(){
 			$SQL_Bus_Profesores =
-            "	
-				SELECT DISTINCT PROF_ID_PROFESOR, PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
-				FROM Profesor P, Persona A, Usuario U
-				WHERE A.PERS_ID_PERSONA=P.PERS_ID_PERSONA AND U.PERS_ID_PERSONA=P.PERS_ID_PERSONA AND USUA_ACTIVO = TRUE AND ROL_ID_ROL = 2
-				ORDER BY PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
+            "SELECT DISTINCT PROF_ID_PROFESOR, A.PERS_ID_PERSONA, PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO, N.NOMB_DESCRIPCION
+			 FROM Profesor P, Persona A, Usuario U, Nombramiento N
+			 WHERE A.PERS_ID_PERSONA=P.PERS_ID_PERSONA AND U.PERS_ID_PERSONA=P.PERS_ID_PERSONA AND P.nomb_id_nombramiento = N.nomb_id_nombramiento
+			 		AND USUA_ACTIVO = TRUE AND ROL_ID_ROL = 4
+			 ORDER BY PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
             ";
     
                 $bd = new BD();
