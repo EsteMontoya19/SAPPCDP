@@ -139,7 +139,7 @@ class Constancias
         AND P.pers_id_persona = U.pers_id_persona 
         AND G.curs_id_curso = C.curs_id_curso
         AND U.rol_id_rol = 2 
-        AND G.esta_id_estado != 1
+        AND G.esta_id_estado = 4
         AND G.grup_id_grupo IN(SELECT grup_id_grupo
                         FROM Sesion S
                         GROUP BY grup_id_grupo
@@ -163,10 +163,10 @@ class Constancias
         WHERE G.grup_id_grupo = PG.grup_id_grupo AND U.usua_id_usuario = PG.usua_id_usuario
             AND P.pers_id_persona = U.pers_id_persona AND G.curs_id_curso = C.curs_id_curso
             AND Prof.pers_id_persona = P.pers_id_persona
-            AND U.rol_id_rol = 3 and G.grup_id_grupo IN(SELECT grup_id_grupo
-                                                        FROM Sesion S
-                                                        GROUP BY grup_id_grupo
-                                                        HAVING MAX(sesi_fecha) >= '$fechaInicio'  AND MAX(sesi_fecha) < '$fechaFin')
+            AND U.rol_id_rol = 3 AND G.esta_id_estado = 4 AND G.grup_id_grupo IN(SELECT grup_id_grupo
+                                                                                FROM Sesion S
+                                                                                GROUP BY grup_id_grupo
+                                                                                HAVING MAX(sesi_fecha) >= '$fechaInicio'  AND MAX(sesi_fecha) < '$fechaFin');
             ";
 
         $bd = new BD();

@@ -25,7 +25,7 @@ $arr_ConstanciasVencidas = $obj_Actualizacion->buscarConstanciasVencidas();
 
 
 //! Quitarle el numero a origen para que vuelva a funcionar
-if($_POST['origen0'] == 'grupos') {
+if($_POST['origen'] == 'grupos') {
     //? Los grupos Pendientes que ya inició su sesión principal se deben convertir en En curso
     foreach ($arr_GruposPendientes as $iCont => $grupo) {
         $obj_Grupo->cambiarEstadoGrupo($grupo['grup_id_grupo'], 2);
