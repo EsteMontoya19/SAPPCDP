@@ -95,6 +95,7 @@
         
         //?Datos de persona
         $rfc = $_POST['strRFC'];
+        $sexo = $_POST['strSexo'];
         $nombre = $_POST['strUsuarioNombre'];
         $apellidoPaterno = $_POST['strUsuarioPrimerApe'];
         $apellidoMaterno = $_POST['strUsuarioSegundoApe'];
@@ -151,6 +152,7 @@
           case PROFESOR:
             $semblanza = null;
             $num_trabajador = $_POST['intNum_Trabajador'];
+            $nombramiento = $_POST['nombramiento'];
             
             //*? Creado para guardar los inputs. Solo guarda los que tienen algo
             $nivelesProfesor=array();
@@ -189,7 +191,7 @@
         if (isset($profesor_existente)) {
           $persona = $profesor_existente->pers_id_persona;
         } else {
-          $obj_Persona->agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc);
+          $obj_Persona->agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc, $sexo);
           $persona = $obj_Persona->buscarUltimo();
         }
         
@@ -200,7 +202,7 @@
           case ADMINISTRADOR: //Administrador
             //? Si ya hay un profesor existente, ya no se registra nada
             if(!isset($profesor_existente)) {
-              $obj_Profesor->agregarProfesor($persona, $num_trabajador, null);
+              $obj_Profesor->agregarProfesor($persona, $num_trabajador, null, null);
             } 
           break;
 
@@ -212,7 +214,7 @@
             } else {
               //? Si ya hay un profesor existente, ya no se registra nada
               if(!isset($profesor_existente)) {
-                $obj_Profesor->agregarProfesor($persona, $num_trabajador, null);
+                $obj_Profesor->agregarProfesor($persona, $num_trabajador, null, null);
               }
             }
 
@@ -225,16 +227,16 @@
           case INSTRUCTOR: 
             //? Si ya hay un profesor existente, ya no se registra nada
             if(!isset($profesor_existente)) {
-              $obj_Profesor->agregarProfesor($persona, $num_trabajador, $semblanza);
+              $obj_Profesor->agregarProfesor($persona, $num_trabajador, $semblanza, null);
             } else {
               //? Si ya existe un profesor existente se actualiza sus datos por si no tiene semblanza
-              $obj_Profesor->actualizarProfesor($persona, $num_trabajador, $semblanza);
+              $obj_Profesor->actualizarProfesor($persona, $num_trabajador, $semblanza, null);
             }
           break;
 
           case PROFESOR: 
             if(!isset($profesor_existente)) {
-              $obj_Profesor->agregarProfesor($persona, $num_trabajador, null);
+              $obj_Profesor->agregarProfesor($persona, $num_trabajador, null, $nombramiento);
             } 
             
             foreach($nivelesProfesor as $id){
@@ -276,6 +278,7 @@
         $correo = $_POST['strUsuarioCorreo'];
         $telefono = $_POST['strUsuarioTelefono'];
         $rfc = $_POST['strRFC'];
+        $sexo = $_POST['strSexo'];
         
         //? Datos de usuario
         $nombreUsuario = $_POST['strNombreUsuario'];
@@ -289,6 +292,7 @@
         //?Datos según rol
         if($rol == ADMINISTRADOR || $rol == INSTRUCTOR || $rol == PROFESOR) {
           $num_trabajador = $_POST['intNum_Trabajador'];
+          $nombramiento = $_POST['nombramiento'];
 
           if($rol == INSTRUCTOR) {
             $semblanza = $_POST['strSemblanza'];
@@ -345,13 +349,13 @@
           }
         }
         
-        $obj_Persona->actualizarPersona($idPersona, $nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc);
+        $obj_Persona->actualizarPersona($idPersona, $nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc, $sexo);
         
         $obj_Usuario->actualizarUsuario($idPersona, $rol, $pregunta, $nombreUsuario, $contrasenia);
 
         switch($rol){
           case ADMINISTRADOR:
-            $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, null);
+            $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, null, null);
           break;
 
           case MODERADOR:
@@ -362,7 +366,7 @@
               if (strlen($num_trabajador) < 6 || strlen($num_trabajador) > 6) {
                 exit("3");
               }
-              $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, null);
+              $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, null, null);
 
               //? Si tiene número de cuenta es un servidor social
             } elseif (isset($num_cuenta)) {
@@ -383,7 +387,7 @@
           break; 
 
           case PROFESOR:
-            $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, null);
+            $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, null, $nombramiento);
             
             $obj_Profesor->eliminarNivelesProfesor($idPersona);
             foreach($nivelesProfesor as $id){
@@ -400,9 +404,10 @@
           break;
 
           case INSTRUCTOR:
-            $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, $semblanza);
+            $obj_Profesor->actualizarProfesor($idPersona, $num_trabajador, $semblanza, $nombramiento);
           break;
         }
+        exit("1");
       } else {
         exit("2");
       }
@@ -459,6 +464,7 @@
         $resultado ['apellidoMaterno'] = $persona->pers_apellido_materno;
         $resultado ['correo'] = $persona->pers_correo;
         $resultado ['telefono'] = $persona->pers_telefono;
+        $resultado ['sexo'] = $persona->pers_sexo;
         
       } else {
         $resultado ['estado'] = "Nulo";

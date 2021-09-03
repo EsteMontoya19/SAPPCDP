@@ -353,6 +353,11 @@ function buscarProfesor () {
                     $('#strUsuarioSegundoApe').val(respuesta.apellidoMaterno);
                     $('#strUsuarioCorreo').val(respuesta.correo);
                     $('#strUsuarioTelefono').val(respuesta.telefono);
+                    if(respuesta.sexo == "Hombre") {
+                        $("#strSexoH").prop("checked", true);
+                    } else {
+                        $("#strSexoM").prop("checked", true);
+                    }
     
                     
                     $("#strRFC").focus();
@@ -363,6 +368,8 @@ function buscarProfesor () {
                     $( "#strUsuarioCorreo" ).prop( "disabled", true );
                     $( "#strUsuarioTelefono" ).prop( "disabled", true );
                     $( "#semblanza" ).prop( "disabled", true );
+                    $( "#strSexoH" ).prop( "disabled", true );
+                    $( "#strSexoM" ).prop( "disabled", true );
                     
 
                 }  else if (respuesta.estado == "Nulo") {
@@ -374,6 +381,8 @@ function buscarProfesor () {
                     $( "#strUsuarioCorreo" ).prop( "disabled", false );
                     $( "#strUsuarioTelefono" ).prop( "disabled", false );
                     $( "#semblanza" ).prop( "disabled", false );
+                    $( "#strSexoM" ).prop( "disabled", false );
+                    $( "#strSexoH" ).prop( "disabled", false );
 
                     $('#semblanza').val("");
                     $('#strRFC').val("");
@@ -384,6 +393,9 @@ function buscarProfesor () {
                     $('#strUsuarioTelefono').val("");
                     $('#strContrasenia01').val("");
                     $('#strContrasenia02').val("");
+                    $("#strSexoM").prop("checked", false);
+                    $("#strSexoH").prop("checked", false);
+                    
 
                     alertify.success('No se encontró otro profesor con ese Número de trabajador.');
                 }
@@ -398,7 +410,6 @@ function buscarProfesor () {
 function validarFormularioUsuario() {
     
     //! Validaciones de Persona
-
     //? Con esto sabemos si acaban de registrar a alguien.
     if (typeof($('#hideRol').val()) == 'undefined') {
 
@@ -631,6 +642,12 @@ function validarFormularioUsuario() {
             }
         }
     }
+    if ($("#strSexoM").is(':checked') == false && $("#strSexoH").is(':checked') == false) {
+        $('html, body').animate({ scrollTop: 100 }, 'slow');
+        document.getElementById('strSexoM').focus();
+        alertify.error('Se debe ingresar el sexo del usuario.');
+        return false;
+    }
 
     //! Validaciones de Usuario
     if ($('#intUsuarioRol').val() == 0) {
@@ -819,6 +836,13 @@ function validarFormularioUsuario() {
             alertify.error('Debe seleccionar al menos una coordinación en la que participe.');
             return false;
         }
+
+        if (typeof($('input:radio[name=nombramiento]:checked').val()) == 'undefined') {
+            $('html, body').animate({ scrollTop: 200 }, 'slow');
+            document.getElementById('nombramiento1').focus();
+            alertify.error('Debe de seleccionar un nombramiento principal para el profesor.');
+            return false;
+        }
     }
     return true;
 }
@@ -891,6 +915,7 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
         $('#nivelImparticion').hide();
         $('#modalidadImparticion').hide();
         $('#coordinaciones').hide();
+        $('#nombramientos').hide();
     } else if (tipo_evento.startsWith(PROFESOR) || tipo_evento.startsWith(INSTRUCTOR)) {
         /*$('#num_trabajador').show();
         $('#rfc').show();
@@ -905,12 +930,14 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
         $('#nivelImparticion').show();
         $('#modalidadImparticion').show();
         $('#coordinaciones').show();
+        $('#nombramientos').show();
         //?En caso de que si sea Instructor
         if (tipo_evento.startsWith(INSTRUCTOR)) {
             $('#semblanza').show();
             $('#nivelImparticion').hide();
             $('#modalidadImparticion').hide();
             $('#coordinaciones').hide();
+            $('#nombramientos').hide();
         //?En caso de que sea un profesor su usuario y contraseña se auto asignans
         } else {
             $('#semblanza').hide();

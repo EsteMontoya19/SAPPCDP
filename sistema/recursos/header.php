@@ -51,15 +51,22 @@
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav ml-auto">
             
+            <li id="btn_usuarios" class="nav-item">
+                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-shield"></i>&nbsp; Usuarios</a>
+            </li>
+
             <li id="btn_cursos" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-book"></i>&nbsp; Cursos</a>
             </li>
-            <li id="btn_grupos" class="nav-item">
-                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-users"></i>&nbsp; Grupos</a>
-            </li>
 
-            <li id="btn_usuarios" class="nav-item">
-                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-user-shield"></i>&nbsp; Usuarios</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#FFFFFF">
+                <i class="fas fa-users"><div style="width: 20px;"></div></i>Grupos
+              </a>
+              <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarUser">
+                <a class="dropdown-item" type="button"  id="btn_grupos">Listado grupos</a>
+                <a class="dropdown-item" type="button"  id="btn_gruposPrivados">Inscripciones privados</a>
+              </div>
             </li>
 
             <li class="nav-item dropdown">

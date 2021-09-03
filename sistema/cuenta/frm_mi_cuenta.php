@@ -83,7 +83,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <!-- Define los campos que estarán en una fila -->
                 <div class="col-lg-4 form-group">
-                  <label for="strUsuarioNombre" class = "negritas">Nombre(s): *</label>
+                  <label for="strUsuarioNombre" class = "negritas">Nombre(s): </label>
                   <input readonly type="text" class="form-control" id="strUsuarioNombre" name="strUsuarioNombre"
                     value="<?php echo isset($persona) ? $persona->pers_nombre : ""; ?>">
                 </div>
@@ -100,16 +100,31 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
               </div>
 
               <div class="col-lg-12 form-row">
-                <div class="col-lg-6 form-group">
+                <div class="col-lg-4 form-group">
                   <label for="strUsuarioCorreo" class = "negritas">Correo electrónico: *</label>
                   <input type="text" class="form-control" id="strUsuarioCorreo" name="strUsuarioCorreo"
                     placeholder="ej. ejemplo@dominio.com"
                     value="<?php echo isset($persona) ? $persona->pers_correo : ""; ?>" enabled>
                 </div>
-                <div class="col-lg-6 form-group">
+                <div class="col-lg-4 form-group">
                   <label for="strUsuarioTelefono" class = "negritas">Teléfono: *</label>
                   <input type="text" class="form-control" id="strUsuarioTelefono" name="strUsuarioTelefono"
                     placeholder="ej. 5511223344" value="<?php echo isset($persona) ? $persona->pers_telefono : ""; ?>">
+                </div>
+
+                <div class="col-lg-4 form-group">
+                  <label for="strSexo" class = "negritas">Sexo:</label><br>
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label" for="Sexo">
+                      <input type="radio" class="form-check-input" id="strSexoH" name="strSexo" value="Hombre" <?php echo (isset($persona) && $persona->pers_sexo == "Hombre") ? "checked" : ""; ?> disabled>Hombre
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label" for="strSexoM">
+                      <input type="radio" class="form-check-input" id="strSexoM" name="strSexo" value="Mujer" <?php echo (isset($persona) && $persona->pers_sexo == "Mujer") ? "checked" : ""; ?> disabled>Mujer
+                    </label>
+                  </div>
+
                 </div>
               </div>
             </div>

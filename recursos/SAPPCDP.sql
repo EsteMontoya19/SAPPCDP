@@ -443,6 +443,7 @@ create table PERSONA (
    PERS_CORREO          VARCHAR(30)          not null,
    PERS_TELEFONO        VARCHAR(10)          not null,
    PERS_RFC             VARCHAR(13)          not null,
+   PERS_SEXO            VARCHAR(9)           not null,
    constraint PK_PERSONA primary key (PERS_ID_PERSONA)
 );
 
@@ -547,10 +548,12 @@ PRSE_ID_PREGUNTA
 create table PROFESOR (
    PROF_ID_PROFESOR     SERIAL               not null,
    PERS_ID_PERSONA      INT4                 not null,
+   NOMB_ID_NOMBRAMIENTO INT4                 default null,
    PROF_NUM_TRABAJADOR  VARCHAR(15)          not null,
    PROF_SEMBLANZA       VARCHAR(500)         	 null,
    constraint PK_PROFESOR primary key (PROF_ID_PROFESOR)
 );
+
 
 /*==============================================================*/
 /* Index: PROFESOR_PK                                           */
@@ -564,6 +567,29 @@ PROF_ID_PROFESOR
 /*==============================================================*/
 create  index RELATIONSHIP_17_FK on PROFESOR (
 PERS_ID_PERSONA
+);
+
+/*==============================================================*/
+/* Table: NOMBRAMIENTO                                          */
+/*==============================================================*/
+create table NOMBRAMIENTO (
+   NOMB_ID_NOMBRAMIENTO  SERIAL               not null,
+   NOMB_DESCRIPCION      VARCHAR(150)          not null,
+   constraint PK_NOMBRAMIENTO primary key (NOMB_ID_NOMBRAMIENTO)
+);
+
+/*==============================================================*/
+/* Index: PROFESOR_PK                                           */
+/*==============================================================*/
+create unique index NOMBRAMIENTO_PK on NOMBRAMIENTO (
+NOMB_ID_NOMBRAMIENTO
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_17_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_45_FK on PROFESOR (
+NOMB_ID_NOMBRAMIENTO
 );
 
 /*==============================================================*/
@@ -924,6 +950,11 @@ alter table PREGUNTA_ENCUESTA
 alter table PROFESOR
    add constraint FK_PROFESOR_RELATIONS_PERSONA foreign key (PERS_ID_PERSONA)
       references PERSONA (PERS_ID_PERSONA)
+      on delete restrict on update restrict;
+      
+alter table PROFESOR
+   add constraint FK_PROFESOR_RELATIONS_NOMBRAMIENTO foreign key (NOMB_ID_NOMBRAMIENTO)
+      references NOMBRAMIENTO (NOMB_ID_NOMBRAMIENTO)
       on delete restrict on update restrict;
 
 alter table PROFESOR_COORDINACION

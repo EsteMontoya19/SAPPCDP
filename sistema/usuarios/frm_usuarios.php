@@ -45,6 +45,7 @@
   $arr_niveles = $obj_Busqueda->selectNiveles();
   $arr_modalidades = $obj_Busqueda->selectModalidades();
   $arr_coordinaciones = $obj_Busqueda->selectCoordinaciones();
+  $arr_nombramientos = $obj_Busqueda->selectNombramientos();
 
   // Constantes de roles
   define("ADMINISTRADOR", 1);
@@ -205,7 +206,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
               </div>
 
               <div class="col-lg-12 form-row">
-                <div class="col-lg-6 form-group">
+                <div class="col-lg-4 form-group">
                   <label for="strUsuarioCorreo" class = "negritas">Correo
                       electrónico:<?php if (isset($_POST['CRUD']) == false) {
                             echo "*";
@@ -214,13 +215,28 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                     placeholder="ej. ejemplo@dominio.com"
                     value="<?php echo isset($persona) ? $persona->pers_correo : ""; ?>">
                 </div>
-                <div class="col-lg-6 form-group">
+                <div class="col-lg-4 form-group">
                   <label
                     for="strUsuarioTelefono" class = "negritas">Teléfono:<?php if (isset($_POST['CRUD']) == false) {
-                        echo "*";
-                                                                         } ?></label>
+                        echo "*";} ?></label>
                   <input type="text" class="form-control" id="strUsuarioTelefono" name="strUsuarioTelefono"
                     placeholder="ej. 5511223344" value="<?php echo isset($persona) ? $persona->pers_telefono : ""; ?>">
+                </div>
+                <div class="col-lg-4 form-group">
+                  <label
+                    for="strSexo" class = "negritas">Sexo:<?php if (isset($_POST['CRUD']) == false) {
+                        echo "*";} ?></label><br>
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label" for="Sexo">
+                      <input type="radio" class="form-check-input" id="strSexoH" name="strSexo" value="Hombre" <?php echo (isset($persona) && $persona->pers_sexo == "Hombre") ? "checked" : ""; ?>>Hombre
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label" for="strSexoM">
+                      <input type="radio" class="form-check-input" id="strSexoM" name="strSexo" value="Mujer" <?php echo (isset($persona) && $persona->pers_sexo == "Mujer") ? "checked" : ""; ?>>Mujer
+                    </label>
+                  </div>
+
                 </div>
               </div>
 
@@ -507,6 +523,31 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                                 }
                                 ?>
                             </div>
+                      <?php } ?>
+                    </td>
+                  </tr>
+                </table>
+              </div>  <!-- Fin del campo-->
+            </div>  <!-- Fin del card-->
+
+            <div class="col-lg-12 form-row" style="margin-top: 15px;">
+                <?php //? Si es Profesor o Instructor ?>
+                <?php if (isset($usuario) && ($usuario->rol_id_rol == PROFESOR)) { ?>
+                  <div id="nombramientos" class="col-lg-12 form-group">
+                <?php } else { ?>
+                  <div id="nombramientos" class="col-lg-12 form-group" style="display: none;">
+                <?php } ?>    
+                <label for="strNombramiento" class = "negritas">Nombramiento principal: *</label><br>
+                <table> <?php //*? Esto lo creo para hacer columnas con los checkbox?>
+                  <tr>
+                    <td>
+                      <?php foreach ($arr_nombramientos as $nombramiento) { ?> 
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label" for="nombramiento">
+                            <input type="radio" class="form-check-input" id= <?php echo("nombramiento".$nombramiento['nomb_id_nombramiento']); ?>
+                              name="nombramiento" value="<?php echo isset($profesor) ? $nombramiento['nomb_id_nombramiento'] : ""; ?>" <?php echo (isset($profesor) && $profesor->nomb_id_nombramiento == $nombramiento['nomb_id_nombramiento']) ? "checked" : ""; ?>><?php echo($nombramiento['nomb_descripcion']); ?>
+                          </label>
+                        </div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                       <?php } ?>
                     </td>
                   </tr>

@@ -60,6 +60,9 @@ $(document).ready(function () {
     $('#btn_DescargarExcel').click(function () {
         $('#container').load('../sistema/constancia/frm_constancia.php');
     });
+    $('#btn_gruposPrivados').click(function () {
+        $('#container').load('../sistema/inscripciones/frm_privados.php');
+    });
 
     $('#btn_SubirConstancias').click(function () {
         $('#container').load('../sistema/constancia/frm_registrar_constancias_personal.php');

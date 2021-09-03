@@ -4,7 +4,7 @@ class Persona
     //Registra una persona
     //? Verificado en la BD 02/07/2021
     //? Se añadió a la tabla el atributo rfc
-    function agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc)
+    function agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc, $sexo)
     {
       //Aquí iría una validación pero puede ser que ya se esté haciendo en otra parte
         $SQL_Ins_Persona =
@@ -14,8 +14,9 @@ class Persona
           pers_apellido_materno,
           pers_correo,
           pers_telefono,
+          pers_sexo,
           pers_rfc)
-        VALUES ('$nombre', '$apellidoPaterno', '$apellidoMaterno', '$correo', '$telefono', '$rfc');
+        VALUES ('$nombre', '$apellidoPaterno', '$apellidoMaterno', '$correo', '$telefono', '$sexo', '$rfc');
       ";
 
         $bd = new BD();
@@ -28,7 +29,7 @@ class Persona
 
     //Busca el último registro de persona
     //? Verificado en la BD 02/07/2021
-    function buscarUltimo()
+    public static function buscarUltimo()
     {
         $bd = new BD();
         $SQL_Bus_Persona_Seq = "
@@ -48,14 +49,14 @@ class Persona
     //Actualiza todos los datos de una persona dado el id de la persona
     //? Verificado en la BD 02/07/2021
     //? Se añadió a la tabla el atributo rfc
-    function actualizarPersona($persona, $nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc)
+    function actualizarPersona($persona, $nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc, $sexo)
     {
 
         $SQL_Act_Persona =
         "UPDATE Persona
          SET pers_nombre = '$nombre', pers_apellido_paterno = '$apellidoPaterno',
             pers_apellido_materno = '$apellidoMaterno', pers_correo = '$correo',
-            pers_telefono = '$telefono', pers_rfc = '$rfc'
+            pers_telefono = '$telefono', pers_rfc = '$rfc', pers_sexo = '$sexo'
          WHERE pers_id_persona = $persona;
       ";
 
@@ -105,9 +106,9 @@ class Persona
     //? Verificado en la BD 02/07/2021
     function buscarPersona($persona)
     {
-            $SQL_Bus_Persona =
-            "	SELECT pers_id_persona, pers_nombre, pers_apellido_paterno, pers_apellido_materno, 
-                pers_correo, pers_telefono, pers_rfc
+      $SQL_Bus_Persona =
+      "	SELECT pers_id_persona, pers_nombre, pers_apellido_paterno, pers_apellido_materno, 
+          pers_correo, pers_telefono, pers_rfc, pers_sexo
 				FROM persona
 				WHERE pers_id_persona = $persona;
 			";
