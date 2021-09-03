@@ -31,14 +31,19 @@ $grupo = $_POST['grupo'];
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($arr_profesores as $iCont => $profesor) { ?>
+            <?php foreach ($arr_profesores as  $profesor) { ?>
                 <?php if($instructorGrupo != $profesor['pers_id_persona']) {
+                    //? En el caso de que no haya nigun inscrito mandamos la bandera directa en 1 para que ya no haga nada
                     $bandera = 0;
-                    foreach ($arr_inscritos as $iCont2 => $inscrito) {
-                        if ($inscrito['pers_id_persona'] == $profesor['pers_id_persona']) { 
-                            $bandera = 1; 
+                    if (empty($arr_inscritos) == false) {
+                        //? Se hace un foreach con todos los inscritos para no mostrar en la tabla a ningun profesor que ya se encuentre inscrito
+                        foreach ($arr_inscritos as $inscrito) {
+                            if ($inscrito['pers_id_persona'] == $profesor['pers_id_persona']) { 
+                                $bandera = 1; 
+                            } 
                         } 
-                    } 
+                    }
+                    //? En caso de que si haya habido registros en el arreglo y no se haya encontrado el profesor en los inscritos, se muestra en la tabla
                     if ($bandera == 0) { ?>
                         <tr>
                             <td><?php echo $profesor['pers_id_persona']; ?></td>

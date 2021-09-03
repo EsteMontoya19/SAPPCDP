@@ -25,7 +25,7 @@ $arr_ConstanciasVencidas = $obj_Actualizacion->buscarConstanciasVencidas();
 
 
 //! Quitarle el numero a origen para que vuelva a funcionar
-if($_POST['origen'] == 'grupos') {
+if($_POST['origen0'] == 'grupos') {
     //? Los grupos Pendientes que ya inició su sesión principal se deben convertir en En curso
     foreach ($arr_GruposPendientes as $iCont => $grupo) {
         $obj_Grupo->cambiarEstadoGrupo($grupo['grup_id_grupo'], 2);
@@ -58,8 +58,7 @@ if($_POST['origen'] == 'grupos') {
 
     exit("1");
 
-} elseif ($_POST['origen'] == 'constancias') {
-    //TODO: Falta consultar como se llevara a cabo la baja de constancias después del año 
+} elseif ($_POST['origen0'] == 'constancias') {
     foreach ($arr_ConstanciasVencidas as $iCont => $constancia) {
         $obj_Constancia->desactivarConstancia($constancia['cons_id_constancias']);
     }
