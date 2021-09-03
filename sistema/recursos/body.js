@@ -99,6 +99,9 @@ $(document).ready(function () {
     $('#btn_coordinacion').click(function () {
         $('#container').load('../sistema/coordinaciones/frm_inicio_coordinaciones.php');
     });
+    $('#btn_nombramiento').click(function () {
+        $('#container').load('../sistema/nombramientos/frm_inicio_nombramientos.php');
+    });
 
     $('#btn_calendario').click(function () {
         $('#container').load('../sistema/calendarios/frm_inicio_calendarios.php');
