@@ -138,11 +138,12 @@
                   <th>Estado Constancia</th>
                   <th>Descargada</th>
                   <th>Observaciones</th>
+                  <th>Asignar Constancia</th>
                 </tr>
               </thead>
               <tbody>
                 <?php
-                if (isset($inscritos)) {
+                if (isset($inscritos)) { $contador = 1;
                     foreach ($inscritos as $inscrito) { ?>
                     <tr>
                       <td><?php echo($inscrito["prof_id_profesor"]); ?></td>
@@ -183,8 +184,16 @@
                             } }?> readonly="readonly" onclick="javascript: return false;">
                       </td>
                       <td><textarea disabled class="observaciones" id="observacion_<?php echo($inscrito["insc_id_inscripcion"]); ?>" name="observacion_<?php echo($inscrito["insc_id_inscripcion"]); ?>" rows="2"><?php echo($inscrito["insc_observacion"]); ?></textarea></td>
+                      <td>
+                        <div class="custom-file">
+                          <input type="file" id="asignarConstancia<?php echo($contador) ?>" name="asignarConstancia<?php echo($contador) ?>" class="custom-file-input" accept="application/pdf"
+                            <?php echo !isset($curso) ? "require": ""; ?> required>
+                          <label class="custom-file-label"
+                            for="asignarConstancia<?php echo($contador) ?>"><?php echo isset($curso) ? $curso -> curs_temario: ""; ?></label>
+                        </div>
+                      </td>
                     </tr>
-                    <?php } ?>
+                    <?php $contador += 1;} ?>
                 <?php } ?>
               </tbody>
             </table

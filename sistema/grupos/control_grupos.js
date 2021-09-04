@@ -81,7 +81,7 @@ function validarFormularioGrupo() {
                 alertify.error('Debe ingresar el cupo del grupo');
                 return false;
             } else {
-                if ($('#GrupoCupo').val() < 2) {
+                if ($('#GrupoCupo').val() <= 2) {
                     $('html, body').animate({ scrollTop: 0 }, 'slow');
                     document.getElementById('GrupoCupo').focus();
                     alertify.error('Debe ingresar un cupo del grupo mayor a 2 para los grupos En Línea');
@@ -149,7 +149,7 @@ function validarFormularioGrupo() {
                     alertify.error('Debe ingresar el cupo del grupo');
                     return false;
                 } else {
-                    if ($('#GrupoCupo').val() < 10) {
+                    if ($('#GrupoCupo').val() <= 10) {
                         $('html, body').animate({ scrollTop: 0 }, 'slow');
                         document.getElementById('GrupoCupo').focus();
                         alertify.error('Debe ingresar un cupo del grupo mayor a 10 para los grupos Presenciales');
@@ -177,7 +177,7 @@ function validarFormularioGrupo() {
                 alertify.error('Debe ingresar el cupo del grupo');
                 return false;
             } else {
-                if ($('#GrupoCupo').val() < 5) {
+                if ($('#GrupoCupo').val() <= 5) {
                     $('html, body').animate({ scrollTop: 0 }, 'slow');
                     document.getElementById('GrupoCupo').focus();
                     alertify.error('Debe ingresar un cupo del grupo mayor a 5 para los grupos Autogestivos');

@@ -139,7 +139,7 @@
                           <?php } ?>
 
 
-                          <button type="button" class="btn btn-info btn-table" title="Asistencias" <?php if ($grupo['grup_estado'] == 'Pendiente' || $grupo['grup_estado'] == 'Cancelado' ||  $grupo['grup_publicado'] != "t") {
+                          <button type="button" class="btn btn-info btn-table" title="Asistencias" <?php if ($grupo['grup_estado'] == 'Pendiente' || $grupo['grup_estado'] == 'Cancelado' ) {
                                 ?> style="display: none;" <?php
                                                                                                    } ?> 
                             style="margin-top: 5px;" onclick="asistenciaGrupo(<?php echo $grupo['grup_id_grupo']?>)">

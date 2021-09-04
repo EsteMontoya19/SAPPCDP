@@ -24,7 +24,7 @@
             WHERE G.curs_id_curso = C.curs_id_curso AND 
                   S.grup_id_grupo = G.grup_id_grupo AND 
                   G.moap_id_modalidad = 3  AND
-                  G.grup_num_inscritos <= 5
+                  G.grup_num_inscritos <= 5 AND esta_id_estado = 3
             GROUP BY G.grup_id_grupo, sesi_hora_fin
             HAVING MIN(sesi_fecha) <= current_date  
             ";
@@ -43,7 +43,7 @@
             WHERE G.curs_id_curso = C.curs_id_curso AND 
                   S.grup_id_grupo = G.grup_id_grupo AND 
                   G.moap_id_modalidad = 2  AND
-                  G.grup_num_inscritos <= 2
+                  G.grup_num_inscritos <= 2 AND esta_id_estado = 3
             GROUP BY G.grup_id_grupo, sesi_hora_fin
             HAVING MIN(sesi_fecha) <= current_date 
             ";
@@ -62,7 +62,7 @@
             WHERE G.curs_id_curso = C.curs_id_curso AND 
                   S.grup_id_grupo = G.grup_id_grupo AND 
                   G.moap_id_modalidad = 1  AND
-                  G.grup_num_inscritos <= 10
+                  G.grup_num_inscritos <= 10 AND esta_id_estado = 3
             GROUP BY G.grup_id_grupo, sesi_hora_fin
             HAVING MIN(sesi_fecha) <= current_date
             ";
