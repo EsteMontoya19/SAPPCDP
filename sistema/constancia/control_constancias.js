@@ -96,6 +96,33 @@ $(document).ready(function () {
     });
 });
 
+//Actualizar constancia Manual
+$(document).ready(function () {
+    $('#btn-registrar-constancia-manual').click(function (){
+        datos = new FormData($('#form_constancias_ds')[0]);
+        $.ajax({
+            type: 'POST',
+            url: '../modulos/Contol_Constancia.php',
+            data: datos,
+            contentType: false, 
+            processData: false,
+
+            success: function (respuesta) {
+                console.log(respuesta);
+                if(respuesta.endsWith('1')){
+                    alertify.success('Se han asignado correctamente las constancias');
+                    setTimeout(function () {
+                        $('html, body').animate({ scrollTop: 0 }, 0);
+                        $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
+                    }, 1500);
+                } else {
+                    alertify.error('No se pudieron asignar las constancias' + respuesta);
+                }
+            },
+        });
+    });
+});
+
 //! Importante, sin esto el archivo no se puede cargar
 $('.custom-file-input').on('change', function () {
     var fileName = $(this).val().split('\\').pop();

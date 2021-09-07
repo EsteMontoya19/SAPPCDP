@@ -36,8 +36,8 @@
 
       
       <!-- Formulario -->
-      <form name="form_asistencia" id="form_asistencia" method="POST">
-        <?php //? Se necesita saber estos datos para registrar las asistencias ?>
+      <form name="form_constancias_ds" id="form_constancias_ds" method="POST" enctype="multipart/form-data" action 
+        action="../modulos/Control_Constancia.php">
         <input type="hidden" id = "idGrupo" name = "idGrupo" value = "<?php echo($grupo->grup_id_grupo); ?>">
       <div class="card mb-3">
         <div class="form-group">
@@ -59,53 +59,18 @@
                 </p>
               </div>
             </div>
-
-          <div class="col-lg-12 form-row">
-            <div class="col-lg-4 form-group">
-                <p><b>Moderador: </b> <?php
-                if ($grupo->moderador != "") {
-                    echo($grupo->moderador);
-                } else {
-                    echo("No asignado.");
-                }?></p>
-            </div>
-
-            <div class="col-lg-8 form-group">
-                <p><b>Semblanza del instructor: </b><br><?php if(isset($datosInstructor->prof_semblanza)) { echo($datosInstructor->prof_semblanza); } else {echo("Sin semblanza registrada por el instructor.");}?></p>
-            </div>
-          </div><hr><br>
-
+  
             <div class="col-lg-12 form-row">
               <div class="col-lg-4 form-group">
-                <p><b><?php
-                if ($grupo->moap_id_modalidad == 1) {
-                    echo("Salón: </b>".$grupo->salo_nombre);
-                } elseif ($grupo->moap_id_modalidad == 2 || $grupo->moap_id_modalidad == 3) {
-                  echo("Enlace: </b><a href target = '_blank'>".$grupo->grup_url."</a>");
-                }?></p>
+                  <p><b>Moderador: </b> <?php
+                  if ($grupo->moderador != "") {
+                      echo($grupo->moderador);
+                  } else {
+                      echo("No asignado.");
+                  }?></p>
               </div>
 
-              <?php if ($grupo->moap_id_modalidad == 2) {?>
-              <div class="col-lg-4 form-group">
-                <p><b>ID: </b> <?php if ($grupo->grup_id_acceso != "") {
-                                    echo($grupo->grup_id_acceso);
-                               } else {
-                                   echo("No registrado");
-                               } ?></p>
-                </p>
-              </div>
-              <?php }?>
-
-              <?php if ($grupo->moap_id_modalidad == 2) {?>
-              <div class="col-lg-4 form-group">
-                <p><b>Código: </b><?php if ($grupo->grup_clave_acceso != "") {
-                                    echo($grupo->grup_clave_acceso);
-                                  } else {
-                                      echo("No registrado");
-                                  } ?></p>
-              </div>
-              <?php }?>
-            </div>
+            </div><hr><br>
 
             <div class="col-lg-12 form-row">
               <div class="col-lg-4 form-group">
@@ -122,8 +87,6 @@
               </div>
             </div>
       
-              
-              <!-- Aqui estaba la tabla -->
           </div>
         </div>
         
@@ -138,12 +101,11 @@
                   <th>Estado Constancia</th>
                   <th>Descargada</th>
                   <th>Observaciones</th>
-                  <th>Asignar Constancia</th>
                 </tr>
               </thead>
               <tbody>
                 <?php
-                if (isset($inscritos)) { $contador = 1;
+                if (isset($inscritos)) { 
                     foreach ($inscritos as $inscrito) { ?>
                     <tr>
                       <td><?php echo($inscrito["prof_id_profesor"]); ?></td>
@@ -184,30 +146,86 @@
                             } }?> readonly="readonly" onclick="javascript: return false;">
                       </td>
                       <td><textarea disabled class="observaciones" id="observacion_<?php echo($inscrito["insc_id_inscripcion"]); ?>" name="observacion_<?php echo($inscrito["insc_id_inscripcion"]); ?>" rows="2"><?php echo($inscrito["insc_observacion"]); ?></textarea></td>
-                      <td>
-                        <div class="custom-file">
-                          <input type="file" id="asignarConstancia<?php echo($contador) ?>" name="asignarConstancia<?php echo($contador) ?>" class="custom-file-input" accept="application/pdf"
-                            <?php echo !isset($curso) ? "require": ""; ?> required>
-                          <label class="custom-file-label"
-                            for="asignarConstancia<?php echo($contador) ?>"><?php echo isset($curso) ? $curso -> curs_temario: ""; ?></label>
-                        </div>
-                      </td>
                     </tr>
-                    <?php $contador += 1;} ?>
+                    <?php } ?>
                 <?php } ?>
               </tbody>
-            </table
+            </table>
           </div>
         </div>
       </div>
+
+      <div class="card lg-12">
+        <div class="card-header">
+          <i class="fas fa-id-card fa-lg"></i>
+          <b>&nbsp; Cargar constancia del Alumno: </b>
+        </div>
+        <div class="col-lg-12 form-row">
+          <div class="col-lg-6 form-group">
+            <label><b>Seleccione el profesor al que le desea asignar la constancia: *</b></label>
+            <select required='required' class="custom-select" id="ID_profesor_constancia" name="ID_profesor_constancia">
+              <option value="0">Seleccionar una opción</option>
+              <?php foreach ($inscritos as $inscrito) { ?>
+              <option value="<?php echo $inscrito['cons_id_constancias']; ?>"> 
+                <?php echo ($inscrito['prof_id_profesor'].".- ".$inscrito['nombre']); ?>
+              </option>
+              <?php } ?>
+            </select>
+          </div>
+          <div class="col-lg-6 form-group">
+            <label for="constanciaProfesor"><b>Seleccione el archivo pdf de la constancia del profesor: *</b></label>
+            <div class="custom-file">
+                <input type="file" id="constanciaProfesor" name="constanciaProfesor"  class="custom-file-input" accept="application/pdf" required>
+                <label class="custom-file-label" for="constanciaProfesor"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card lg-12">
+        <div class="card-header">
+          <i class="fas fa-id-card fa-lg"></i>
+          <b>&nbsp; Cargar constancia del Instructor: <?php echo($grupo->pers_nombre . " " . $grupo->pers_apellido_paterno . " " . $grupo-> pers_apellido_materno); ?></b>
+        </div>
+
+        <div class="col-lg-6 form-group">
+          <label for="constanciaInstructor"><b>Seleccione el archivo pdf de la constancia del instructor: *</b></label>
+          <div class="custom-file">
+              <input type="file" id="constanciaInstructor" name="constanciaInstructor"  class="custom-file-input" accept="application/pdf" required>
+              <label class="custom-file-label" for="constanciaInstructor"></label>
+          </div>
+        </div>
+      </div>  
+
+      <?php if($grupo->moderador != '') { ?>
+      <div class="card lg-12">
+        <div class="card-header">
+          <i class="fas fa-id-card fa-lg"></i>
+          <b>&nbsp; Cargar constancia de Moderador: </b>
+        </div>
+        
+        <div class="col-lg-6 form-group">
+          <label for="constanciaModerador"><b>Seleccione el archivo pdf de la constancia de la constancia del moderador: *</b></label>
+          <div class="custom-file">
+              <input type="file" id="constanciaModerador" name="constanciaModerador"  class="custom-file-input" accept="application/pdf" required>
+              <label class="custom-file-label" for="constanciaModerador"></label>
+          </div>
+        </div>
+      </div>
+      <?php } ?>
       </form>
 
         <!-- Botones -->
+        <input type="hidden" name="dml" value="insertConstanciaManual" />
+        <input type="hidden" name="idGrupo" value="<?php echo $grupo->grup_id_grupo; ?>"/>
+
         <div class="col-lg-12" style="text-align: center;">
-          <button id = "btn-regresar-constancia" type="button" class="btn btn-success btn-footer">Aceptar</button>
+          <button id="btn-regresar-constancia" type="button" class="btn btn-secondary btn-footer btn-regresar">Regresar</button>
+          <button id="btn-registrar-constancia-manual" type="button" form="form_constancias_personal"
+            class="btn btn-success btn-footer btn-aceptar">Guardar</button>
         </div>
     </div>
   </div>
 </div>
 
-<script src="../sistema/asistencia/control_asistencias.js"></script>
+<script src="../sistema/constancia/control_constancias.js"></script>

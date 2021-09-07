@@ -131,7 +131,7 @@ if($_POST['dml'] == 'insert'){
             
             $zip=new ZipArchive();
             //? Guardamos la direccion de la carpeta donde se descomprimira todo
-            $direccion = "../recursos/PDF/Constancias/Instructores/".$fechaInicio."/"; // Falta asignar un serial a la carpeta
+            $direccion = "../recursos/PDF/Constancias/Instructores/".$fechaInicio."/"; 
 
             //? Existe la dirección temporal?
             if($zip->open($_FILES['constanciasInstructor']['tmp_name'])===TRUE) { 
@@ -275,5 +275,10 @@ if($_POST['dml'] == 'insert'){
 
     exit("4");
 
-}   
+} elseif ($_POST['dml'] == 'insertConstanciaManual'){
+    $idGrupo = $_POST['idGrupo'];
+    $idConstanciaProfesor = $_POST['ID_profesor_constancia'];
+
+    //A partir de aqui debo comenzar el tratado para el guardado de los PDF
+}  
 ?>
