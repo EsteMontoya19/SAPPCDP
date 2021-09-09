@@ -99,10 +99,11 @@ $(document).ready(function () {
 //Actualizar constancia Manual
 $(document).ready(function () {
     $('#btn-registrar-constancia-manual').click(function (){
+
         datos = new FormData($('#form_constancias_ds')[0]);
         $.ajax({
             type: 'POST',
-            url: '../modulos/Contol_Constancia.php',
+            url: '../modulos/Control_Constancia.php',
             data: datos,
             contentType: false, 
             processData: false,
@@ -115,6 +116,8 @@ $(document).ready(function () {
                         $('html, body').animate({ scrollTop: 0 }, 0);
                         $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
                     }, 1500);
+                } else if (respuesta.endsWith('2')) {
+                    alertify.success('Se ha asignado correctamente la constancia del profesor');
                 } else {
                     alertify.error('No se pudieron asignar las constancias' + respuesta);
                 }

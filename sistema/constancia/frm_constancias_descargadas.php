@@ -213,7 +213,7 @@
         </div>
       </div>
       <?php } ?>
-      </form>
+      
 
         <!-- Botones -->
         <input type="hidden" name="dml" value="insertConstanciaManual" />
@@ -221,9 +221,10 @@
 
         <div class="col-lg-12" style="text-align: center;">
           <button id="btn-regresar-constancia" type="button" class="btn btn-secondary btn-footer btn-regresar">Regresar</button>
-          <button id="btn-registrar-constancia-manual" type="button" form="form_constancias_personal"
+          <button id="btn-registrar-constancia-manual" type="button" form="form_constancias_ds"
             class="btn btn-success btn-footer btn-aceptar">Guardar</button>
         </div>
+      </form>
     </div>
   </div>
 </div>

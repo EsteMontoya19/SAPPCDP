@@ -143,9 +143,14 @@ if ($_POST['dml'] == 'insert') {
 
   //Se agrega al maestro siempre y al moderador en caso de existir.
     $obj_personal_grupo->agregarPersonal($id_grupo, $profesor);
+    $constancia_instructor = $obj_Constancia->agregarConstancia();
+    $obj_personal_grupo->asignarConstancia($id_grupo, $profesor, $constancia_instructor);
+
   //Aqui se comprueba si el moderador existe y lo agrega o no
     if ($moderador != 'null') {
         $obj_personal_grupo->agregarPersonal($id_grupo, $moderador);
+        $constancia_moderador = $obj_Constancia->agregarConstancia();
+        $obj_personal_grupo->asignarConstancia($id_grupo, $moderador, $constancia_moderador);
     }
     exit('1');
 } elseif ($_POST['dml'] == 'update') {
@@ -215,12 +220,15 @@ if ($_POST['dml'] == 'insert') {
     if (isset($moderador_anterior->usr_moderador)) {
         if ($moderador == 'null') {
             $obj_personal_grupo->quitarPersonal($grupo, $moderador_anterior->usr_moderador);
+            //TODO Ya que se vea como eliminar una constancia, aquí se debe eliminar el registro de la constancia cuando se deja sin moderador al grupo
         } else {
             $obj_personal_grupo->actualizarModerador($grupo, $moderador);
         }
     } else {
         if ($moderador != 'null') {
             $obj_personal_grupo->agregarPersonal($grupo, $moderador);
+            $constancia_moderador = $obj_Constancia->agregarConstancia();
+            $obj_personal_grupo->asignarConstancia($id_grupo, $moderador, $constancia_moderador);
         }
     }
     echo 1;

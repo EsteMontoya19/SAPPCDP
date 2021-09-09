@@ -276,9 +276,32 @@ if($_POST['dml'] == 'insert'){
     exit("4");
 
 } elseif ($_POST['dml'] == 'insertConstanciaManual'){
+    
     $idGrupo = $_POST['idGrupo'];
     $idConstanciaProfesor = $_POST['ID_profesor_constancia'];
 
-    //A partir de aqui debo comenzar el tratado para el guardado de los PDF
+    //Esta parte es para la verificación de que se ha subido un archivo de constancia al profesor seleccionado
+    if($idConstanciaProfesor != 0){
+        if (isset($_FILES['constanciaProfesor']['name']) && $_FILES['constanciaProfesor']['name'] != '') {
+            //TODO hay que verificar si ya tiene asignada una constancia el profesor para en dado caso eliminarla 
+            //TODO y posteriormente guardar el nuevo archivo en la misma url, de lo contrario se tiene que guardar
+            //TODO el archivo nuevo con un nombre nuevo (agregar al final al formato de los archivos de constancia 
+            //TODO el nombre del profesor y id constancia) Si no merece constancia no se debe permitir asignar.
+        }
+    }
+
+    //Aqui comienza la verificación de si se ha subido un archivo de constancia al instructor
+    if(isset($_FILES['constanciaInstructor']['name']) && $_FILES['constanciaInstructor']['name'] != ''){
+        //TODO verificar si el instructor ya tiene asignada una constancia para en su caso eliminarla y guardar
+        //TODO el archivo de la nueva con la misma ruta, de lo contrario guardar el archivo con nombre nuevo.
+    }
+
+    //TODO Aqui primero hay que buscar al moderador del grupo y verificar que sea profesor para asignar la constancia 
+    //TODO si no lo es debe de mostrar el error directamente desde el js
+    //Aqui comienza la verificación de si se ha subido un archivo de constancia al moderador
+    if(isset($_FILES['constanciaModerador']['name']) && $_FILES['constanciaModerador']['name'] != ''){
+        //TODO verificar si el moderador ya tiene asignada una constancia para en su caso eliminarla y guardar
+        //TODO el archivo de la nueva con la misma ruta, de lo contrario guardar el archivo con nombre nuevo.
+    }
 }  
 ?>
