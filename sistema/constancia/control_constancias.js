@@ -124,6 +124,10 @@ $(document).ready(function () {
                     alertitfy.error('El profesor al que intenta asignar una constancia no merece constancia, verifique sus asistencias primero.');
                 } else if (respuesta.endsWith('5')) {
                     alertify.error('El archivo cargado para la constancia del instructor no tiene extensión .pdf');
+                } else if (respuesta.endsWith('6')) {
+                    alertify.error('El moderador al que intenta asignar constancia no es un profesor, por lo tanto no está permitido.')
+                } else if(respuesta.endsWith('7')){
+                    alertify.error('El archivo cargado para la constancia del moderador no tiene extensión .pdf')
                 } else {
                     alertify.error('No se pudieron asignar las constancias' + respuesta);
                 }
