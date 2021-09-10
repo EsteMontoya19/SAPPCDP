@@ -119,9 +119,11 @@ $(document).ready(function () {
                 } else if (respuesta.endsWith('2')) {
                     alertify.error('Debe seleccionar un profesor para poderle asignar constancia');
                 } else if (respuesta.endsWith('3')) {
-                    alertify.error('El archivo cargado para la constancia del profesor no tiene extensión .pdf')
+                    alertify.error('El archivo cargado para la constancia del profesor no tiene extensión .pdf');
                 } else if(respuesta.endsWith('4')) {
-                    alertitfy.error('El profesor al que intenta asignar una constancia no merece constancia, verifique sus asistencias primero.')
+                    alertitfy.error('El profesor al que intenta asignar una constancia no merece constancia, verifique sus asistencias primero.');
+                } else if (respuesta.endsWith('5')) {
+                    alertify.error('El archivo cargado para la constancia del instructor no tiene extensión .pdf');
                 } else {
                     alertify.error('No se pudieron asignar las constancias' + respuesta);
                 }
