@@ -228,7 +228,7 @@ if ($_POST['dml'] == 'insert') {
         if ($moderador != 'null') {
             $obj_personal_grupo->agregarPersonal($grupo, $moderador);
             $constancia_moderador = $obj_Constancia->agregarConstancia();
-            $obj_personal_grupo->asignarConstancia($id_grupo, $moderador, $constancia_moderador);
+            $obj_personal_grupo->asignarConstancia($grupo, $moderador, $constancia_moderador);
         }
     }
     echo 1;

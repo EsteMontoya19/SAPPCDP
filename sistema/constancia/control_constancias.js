@@ -117,7 +117,11 @@ $(document).ready(function () {
                         $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
                     }, 1500);
                 } else if (respuesta.endsWith('2')) {
-                    alertify.success('Se ha asignado correctamente la constancia del profesor');
+                    alertify.error('Debe seleccionar un profesor para poderle asignar constancia');
+                } else if (respuesta.endsWith('3')) {
+                    alertify.error('El archivo cargado para la constancia del profesor no tiene extensión .pdf')
+                } else if(respuesta.endsWith('4')) {
+                    alertitfy.error('El profesor al que intenta asignar una constancia no merece constancia, verifique sus asistencias primero.')
                 } else {
                     alertify.error('No se pudieron asignar las constancias' + respuesta);
                 }
