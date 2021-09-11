@@ -475,5 +475,26 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }
+
+        //Consulta los datos de un profesor a partir de su id de constancia
+        function buscarProfesorPorIDConstancia($idConstancia)
+        {
+            $SQL_Bus_Profesor =
+            "   
+                SELECT pers_nombre, pers_apellido_paterno, pers_apellido_materno,c.cons_id_constancias 
+                FROM Constancia c, Inscripcion i, Profesor t, persona p
+                WHERE c.cons_id_constancias = $idConstancia 
+                    AND c.cons_id_constancias = i.cons_id_constancias 
+                    AND i.prof_id_profesor = t.prof_id_profesor
+                    AND t.pers_id_persona = p.pers_id_persona;
+            ";
+
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Profesor);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
+        }
     }
 ?>

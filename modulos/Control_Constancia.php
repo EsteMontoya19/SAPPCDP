@@ -3,9 +3,13 @@
 include('../clases/BD.php');
 include('../clases/Constancias.php');
 include('../clases/Grupo.php');
+include('../clases/Busqueda.php');
+include('../clases/Personal_Grupo.php');
 
 $obj_Constancia = new Constancias();
 $obj_Grupo = new Grupo();
+$obj_Busqueda = new Busqueda();
+$obj_Personal = new Personal_Grupo();
 
 if($_POST['dml'] == 'insert'){
 
@@ -276,9 +280,165 @@ if($_POST['dml'] == 'insert'){
     exit("4");
 
 } elseif ($_POST['dml'] == 'insertConstanciaManual'){
+    
     $idGrupo = $_POST['idGrupo'];
     $idConstanciaProfesor = $_POST['ID_profesor_constancia'];
 
-    //A partir de aqui debo comenzar el tratado para el guardado de los PDF
+    //Esta parte es para la verificación de que se ha subido un archivo de constancia al profesor seleccionado
+    if($idConstanciaProfesor != 0){
+        if (isset($_FILES['constanciaProfesor']['name']) && $_FILES['constanciaProfesor']['name'] != '') {
+            //Se valida primero que el archivo que ha subido sea de extensión pdf
+            $nombreConstanciaProfesor = $_FILES['constanciaProfesor']['name'];
+            if(substr($nombreConstanciaProfesor, -4) == '.pdf'){
+                //Se procede a buscar si este profesor ya tenía asignada una constancia o no aplica
+                $constancia_existente = $obj_Busqueda->selectConstanciaID($idConstanciaProfesor);
+                if (isset($constancia_existente->cons_id_constancias)){
+                    if($constancia_existente->cons_estado == 'No aplica'){
+                        exit('4'); 
+                    } elseif ($constancia_existente->cons_estado == 'Disponible'){
+                        //Se elimina primero la constancia actual antes de asignar la nueva
+                        $file = is_uploaded_file($_FILES['constanciaProfesor']['tmp_name']); //se verifica que el archivo este subido 
+                        $rutaConstanciaAnterior = $constancia_existente->cons_url;//Se guarda la ruta de la constancia actual
+                        unlink("$rutaConstanciaAnterior");//Se borra el archivo de la constancia actual
+                        $rutaTemporal = $_FILES['constanciaProfesor']['tmp_name'];//Se guarda la ruta temporal de la nueva constancia
+                        move_uploaded_file($rutaTemporal,$rutaConstanciaAnterior);//Se mueve el archivo a la ruta de la constancia anterior
+                        $obj_Constancia->cargarConstancia($idConstanciaProfesor, $rutaConstanciaAnterior);//se actualiza la bd para la constancia cargada
+                    } elseif ($constancia_existente->cons_estado == 'En trámite') {
+                        $file = is_uploaded_file($_FILES['constanciaProfesor']['tmp_name']); //se verifica que el archivo este subido 
+                        //Se buscan los datos del profesor 
+                        $datos_Profesor = $obj_Busqueda->buscarProfesorPorIDConstancia($idConstanciaProfesor);
+                        if (isset($datos_Profesor->cons_id_constancias)){
+                            $rutaDirectorio = "../recursos/PDF/Constancias/Profesores/".$idGrupo."/";
+                            //verificamos que exista el directorio
+                            if(file_exists($rutaDirectorio)){
+                                //se crea el nuevo nombre del archivo
+                                $nuevoNombre = $datos_Profesor->pers_apellido_paterno."_".$datos_Profesor->pers_apellido_materno."_".$datos_Profesor->pers_nombre."_".$datos_Profesor->cons_id_constancias.".pdf";
+                                $rutaTemporal = $_FILES['constanciaProfesor']['tmp_name'];//Se guarda la ruta temporal de la nueva constancia
+                                move_uploaded_file($rutaTemporal,$rutaDirectorio.$nuevoNombre);//Se mueve el archivo a la ruta de la constancia 
+                                $obj_Constancia->cargarConstancia($idConstanciaProfesor, $rutaDirectorio.$nuevoNombre);
+                            } else {
+                                //Se crea el directorio para las constancias de los profesores del grupo
+                                mkdir($rutaDirectorio, 0777);
+                                //Se crea el nuevo nombre del archivo
+                                $nuevoNombre = $datos_Profesor->pers_apellido_paterno."_".$datos_Profesor->pers_apellido_materno."_".$datos_Profesor->pers_nombre."_".$datos_Profesor->cons_id_constancias.".pdf";
+                                $rutaTemporal = $_FILES['constanciaProfesor']['tmp_name'];//Se guarda la ruta temporal de la nueva constancia
+                                move_uploaded_file($rutaTemporal,$rutaDirectorio.$nuevoNombre);//Se mueve el archivo a la ruta de la constancia anterior
+                                $obj_Constancia->cargarConstancia($idConstanciaProfesor, $rutaDirectorio.$nuevoNombre);
+                            }
+                        }
+                        
+                    }
+                }
+            } else {
+                exit('3');
+            }
+        }
+    } else {
+        if (isset($_FILES['constanciaProfesor']['name']) && $_FILES['constanciaProfesor']['name'] != '') {
+            exit('2');
+        }
+    }
+
+    //Aqui comienza la verificación de si se ha subido un archivo de constancia al instructor
+    if(isset($_FILES['constanciaInstructor']['name']) && $_FILES['constanciaInstructor']['name'] != ''){
+        $nombreConstanciaInstructor = $_FILES['constanciaInstructor']['name'];
+        //Se verifica que el archivo que se subió sea de extensión .pdf
+        if(substr($nombreConstanciaInstructor, -4) == '.pdf'){
+            //Se procede a buscar los datos del instructor
+            $datosInstructor = $obj_Personal->buscarInstructor($idGrupo);
+            if(isset($datosInstructor->cons_id_constancias)){
+                //se buscan ahora los datos de la constancia para ver si ya tiene una asignada
+                $constancia_existente_instructor = $obj_Busqueda->selectConstanciaID($datosInstructor->cons_id_constancias);
+                if(isset($constancia_existente_instructor->cons_id_constancias)){
+                    //Se procede a verificar si ya tiene una asignada o no
+                    if($constancia_existente_instructor->cons_estado == 'Disponible'){
+                        //Se procede a eliminar primero la constancia que tiene actualmente
+                        $file = is_uploaded_file($_FILES['constanciaInstructor']['tmp_name']); //se verifica que el archivo este subido 
+                        $rutaConstanciaAnterior = $constancia_existente_instructor->cons_url;//Se guarda la ruta de la constancia actual
+                        unlink("$rutaConstanciaAnterior");//Se borra el archivo de la constancia actual
+                        $rutaTemporal = $_FILES['constanciaInstructor']['tmp_name'];//Se guarda la ruta temporal de la nueva constancia
+                        move_uploaded_file($rutaTemporal,$rutaConstanciaAnterior);//Se mueve el archivo a la ruta de la constancia anterior
+                        $obj_Constancia->cargarConstancia($datosInstructor->cons_id_constancias, $rutaConstanciaAnterior);//se actualiza la bd para la constancia cargada
+                    } elseif ($constancia_existente_instructor->cons_estado == 'En trámite'){
+                        //se verifica que exista el directorio de manuales para subir la constancia
+                        $rutaDirectorio = "../recursos/PDF/Constancias/Instructores/AsignadasManualmente/";
+                        if(file_exists($rutaDirectorio)){
+                            //se crea el nuevo nombre del archivo
+                            $nuevoNombre = $datosInstructor->pers_apellido_paterno."_".$datosInstructor->pers_apellido_materno."_".$datosInstructor->pers_nombre."_".$datosInstructor->cons_id_constancias.".pdf";
+                            $rutaTemporal = $_FILES['constanciaInstructor']['tmp_name'];//Se guarda la ruta temporal de la nueva constancia
+                            move_uploaded_file($rutaTemporal,$rutaDirectorio.$nuevoNombre);//Se mueve el archivo a la ruta de la constancia
+                            $obj_Constancia->cargarConstancia($datosInstructor->cons_id_constancias, $rutaDirectorio.$nuevoNombre);
+                        } else {
+                            //Se crea el directorio para que se pueda subir la constancia
+                            mkdir($rutaDirectorio, 0777);
+                            //se crea el nuevo nombre del archivo
+                            $nuevoNombre = $datosInstructor->pers_apellido_paterno."_".$datosInstructor->pers_apellido_materno."_".$datosInstructor->pers_nombre."_".$datosInstructor->cons_id_constancias.".pdf";
+                            $rutaTemporal = $_FILES['constanciaInstructor']['tmp_name'];//Se guarda la ruta temporal de la nueva constancia
+                            move_uploaded_file($rutaTemporal,$rutaDirectorio.$nuevoNombre);//Se mueve el archivo a la ruta de la constancia
+                            $obj_Constancia->cargarConstancia($datosInstructor->cons_id_constancias, $rutaDirectorio.$nuevoNombre);
+                        }
+                    }
+                }
+            }
+        } else {
+            exit('5');
+        }
+    }
+
+    //TODO Aqui primero hay que buscar al moderador del grupo y verificar que sea profesor para asignar la constancia 
+    //TODO si no lo es debe de mostrar el error directamente desde el js
+    //Aqui comienza la verificación de si se ha subido un archivo de constancia al moderador
+    if(isset($_FILES['constanciaModerador']['name']) && $_FILES['constanciaModerador']['name'] != ''){
+        $datosModerador = $obj_Personal->buscarModerador($idGrupo);
+        if(isset($datosModerador->usr_moderador)){
+            //Se verifica si el moderador es profesor para merecer constancia
+            $es_profesor = $obj_Busqueda->buscarProfesorID($datosModerador->usr_moderador);
+            if(isset($es_profesor->prof_id_profesor)){
+                //Se verifica que el archivo que se subió tiene extensión .pdf
+                if(substr($_FILES['constanciaModerador']['name'], -4) == '.pdf'){
+                    //Se procede a buscar los datos de la constancia para ver si ya tiene una asignada
+                    $constancia_existente_moderador = $obj_Busqueda->selectConstanciaID($datosModerador->cons_id_constancias);
+                    if(isset($constancia_existente_moderador->cons_estado)){
+                        //Se verifica si ya tiene una asignada o no
+                        if($constancia_existente_moderador->cons_estado == 'Disponible'){
+                            //Se procede a eliminar primero la constancia que tiene actualmente
+                        $file = is_uploaded_file($_FILES['constanciaModerador']['tmp_name']); //se verifica que el archivo este subido 
+                        $rutaConstanciaAnterior = $constancia_existente_moderador->cons_url;//Se guarda la ruta de la constancia actual
+                        unlink("$rutaConstanciaAnterior");//Se borra el archivo de la constancia actual
+                        $rutaTemporal = $_FILES['constanciaModerador']['tmp_name'];//Se guarda la ruta temporal de la nueva constancia
+                        move_uploaded_file($rutaTemporal,$rutaConstanciaAnterior);//Se mueve el archivo a la ruta de la constancia anterior
+                        $obj_Constancia->cargarConstancia($datosModerador->cons_id_constancias, $rutaConstanciaAnterior);//se actualiza la bd para la constancia cargada
+                        } elseif($constancia_existente_moderador->cons_estado == 'En trámite'){
+                            //se verifica que exista el directorio de manuales para subir la constancia
+                            $rutaDirectorio = "../recursos/PDF/Constancias/Moderadores/AsignadasManualmente/";
+                            if(file_exists($rutaDirectorio)){
+                                //se crea el nuevo nombre del archivo
+                                $nuevoNombre = $datosModerador->pers_apellido_paterno."_".$datosModerador->pers_apellido_materno."_".$datosModerador->pers_nombre."_".$datosModerador->cons_id_constancias.".pdf";
+                                $rutaTemporal = $_FILES['constanciaModerador']['tmp_name'];//Se guarda la ruta temporal de la nueva constancia
+                                move_uploaded_file($rutaTemporal,$rutaDirectorio.$nuevoNombre);//Se mueve el archivo a la ruta de la constancia
+                                $obj_Constancia->cargarConstancia($datosModerador->cons_id_constancias, $rutaDirectorio.$nuevoNombre);
+                            } else {
+                                //Se crea el directorio para que se pueda subir la constancia
+                                mkdir($rutaDirectorio, 0777);
+                                //se crea el nuevo nombre del archivo
+                                $nuevoNombre =                                 $nuevoNombre = $datosModerador->pers_apellido_paterno."_".$datosModerador->pers_apellido_materno."_".$datosModerador->pers_nombre."_".$datosModerador->cons_id_constancias.".pdf";
+                                $rutaTemporal = $_FILES['constanciaModerador']['tmp_name'];//Se guarda la ruta temporal de la nueva constancia
+                                move_uploaded_file($rutaTemporal,$rutaDirectorio.$nuevoNombre);//Se mueve el archivo a la ruta de la constancia
+                                $obj_Constancia->cargarConstancia($datosModerador->cons_id_constancias, $rutaDirectorio.$nuevoNombre);
+                            }
+                        }
+                    }
+                } else {
+                    exit('7');
+                }
+            } else {
+                exit('6');
+            }
+        }
+        //TODO verificar si el moderador ya tiene asignada una constancia para en su caso eliminarla y guardar
+        //TODO el archivo de la nueva con la misma ruta, de lo contrario guardar el archivo con nombre nuevo.
+    }
+
+    exit('1');
 }  
 ?>
