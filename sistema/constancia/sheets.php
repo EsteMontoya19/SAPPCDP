@@ -10,25 +10,25 @@
     $obj_Sesion = new Sesion();
     $obj_Asistencia = new Asistencia();
     $obj_Constancia = new Constancias();
-    
+
     // Inputs
     $fechaInicio =  $_POST["mesConstancia"];
 
     //? Se le da el formato a la fecha para restringir los periodos a un mes
-    $fechaFin = substr($fechaInicio,-2);
+    $fechaFin = substr($fechaInicio, -2);
 
-    if($fechaFin == 12) {
-        $fechaFin = substr($fechaInicio, 0, 4);
-        $fechaFin += 1;
-        $fechaFin = $fechaFin . "-01-01";
-    } else {
-        $fechaFin += 1;
-        if ($fechaFin < 10) {
-            $fechaFin = "0" . $fechaFin;
-        }
-        $fechaFin = substr($fechaInicio, 0 , 4) . "-" . $fechaFin;
-        $fechaFin = $fechaFin . "-01";
+if ($fechaFin == 12) {
+    $fechaFin = substr($fechaInicio, 0, 4);
+    $fechaFin += 1;
+    $fechaFin = $fechaFin . "-01-01";
+} else {
+    $fechaFin += 1;
+    if ($fechaFin < 10) {
+        $fechaFin = "0" . $fechaFin;
     }
+    $fechaFin = substr($fechaInicio, 0, 4) . "-" . $fechaFin;
+    $fechaFin = $fechaFin . "-01";
+}
     $fechaInicio = $fechaInicio . "-01";
 
 

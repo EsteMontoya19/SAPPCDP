@@ -25,24 +25,23 @@ $(document).ready(function () {
 
     $('#btn_grupos').click(function () {
         var datos = {
-            origen : "grupos",
+            origen: 'grupos',
         };
-    
+
         $.ajax({
             data: datos,
             type: 'POST',
             url: '../modulos/Control_Automatico.php',
             success: function (respuesta) {
                 // console.log(respuesta);
-                if (respuesta.endsWith("1")) {
-                    alertify.success('Grupos actualizados.');                     
+                if (respuesta.endsWith('1')) {
+                    alertify.success('Grupos actualizados.');
                 } else if (respuesta == 2) {
                     alertify.error('Error al actualizar estados grupo.');
                 }
-                    $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
+                $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
             },
         });
-        
     });
 
     $('#btn_propuestas').click(function () {
@@ -131,7 +130,7 @@ function miCuenta(id, persona) {
 //? Permite ver los cursos a moderar
 function asistenciasModerador(idUsuario) {
     var datos = {
-        origen : "constancias",
+        origen: 'constancias',
     };
 
     //?     El primer AJAX busca actualizar los estados de las contancias
@@ -143,7 +142,7 @@ function asistenciasModerador(idUsuario) {
             var datos2 = {
                 idUsuario: idUsuario,
             };
-        
+
             $.ajax({
                 data: datos2,
                 type: 'POST',
@@ -155,7 +154,6 @@ function asistenciasModerador(idUsuario) {
         },
     });
 }
-
 
 // Cambio de contraseña y datos de usuario
 function cambiarContrasena(id, persona) {
@@ -209,7 +207,7 @@ function gruposInscritos(persona) {
 //Listar Grupos inscritos Históricos
 function gruposInscritosHistoricos(persona) {
     var datos = {
-        origen : "constancias",
+        origen: 'constancias',
     };
 
     //?     El primer AJAX busca actualizar los estados de las contancias
@@ -221,7 +219,7 @@ function gruposInscritosHistoricos(persona) {
             var datos2 = {
                 persona: persona,
             };
-        
+
             $.ajax({
                 data: datos2,
                 type: 'POST',
@@ -252,7 +250,7 @@ function gruposImpartir(persona) {
 //Listar grupos historicos de un instructor
 function gruposImpartirHistoricos(persona) {
     var datos = {
-        origen : "constancias",
+        origen: 'constancias',
     };
 
     //?     El primer AJAX busca actualizar los estados de las contancias
@@ -264,7 +262,7 @@ function gruposImpartirHistoricos(persona) {
             var datos2 = {
                 persona: persona,
             };
-        
+
             $.ajax({
                 data: datos2,
                 type: 'POST',
