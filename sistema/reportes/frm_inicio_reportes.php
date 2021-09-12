@@ -44,7 +44,7 @@ $Grupo = $obj_Grupo->grup_id_grupo = null;
                 </p>
 
                 <!-- Formulario -->
-                <form name="form_grupo" action='../sistema/reportes/generar_reportes.php' id="form_grupo" method="POST">
+                <form name="form_grupo" action='../sistema/reportes/generar_reportes.php' id="form_grupo" method="GET">
                     <!-- Section: Datos de constancia -->
                     <div class="form-group">
                         <div class="card lg-12">
@@ -54,35 +54,18 @@ $Grupo = $obj_Grupo->grup_id_grupo = null;
                             </div>
                             <div class="col-lg-12 form-row" style="margin-top: 15px;">
                                 <div class="col-lg-6 form-group">
-                                    <label for ="mesConstancia"><b>Mes de inicio:</b></label>
-                                    <input type="month" class="form-control" id="mesConstancia" name="mesConstancia" placeholder="0" min="0" value="<?php echo isset($Grupo) ? $Grupo->grup_inicio_insc : ""; ?>"
-                                        max = "<?php
-                                                $fecha =  date('m');
-                                                $fecha -= 1;
-                                        if ($fecha < 10) {
-                                            $fecha = '0' . $fecha;
-                                        }
-                                                $fecha = date('Y') . "-" . $fecha;
-                                                echo($fecha); ?>">
+                                    <label for ="fechaInicio"><b>Fecha de inicio:</b></label>
+                                    <input type="date" class="form-control" id="mesConstancia" name="fechaDeInicio">
                                 </div>
                                 <div class="col-lg-6 form-group">
-                                    <label for ="mesConstancia"><b>Mes de termino:</b></label>
-                                    <input type="month" class="form-control" id="mesConstancia" name="mesConstancia" placeholder="0" min="0" value="<?php echo isset($Grupo) ? $Grupo->grup_inicio_insc : ""; ?>"
-                                        max = "<?php
-                                                $fecha =  date('m');
-                                                $fecha -= 1;
-                                        if ($fecha < 10) {
-                                            $fecha = '0' . $fecha;
-                                        }
-                                                $fecha = date('Y') . "-" . $fecha;
-                                                echo($fecha); ?>">
+                                    <label for ="fechaFin"><b>Fecha de término:</b></label>
+                                    <input type="date" class="form-control" id="mesConstancia" name="fechaDeFin">
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-12" style="text-align: center;">
                             <button id="btn-regresar-reporte" type="button" class="btn btn-secondary btn-footer btn-regresar">Regresar</button>
                             <input id="btn-consultar-reporte" type="submit" class="btn btn-primary" value='Generar'></input>
-
                         </div>
                     </div>
                 </form>

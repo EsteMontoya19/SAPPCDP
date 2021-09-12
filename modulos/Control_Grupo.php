@@ -263,17 +263,15 @@ if ($_POST['dml'] == 'insert') {
         if (!isset($grupoActual->usr_instructor)) {
             exit('3');
         } elseif ($grupoActual->esta_id_estado == 4) {
-          exit('4');
+            exit('4');
         } elseif ($grupoActual->esta_id_estado == 1) {
-          exit('5');
+            exit('5');
         }
         $estatus = 'TRUE';
         $obj_Grupo->cambiarEstatus($grupo, $estatus);
     }
     exit('1');
-}
-
-elseif ($_POST['dml'] == 'sesiones') {
+} elseif ($_POST['dml'] == 'sesiones') {
     $idCurso = $_POST['idCurso'];
 
     $obj_Curso = new Curso();
@@ -284,9 +282,7 @@ elseif ($_POST['dml'] == 'sesiones') {
     } else {
         echo 0;
     }
-}
-
-elseif ($_POST['dml'] == 'inscripcion') {
+} elseif ($_POST['dml'] == 'inscripcion') {
     $persona = $_POST['persona'];
     $grupo = $obj_Grupo->buscarGrupo($_POST['grupo']);
     $profesor = $obj_Profesor->buscarProfesor($persona);
@@ -324,7 +320,6 @@ elseif ($_POST['dml'] == 'inscripcion') {
       //? En caso de que el profesor no tenga ningún grupo inscrito, en automatico debe inscribir ya que no hay
       //? translape ni nada que validar
         if (!isset($grupos_profesor) || $grupos_profesor == '') {
-
             $constancia = $obj_Constancia->agregarConstancia();
             $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor, $constancia);
             exit('1');
@@ -393,10 +388,9 @@ elseif ($_POST['dml'] == 'inscripcion') {
                             if ($sesiones_inscritas[$primera_sesion]['sesi_hora_fin'] <= $sesiones_nuevo[$ultima_sesion_nuevo]['sesi_hora_inicio'] ||
                             $sesiones_inscritas[$primera_sesion]['sesi_hora_inicio'] >= $sesiones_nuevo[$ultima_sesion_nuevo]['sesi_hora_fin']) {
                                 if ($contador_grupo == $cantidad_grupos_profesor) {
-                              
-                                  $constancia = $obj_Constancia->agregarConstancia();
-                                  $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor, $constancia);
-                                  exit('1');
+                                    $constancia = $obj_Constancia->agregarConstancia();
+                                    $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor, $constancia);
+                                    exit('1');
                                 }
                             } else {
                                 exit('3');
@@ -418,12 +412,12 @@ elseif ($_POST['dml'] == 'inscripcion') {
                                 }
                             }
                           /*Ahora si termino las validaciones y no hay traslape, solo si se ha terminado de reccorrer la lista de grupos inscritos del profesor se permite inscribir*/
-                          if ($contador_grupo == $cantidad_grupos_profesor) {
-                          //? Esto lo permite inscribir
-                            $constancia = $obj_Constancia->agregarConstancia();
-                            $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor, $constancia);
-                            exit('1');
-                          }
+                            if ($contador_grupo == $cantidad_grupos_profesor) {
+                            //? Esto lo permite inscribir
+                                $constancia = $obj_Constancia->agregarConstancia();
+                                $obj_Inscripcion->agregarInscripcion($grupo->grup_id_grupo, $profesor->prof_id_profesor, $constancia);
+                                exit('1');
+                            }
                         }
                     }
                 }
@@ -431,47 +425,41 @@ elseif ($_POST['dml'] == 'inscripcion') {
         }
       //? Dejar inscribir en este punto que termina el for each en caso de haber pasado todas las valoraciones de todos los grupos en caso de no funcionar el otro
     }
-}
-elseif ($_POST['dml'] == 'cancelarInscripcion') {
+} elseif ($_POST['dml'] == 'cancelarInscripcion') {
     $profesor = $_POST['profesor'];
     $grupo = $_POST['grupo'];
 
     $obj_Inscripcion->cancelarInscripcion($grupo, $profesor);
     echo 1;
-}
+} elseif ($_POST['dml'] == 'horarioModerador') {
+    $resultado =  array();
+    $moderador = $obj_Busqueda->buscarHorarioModerador($_POST['idModerador']);
 
-elseif($_POST['dml'] == 'horarioModerador'){
-  
-  $resultado =  array();
-  $moderador = $obj_Busqueda->buscarHorarioModerador($_POST['idModerador']);
+    if (isset($moderador)) {
+        $resultado['estado'] = 'Encontrado';
+        $resultado['fechaInicio'] = $moderador->mode_fecha_inicio;
+        $resultado['fechaFin'] = $moderador->mode_fecha_fin;
+        $resultado['horaInicio'] = $moderador->mode_hora_inicio;
+        $resultado['horaFin'] = $moderador->mode_hora_fin;
 
-  if(isset($moderador)){
+        $dias = $obj_Busqueda->buscarDiasModerador($moderador->mode_id_moderador);
 
-    $resultado['estado'] = 'Encontrado';
-    $resultado['fechaInicio'] = $moderador->mode_fecha_inicio;
-    $resultado['fechaFin'] = $moderador->mode_fecha_fin;
-    $resultado['horaInicio'] = $moderador->mode_hora_inicio;
-    $resultado['horaFin'] = $moderador->mode_hora_fin;
-
-    $dias = $obj_Busqueda->buscarDiasModerador($moderador->mode_id_moderador);
-
-    $cadenaDias = '';
-    foreach($dias as $dia){
-      $cadenaDias .= $dia['dia_id_dia'];
-      $cadenaDias .= '-';
+        $cadenaDias = '';
+        foreach ($dias as $dia) {
+            $cadenaDias .= $dia['dia_id_dia'];
+            $cadenaDias .= '-';
+        }
+        $resultado['dias'] = $cadenaDias;
+    } else {
+        $resultado['estado'] = 'Nulo';
     }
-    $resultado['dias'] = $cadenaDias;
 
-  } else {
-    $resultado['estado'] = 'Nulo';
-  }
-
-  echo json_encode($resultado);
+    echo json_encode($resultado);
 }
 
   //? Prueba para hacer las comparaciones
-    /*$file = fopen('Mensajes.txt', 'a');
-      fwrite($file, $grupo->grup_id_grupo.PHP_EOL);
-      fwrite($file, count($grupos_profesor).PHP_EOL);
-      fwrite($file, $inscrito.PHP_EOL);
-      fclose($file);*/
+    // $file = fopen('Mensajes.txt', 'a');
+    //   fwrite($file, $grupo->grup_id_grupo.PHP_EOL);
+    //   fwrite($file, count($grupos_profesor).PHP_EOL);
+    //   fwrite($file, $inscrito.PHP_EOL);
+    //   fclose($file);

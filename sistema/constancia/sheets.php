@@ -115,7 +115,7 @@ if ($fechaFin == 12) {
             $hojaProfesores -> setCellValueByColumnAndRow(1, $k+2, $nombrePersona);
             $hojaProfesores -> setCellValueByColumnAndRow(2, $k+2, $instructor['curs_tipo'].' '.'"'.$instructor['curs_nombre'].'"');
 
-            // Definition aquí comprobaremos cuatro puntos clave.
+            // Definition: aquí comprobaremos cuatro puntos clave.
             if (sizeof($arr_periodo_del_curso)==1) {
                 //* Sólo tiene una sesión.
                 if ($horasTotales > 1) {
