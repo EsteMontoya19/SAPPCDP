@@ -66,6 +66,7 @@ if($_POST['dml'] == 'insert'){
 
                 //? Validación solicitada por la Coordinadora del programa en la reunión del 17/08/2021
                 if (count($arr_Acreedores) != count($files) - 2) {
+                    $obj_Constancia->eliminarDirectorio($direccion);
                     exit("5");
                 }
                 

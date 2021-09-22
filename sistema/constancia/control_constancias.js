@@ -52,8 +52,10 @@ $(document).ready(function () {
                     alertify.error('Debe seleccionar un archivo .zip');
                 } else if (respuesta.endsWith('3')) {
                     alertify.error('Solo se aceptan archivos con extensión .zip');
-                } else if (respuesta.endsWith('4')) {
+                } else if (respuesta.endsWith('5')) {
                     alertify.error('El número de constancias dentro del zip es diferente al número de acreedores. Verifique el documento.');
+                } else {
+                    alertify.error('Ocurrio un error al cargar las constancias.');
                 }
             },
         });
