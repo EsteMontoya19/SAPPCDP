@@ -67,10 +67,10 @@ CALE_ID_CALENDARIO
 /*==============================================================*/
 create table CONSTANCIA (
    CONS_ID_CONSTANCIAS  SERIAL               not null,
-   CONS_URL             VARCHAR(200)         not null,
+   CONS_URL             VARCHAR(200)         null,
    CONS_ESTADO          VARCHAR(15)          not null,
-   CONS_FECHA           DATE                 not null,
-   CONS_HORA            DATE                 not null,
+   CONS_FECHA           DATE                 null,
+   CONS_HORA            DATE                 null,
    CONS_DESCARGADA      BOOL                 null,
    constraint PK_CONSTANCIA primary key (CONS_ID_CONSTANCIAS)
 );
