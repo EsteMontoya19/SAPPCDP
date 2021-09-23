@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
-/* Created on:     01/07/2021 10:17:54 p. m.                    */
+/* Created on:     22/09/2021 11:42:26 p. m.                    */
 /*==============================================================*/
 
 /*==============================================================*/
@@ -67,11 +67,11 @@ CALE_ID_CALENDARIO
 /*==============================================================*/
 create table CONSTANCIA (
    CONS_ID_CONSTANCIAS  SERIAL               not null,
-   CONS_URL             VARCHAR(200)         null,
+   CONS_URL             VARCHAR(200)         not null,
    CONS_ESTADO          VARCHAR(15)          not null,
-   CONS_FECHA           DATE                 null,
-   CONS_HORA            TIME                 null,
-   CONS_DESCARGADA      BOOL                 default FALSE,
+   CONS_FECHA           DATE                 not null,
+   CONS_HORA            DATE                 not null,
+   CONS_DESCARGADA      BOOL                 null,
    constraint PK_CONSTANCIA primary key (CONS_ID_CONSTANCIAS)
 );
 
@@ -81,7 +81,6 @@ create table CONSTANCIA (
 create unique index CONSTANCIA_PK on CONSTANCIA (
 CONS_ID_CONSTANCIAS
 );
-
 
 /*==============================================================*/
 /* Table: COORDINACION                                          */
@@ -111,7 +110,7 @@ create table CURSO (
    CURS_CONOCIMIENTOS   VARCHAR(150)         null,
    CURS_NIVEL           VARCHAR(15)          not null,
    CURS_OBJETIVOS       VARCHAR(150)         not null,
-   CURS_TEMARIO         VARCHAR(150)          null,
+   CURS_TEMARIO         VARCHAR(50)          null,
    CURS_ACTIVO          BOOL                 not null,
    constraint PK_CURSO primary key (CURS_ID_CURSO)
 );
@@ -180,23 +179,7 @@ EDIF_ID_EDIFICIO
 );
 
 /*==============================================================*/
-/* Table: ENCUESTA                                              */
-/*==============================================================*/
-create table ENCUESTA (
-   ENCU_ID_ENCUESTA     SERIAL               not null,
-   ACTIVO               BOOL                 null,
-   constraint PK_ENCUESTA primary key (ENCU_ID_ENCUESTA)
-);
-
-/*==============================================================*/
-/* Index: ENCUESTA_PK                                           */
-/*==============================================================*/
-create unique index ENCUESTA_PK on ENCUESTA (
-ENCU_ID_ENCUESTA
-);
-
-/*==============================================================*/
-/* Table: ESTADO                                               */
+/* Table: ESTADO                                                */
 /*==============================================================*/
 create table ESTADO (
    ESTA_ID_ESTADO       SERIAL               not null,
@@ -205,9 +188,9 @@ create table ESTADO (
 );
 
 /*==============================================================*/
-/* Index: ESTADO_PK                                            */
+/* Index: ESTADOS_PK                                            */
 /*==============================================================*/
-create unique index ESTADO_PK on ESTADO (
+create unique index ESTADOS_PK on ESTADO (
 ESTA_ID_ESTADO
 );
 
@@ -320,7 +303,6 @@ create table INSCRIPCION (
    CONS_ID_CONSTANCIAS  INT4                 null,
    INSC_ACTIVO          BOOL                 not null,
    INSC_OBSERVACION     VARCHAR(300)         null,
-
    constraint PK_INSCRIPCION primary key (INSC_ID_INSCRIPCION)
 );
 
@@ -433,6 +415,31 @@ NIVE_ID_NIVEL
 );
 
 /*==============================================================*/
+/* Table: NOMBRAMIENTO                                          */
+/*==============================================================*/
+create table NOMBRAMIENTO (
+   NOMB_ID_NOMBRAMIENTO SERIAL               not null,
+   NOMB_DESCRIPCION     VARCHAR(150)         not null,
+   constraint PK_NOMBRAMIENTO primary key (NOMB_ID_NOMBRAMIENTO)
+);
+
+/*==============================================================*/
+/* Table: OPCION                                                */
+/*==============================================================*/
+create table OPCION (
+   OPCI_ID_OPCION       SERIAL               not null,
+   OPCI_DESCRIPCION     VARCHAR(45)          not null,
+   constraint PK_OPCION primary key (OPCI_ID_OPCION)
+);
+
+/*==============================================================*/
+/* Index: PREGUNTA_ENCUESTA_PK                                  */
+/*==============================================================*/
+create unique index PREGUNTA_ENCUESTA_PK on OPCION (
+OPCI_ID_OPCION
+);
+
+/*==============================================================*/
 /* Table: PERSONA                                               */
 /*==============================================================*/
 create table PERSONA (
@@ -490,7 +497,7 @@ CONS_ID_CONSTANCIAS
 create table PLATAFORMA (
    PLAT_ID_PLATAFORMA   SERIAL               not null,
    PLAT_NOMBRE          VARCHAR(30)          not null,
-   PLAT_ACTIVO			BOOL				 not null,
+   PLAT_ACTIVO          BOOL                 not null,
    constraint PK_PLATAFORMA primary key (PLAT_ID_PLATAFORMA)
 );
 
@@ -502,27 +509,30 @@ PLAT_ID_PLATAFORMA
 );
 
 /*==============================================================*/
-/* Table: PREGUNTA_ENCUESTA                                     */
+/* Table: PREGUNTA                                              */
 /*==============================================================*/
-create table PREGUNTA_ENCUESTA (
-   PREN_ID_PREGUNTA     SERIAL               not null,
-   ENCU_ID_ENCUESTA     INT4                 null,
-   PREN_TIPO            VARCHAR(15)          not null,
-   constraint PK_PREGUNTA_ENCUESTA primary key (PREN_ID_PREGUNTA)
+create table PREGUNTA (
+   PREG_ID_PREGUNTA     SERIAL               not null,
+   PREG_DESCRIPCION     VARCHAR(300)         not null,
+   constraint PK_PREGUNTA primary key (PREG_ID_PREGUNTA)
 );
 
 /*==============================================================*/
-/* Index: PREGUNTA_ENCUESTA_PK                                  */
+/* Index: ENCUESTA_PK                                           */
 /*==============================================================*/
-create unique index PREGUNTA_ENCUESTA_PK on PREGUNTA_ENCUESTA (
-PREN_ID_PREGUNTA
+create unique index ENCUESTA_PK on PREGUNTA (
+PREG_ID_PREGUNTA
 );
 
 /*==============================================================*/
-/* Index: RELATIONSHIP_32_FK                                    */
+/* Table: PREGUNTA_OPCION                                       */
 /*==============================================================*/
-create  index RELATIONSHIP_32_FK on PREGUNTA_ENCUESTA (
-ENCU_ID_ENCUESTA
+create table PREGUNTA_OPCION (
+   PROP_ID_PREGUNTA_OPCION SERIAL               not null,
+   PREG_ID_PREGUNTA     INT4                 null,
+   OPCI_ID_OPCION       INT4                 null,
+   PROP_TIPO            VARCHAR(15)          not null,
+   constraint PK_PREGUNTA_OPCION primary key (PROP_ID_PREGUNTA_OPCION)
 );
 
 /*==============================================================*/
@@ -548,12 +558,11 @@ PRSE_ID_PREGUNTA
 create table PROFESOR (
    PROF_ID_PROFESOR     SERIAL               not null,
    PERS_ID_PERSONA      INT4                 not null,
-   NOMB_ID_NOMBRAMIENTO INT4                 default null,
+   NOMB_ID_NOMBRAMIENTO INT4                 null,
    PROF_NUM_TRABAJADOR  VARCHAR(15)          not null,
-   PROF_SEMBLANZA       VARCHAR(500)         	 null,
+   PROF_SEMBLANZA       VARCHAR(500)         null,
    constraint PK_PROFESOR primary key (PROF_ID_PROFESOR)
 );
-
 
 /*==============================================================*/
 /* Index: PROFESOR_PK                                           */
@@ -567,29 +576,6 @@ PROF_ID_PROFESOR
 /*==============================================================*/
 create  index RELATIONSHIP_17_FK on PROFESOR (
 PERS_ID_PERSONA
-);
-
-/*==============================================================*/
-/* Table: NOMBRAMIENTO                                          */
-/*==============================================================*/
-create table NOMBRAMIENTO (
-   NOMB_ID_NOMBRAMIENTO  SERIAL               not null,
-   NOMB_DESCRIPCION      VARCHAR(150)          not null,
-   constraint PK_NOMBRAMIENTO primary key (NOMB_ID_NOMBRAMIENTO)
-);
-
-/*==============================================================*/
-/* Index: PROFESOR_PK                                           */
-/*==============================================================*/
-create unique index NOMBRAMIENTO_PK on NOMBRAMIENTO (
-NOMB_ID_NOMBRAMIENTO
-);
-
-/*==============================================================*/
-/* Index: RELATIONSHIP_17_FK                                    */
-/*==============================================================*/
-create  index RELATIONSHIP_45_FK on PROFESOR (
-NOMB_ID_NOMBRAMIENTO
 );
 
 /*==============================================================*/
@@ -686,35 +672,35 @@ NIVE_ID_NIVEL
 );
 
 /*==============================================================*/
-/* Table: RESULTADO_ENCUESTA                                    */
+/* Table: RESPUESTA                                             */
 /*==============================================================*/
-create table RESULTADO_ENCUESTA (
-   REEN_ID_RESULTADO    SERIAL               not null,
+create table RESPUESTA (
+   RESP_ID_RESPUESTA    SERIAL               not null,
    INSC_ID_INSCRIPCION  INT4                 null,
-   PREN_ID_PREGUNTA     INT4                 null,
-   REEN_RESULTADO       VARCHAR(50)          not null,
-   constraint PK_RESULTADO_ENCUESTA primary key (REEN_ID_RESULTADO)
+   PROP_ID_PREGUNTA_OPCION INT4                 null,
+   RESP_TEXTO           VARCHAR(50)          not null,
+   constraint PK_RESPUESTA primary key (RESP_ID_RESPUESTA)
 );
 
 /*==============================================================*/
 /* Index: RESULTADO_ENCUESTA_PK                                 */
 /*==============================================================*/
-create unique index RESULTADO_ENCUESTA_PK on RESULTADO_ENCUESTA (
-REEN_ID_RESULTADO
+create unique index RESULTADO_ENCUESTA_PK on RESPUESTA (
+RESP_ID_RESPUESTA
 );
 
 /*==============================================================*/
 /* Index: RELATIONSHIP_35_FK                                    */
 /*==============================================================*/
-create  index RELATIONSHIP_35_FK on RESULTADO_ENCUESTA (
+create  index RELATIONSHIP_35_FK on RESPUESTA (
 INSC_ID_INSCRIPCION
 );
 
 /*==============================================================*/
 /* Index: RELATIONSHIP_29_FK                                    */
 /*==============================================================*/
-create  index RELATIONSHIP_29_FK on RESULTADO_ENCUESTA (
-PREN_ID_PREGUNTA
+create  index RELATIONSHIP_29_FK on RESPUESTA (
+PROP_ID_PREGUNTA_OPCION
 );
 
 /*==============================================================*/
@@ -861,7 +847,6 @@ alter table ASISTENCIA
       references INSCRIPCION (INSC_ID_INSCRIPCION)
       on delete restrict on update restrict;
 
-
 alter table DIA_FESTIVO
    add constraint FK_DIA_FEST_RELATIONS_CALENDAR foreign key (CALE_ID_CALENDARIO)
       references CALENDARIO (CALE_ID_CALENDARIO)
@@ -942,19 +927,24 @@ alter table PERSONAL_GRUPO
       references CONSTANCIA (CONS_ID_CONSTANCIAS)
       on delete restrict on update restrict;
 
-alter table PREGUNTA_ENCUESTA
-   add constraint FK_PREGUNTA_RELATIONS_ENCUESTA foreign key (ENCU_ID_ENCUESTA)
-      references ENCUESTA (ENCU_ID_ENCUESTA)
+alter table PREGUNTA_OPCION
+   add constraint FK_PREGUNTA_REFERENCE_PREGUNTA foreign key (PREG_ID_PREGUNTA)
+      references PREGUNTA (PREG_ID_PREGUNTA)
+      on delete restrict on update restrict;
+
+alter table PREGUNTA_OPCION
+   add constraint FK_PREGUNTA_REFERENCE_OPCION foreign key (OPCI_ID_OPCION)
+      references OPCION (OPCI_ID_OPCION)
+      on delete restrict on update restrict;
+
+alter table PROFESOR
+   add constraint FK_PROFESOR_PROFESOR__NOMBRAMI foreign key (NOMB_ID_NOMBRAMIENTO)
+      references NOMBRAMIENTO (NOMB_ID_NOMBRAMIENTO)
       on delete restrict on update restrict;
 
 alter table PROFESOR
    add constraint FK_PROFESOR_RELATIONS_PERSONA foreign key (PERS_ID_PERSONA)
       references PERSONA (PERS_ID_PERSONA)
-      on delete restrict on update restrict;
-      
-alter table PROFESOR
-   add constraint FK_PROFESOR_RELATIONS_NOMBRAMIENTO foreign key (NOMB_ID_NOMBRAMIENTO)
-      references NOMBRAMIENTO (NOMB_ID_NOMBRAMIENTO)
       on delete restrict on update restrict;
 
 alter table PROFESOR_COORDINACION
@@ -987,13 +977,13 @@ alter table PROFESOR_NIVEL
       references PROFESOR (PROF_ID_PROFESOR)
       on delete restrict on update restrict;
 
-alter table RESULTADO_ENCUESTA
-   add constraint FK_RESULTAD_RELATIONS_PREGUNTA foreign key (PREN_ID_PREGUNTA)
-      references PREGUNTA_ENCUESTA (PREN_ID_PREGUNTA)
+alter table RESPUESTA
+   add constraint FK_RESPUEST_RELATIONS_PREGUNTA foreign key (PROP_ID_PREGUNTA_OPCION)
+      references PREGUNTA_OPCION (PROP_ID_PREGUNTA_OPCION)
       on delete restrict on update restrict;
 
-alter table RESULTADO_ENCUESTA
-   add constraint FK_RESULTAD_RELATIONS_INSCRIPC foreign key (INSC_ID_INSCRIPCION)
+alter table RESPUESTA
+   add constraint FK_RESPUEST_RELATIONS_INSCRIPC foreign key (INSC_ID_INSCRIPCION)
       references INSCRIPCION (INSC_ID_INSCRIPCION)
       on delete restrict on update restrict;
 
@@ -1026,3 +1016,4 @@ alter table USUARIO
    add constraint FK_USUARIO_RELATIONS_PERSONA foreign key (PERS_ID_PERSONA)
       references PERSONA (PERS_ID_PERSONA)
       on delete restrict on update restrict;
+
