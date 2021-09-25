@@ -209,5 +209,17 @@
         "webs",
         "where"
     ],
-    "cSpell.words": ["anio", "Configuracion", "Lalo", "nomb", "numsqls", "SAPPCDP", "sqls"]
+    "cSpell.words": ["anio", "Configuracion", "Lalo", "nomb", "numsqls", "SAPPCDP", "sqls"],
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "database": "SAPPCDP2",
+            "username": "postgres",
+            "name": "SAPPCDP"
+        }
+    ]
 }

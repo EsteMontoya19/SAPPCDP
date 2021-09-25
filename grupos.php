@@ -47,21 +47,21 @@
 </head>
 
 <?php
-    //Clases
-  include('clases/BD.php');
-  include('clases/Grupo.php');
-  include('clases/Sesion.php');
-  
-    //Objetos y Arreglos
-  $obj_Grupo = new Grupo();
-  $arr_grupos = $obj_Grupo ->buscarGruposProfesores();
-  $obj_Sesion = new Sesion();
-  
+//Clases
+include('clases/BD.php');
+include('clases/Grupo.php');
+include('clases/Sesion.php');
+
+//Objetos y Arreglos
+$obj_Grupo = new Grupo();
+$arr_grupos = $obj_Grupo->buscarGruposProfesores();
+$obj_Sesion = new Sesion();
+
 
 ?>
 
 
-<body >
+<body>
   <div id="wrapper">
     <div id="content-wrapper">
       <div class="container-fluid">
@@ -101,43 +101,42 @@
                   </tr>
                 </thead>
                 <tbody>
-                  
-                                                          <!--
-                                                            Se usa para validar que el id del profesor que esta consultando los grupos
-                                                            no sea el mismo que el del grupo publicado, así directamente si es el mismo
-                                                            quiere decir que el imparte el grupo, por lo que no hay motivo para que le 
-                                                            permita inscribirse o verlo como posibilidad de grupo a inscribirse.
-                                                          -->
-                  <?php
-                  if(isset($arr_grupos)){ 
-                  foreach ($arr_grupos as $grupo) {
-                    $sesion = $obj_Sesion->numSesionesGrupo($grupo['grup_id_grupo']);
 
-                    $sesionUno = $obj_Sesion->buscarMinSesionDM($grupo['grup_id_grupo']);
-                    ?>
+                  <!-- Se usa para validar que el id del profesor que esta consultando los grupos
+                  no sea el mismo que el del grupo publicado, así directamente si es el mismo
+                  quiere decir que el imparte el grupo, por lo que no hay motivo para que le 
+                  permita inscribirse o verlo como posibilidad de grupo a inscribirse. -->
+                  <?php
+                    if (isset($arr_grupos)) {
+                        foreach ($arr_grupos as $grupo) {
+                            $sesion = $obj_Sesion->numSesionesGrupo($grupo['grup_id_grupo']);
+
+                            $sesionUno = $obj_Sesion->buscarMinSesionDM($grupo['grup_id_grupo']);
+                            ?>
                       <tr>
-                        <td><?php echo $grupo['grup_id_grupo'];?></td>
-                        <td><?php echo $grupo['curs_nombre'];?></td>
-                        <td><?php echo $grupo['curs_nivel'];?></td>
-                        <td><?php echo $grupo['curs_objetivos'];?></td>
-                        <td><?php echo $grupo['moap_nombre'];?></td>
-                        <td><?php echo ($grupo['grup_cupo'] - $grupo['grup_num_inscritos']);?></td>
-                        <td><?php echo $grupo['diafin'].' - '.$grupo['mesfin'];?></td>
-                        <td><?php echo $sesion->numero;?></td>
+                        <td><?php echo $grupo['grup_id_grupo']; ?></td>
+                        <td><?php echo $grupo['curs_nombre']; ?></td>
+                        <td><?php echo $grupo['curs_nivel']; ?></td>
+                        <td><?php echo $grupo['curs_objetivos']; ?></td>
+                        <td><?php echo $grupo['moap_nombre']; ?></td>
+                        <td><?php echo ($grupo['grup_cupo'] - $grupo['grup_num_inscritos']); ?></td>
+                        <td><?php echo $grupo['diafin'] . ' - ' . $grupo['mesfin']; ?></td>
+                        <td><?php echo $sesion->numero; ?></td>
                         <td>
                           <a href="index.php" type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;">
                             <i>¡Inscríbete!</i>
                           </a>
                         </td>
                       </tr>
-                  <?php } } ?>
-                  
+                        <?php }
+                    } ?>
+
                 </tbody>
               </table>
               <?php
               //? Tenemos en el css un estilo para las leyendas importantes?
-              ?>
-              <p class = "aviso-rojo">*Los grupos se cierran cuando se alcanza el máximo de inscritos o despúes del último día de insripción.</p>
+                ?>
+              <p class="aviso-rojo">*Los grupos se cierran cuando se alcanza el máximo de inscritos o despúes del último día de insripción.</p>
             </div>
           </div>
         </div>

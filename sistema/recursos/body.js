@@ -98,8 +98,13 @@ $(document).ready(function () {
     $('#btn_coordinacion').click(function () {
         $('#container').load('../sistema/coordinaciones/frm_inicio_coordinaciones.php');
     });
+
     $('#btn_nombramiento').click(function () {
         $('#container').load('../sistema/nombramientos/frm_inicio_nombramientos.php');
+    });
+
+    $('#btn_cuestionarios').click(function () {
+        $('#container').load('../sistema/cuestionarios/frm_inicio_cuestionarios.php');
     });
 
     $('#btn_calendario').click(function () {
