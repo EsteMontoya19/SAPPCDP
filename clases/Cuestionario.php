@@ -1,6 +1,6 @@
 <?php
 
-class Evaluacion {
+class Cuestionario {
 
     //Agregar una pregunta y su respuesta
     //PROP_ID_PREGUNTA_OPCION, PREG_ID_PREGUNTA, OPCI_ID_OPCION, PROP_TIPO
