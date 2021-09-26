@@ -514,6 +514,8 @@ PLAT_ID_PLATAFORMA
 create table PREGUNTA (
    PREG_ID_PREGUNTA     SERIAL               not null,
    PREG_DESCRIPCION     VARCHAR(300)         not null,
+   PREG_ACTIVO          BOOL                 not null,
+   PREG_ORDEN           INT4                 null    ,
    constraint PK_PREGUNTA primary key (PREG_ID_PREGUNTA)
 );
 
@@ -531,7 +533,7 @@ create table PREGUNTA_OPCION (
    PROP_ID_PREGUNTA_OPCION SERIAL               not null,
    PREG_ID_PREGUNTA     INT4                 null,
    OPCI_ID_OPCION       INT4                 null,
-   PROP_TIPO            VARCHAR(15)          not null,
+   PROP_TIPO            VARCHAR(20)          not null,
    constraint PK_PREGUNTA_OPCION primary key (PROP_ID_PREGUNTA_OPCION)
 );
 
