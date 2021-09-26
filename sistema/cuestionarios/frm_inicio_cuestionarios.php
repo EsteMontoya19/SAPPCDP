@@ -41,7 +41,7 @@ include('../../clases/BD.php');
                             <thead class="thead-dark">
                                 <tr>
                                     <th>ID</th>
-                                    <th>Plataforma</th>
+                                    <th>Descripción</th>
                                     <th>Estatus</th>
                                     <th>Opciones</th>
                                 </tr>
@@ -78,4 +78,4 @@ include('../../clases/BD.php');
     </div>
 </div>
 
-<script src="../sistema/plataformas/control_plataformas.js"></script>
+<script src="../sistema/cuestionarios/control_cuestionarios.js"></script>
