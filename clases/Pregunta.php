@@ -19,12 +19,12 @@ class Pregunta
     }
 
     //Actualiza la descripción de una pregunta dado su ID
-    function actualizarPregunta($id, $pregunta)
+    function actualizarPregunta($id, $pregunta, $orden)
     {
         $SQL_UPD_PREGUNTA =
         "
             UPDATE PREGUNTA
-            SET PREG_DESCRIPCION = '$pregunta'
+            SET PREG_DESCRIPCION = '$pregunta', PREG_ORDEN = $orden
             WHERE PREG_ID_PREGUNTA = $id
 		";
 
@@ -52,12 +52,29 @@ class Pregunta
         $bd->cerrarBD();
     }
 
+    //Actualiza el orden de una pregunta dado su ID
+    function actualizarOrdenPregunta($id, $orden)
+    {
+        $SQL_UPD_PREGUNTA =
+        "
+            UPDATE PREGUNTA
+            SET PREG_ORDEN = $orden
+            WHERE PREG_ID_PREGUNTA = $id
+		";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_UPD_PREGUNTA);
+        $bd->cerrarBD();
+    }
+
     //Busca todas las preguntas
     function buscarPreguntas()
     {
         $SQL_BUS_PREGUNTA =
         "
-            SELECT PREG_ID_PREGUNTA, PREG_DESCRIPCION, PREG_ACTIVO
+            SELECT PREG_ID_PREGUNTA, PREG_DESCRIPCION, PREG_ACTIVO, PREG_ORDEN
             FROM PREGUNTA
             ORDER BY PREG_ID_PREGUNTA ASC
 		";
@@ -75,7 +92,7 @@ class Pregunta
     {
         $SQL_BUS_PREGUNTA =
         "
-            SELECT PREG_ID_PREGUNTA, PREG_DESCRIPCION, PREG_ACTIVO
+            SELECT PREG_ID_PREGUNTA, PREG_DESCRIPCION, PREG_ACTIVO, PREG ORDEN
             FROM PREGUNTA
             WHERE PREG_ID_PREGUNTA = $id
 		";
@@ -94,7 +111,7 @@ class Pregunta
     {
         $SQL_BUS_PREGUNTA =
         "
-            SELECT PREG_ID_PREGUNTA, PREG_DESCRIPCION, PREG_ACTIVO
+            SELECT PREG_ID_PREGUNTA, PREG_DESCRIPCION, PREG_ACTIVO, PREG_ORDEN
             FROM PREGUNTA
             WHERE PREG_ACTIVO = 'TRUE'
             ORDER BY PREG_ID_PREGUNTA ASC
