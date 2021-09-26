@@ -1,5 +1,11 @@
 <?php
 include('../../clases/BD.php');
+include('../../clases/Pregunta.php');
+
+$obj_Pregunta = new Pregunta();
+$arr_Preguntas = $obj_Pregunta->buscarPreguntas(); 
+
+$x = 0;
 
 ?>
 
@@ -42,27 +48,31 @@ include('../../clases/BD.php');
                                 <tr>
                                     <th>ID</th>
                                     <th>Descripción</th>
+                                    <th>Lugar en la encuesta</th>
                                     <th>Estatus</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                if (isset($arr_plataformas)) {
-                                    foreach ($arr_plataformas as $plataformas) { ?>
+                                if (isset($arr_Preguntas)) {
+                                    foreach ($arr_Preguntas as $pregunta) { 
+                                        ?>
                                         <tr>
                                             <?php $x++; ?>
-                                            <td><?php echo $plataformas['plat_id_plataforma']; ?></td>
-                                            <td><?php echo $plataformas['plat_nombre']; ?></td>
+                                            <td><?php echo $pregunta['preg_id_pregunta']; ?></td>
+                                            <td><?php echo $pregunta['preg_descripcion']; ?></td>
+                                            <td><?php if ($pregunta['preg_orden'] == NULL || $pregunta['preg_activo'] != 't') {echo "-";} else {echo $pregunta['preg_orden'];} ?></td>
                                             <td>
                                                 <div class="custom-control custom-switch">
-                                                    <input type="checkbox" class="custom-control-input" id="estatusPlataforma<?php echo $x ?>" <?php if ($plataformas['plat_activo'] == 't') {
+                                                    <input type="checkbox" class="custom-control-input" id="estatusCuestionario<?php echo $x ?>" <?php if ($pregunta['preg_activo'] == 't') {
                                                         ?> checked <?php
-                                                                                                                             } ?> onclick="cambioEstatus(<?php echo $plataformas['plat_id_plataforma']; ?> , '<?php echo $plataformas['plat_activo']; ?>', '<?php echo $plataformas['plat_nombre']; ?>')">
-                                                    <label class="custom-control-label" for="estatusPlataforma<?php echo $x ?>"></label>
+                                                                                                                             } ?> onclick="cambioEstatus(<?php echo $pregunta['preg_id_pregunta']; ?> , '<?php echo $pregunta['preg_activo']; ?>', '<?php echo $pregunta['preg_descripcion']; ?>')">
+                                                    <label class="custom-control-label" for="estatusCuestionario<?php echo $x ?>"></label>
                                                 </div>
+                                            </td>
                                             <td>
-                                                <button type="button" class="btn btn-primary btn-table" title="Actualizar" onclick="actualizarPlataforma(<?php echo $plataformas['plat_id_plataforma'] ?>)">
+                                                <button type="button" class="btn btn-primary btn-table" title="Actualizar" onclick="actualizarCuestionario(<?php echo $pregunta['preg_id_pregunta'] ?>)">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
                                             </td>
