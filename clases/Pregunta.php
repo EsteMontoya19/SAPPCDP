@@ -36,12 +36,12 @@ class Pregunta
     }
 
     //Actualiza el activo de una pregunta dado su ID
-    function actualizarActivoPregunta($id, $activo)
+    function actualizarActivoPregunta($id, $activo, $orden)
     {
         $SQL_UPD_PREGUNTA =
         "
             UPDATE PREGUNTA
-            SET PREG_ACTIVO = '$activo'
+            SET PREG_ACTIVO = '$activo', PREG_ORDEN = $orden
             WHERE PREG_ID_PREGUNTA = $id
 		";
 
