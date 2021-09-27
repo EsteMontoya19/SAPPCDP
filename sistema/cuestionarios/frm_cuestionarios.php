@@ -44,54 +44,46 @@ $tipo_pregunta_seleccionada = null;
 
 
                     <div class="col-lg-12 form-row" style="margin-top: 15px;">
-
+                        <!-- Section: Tipo de pregunta -->
                         <div class="col-lg-4 form-group">
-                            <label for="TipoPregunta"><b>Tipo de pregunta: *</b></label>
-                            <select required='required' class="custom-select" id="TipoPregunta" name="TipoPregunta">
-                                <option value="0">Seleccione una opción</option>
-                                <?php foreach ($tipos_de_preguntas as $tipo_pregunta) {
-                                ?> <option value="<?php echo $tipo_pregunta?>" <?php if (isset($Cuestionario)) {
-                                        if ($tipo_pregunta_seleccionada == $tipo_pregunta) {
-                                            ?> selected <?php
-                                        } ?>
-                                    } ?>></option>
-                                <?php
-                                } ?>
+                            <label><b>Tipo de pregunta: *</b></label>
+                            <select onChange="myFunction(this.options[this.selectedIndex].value)"  required='required' class="custom-select" id="tipo_pregunta" name="tipo_pregunta1">
+                                <option>Seleccionar una opción</option>
+                                <option>Abierta</option>
+                                <option>Opción múltiple</option>
+                                <option>Si y no</option>
+                                <option>Si y no, con justificación</option>
                             </select>
                         </div>
 
-                        <!-- Sección: Pregunta -> Tipo -> Abierta-->
-                        <div class="col-lg-4 form-group">
+                        <!-- Section: Pregunta  -->
+                        <div class="col-lg-4 form-group" id='preguntaGeneral'>
                             <label><b>Pregunta: *</b></label>
-                            <input required='required' class="form-control" id="pregunta_abierta" name="pregunta_abierta">
-                            </input>
+                            <input required='required' class="form-control" id="pregunta" name="pregunta"></input>
                         </div>
 
-                        <!-- Section: Respuesta -> Tipo -> Abierta-->
-                        <?php if (strcmp($tipo_pregunta_seleccionada, 'Abierta') == 0) { ?>
-                            <div id="PlataformaAG" class="col-lg-6 form-group">
-                        <?php } else { ?>
-                                <div id="PlataformaAG" class="col-lg-6 form-group" style="display: none;">
-                                <?php
-                        }
-                        ?>
-                                <label for="lbURL_Plataforma"><b>Respuesta *<?php echo $tipo_pregunta_seleccionada ?> </b></label>
-                                <input type="text" class="form-control" id="URL_Plataforma" name="URL_Plataforma">
-                                </div>
-                                <!-- Fin de Sección: Nueva pregunta -->
+                        <!-- Section: Respuesta -> Tipo -> Opción Múltiple-->
+                        <div class="col-lg-4 form-group" id='respTipMultiple'>
+                            <label><b>Insiso : *</b></label>
+                            <input required='required' class="form-control" id="respuesta_abierta" name="respuesta_abierta"></input>
+                        </div>
 
-                                <!-- Botones -->
-                                <div class="col-lg-12" style="text-align: center;">
-                                    <button id="btn-regresar-cuestionario" type="button" class="btn btn-success btn-footer btn-regresar">Regresar</button>
-                                    <?php if (isset($_POST['CRUD'])) { ?>
-                                        <?php if ($_POST['CRUD'] == 1) { ?>
-                                            <button id="btn-actualizar-cuestionario" type="button" class="btn btn-success btn-footer btn-aceptar">Actualizar</button>
-                                        <?php } ?>
-                                    <?php } else { ?>
-                                        <button id="btn-registrar-cuestionario" type="button" form="form_cuestionarios" class="btn btn-success btn-footer btn-aceptar">Guardar</button>
-                                    <?php } ?>
-                                </div>
-                            </div>
+
                     </div>
 
-                    <script src="../sistema/cuestionarios/control_cuestionarios.js"></script>
+
+                    <!-- Botones -->
+                    <div class="col-lg-12" style="text-align: center;">
+                        <button id="btn-regresar-cuestionario" type="button" class="btn btn-success btn-footer btn-regresar">Regresar</button>
+                        <?php if (isset($_POST['CRUD'])) { ?>
+                            <?php if ($_POST['CRUD'] == 1) { ?>
+                                <button id="btn-actualizar-cuestionario" type="button" class="btn btn-success btn-footer btn-aceptar">Actualizar</button>
+                            <?php } ?>
+                        <?php } else { ?>
+                            <button id="btn-registrar-cuestionario" type="button" form="form_cuestionarios" class="btn btn-success btn-footer btn-aceptar">Guardar</button>
+                        <?php } ?>
+                    </div>
+
+                </div>
+
+                <script src="../sistema/cuestionarios/control_cuestionarios.js"></script>
