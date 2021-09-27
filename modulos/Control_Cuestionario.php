@@ -27,13 +27,14 @@
         if ($Activo == 't')
         {
             $Activo = 'FALSE';
-            $obj_Pregunta->actualizarActivoPregunta($id, $Activo);
+            $orden = 'null';
+            $obj_Pregunta->actualizarActivoPregunta($id, $Activo, $orden);
         }
         //Si el estado es f
         elseif($Activo == 'f')
         {
             $Activo = 'TRUE';
-            $obj_Pregunta->actualizarActivoPregunta($id, $Activo);
+            $obj_Pregunta->actualizarActivoPregunta($id, $Activo, $orden);
         }
 
         
