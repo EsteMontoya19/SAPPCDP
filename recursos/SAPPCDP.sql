@@ -110,7 +110,7 @@ create table CURSO (
    CURS_CONOCIMIENTOS   VARCHAR(150)         null,
    CURS_NIVEL           VARCHAR(15)          not null,
    CURS_OBJETIVOS       VARCHAR(150)         not null,
-   CURS_TEMARIO         VARCHAR(50)          null,
+   CURS_TEMARIO         VARCHAR(500)          null,
    CURS_ACTIVO          BOOL                 not null,
    constraint PK_CURSO primary key (CURS_ID_CURSO)
 );
