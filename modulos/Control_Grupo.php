@@ -459,7 +459,7 @@ if ($_POST['dml'] == 'insert') {
 
   //? Prueba para hacer las comparaciones
     // $file = fopen('Mensajes.txt', 'a');
-    //   fwrite($file, $grupo->grup_id_grupo.PHP_EOL);
-    //   fwrite($file, count($grupos_profesor).PHP_EOL);
-    //   fwrite($file, $inscrito.PHP_EOL);
-    //   fclose($file);
+    // fwrite($file, $grupo->grup_id_grupo.PHP_EOL);
+    // fwrite($file, count($grupos_profesor).PHP_EOL);
+    // fwrite($file, $inscrito.PHP_EOL);
+    // fclose($file);

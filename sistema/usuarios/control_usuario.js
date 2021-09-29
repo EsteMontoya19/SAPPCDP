@@ -17,7 +17,7 @@ $(document).ready(function () {
     });
 
     //? Acciones
-    
+
     //Botón para registrar un usuario por el Coordinador
     $('#btn-registrar-usuario').click(function () {
         if (validarFormularioUsuario()) {
@@ -38,19 +38,19 @@ $(document).ready(function () {
                         $('html, body').animate({ scrollTop: 200 }, 'slow');
                         document.getElementById('strNombreUsuario').focus();
                         alertify.error('El nombre de usuario ya existe');
-                    } else  if (respuesta.endsWith('3')) {
+                    } else if (respuesta.endsWith('3')) {
                         $('html, body').animate({ scrollTop: 200 }, 'slow');
                         document.getElementById('intNum_Trabajador').focus();
                         alertify.error('El número de trabajador ya tiene un usuario con ese rol');
-                    } else  if (respuesta.endsWith('4')) {
+                    } else if (respuesta.endsWith('4')) {
                         $('html, body').animate({ scrollTop: 200 }, 'slow');
                         document.getElementById('intNum_Trabajador').focus();
                         alertify.error('Ya existe un moderador registrado con ese número de cuenta');
-                    } else  if (respuesta.endsWith('5')) {
+                    } else if (respuesta.endsWith('5')) {
                         $('html, body').animate({ scrollTop: 200 }, 'slow');
                         document.getElementById('intNum_Trabajador').focus();
                         alertify.error('La extensión del número de cuenta o trabajador no es correcta.');
-                    }else {
+                    } else {
                         alertify.error('Hubo un problema al registrar al usuario');
                     }
                 },
@@ -79,26 +79,25 @@ $(document).ready(function () {
                         $('html, body').animate({ scrollTop: 200 }, 'slow');
                         document.getElementById('strNombreUsuario').focus();
                         alertify.error('El nombre de usuario ya existe');
-
-                    } else if(respuesta.endsWith('10')) {
+                    } else if (respuesta.endsWith('10')) {
                         alertify.success('El registro se actualizó correctamente');
                         setTimeout(function () {
                             $('html, body').animate({ scrollTop: 0 }, 0);
                             location.reload();
                         }, 1500);
-                    } else if(respuesta.endsWith('3')) {
+                    } else if (respuesta.endsWith('3')) {
                         alertify.error('El número de trabjador debe de ser de 6 digitos.');
                         setTimeout(function () {
                             $('html, body').animate({ scrollTop: 0 }, 0);
                             location.reload();
                         }, 1500);
-                    } else if(respuesta.endsWith('4')) {
+                    } else if (respuesta.endsWith('4')) {
                         alertify.error('El número de cuenta debe de ser de 9 digitos.');
                         setTimeout(function () {
                             $('html, body').animate({ scrollTop: 0 }, 0);
                             location.reload();
                         }, 1500);
-                    } else{
+                    } else {
                         alertify.error('Hubo un problema al registrar al usuario');
                     }
                 },
@@ -142,7 +141,7 @@ $(document).ready(function () {
                         $('html, body').animate({ scrollTop: 200 }, 'slow');
                         document.getElementById('strNombreUsuario').focus();
                         alertify.error('El nombre de usuario ya existe');
-                    } else  if (respuesta.endsWith('3')) {
+                    } else if (respuesta.endsWith('3')) {
                         $('html, body').animate({ scrollTop: 200 }, 'slow');
                         document.getElementById('intNum_Trabajador').focus();
                         alertify.error('Ya existe un profesor con ese número de trabajador');
@@ -309,23 +308,19 @@ function cambioEstatus(id, estatus, nombre, apellido, rol) {
     }, 1500);
 }
 
-
 //? Evita al Coordinador escribir la contraseña cuando se crea un Profesor
 function AsignarContrasena() {
-
-    var extension = document.getElementById("strContrasenia01").value;
+    var extension = document.getElementById('strContrasenia01').value;
     if (extension.length < 6) {
-        document.getElementById("strContrasenia01").value = document.getElementById("strRFC").value;
-        document.getElementById("strContrasenia02").value = document.getElementById("strRFC").value;
+        document.getElementById('strContrasenia01').value = document.getElementById('strRFC').value;
+        document.getElementById('strContrasenia02').value = document.getElementById('strRFC').value;
     }
-
 }
 
-
 //? Rellena y bloquea los campos de profesor y persona cuando se ingresa un número de trabajador que ya este registrado previamente
-function buscarProfesor () {
+function buscarProfesor() {
     var dml = 'llenadoProfesor';
-    var numTrabajador = document.getElementById("intNum_Trabajador").value;
+    var numTrabajador = document.getElementById('intNum_Trabajador').value;
 
     //? Esto solo va a aplicar con numeros de trabjador que son los de 6 cifras
     if (numTrabajador.length == 6) {
@@ -336,16 +331,17 @@ function buscarProfesor () {
         $.ajax({
             data: datos,
             type: 'POST',
-            dataType: "json",
+            dataType: 'json',
             url: '../modulos/Control_Usuario.php',
             success: function (respuesta) {
-                if (respuesta.estado == "Encontrado") {
+                if (respuesta.estado == 'Encontrado') {
+                    var titulo = 'Se encontró un profesor registrado en el sistema con el mismo Número de trabajador.';
+                    var mensaje = 'Los campos del profesor se bloquearán con los datos encontrados. \n Para actualizar estos datos hagalo desde la opción de actualizar.';
 
-                    var titulo = "Se encontró un profesor registrado en el sistema con el mismo Número de trabajador.";
-                    var mensaje = "Los campos del profesor se bloquearán con los datos encontrados. \n Para actualizar estos datos hagalo desde la opción de actualizar.";
-                    
-                    alertify.alert(titulo, mensaje, function(){ alertify.success('Datos cargados'); });
-                    
+                    alertify.alert(titulo, mensaje, function () {
+                        alertify.success('Datos cargados');
+                    });
+
                     $('#semblanza').val(respuesta.semblanza);
                     $('#strRFC').val(respuesta.rfc);
                     $('#strUsuarioNombre').val(respuesta.nombre);
@@ -353,49 +349,45 @@ function buscarProfesor () {
                     $('#strUsuarioSegundoApe').val(respuesta.apellidoMaterno);
                     $('#strUsuarioCorreo').val(respuesta.correo);
                     $('#strUsuarioTelefono').val(respuesta.telefono);
-                    if(respuesta.sexo == "Hombre") {
-                        $("#strSexoH").prop("checked", true);
+                    if (respuesta.sexo == 'Hombre') {
+                        $('#strSexoH').prop('checked', true);
                     } else {
-                        $("#strSexoM").prop("checked", true);
+                        $('#strSexoM').prop('checked', true);
                     }
-    
-                    
-                    $("#strRFC").focus();
-                    $( "#strRFC" ).prop( "disabled", true );
-                    $( "#strUsuarioNombre" ).prop( "disabled", true );
-                    $( "#strUsuarioPrimerApe" ).prop( "disabled", true );
-                    $( "#strUsuarioSegundoApe" ).prop( "disabled", true );
-                    $( "#strUsuarioCorreo" ).prop( "disabled", true );
-                    $( "#strUsuarioTelefono" ).prop( "disabled", true );
-                    $( "#semblanza" ).prop( "disabled", true );
-                    $( "#strSexoH" ).prop( "disabled", true );
-                    $( "#strSexoM" ).prop( "disabled", true );
-                    
 
-                }  else if (respuesta.estado == "Nulo") {
-                    $("#strRFC").focus();
-                    $( "#strRFC" ).prop( "disabled", false );
-                    $( "#strUsuarioNombre" ).prop( "disabled", false );
-                    $( "#strUsuarioPrimerApe" ).prop( "disabled", false );
-                    $( "#strUsuarioSegundoApe" ).prop( "disabled", false );
-                    $( "#strUsuarioCorreo" ).prop( "disabled", false );
-                    $( "#strUsuarioTelefono" ).prop( "disabled", false );
-                    $( "#semblanza" ).prop( "disabled", false );
-                    $( "#strSexoM" ).prop( "disabled", false );
-                    $( "#strSexoH" ).prop( "disabled", false );
+                    $('#strRFC').focus();
+                    $('#strRFC').prop('disabled', true);
+                    $('#strUsuarioNombre').prop('disabled', true);
+                    $('#strUsuarioPrimerApe').prop('disabled', true);
+                    $('#strUsuarioSegundoApe').prop('disabled', true);
+                    $('#strUsuarioCorreo').prop('disabled', true);
+                    $('#strUsuarioTelefono').prop('disabled', true);
+                    $('#semblanza').prop('disabled', true);
+                    $('#strSexoH').prop('disabled', true);
+                    $('#strSexoM').prop('disabled', true);
+                } else if (respuesta.estado == 'Nulo') {
+                    $('#strRFC').focus();
+                    $('#strRFC').prop('disabled', false);
+                    $('#strUsuarioNombre').prop('disabled', false);
+                    $('#strUsuarioPrimerApe').prop('disabled', false);
+                    $('#strUsuarioSegundoApe').prop('disabled', false);
+                    $('#strUsuarioCorreo').prop('disabled', false);
+                    $('#strUsuarioTelefono').prop('disabled', false);
+                    $('#semblanza').prop('disabled', false);
+                    $('#strSexoM').prop('disabled', false);
+                    $('#strSexoH').prop('disabled', false);
 
-                    $('#semblanza').val("");
-                    $('#strRFC').val("");
-                    $('#strUsuarioNombre').val("");
-                    $('#strUsuarioPrimerApe').val("");
-                    $('#strUsuarioSegundoApe').val("");
-                    $('#strUsuarioCorreo').val("");
-                    $('#strUsuarioTelefono').val("");
-                    $('#strContrasenia01').val("");
-                    $('#strContrasenia02').val("");
-                    $("#strSexoM").prop("checked", false);
-                    $("#strSexoH").prop("checked", false);
-                    
+                    $('#semblanza').val('');
+                    $('#strRFC').val('');
+                    $('#strUsuarioNombre').val('');
+                    $('#strUsuarioPrimerApe').val('');
+                    $('#strUsuarioSegundoApe').val('');
+                    $('#strUsuarioCorreo').val('');
+                    $('#strUsuarioTelefono').val('');
+                    $('#strContrasenia01').val('');
+                    $('#strContrasenia02').val('');
+                    $('#strSexoM').prop('checked', false);
+                    $('#strSexoH').prop('checked', false);
 
                     alertify.success('No se encontró otro profesor con ese Número de trabajador.');
                 }
@@ -404,23 +396,20 @@ function buscarProfesor () {
     }
 }
 
-
 //? Validaciones y animaciones de campos
 // Validación del formulario para usuario
 function validarFormularioUsuario() {
-    
     //! Validaciones de Persona
     //? Con esto sabemos si acaban de registrar a alguien.
-    if (typeof($('#hideRol').val()) == 'undefined') {
-
+    if (typeof $('#hideRol').val() == 'undefined') {
         //? Solo el Moderador puede tener 6
-        if($('#intUsuarioRol').val() != 3) {
+        if ($('#intUsuarioRol').val() != 3) {
             if ($('#intNum_Trabajador').val().length < 6 || $('#intNum_Trabajador').val().length > 6) {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
                 document.getElementById('intNum_Trabajador').focus();
                 alertify.error('El número de trabjador no puede ser menor a 6 cifras.');
                 return false;
-            } 
+            }
         } else {
             if ($('#intNum_Trabajador').val() == '') {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
@@ -433,14 +422,14 @@ function validarFormularioUsuario() {
                     document.getElementById('intNum_Trabajador').focus();
                     alertify.error('El número de cuenta o trabjador no puede ser menor a 6 cifras.');
                     return false;
-                } 
+                }
 
                 if ($('#intNum_Trabajador').val().length > 6 && $('#intNum_Trabajador').val().length < 9) {
                     $('html, body').animate({ scrollTop: 0 }, 'slow');
                     document.getElementById('intNum_Trabajador').focus();
                     alertify.error('La extensión del número de cuenta o trabajador es incorrecta.');
                     return false;
-                } 
+                }
 
                 if ($('#intNum_Trabajador').val().length > 9) {
                     $('html, body').animate({ scrollTop: 0 }, 'slow');
@@ -448,7 +437,7 @@ function validarFormularioUsuario() {
                     alertify.error('El número de trabajador debe de ser mayor a 9 cifras.');
                     return false;
                 }
-                
+
                 var numExp = /^([0-9])*$/;
                 if (numExp.test($('#intNum_Trabajador').val())) {
                 } else {
@@ -461,8 +450,8 @@ function validarFormularioUsuario() {
         }
     }
 
-    if (typeof($('#intNum_Trabajador').val()) != 'undefined' && typeof($('#intNumCuenta').val()) == 'undefined') {
-        if ($('#intNum_Trabajador').val() == '' ) {
+    if (typeof $('#intNum_Trabajador').val() != 'undefined' && typeof $('#intNumCuenta').val() == 'undefined') {
+        if ($('#intNum_Trabajador').val() == '') {
             $('html, body').animate({ scrollTop: 0 }, 'slow');
             document.getElementById('intNum_Trabajador').focus();
             alertify.error('Se debe ingresar el Número de trabajador o Número de cuenta.');
@@ -483,9 +472,9 @@ function validarFormularioUsuario() {
                 alertify.error('El Número de trabajador debe de incluir solo números.');
                 return false;
             }
-        }   
-    } else if (typeof($('#intNum_Trabajador').val()) == 'undefined' && typeof($('#intNumCuenta').val()) != 'undefined') {
-        if ($('#intNumCuenta').val() == '' ) {
+        }
+    } else if (typeof $('#intNum_Trabajador').val() == 'undefined' && typeof $('#intNumCuenta').val() != 'undefined') {
+        if ($('#intNumCuenta').val() == '') {
             $('html, body').animate({ scrollTop: 0 }, 'slow');
             document.getElementById('intNumCuenta').focus();
             alertify.error('Se debe ingresar el número de cuenta.');
@@ -506,12 +495,11 @@ function validarFormularioUsuario() {
                 alertify.error('El Número de cuenta debe de incluir solo números.');
                 return false;
             }
-        }   
+        }
     } else {
         alertify.error('Hubo un error al realizar la operación.');
         return false;
     }
-
 
     if ($('#strRFC').val() == '') {
         alertify.error('Debe ingresar su RFC con homoclave.  <br> En caso de no tenerla rellenar con 0.');
@@ -528,7 +516,6 @@ function validarFormularioUsuario() {
             return false;
         }
     }
-
 
     if ($('#strUsuarioNombre').val() == '') {
         $('html, body').animate({ scrollTop: 0 }, 'slow');
@@ -629,7 +616,7 @@ function validarFormularioUsuario() {
             document.getElementById('strUsuarioTelefono').focus();
             alertify.error('El teléfono debe incluir unicamente 10 dígitos.');
             return false;
-        } 
+        }
 
         if (total_numeros == 10) {
             var numExp = /^([0-9])*$/;
@@ -642,7 +629,7 @@ function validarFormularioUsuario() {
             }
         }
     }
-    if ($("#strSexoM").is(':checked') == false && $("#strSexoH").is(':checked') == false) {
+    if ($('#strSexoM').is(':checked') == false && $('#strSexoH').is(':checked') == false) {
         $('html, body').animate({ scrollTop: 100 }, 'slow');
         document.getElementById('strSexoM').focus();
         alertify.error('Se debe ingresar el sexo del usuario.');
@@ -655,16 +642,16 @@ function validarFormularioUsuario() {
         $('html, body').animate({ scrollTop: 100 }, 'slow');
         document.getElementById('intUsuarioRol').focus();
         return false;
-    }   
+    }
 
     //? Si no esta definido viene de auto registro
-    if (typeof($('#strNombreUsuario').val()) != 'undefined') {
+    if (typeof $('#strNombreUsuario').val() != 'undefined') {
         if ($('#strNombreUsuario').val() == '') {
             alertify.error('Se debe ingresar el identificador del usuario.');
             $('html, body').animate({ scrollTop: 100 }, 'slow');
             document.getElementById('strNombreUsuario').focus();
             return false;
-        } else  if ($('#strNombreUsuario').val().length > 15) {  
+        } else if ($('#strNombreUsuario').val().length > 15) {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
             document.getElementById('strNombreUsuario').focus();
             alertify.error('El nombre de usuario debe tener máximo 15 caracteres.');
@@ -672,49 +659,48 @@ function validarFormularioUsuario() {
         }
     }
 
-    if (typeof($('#strContrasenia01').val()) != 'undefined') {
+    if (typeof $('#strContrasenia01').val() != 'undefined') {
         if ($('#strContrasenia01').val() == '') {
-           alertify.error('Debe ingresar una contraseña');
-           $('html, body').animate({ scrollTop: 100 }, 'slow');
-           document.getElementById('strContrasenia01').focus();
-           return false;
-       } else {
-           if ($('#strContrasenia01').val().length > 20) {
-               $('html, body').animate({ scrollTop: 0 }, 'slow');
-               document.getElementById('strContrasenia01').focus();
-               alertify.error('La contraseña debe tener máximo 20 caracteres.');
-               return false;
-           }
-   
-           if ($('#strContrasenia01').val().length < 6) {
-               $('html, body').animate({ scrollTop: 0 }, 'slow');
-               document.getElementById('strContrasenia01').focus();
-               alertify.error('La contraseña debe tener mínimo 6 caracteres.');
-               return false;
-           }
-       }
-   
-       if ($('#strContrasenia02').val() == '') {
-           alertify.error('Debe ingresar la confirmación de la contraseña');
-           $('html, body').animate({ scrollTop: 100 }, 'slow');
-           document.getElementById('strContrasenia02').focus();
-           return false;
-       }
-   
-       if ($('#strContrasenia01').val() != $('#strContrasenia02').val()) {
-           alertify.error('Las contraseña no coinciden.');
-           $('html, body').animate({ scrollTop: 100 }, 'slow');
-           document.getElementById('strContrasenia01').focus();
-           return false;
-       }
-    }
+            alertify.error('Debe ingresar una contraseña');
+            $('html, body').animate({ scrollTop: 100 }, 'slow');
+            document.getElementById('strContrasenia01').focus();
+            return false;
+        } else {
+            if ($('#strContrasenia01').val().length > 20) {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('strContrasenia01').focus();
+                alertify.error('La contraseña debe tener máximo 20 caracteres.');
+                return false;
+            }
 
+            if ($('#strContrasenia01').val().length < 6) {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('strContrasenia01').focus();
+                alertify.error('La contraseña debe tener mínimo 6 caracteres.');
+                return false;
+            }
+        }
+
+        if ($('#strContrasenia02').val() == '') {
+            alertify.error('Debe ingresar la confirmación de la contraseña');
+            $('html, body').animate({ scrollTop: 100 }, 'slow');
+            document.getElementById('strContrasenia02').focus();
+            return false;
+        }
+
+        if ($('#strContrasenia01').val() != $('#strContrasenia02').val()) {
+            alertify.error('Las contraseña no coinciden.');
+            $('html, body').animate({ scrollTop: 100 }, 'slow');
+            document.getElementById('strContrasenia01').focus();
+            return false;
+        }
+    }
 
     //! Validaciones según el rol
 
     //? Instructor
     if ($('#hideRol').val() == 2 || $('#intUsuarioRol').val() == 2) {
-        if($('#strSemblanza').val() == '') {
+        if ($('#strSemblanza').val() == '') {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
             document.getElementById('strSemblanza').focus();
             alertify.error('Debe ingresar la semblanza del instructor.');
@@ -727,7 +713,6 @@ function validarFormularioUsuario() {
                 return false;
             }
         }
-        
     }
 
     //? Moderador
@@ -837,7 +822,7 @@ function validarFormularioUsuario() {
             return false;
         }
 
-        if (typeof($('input:radio[name=nombramiento]:checked').val()) == 'undefined') {
+        if (typeof $('input:radio[name=nombramiento]:checked').val() == 'undefined') {
             $('html, body').animate({ scrollTop: 200 }, 'slow');
             document.getElementById('nombramiento1').focus();
             alertify.error('Debe de seleccionar un nombramiento principal para el profesor.');
@@ -847,15 +832,14 @@ function validarFormularioUsuario() {
     return true;
 }
 
-
 //Mostrar contraseña index.php
 function hideOrShowPassword() {
-  var x = document.getElementById('strContrasena');
-  if (x.type === 'password') {
-    x.type = 'text';
-  } else {
-    x.type = 'password';
-  }
+    var x = document.getElementById('strContrasena');
+    if (x.type === 'password') {
+        x.type = 'text';
+    } else {
+        x.type = 'password';
+    }
 }
 // Mostrar o ocultar contraseña
 function hideOrShowPassword1() {
@@ -896,12 +880,12 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
     const MODERADOR = 3;
     const PROFESOR = 4;
 
-    document.getElementById("strContrasenia01").value = $('#strRFC').val().substr(0,6);
-    document.getElementById("strContrasenia02").value = $('#strRFC').val().substr(0,6);
+    document.getElementById('strContrasenia01').value = $('#strRFC').val().substr(0, 6);
+    document.getElementById('strContrasenia02').value = $('#strRFC').val().substr(0, 6);
 
     var tipo_evento = $('#intUsuarioRol').val();
     if (tipo_evento.startsWith(ADMINISTRADOR)) {
-       /* $('#num_trabajador').show();
+        /* $('#num_trabajador').show();
         $('#rfc').show(); 
         $('#numCuenta').hide();
         Ahora son campos obligatorios*/
@@ -938,10 +922,10 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
             $('#modalidadImparticion').hide();
             $('#coordinaciones').hide();
             $('#nombramientos').hide();
-        //?En caso de que sea un profesor su usuario y contraseña se auto asignans
+            //?En caso de que sea un profesor su usuario y contraseña se auto asignans
         } else {
             $('#semblanza').hide();
-            document.getElementById("strNombreUsuario").value = $('#intNum_Trabajador').val();
+            document.getElementById('strNombreUsuario').value = $('#intNum_Trabajador').val();
             //? Aqui estaba las lineas de autocpmpletado de contraseña
         }
     } else if (tipo_evento.startsWith(MODERADOR)) {

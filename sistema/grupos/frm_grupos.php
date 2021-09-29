@@ -383,6 +383,7 @@ if (isset($_POST['id'])) {
                             value="<?php echo isset($Grupo) ? $Grupo->grup_url : ""; ?>">
                         </div>
                       </div>
+                      
                       <div class="col-lg-12 form-row" style="margin-top: 15px;">
                         <?php if (isset($Grupo) && $Grupo->moap_id_modalidad == 2) { ?>
                         <div id="Reunion" class="col-lg-6 form-group">
@@ -505,18 +506,16 @@ if (isset($_POST['id'])) {
             <input type="hidden" id="idGrupo" name="idGrupo" value="<?php echo $_POST['id'];?>">
             <input type="hidden" id="ifModalidad" name="ifModalidad" value="<?php echo $Grupo->moap_id_modalidad;?>">
 
-            <?php if($Grupo->usr_moderador != '') { 
-              $moderador = $obj_Busqueda->buscarHorarioModerador($Grupo->usr_moderador);
-              if(isset($moderador)){
-            
-                $dias = $obj_Busqueda->buscarDiasModerador($moderador->mode_id_moderador);
-            
-                $cadenaDias = '';
-                foreach($dias as $dia){
-                  $cadenaDias .= $dia['dia_id_dia'];
-                  $cadenaDias .= '-';
-                }
-              ?>
+                <?php if ($Grupo->usr_moderador != '') {
+                    $moderador = $obj_Busqueda->buscarHorarioModerador($Grupo->usr_moderador);
+                    if (isset($moderador)) {
+                        $dias = $obj_Busqueda->buscarDiasModerador($moderador->mode_id_moderador);
+                        $cadenaDias = '';
+                        foreach ($dias as $dia) {
+                            $cadenaDias .= $dia['dia_id_dia'];
+                            $cadenaDias .= '-';
+                        }
+                        ?>
 
             <input type="hidden" id="modeFechaInicio" name="modeFechaInicio" value="<?php echo $moderador->mode_fecha_inicio;?>">
             <input type="hidden" id="modeFechaFin" name="modeFechaFin" value="<?php echo $moderador->mode_fecha_fin;?>">
@@ -524,15 +523,15 @@ if (isset($_POST['id'])) {
             <input type="hidden" id="modeHoraFin" name="modeHoraFin" value="<?php echo $moderador->mode_hora_fin;?>">
             <input type="hidden" id="modeDias" name="modeDias" value="<?php echo $cadenaDias;?>">
 
-            <?php } } else { ?>
-
+                    <?php }
+                } else { ?>
             <input type="hidden" id="modeFechaInicio" name="modeFechaInicio" value="">
             <input type="hidden" id="modeFechaFin" name="modeFechaFin" value="">
             <input type="hidden" id="modeHoraInicio" name="modeHoraInicio" value="">
             <input type="hidden" id="modeHoraFin" name="modeHoraFin" value="">
             <input type="hidden" id="modeDias" name="modeDias" value="">
 
-            <?php } ?>
+                <?php } ?>
             <?php } elseif ($_POST['CRUD'] == 0) { ?>
             <input type="hidden" name="dml" value="select" />
             <?php } ?>
