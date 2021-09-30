@@ -83,10 +83,13 @@
             </div>
             <button type="submit" class="btn btn-sy01 btn-block" id="btn-inicio">Ingresar</button>
           </form>
+
+          <!-- El auto-registro se elimino por carga manual de profesores.
+            
           <div class="col-12 text-center negritas">
             <a id="Auto-regstro-profesor"  onClick='FormularioAutoRegistro()' class="d-block small" href="#" style="color:#126E82" type="button" data-toggle="modal"
             data-target="#exampleModal" >Registrar Profesor</a>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

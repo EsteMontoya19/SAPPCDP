@@ -559,7 +559,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
         <!-- ID e Instrucciones -->
         <?php //? Al haber algo en el CRUD es que es una consulta ?>
         <?php if (isset($_POST['CRUD'])) { ?>
-        <php ?/? Si es 1 significa una actualización ?></php>
+        <?php  //? Si es 1 significa una actualización ?>
             <?php if ($_POST['CRUD'] == 1) { ?>
             <input type="hidden" name="dml" value="update">
             <input type="hidden" id="idUsuario" name="idUsuario" value="<?php echo $_POST['id']; ?>">
