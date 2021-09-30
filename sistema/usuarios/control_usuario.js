@@ -530,7 +530,7 @@ function validarFormularioUsuario() {
             return false;
         }
 
-        var letExp = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/g;
+        var letExp = /^[a-zA-ZÀ-ÿ\u00f1\u00d1\.?]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/g;
         if (letExp.test($('#strUsuarioNombre').val())) {
         } else {
             $('html, body').animate({ scrollTop: 100 }, 'slow');

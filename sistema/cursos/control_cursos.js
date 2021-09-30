@@ -54,7 +54,6 @@ function validarFormularioCurso() {
 
         if (
             $('#strNombreCurso').val().includes('@') ||
-            $('#strNombreCurso').val().includes('.') ||
             $('#strNombreCurso').val().includes('/') ||
             $('#strNombreCurso').val().includes('-') ||
             $('#strNombreCurso').val().includes('*') ||
@@ -64,8 +63,6 @@ function validarFormularioCurso() {
             $('#strNombreCurso').val().includes('%') ||
             $('#strNombreCurso').val().includes('^') ||
             $('#strNombreCurso').val().includes('&') ||
-            $('#strNombreCurso').val().includes('(') ||
-            $('#strNombreCurso').val().includes(')') ||
             $('#strNombreCurso').val().includes('-') ||
             $('#strNombreCurso').val().includes('=') ||
             $('#strNombreCurso').val().includes('+') ||
@@ -74,7 +71,7 @@ function validarFormularioCurso() {
         ) {
             $('html, body').animate({ scrollTop: 0 }, 'slow');
             document.getElementById('strNombreCurso').focus();
-            alertify.error('El nombre del curso no debe incluir caracteres especiales @, ., /, *, -, !, #, $, %, ^, &, *, (, ), -, +, =');
+            alertify.error('El nombre del curso no debe incluir caracteres especiales @, /, *, -, !, #, $, %, ^, &, -, +, =, ;, :');
             return false;
         }
     }
@@ -93,9 +90,9 @@ function validarFormularioCurso() {
         return false;
     }
 
-    if ($('#strReqTec').val().length > 150) {
+    if ($('#strReqTec').val().length > 250) {
         alertify.error('El campo de requisitos técnicos debe ser de máximo 150 caracteres');
-        $('html, body').animate({ scrollTop: 150 }, 'slow');
+        $('html, body').animate({ scrollTop: 250 }, 'slow');
         document.getElementById('strReqTec').focus();
         return false;
     }
