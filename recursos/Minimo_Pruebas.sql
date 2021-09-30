@@ -25,7 +25,7 @@ INSERT INTO Coordinacion (coor_nombre) VALUES
 INSERT INTO EDIFICIO (EDIF_NOMBRE) VALUES 
     ('A'),('B'),('C');
 
-INSERT INTO SALON (EDIF_ID_EDIFICIO, SALO_NOMBRE) VALUES 
+INSERT INTO SALON (SALO_ID_EDIFICIO, SALO_NOMBRE) VALUES 
     (1, '05'),(2, '03'),(3, '08');
 
 INSERT INTO CALENDARIO (CALE_SEMESTRE, CALE_INICIO_CICLO, CALE_FIN_CICLO, CALE_INICIO_EXAMENES, CALE_FIN_EXAMENES, CALE_INICIO_ASUETO,
@@ -34,7 +34,7 @@ INSERT INTO CALENDARIO (CALE_SEMESTRE, CALE_INICIO_CICLO, CALE_FIN_CICLO, CALE_I
 
 INSERT INTO PLATAFORMA (PLAT_NOMBRE, PLAT_ACTIVO) VALUES 
     ('Zoom', 'TRUE'),('Google Meet', 'TRUE'),('Webex', 'TRUE'),('Skype', 'FALSE');
-INSERT INTO dia_festivo (cale_id_calendario, dife_fecha) VALUES
+INSERT INTO dia_festivo (dife_id_calendario, dife_fecha) VALUES
     (1, '2021/09/15'), (1,'2021/09/16');
                 
 INSERT INTO Persona (pers_nombre, pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono, PERS_RFC, pers_sexo) VALUES 
@@ -50,7 +50,7 @@ INSERT INTO Persona (pers_nombre, pers_apellido_paterno, pers_apellido_materno, 
 
 INSERT INTO Nombramiento (nomb_descripcion) VALUES ('Academico'), ('Tecnico'), ('De carrera');
 
-INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza, nomb_id_nombramiento) VALUES 
+INSERT INTO Profesor (prof_id_persona, prof_num_trabajador, prof_semblanza, prof_id_nombramiento) VALUES 
     (1,'111111', 'Profesora con amplio conocimeinto en todas las ramas habidas y por haber', 1),
     (2,'222222','Profesor de informatica con experiencia en IOS y MACOS',1),
     (3,'333333',null, 1),
@@ -60,19 +60,19 @@ INSERT INTO Profesor (pers_id_persona, prof_num_trabajador, prof_semblanza, nomb
     (7,'777777',null, 3),
     (8,'888888',null, 3);
 
-INSERT INTO Profesor_Nivel (prof_id_profesor, nive_id_nivel) VALUES
+INSERT INTO Profesor_Nivel (prni_id_profesor, prni_id_nivel) VALUES
     (1, 1), (1, 2),(2, 1), (3, 2), (4, 1), (5, 2),(6, 1), (7, 2), (8,2);
 
-INSERT INTO Profesor_Modalidad (prof_id_profesor, moda_id_modalidad) VALUES
+INSERT INTO Profesor_Modalidad (prmo_id_profesor, prmo_id_modalidad) VALUES
     (1, 1), (1, 2),(2, 1), (3, 2), (4, 3), (5, 2),(6, 1), (7, 3), (8,3);
 
-INSERT INTO Profesor_Coordinacion(prof_id_profesor, coor_id_coordinacion) VALUES
+INSERT INTO Profesor_Coordinacion(prco_id_profesor, prco_id_coordinacion) VALUES
     (1, 2), (1, 5),(2, 9), (3, 18), (4, 24), (5, 3),(6, 1), (7, 6), (8,6);
 
-INSERT INTO SERVIDOR_SOCIAL (pers_id_persona, SESO_NUM_CUENTA) VALUES 
+INSERT INTO SERVIDOR_SOCIAL (seso_id_persona, SESO_NUM_CUENTA) VALUES 
     (9, '000000000');
 
-INSERT INTO USUARIO (PERS_ID_PERSONA,ROL_ID_ROL,USUA_NUM_USUARIO,USUA_CONTRASENA, USUA_ACTIVO) VALUES
+INSERT INTO USUARIO (USUA_ID_PERSONA,USUA_ID_ROL,USUA_NUM_USUARIO,USUA_CONTRASENA, USUA_ACTIVO) VALUES
     /* Administrador */
     (1,1,'Administrador1','AAAA00','TRUE'),
 
@@ -95,12 +95,12 @@ INSERT INTO USUARIO (PERS_ID_PERSONA,ROL_ID_ROL,USUA_NUM_USUARIO,USUA_CONTRASENA
     (7,4,'Profesor7','AAAA00','TRUE'),
     (8,4,'Profesor8','AAAA00','TRUE');
 
-INSERT INTO HORARIO_MODERADOR (usua_id_usuario, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin) VALUES 	
+INSERT INTO HORARIO_MODERADOR (mode_id_usuario, mode_fecha_inicio, mode_fecha_fin, mode_hora_inicio, mode_hora_fin) VALUES 	
     (5, '2021/06/01', '2021/09/08','07:00:00', '21:00:00'),
     (6, '2021/02/23', '2021/09/08','07:00:00', '21:00:00');
 
 
-INSERT INTO Moderador_Dia (mode_id_moderador, dia_id_dia) VALUES 	
+INSERT INTO Moderador_Dia (modi_id_moderador, modi_id_dia) VALUES 	
     (1,1), (1,2), (1,3), (1,4), (1,5),
     (2,1), (2,2), (2,3), (2,4), (2,5), (2,6);
 
@@ -112,8 +112,8 @@ INSERT INTO Curso (CURS_TIPO, CURS_NOMBRE, CURS_NUM_SESIONES, CURS_REQ_TECNICOS,
     ('Taller', 'Plan de Clase', 2, null, null, 'Intermedio', 'Aprender', '../recursos/PDF/Temario_Pruebas.pdf', 'TRUE'),
     ('Taller', 'Biblioteca Digital', 4, null, null, 'Avanzado', 'Aprender', '../recursos/PDF/Temario_Pruebas.pdf', 'TRUE');
 
-INSERT INTO Grupo 	(CURS_ID_CURSO,CALE_ID_CALENDARIO,PLAT_ID_PLATAFORMA,SALO_ID_SALON,
-                    ESTA_ID_ESTADO,MOAP_ID_MODALIDAD,GRUP_URL,GRUP_ID_ACCESO,GRUP_CLAVE_ACCESO,
+INSERT INTO Grupo 	(GRUP_ID_CURSO,GRUP_ID_CALENDARIO,GRUP_ID_PLATAFORMA,GRUP_ID_SALON,
+                    GRUP_ID_ESTADO,GRUP_ID_MODALIDAD,GRUP_URL,GRUP_ID_ACCESO,GRUP_CLAVE_ACCESO,
                     GRUP_CUPO,GRUP_NUM_INSCRITOS,GRUP_PUBLICADO,GRUP_TIPO,GRUP_INICIO_INSC,GRUP_FIN_INSC) VALUES
     /* Grupos Totales : 11*/
         /*Cancelados: 1*/
@@ -176,7 +176,7 @@ INSERT INTO Grupo 	(CURS_ID_CURSO,CALE_ID_CALENDARIO,PLAT_ID_PLATAFORMA,SALO_ID_
                 4,3,'https://cuaed-unam.zoom.us/j/88139303420', null, null,  
                 2,2,'TRUE','Público','2021/08/01','2021/08/05');
 
-INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin) VALUES  	
+INSERT INTO Sesion (sesi_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin) VALUES  	
     /*Cancelados: 1*/
         (1, '2021/07/19','09:00:00', '11:00:00'),
 
@@ -261,7 +261,7 @@ INSERT INTO Constancia (cons_url, cons_estado, cons_fecha, cons_hora) VALUES
 		    /*Finalizados: [51]*/
 			    (null, 'En trámite', null, null);
 
-INSERT INTO PERSONAL_GRUPO (GRUP_ID_GRUPO,USUA_ID_USUARIO,CONS_ID_CONSTANCIAS) VALUES
+INSERT INTO PERSONAL_GRUPO (PEGR_ID_GRUPO,PEGR_ID_USUARIO,PEGR_ID_CONSTANCIA) VALUES
     /*Instructores 2 , 3, 4*/    
     (1, 2, 37),
     (2, 2, 38),
@@ -288,7 +288,7 @@ INSERT INTO PERSONAL_GRUPO (GRUP_ID_GRUPO,USUA_ID_USUARIO,CONS_ID_CONSTANCIAS) V
 
 
 
-INSERT INTO INSCRIPCION (GRUP_ID_GRUPO,PROF_ID_PROFESOR,INSC_ACTIVO, CONS_ID_CONSTANCIAS, INSC_OBSERVACION) VALUES
+INSERT INTO INSCRIPCION (INSC_ID_GRUPO,INSC_ID_PROFESOR,INSC_ACTIVO, INSC_ID_CONSTANCIA, INSC_OBSERVACION) VALUES
     /*Profesores inscritos: [1 - 8]*/
     (1, 1, 'TRUE', 1, null),
     (2, 1, 'TRUE',  2, null), (2, 2, 'TRUE', 3, null), (2, 3, 'TRUE', 4, null), (2, 4, 'TRUE', 5, null), (2, 5, 'TRUE', 6, null),
@@ -304,7 +304,7 @@ INSERT INTO INSCRIPCION (GRUP_ID_GRUPO,PROF_ID_PROFESOR,INSC_ACTIVO, CONS_ID_CON
         (10,1, 'TRUE', 31, null), (10, 2, 'TRUE', 32, null), (10, 7, 'FALSE', 33, null), 
         (11, 1, 'TRUE', 34, 'Entro 30 minutos tarde.'), (11, 4, 'TRUE', 35, null), (11, 3, 'FALSE', 36, null);
 
-INSERT INTO Asistencia (SESI_ID_SESIONES, INSC_ID_INSCRIPCION, ASIS_PRESENTE) VALUES 
+INSERT INTO Asistencia (ASIS_ID_SESION, ASIS_ID_INSCRIPCION, ASIS_PRESENTE) VALUES 
     
     /*Finalizados*/
         (14, 26, 'TRUE'),
