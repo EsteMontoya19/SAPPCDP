@@ -579,7 +579,7 @@ function validarFormularioUsuario() {
             return false;
         }
     }
-
+/*
     if ($('#strUsuarioCorreo').val() == '') {
         $('html, body').animate({ scrollTop: 100 }, 'slow');
         document.getElementById('strUsuarioCorreo').focus();
@@ -629,6 +629,8 @@ function validarFormularioUsuario() {
             }
         }
     }
+
+    */
     if ($('#strSexoM').is(':checked') == false && $('#strSexoH').is(':checked') == false) {
         $('html, body').animate({ scrollTop: 100 }, 'slow');
         document.getElementById('strSexoM').focus();
@@ -822,12 +824,12 @@ function validarFormularioUsuario() {
             return false;
         }
 
-        if (typeof $('input:radio[name=nombramiento]:checked').val() == 'undefined') {
-            $('html, body').animate({ scrollTop: 200 }, 'slow');
-            document.getElementById('nombramiento1').focus();
-            alertify.error('Debe de seleccionar un nombramiento principal para el profesor.');
+         if ($("#nombramiento").val() == "0") {
+            $("html, body").animate({ scrollTop: 900 }, "slow");
+            document.getElementById("nombramiento").focus();
+            alertify.error("Debe de seleccionar un nombramiento principal para el profesor.");
             return false;
-        }
+          }
     }
     return true;
 }

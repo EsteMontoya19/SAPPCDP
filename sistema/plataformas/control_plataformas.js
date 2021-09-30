@@ -93,23 +93,23 @@ $(document).ready(function () {
     });
 });
 
-// // Actualizar Plataforma
-// function actualizarPlataforma(id) {
-//     var datos = {
-//         id: id,
-//         CRUD: 1,
-//     };
+// Actualizar Plataforma
+function actualizarPlataforma(id) {
+    var datos = {
+        id: id,
+        CRUD: 1,
+    };
 
-//     $.ajax({
-//         data: datos,
-//         type: 'POST',
-//         url: '../sistema/plataformas/frm_plataformas.php',
-//         success: function (data) {
-//             $('html, body').animate({ scrollTop: 0 }, 0);
-//             $('#container').html(data);
-//         },
-//     });
-// }
+    $.ajax({
+        data: datos,
+        type: 'POST',
+        url: '../sistema/plataformas/frm_plataformas.php',
+        success: function (data) {
+            $('html, body').animate({ scrollTop: 0 }, 0);
+            $('#container').html(data);
+        },
+    });
+}
 
 $(document).ready(function () {
     $('#btn-actualizar-plataforma').click(function () {

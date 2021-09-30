@@ -538,20 +538,17 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                   <div id="nombramientos" class="col-lg-12 form-group" style="display: none;">
                 <?php } ?>    
                 <label for="strNombramiento" class = "negritas">Nombramiento principal: *</label><br>
-                <table> <?php //*? Esto lo creo para hacer columnas con los checkbox?>
-                  <tr>
-                    <td>
-                      <?php foreach ($arr_nombramientos as $nombramiento) { ?> 
-                        <div class="form-check form-check-inline">
-                          <label class="form-check-label" for="nombramiento">
-                            <input type="radio" class="form-check-input" id= <?php echo("nombramiento".$nombramiento['nomb_id_nombramiento']); ?>
-                              name="nombramiento" value="<?php echo isset($profesor) ? $nombramiento['nomb_id_nombramiento'] : ""; ?>" <?php echo (isset($profesor) && $profesor->nomb_id_nombramiento == $nombramiento['nomb_id_nombramiento']) ? "checked" : ""; ?>><?php echo($nombramiento['nomb_descripcion']); ?>
-                          </label>
-                        </div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                      <?php } ?>
-                    </td>
-                  </tr>
-                </table>
+                       <select class="custom-select" id="nombramiento" name="nombramiento">
+                            <option value="0">Seleccione una opción</option>
+                            <?php foreach ($arr_nombramientos as $nombramiento) { ?> 
+
+                            <option value="<?php echo isset($profesor) ? $nombramiento['nomb_id_nombramiento'] : $nombramiento['nomb_id_nombramiento']; ?>" <?php echo (isset($profesor) && $profesor->nomb_id_nombramiento == $nombramiento['nomb_id_nombramiento']) ? "selected" : ""; ?>>
+                              <?php echo($nombramiento['nomb_descripcion']); ?>
+                            </option>
+
+                          <?php } ?>
+                         
+                  </select>
               </div>  <!-- Fin del campo-->
             </div>  <!-- Fin del card-->
           </div> <!-- Este es cierra todo el grupo de Datos de cuenta -->

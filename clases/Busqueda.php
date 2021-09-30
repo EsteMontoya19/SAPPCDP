@@ -24,7 +24,7 @@
             $SQL_Bus_Eventos =
             "   SELECT coor_id_coordinacion, coor_nombre
                 FROM Coordinacion
-                ORDER BY coor_id_coordinacion ASC;
+                ORDER BY coor_nombre ASC;
             ";
 
             $bd = new BD();
