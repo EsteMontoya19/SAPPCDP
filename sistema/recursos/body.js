@@ -279,3 +279,13 @@ function gruposImpartirHistoricos(persona) {
         },
     });
 }
+
+//Mostrar contraseña de la comprobación
+function hideOrShowPassword() {
+    var x = document.getElementById('strContrasena');
+    if (x.type === 'password') {
+        x.type = 'text';
+    } else {
+        x.type = 'password';
+    }
+}
