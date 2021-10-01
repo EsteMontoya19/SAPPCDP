@@ -45,10 +45,10 @@ function validarFormularioCurso() {
         alertify.error('Se debe ingresar el nombre del curso');
         return false;
     } else {
-        if ($('#strNombreCurso').val().length > 50) {
+        if ($('#strNombreCurso').val().length >= 150) {
             $('html, body').animate({ scrollTop: 0 }, 'slow');
             document.getElementById('strNombreCurso').focus();
-            alertify.error('El nombre del curso debe tener máximo 50 caracteres');
+            alertify.error('El nombre del curso debe tener máximo 150 caracteres');
             return false;
         }
 
