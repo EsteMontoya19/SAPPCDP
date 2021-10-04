@@ -178,7 +178,7 @@ INSERT INTO Grupo 	(GRUP_ID_CURSO,GRUP_ID_CALENDARIO,GRUP_ID_PLATAFORMA,GRUP_ID_
                 4,3,'https://cuaed-unam.zoom.us/j/88139303420', null, null,  
                 2,2,'TRUE','Público','2021/08/01','2021/08/05');
 
-INSERT INTO Sesion (¨sesi_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin) VALUES  	
+INSERT INTO Sesion (sesi_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin) VALUES  	
     /*Cancelados: 1*/
         (1, '2021/07/19','09:00:00', '11:00:00'),
 
@@ -263,7 +263,7 @@ INSERT INTO Constancia (cons_url, cons_estado, cons_fecha, cons_hora) VALUES
 		    /*Finalizados: [51]*/
 			    (null, 'En trámite', null, null);
 
-INSERT INTO PERSONAL_GRUPO (PEGR_ID_GRUPO,PEGR_ID_USUARIO,PEGR_ID_CONSTANCIAS) VALUES
+INSERT INTO PERSONAL_GRUPO (PEGR_ID_GRUPO,PEGR_ID_USUARIO,PEGR_ID_CONSTANCIA) VALUES
     /*Instructores 2 , 3, 4*/    
     (1, 2, 37),
     (2, 2, 38),
@@ -290,7 +290,7 @@ INSERT INTO PERSONAL_GRUPO (PEGR_ID_GRUPO,PEGR_ID_USUARIO,PEGR_ID_CONSTANCIAS) V
 
 
 
-INSERT INTO INSCRIPCION (INSC_ID_GRUPO,INSC_ID_PROFESOR,INSC_ACTIVO, INSC_ID_CONSTANCIAS, INSC_OBSERVACION) VALUES
+INSERT INTO INSCRIPCION (INSC_ID_GRUPO,INSC_ID_PROFESOR,INSC_ACTIVO, INSC_ID_CONSTANCIA, INSC_OBSERVACION) VALUES
     /*Profesores inscritos: [1 - 8]*/
     (1, 1, 'TRUE', 1, null),
     (2, 1, 'TRUE',  2, null), (2, 2, 'TRUE', 3, null), (2, 3, 'TRUE', 4, null), (2, 4, 'TRUE', 5, null), (2, 5, 'TRUE', 6, null),
@@ -306,7 +306,7 @@ INSERT INTO INSCRIPCION (INSC_ID_GRUPO,INSC_ID_PROFESOR,INSC_ACTIVO, INSC_ID_CON
         (10,1, 'TRUE', 31, null), (10, 2, 'TRUE', 32, null), (10, 7, 'FALSE', 33, null), 
         (11, 1, 'TRUE', 34, 'Entro 30 minutos tarde.'), (11, 4, 'TRUE', 35, null), (11, 3, 'FALSE', 36, null);
 
-INSERT INTO Asistencia (ASIS_ID_SESIONES, ASIS_ID_INSCRIPCION, ASIS_PRESENTE) VALUES 
+INSERT INTO Asistencia (ASIS_ID_SESION, ASIS_ID_INSCRIPCION, ASIS_PRESENTE) VALUES 
     
     /*Finalizados*/
         (14, 26, 'TRUE'),
@@ -340,7 +340,7 @@ INSERT INTO Asistencia (ASIS_ID_SESIONES, ASIS_ID_INSCRIPCION, ASIS_PRESENTE) VA
         ('¿Tiene alguna recomendación o sugerencia adicional?', 'TRUE', 10, 'Abierta'),
         ('Si desea tomar otro(s) curso(s) en el Programa Permanente de Capacitación a Distancia para los profesores de la FCA índique por favor cuáles.', 'TRUE', 11, 'Abierta');
         
-    INSERT INTO PREGUNTA_OPCION (PREG_ID_PREGUNTA, OPCI_ID_OPCION) VALUES
+    INSERT INTO PREGUNTA_OPCION (PROP_ID_PREGUNTA, PROP_ID_OPCION) VALUES
         (1, 1),(1, 2),
         (2, 1),(2, 2),
         (3, 3),(3, 4),(3, 5), (3, 5),
