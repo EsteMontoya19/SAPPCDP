@@ -12,6 +12,7 @@ INSERT INTO Dia (dia_nombre) VALUES
 
 INSERT INTO Nivel (nive_nombre) VALUES 
     ('Licenciatura'), ('Postgrado');
+	
 INSERT INTO Modalidad (moda_nombre) VALUES 
     ('Presencial'), ('Abierta'), ('A distancia');
 
@@ -34,6 +35,7 @@ INSERT INTO CALENDARIO (CALE_SEMESTRE, CALE_INICIO_CICLO, CALE_FIN_CICLO, CALE_I
 
 INSERT INTO PLATAFORMA (PLAT_NOMBRE, PLAT_ACTIVO) VALUES 
     ('Zoom', 'TRUE'),('Google Meet', 'TRUE'),('Webex', 'TRUE'),('Skype', 'FALSE');
+	
 INSERT INTO dia_festivo (dife_id_calendario, dife_fecha) VALUES
     (1, '2021/09/15'), (1,'2021/09/16');
                 
@@ -176,7 +178,7 @@ INSERT INTO Grupo 	(GRUP_ID_CURSO,GRUP_ID_CALENDARIO,GRUP_ID_PLATAFORMA,GRUP_ID_
                 4,3,'https://cuaed-unam.zoom.us/j/88139303420', null, null,  
                 2,2,'TRUE','Público','2021/08/01','2021/08/05');
 
-INSERT INTO Sesion (sesi_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin) VALUES  	
+INSERT INTO Sesion (¨sesi_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin) VALUES  	
     /*Cancelados: 1*/
         (1, '2021/07/19','09:00:00', '11:00:00'),
 
@@ -261,7 +263,7 @@ INSERT INTO Constancia (cons_url, cons_estado, cons_fecha, cons_hora) VALUES
 		    /*Finalizados: [51]*/
 			    (null, 'En trámite', null, null);
 
-INSERT INTO PERSONAL_GRUPO (PEGR_ID_GRUPO,PEGR_ID_USUARIO,PEGR_ID_CONSTANCIA) VALUES
+INSERT INTO PERSONAL_GRUPO (PEGR_ID_GRUPO,PEGR_ID_USUARIO,PEGR_ID_CONSTANCIAS) VALUES
     /*Instructores 2 , 3, 4*/    
     (1, 2, 37),
     (2, 2, 38),
@@ -288,7 +290,7 @@ INSERT INTO PERSONAL_GRUPO (PEGR_ID_GRUPO,PEGR_ID_USUARIO,PEGR_ID_CONSTANCIA) VA
 
 
 
-INSERT INTO INSCRIPCION (INSC_ID_GRUPO,INSC_ID_PROFESOR,INSC_ACTIVO, INSC_ID_CONSTANCIA, INSC_OBSERVACION) VALUES
+INSERT INTO INSCRIPCION (INSC_ID_GRUPO,INSC_ID_PROFESOR,INSC_ACTIVO, INSC_ID_CONSTANCIAS, INSC_OBSERVACION) VALUES
     /*Profesores inscritos: [1 - 8]*/
     (1, 1, 'TRUE', 1, null),
     (2, 1, 'TRUE',  2, null), (2, 2, 'TRUE', 3, null), (2, 3, 'TRUE', 4, null), (2, 4, 'TRUE', 5, null), (2, 5, 'TRUE', 6, null),
@@ -304,7 +306,7 @@ INSERT INTO INSCRIPCION (INSC_ID_GRUPO,INSC_ID_PROFESOR,INSC_ACTIVO, INSC_ID_CON
         (10,1, 'TRUE', 31, null), (10, 2, 'TRUE', 32, null), (10, 7, 'FALSE', 33, null), 
         (11, 1, 'TRUE', 34, 'Entro 30 minutos tarde.'), (11, 4, 'TRUE', 35, null), (11, 3, 'FALSE', 36, null);
 
-INSERT INTO Asistencia (ASIS_ID_SESION, ASIS_ID_INSCRIPCION, ASIS_PRESENTE) VALUES 
+INSERT INTO Asistencia (ASIS_ID_SESIONES, ASIS_ID_INSCRIPCION, ASIS_PRESENTE) VALUES 
     
     /*Finalizados*/
         (14, 26, 'TRUE'),
@@ -321,6 +323,34 @@ INSERT INTO Asistencia (ASIS_ID_SESION, ASIS_ID_INSCRIPCION, ASIS_PRESENTE) VALU
         (17, 35 ,'TRUE'),
         (17, 34 ,'FALSE');
 
+    INSERT INTO OPCION (OPCI_DESCRIPCION) VALUES
+        ('SI'),('No'),
+        ('Totalmente de acuerdo'),('De acuerdo'),('En desacuerdo'),('Totalmente en desacuerdo');
 
+    INSERT INTO PREGUNTA (PREG_DESCRIPCION, PREG_ACTIVO, PREG_ORDEN, PREG_TIPO) VALUES
+        ('¿El inicio del curso fue en la hora establecida?', 'TRUE', 1, 'Si/No'),
+        ('¿Se dio a conocer el contenido del curso al inicio de este?', 'TRUE', 2, 'Si/No'),
+        ('El material de apoyo utilizado por el instructor fue de utilidad para comprender el contendo temático del curso:', 'TRUE', 3, 'Acuerdo/Desacuerdo'),
+        ('El instructor explicó con claridad el contenido del curso:', 'TRUE', 4, 'Acuerdo/Desacuerdo'),
+        ('El instructor resolvió de manera oportuna las dudas que se presentaron a lo largo del curso:', 'TRUE', 5, 'Acuerdo/Desacuerdo'),
+        ('El instructor se desempeñó adecuadamente durante del curso:', 'TRUE', 6, 'Acuerdo/Desacuerdo'),
+        ('¿Tomaría otro curso con el mismo instructor?', 'TRUE', 7, 'Si/No, con justificación'),
+        ('¿Considera que el curso le proporcionó herramientas para el apoyo en su práctica docente?', 'TRUE', 8, 'Si/No, con justificación'),
+        ('¿Las expectativas respecto al nivel del curso (básico, intermedio y avanzado) se cumplieron?', 'TRUE', 9, 'Si/No, con justificación'),
+        ('¿Tiene alguna recomendación o sugerencia adicional?', 'TRUE', 10, 'Abierta'),
+        ('Si desea tomar otro(s) curso(s) en el Programa Permanente de Capacitación a Distancia para los profesores de la FCA índique por favor cuáles.', 'TRUE', 11, 'Abierta');
+        
+    INSERT INTO PREGUNTA_OPCION (PREG_ID_PREGUNTA, OPCI_ID_OPCION) VALUES
+        (1, 1),(1, 2),
+        (2, 1),(2, 2),
+        (3, 3),(3, 4),(3, 5), (3, 5),
+        (4, 3),(4, 4),(4, 5), (4, 5),
+        (5, 3),(5, 4),(5, 5), (5, 5),
+        (6, 3),(6, 4),(6, 5), (6, 5),
+        (7, 1),(7, 2),
+        (8, 1),(8, 2),
+        (9, 1),(9, 2),
+        (10, null),
+        (11, null);
 
 
