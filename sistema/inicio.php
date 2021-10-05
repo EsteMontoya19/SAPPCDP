@@ -4,7 +4,7 @@
   $obj_Cuenta = new Cuenta();
   $cuenta = $obj_Cuenta->buscarUsuarioSistema($_strUsuario, $_strContrasena);
 ?>
-<input id = "idPersona" type="hidden" name="dml" value='<?php echo($cuenta->pers_id_persona);?>'>
+<input id = "idPersona" type="hidden" name="dml" value='<?php echo($cuenta->usua_id_persona);?>'>
 <input id = "idRol" type="hidden" name="dml" value='<?php echo($cuenta->rol_id_rol);?>'>
 
 <!-- Archivo para cargar el header y referencias -->
