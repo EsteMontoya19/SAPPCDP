@@ -1,5 +1,5 @@
 <?php 
-
+    //? Clase verificada en la BD 04/10/2021
 class Opcion
 {
 

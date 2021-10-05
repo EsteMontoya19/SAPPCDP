@@ -1,4 +1,6 @@
 <?php
+//? Clase verificada 04/07/2021
+//?No requiere comunicación con la BD
 require('../recursos/fpdf/fpdf.php');
 
 class PDF extends FPDF

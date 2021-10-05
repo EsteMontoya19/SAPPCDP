@@ -1,11 +1,13 @@
 <?php 
+    //? Clase verificada en la BD 04/10/2021
     class Nombramiento {
         //Permite buscar todas las coordinaciones y traer sus datos
         function buscarTodosNombramientos()
         {
             $SQL_Bus_Nombramientos = 
-            "   SELECT nomb_id_nombramiento, nomb_descripcion 
-                FROM Nombramiento;
+            "   
+                SELECT NOMB_ID_NOMBRAMIENTO, NOMB_DESCRIPCION 
+                FROM NOMBRAMIENTO;
             ";
 
             $bd = new BD();
@@ -20,9 +22,10 @@
         function buscarNombramiento($id)
         {
             $SQL_Bus_Nombramiento =
-            "   SELECT nomb_id_nombramiento, nomb_descripcion 
-                FROM Nombramiento
-                WHERE nomb_id_nombramiento = $id
+            "   
+                SELECT NOMB_ID_NOMBRAMIENTO, NOMB_DESCRIPCION 
+                FROM NOMBRAMIENTO
+                WHERE NOMB_ID_NOMBRAMIENTO = $id
             ";
 
             $bd = new BD();
@@ -37,9 +40,10 @@
         function buscarNombramientoNombre($nombre)
         {
             $SQL_Bus_Nombramiento =
-            "   SELECT nomb_id_nombramiento, nomb_descripcion 
-                FROM Nombramiento
-                WHERE LOWER(nomb_descripcion) = LOWER('$nombre');
+            "   
+                SELECT NOMB_ID_NOMBRAMIENTO, NOMB_DESCRIPCION 
+                FROM NOMBRAMIENTO
+                WHERE LOWER(NOMB_DESCRIPCION) = LOWER('$nombre');
             ";
 
             $bd = new BD();
@@ -50,12 +54,12 @@
             return ($transaccion_1->traerObjeto(0));
         }
 
-
         //Permite agregar un nombramiento nueva
         function agregarNombramiento($descripcion)
         {
             $SQL_Agr_Nombramiento =
-            "   INSERT INTO Nombramiento (nomb_descripcion)
+            "   
+                INSERT INTO NOMBRAMIENTO (NOMB_DESCRIPCION)
                 VALUES ('$descripcion');
             ";
 
@@ -70,9 +74,10 @@
         function actualizarNombramiento($id, $nombre)
         {
             $SQL_Act_Nombramiento =
-            "   UPDATE Nombramiento
-                SET nomb_descripcion = '$nombre'
-                WHERE nomb_id_nombramiento = $id;
+            "   
+                UPDATE NOMBRAMIENTO
+                SET NOMB_DESCRIPCION = '$nombre'
+                WHERE NOMB_ID_NOMBRAMIENTO = $id;
             ";
 
             $bd = new BD();

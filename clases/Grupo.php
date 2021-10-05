@@ -1,16 +1,22 @@
 <?php
+//? Clase verificada en la BD 04/10/2021
 class Grupo
 {
     //? Trea los datos necesario para mostrar los cursos privados qie se encuentran Pendientes
     function buscarGruposPrivados () {
         $SQL_GRUPO = 
-        "SELECT G.grup_id_grupo, C.curs_nombre, C.curs_tipo, C.curs_nivel, G.curs_id_curso, G.plat_id_plataforma, G.cale_id_calendario, G.salo_id_salon,
-                G.esta_id_estado, G.moap_id_modalidad, G.grup_url, G.grup_id_acceso, G.grup_clave_acceso, G.grup_cupo, 
-                G.grup_num_inscritos, G.grup_publicado, G.grup_tipo, G.grup_inicio_insc, G.grup_fin_insc
-        FROM Grupo G, Curso C
-        WHERE grup_tipo LIKE 'Privado'
-            AND esta_id_estado = 3
-            AND C.curs_id_curso = G.curs_id_curso;";
+        "
+            SELECT GRUP_ID_GRUPO, CURS_NOMBRE, CURS_TIPO, CURS_NIVEL, 
+                    GRUP_ID_CURSO, GRUP_ID_PLATAFORMA, GRUP_ID_CALENDARIO, 
+                    GRUP_ID_SALON, GRUP_ID_ESTADO, GRUP_ID_MODALIDAD, GRUP_URL, 
+                    GRUP_ID_ACCESO, GRUP_CLAVE_ACCESO, GRUP_CUPO, 
+                    GRUP_NUM_INSCRITOS, GRUP_PUBLICADO, GRUP_TIPO, 
+                    GRUP_INICIO_INSC, GRUP_FIN_INSC
+            FROM GRUPO, CURSO 
+            WHERE GRUP_TIPO LIKE 'PRIVADO'
+                AND GRUP_ID_ESTADO = 3
+                AND CURS_ID_CURSO = GRUP_ID_CURSO;
+        ";
         
         $bd = new BD();
         $bd->abrirBD();
@@ -22,9 +28,10 @@ class Grupo
     //? Se utiliza para cambiar el estado de manera automatica
     function cambiarEstadoGrupo ($grupo, $estado) {
         $SQL_Bus_Grupo =
-        "UPDATE Grupo
-        SET esta_id_estado = $estado
-        WHERE grup_id_grupo = $grupo;
+        "
+            UPDATE GRUPO
+            SET GRUP_ID_ESTADO = $estado
+            WHERE GRUP_ID_GRUPO = $grupo;
         ";
 
         $bd = new BD();
@@ -33,13 +40,20 @@ class Grupo
         $transaccion_1->enviarQuery($SQL_Bus_Grupo);
         $bd->cerrarBD();
     }
+
+    //Busca datos del instructor
     function buscarDatosInstructorGrupo ($grupo) {
         $SQL_Bus_Grupo =
-        "SELECT P.pers_id_persona, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno, P.pers_correo, P.pers_telefono, P.pers_rfc, Pr.prof_semblanza
-        FROM Grupo G, Personal_Grupo PG, Usuario U, Persona P, Profesor Pr
-        WHERE G.grup_id_grupo = PG.grup_id_grupo AND U.usua_id_usuario = PG.usua_id_usuario AND P.pers_id_persona = U.pers_id_persona
-            AND Pr.pers_id_persona = P.pers_id_persona 
-            AND G.grup_id_grupo = $grupo AND U.rol_id_rol = 2;
+        "
+            SELECT PERS_ID_PERSONA, PERS_NOMBRE, PERS_APELLIDO_PATERNO, 
+                    PERS_APELLIDO_MATERNO, PERS_CORREO, PERS_TELEFONO, 
+                    PERS_RFC, PROF_SEMBLANZA
+            FROM GRUPO, PERSONAL_GRUPO, USUARIO, PERSONA, PROFESOR PR
+            WHERE GRUP_ID_GRUPO = PEGR_ID_GRUPO 
+                AND USUA_ID_USUARIO = PEGR_ID_USUARIO 
+                AND PERS_ID_PERSONA = USUA_ID_PERSONA
+                AND PROF_ID_PERSONA = PERS_ID_PERSONA 
+                AND GRUP_ID_GRUPO = $grupo AND USUA_ID_ROL = 2;
         ";
 
         $bd = new BD();
@@ -54,11 +68,14 @@ class Grupo
     //? Busca el moderador asignado para un grupo
     function buscarModeradorGrupo ($grupo) {
         $SQL_Bus_Grupo =
-        "SELECT U.usua_id_usuario, P.pers_id_persona, PG.grup_id_grupo, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno
-        FROM Personal_Grupo PG, Usuario U, Persona P
-        WHERE PG.usua_id_usuario = U.usua_id_usuario  AND P.pers_id_persona = U.pers_id_persona
-                AND U.rol_id_rol = 3 AND PG.grup_id_grupo = $grupo
-            ";
+        "
+            SELECT USUA_ID_USUARIO, PERS_ID_PERSONA, PEGR_ID_GRUPO, 
+                    PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
+            FROM PERSONAL_GRUPO, USUARIO, PERSONA
+            WHERE PEGR_ID_USUARIO = USUA_ID_USUARIO  
+                AND PERS_ID_PERSONA = USUA_ID_PERSONA
+                AND USUA_ID_ROL = 3 AND PEGR_ID_GRUPO = $grupo
+        ";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -70,18 +87,21 @@ class Grupo
     }
 
     //Permite agregar cualquier tipo de grupo
-    //? Verificado en la BD 06/07/2021
     /*No agrega el instructor ni moderador en este método, en el caso de estado y modalidad ahora manda ID*/
     function agregarGrupo($curso,$salon,$plataforma,$url,$acceso,$clave,$cupo,$estado,
                         $activo,$modalidad,$tipo_grupo,$inicio_insc,$fin_insc) {
         $SQL_Ins_Grupo =
-        "   INSERT INTO Grupo (curs_id_curso, salo_id_salon, cale_id_calendario, plat_id_plataforma, grup_url, grup_id_acceso, grup_clave_acceso,  
-                            grup_cupo, esta_id_estado, grup_publicado, moap_id_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc)
-                VALUES ($curso, $salon, (SELECT cale_id_calendario
-                                        FROM Calendario
-                                        WHERE cale_activo = TRUE), 
-                $plataforma, '$url', '$acceso','$clave', $cupo, '$estado', $activo, '$modalidad', '$tipo_grupo', '$inicio_insc', '$fin_insc')
-            ";
+        "   
+            INSERT INTO GRUPO (GRUP_ID_CURSO, GRUP_ID_SALON, GRUP_ID_CALENDARIO, 
+                    GRUP_ID_PLATAFORMA, GRUP_URL, GRUP_ID_ACCESO, GRUP_CLAVE_ACCESO,  
+                    GRUP_CUPO, GRUP_ID_ESTADO, GRUP_PUBLICADO, GRUP_ID_MODALIDAD, 
+                    GRUP_TIPO, GRUP_INICIO_INSC, GRUP_FIN_INSC)
+            VALUES ($curso, $salon, (SELECT CALE_ID_CALENDARIO
+                                    FROM CALENDARIO
+                                    WHERE CALE_ACTIVO = TRUE), 
+                $plataforma, '$url', '$acceso','$clave', $cupo, '$estado', $activo, 
+                '$modalidad', '$tipo_grupo', '$inicio_insc', '$fin_insc')
+        ";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -91,17 +111,24 @@ class Grupo
     }
 
     //Permite Actualizar Cualquier tipo de grupo
-    //? Verificado en la BD 06/07/2021
     /*No actualiza curs_id_cursos, grup_modalidad, grup_activo ni cale_id_calendario. Por los requerimientos del sistema.
     El estado debe mandar el ID, el instructor y moderador se actualizan en otro método de personal_grupo*/
     function actualizarGrupo($grupo, $tipo_grupo, $estado, $cupo, $inicio_insc, $fin_insc, $salon, $plataforma, $url, $acceso, $clave) {
         $SQL_Actua_Grupo =
-        "   UPDATE grupo
-            SET grup_tipo = '$tipo_grupo', esta_id_estado = '$estado',
-                grup_cupo = $cupo, grup_inicio_insc = '$inicio_insc', grup_fin_insc = '$fin_insc',
-                salo_id_salon = $salon, plat_id_plataforma = $plataforma, grup_url = '$url', grup_id_acceso = '$acceso', grup_clave_acceso = '$clave'
-            WHERE grup_id_grupo = $grupo;
-            ";
+        "   
+            UPDATE GRUPO
+            SET GRUP_TIPO = '$tipo_grupo', 
+                GRUP_ID_ESTADO = '$estado',
+                GRUP_CUPO = $cupo, 
+                GRUP_INICIO_INSC = '$inicio_insc', 
+                GRUP_FIN_INSC = '$fin_insc',
+                GRUP_ID_SALON = $salon, 
+                GRUP_ID_PLATAFORMA = $plataforma, 
+                GRUP_URL = '$url', 
+                GRUP_ID_ACCESO = '$acceso', 
+                GRUP_CLAVE_ACCESO = '$clave'
+            WHERE GRUP_ID_GRUPO = $grupo;
+        ";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -111,15 +138,19 @@ class Grupo
     }
 
     //Busca los correos de los profesores inscritos a un grupo.
-    //? Verificado en la BD 06/07/2021
     function buscarCorreosDeParticipantes($grupo) {
         $SQL_Bus_Cursos =
-        "SELECT ( Pers.pers_apellido_paterno || ' ' || pers_apellido_materno || ' ' || Pers.pers_nombre) AS nombre , Pers.pers_correo, 
-                    Prof.prof_id_profesor, Pers.pers_id_persona, I.insc_id_inscripcion, I.insc_observacion, cons_id_constancias
-            FROM Persona Pers, Inscripcion I, Grupo G, Profesor Prof
-            WHERE G.grup_id_grupo = $grupo AND I.grup_id_grupo = G.grup_id_grupo AND I.prof_id_profesor = Prof.prof_id_profesor AND Prof.pers_id_persona = Pers.pers_id_persona
-                  AND I.insc_activo = TRUE ORDER BY nombre
-            ";
+        "
+            SELECT (PERS_APELLIDO_PATERNO || ' ' || PERS_APELLIDO_MATERNO || ' ' || PERS_NOMBRE) AS NOMBRE , 
+                    PERS_CORREO, PROF_ID_PROFESOR, PERS_ID_PERSONA, 
+                    INSC_ID_INSCRIPCION, INSC_OBSERVACION, INSC_ID_CONSTANCIA
+            FROM PERSONA, INSCRIPCION, GRUPO, PROFESOR
+            WHERE GRUP_ID_GRUPO = $grupo 
+                AND INSC_ID_GRUPO = GRUP_ID_GRUPO 
+                AND INSC_ID_PROFESOR = PROF_ID_PROFESOR 
+                AND PROF_ID_PERSONA = PERS_ID_PERSONA
+                AND INSC_ACTIVO = TRUE ORDER BY NOMBRE
+        ";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -131,33 +162,39 @@ class Grupo
 
     function buscarNoAcreedoresConstancia($idGrupo) {
         $SQL_Acreedor_Constancia =
-        "SELECT ( P.pers_apellido_paterno || ' ' || P.pers_apellido_materno || ' ' || P.pers_nombre) AS nombre, Prof.prof_id_profesor,P.pers_id_persona, I.insc_id_inscripcion, C.cons_id_constancias 
-        FROM Inscripcion I, Profesor Prof, Persona P, Constancia C
-        WHERE Prof.prof_id_profesor = I.prof_id_profesor
-            AND P.pers_id_persona = Prof.pers_id_persona
-            AND C.cons_id_constancias = I.cons_id_constancias
-            AND I.insc_activo = TRUE
-            AND grup_id_grupo = $idGrupo
-            AND I.insc_id_inscripcion NOT IN (SELECT DISTINCT I.insc_id_inscripcion
-                                                FROM Persona P, Profesor Prof, Inscripcion I, Asistencia A, Constancia C
-                                                WHERE P.pers_id_persona = Prof.pers_id_persona
-                                                        AND C.cons_id_constancias = I.cons_id_constancias
-                                                        AND I. prof_id_profesor = Prof.prof_id_profesor
-                                                        AND I.insc_id_inscripcion = A.insc_id_inscripcion
-                                                        AND I.grup_id_grupo = $idGrupo
-                                                        AND I.insc_activo = TRUE
-                                                        AND P.pers_id_persona NOT IN (SELECT P.pers_id_persona
-                                                                                FROM Persona P, Profesor Prof , Inscripcion I, Asistencia A, Sesion S
-                                                                                WHERE P. pers_id_persona = Prof.pers_id_persona
-                                                                                AND I. prof_id_profesor = Prof.prof_id_profesor
-                                                                                AND I.insc_id_inscripcion = A.insc_id_inscripcion
-                                                                                AND S.sesi_id_sesiones = A.sesi_id_sesiones
-                                                                                AND I.insc_activo = TRUE
-                                                                                AND I.grup_id_grupo = $idGrupo
-                                                                                AND A.asis_presente = FALSE
-                                                                                GROUP BY P.pers_id_persona, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno, 
-                                                                                        A.asis_presente));
-			";
+        "
+            SELECT (PERS_APELLIDO_PATERNO || ' ' || PERS_APELLIDO_MATERNO || ' ' || PERS_NOMBRE) AS NOMBRE, 
+                    PROF_ID_PROFESOR, PERS_ID_PERSONA, 
+                    INSC_ID_INSCRIPCION, CONS_ID_CONSTANCIA
+            FROM INSCRIPCION, PROFESOR, PERSONA, CONSTANCIA
+            WHERE PROF_ID_PROFESOR = INSC_ID_PROFESOR
+                AND PERS_ID_PERSONA = PROF_ID_PERSONA
+                AND CONS_ID_CONSTANCIA = INSC_ID_CONSTANCIA
+                AND INSC_ACTIVO = TRUE
+                AND GRUP_ID_GRUPO = $idGrupo
+                AND INSC_ID_INSCRIPCION NOT IN (SELECT DISTINCT INSC_ID_INSCRIPCION
+                                                FROM PERSONA, PROFESOR, INSCRIPCION, ASISTENCIA, CONSTANCIA
+                                                WHERE PERS_ID_PERSONA = PROF_ID_PERSONA
+                                                    AND C.CONS_ID_CONSTANCIAS = INSC_ID_CONSTANCIAS
+                                                    AND INSC_ID_PROFESOR = PROF_ID_PROFESOR
+                                                    AND INSC_ID_INSCRIPCION = ASIS_ID_INSCRIPCION
+                                                    AND INSC_ID_GRUPO = $idGrupo
+                                                    AND INSC_ACTIVO = TRUE
+                                                    AND PERS_ID_PERSONA NOT IN (SELECT PERS_ID_PERSONA
+                                                                                FROM PERSONA, PROFESOR, INSCRIPCION, ASISTENCIA, SESION
+                                                                                WHERE PERS_ID_PERSONA = PROF_ID_PERSONA
+                                                                                    AND INSC_ID_PROFESOR = PROF_ID_PROFESOR
+                                                                                    AND INSC_ID_INSCRIPCION = ASIS_ID_INSCRIPCION
+                                                                                    AND SESI_ID_SESION = ASIS_ID_SESIONES
+                                                                                    AND INSC_ACTIVO = TRUE
+                                                                                    AND INSC_ID_GRUPO = $idGrupo
+                                                                                    AND ASIS_PRESENTE = FALSE
+                                                                                GROUP BY PERS_ID_PERSONA, 
+                                                                                        PERS_NOMBRE, 
+                                                                                        PERS_APELLIDO_PATERNO, 
+                                                                                        PERS_APELLIDO_MATERNO, 
+                                                                                        ASIS_PRESENTE));
+        ";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -169,26 +206,28 @@ class Grupo
 
     function buscarAcreedorConstancia($idGrupo){
         $SQL_Acreedor_Constancia =
-        "SELECT DISTINCT ( P.pers_apellido_paterno || ' ' || P.pers_apellido_materno || ' ' || P.pers_nombre) AS nombre, Prof.prof_id_profesor,P.pers_id_persona, I.insc_id_inscripcion, C.cons_id_constancias 
-        FROM Persona P, Profesor Prof, Inscripcion I, Asistencia A, Constancia C
-        WHERE P.pers_id_persona = Prof.pers_id_persona
-                AND C.cons_id_constancias = I.cons_id_constancias
-                AND I. prof_id_profesor = Prof.prof_id_profesor
-                AND I.insc_id_inscripcion = A.insc_id_inscripcion
-                AND I.grup_id_grupo = $idGrupo
-                AND I.insc_activo = TRUE
-                AND P.pers_id_persona NOT IN (SELECT P.pers_id_persona
-                                        FROM Persona P, Profesor Prof , Inscripcion I, Asistencia A, Sesion S
-                                        WHERE P. pers_id_persona = Prof.pers_id_persona
-                                        AND I. prof_id_profesor = Prof.prof_id_profesor
-                                        AND I.insc_id_inscripcion = A.insc_id_inscripcion
-                                        AND S.sesi_id_sesiones = A.sesi_id_sesiones
-                                        AND I.insc_activo = TRUE
-                                        AND I.grup_id_grupo = $idGrupo
-                                        AND A.asis_presente = FALSE
-                                        GROUP BY P.pers_id_persona, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno, 
-                                                A.asis_presente);
-			";
+        "
+            SELECT DISTINCT (PERS_APELLIDO_PATERNO || ' ' || PERS_APELLIDO_MATERNO || ' ' || PERS_NOMBRE) AS NOMBRE, 
+                    PROF_ID_PROFESOR, PERS_ID_PERSONA, INSC_ID_INSCRIPCION, CONS_ID_CONSTANCIA 
+            FROM PERSONA, PROFESOR, INSCRIPCION, ASISTENCIA, CONSTANCIA 
+            WHERE PERS_ID_PERSONA = PROF_ID_PERSONA
+                AND CONS_ID_CONSTANCIA = INSC_ID_CONSTANCIA
+                AND INSC_ID_PROFESOR = PROF_ID_PROFESOR
+                AND INSC_ID_INSCRIPCION = ASIS_ID_INSCRIPCION
+                AND INSC_ID_GRUPO = $idGrupo
+                AND INSC_ACTIVO = TRUE
+                AND PERS_ID_PERSONA NOT IN (SELECT PERS_ID_PERSONA
+                                        FROM PERSONA, PROFESOR, INSCRIPCION, ASISTENCIA, SESION
+                                        WHERE PERS_ID_PERSONA = PROF_ID_PERSONA
+                                        AND INSC_ID_PROFESOR = PROF_ID_PROFESOR
+                                        AND INSC_ID_INSCRIPCION = ASIS_ID_INSCRIPCION
+                                        AND SESI_ID_SESION = ASIS_ID_SESION
+                                        AND INSC_ACTIVO = TRUE
+                                        AND INSC_ID_GRUPO = $idGrupo
+                                        AND ASIS_PRESENTE = FALSE
+                                        GROUP BY PERS_ID_PERSONA, PERS_NOMBRE, PERS_APELLIDO_PATERNO, 
+                                                PERS_APELLIDO_MATERNO, ASIS_PRESENTE);
+		";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -199,25 +238,32 @@ class Grupo
     }
 
     //Permite Consultar cualquier tipo de grupo
-    //?Verificado en la BD 06/07/2021
     function buscarGrupo($id)
     {
         $SQL_Bus_Curso =
-        "   SELECT g.grup_id_grupo, p.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
-                    g.curs_id_curso, curs_nombre, curs_tipo, curs_nivel,  curs_num_sesiones,
-                    g.plat_id_plataforma, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo,
-                    grup_publicado, moap_id_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, esta_id_estado,
-                    (SELECT pers_apellido_paterno || ' ' || pers_apellido_materno || ' ' || pers_nombre
-                    FROM personal_grupo g, usuario u, persona p
-                    WHERE rol_id_rol = 3 AND g.grup_id_grupo = $id 
-                        AND g.usua_id_usuario = u.usua_id_usuario AND u.pers_id_persona = p.pers_id_persona
-                    ) as moderador
-                FROM grupo g, personal_grupo p, usuario u,persona pr, curso c, calendario ca 
-                WHERE rol_id_rol = 2 AND g.grup_id_grupo = p.grup_id_grupo AND p.usua_id_usuario = u.usua_id_usuario
-                    AND u.pers_id_persona = pr.pers_id_persona AND g.curs_id_curso = c.curs_id_curso 
-                    AND g.cale_id_calendario = ca.cale_id_calendario 
-                    AND g.grup_id_grupo = $id;
-            ";
+        "   
+            SELECT GRUP_ID_GRUPO, USUA_ID_USUARIO, PERS_NOMBRE, 
+                    PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO, GRUP_ID_CURSO, 
+                    CURS_NOMBRE, CURS_TIPO, CURS_NIVEL,  CURS_NUM_SESIONES,
+                    GRUP_ID_PLATAFORMA, GRUP_URL, GRUP_ID_ACCESO, GRUP_CLAVE_ACCESO, 
+                    GRUP_CUPO, GRUP_PUBLICADO, GRUP_ID_MODALIDAD, GRUP_TIPO, 
+                    GRUP_INICIO_INSC, GRUP_FIN_INSC, GRUP_ID_ESTADO,
+                        (SELECT PERS_APELLIDO_PATERNO || ' ' || PERS_APELLIDO_MATERNO || ' ' || PERS_NOMBRE
+                        FROM PERSONAL_GRUPO, USUARIO, PERSONA
+                        WHERE USUA_ID_ROL = 3 
+                            AND PEGR_ID_GRUPO = $id
+                            AND PEGR_ID_USUARIO = USUA_ID_USUARIO 
+                            AND USUA_ID_PERSONA = PERS_ID_PERSONA
+                        ) AS MODERADOR
+            FROM GRUPO, PERSONAL_GRUPO, USUARIO,PERSONA, CURSO, CALENDARIO 
+            WHERE USUA_ID_ROL = 2 
+                AND GRUP_ID_GRUPO = PEGR_ID_GRUPO 
+                AND PEGR_ID_USUARIO = USUA_ID_USUARIO
+                AND USUA_ID_PERSONA = PERS_ID_PERSONA 
+                AND GRUP_ID_CURSO = CURS_ID_CURSO 
+                AND GRUP_ID_CALENDARIO = CALE_ID_CALENDARIO 
+                AND GRUP_ID_GRUPO = $id;
+        ";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -229,22 +275,29 @@ class Grupo
     }
 
     //Permite Consultar todos los grupos sin importar la modalidad
-    //? Verificado en la BD 06/07/2021
     //? Ahora regresa el id de usuario del profesor y no su id de profesor.
     function buscarTodosGrupos()
     {
         $SQL_Bus_Cursos =
-        "   SELECT DISTINCT g.grup_id_grupo, p.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
-                    g. curs_id_curso, curs_nombre, grup_num_inscritos,
-                    g.plat_id_plataforma, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo,  
-                    grup_publicado, moap_nombre grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, esta_nombre grup_estado
-                FROM grupo g, personal_grupo p, usuario u, persona pr, curso c, calendario ca, modalidad_aprendizaje m, estado e
-                WHERE rol_id_rol = 2 AND g.grup_id_grupo = p.grup_id_grupo AND p.usua_id_usuario = u.usua_id_usuario
-                    AND u.pers_id_persona = pr.pers_id_persona AND g.curs_id_curso = c.curs_id_curso 
-                    AND g.cale_id_calendario = ca.cale_id_calendario 
-                    AND m.moap_id_modalidad = g.moap_id_modalidad AND e.esta_id_estado = g.esta_id_estado
-                ORDER BY g.grup_id_grupo DESC;
-            ";
+        "   
+            SELECT DISTINCT GRUP_ID_GRUPO, PEGR_ID_USUARIO, PERS_NOMBRE, 
+                    PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO,
+                    GRUP_ID_CURSO, CURS_NOMBRE, GRUP_NUM_INSCRITOS,
+                    GRUP_ID_PLATAFORMA, GRUP_URL, GRUP_ID_ACCESO, GRUP_CLAVE_ACCESO, 
+                    GRUP_CUPO, GRUP_PUBLICADO, MOAP_NOMBRE GRUP_MODALIDAD, GRUP_TIPO,
+                    GRUP_INICIO_INSC, GRUP_FIN_INSC, ESTA_NOMBRE GRUP_ESTADO
+            FROM GRUPO, PERSONAL_GRUPO, USUARIO, PERSONA, CURSO, 
+                CALENDARIO, MODALIDAD_APRENDIZAJE, ESTADO E
+            WHERE USUA_ID_ROL = 2 
+                AND GRUP_ID_GRUPO = PEGR_ID_GRUPO 
+                AND PEGR_ID_USUARIO = USUA_ID_USUARIO
+                AND usua_ID_PERSONA = PERS_ID_PERSONA 
+                AND GRUP_ID_CURSO = CURS_ID_CURSO 
+                AND GRUP_ID_CALENDARIO = CALE_ID_CALENDARIO 
+                AND MOAP_ID_MODALIDAD = GRUP_ID_MODALIDAD 
+                AND ESTA_ID_ESTADO = GRUP_ID_ESTADO
+            ORDER BY GRUP_ID_GRUPO DESC;
+        ";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -258,18 +311,27 @@ class Grupo
     function buscarTodosGruposAsignados($idUsuario)
     {
         $SQL_Bus_Cursos =
-        "   SELECT g.grup_id_grupo, p.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
-                    g. curs_id_curso, curs_nombre, grup_num_inscritos,
-                    g.plat_id_plataforma, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo,  
-                    grup_publicado, moap_nombre grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, esta_nombre grup_estado
-                FROM grupo g, personal_grupo p, usuario u, persona pr, curso c, calendario ca, modalidad_aprendizaje m, estado e
-                WHERE rol_id_rol = 3 AND g.grup_id_grupo = p.grup_id_grupo AND p.usua_id_usuario = u.usua_id_usuario
-                    AND u.pers_id_persona = pr.pers_id_persona AND g.curs_id_curso = c.curs_id_curso 
-                    AND g.cale_id_calendario = ca.cale_id_calendario 
-                    AND m.moap_id_modalidad = g.moap_id_modalidad AND e.esta_id_estado = g.esta_id_estado
-                    AND U.usua_id_usuario = $idUsuario
-                ORDER BY g.grup_id_grupo DESC;
-            ";
+        "   
+            SELECT GRUP_ID_GRUPO, PEGR_ID_USUARIO, PERS_NOMBRE, 
+                    PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO,
+                    GRUP_ID_CURSO, CURS_NOMBRE, GRUP_NUM_INSCRITOS,
+                    GRUP_ID_PLATAFORMA, GRUP_URL, GRUP_ID_ACCESO, 
+                    GRUP_CLAVE_ACCESO, GRUP_CUPO, GRUP_PUBLICADO, 
+                    MOAP_NOMBRE GRUP_MODALIDAD, GRUP_TIPO, GRUP_INICIO_INSC, 
+                    GRUP_FIN_INSC, ESTA_NOMBRE GRUP_ESTADO
+            FROM GRUPO, PERSONAL_GRUPO, USUARIO, PERSONA, CURSO, 
+                CALENDARIO, MODALIDAD_APRENDIZAJE M, ESTADO E
+            WHERE USUA_ID_ROL = 3 
+                AND GRUP_ID_GRUPO = PEGR_ID_GRUPO 
+                AND PEGR_ID_USUARIO = USUA_ID_USUARIO
+                AND USUA_ID_PERSONA = PERS_ID_PERSONA 
+                AND GRUP_ID_CURSO = CURS_ID_CURSO 
+                AND GRUP_ID_CALENDARIO = CALE_ID_CALENDARIO 
+                AND MOAP_ID_MODALIDAD = GRUP_ID_MODALIDAD 
+                AND ESTA_ID_ESTADO = GRUP_ID_ESTADO
+                AND USUA_ID_USUARIO = $idUsuario
+            ORDER BY GRUP_ID_GRUPO DESC;
+        ";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -283,23 +345,33 @@ class Grupo
         Permite consultar todos los grupos que deben ser mostrados para
         los profesores, para ello deben estar publicados, en Inscripciones(estado pendiente) y públicos
     */
-    //? Verificado en la BD 06/07/2021
     //? Ahora regresa el id de usuario del profesor y no su id de profesor.
     function buscarGruposProfesores()
     {
         $SQL_Bus_Cursos =
-        "SELECT g.grup_id_grupo, p.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
-                    curs_nombre, curs_tipo, curs_nivel, curs_objetivos, grup_cupo,  grup_num_inscritos, g.moap_id_modalidad,
-                    moap_nombre, to_char(grup_inicio_insc, 'DD') diaini, to_char(to_timestamp (to_char(grup_inicio_insc, 'MM')::text, 'MM'), 'TMmon') mesini, 
-                    to_char(grup_fin_insc, 'DD') diafin, to_char(to_timestamp (to_char(grup_fin_insc, 'MM')::text, 'MM'), 'TMmon') mesfin
-                FROM grupo g, personal_grupo p, usuario u,persona pr, curso c, calendario ca, modalidad_aprendizaje m, estado e 
-                WHERE grup_tipo = 'Público' AND g.esta_id_estado = 3 AND grup_publicado = true AND rol_id_rol = 2
-                    AND g.grup_id_grupo = p.grup_id_grupo AND p.usua_id_usuario = u.usua_id_usuario
-                    AND u.pers_id_persona = pr.pers_id_persona AND g.curs_id_curso = c.curs_id_curso 
-                    AND g.cale_id_calendario = ca.cale_id_calendario 
-                    AND m.moap_id_modalidad = g.moap_id_modalidad AND e.esta_id_estado = g.esta_id_estado
-                ORDER BY g.grup_id_grupo ASC;
-            ";
+        "
+            SELECT GRUP_ID_GRUPO, PEGR_ID_USUARIO, PERS_NOMBRE, PERS_APELLIDO_PATERNO, 
+                    PERS_APELLIDO_MATERNO, CURS_NOMBRE, CURS_TIPO, CURS_NIVEL, 
+                    CURS_OBJETIVOS, GRUP_CUPO,  GRUP_NUM_INSCRITOS, GRUP_ID_MODALIDAD,
+                    MOAP_NOMBRE, TO_CHAR(GRUP_INICIO_INSC, 'DD') DIAINI, 
+                    TO_CHAR(TO_TIMESTAMP (TO_CHAR(GRUP_INICIO_INSC, 'MM')::TEXT, 'MM'), 'TMMON') MESINI, 
+                    TO_CHAR(GRUP_FIN_INSC, 'DD') DIAFIN, 
+                    TO_CHAR(TO_TIMESTAMP (TO_CHAR(GRUP_FIN_INSC, 'MM')::TEXT, 'MM'), 'TMMON') MESFIN
+            FROM GRUPO G, PERSONAL_GRUPO P, USUARIO U,PERSONA PR, CURSO C, CALENDARIO CA, 
+                MODALIDAD_APRENDIZAJE M, ESTADO E 
+            WHERE GRUP_TIPO = 'PÚBLICO' 
+                AND GRUP_ID_ESTADO = 3 
+                AND GRUP_PUBLICADO = TRUE 
+                AND USUA_ID_ROL = 2
+                AND GRUP_ID_GRUPO = PEGR_ID_GRUPO 
+                AND PEGR_ID_USUARIO = USUA_ID_USUARIO
+                AND USUA_ID_PERSONA = PERS_ID_PERSONA 
+                AND GRUP_ID_CURSO = CURS_ID_CURSO 
+                AND GRUP_ID_CALENDARIO = CALE_ID_CALENDARIO 
+                AND MOAP_ID_MODALIDAD = GRUP_ID_MODALIDAD 
+                AND ESTA_ID_ESTADO = GRUP_ID_ESTADO
+            ORDER BY GRUP_ID_GRUPO ASC;
+        ";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -310,14 +382,14 @@ class Grupo
     }
 
     // Permite Cambiar estatus_activo grupo
-    //? Verificado en la BD 06/07/2021
     function cambiarEstatus($id, $activo)
     {
         $SQL_Act_Curso =
-        "   UPDATE grupo
-                SET grup_publicado = $activo
-                WHERE grup_id_grupo = $id;
-            ";
+        "   
+            UPDATE GRUPO
+            SET GRUP_PUBLICADO = $activo
+            WHERE GRUP_ID_GRUPO = $id;
+        ";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -327,22 +399,22 @@ class Grupo
     }
 
     //Permite obtener los grupos a los cuales se ha inscrito un profesor y se encuentran en curso o están por comenzar (Pendientes)
-    //? Verificado en la BD 06/07/2021
     function gruposInscritosxProfesor($idProfesor)
     {
         $SQL_Act_Curso =
-        " SELECT G.GRUP_ID_GRUPO, G.moap_id_modalidad, moap_nombre, 
-                    CURS_NOMBRE, CALE_SEMESTRE, ESTA_NOMBRE, insc_activo, curs_nivel, curs_tipo
-                FROM INSCRIPCION I, GRUPO G, CURSO C, CALENDARIO CA, MODALIDAD_APRENDIZAJE M, ESTADO E
-                WHERE I.PROF_ID_PROFESOR = $idProfesor
-                    AND I.GRUP_ID_GRUPO = G.GRUP_ID_GRUPO 
-                    AND G.CURS_ID_CURSO = C.CURS_ID_CURSO  
-                    AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO 
-                    AND G.MOAP_ID_MODALIDAD = M.MOAP_ID_MODALIDAD
-                    AND E.ESTA_ID_ESTADO = G.ESTA_ID_ESTADO
-                    AND (G.ESTA_ID_ESTADO = 2 OR G.ESTA_ID_ESTADO = 3)
-                ORDER BY I.GRUP_ID_GRUPO ASC;
-            ";
+        " 
+            SELECT GRUP_ID_GRUPO, GRUP_ID_MODALIDAD, MOAP_NOMBRE, CURS_NOMBRE, 
+                    CALE_SEMESTRE, ESTA_NOMBRE, INSC_ACTIVO, CURS_NIVEL, CURS_TIPO
+            FROM INSCRIPCION, GRUPO, CURSO, CALENDARIO, MODALIDAD_APRENDIZAJE, ESTADO
+            WHERE INSC_ID_PROFESOR = $idProfesor
+                AND INSC_ID_GRUPO = GRUP_ID_GRUPO 
+                AND GRUP_ID_CURSO = CURS_ID_CURSO  
+                AND GRUP_ID_CALENDARIO = CALE_ID_CALENDARIO 
+                AND GRUP_ID_MODALIDAD = MOAP_ID_MODALIDAD
+                AND ESTA_ID_ESTADO = GRUP_ID_ESTADO
+                AND (GRUP_ID_ESTADO = 2 OR GRUP_ID_ESTADO = 3)
+            ORDER BY INSC_ID_GRUPO ASC;
+        ";
             
         $bd = new BD();
         $bd->abrirBD();
@@ -353,22 +425,24 @@ class Grupo
     }
 
     //Permite obtener los grupos a los cuales se ha inscrito un profesor y ya han finalizado o fueron cancelados
-    //? Verificado en la BD 06/07/2021
     function gruposInscritosxProfesorHistoricos($idProfesor)
     {
         $SQL_Act_Curso =
-        " SELECT G.GRUP_ID_GRUPO, G.moap_id_modalidad, moap_nombre, CONS_ID_CONSTANCIAS,
-                    CURS_NOMBRE, CALE_SEMESTRE, ESTA_NOMBRE, insc_activo, curs_nivel, curs_tipo
-                FROM INSCRIPCION I, GRUPO G, CURSO C, CALENDARIO CA, MODALIDAD_APRENDIZAJE M, ESTADO E
-                WHERE I.PROF_ID_PROFESOR = $idProfesor
-                    AND I.GRUP_ID_GRUPO = G.GRUP_ID_GRUPO 
-                    AND G.CURS_ID_CURSO = C.CURS_ID_CURSO  
-                    AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO 
-                    AND G.MOAP_ID_MODALIDAD = M.MOAP_ID_MODALIDAD
-                    AND E.ESTA_ID_ESTADO = G.ESTA_ID_ESTADO
-                    AND (G.ESTA_ID_ESTADO = 1 OR G.ESTA_ID_ESTADO = 4)
-                ORDER BY I.GRUP_ID_GRUPO ASC;
-            ";
+        " 
+            SELECT GRUP_ID_GRUPO, GRUP_ID_MODALIDAD, MOAP_NOMBRE, 
+                    INSC_ID_CONSTANCIA, CURS_NOMBRE, CALE_SEMESTRE, 
+                    ESTA_NOMBRE, INSC_ACTIVO, CURS_NIVEL, CURS_TIPO
+            FROM INSCRIPCION I, GRUPO G, CURSO C, CALENDARIO CA, 
+                MODALIDAD_APRENDIZAJE M, ESTADO E
+            WHERE INSC_ID_PROFESOR = $idProfesor
+                AND INSC_ID_GRUPO = GRUP_ID_GRUPO 
+                AND GRUP_ID_CURSO = CURS_ID_CURSO  
+                AND GRUP_ID_CALENDARIO = CALE_ID_CALENDARIO 
+                AND GRUP_ID_MODALIDAD = MOAP_ID_MODALIDAD
+                AND ESTA_ID_ESTADO = GRUP_ID_ESTADO
+                AND (GRUP_ID_ESTADO = 1 OR GRUP_ID_ESTADO = 4)
+            ORDER BY INSC_ID_GRUPO ASC;
+        ";
             
         $bd = new BD();
         $bd->abrirBD();
@@ -379,21 +453,20 @@ class Grupo
     }
 
     //Permite obtener todos los grupos activos a los cuales se ha inscrito un profesor
-    //? Verificado en la BD 06/07/2021
     function gruposInscritosActivosxProfesor($idProfesor)
     {
         $SQL_Act_Curso =
         "   
-            SELECT I.PROF_ID_PROFESOR, I.GRUP_ID_GRUPO
-            FROM INSCRIPCION I, GRUPO G, CURSO C, CALENDARIO CA 
-            WHERE I.PROF_ID_PROFESOR = $idProfesor
-                AND I.GRUP_ID_GRUPO = G.GRUP_ID_GRUPO 
-                AND G.CURS_ID_CURSO = C.CURS_ID_CURSO
-                AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO 
-                AND grup_publicado = true
-                AND insc_activo = true
-            ORDER BY I.GRUP_ID_GRUPO ASC;
-            ";
+            SELECT INSC_ID_PROFESOR, INSC_ID_GRUPO
+            FROM INSCRIPCION, GRUPO, CURSO, CALENDARIO
+            WHERE INSC_ID_PROFESOR = $idProfesor
+                AND INSC_ID_GRUPO = GRUP_ID_GRUPO 
+                AND GRUP_ID_CURSO = CURS_ID_CURSO
+                AND GRUP_ID_CALENDARIO = CALE_ID_CALENDARIO 
+                AND GRUP_PUBLICADO = TRUE
+                AND INSC_ACTIVO = TRUE
+            ORDER BY INSC_ID_GRUPO ASC;
+        ";
             
         $bd = new BD();
         $bd->abrirBD();
@@ -404,16 +477,16 @@ class Grupo
     }
         
     //Busca los datos de un grupo autogestivo dado el id del grupo
-    //? Verificado en la BD 07/07/2021
     function buscarDatosAutogestivo($id)
     {
         $SQL_Bus_Grupo =
         "  
-                SELECT grup_url
-                FROM GRUPO 
-                WHERE moap_id_modalidad = 3  
-                AND GRUP_ID_GRUPO=$id; 
-            ";
+            SELECT GRUP_URL
+            FROM GRUPO 
+            WHERE GRUP_ID_MODALIDAD = 3  
+                AND GRUP_ID_GRUPO=$id;
+
+        ";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -424,17 +497,17 @@ class Grupo
         return ($transaccion_1->traerObjeto(0));
     }
 
-    //? Verificado en la BD 06/07/2021
-    //? Ahora verifica la modalidad mediante el id
+    //? Verifica la modalidad mediante el id
     function buscarDatosEnLinea($id)
     {
         $SQL_Bus_Grupo =
         "  
-                SELECT PLAT_NOMBRE, grup_url, GRUP_ID_ACCESO, grup_clave_acceso
-                FROM GRUPO G, PLATAFORMA PA
-                WHERE G.PLAT_ID_PLATAFORMA=PA.PLAT_ID_PLATAFORMA AND moap_id_modalidad = 2  
+            SELECT PLAT_NOMBRE, GRUP_URL, GRUP_ID_ACCESO, GRUP_CLAVE_ACCESO
+            FROM GRUPO, PLATAFORMA
+            WHERE GRUP_ID_PLATAFORMA=PLAT_ID_PLATAFORMA 
+                AND GRUP_ID_MODALIDAD = 2  
                 AND GRUP_ID_GRUPO=$id; 
-            ";
+        ";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -445,18 +518,17 @@ class Grupo
         return ($transaccion_1->traerObjeto(0));
     }
 
-    //? Verificado en la BD 06/07/2021
-    //?Ahora regresa el id de la modalidad, pero verifica que sea el correspondiente a presencial.
+    //?Regresa el id de la modalidad, pero verifica que sea el correspondiente a presencial.
     function buscarDatosPresencial($id)
     {
         $SQL_Bus_Grupo =
         "   
-                SELECT moap_id_modalidad, SALO_NOMBRE, EDIF_NOMBRE 
-                FROM GRUPO G, SALON S, EDIFICIO E
-                WHERE G.SALO_ID_SALON=S.SALO_ID_SALON AND S.EDIF_ID_EDIFICIO = E.EDIF_ID_EDIFICIO 
-                AND moap_id_modalidad = 1 AND G.GRUP_ID_GRUPO=$id;
-
-            ";
+            SELECT GRUP_ID_MODALIDAD, SALO_NOMBRE, EDIF_NOMBRE 
+            FROM GRUPO G, SALON S, EDIFICIO E
+            WHERE GRUP_ID_SALON=SALO_ID_SALON 
+                AND SALO_ID_EDIFICIO = EDIF_ID_EDIFICIO 
+                AND GRUP_ID_MODALIDAD = 1 AND G.GRUP_ID_GRUPO=$id;
+        ";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -468,14 +540,14 @@ class Grupo
     }
 
     //Permite eliminar un grupo independientemente de si es en modo presencial o en linea
-    //? Verificado en la BD 06/07/2021
     //?No debe utilizarse esta función
     function eliminarGrupo($grupo)
     {
         $SQL_Eli_Grupo =
-        " DELETE FROM grupo
-              WHERE grup_id_grupo = $grupo;
-            ";
+        " 
+            DELETE FROM GRUPO
+            WHERE GRUP_ID_GRUPO = $grupo;
+        ";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -485,11 +557,14 @@ class Grupo
     }
 
     //Busca el ultimo grupo registrado
-    //? Verificado en la BD 06/07/2021
     function buscarUltimo()
     {
         $bd = new BD();
-        $SQL_Bus_Grupo_Seq = "SELECT last_value FROM grupo_grup_id_grupo_seq;";
+        $SQL_Bus_Grupo_Seq =
+        "
+            SELECT last_value 
+            FROM grupo_grup_id_grupo_seq;
+        ";
         //posible alternativa de solución para la tabla. SELECT last_value(grup_id_grupo) Over (partition by grup_id_grupo order by grup_id_grupo DESC) FROM grupo
 
         $bd->abrirBD();
@@ -503,121 +578,132 @@ class Grupo
     }
 
     //Busca todos los datos de un grupo dado el id.
-    //? Verificado en la BD 06/07/2021
-    //? Se cambia ahora, regresa los id de usuario del profesor y el moderador, a su vez lo que regresa es el id de modalidad y estado.
     function buscarSoloGrupo($id)
     {
         $SQL_Bus_SoloGrupo =
         "
-                SELECT g.grup_id_grupo, curs_id_curso, salo_id_salon, plat_id_plataforma, cale_id_calendario, grup_url, grup_id_acceso, grup_clave_acceso,  
-                    grup_cupo, esta_id_estado, grup_publicado, moap_id_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc, grup_num_inscritos,
-                    p.usua_id_usuario usr_instructor, (SELECT p.usua_id_usuario
-                        FROM personal_grupo p, usuario u
-                        WHERE grup_id_grupo = $id AND rol_id_rol = 3 AND p.usua_id_usuario = u.usua_id_usuario) as usr_moderador
-                FROM Grupo g, personal_grupo p, usuario u
-                WHERE g.grup_id_grupo = $id AND rol_id_rol = 2
-                    AND g.grup_id_grupo = p.grup_id_grupo AND p.usua_id_usuario = u.usua_id_usuario;
-                ";
+            SELECT GRUP_ID_GRUPO, GRUP_ID_CURSO, GRUP_ID_SALON, GRUP_ID_PLATAFORMA, 
+                    GRUP_ID_CALENDARIO, GRUP_URL, GRUP_ID_ACCESO, GRUP_CLAVE_ACCESO,  
+                    GRUP_CUPO, GRUP_ID_ESTADO, GRUP_PUBLICADO, GRUP_ID_MODALIDAD, 
+                    GRUP_TIPO, GRUP_INICIO_INSC, GRUP_FIN_INSC, GRUP_NUM_INSCRITOS,
+                    PEGR_ID_USUARIO USR_INSTRUCTOR, (SELECT PEGR_ID_USUARIO
+                                                    FROM PERSONAL_GRUPO, USUARIO
+                                                    WHERE PEGR_ID_GRUPO = $id AND USUA_ID_ROL = 3 
+                                                        AND PEGR_ID_USUARIO = USUA_ID_USUARIO) AS USR_MODERADOR
+            FROM GRUPO, PERSONAL_GRUPO, USUARIO
+            WHERE GRUP_ID_GRUPO = $id 
+                AND USUA_ID_ROL = 2
+                AND GRUP_ID_GRUPO = PEGR_ID_GRUPO 
+                AND PEGR_ID_USUARIO = USUA_ID_USUARIO;
+        ";
 
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Bus_SoloGrupo);
-            $obj_Grupo = $transaccion_1->traerObjeto(0);
-            $bd->cerrarBD();
-            return ($transaccion_1->traerObjeto(0));
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Bus_SoloGrupo);
+        $obj_Grupo = $transaccion_1->traerObjeto(0);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerObjeto(0));
     }
         
     function buscarGrupoCompleto($id)
     {
         $SQL_Bus_Grupo =
-        "SELECT G.GRUP_ID_GRUPO, G.CURS_ID_CURSO, CURS_NOMBRE, CURS_TIPO, CURS_NIVEL, CURS_OBJETIVOS, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, 
-            G.MOAP_ID_MODALIDAD, MOAP_NOMBRE, ESTA_NOMBRE, PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO, 
-            GRUP_CUPO, GRUP_NUM_INSCRITOS, GRUP_INICIO_INSC, GRUP_FIN_INSC, GRUP_PUBLICADO, GRUP_TIPO, G.PLAT_ID_PLATAFORMA,
-            G.grup_id_acceso, G.grup_clave_acceso,
-            CALE_ID_CALENDARIO, GRUP_URL, GRUP_ID_ACCESO, GRUP_CLAVE_ACCESO, GRUP_CUPO, GRUP_NUM_INSCRITOS,
-            (SELECT P.plat_nombre
-             FROM Grupo G, Plataforma P
-             WHERE G.plat_id_plataforma = P.plat_id_plataforma
-                   AND G.grup_id_grupo = $id) AS plat_nombre,
-                   
-             (SELECT (S.salo_nombre || ' Edificio: ' || E.edif_nombre) AS salon
-              FROM Salon S, Grupo G, Edificio E
-              WHERE S.salo_id_salon = G.salo_id_salon
-                      AND G.grup_id_grupo = $id
-                     AND S.EDIF_ID_EDIFICIO = E.EDIF_ID_EDIFICIO) AS salo_nombre,
-            (SELECT count (sesi_id_sesiones)
-			  FROM Sesion 
-			  WHERE grup_id_grupo = $id
-			  GROUP BY grup_id_grupo) AS num_sesiones,
-            (SELECT MA.moap_nombre
-			 FROM Modalidad_Aprendizaje MA, Grupo G
-			 WHERE MA.moap_id_modalidad = G.moap_id_modalidad
-	   			 	AND G.grup_id_grupo = $id) AS moap_nombre,
-            (SELECT (P.pers_nombre || ' ' || P.pers_apellido_paterno || ' ' || P.pers_apellido_materno) AS Moderador
-            FROM Personal_Grupo PG, Usuario U, Persona P
-            WHERE U.usua_id_usuario = PG.usua_id_usuario AND P.pers_id_persona = U.pers_id_persona 
-                AND U.rol_id_rol = 3 AND PG.grup_id_grupo = $id) AS moderador
+        "
+            SELECT GRUP_ID_GRUPO, GRUP_ID_CURSO, CURS_NOMBRE, CURS_TIPO, 
+                    CURS_NIVEL, CURS_OBJETIVOS, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, 
+                    GRUP_ID_MODALIDAD, MOAP_NOMBRE, ESTA_NOMBRE, PERS_NOMBRE, 
+                    PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO, GRUP_CUPO, 
+                    GRUP_NUM_INSCRITOS, GRUP_INICIO_INSC, GRUP_FIN_INSC, GRUP_PUBLICADO, 
+                    GRUP_TIPO, GRUP_ID_PLATAFORMA, GRUP_ID_ACCESO, 
+                    GRUP_CLAVE_ACCESO, GRUP_ID_CALENDARIO, GRUP_URL, GRUP_ID_ACCESO, 
+                    GRUP_CLAVE_ACCESO, GRUP_CUPO, GRUP_NUM_INSCRITOS,
                     
-        FROM GRUPO G, CURSO C, MODALIDAD_APRENDIZAJE M, ESTADO E, 
-            PERSONAL_GRUPO PG, USUARIO U, PERSONA P
-        WHERE 	G.CURS_ID_CURSO = C.CURS_ID_CURSO 
-            AND G.MOAP_ID_MODALIDAD = M.MOAP_ID_MODALIDAD
-            AND G.ESTA_ID_ESTADO = E.ESTA_ID_ESTADO
-            AND G.GRUP_ID_GRUPO = PG.GRUP_ID_GRUPO
-            AND PG.USUA_ID_USUARIO = U.USUA_ID_USUARIO
-            AND U.PERS_ID_PERSONA = P.PERS_ID_PERSONA
-            AND ROL_ID_ROL = 2
-            AND G.GRUP_ID_GRUPO = $id
-            
+                    (SELECT PLAT_NOMBRE
+                    FROM GRUPO, PLATAFORMA
+                    WHERE GRUP_ID_PLATAFORMA = PLAT_ID_PLATAFORMA
+                        AND GRUP_ID_GRUPO = $id) AS PLAT_NOMBRE,
+                
+                    (SELECT (SALO_NOMBRE || ' EDIFICIO: ' || EDIF_NOMBRE) AS SALON
+                    FROM SALON S, GRUPO G, EDIFICIO E
+                    WHERE SALO_ID_SALON = GRUP_ID_SALON
+                            AND GRUP_ID_GRUPO = $id
+                            AND SALO_ID_EDIFICIO = EDIF_ID_EDIFICIO) AS SALO_NOMBRE,
 
-            ";
+                    (SELECT COUNT (SESI_ID_SESION)
+                    FROM SESION 
+                    WHERE GRUP_ID_GRUPO = $id
+                    GROUP BY GRUP_ID_GRUPO) AS NUM_SESIONES,
 
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Bus_Grupo);
-            $obj_Grupo = $transaccion_1->traerObjeto(0);
-            $bd->cerrarBD();
-            return ($transaccion_1->traerObjeto(0));
+                    (SELECT MOAP_NOMBRE
+                    FROM MODALIDAD_APRENDIZAJE, GRUPO
+                    WHERE MOAP_ID_MODALIDAD = GRUP_ID_MODALIDAD
+                            AND GRUP_ID_GRUPO = $id) AS MOAP_NOMBRE,
+
+                    (SELECT (PERS_NOMBRE || ' ' || PERS_APELLIDO_PATERNO || ' ' || PERS_APELLIDO_MATERNO) AS MODERADOR
+                    FROM PERSONAL_GRUPO, USUARIO, PERSONA 
+                    WHERE USUA_ID_USUARIO = PEGR_ID_USUARIO AND PERS_ID_PERSONA = USUA_ID_PERSONA 
+                        AND USUA_ID_ROL = 3 AND PEGR_ID_GRUPO = $id) AS MODERADOR
+                    
+            FROM GRUPO G, CURSO C, MODALIDAD_APRENDIZAJE M, ESTADO E, 
+                PERSONAL_GRUPO PG, USUARIO U, PERSONA P
+            WHERE   GRUP_ID_CURSO = CURS_ID_CURSO 
+                AND GRUP_ID_MODALIDAD = MOAP_ID_MODALIDAD
+                AND GRUP_ID_ESTADO = ESTA_ID_ESTADO
+                AND GRUP_ID_GRUPO = PEGR_ID_GRUPO
+                AND PEGR_ID_USUARIO = USUA_ID_USUARIO
+                AND USUA_ID_PERSONA = PERS_ID_PERSONA
+                AND USUA_ID_ROL = 2
+                AND GRUP_ID_GRUPO = $id
+        ";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Bus_Grupo);
+        $obj_Grupo = $transaccion_1->traerObjeto(0);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerObjeto(0));
     }
     function idUsuarioModeradorGrupo($id)
     {
         $SQL_Bus_Grupo =
         "
-                SELECT P.USUA_ID_USUARIO
-                FROM PERSONAL_GRUPO P, USUARIO U
-                WHERE P.USUA_ID_USUARIO = U.USUA_ID_USUARIO 
-                    AND ROL_ID_ROL = 3
-                    AND GRUP_ID_GRUPO = $id
-            ";
+            SELECT PEGR_ID_USUARIO
+            FROM PERSONAL_GRUPO, USUARIO
+            WHERE PEGR_ID_USUARIO = USUA_ID_USUARIO 
+                AND USUA_ID_ROL = 3
+                AND PEGR_ID_GRUPO = $id
+        ";
 
-            $bd = new BD();
-            $bd->abrirBD();
-            $transaccion_1 = new Transaccion($bd->conexion);
-            $transaccion_1->enviarQuery($SQL_Bus_Grupo);
-            $obj_Grupo = $transaccion_1->traerObjeto(0);
-            $bd->cerrarBD();
-            return ($transaccion_1->traerObjeto(0));
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Bus_Grupo);
+        $obj_Grupo = $transaccion_1->traerObjeto(0);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerObjeto(0));
     }
 
     //Busca los grupos que imparte un profesor y se encuentran activos o a punto de comenzar
-    //? Verificado en la BD 06/07/2021
     //? Se cambia la logica ahora el id hace referencia al id de usuario del profesor
     function buscarGruposImpartidosxInstructor($id)
     {
         $SQL_Bus_Grupos =
-        "SELECT G.GRUP_ID_GRUPO, G.grup_publicado, M.moap_id_modalidad, moap_nombre,
-                    CURS_NOMBRE, CALE_SEMESTRE, grup_num_inscritos, esta_nombre
-                FROM Personal_Grupo P, GRUPO G, CURSO C, Modalidad_Aprendizaje M, CALENDARIO CA, Estado E
-                WHERE P.usua_id_usuario = $id
-                    AND G.CURS_ID_CURSO = C.CURS_ID_CURSO AND G.grup_id_grupo = P.grup_id_grupo
-                    AND G.moap_id_modalidad = M.moap_id_modalidad
-                    AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO
-                    AND G.ESTA_ID_ESTADO = E.ESTA_ID_ESTADO
-                    AND (g.esta_id_estado = 2 OR g.esta_id_estado = 3)
-                ORDER BY GRUP_ID_GRUPO ASC;
-            ";
+        "
+            SELECT GRUP_ID_GRUPO, GRUP_PUBLICADO, MOAP_ID_MODALIDAD, MOAP_NOMBRE,
+                    CURS_NOMBRE, CALE_SEMESTRE, GRUP_NUM_INSCRITOS, ESTA_NOMBRE
+            FROM PERSONAL_GRUPO P, GRUPO G, CURSO C, MODALIDAD_APRENDIZAJE M, 
+                CALENDARIO CA, ESTADO E
+            WHERE PEGR_ID_USUARIO = $id
+                AND GRUP_ID_CURSO = CURS_ID_CURSO 
+                AND GRUP_ID_GRUPO = PEGR_ID_GRUPO
+                AND GRUP_ID_MODALIDAD = MOAP_ID_MODALIDAD
+                AND GRUP_ID_CALENDARIO = CALE_ID_CALENDARIO
+                AND GRUP_ID_ESTADO = ESTA_ID_ESTADO
+                AND (GRUP_ID_ESTADO = 2 OR GRUP_ID_ESTADO = 3)
+            ORDER BY GRUP_ID_GRUPO ASC;
+        ";
 
             $bd = new BD();
             $bd->abrirBD();
@@ -631,17 +717,21 @@ class Grupo
     function buscarGruposImpartidosxInstructorHistoricos($id)
     {
         $SQL_Bus_Grupos =
-        "SELECT G.GRUP_ID_GRUPO, G.grup_publicado, M.moap_id_modalidad, moap_nombre,
-                    CURS_NOMBRE, CALE_SEMESTRE, grup_num_inscritos, esta_nombre, cons_id_constancias
-                FROM Personal_Grupo P, GRUPO G, CURSO C, Modalidad_Aprendizaje M, CALENDARIO CA, Estado E
-                WHERE P.usua_id_usuario = $id
-                    AND G.CURS_ID_CURSO = C.CURS_ID_CURSO AND G.grup_id_grupo = P.grup_id_grupo
-                    AND G.moap_id_modalidad = M.moap_id_modalidad
-                    AND G.CALE_ID_CALENDARIO = CA.CALE_ID_CALENDARIO
-                    AND G.ESTA_ID_ESTADO = E.ESTA_ID_ESTADO
-                    AND (g.esta_id_estado = 1 OR g.esta_id_estado = 4)
-                ORDER BY GRUP_ID_GRUPO ASC;
-            ";
+        "
+            SELECT GRUP_ID_GRUPO, GRUP_PUBLICADO, MOAP_ID_MODALIDAD, 
+                    MOAP_NOMBRE, CURS_NOMBRE, CALE_SEMESTRE, 
+                    GRUP_NUM_INSCRITOS, ESTA_NOMBRE, PEGR_ID_CONSTANCIA
+            FROM PERSONAL_GRUPO, GRUPO, CURSO, MODALIDAD_APRENDIZAJE, 
+                CALENDARIO, ESTADO
+            WHERE PEGR_ID_USUARIO = $id
+                AND GRUP_ID_CURSO = CURS_ID_CURSO 
+                AND GRUP_ID_GRUPO = PEGR_ID_GRUPO
+                AND GRUP_ID_MODALIDAD = MOAP_ID_MODALIDAD
+                AND GRUP_ID_CALENDARIO = CALE_ID_CALENDARIO
+                AND GRUP_ID_ESTADO = ESTA_ID_ESTADO
+                AND (GRUP_ID_ESTADO = 1 OR GRUP_ID_ESTADO = 4)
+            ORDER BY GRUP_ID_GRUPO ASC;
+        ";
 
             $bd = new BD();
             $bd->abrirBD();
@@ -652,16 +742,18 @@ class Grupo
     }
 
     //Permite Consultar las inscripciones de un grupo
-    //? Verificado en la BD 06/07/2021
     function buscarInscripcionesxGrupo($ID)
     {
         $SQL_Bus_Cursos =
-        "SELECT insc_id_inscripcion, pers_apellido_paterno, pers_apellido_materno, pers_nombre, pers_correo
-            FROM Inscripcion I, Profesor p, Persona E 
-            WHERE I.prof_id_profesor = P.prof_id_profesor 
-                AND P.pers_id_persona = E.pers_id_persona AND grup_id_grupo = $ID 
-                AND I.insc_activo = TRUE
-            ORDER BY pers_apellido_paterno ASC;
+        "
+            SELECT INSC_ID_INSCRIPCION, PERS_APELLIDO_PATERNO, 
+                    PERS_APELLIDO_MATERNO, PERS_NOMBRE, PERS_CORREO
+            FROM INSCRIPCION, PROFESOR, PERSONA
+            WHERE INSC_ID_PROFESOR = PROF_ID_PROFESOR 
+                AND PROF_ID_PERSONA = PERS_ID_PERSONA 
+                AND INSC_ID_GRUPO = $ID 
+                AND INSC_ACTIVO = TRUE
+            ORDER BY PERS_APELLIDO_PATERNO ASC;
         ";
 
         $bd = new BD();
@@ -673,7 +765,6 @@ class Grupo
     }
 
     //Permite consultar el nombre de un curso por el ID del grupo
-    //? Verificado en la BD 06/07/2021
     /*SELECT curs_nombre, curs_nivel, curs_tipo, mode_id_moderador, prof_id_profesor, plat_id_plataforma, salo_id_salon, grup_modalidad
                 FROM Curso C, Grupo G
             WHERE C.curs_id_cursos=G.curs_id_cursos AND grup_id_grupo = $ID;*/
@@ -681,15 +772,22 @@ class Grupo
     {
         $SQL_Bus_Curso =
         "   
-                SELECT curs_nombre, curs_nivel, esta_id_estado, curs_tipo, P.usua_id_usuario, plat_id_plataforma, salo_id_salon, M.moap_id_modalidad, moap_nombre, 
-                    (SELECT P.usua_id_usuario
-                    FROM Personal_grupo P, Usuario U
-                    WHERE P.usua_id_usuario = U.usua_id_usuario AND rol_id_rol = 3 AND p.grup_id_grupo = $ID) as id_moderador
-                FROM Curso C, Grupo G, Personal_grupo P, Usuario U, Modalidad_Aprendizaje M
-                WHERE C.curs_id_curso=G.curs_id_curso AND g.grup_id_grupo = P.grup_id_grupo
-                    AND P.usua_id_usuario = U.usua_id_usuario AND G.moap_id_modalidad = M.moap_id_modalidad
-                    AND rol_id_rol = 2 AND G.grup_id_grupo = $ID;
-            ";
+            SELECT CURS_NOMBRE, CURS_NIVEL, GRUP_ID_ESTADO, CURS_TIPO, 
+                    PEGR_ID_USUARIO, GRUP_ID_PLATAFORMA, GRUP_ID_SALON, 
+                    MOAP_ID_MODALIDAD, MOAP_NOMBRE, 
+                    (SELECT PEGR_ID_USUARIO
+                    FROM PERSONAL_GRUPO, USUARIO
+                    WHERE PEGR_ID_USUARIO = USUA_ID_USUARIO 
+                        AND USUA_ID_ROL = 3 
+                        AND PEGR_ID_GRUPO = $ID) AS ID_MODERADOR
+            FROM CURSO, GRUPO, PERSONAL_GRUPO, USUARIO, MODALIDAD_APRENDIZAJE
+            WHERE CURS_ID_CURSO=GRUP_ID_CURSO 
+                AND GRUP_ID_GRUPO = PEGR_ID_GRUPO
+                AND PEGR_ID_USUARIO = USUA_ID_USUARIO 
+                AND GRUP_ID_MODALIDAD = MOAP_ID_MODALIDAD
+                AND USUA_ID_ROL = 2 
+                AND GRUP_ID_GRUPO = $ID;
+        ";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -700,193 +798,4 @@ class Grupo
         return ($transaccion_1->traerObjeto(0));
     }
 
-        
-
-    //? Ninguno de los siguientes métodos se utiliza actualmente 24/06/2021
-    //? Deprecated
-    /*Los métodos a partir de aqui están diferenciados pero los de arriba estan creados para permitir un trato indiferente para los 2 tipos de cursos, para una facilidad de manejo*/
-    //Permite agregar un grupo presencial
-    function agregarGrupoPresencial($moderador, $profesor, $curso, $salon, $calendario, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc)
-    {
-        $SQL_Ins_Grupo =
-        "   INSERT INTO Grupo (mode_id_moderador, prof_id_profesor, curs_id_cursos, salo_id_salon, cale_id_calendario, 
-                    grup_cupo, grup_estado, grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc)
-                VALUES ($moderador, $profesor, $curso, $salon, $calendario, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc);
-            ";
-
-        $bd = new BD();
-        $bd->abrirBD();
-        $transaccion_1 = new Transaccion($bd->conexion);
-        $transaccion_1->enviarQuery($SQL_Ins_Grupo);
-        $bd->cerrarBD();
-        //$this->id_grupo = Grupo::buscarUltimo();
-    }
-
-    //Permite agregar un grupo en línea
-    function agregarGrupoWebinar(
-        $moderador,
-        $profesor,
-        $curso,
-        $plataforma,
-        $calendario,
-        $reunion,
-        $acceso,
-        $clave,
-        $cupo,
-        $estado,
-        $activo,
-        $modalidad,
-        $tipo_grupo,
-        $inicio_insc,
-        $fin_insc
-    ) {
-        $SQL_Ins_Grupo =
-        "   INSERT INTO Grupo (mode_id_moderador, prof_id_profesor, curs_id_cursos,  plat_id_plataforma, cale_id_calendario, grup_reunion, grup_acceso, grup_clave_acceso,  
-                    grup_cupo, grup_estado, grup_activo, grup_modalidad, grup_tipo, grup_inicio_insc, grup_fin_insc)
-                VALUES ($moderador, $profesor, $curso, $plataforma, $calendario, $reunion, $acceso, $clave, $cupo, $estado, $activo, $modalidad, $tipo_grupo, $inicio_insc, $fin_insc);
-            ";
-
-        $bd = new BD();
-        $bd->abrirBD();
-        $transaccion_1 = new Transaccion($bd->conexion);
-        $transaccion_1->enviarQuery($SQL_Ins_Grupo);
-        $bd->cerrarBD();
-        //$this->id_grupo = Grupo::buscarUltimo();
-    }
-
-    //Permite actualizar un grupo presencial
-    function actualizarGrupoPresencial($grupo, $moderador, $profesor, $salon, $cupo, $estado, $activo, $inicio_insc, $fin_insc)
-    {
-        $SQL_Actua_Grupo =
-        "   UPDATE grupo
-                SET mode_id_moderador = $moderador, prof_id_profesor = $profesor, salo_id_salon = $salon, grup_cupo = $cupo, 
-                    grup_estado = $estado, grup_activo = $activo, grup_inicio_insc = $inicio_insc, grup_fin_insc = $fin_insc
-                WHERE grup_id_grupo = $grupo;
-            ";
-
-        $bd = new BD();
-        $bd->abrirBD();
-        $transaccion_1 = new Transaccion($bd->conexion);
-        $transaccion_1->enviarQuery($SQL_Actua_Grupo);
-        $bd->cerrarBD();
-    }
-
-    //Permite actualizar un grupo en linea
-    function actualizarGrupoWeb($grupo, $moderador, $profesor, $plataforma, $reunion, $acceso, $clave, $cupo, $estado, $activo, $inicio_insc, $fin_insc)
-    {
-        $SQL_Actua_Grupo =
-        "   UPDATE grupo
-                SET mode_id_moderador = $moderador, prof_id_profesor = $profesor, plat_id_plataforma = $plataforma, grup_reunion = $reunion, grup_acceso = $acceso, grup_clave_acceso = $clave,
-                grup_cupo = $cupo, grup_estado = $estado, grup_activo = $activo, grup_inicio_insc = $inicio_insc, grup_fin_insc = $fin_insc
-                WHERE grup_id_grupo = $grupo;
-            ";
-
-        $bd = new BD();
-        $bd->abrirBD();
-        $transaccion_1 = new Transaccion($bd->conexion);
-        $transaccion_1->enviarQuery($SQL_Actua_Grupo);
-        $bd->cerrarBD();
-    }
-
-    //Permite obtener todos los grupos de modalidad Presencial
-    function buscarTodosGruposPresencial()
-    {
-        $SQL_Bus_Cursos =
-        "   SELECT g.grup_id_grupo, g.curs_id_curso, curs_nombre, ( edif_nombre || salo_nombre) as salon, g.esta_id_estado, esta_nombre,
-                    g.moap_id_modalidad, moap_nombre, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo, grup_num_inscritos, grup_publicado,
-                    grup_tipo, grup_inicio_insc, grup_fin_insc, pg.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno
-                FROM Grupo g, Curso c, salon s, edificio ed,estado e, modalidad_aprendizaje m, personal_grupo pg, usuario u, persona pe
-                WHERE g.curs_id_curso = c.curs_id_curso AND g.salo_id_salon = s.salo_id_salon AND s.edif_id_edificio = ed.edif_id_edificio 
-                    AND g.esta_id_estado = e.esta_id_estado	AND g.moap_id_modalidad = m.moap_id_modalidad AND g.grup_id_grupo = pg.grup_id_grupo 
-                    AND pg.usua_id_usuario = u.usua_id_usuario	AND u.pers_id_persona = pe.pers_id_persona AND rol_id_rol = 2 
-                    AND g.moap_id_modalidad = 1
-                ORDER BY grup_id_grupo ASC;
-            ";
-
-        $bd = new BD();
-        $bd->abrirBD();
-        $transaccion_1 = new Transaccion($bd->conexion);
-        $transaccion_1->enviarQuery($SQL_Bus_Cursos);
-        $bd->cerrarBD();
-        return ($transaccion_1->traerRegistros());
-    }
-
-    //Permite obtener todos los grupos de modalidad en Linea
-    //? Verificado en la BD 06/07/2021
-    function buscarTodosWebinar()
-    {
-        $SQL_Bus_Cursos =
-        "   SELECT g.grup_id_grupo, g.curs_id_curso, curs_nombre, g.plat_id_plataforma, plat_nombre, g.esta_id_estado, esta_nombre,
-                    g.moap_id_modalidad, moap_nombre, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo, grup_num_inscritos, grup_publicado,
-                    grup_tipo, grup_inicio_insc, grup_fin_insc, pg.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno
-                FROM Grupo g, Curso c, plataforma p, estado e, modalidad_aprendizaje m, personal_grupo pg, usuario u, persona pe
-                WHERE g.curs_id_curso = c.curs_id_curso AND g.plat_id_plataforma = p.plat_id_plataforma AND g.esta_id_estado = e.esta_id_estado
-                    AND g.moap_id_modalidad = m.moap_id_modalidad AND g.grup_id_grupo = pg.grup_id_grupo AND pg.usua_id_usuario = u.usua_id_usuario
-                    AND u.pers_id_persona = pe.pers_id_persona AND rol_id_rol = 2 AND g.moap_id_modalidad = 2
-                ORDER BY grup_id_grupo ASC;
-            ";
-
-        $bd = new BD();
-        $bd->abrirBD();
-        $transaccion_1 = new Transaccion($bd->conexion);
-        $transaccion_1->enviarQuery($SQL_Bus_Cursos);
-        $bd->cerrarBD();
-        return ($transaccion_1->traerRegistros());
-    }
-
-    //permite obtener un grupo presencial por id
-    //Acoplar este método y el siguiente para que muestren los datos del formulario unicamente, no necesitas los id realmente.
-    //? Verificado en la BD 06/07/2021
-    function buscarGrupoPresencial($id)
-    {
-        $SQL_Bus_Curso =
-        "   SELECT g.grup_id_grupo, g.curs_id_curso, curs_nombre, ( edif_nombre || salo_nombre) as salon, g.esta_id_estado, esta_nombre,
-                    g.moap_id_modalidad, moap_nombre, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo, grup_num_inscritos, grup_publicado,
-                    grup_tipo, grup_inicio_insc, grup_fin_insc, pg.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
-                    (SELECT pers_nombre || ' ' || pers_apellido_paterno || ' ' || pers_apellido_materno 
-                    FROM personal_grupo pg, usuario u, persona p
-                    WHERE pg.grup_id_grupo = $id AND pg.usua_id_usuario = u.usua_id_usuario AND u.pers_id_persona = p.pers_id_persona
-                        AND rol_id_rol = 3) as moderador
-                FROM Grupo g, Curso c, salon s, edificio ed,estado e, modalidad_aprendizaje m, personal_grupo pg, usuario u, persona pe
-                WHERE g.curs_id_curso = c.curs_id_curso AND g.salo_id_salon = s.salo_id_salon AND s.edif_id_edificio = ed.edif_id_edificio 
-                    AND g.esta_id_estado = e.esta_id_estado	AND g.moap_id_modalidad = m.moap_id_modalidad AND g.grup_id_grupo = pg.grup_id_grupo 
-                    AND pg.usua_id_usuario = u.usua_id_usuario	AND u.pers_id_persona = pe.pers_id_persona AND rol_id_rol = 2 
-                    AND g.moap_id_modalidad = 1 AND g.grup_id_grupo = $id;
-            ";
-
-        $bd = new BD();
-        $bd->abrirBD();
-        $transaccion_1 = new Transaccion($bd->conexion);
-        $transaccion_1->enviarQuery($SQL_Bus_Curso);
-        $obj_Grupo = $transaccion_1->traerObjeto(0);
-        $bd->cerrarBD();
-        return ($transaccion_1->traerObjeto(0));
-    }
-
-    //permite obtener un grupo en linea por id
-    //? Verificado en la BD 06/07/2021
-    function buscarGrupoWeb($id)
-    {
-        $SQL_Bus_Curso =
-        "   SELECT g.grup_id_grupo, g.curs_id_curso, curs_nombre, g.plat_id_plataforma, plat_nombre, g.esta_id_estado, esta_nombre,
-                    g.moap_id_modalidad, moap_nombre, grup_url, grup_id_acceso, grup_clave_acceso, grup_cupo, grup_num_inscritos, grup_publicado,
-                    grup_tipo, grup_inicio_insc, grup_fin_insc, pg.usua_id_usuario, pers_nombre, pers_apellido_paterno, pers_apellido_materno,
-                    (SELECT pers_nombre || ' ' || pers_apellido_paterno || ' ' || pers_apellido_materno 
-                    FROM personal_grupo pg, usuario u, persona p
-                    WHERE pg.grup_id_grupo = $id AND pg.usua_id_usuario = u.usua_id_usuario AND u.pers_id_persona = p.pers_id_persona
-                        AND rol_id_rol = 3) as moderador
-                FROM Grupo g, Curso c, plataforma p, estado e, modalidad_aprendizaje m, personal_grupo pg, usuario u, persona pe
-                WHERE g.curs_id_curso = c.curs_id_curso AND g.plat_id_plataforma = p.plat_id_plataforma AND g.esta_id_estado = e.esta_id_estado
-                    AND g.moap_id_modalidad = m.moap_id_modalidad AND g.grup_id_grupo = pg.grup_id_grupo AND pg.usua_id_usuario = u.usua_id_usuario
-                    AND u.pers_id_persona = pe.pers_id_persona AND rol_id_rol = 2 AND g.moap_id_modalidad = 2 AND g.grup_id_grupo = $id;
-            ";
-
-        $bd = new BD();
-        $bd->abrirBD();
-        $transaccion_1 = new Transaccion($bd->conexion);
-        $transaccion_1->enviarQuery($SQL_Bus_Curso);
-        $obj_Grupo = $transaccion_1->traerObjeto(0);
-        $bd->cerrarBD();
-        return ($transaccion_1->traerObjeto(0));
-    }
 }
