@@ -2,6 +2,9 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
+//? Clase actualizada a las reglas de los prefijos 04/10/21
+
 class BD
 {
     public $servidor;

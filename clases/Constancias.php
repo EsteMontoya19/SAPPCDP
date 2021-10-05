@@ -1,15 +1,16 @@
 <?php
 
-class Constancias
+//? Clase actualizada a las reglas de los prefijos 05/10/21
+class constancias
 {
-    //TODO: Falta consultar como se llevara a cabo la baja de constancias después del año.
+    
     function eliminarConstancia($constancia)
     {   
 
         $SQL_BUS_CONSTANCIA =
         "UPDATE Constancia
         SET cons_url = null, cons_estado = 'No aplica', cons_fecha = null, cons_hora = null
-        WHERE cons_id_constancias = $constancia";
+        WHERE cons_id_constancia = $constancia";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -30,7 +31,7 @@ class Constancias
         $transaccion_1 = new Transaccion($bd->conexion);
         $transaccion_1->enviarQuery($SQL_BUS_CONSTANCIA);
         $bd->cerrarBD();
-        return $this->id_constancia = Constancias :: buscarUltimo(); //? Se regresa el valor de la constancia recién creada 
+        return $this->id_constancia = $this -> buscarUltimo(); //? Se regresa el valor de la constancia recién creada 
     }
 
     function cargarConstancia($constancia, $url)
@@ -43,7 +44,7 @@ class Constancias
         $SQL_BUS_CONSTANCIA =
         "UPDATE Constancia
         SET cons_url = '$url', cons_estado = 'Disponible', cons_fecha = current_date, cons_hora = '$hora'
-        WHERE cons_id_constancias = $constancia";
+        WHERE cons_id_constancia = $constancia";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -58,7 +59,7 @@ class Constancias
         $SQL_BUS_CONSTANCIA =
         "UPDATE Constancia
         SET cons_url = null, cons_estado = 'No aplica', cons_fecha = null, cons_hora = null
-        WHERE cons_id_constancias = $constancia";
+        WHERE cons_id_constancia = $constancia";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -72,7 +73,7 @@ class Constancias
         $SQL_BUS_CONSTANCIA =
         "UPDATE Constancia
         SET  cons_estado = 'No disponible'
-        WHERE cons_id_constancias = $constancia";
+        WHERE cons_id_constancia = $constancia";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -87,7 +88,7 @@ class Constancias
     {
         $bd = new BD();
         $SQL_BUS_CONSTANCIA = 
-        "SELECT last_value FROM constancia_cons_id_constancias_seq; ";
+        "SELECT last_value FROM constancia_cons_id_constancia_seq; ";
 
         $bd->abrirBD();
         $transaccion_1 = new Transaccion($bd->conexion);
@@ -100,7 +101,7 @@ class Constancias
         return $constancia_Seq;
     }
 
-    //? Se utiliza para darle formato de dos digitos a las constancias que suben
+    //? Se utiliza para darle formato de dos digitos a las constancia que suben
     function renombrarConstancia($nombre, $direccion){      
         // Se obtiene el caracter que sería un numero si se siguira un patron de 2 numeros en la contancia
         $esNumero = substr($nombre, -6, 1);
@@ -132,17 +133,17 @@ class Constancias
     {
         $SQL_Ins_Horario =
         "SELECT DISTINCT U.usua_id_usuario,P.pers_id_persona, (P.pers_nombre ||' ' || P.pers_apellido_paterno || ' ' || P.pers_apellido_materno) as Nombre_instructor,
-                        G.grup_id_grupo, C.curs_id_curso, C.curs_nombre, C.curs_tipo, C.curs_nivel, C.curs_num_sesiones, PG.cons_id_constancias
+                        G.grup_id_grupo, C.curs_id_curso, C.curs_nombre, C.curs_tipo, C.curs_nivel, C.curs_num_sesiones, PG.pegr_id_constancia
         FROM Grupo G, Personal_Grupo PG, Usuario U, Persona P, Curso C
-        WHERE G.grup_id_grupo = PG.grup_id_grupo 
-        AND U.usua_id_usuario = PG.usua_id_usuario
-        AND P.pers_id_persona = U.pers_id_persona 
-        AND G.curs_id_curso = C.curs_id_curso
-        AND U.rol_id_rol = 2 
-        AND G.esta_id_estado = 4
-        AND G.grup_id_grupo IN(SELECT grup_id_grupo
+        WHERE G.grup_id_grupo = PG.pegr_id_grupo 
+        AND U.usua_id_usuario = PG.pegr_id_usuario
+        AND P.pers_id_persona = U.usua_id_persona 
+        AND G.grup_id_curso = C.curs_id_curso
+        AND U.usua_id_rol = 2 
+        AND G.grup_id_estado = 4
+        AND G.grup_id_grupo IN(SELECT sesi_id_grupo
                         FROM Sesion S
-                        GROUP BY grup_id_grupo
+                        GROUP BY sesi_id_grupo
                         HAVING MAX(sesi_fecha) >= '$fechaInicio'  AND MAX(sesi_fecha) < '$fechaFin');
         ";
 
@@ -158,14 +159,14 @@ class Constancias
     {
         $SQL_Ins_Horario =
         " SELECT DISTINCT U.usua_id_usuario,P.pers_id_persona, (P.pers_nombre ||' ' || P.pers_apellido_paterno || ' ' || P.pers_apellido_materno) as Nombre_instructor,
-                        G.grup_id_grupo, C.curs_id_curso, C.curs_nombre, C.curs_tipo, C.curs_nivel, C.curs_num_sesiones, PG.cons_id_constancias
+                        G.grup_id_grupo, C.curs_id_curso, C.curs_nombre, C.curs_tipo, C.curs_nivel, C.curs_num_sesiones, PG.pegr_id_constancia
         FROM Grupo G, Personal_Grupo PG, Usuario U, Persona P, Curso C, Profesor Prof
-        WHERE G.grup_id_grupo = PG.grup_id_grupo AND U.usua_id_usuario = PG.usua_id_usuario
-            AND P.pers_id_persona = U.pers_id_persona AND G.curs_id_curso = C.curs_id_curso
-            AND Prof.pers_id_persona = P.pers_id_persona
-            AND U.rol_id_rol = 3 AND G.esta_id_estado = 4 AND G.grup_id_grupo IN(SELECT grup_id_grupo
+        WHERE G.grup_id_grupo = PG.pegr_id_grupo AND U.usua_id_usuario = PG.pegr_id_usuario
+            AND P.pers_id_persona = U.usua_id_persona AND G.grup_id_curso = C.curs_id_curso
+            AND Prof.prof_id_persona = P.pers_id_persona
+            AND U.usua_id_rol = 3 AND G.grup_id_estado = 4 AND G.grup_id_grupo IN(SELECT sesi_id_grupo
                                                                                 FROM Sesion S
-                                                                                GROUP BY grup_id_grupo
+                                                                                GROUP BY sesi_id_grupo
                                                                                 HAVING MAX(sesi_fecha) >= '$fechaInicio'  AND MAX(sesi_fecha) < '$fechaFin');
             ";
 
@@ -180,10 +181,9 @@ class Constancias
     function actualizarEstadoConstanciaDescargada($id)
     {
         $SQL_Act_Est_Constancia = 
-        "
-        UPDATE Constancia
-        SET cons_descargada = true
-        WHERE cons_id_constancias = $id
+        "UPDATE Constancia
+         SET cons_descargada = true
+         WHERE cons_id_constancia = $id
         ";
         
         $bd = new BD();

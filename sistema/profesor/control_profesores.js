@@ -9,6 +9,11 @@ $(document).ready(function () {
     });
 });
 
+function formularioEvaluacion() {
+    $('#EvaluacionCurso').load('../sistema/cuestionarios/frm_evaluacion_curso.php');
+    //$('#container').load('../usuario/frm_autoregistro.php');
+}
+
 function descargaConstancia (id) {
     
     var dml = 'cambioEstadoDescargada';

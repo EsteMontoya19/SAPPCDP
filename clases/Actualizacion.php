@@ -1,5 +1,6 @@
 <?php
-    //? Esta clase se crea para realizar los cambios automaticos.
+    //? Clase actualizada a las reglas de los prefijos 04/10/21
+
     class Actualizacion
     {
         //? Funciones para lso cambios de estado automaticos
@@ -17,14 +18,15 @@
             $bd->cerrarBD();
             return ($transaccion_1->traerRegistros());
         }
+
         function buscarCursosPorCancelarAutogestivos() {
             $SQL_Bus_Grupo =
             "SELECT G.grup_id_grupo, MIN(sesi_fecha) AS primer_sesion, sesi_hora_fin
             FROM Grupo G, Curso C, Sesion S
-            WHERE G.curs_id_curso = C.curs_id_curso AND 
-                  S.grup_id_grupo = G.grup_id_grupo AND 
-                  G.moap_id_modalidad = 3  AND
-                  G.grup_num_inscritos <= 5 AND esta_id_estado = 3
+            WHERE G.grup_id_curso = C.curs_id_curso AND 
+                  S.sesi_id_grupo = G.grup_id_grupo AND 
+                  G.grup_id_modalidad = 3  AND
+                  G.grup_num_inscritos <= 5 AND grup_id_estado = 3
             GROUP BY G.grup_id_grupo, sesi_hora_fin
             HAVING MIN(sesi_fecha) <= current_date  
             ";
@@ -40,10 +42,10 @@
             $SQL_Bus_Grupo =
             "SELECT G.grup_id_grupo, MIN(sesi_fecha) AS primer_sesion, sesi_hora_fin
             FROM Grupo G, Curso C, Sesion S
-            WHERE G.curs_id_curso = C.curs_id_curso AND 
-                  S.grup_id_grupo = G.grup_id_grupo AND 
-                  G.moap_id_modalidad = 2  AND
-                  G.grup_num_inscritos <= 2 AND esta_id_estado = 3
+            WHERE G.grup_id_curso = C.curs_id_curso AND 
+                  S.sesi_id_grupo = G.grup_id_grupo AND 
+                  G.grup_id_modalidad = 2  AND
+                  G.grup_num_inscritos <= 2 AND grup_id_estado = 3
             GROUP BY G.grup_id_grupo, sesi_hora_fin
             HAVING MIN(sesi_fecha) <= current_date 
             ";
@@ -59,10 +61,10 @@
             $SQL_Bus_Grupo =
             "SELECT G.grup_id_grupo, MIN(sesi_fecha) AS primer_sesion, sesi_hora_fin
             FROM Grupo G, Curso C, Sesion S
-            WHERE G.curs_id_curso = C.curs_id_curso AND 
-                  S.grup_id_grupo = G.grup_id_grupo AND 
-                  G.moap_id_modalidad = 1  AND
-                  G.grup_num_inscritos <= 10 AND esta_id_estado = 3
+            WHERE G.grup_id_curso = C.curs_id_curso AND 
+                  S.sesi_id_grupo = G.grup_id_grupo AND 
+                  G.grup_id_modalidad = 1  AND
+                  G.grup_num_inscritos <= 10 AND grup_id_estado = 3
             GROUP BY G.grup_id_grupo, sesi_hora_fin
             HAVING MIN(sesi_fecha) <= current_date
             ";
@@ -78,7 +80,7 @@
             $SQL_Bus_Grupo =
             "SELECT * 
             FROM Grupo 
-            WHERE esta_id_estado = 1 AND grup_publicado = 'TRUE';
+            WHERE grup_id_estado = 1 AND grup_publicado = 'TRUE';
             ";
 
             $bd = new BD();
@@ -92,7 +94,7 @@
             $SQL_Bus_Grupo =
             "SELECT * 
             FROM Grupo 
-            WHERE esta_id_estado = 4 AND grup_publicado = 'TRUE';
+            WHERE grup_id_estado = 4 AND grup_publicado = 'TRUE';
             ";
 
             $bd = new BD();
@@ -106,9 +108,9 @@
             $SQL_Bus_Grupo =
             "SELECT G.grup_id_grupo, MAX(sesi_fecha) AS fecha_fin, sesi_hora_fin
             FROM Grupo G, Curso C, Sesion S
-            WHERE G.curs_id_curso = C.curs_id_curso
-                AND S.grup_id_grupo = G.grup_id_grupo
-                AND G.esta_id_estado = 2
+            WHERE G.grup_id_curso = C.curs_id_curso
+                AND S.sesi_id_grupo = G.grup_id_grupo
+                AND G.grup_id_estado = 2
             GROUP BY G.grup_id_grupo, sesi_hora_fin
             HAVING MAX(sesi_fecha) <= current_date AND sesi_hora_fin <= current_time
             ";
@@ -126,9 +128,9 @@
             $SQL_Bus_Grupo =
             "SELECT G.grup_id_grupo, MIN(sesi_fecha) AS fecha_inicio, sesi_hora_inicio
             FROM Grupo G, Curso C, Sesion S
-            WHERE G.curs_id_curso = C.curs_id_curso
-                AND S.grup_id_grupo = G.grup_id_grupo
-                AND G.esta_id_estado = 3
+            WHERE G.grup_id_curso = C.curs_id_curso
+                AND S.sesi_id_grupo = G.grup_id_grupo
+                AND G.grup_id_estado = 3
             GROUP BY G.grup_id_grupo, sesi_hora_inicio
             HAVING MIN(sesi_fecha) <= current_date AND sesi_hora_inicio <= current_time
             ";
@@ -145,7 +147,7 @@
         function actualizarEstadoGrupo ($grupo, $estado) {
             $SQL_Bus_Grupo =
             "UPDATE Grupo
-             SET  esta_id_estado = $estado,
+             SET  grup_id_estado = $estado,
              WHERE grup_id_grupo = $grupo;
             ";
 

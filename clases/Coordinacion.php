@@ -1,6 +1,8 @@
 <?php 
+    //? Clase actualizada a las reglas de los prefijos 05/10/21
+
     class Coordinacion{
-        //Permite buscar todas las coordinaciones y traer sus datos
+        //? Permite buscar todas las coordinaciones y traer sus datos
         function buscarTodasCoordinaciones()
         {
             $SQL_Bus_Coordinaciones = 
@@ -16,7 +18,7 @@
             return ($transaccion_1->traerRegistros());
         }
 
-        //Permite buscar una coordinación a partir de su id
+        //? Permite buscar una coordinación a partir de su id
         function buscarCoordinacion($id)
         {
             $SQL_Bus_Coordinacion =
@@ -33,7 +35,7 @@
             return ($transaccion_1->traerObjeto(0));
         }
 
-        //Permite buscar una coordinación a partir de su nombre
+        //? Permite buscar una coordinación a partir de su nombre
         function buscarCoordinacionNombre($nombre)
         {
             $SQL_Bus_Coordinacion =
@@ -50,7 +52,7 @@
             return ($transaccion_1->traerObjeto(0));
         }
 
-        //Permite agregar una coordinación nueva
+        //? Permite agregar una coordinación nueva
         function agregarCoordinacion($id)
         {
             $SQL_Agr_Coordinacion =
@@ -65,7 +67,7 @@
             $bd->cerrarBD();
         }
 
-        //Permite actualizar una coordinación a partir de su id
+        //? Permite actualizar una coordinación a partir de su id
         function actualizarCoordinacion($id, $nombre)
         {
             $SQL_Act_Coordinacion =

@@ -99,7 +99,12 @@
                           </button> -->
                         </td>
                         <td>
-                          <?php if($grupo['insc_activo'] == 't'){ ?>
+                        <div class="col-12 text-center negritas">
+                          <a id="Solicitud_Evaluacion"  onClick='formularioEvaluacion()' class="d-block small" href="#" style="color:#126E82" type="button" data-toggle="modal"
+                          data-target="#exampleModal" >Descargar Constancias</a>
+                        </div>
+
+                          <!-- <?php if($grupo['insc_activo'] == 't'){ ?>
                             <?php if ($grupo['esta_nombre'] == 'Finalizado') {
                               if($grupo['cons_id_constancias'] == '') { 
                                 echo "Pendiente carga de constancia";
@@ -124,7 +129,7 @@
                             }?>
                           <?php } else {
                               echo ('<p class = aviso-azul>Inscripción Cancelada</p>');
-                           } ?>
+                           } ?> -->
                         </td>
                       </tr>
                   <?php } } ?>
@@ -132,6 +137,37 @@
               </table>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title col-lg-12" id="exampleModalLabel"
+            style="background: #132c33;color: #fff;padding: 10px">Evaluación de curso</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-12">
+                  <p class = "aviso-verde">Para poder descargar su constancia es necesario realizar la evaluación del curso que se tomó.</p>
+                  <section id = "EvaluacionCurso">
+                  </section>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-regresar" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary btn-aceptar" id = "btn-registrar-profesor">Registrar</button>
         </div>
       </div>
     </div>

@@ -1,4 +1,7 @@
 <?php 
+
+    //? Clase actualizada a las reglas de los prefijos 05/10/21
+
     class Calendario
     {
         //? Registra un nuevo calendario
@@ -22,7 +25,7 @@
         function agregarInhabiles ($calendario , $diaInhabil)
     	{
 			$SQL_BUS_CALENDARIO =
-			"INSERT INTO Dia_festivo (cale_id_calendario, dife_fecha) VALUES ($calendario, '$diaInhabil');
+			"INSERT INTO Dia_festivo (dife_id_calendario, dife_fecha) VALUES ($calendario, '$diaInhabil');
 			";
 			
 			$bd = new BD();
@@ -36,7 +39,7 @@
     	{
 			$SQL_BUS_CALENDARIO =
 			"DELETE FROM Dia_festivo 
-             WHERE cale_id_calendario = $id
+             WHERE dife_id_calendario = $id
 			";
 			
 			$bd = new BD();
@@ -67,14 +70,13 @@
 
         }
 
-        //Busca el último registro de persona
-        //? Verificado en la BD 02/07/2021
+        //? Busca el último registro de persona
         function buscarUltimo()
         {
             $bd = new BD();
             $SQL_BUS_CALENDARIO = 
             "SELECT last_value
-            FROM calendario_cale_id_calendario_seq;"; //Que hace este last_value : Muestra el ultimo valor ingresado
+            FROM calendario_cale_id_calendario_seq;";
 
             $bd->abrirBD();
             $transaccion_1 = new Transaccion($bd->conexion);
@@ -146,10 +148,10 @@
         function buscarDiasFestivos($idCalendario)
         {
             $SQL_BUS_CALENDARIO = 
-            "SELECT DF.dife_id_dia_festivo, DF.cale_id_calendario, DF.dife_fecha
+            "SELECT DF.dife_id_dia_festivo, DF.dife_id_calendario, DF.dife_fecha
             FROM Dia_festivo DF, Calendario C
-            WHERE DF.cale_id_calendario = C.cale_id_calendario AND
-                  DF.cale_id_calendario = $idCalendario
+            WHERE DF.dife_id_calendario = C.cale_id_calendario AND
+                  DF.dife_id_calendario = $idCalendario
             ";
 
             $bd = new BD();
@@ -178,13 +180,10 @@
             $transaccion_1 = new Transaccion($bd->conexion);
             $transaccion_1->enviarQuery($SQL_BUS_CALENDARIO);
             $bd->cerrarBD();
-		}
-        
-        
-        
-        
-        //Permite Consultar los dias de inicio y fin de un periodo de asueto académico como semana santa del calendario activo
-        //? Verificado en la BD
+		}  
+                
+        //? Permite Consultar los dias de inicio y fin de un periodo de asueto académico como semana santa del calendario activo
+
         function consultarAsueto()
         {
             $SQL_Bus_Asueto = 
@@ -201,8 +200,8 @@
             return ($transaccion_1->traerObjeto(0));
         }
         
-        //Permite Consultar el inicio del periodo de vacaciones administrativas correspondientes al semestre del calendario activo
-        //? Verificado en la BD
+        //? Permite Consultar el inicio del periodo de vacaciones administrativas correspondientes al semestre del calendario activo
+
         function consultarVacacionesAdministrativas()
         {
             $SQL_Bus_Vac_Admin = 
