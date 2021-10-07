@@ -1,10 +1,10 @@
 <?php
+//Registra una persona
+//? Verificado en la BD 02/07/2021
+//? Se añadió a la tabla el atributo rfc
+//? Clase actualizada a las reglas de los prefijos 06/10/21
 class Persona
 {
-    //Registra una persona
-    //? Verificado en la BD 02/07/2021
-    //? Se añadió a la tabla el atributo rfc
-    //? Clase actualizada a las reglas de los prefijos 06/10/21
     function agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc, $sexo)
     {
       //Aquí iría una validación pero puede ser que ya se esté haciendo en otra parte
