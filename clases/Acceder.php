@@ -33,8 +33,8 @@ class Acceder
         $bd->cerrarBD();
         $this->id_usuario = $obj_Usuario->usua_num_usuario;
         $this->id_contrasena = $obj_Usuario->usua_contrasena;
-        $this->id_rol = $obj_Usuario->rol_id_rol;
-        $this->id_persona = $obj_Usuario->pers_id_persona;
+        $this->id_rol = $obj_Usuario->usua_id_rol;
+        $this->id_persona = $obj_Usuario->usua_id_persona;
         $this->estado = $obj_Usuario->usua_activo;
 
         return true;
@@ -64,8 +64,8 @@ class Acceder
 
         $this->id_usuario = $obj_Usuario->usua_num_usuario;
         $this->id_contrasena = $obj_Usuario->usua_contrasena;
-        $this->id_rol = $obj_Usuario->rol_id_rol;
-        $this->id_persona = $obj_Usuario->pers_id_persona;
+        $this->id_rol = $obj_Usuario->usua_id_rol;
+        $this->id_persona = $obj_Usuario->usua_id_persona;
         $this->estado = $obj_Usuario->usua_activo;
 
          return true;
