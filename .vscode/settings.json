@@ -209,7 +209,7 @@
         "webs",
         "where"
     ],
-    "cSpell.words": ["anio", "Configuracion", "Lalo", "nomb", "numsqls", "SAPPCDP", "sqls"],
+    "cSpell.words": ["anio", "Configuracion", "Lalo", "nomb", "numsqls", "prmo", "SAPPCDP", "sqls"],
     "sqltools.connections": [
         {
             "previewLimit": 50,

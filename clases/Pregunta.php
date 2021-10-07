@@ -1,8 +1,9 @@
-<?php 
+<?php
 
 class Pregunta
 {
     //Agrega una pregunta, con los atributos descripción y activo
+    //! El valor nulo en la columna «preg_orden» de la relación «pregunta» viola la restricción de no nulo
     function agregarPregunta($pregunta, $activo)
     {
         $SQL_INS_PREGUNTA =
@@ -130,7 +131,7 @@ class Pregunta
     {
         $bd = new BD();
 
-        $SQL_BUS_PREGUNTA = 
+        $SQL_BUS_PREGUNTA =
         "
             SELECT last_value FROM pregunta_preg_id_pregunta_seq; 
         ";
@@ -147,13 +148,13 @@ class Pregunta
     }
 
     //Elimina una pregunta dado su ID
+    // TODO: Esto está raro xd revisar
     function eliminarPregunta($id)
-    {   
+    {
 
         $SQL_DEL_CONSTANCIA =
         "
-            DELETE FROM PREGUNTA
-            WHERE PREG_ID_PREGUNTA = $id
+            SELECT last_value FROM pregunta_preg_id_pregunta_seq;
         ";
 
         $bd = new BD();
@@ -162,8 +163,4 @@ class Pregunta
         $transaccion_1->enviarQuery($SQL_DEL_CONSTANCIA);
         $bd->cerrarBD();
     }
-
 }
-
-
-?>

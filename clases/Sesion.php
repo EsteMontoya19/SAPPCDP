@@ -1,11 +1,12 @@
 <?php
+//? Clase actualizada a las reglas de los prefijos 04/10/21
 class Sesion
 {
     //Agregar sesión
     function agregarSesion($id_grupo, $fecha_sesion, $hora_inicio_sesion, $hora_fin_sesion)
     {
         $SQL_Ins_Sesion =
-        "INSERT INTO Sesion (grup_id_grupo, sesi_fecha, sesi_hora_inicio,sesi_hora_fin)
+        "INSERT INTO Sesion (sesi_id_grupo, sesi_fecha, sesi_hora_inicio,sesi_hora_fin)
 			 VALUES ($id_grupo, '$fecha_sesion' , '$hora_inicio_sesion', '$hora_fin_sesion');
 			";
 
@@ -23,7 +24,7 @@ class Sesion
         "	
 				UPDATE Sesion
 				SET sesi_fecha = '$fecha_sesion', sesi_hora_inicio = '$hora_inicio_sesion', sesi_hora_fin = '$hora_fin_sesion'
-				WHERE sesi_id_sesiones = $id_sesion AND grup_id_grupo = $id_grupo;
+				WHERE sesi_id_sesion = $id_sesion AND sesi_id_grupo = $id_grupo;
 			";
 
         $bd = new BD();
@@ -39,7 +40,7 @@ class Sesion
         $SQL_Eli_Sesion =
         "	
 				DELETE FROM Sesion
-				WHERE sesi_id_sesiones = $id_sesion;
+				WHERE sesi_id_sesion = $id_sesion;
 			";
 
         $bd = new BD();
@@ -53,9 +54,9 @@ class Sesion
     function buscarSesionesIDGrupo($id_grupo)
     {
         $SQL_Bus_Sesion =
-        "SELECT sesi_id_sesiones, grup_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin
+        "SELECT sesi_id_sesion, sesi_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin
 			FROM sesion
-			WHERE grup_id_grupo = $id_grupo 
+			WHERE sesi_id_grupo = $id_grupo
 		";
 
         $bd = new BD();
@@ -71,9 +72,9 @@ class Sesion
     {
         $SQL_Bus_Sesion =
         "
-				SELECT sesi_id_sesiones, grup_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin
+				SELECT sesi_id_sesiones, sesi_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin
 				FROM sesion
-				WHERE sesi_id_sesiones = $id_sesion;
+				WHERE sesi_id_sesion = $id_sesion;
 			";
 
         $bd = new BD();
@@ -90,11 +91,11 @@ class Sesion
     {
 
         $SQL_Bus_Sesion =
-        "SELECT COUNT(grup_id_grupo) numero
-			 FROM sesion
-			 WHERE grup_id_grupo = $idGrupo
-			 GROUP BY grup_id_grupo 
-			";
+        "SELECT COUNT(sesi_id_grupo) numero
+            FROM sesion
+            WHERE sesi_id_grupo = $idGrupo
+            GROUP BY sesi_id_grupo
+		";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -110,13 +111,13 @@ class Sesion
     {
         $SQL_Bus_Sesion =
         "
-				SELECT to_char(sesi_fecha, 'DD-MM-YYYY') fecha, to_char(sesi_hora_inicio, 'HH:MM') hora_ini, to_char(sesi_hora_fin, 'HH:MM') hora_fin
-				FROM sesion
-				WHERE sesi_id_sesiones = (
-					SELECT MIN(sesi_id_sesiones) sesi_id_sesiones 
-					FROM sesion 
-					WHERE grup_id_grupo = $idGrupo
-					) 
+            SELECT to_char(sesi_fecha, 'DD-MM-YYYY') fecha, to_char(sesi_hora_inicio, 'HH:MM') hora_ini, to_char(sesi_hora_fin, 'HH:MM') hora_fin
+            FROM sesion
+            WHERE sesi_id_sesion = (
+                SELECT MIN(sesi_id_sesion) sesi_id_sesion
+                FROM sesion
+                WHERE sesi_id_grupo = $idGrupo
+                )
 			";
 
         $bd = new BD();
@@ -133,14 +134,14 @@ class Sesion
     {
         $SQL_Bus_Sesion =
         "
-			SELECT to_char(sesi_fecha, 'DD') dia, to_char(to_timestamp (to_char(sesi_fecha, 'MM')::text, 'MM'), 'TMmon') mes
-			FROM sesion
-			WHERE sesi_id_sesiones = (
-				SELECT MIN(sesi_id_sesiones) sesi_id_sesiones 
-				FROM sesion 
-				WHERE grup_id_grupo = $idGrupo
-				)
-			";
+        SELECT to_char(sesi_fecha, 'DD') dia, to_char(to_timestamp (to_char(sesi_fecha, 'MM')::text, 'MM'), 'TMmon') mes
+        FROM sesion
+        WHERE sesi_id_sesion = (
+            SELECT MIN(sesi_id_sesion) sesi_id_sesion
+            FROM sesion
+            WHERE sesi_id_grupo = $idGrupo
+            )
+        ";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -155,9 +156,9 @@ class Sesion
     {
         $SQL_Bus_Sesion =
         "
-			SELECT to_char(sesi_fecha, 'DD') dia, to_char(sesi_fecha, 'MM')  mes, to_char(sesi_fecha, 'YYYY')  anio
-			FROM sesion
-			WHERE grup_id_grupo =$idGrupo ORDER BY dia";
+        SELECT to_char(sesi_fecha, 'DD') dia, to_char(sesi_fecha, 'MM')  mes, to_char(sesi_fecha, 'YYYY')  anio
+        FROM sesion
+        WHERE sesi_id_grupo =$idGrupo ORDER BY dia";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -172,7 +173,7 @@ class Sesion
         $SQL_Horas_Sesion=
         "SELECT SUM (sesi_hora_fin - sesi_hora_inicio) as horas
         FROM sesion
-        WHERE grup_id_grupo = $idGrupo";
+        WHERE sesi_id_grupo = $idGrupo";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -188,8 +189,8 @@ class Sesion
     {
         $SQL_Bus_Sesion =
         "SELECT to_char(sesi_fecha, 'DD-MM-YYYY') fecha, sesi_hora_inicio, sesi_hora_fin
-             FROM SESION
-             WHERE GRUP_ID_GRUPO = $idGrupo
+            FROM SESION
+            WHERE SESI_ID_GRUPO = $idGrupo
             ";
 
         $bd = new BD();
@@ -206,7 +207,7 @@ class Sesion
         $SQL_Bus_Sesion =
         "SELECT to_char(sesi_fecha, 'DD') dia, to_char(to_timestamp(to_char(sesi_fecha, 'MM')::text, 'MM'), 'TMmon') mes
              FROM SESION
-             WHERE GRUP_ID_GRUPO = $idGrupo
+             WHERE SESI_ID_GRUPO = $idGrupo
             ";
 
         $bd = new BD();

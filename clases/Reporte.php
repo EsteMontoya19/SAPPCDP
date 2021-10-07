@@ -1,4 +1,5 @@
 <?php
+//? Clase actualizada a las reglas de los prefijos 04/10/21
 namespace clases;
 
 use BD;
@@ -19,11 +20,11 @@ class Reporte
             curs_nombre
         FROM profesor t, persona p, nombramiento n, inscripcion i, grupo g, curso c
         WHERE
-            t.pers_id_persona = p.pers_id_persona
-        AND t.nomb_id_nombramiento = n.nomb_id_nombramiento
-        AND t.prof_id_profesor = i.prof_id_profesor
-        AND i.grup_id_grupo = g.grup_id_grupo
-        AND g.curs_id_curso = c.curs_id_curso
+            t.prof_id_persona = p.pers_id_persona
+        AND t.prof_id_nombramiento = n.nomb_id_nombramiento
+        AND t.prof_id_profesor = i.insc_id_profesor
+        AND i.insc_id_grupo = g.grup_id_grupo
+        AND g.grup_id_curso = c.curs_id_curso
         AND g.grup_id_grupo
         IN (SELECT grup_id_grupo FROM sesion
         GROUP BY grup_id_grupo
@@ -47,14 +48,14 @@ class Reporte
             to_char(sesi_fecha, 'MM') mes,
             to_char(sesi_fecha, 'YYYY') anio
         FROM sesion
-        WHERE sesi_id_sesiones IN ((
-            SELECT MAX(sesi_id_sesiones) sesi_id_sesiones
+        WHERE sesi_id_sesion IN ((
+            SELECT MAX(sesi_id_sesion) sesi_id_sesion
             FROM sesion
-            WHERE grup_id_grupo = $idGrupo),
-            (SELECT MIN(sesi_id_sesiones) sesi_id_sesiones
+            WHERE sesi_id_grupo = $idGrupo),
+            (SELECT MIN(sesi_id_sesion) sesi_id_sesion
             FROM sesion
-            WHERE grup_id_grupo = $idGrupo))
-        ORDER BY sesi_id_sesiones;";
+            WHERE sesi_id_grupo = $idGrupo))
+        ORDER BY sesi_id_sesion;";
 
         $bd = new BD();
         $bd->abrirBD();
@@ -70,8 +71,8 @@ class Reporte
         $SQL_Asistencia_Sesion =
         "SELECT moda_nombre
         FROM profesor_modalidad pm , modalidad m
-        WHERE pm.moda_id_modalidad = m.moda_id_modalidad
-        AND prof_id_profesor = $idProfesor
+        WHERE pm.prmo_id_modalidad = m.moda_id_modalidad
+        AND prmo_id_profesor = $idProfesor
         ORDER By moda_nombre;";
 
         $bd = new BD();

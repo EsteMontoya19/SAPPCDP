@@ -4,6 +4,7 @@ class Persona
     //Registra una persona
     //? Verificado en la BD 02/07/2021
     //? Se añadió a la tabla el atributo rfc
+    //? Clase actualizada a las reglas de los prefijos 06/10/21
     function agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc, $sexo)
     {
       //Aquí iría una validación pero puede ser que ya se esté haciendo en otra parte
@@ -88,6 +89,7 @@ class Persona
 
     //Elimina el registro de un persona dado el id
     //? Verificado en la BD 02/07/2021
+    //!  Update o delete en «persona» viola la llave foránea «fk_profesor_relations_persona» en la tabla «profesor»
     function eliminarPersona($persona)
     {
         $SQL_Eli_Persona=
@@ -163,9 +165,9 @@ class Persona
       $SQL_Bus_Persona = 
 			"	SELECT count (*) as roles_persona
         FROM Usuario U
-        INNER JOIN Persona P ON U.pers_id_persona = P.pers_id_persona
+        INNER JOIN Persona P ON U.usua_id_persona = P.pers_id_persona
         WHERE P.pers_id_persona = $idPersona
-        GROUP BY U.pers_id_persona
+        GROUP BY U.usua_id_persona
 			";
 
             $bd = new BD();

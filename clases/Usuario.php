@@ -1,4 +1,5 @@
 <?php
+//? Clase actualizada a las reglas de los prefijos 04/10/21
 class Usuario
 {
     //Actualizar el estatus dado el id y el estatus
@@ -28,7 +29,7 @@ class Usuario
    //? El id de la pregunta es NULL por que aún no tenemos nada en esos catálogos
         $SQL_Ins_Usuario =
         "	
-				INSERT INTO usuario (pers_id_persona, rol_id_rol, prse_id_pregunta, usua_num_usuario, usua_contrasena, usua_activo)
+				INSERT INTO usuario (usua_id_persona, usua_id_rol, usua_id_pregunta, usua_num_usuario, usua_contrasena, usua_activo)
 				VALUES ($persona, $rol, null, '$nombreUsuario', '$contrasenia', '$estado');
 			";
 
@@ -46,7 +47,7 @@ class Usuario
         $SQL_Act_Usuario=
         " 	
 			UPDATE Usuario
-			SET rol_id_rol = $rol , prse_id_pregunta= null, usua_num_usuario= '$nombreUsuario', usua_contrasena= '$contrasenia'
+			SET usua_id_rol = $rol , usua_id_pregunta= null, usua_num_usuario= '$nombreUsuario', usua_contrasena= '$contrasenia'
 			WHERE pers_id_persona = $idPersona AND rol_id_rol = $rol;
 			";
 
@@ -80,11 +81,11 @@ class Usuario
     function buscarTodosUsuarios()
     {
         $SQL_Bus_usuarios =
-        "	
-				SELECT U.usua_id_usuario,P.pers_id_persona, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno,U.rol_id_rol, U.usua_num_usuario, R.rol_nombre, U.usua_activo
-				FROM persona P, usuario U , rol R
-				WHERE P.pers_id_persona = U.pers_id_persona AND R.rol_id_rol = U.rol_id_rol
-				ORDER BY U.usua_activo, P.pers_id_persona DESC, R.rol_id_rol
+        "
+            SELECT U.usua_id_usuario,P.pers_id_persona, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno,U.usua_id_rol, U.usua_num_usuario, R.rol_nombre, U.usua_activo
+            FROM persona P, usuario U , rol R
+            WHERE P.pers_id_persona = U.usua_id_persona AND R.rol_id_rol = U.usua_id_rol
+            ORDER BY U.usua_activo, P.pers_id_persona DESC, R.rol_id_rol
 			";
 
         $bd = new BD();
@@ -101,35 +102,35 @@ class Usuario
     function buscarUsuario($intIdUsuario)
     {
         $SQL_Bus_Usuario =
-        "SELECT U.usua_id_usuario, U.rol_id_rol, R.rol_nombre, U.usua_num_usuario, U.usua_contrasena, U.usua_activo
+        "SELECT U.usua_id_usuario, U.usua_id_rol, R.rol_nombre, U.usua_num_usuario, U.usua_contrasena, U.usua_activo
 				FROM Rol R, Usuario U
-				WHERE R.rol_id_rol = U.rol_id_rol AND U.usua_id_usuario = $intIdUsuario;
+				WHERE R.rol_id_rol = U.usua_id_rol AND U.usua_id_usuario = $intIdUsuario;
 			";
 
-			$bd = new BD();
-			$bd->abrirBD();
-			$transaccion_1 = new Transaccion($bd->conexion);
-			$transaccion_1->enviarQuery($SQL_Bus_Usuario);
-			$obj_Usuario = $transaccion_1->traerObjeto(0);
-			$bd->cerrarBD();
-			return ($transaccion_1->traerObjeto(0));
-		}
-		function buscarUsuarioPersona($persona, $rol)
-		{
-			$SQL_Bus_Usuario = 
-			"	SELECT U.usua_id_usuario, U.rol_id_rol, R.rol_nombre, U.usua_num_usuario, U.usua_contrasena, U.usua_activo
+            $bd = new BD();
+            $bd->abrirBD();
+            $transaccion_1 = new Transaccion($bd->conexion);
+            $transaccion_1->enviarQuery($SQL_Bus_Usuario);
+            $obj_Usuario = $transaccion_1->traerObjeto(0);
+            $bd->cerrarBD();
+            return ($transaccion_1->traerObjeto(0));
+    }
+    function buscarUsuarioPersona($persona, $rol)
+    {
+        $SQL_Bus_Usuario =
+        "	SELECT U.usua_id_usuario, U.usua_id_rol, R.rol_nombre, U.usua_num_usuario, U.usua_contrasena, U.usua_activo
 				FROM Rol R, Usuario U
-				WHERE R.rol_id_rol = U.rol_id_rol AND U.pers_id_persona = $persona AND U.rol_id_rol = $rol;
+				WHERE R.rol_id_rol = U.usua_id_rol AND U.usua_id_persona = $persona AND U.usua_id_rol = $rol;
 			";
 
-			$bd = new BD();
-			$bd->abrirBD();
-			$transaccion_1 = new Transaccion($bd->conexion);
-			$transaccion_1->enviarQuery($SQL_Bus_Usuario);
-			$obj_Usuario = $transaccion_1->traerObjeto(0);
-			$bd->cerrarBD();
-			return ($transaccion_1->traerObjeto(0));
-		}
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Bus_Usuario);
+        $obj_Usuario = $transaccion_1->traerObjeto(0);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerObjeto(0));
+    }
 
     //Bucar datos de un usuario dado el nombre de usuario
     //? Verificado en la BD 02/07/2021
@@ -137,9 +138,9 @@ class Usuario
     function buscarNombreUsuario($nombreUsu)
     {
         $SQL_Bus_Usuario =
-        "SELECT U.usua_id_usuario, U.rol_id_rol, U.usua_num_usuario, U.usua_contrasena
+        "SELECT U.usua_id_usuario, U.usua_id_rol, U.usua_num_usuario, U.usua_contrasena
 				 FROM Rol R, Usuario U
-				 WHERE R.rol_id_rol = U.rol_id_rol AND U.usua_num_usuario = '$nombreUsu';
+				 WHERE R.rol_id_rol = U.usua_id_rol AND U.usua_num_usuario = '$nombreUsu';
 			";
 
         $bd = new BD();
@@ -152,11 +153,12 @@ class Usuario
     }
 
 
-		//Eliminar registro de una persona dado el id de usuario
-		//? Verificado en la BD 02/07/2021
-		function eliminarPersonaRol($intIdPersonaRol){
-			$SQLDEL_PersonaRol = 
-			"
+        //Eliminar registro de una persona dado el id de usuario
+        //? Verificado en la BD 02/07/2021
+    function eliminarPersonaRol($intIdPersonaRol)
+    {
+        $SQLDEL_PersonaRol =
+        "
 				DELETE FROM usuario
 				WHERE usua_id_usuario =  $intIdPersonaRol
 			";
