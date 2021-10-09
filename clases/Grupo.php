@@ -13,7 +13,7 @@ class Grupo
                     GRUP_NUM_INSCRITOS, GRUP_PUBLICADO, GRUP_TIPO, 
                     GRUP_INICIO_INSC, GRUP_FIN_INSC
             FROM GRUPO, CURSO 
-            WHERE GRUP_TIPO LIKE 'PRIVADO'
+            WHERE GRUP_TIPO LIKE 'Privado'
                 AND GRUP_ID_ESTADO = 3
                 AND CURS_ID_CURSO = GRUP_ID_CURSO;
         ";
