@@ -175,7 +175,7 @@ if($_POST['dml'] == 'insert'){
                 
                 //? Asignamos las constancias a los instructores
                 foreach ($arr_Instructores as $iCont => $acreedor) {
-                    $obj_Constancia->cargarConstancia($acreedor['cons_id_constancia'], $direccion.$files[$iCont + 2]);
+                    $obj_Constancia->cargarConstancia($acreedor['pegr_id_constancia'], $direccion.$files[$iCont + 2]);
                     
                 }
 
@@ -248,7 +248,7 @@ if($_POST['dml'] == 'insert'){
                             
                             //? Asignamos las constancias a los Moderadores
                             foreach ($arr_Moderadores as $iCont => $acreedor) {
-                                $obj_Constancia->cargarConstancia($acreedor['cons_id_constancia'], $direccion.$files[$iCont + 2]);
+                                $obj_Constancia->cargarConstancia($acreedor['pegr_id_constancia'], $direccion.$files[$iCont + 2]);
                                 
                             }
 
