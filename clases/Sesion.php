@@ -72,7 +72,7 @@ class Sesion
     {
         $SQL_Bus_Sesion =
         "
-				SELECT sesi_id_sesiones, sesi_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin
+				SELECT sesi_id_sesion, sesi_id_grupo, sesi_fecha, sesi_hora_inicio, sesi_hora_fin
 				FROM sesion
 				WHERE sesi_id_sesion = $id_sesion;
 			";
