@@ -171,23 +171,23 @@ class Grupo
                 AND PERS_ID_PERSONA = PROF_ID_PERSONA
                 AND CONS_ID_CONSTANCIA = INSC_ID_CONSTANCIA
                 AND INSC_ACTIVO = TRUE
-                AND GRUP_ID_GRUPO = $idGrupo
+                AND INSC_ID_GRUPO = 11
                 AND INSC_ID_INSCRIPCION NOT IN (SELECT DISTINCT INSC_ID_INSCRIPCION
                                                 FROM PERSONA, PROFESOR, INSCRIPCION, ASISTENCIA, CONSTANCIA
                                                 WHERE PERS_ID_PERSONA = PROF_ID_PERSONA
-                                                    AND C.CONS_ID_CONSTANCIAS = INSC_ID_CONSTANCIAS
+                                                    AND CONS_ID_CONSTANCIA = INSC_ID_CONSTANCIA
                                                     AND INSC_ID_PROFESOR = PROF_ID_PROFESOR
                                                     AND INSC_ID_INSCRIPCION = ASIS_ID_INSCRIPCION
-                                                    AND INSC_ID_GRUPO = $idGrupo
+                                                    AND INSC_ID_GRUPO = 11
                                                     AND INSC_ACTIVO = TRUE
                                                     AND PERS_ID_PERSONA NOT IN (SELECT PERS_ID_PERSONA
                                                                                 FROM PERSONA, PROFESOR, INSCRIPCION, ASISTENCIA, SESION
                                                                                 WHERE PERS_ID_PERSONA = PROF_ID_PERSONA
                                                                                     AND INSC_ID_PROFESOR = PROF_ID_PROFESOR
                                                                                     AND INSC_ID_INSCRIPCION = ASIS_ID_INSCRIPCION
-                                                                                    AND SESI_ID_SESION = ASIS_ID_SESIONES
+                                                                                    AND SESI_ID_SESION = ASIS_ID_SESION
                                                                                     AND INSC_ACTIVO = TRUE
-                                                                                    AND INSC_ID_GRUPO = $idGrupo
+                                                                                    AND INSC_ID_GRUPO = 11
                                                                                     AND ASIS_PRESENTE = FALSE
                                                                                 GROUP BY PERS_ID_PERSONA, 
                                                                                         PERS_NOMBRE, 

@@ -66,7 +66,7 @@
 			"
                 SELECT INSC_ID_INSCRIPCION, INSC_ID_CONSTANCIA, INSC_ID_GRUPO, INSC_ID_PROFESOR, INSC_ACTIVO
                 FROM INSCRIPCION
-                WHERE GRUP_ID_GRUPO = $grupo AND PROF_ID_PROFESOR = $profesor
+                WHERE INSC_ID_GRUPO = $grupo AND INSC_ID_PROFESOR = $profesor
             ";
 
 			$bd = new BD();

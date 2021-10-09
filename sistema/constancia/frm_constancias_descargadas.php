@@ -114,14 +114,14 @@
                         <?php 
                         $merece_Constancia = "t";
                         foreach($sesiones as $iCont => $sesion) { 
-                          $asistencia = $obj_Asistencia->buscarAsistenciaSesion($sesion["sesi_id_sesiones"], $inscrito["insc_id_inscripcion"]);
+                          $asistencia = $obj_Asistencia->buscarAsistenciaSesion($sesion["sesi_id_sesion"], $inscrito["insc_id_inscripcion"]);
                           if(isset($asistencia)){
                             if($asistencia->asis_presente == "f"){
                               $merece_Constancia = "f";
                             }
                           }
                         }
-                        $constancia_Descargada = $obj_Busqueda->selectConstanciaID($inscrito["cons_id_constancias"]);
+                        $constancia_Descargada = $obj_Busqueda->selectConstanciaID($inscrito["insc_id_constancia"]);
                         if(isset($constancia_Descargada)){
                           if ($merece_Constancia == "f"){
                             echo ("<p class = aviso-rojo>No Aplica, no acreedor</p>");
@@ -166,7 +166,7 @@
             <select required='required' class="custom-select" id="ID_profesor_constancia" name="ID_profesor_constancia">
               <option value="0">Seleccionar una opción</option>
               <?php foreach ($inscritos as $inscrito) { ?>
-              <option value="<?php echo $inscrito['cons_id_constancias']; ?>"> 
+              <option value="<?php echo $inscrito['insc_id_constancia']; ?>"> 
                 <?php echo ($inscrito['prof_id_profesor'].".- ".$inscrito['nombre']); ?>
               </option>
               <?php } ?>
@@ -201,7 +201,12 @@
       <div class="card lg-12">
         <div class="card-header">
           <i class="fas fa-id-card fa-lg"></i>
-          <b>&nbsp; Cargar constancia de Moderador: </b>
+          <b>&nbsp; Cargar constancia de Moderador: <?php
+                  if ($grupo->moderador != "") {
+                      echo($grupo->moderador);
+                  } else {
+                      echo("No asignado.");
+                  }?></b>
         </div>
         
         <div class="col-lg-6 form-group">

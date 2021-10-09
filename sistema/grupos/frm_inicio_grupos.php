@@ -95,6 +95,7 @@
 
                         <div align="right" >
                           <div align='left' style="width: 80%;">
+                      
                             <button type="button" class="btn btn-primary btn-table" title="Actualizar" <?php if ($grupo['grup_publicado'] == 't' || $grupo['grup_estado'] == 'Finalizado'  || $grupo['grup_estado'] == 'Cancelado') {
                                 ?> style="display: none;" 
                                                                                                        <?php } ?>style="margin-top: 5px;" onclick="actualizarGrupo(<?php echo $grupo['grup_id_grupo']?>)">
@@ -113,11 +114,13 @@
                           </a>
                                    <?php } ?> -->
 
+
                               <?php if ($grupo['grup_num_inscritos'] != 0) { ?>
                             <a href="../modulos/Control_PDF_Inscritos.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-table btn-pdf" title="PDF Inscritos" style="margin-top: 5px;">
                               <i class="fa fa-file-pdf"></i>
                             </a>
                               <?php } ?>
+
 
                           <?php if ($grupo['grup_num_inscritos'] != 0) { ?>
                             <a href="../modulos/Control_Generar_Excel.php?idGrupo=<?php echo $grupo['grup_id_grupo'];?>" target="_blank" type="button" class="btn btn-table btn-excel" title="Excel Asistencia" <?php if ($grupo['grup_estado'] == 'Pendiente') {
@@ -146,6 +149,8 @@
                             <i class="fas fa-tasks"></i>
                           </button>
 
+  
+                          
                           <button type="button" class="btn btn-info btn-table" title="Subir Constancias" <?php if ($grupo['grup_estado'] != 'Finalizado') {
                                 ?> style="display: none;" <?php
                                                                                                          } ?> style="margin-top: 5px;" onclick="registrarConstancias(<?php echo $grupo['grup_id_grupo']?>)">

@@ -242,7 +242,7 @@
 
             /* 
                 Se obtienen los siguientes datos de una inscripcion:
-                    I.INSC_ID_INSCRIPCION, SESI_ID_SESIONES, ASIS_PRESENTE
+                    I.INSC_ID_INSCRIPCION, SESI_ID_SESION, ASIS_PRESENTE
             */
             $arr_asistencias = $obj_Asistencia->buscarAsistenciasInscripcion($idGrupo, $inscrito['insc_id_inscripcion']);
             //Se inicializa contador
@@ -276,7 +276,7 @@
             
             if($i==1){
                 //Si el total de asietencia difiere de 0 o el estado es diferente de 4 (Finalizado)
-                if($conAsistencias != 0 || $curso->esta_id_estado == 4){
+                if($conAsistencias != 0 || $curso->grup_id_estado == 4){
                     //El curso ya finalizó 
                     // Tuvo todas las asistencias
                     if($conAsistencias == $numSesiones){

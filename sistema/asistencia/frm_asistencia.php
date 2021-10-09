@@ -82,14 +82,14 @@
             <div class="col-lg-12 form-row">
               <div class="col-lg-4 form-group">
                 <p><b><?php
-                if ($grupo->moap_id_modalidad == 1) {
+                if ($grupo->grup_id_modalidad == 1) {
                     echo("Salón: </b>".$grupo->salo_nombre);
-                } elseif ($grupo->moap_id_modalidad == 2 || $grupo->moap_id_modalidad == 3) {
+                } elseif ($grupo->grup_id_modalidad == 2 || $grupo->grup_id_modalidad == 3) {
                     echo("Enlace: </b><a href target = '_blank'>".$grupo->grup_url."</a>");
                 }?></p>
               </div>
 
-              <?php if ($grupo->moap_id_modalidad == 2) {?>
+              <?php if ($grupo->grup_id_modalidad == 2) {?>
               <div class="col-lg-4 form-group">
                 <p><b>ID: </b> <?php if ($grupo->grup_id_acceso != "") {
                                     echo($grupo->grup_id_acceso);
@@ -100,7 +100,7 @@
               </div>
               <?php }?>
 
-              <?php if ($grupo->moap_id_modalidad == 2) {?>
+              <?php if ($grupo->grup_id_modalidad == 2) {?>
               <div class="col-lg-4 form-group">
                 <p><b>Código: </b><?php if ($grupo->grup_clave_acceso != "") {
                                     echo($grupo->grup_clave_acceso);
@@ -164,7 +164,7 @@
                             name= "<?php echo($inscrito['insc_id_inscripcion']); ?>_asistencia_<?php echo($iCont + 1);?>"
                             value="TRUE" 
                             <?php
-                              $asistencia = $obj_Asistencia->buscarAsistenciaSesion($sesion['sesi_id_sesiones'], $inscrito['insc_id_inscripcion']);
+                              $asistencia = $obj_Asistencia->buscarAsistenciaSesion($sesion['sesi_id_sesion'], $inscrito['insc_id_inscripcion']);
                             
                               //? Si es en un futuro
                                 if ($sesion['sesi_fecha'] >  date("Y")."-".date("m")."-".date("d")) {

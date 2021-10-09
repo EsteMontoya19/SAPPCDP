@@ -128,7 +128,7 @@ foreach ($arr_sesiones as $sesion) {
         // Section: Columna de asistencias
         foreach ($sesiones as $iCont => $sesion) {
             $countSesiones;
-            $asistencia = $obj_Asistencia->buscarAsistenciaSesion($sesion['sesi_id_sesiones'], $inscrito['insc_id_inscripcion']);
+            $asistencia = $obj_Asistencia->buscarAsistenciaSesion($sesion['sesi_id_sesion'], $inscrito['insc_id_inscripcion']);
             if (isset($asistencia)) {
                 if ($asistencia->asis_presente =='t') {
                     //? Si estuvo presente marcamos la casilla sino, se queda despintada
@@ -151,12 +151,12 @@ foreach ($arr_sesiones as $sesion) {
             $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+5, $k)->getFill()->setFillType(
                 \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
             )->getStartColor()->setARGB('C9E4C5');
-                    // $documento->getActiveSheet()->getStyleByColumnAndRow($sesion['sesi_id_sesiones']+5, $k)->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM);
+                    // $documento->getActiveSheet()->getStyleByColumnAndRow($sesion['sesi_id_sesion']+5, $k)->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM);
         } else {
             $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+5, $k)->getFill()->setFillType(
                 \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
             )->getStartColor()->setARGB('F54748');
-                    // $documento->getActiveSheet()->getStyleByColumnAndRow($sesion['sesi_id_sesiones']+5, $k)->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM);
+                    // $documento->getActiveSheet()->getStyleByColumnAndRow($sesion['sesi_id_sesion']+5, $k)->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM);
         }
 
         // Section: Columna de observaciones.

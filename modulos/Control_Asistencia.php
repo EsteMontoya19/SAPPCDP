@@ -44,7 +44,7 @@
         //? Creamos asistencia para cada sesion
         foreach ($sesiones as $jCont => $sesion) {
           $checkbox = $inscripcion->insc_id_inscripcion . "_asistencia_" . ($jCont + 1);
-          $obj_Asistencias->agregarAsistencia($sesion['sesi_id_sesiones'], $inscripcion->insc_id_inscripcion, isset($_POST[$checkbox]) ? $_POST[$checkbox] : null);
+          $obj_Asistencias->agregarAsistencia($sesion['sesi_id_sesion'], $inscripcion->insc_id_inscripcion, isset($_POST[$checkbox]) ? $_POST[$checkbox] : null);
         }
       }
       exit("1");
