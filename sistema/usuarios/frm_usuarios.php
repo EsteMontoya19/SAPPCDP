@@ -12,7 +12,7 @@
   //*! Se inicializan variables para evitar el Notice en PHP en caso de afectar en algo eliminar
   $usuario = new Usuario();
   $usuario->pers_id_persona = null;
-  $usuario->rol_id_rol = null;
+  $usuario->usua_id_rol = null;
   $usuario->prse_id_pregunta = null;
   $usuario->usua_num_usuario = null;
   $usuario->usua_contrasena = null;
@@ -64,7 +64,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
     $obj_Profesor = new Profesor();
     $obj_Moderador = new Moderador();
 
-    switch ($usuario->rol_id_rol) {
+    switch ($usuario->usua_id_rol) {
         case ADMINISTRADOR: //Administrador
         case INSTRUCTOR: //Instructor
         case PROFESOR: //Profesor
@@ -143,7 +143,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                 <div id="numCuenta" class="col-lg-6 form-group">
                 <?php
                  //? Si es un servidor socila debe aparecer número de cuenta, sino es el de trabajador
-                if (isset($usuario) && $usuario->rol_id_rol == MODERADOR) {
+                if (isset($usuario) && $usuario->usua_id_rol == MODERADOR) {
                     if (isset($servidorSocial)) { ?>
                         <label for="numCuenta" class = "negritas">Número de cuenta:*</label>
                         <input value="<?php echo isset($servidorSocial) ? $servidorSocial-> seso_num_cuenta : ""; ?>" type="text" 
@@ -263,7 +263,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                     <?php foreach ($arr_roles as $rol) { ?>
                     <option value="<?php echo $rol['rol_id_rol']; ?>"
                         <?php if (isset($usuario)) {
-                            if ($usuario->rol_id_rol == $rol['rol_id_rol']) {
+                            if ($usuario->usua_id_rol == $rol['rol_id_rol']) {
                                 ?> selected
                             <?php }
                         }?>>
@@ -361,7 +361,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
 
           <!-- Datos de cuenta según rol -->
           <div id = "datosCuenta" class="form-group"                    
-           <?php if (isset($usuario) && $usuario->rol_id_rol == ADMINISTRADOR) {
+           <?php if (isset($usuario) && $usuario->usua_id_rol == ADMINISTRADOR) {
                       echo ('style="display: none;"');
            }
             ?> >
@@ -373,7 +373,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
               
               <!-- Datos del Moderador -->
               <div class="col-lg-12 form-row" style="margin-top: 15px;"> 
-                <?php if (isset($usuario) && $usuario->rol_id_rol == MODERADOR) { ?>
+                <?php if (isset($usuario) && $usuario->usua_id_rol == MODERADOR) { ?>
                   <div id="diasServicio" class="col-lg-12 form-group">
                 <?php } else { ?>
                   <div id="diasServicio" class="col-lg-12 form-group" style="display: none;">
@@ -395,7 +395,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
               </div>  <!-- Cierre div de datos row -->
 
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                <?php if (isset($usuario) && $usuario->rol_id_rol == MODERADOR) { ?>
+                <?php if (isset($usuario) && $usuario->usua_id_rol == MODERADOR) { ?>
                   <div id="fechaInicio" class="col-lg-3 form-group">
                 <?php } else { ?>
                   <div id="fechaInicio" class="col-lg-3 form-group" style="display: none;">
@@ -403,7 +403,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                     <label for="fechaInicio" class = "negritas">Fecha de inicio del servicio: *</label>
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_inicio: ""; ?>" type="date" class="form-control" name="strFechaInicio" id="strFechaInicio">
                   </div>
-                <?php if (isset($usuario) && $usuario->rol_id_rol == MODERADOR) { ?>
+                <?php if (isset($usuario) && $usuario->usua_id_rol == MODERADOR) { ?>
                   <div id="fechaFin" class="col-lg-3 form-group">
                 <?php } else { ?>
                   <div id="fechaFin" class="col-lg-3 form-group" style="display: none;">
@@ -411,7 +411,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                     <label for="fechaFin" class = "negritas">Fecha de fin del servicio:*</label>
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_fecha_fin: ""; ?>" type="date" class="form-control" name="strFechaFin" id="strFechaFin">
                   </div>
-                <?php if (isset($usuario) && $usuario->rol_id_rol == MODERADOR) { ?>
+                <?php if (isset($usuario) && $usuario->usua_id_rol == MODERADOR) { ?>
                   <div id="horaInicio" class="col-lg-3 form-group">
                 <?php } else { ?>
                   <div id="horaInicio" class="col-lg-3 form-group" style="display: none;">
@@ -419,7 +419,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                     <label for="horaInicio" class = "negritas">Hora de inicio del servicio: *</label>
                     <input value="<?php echo isset($moderador) ? $moderador-> mode_hora_inicio: ""; ?>" type="time" class="form-control" name="strHoraInicio" id="strHoraInicio">
                   </div>
-                <?php if (isset($usuario) && $usuario->rol_id_rol == MODERADOR) { ?>
+                <?php if (isset($usuario) && $usuario->usua_id_rol == MODERADOR) { ?>
                   <div id="horaFin" class="col-lg-3 form-group">
                 <?php } else { ?>
                   <div id="horaFin" class="col-lg-3 form-group" style="display: none;">
@@ -431,7 +431,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
 
               <!-- Datos del Profesor -->
               <div class="col-lg-12 form-row" style="margin-top: 15px;">  
-                <?php if (isset($usuario) && $usuario->rol_id_rol == INSTRUCTOR) { ?>
+                <?php if (isset($usuario) && $usuario->usua_id_rol == INSTRUCTOR) { ?>
                   <div id="semblanza" class="col-lg-12 form-group">
                 <?php } else { ?>
                   <div id="semblanza" class="col-lg-12 form-group" style="display: none;">
@@ -443,7 +443,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
     
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <?php //? Si es Profesor  o Instructor ?>
-                <?php if (isset($usuario) && ($usuario->rol_id_rol == PROFESOR )) { ?>
+                <?php if (isset($usuario) && ($usuario->usua_id_rol == PROFESOR )) { ?>
                   <div id="nivelImparticion" class="col-lg-6 form-group">
                 <?php } else { ?>
                   <div id="nivelImparticion" class="col-lg-6 form-group" style="display: none;">
@@ -465,7 +465,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                     <?php } ?>
                   </div>
                 <?php //? Si es Profesor  o Instructor ?>
-                <?php if (isset($usuario) && ($usuario->rol_id_rol == PROFESOR)) { ?>
+                <?php if (isset($usuario) && ($usuario->usua_id_rol == PROFESOR)) { ?>
                   <div id="modalidadImparticion" class="col-lg-6 form-group">
                 <?php } else { ?>
                   <div id="modalidadImparticion" class="col-lg-6 form-group" style="display: none;">
@@ -490,7 +490,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
 
               <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <?php //? Si es Profesor o Instructor ?>
-                <?php if (isset($usuario) && ($usuario->rol_id_rol == PROFESOR)) { ?>
+                <?php if (isset($usuario) && ($usuario->usua_id_rol == PROFESOR)) { ?>
                   <div id="coordinaciones" class="col-lg-12 form-group">
                 <?php } else { ?>
                   <div id="coordinaciones" class="col-lg-12 form-group" style="display: none;">
@@ -532,7 +532,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
 
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
                 <?php //? Si es Profesor o Instructor ?>
-                <?php if (isset($usuario) && ($usuario->rol_id_rol == PROFESOR)) { ?>
+                <?php if (isset($usuario) && ($usuario->usua_id_rol == PROFESOR)) { ?>
                   <div id="nombramientos" class="col-lg-12 form-group">
                 <?php } else { ?>
                   <div id="nombramientos" class="col-lg-12 form-group" style="display: none;">
@@ -542,7 +542,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                             <option value="0">Seleccione una opción</option>
                             <?php foreach ($arr_nombramientos as $nombramiento) { ?> 
 
-                            <option value="<?php echo isset($profesor) ? $nombramiento['nomb_id_nombramiento'] : $nombramiento['nomb_id_nombramiento']; ?>" <?php echo (isset($profesor) && $profesor->nomb_id_nombramiento == $nombramiento['nomb_id_nombramiento']) ? "selected" : ""; ?>>
+                            <option value="<?php echo isset($profesor) ? $nombramiento['nomb_id_nombramiento'] : $nombramiento['nomb_id_nombramiento']; ?>" <?php echo (isset($profesor) && $profesor->prof_id_nombramiento == $nombramiento['nomb_id_nombramiento']) ? "selected" : ""; ?>>
                               <?php echo($nombramiento['nomb_descripcion']); ?>
                             </option>
 
@@ -561,7 +561,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
             <input type="hidden" name="dml" value="update">
             <input type="hidden" id="idUsuario" name="idUsuario" value="<?php echo $_POST['id']; ?>">
             <input type="hidden" id="idPersona" name="idPersona" value="<?php echo $persona->pers_id_persona; ?>">
-            <input type="hidden" name="hideRol" id="hideRol" value="<?php echo $usuario->rol_id_rol; ?>">
+            <input type="hidden" name="hideRol" id="hideRol" value="<?php echo $usuario->usua_id_rol; ?>">
             <?php } elseif ($_POST['CRUD'] == 0) { ?>
             <input type="hidden" name="dml" value="select">
             <?php } ?>

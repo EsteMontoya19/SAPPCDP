@@ -45,10 +45,9 @@ class Usuario
     function actualizarUsuario($idPersona, $rol, $pregunta, $nombreUsuario, $contrasenia)
     {
         $SQL_Act_Usuario=
-        " 	
-			UPDATE Usuario
+        "UPDATE Usuario
 			SET usua_id_rol = $rol , usua_id_pregunta= null, usua_num_usuario= '$nombreUsuario', usua_contrasena= '$contrasenia'
-			WHERE pers_id_persona = $idPersona AND rol_id_rol = $rol;
+			WHERE usua_id_persona = $idPersona AND usua_id_rol = $rol;
 			";
 
         $bd = new BD();

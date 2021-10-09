@@ -65,15 +65,15 @@
             
                     <td>
                       <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="estatusUsuario<?php echo $x ?>" <?php if ($usuario['usua_activo'] == 't') { ?> checked <?php } ?> onclick="cambioEstatus(<?php echo $usuario['usua_id_usuario'] ?> , '<?php echo $usuario['usua_activo']; ?>', '<?php echo $usuario['pers_nombre']; ?>', '<?php echo $usuario['pers_apellido_paterno']; ?>', '<?php echo $usuario['rol_id_rol']; ?>')">
+                        <input type="checkbox" class="custom-control-input" id="estatusUsuario<?php echo $x ?>" <?php if ($usuario['usua_activo'] == 't') { ?> checked <?php } ?> onclick="cambioEstatus(<?php echo $usuario['usua_id_usuario'] ?> , '<?php echo $usuario['usua_activo']; ?>', '<?php echo $usuario['pers_nombre']; ?>', '<?php echo $usuario['pers_apellido_paterno']; ?>', '<?php echo $usuario['usua_id_rol']; ?>')">
                         <label class="custom-control-label" for="estatusUsuario<?php echo $x ?>"></label>
                       </div>
                     </td>
                     <td>
-                      <button type="button" class="btn btn-primary btn-table" title="Actualizar" onclick="actualizarUsuario(<?php echo $usuario['usua_id_usuario'] ?>, <?php echo $usuario['pers_id_persona'] ?> , <?php echo $usuario['rol_id_rol'] ?>)">
+                      <button type="button" class="btn btn-primary btn-table" title="Actualizar" onclick="actualizarUsuario(<?php echo $usuario['usua_id_usuario'] ?>, <?php echo $usuario['pers_id_persona'] ?> , <?php echo $usuario['usua_id_rol'] ?>)">
                         <i class="fas fa-edit"></i>
                       </button>
-                      <button type="button" class="btn btn-info btn-table" title="Detalles" onclick="consultarUsuarioDirecto(<?php echo $usuario['usua_id_usuario'] ?>, <?php echo $usuario['pers_id_persona'] ?> , <?php echo $usuario['rol_id_rol'] ?>)">
+                      <button type="button" class="btn btn-info btn-table" title="Detalles" onclick="consultarUsuarioDirecto(<?php echo $usuario['usua_id_usuario'] ?>, <?php echo $usuario['pers_id_persona'] ?> , <?php echo $usuario['usua_id_rol'] ?>)">
                         <i class="fas fa-search-plus"></i>
                       </button>
                     </td>

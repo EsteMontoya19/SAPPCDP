@@ -70,7 +70,7 @@ create table CONSTANCIA (
    CONS_URL             VARCHAR(500)         null,
    CONS_ESTADO          VARCHAR(15)          not null,
    CONS_FECHA           DATE                 null,
-   CONS_HORA            TIME WITHOUT TIME ZONE, null,
+   CONS_HORA            TIME WITHOUT TIME ZONE null,
    CONS_DESCARGADA      BOOL                 null,
    constraint PK_CONSTANCIA primary key (CONS_ID_CONSTANCIA)
 );

@@ -189,7 +189,7 @@
         $profesor_existente = $obj_Profesor->buscarNumTrabajador($_POST['intNum_Trabajador'], null);
         
         if (isset($profesor_existente)) {
-          $persona = $profesor_existente->pers_id_persona;
+          $persona = $profesor_existente->prof_id_persona;
         } else {
           $obj_Persona->agregarPersona($nombre, $apellidoPaterno, $apellidoMaterno, $correo, $telefono, $rfc, $sexo);
           $persona = $obj_Persona->buscarUltimo();
@@ -266,7 +266,7 @@
       $idUsuario = $_POST['idUsuario'];
 
       $esElMismo = 0;
-      if($nombreUsu == $usuario_existente->usua_num_usuario && $idUsuario == $usuario_existente->usua_id_usuario){
+      if(isset($usuario_existente->usua_num_usuario) && ($nombreUsu == $usuario_existente->usua_num_usuario && $idUsuario == $usuario_existente->usua_id_usuario)){
         $esElMismo = 1;
       }
 
@@ -474,25 +474,26 @@
     }
     elseif($_POST['dml'] == 'llenadoProfesor')
     {
-        $resultado = array();
-        $profesor = $obj_Profesor->buscarNumTrabajador($_POST['numTrabajador'], null);
       
-        if (isset($profesor->prof_id_profesor)) {
-  
-          //? Asignamos al arreglo Json los datos del profesor
-          $resultado ['estado'] = "Encontrado";
-          $resultado ['idProfesor'] = $profesor->prof_id_profesor;
-          $resultado ['idPersona'] = $profesor->pers_id_persona;
-          $resultado ['numTrabajador'] = $profesor->prof_num_trabajador;
-          $resultado ['semblanza'] = $profesor->prof_semblanza;
-          $resultado ['rfc'] = $profesor->pers_rfc;
-          $resultado ['estado'] = "Encontrado";
-
-          $resultado ['nombre'] = $profesor->pers_nombre;
-          $resultado ['apellidoPaterno'] = $profesor->pers_apellido_paterno;
-          $resultado ['apellidoMaterno'] = $profesor->pers_apellido_materno;
-          $resultado ['correo'] = $profesor->pers_correo;
-          $resultado ['telefono'] = $profesor->pers_telefono;
+      $resultado = array();
+      $profesor = $obj_Profesor->buscarNumTrabajador($_POST['numTrabajador'], null);
+      
+      if (isset($profesor->prof_id_profesor)) {
+        
+        //? Asignamos al arreglo Json los datos del profesor
+        $resultado ['estado'] = "Encontrado";
+        $resultado ['idProfesor'] = $profesor->prof_id_profesor;
+        $resultado ['idPersona'] = $profesor->prof_id_persona;
+        $resultado ['numTrabajador'] = $profesor->prof_num_trabajador;
+        $resultado ['semblanza'] = $profesor->prof_semblanza;
+        $resultado ['rfc'] = $profesor->pers_rfc;
+        $resultado ['sexo'] = $profesor->pers_sexo;
+        
+        $resultado ['nombre'] = $profesor->pers_nombre;
+        $resultado ['apellidoPaterno'] = $profesor->pers_apellido_paterno;
+        $resultado ['apellidoMaterno'] = $profesor->pers_apellido_materno;
+        $resultado ['correo'] = $profesor->pers_correo;
+        $resultado ['telefono'] = $profesor->pers_telefono;
            
         } else {
           $resultado ['estado'] = "Nulo";

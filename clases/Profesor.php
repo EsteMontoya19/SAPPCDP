@@ -96,8 +96,7 @@ class Profesor
     function buscarProfesorNiveles($profesor)
     {
         $SQL_Bus_Niveles =
-        "
-            SELECT N.nive_id_nivel, N.nive_nombre
+        "SELECT N.nive_id_nivel, N.nive_nombre
             FROM Nivel N, Profesor_Nivel PN
             WHERE PN.prni_id_profesor = $profesor AND N.nive_id_nivel = PN.prni_id_nivel
 			";
@@ -164,12 +163,12 @@ class Profesor
             if (isset($nombramiento)) {
                 $SQL_Ins_Profesor =
                 " INSERT INTO Profesor (prof_id_persona, prof_num_trabajador, prof_semblanza, prof_id_nombramiento) VALUES
-						($persona,'$numTrabajador', 'null', $nombramiento);
+						($persona,'$numTrabajador', null, $nombramiento);
 					";
             } else {
                 $SQL_Ins_Profesor =
                 " INSERT INTO Profesor (prof_id_persona, prof_num_trabajador, prof_semblanza, prof_id_nombramiento) VALUES
-						($persona,'$numTrabajador', 'null', 'null');
+						($persona,'$numTrabajador', null, null);
 					";
             }
         }
@@ -443,12 +442,12 @@ class Profesor
             "SELECT DISTINCT prof_id_profesor, P.prof_id_persona, prof_num_trabajador, prof_semblanza, pers_rfc, pers_nombre,
 						pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono, pers_sexo
 				FROM Profesor P, Persona PE, Usuario U
-				WHERE P.prof_id_persona = PE.pers_id_persona AND U.pers_id_persona = P.prof_id_persona AND P.prof_num_trabajador = '$numTrabajador' AND U.usua_id_rol = $rol
+				WHERE P.prof_id_persona = PE.pers_id_persona AND U.usua_id_persona = P.prof_id_persona AND P.prof_num_trabajador = '$numTrabajador' AND U.usua_id_rol = $rol
 				";
         } else {
             $SQL_Bus_Profesor =
             "SELECT DISTINCT prof_id_profesor, P.prof_id_persona, prof_num_trabajador, prof_semblanza, pers_rfc, pers_nombre,
-						pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono
+						pers_apellido_paterno, pers_apellido_materno, pers_correo, pers_telefono, pers_sexo
 				FROM Profesor P, Persona PE, Usuario U
 				WHERE P.prof_id_persona = PE.pers_id_persona AND U.usua_id_persona = P.prof_id_persona AND P.prof_num_trabajador = '$numTrabajador' 
 				";
