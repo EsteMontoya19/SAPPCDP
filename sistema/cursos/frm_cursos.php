@@ -13,11 +13,11 @@ $curso -> curs_nivel=null;
 $curso -> curs_objetivos=null;
 $curso -> curs_temario=null;
 
-  if (isset($_POST['id'])) {
+if (isset($_POST['id'])) {
     // Recuperar información de consulta
     $obj_Curso = new Curso();
     $curso = $obj_Curso->buscarCurso($_POST['id']);
-  }
+}
 ?>
 
 
@@ -31,11 +31,11 @@ $curso -> curs_temario=null;
         </li>
         <!-- Validación de la ruta -->
         <?php if (isset($_POST['CRUD'])) { ?>
-        <?php if ($_POST['CRUD'] == 1) { ?>
+            <?php if ($_POST['CRUD'] == 1) { ?>
         <li class="breadcrumb-item active"><i class="fas fa-edit"></i>&nbsp; Actualizar registro</li>
-        <?php } elseif ($_POST['CRUD'] == 0) { ?>
+            <?php } elseif ($_POST['CRUD'] == 0) { ?>
         <li class="breadcrumb-item active"><i class="fas fa-search-plus"></i>&nbsp; Consultar registro</li>
-        <?php } ?>
+            <?php } ?>
         <?php } else { ?>
         <li class="breadcrumb-item active"><i class="fas fa-folder-plus"></i>&nbsp; Nuevo registro</li>
         <?php } ?>
@@ -56,10 +56,10 @@ $curso -> curs_temario=null;
 
         <!-- Desactivar formulario INICIO en caso de no ser un registro-->
         <?php if (isset($_POST['CRUD'])) { ?>
-        <?php if ($_POST['CRUD'] == 0) { ?>
+            <?php if ($_POST['CRUD'] == 0) { ?>
         <fieldset disabled>
-          <?php } ?>
-          <?php } ?>
+            <?php } ?>
+        <?php } ?>
 
           <!-- Datos generales -->
           <div class="form-group">
@@ -73,35 +73,51 @@ $curso -> curs_temario=null;
 
                 <div id="nombre" class="col-lg-6 form-group">
                   <label for="strNombreCurso"><b>Nombre:
-                      <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1)  echo "*"; ?></b></label>
+                      <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1) {
+                            echo "*";
+                      } ?></b></label>
                   <input type="text" class="form-control" id="strNombreCurso" name="strNombreCurso"
                     value="<?php echo isset($curso) ? $curso->curs_nombre : ""; ?>">
                 </div>
 
                 <div class="col-lg-3 form-group">
                   <label for="intTipoCurso"><b>Tipo:
-                      <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1)  echo "*"; ?></b></label>
+                      <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1) {
+                            echo "*";
+                      } ?></b></label>
                   <select class="custom-select" id="intTipoCurso" name="intTipoCurso">
                     <option value='0'>Seleccione una opción</option>
                     <option value='Curso'
-                      <?php if (isset($curso) && $curso->curs_tipo == "Curso") { echo "selected"; }?>>Curso</option>
+                      <?php if (isset($curso) && $curso->curs_tipo == "Curso") {
+                            echo "selected";
+                      }?>>Curso</option>
                     <option value='Taller'
-                      <?php if (isset($curso) && $curso->curs_tipo == "Taller") { echo "selected"; }?>>Taller</option>
+                      <?php if (isset($curso) && $curso->curs_tipo == "Taller") {
+                            echo "selected";
+                      }?>>Taller</option>
                   </select>
                 </div>
 
                 <div class="col-lg-3 form-group">
                   <label for="intNivel"><b>Nivel:
-                      <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1)  echo "*"; ?></b></label>
+                      <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1) {
+                            echo "*";
+                      } ?></b></label>
                   <select class="custom-select" id="intNivel" name="intNivel">
                     <option value="0">Seleccione una opción</option>
                     <option value='Básico'
-                      <?php if (isset($curso) && $curso->curs_nivel == "Básico") { echo "selected"; }?>>Básico</option>
+                      <?php if (isset($curso) && $curso->curs_nivel == "Básico") {
+                            echo "selected";
+                      }?>>Básico</option>
                     <option value='Intermedio'
-                      <?php if (isset($curso) && $curso->curs_nivel == "Intermedio") { echo "selected"; }?>>Intermedio
+                      <?php if (isset($curso) && $curso->curs_nivel == "Intermedio") {
+                            echo "selected";
+                      }?>>Intermedio
                     </option>
                     <option value='Avanzado'
-                      <?php if (isset($curso) && $curso->curs_nivel == "Avanzado") { echo "selected"; }?>>Avanzado
+                      <?php if (isset($curso) && $curso->curs_nivel == "Avanzado") {
+                            echo "selected";
+                      }?>>Avanzado
                     </option>
                   </select>
                 </div>
@@ -117,7 +133,9 @@ $curso -> curs_temario=null;
 
                 <div class="col-lg-6 form-group">
                   <label for="strObjCurso"><b>Objetivos del curso:
-                      <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1)  echo "*"; ?></b></label>
+                      <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1) {
+                            echo "*";
+                      } ?></b></label>
                   <textarea type="text" class="form-control" id="strObjCurso"
                     name="strObjCurso"><?php echo isset($curso) ? $curso -> curs_objetivos: ""; ?></textarea>
                 </div>
@@ -132,7 +150,9 @@ $curso -> curs_temario=null;
 
                 <div id="numeroSesiones" class="col-lg-6 form-group" style="display:show;">
                   <label for="strNumeroSesiones"><b>Número de sesiones:
-                      <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1)  echo "*"; ?></b></label>
+                      <?php if (isset($_POST['CRUD']) == false || $_POST['CRUD'] == 1) {
+                            echo "*";
+                      } ?></b></label>
                   <input class="form-control numeros_permitidos" type="number" min="1" max="20" class="form-control"
                     id="strNumeroSesiones" name="strNumeroSesiones"
                     value="<?php echo isset($curso) ? $curso->curs_num_sesiones : ""; ?>">
@@ -156,13 +176,13 @@ $curso -> curs_temario=null;
 
           <!-- ID e Instrucciones -->
           <?php if (isset($_POST['CRUD'])) { ?>
-          <?php if ($_POST['CRUD'] == 1) { ?>
+                <?php if ($_POST['CRUD'] == 1) { ?>
           <input type="hidden" name="dml" value="update" />
           <input type="hidden" id="idCurso" name="idCurso" value="<?php echo $_POST['id'];?>">
           <input type="hidden" id="bEstado" name="bEstado" value="true">
-          <?php } elseif ($_POST['CRUD'] == 0) { ?>
+                <?php } elseif ($_POST['CRUD'] == 0) { ?>
           <input type="hidden" name="dml" value="select" />
-          <?php } ?>
+                <?php } ?>
           <?php } else { ?>
           <input type="hidden" name="dml" value="insert" />
           <?php } ?>
@@ -171,10 +191,10 @@ $curso -> curs_temario=null;
 
           <!-- Desactivar formulario FIN -->
           <?php if (isset($_POST['CRUD'])) { ?>
-          <?php if ($_POST['CRUD'] == 0) { ?>
+                <?php if ($_POST['CRUD'] == 0) { ?>
         </fieldset>
-        <?php } ?>
-        <?php } ?>
+                <?php } ?>
+          <?php } ?>
 
       </form>
       <!--! Este código lo descarga con el nombre del archivo original según el href que debes modificar con php -->
@@ -185,17 +205,17 @@ $curso -> curs_temario=null;
         
         
         <?php //? Se hace esta valiación para que no aparezca el botón en registrar.
-          if (isset($_POST['CRUD'])) { ?>
+        if (isset($_POST['CRUD'])) { ?>
         <a id="temarioDW" href="<?php echo isset($curso) ? $curso -> curs_temario : "No subido"; ?>" download
           class="btn btn-descarga" role="button"><i class="fas fa-file-download"
             style="padding-right: 10px;"></i>Descargar temario</a>          
         <?php } ?>
 
         <?php if (isset($_POST['CRUD'])) { ?>
-        <?php if ($_POST['CRUD'] == 1) { ?>
+            <?php if ($_POST['CRUD'] == 1) { ?>
         <button id="btn-actualizar-curso" type="button"
           class="btn btn-success btn-footer btn-aceptar">Actualizar</button>
-        <?php } ?>
+            <?php } ?>
         <?php } else { ?>
         <button id="btn-registrar-curso" type="button" form="form_cursos"
           class="btn btn-success btn-footer btn-aceptar">Guardar</button>

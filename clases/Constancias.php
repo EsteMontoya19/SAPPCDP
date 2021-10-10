@@ -5,7 +5,7 @@ class constancias
 {
     
     function eliminarConstancia($constancia)
-    {   
+    {
 
         $SQL_BUS_CONSTANCIA =
         "UPDATE Constancia
@@ -31,15 +31,15 @@ class constancias
         $transaccion_1 = new Transaccion($bd->conexion);
         $transaccion_1->enviarQuery($SQL_BUS_CONSTANCIA);
         $bd->cerrarBD();
-        return $this->id_constancia = $this -> buscarUltimo(); //? Se regresa el valor de la constancia recién creada 
+        return $this->id_constancia = $this -> buscarUltimo(); //? Se regresa el valor de la constancia recién creada
     }
 
     function cargarConstancia($constancia, $url)
-    {   
+    {
         //? Se toma esta para evitar errores del servidor
-        $Object = new DateTime();  
+        $Object = new DateTime();
         $Object->setTimezone(new DateTimeZone('America/Mexico_City'));
-        $hora = $Object->format("h:i:s");  
+        $hora = $Object->format("h:i:s");
 
         $SQL_BUS_CONSTANCIA =
         "UPDATE Constancia
@@ -54,7 +54,7 @@ class constancias
     }
 
     function negarConstancia($constancia)
-    {   
+    {
 
         $SQL_BUS_CONSTANCIA =
         "UPDATE Constancia
@@ -68,7 +68,7 @@ class constancias
         $bd->cerrarBD();
     }
     function desactivarConstancia($constancia)
-    {   
+    {
 
         $SQL_BUS_CONSTANCIA =
         "UPDATE Constancia
@@ -87,7 +87,7 @@ class constancias
     function buscarUltimo()
     {
         $bd = new BD();
-        $SQL_BUS_CONSTANCIA = 
+        $SQL_BUS_CONSTANCIA =
         "SELECT last_value FROM constancia_cons_id_constancia_seq; ";
 
         $bd->abrirBD();
@@ -102,30 +102,32 @@ class constancias
     }
 
     //? Se utiliza para darle formato de dos digitos a las constancia que suben
-    function renombrarConstancia($nombre, $direccion){      
+    function renombrarConstancia($nombre, $direccion)
+    {
         // Se obtiene el caracter que sería un numero si se siguira un patron de 2 numeros en la contancia
         $esNumero = substr($nombre, -6, 1);
         $finalCadena = substr($nombre, -5);
 
         
         // Verificamos si es un numero, si es así significa que es mayor a 9 y ya tiene dos digitos, entonces no se hace nada.
-        if(!ctype_digit($esNumero)) {
+        if (!ctype_digit($esNumero)) {
             //Obtenemos la parte final de la cadena para no alterarla
-            $nuevoNombre = str_replace($finalCadena, "0".$finalCadena, $nombre); 
+            $nuevoNombre = str_replace($finalCadena, "0".$finalCadena, $nombre);
     
             //Renombramos el archivo con el nuevo nombre
             rename($direccion.$nombre, $direccion.$nuevoNombre);
         }
     }
 
-    function eliminarDirectorio($direccion){
+    function eliminarDirectorio($direccion)
+    {
         $archivosDirectorio = scandir($direccion);
                     
-                    foreach ($archivosDirectorio as $iCont => $archivo) {
-                        if ($iCont >= 2) {
-                            unlink($direccion.$archivo);
-                        }
-                    }
+        foreach ($archivosDirectorio as $iCont => $archivo) {
+            if ($iCont >= 2) {
+                unlink($direccion.$archivo);
+            }
+        }
                     rmdir($direccion);
     }
 
@@ -135,11 +137,11 @@ class constancias
         "SELECT DISTINCT U.usua_id_usuario,P.pers_id_persona, (P.pers_nombre ||' ' || P.pers_apellido_paterno || ' ' || P.pers_apellido_materno) as Nombre_instructor,
                         G.grup_id_grupo, C.curs_id_curso, C.curs_nombre, C.curs_tipo, C.curs_nivel, C.curs_num_sesiones, PG.pegr_id_constancia
         FROM Grupo G, Personal_Grupo PG, Usuario U, Persona P, Curso C
-        WHERE G.grup_id_grupo = PG.pegr_id_grupo 
+        WHERE G.grup_id_grupo = PG.pegr_id_grupo
         AND U.usua_id_usuario = PG.pegr_id_usuario
-        AND P.pers_id_persona = U.usua_id_persona 
+        AND P.pers_id_persona = U.usua_id_persona
         AND G.grup_id_curso = C.curs_id_curso
-        AND U.usua_id_rol = 2 
+        AND U.usua_id_rol = 2
         AND G.grup_id_estado = 4
         AND G.grup_id_grupo IN(SELECT sesi_id_grupo
                         FROM Sesion S
@@ -180,7 +182,7 @@ class constancias
 
     function actualizarEstadoConstanciaDescargada($id)
     {
-        $SQL_Act_Est_Constancia = 
+        $SQL_Act_Est_Constancia =
         "UPDATE Constancia
          SET cons_descargada = true
          WHERE cons_id_constancia = $id

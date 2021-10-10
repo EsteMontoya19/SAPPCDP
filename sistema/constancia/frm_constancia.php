@@ -56,12 +56,12 @@ $Grupo = $obj_Grupo->grup_id_grupo = null;
                                 <div class="col-lg-6 form-group">
                                     <label for ="mesConstancia"><b>Mes de las constancias:</b></label>
                                     <input type="month" class="form-control" id="mesConstancia" name="mesConstancia" placeholder="0" min="0" value="<?php echo isset($Grupo) ? $Grupo->grup_inicio_insc : ""; ?>"
-                                        max = "<?php 
+                                        max = "<?php
                                                 $fecha =  date('m');
                                                 $fecha -= 1;
-                                                if ($fecha < 10) {
-                                                    $fecha = '0' . $fecha;
-                                                }
+                                        if ($fecha < 10) {
+                                            $fecha = '0' . $fecha;
+                                        }
                                                 $fecha = date('Y') . "-" . $fecha;
                                                 echo($fecha); ?>">
                                 </div>

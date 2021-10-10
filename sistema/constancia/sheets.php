@@ -14,6 +14,7 @@
     // Inputs
     $fechaInicio =  $_POST["mesConstancia"];
 
+
     //? Se le da el formato a la fecha para restringir los periodos a un mes
     $fechaFin = substr($fechaInicio, -2);
 
