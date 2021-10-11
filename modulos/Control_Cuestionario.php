@@ -37,10 +37,27 @@
             $obj_Pregunta->actualizarActivoPregunta($id, $Activo, $orden);
         }
 
-        
-
-        
         exit("1");
+    }
+    elseif ($_POST['dml'] == 'orden')
+    {
+        
+    } elseif (isset($_POST['update'])) {
+
+        foreach($_POST['positions'] as $position) {
+            $index = $position[0];
+            $newPosition = $position[1];
+            
+            $result = $obj_Pregunta->actualizarOrdenPregunta($index, $newPosition);
+            
+            
+
+            //$UpdatePosition = ("UPDATE drag_drop SET posicion = '$newPosition' WHERE id='$index' ");
+            //$result = mysqli_query($con, $UpdatePosition);
+            //print_r($UpdatePosition);
+        }
+        
+        exit('1');
     }
     else
     {

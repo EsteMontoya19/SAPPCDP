@@ -112,10 +112,10 @@ class Pregunta
     {
         $SQL_BUS_PREGUNTA =
         "
-            SELECT PREG_ID_PREGUNTA, PREG_DESCRIPCION, PREG_ACTIVO, PREG_ORDEN
+            SELECT PREG_ID_PREGUNTA, PREG_DESCRIPCION, PREG_ACTIVO, PREG_TIPO, PREG_ORDEN
             FROM PREGUNTA
             WHERE PREG_ACTIVO = 'TRUE'
-            ORDER BY PREG_ID_PREGUNTA ASC
+            ORDER BY PREG_ORDEN ASC
 		";
 
         $bd = new BD();

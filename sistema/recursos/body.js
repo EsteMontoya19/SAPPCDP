@@ -110,6 +110,14 @@ $(document).ready(function () {
     $('#btn_calendario').click(function () {
         $('#container').load('../sistema/calendarios/frm_inicio_calendarios.php');
     });
+
+    $('#btn_preguntas').click(function () {
+        $('#container').load('../sistema/cuestionarios/frm_inicio_cuestionarios.php');
+    });
+
+    $('#btn_cuestionario').click(function () {
+        $('#container').load('../sistema/cuestionarios/frm_ordenar_preguntas.php');
+    });
 });
 
 function FormularioAutoRegistro() {

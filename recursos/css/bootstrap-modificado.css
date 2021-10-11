@@ -74,3 +74,61 @@
 .negritas {
     font-weight: bold;
 }
+
+.drop__card,
+.drop__data {
+    display: flex;
+    align-items: center;
+}
+
+.drop__card {
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem 0.75rem 0.75rem;
+    height: 5rem;
+    background-color: #ffffff;
+    box-shadow: 4px 4px 16px #999999, -2px -2px 16px #ededed;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+.drop__card:hover {
+    cursor: pointer;
+}
+
+.drop__name {
+    font-size: 1rem;
+    color: #272a3a;
+    font-weight: 500;
+}
+
+.drop__profession{
+    font-size: .813rem;
+    color: #8A8EAA;
+  }
+
+/* Class name for the chosen item */
+.sortable-chosen{
+    box-shadow: 8px 8px 32px #E1E1E1;
+  }
+  
+  /* Class name for the dragging item */
+  .sortable-drag{
+    opacity: 0;
+  }
+
+
+.circulo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #cecece;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+  }
+  
+  .circulo > h2 {
+    font-family: sans-serif;
+    color: teal;
+    font-size: 12px;
+    font-weight: bold;
+  }
