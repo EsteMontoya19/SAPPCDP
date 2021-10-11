@@ -37,7 +37,7 @@ if (isset($_POST['id'])) {
     $Grupo = $obj_Grupo->buscarGrupoCompleto($idGrupo);
     $arr_Sesiones = $obj_Sesion->buscarSesionesIDGrupo($idGrupo);
     $personal = $obj_Grupo->idUsuarioModeradorGrupo($idGrupo);
-    $Curso1=$obj_Curso->buscarCurso($Grupo->curs_id_curso);
+    $Curso1=$obj_Curso->buscarCurso($Grupo->grup_id_curso);
     if (isset($personal)) {
         $moderador = $obj_Moderador->buscarModeradorIDUsuario($personal->usua_id_usuario);
     } else {
@@ -257,7 +257,7 @@ if (isset($_POST['persona'])) {
             </div>
             <!-- div de la modalidad Presencial -->
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
-              <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 1) { ?>
+              <?php if (isset($idmodalidad) && $Grupo->grup_id_modalidad == 1) { ?>
               <div id="Edificio" class="col-lg-6 form-group">
               <?php } else {?>
               <div id="Edificio" class="col-lg-6 form-group" style="display: none;">
@@ -267,7 +267,7 @@ if (isset($_POST['persona'])) {
                   <option value="0" selected> <?php echo $modalidad->edif_nombre; ?></option>
                 </select>
               </div>
-              <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 1) { ?>
+              <?php if (isset($idmodalidad) && $Grupo->grup_id_modalidad == 1) { ?>
               <div id="Salon" class="col-lg-6 form-group">
               <?php } else {?>
               <div id="Salon" class="col-lg-6 form-group" style="display: none;">
@@ -279,7 +279,7 @@ if (isset($_POST['persona'])) {
               </div>
             </div>
             <!-- div de la modalidad En línea -->
-            <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2) { ?>
+            <?php if (isset($idmodalidad) && $Grupo->grup_id_modalidad == 2) { ?>
             <div id="Plataforma" class="col-lg-12 form-group">
             <?php } else {?>
             <div id="Plataforma" class="col-lg-12 form-group" style="display: none;">
@@ -290,7 +290,7 @@ if (isset($_POST['persona'])) {
                 </select>
             </div>
             
-            <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2 && $_POST['CRUD'] == 1 && $Grupo->esta_nombre == 'En curso' && (isset($inscrito) && $inscrito->insc_activo == 't')) { ?>
+            <?php if (isset($idmodalidad) && $Grupo->grup_id_modalidad == 2 && $_POST['CRUD'] == 1 && $Grupo->esta_nombre == 'En curso' && (isset($inscrito) && $inscrito->insc_activo == 't')) { ?>
             <div id="URL" class="col-lg-12 form-group">
             <?php } else {?>
             <div id="URL" class="col-lg-12 form-group" style="display: none;">
@@ -300,7 +300,7 @@ if (isset($_POST['persona'])) {
                         value="<?php echo isset($modalidad) ? $modalidad->grup_url : ""; ?>">
             </div>
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
-              <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2 && $_POST['CRUD'] == 1 && $Grupo->esta_nombre == 'En curso' && (isset($inscrito) && $inscrito->insc_activo == 't')) { ?>
+              <?php if (isset($idmodalidad) && $Grupo->grup_id_modalidad == 2 && $_POST['CRUD'] == 1 && $Grupo->esta_nombre == 'En curso' && (isset($inscrito) && $inscrito->insc_activo == 't')) { ?>
               <div id="ID_Acceso" class="col-lg-6 form-group">
               <?php } else {?>
               <div id="Reunion" class="col-lg-6 form-group" style="display: none;">
@@ -309,7 +309,7 @@ if (isset($_POST['persona'])) {
                 <input type="text" class="form-control" id="ID_Acceso" name="ID_Acceso" 
                   value="<?php echo isset($modalidad) ? $modalidad->grup_id_acceso: ""; ?>">
               </div>
-              <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 2 && $_POST['CRUD'] == 1 && $Grupo->esta_nombre == 'En curso' && (isset($inscrito) && $inscrito->insc_activo == 't')) { ?>
+              <?php if (isset($idmodalidad) && $Grupo->grup_id_modalidad == 2 && $_POST['CRUD'] == 1 && $Grupo->esta_nombre == 'En curso' && (isset($inscrito) && $inscrito->insc_activo == 't')) { ?>
               <div id="Clave" class="col-lg-6 form-group">
               <?php } else {?>
               <div id="Clave" class="col-lg-6 form-group" style="display: none;">
@@ -321,7 +321,7 @@ if (isset($_POST['persona'])) {
             </div>
             
             <!-- div de la modalidad Autogestionable -->
-            <?php if (isset($idmodalidad) && $Grupo->moap_id_modalidad == 3) { ?>
+            <?php if (isset($idmodalidad) && $Grupo->grup_id_modalidad == 3) { ?>
             <div id="URL" class="col-lg-12 form-group">
             <?php } else {?>
             <div id="URL" class="col-lg-12 form-group" style="display: none;">
@@ -349,7 +349,7 @@ if (isset($_POST['persona'])) {
             <div class="card-header">
               <i class="fas fa-id-card fa-lg"></i>
               <b>&nbsp;&nbsp; <?php echo "Sesión #".$i; ?></b>
-              <input type="hidden" id="<?php echo $idSesion;?>" name="idSesion[]" value="<?php echo $Sesion['sesi_id_sesiones'];?>">
+              <input type="hidden" id="<?php echo $idSesion;?>" name="idSesion[]" value="<?php echo $Sesion['sesi_id_sesion'];?>">
             </div>
             <div class="col-lg-12 form-row" style="margin-top: 15px;">
               <div id="<?php echo $SesionFecha;?>" class="col-lg-6 form-group">

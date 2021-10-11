@@ -80,8 +80,7 @@ class Usuario
     function buscarTodosUsuarios()
     {
         $SQL_Bus_usuarios =
-        "
-            SELECT U.usua_id_usuario,P.pers_id_persona, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno,U.usua_id_rol, U.usua_num_usuario, R.rol_nombre, U.usua_activo
+        "SELECT U.usua_id_usuario,P.pers_id_persona, P.pers_nombre, P.pers_apellido_paterno, P.pers_apellido_materno,U.usua_id_rol, U.usua_num_usuario, R.rol_nombre, U.usua_activo
             FROM persona P, usuario U , rol R
             WHERE P.pers_id_persona = U.usua_id_persona AND R.rol_id_rol = U.usua_id_rol
             ORDER BY U.usua_activo, P.pers_id_persona DESC, R.rol_id_rol

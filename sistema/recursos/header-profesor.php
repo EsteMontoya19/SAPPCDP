@@ -57,14 +57,14 @@
                 &nbsp; <?php echo "Mis Grupos"; ?>
               </a>
               <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarGroups">
-                <a class="dropdown-item" href="#" onclick="gruposInscritos(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)"> En Curso</a>
-                <a class="dropdown-item" href="#" onclick="gruposInscritosHistoricos(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)">Históricos</a>
+                <a class="dropdown-item" href="#" onclick="gruposInscritos(<?php echo isset($cuenta) ? $cuenta->usua_id_persona : '0'; ?>)"> En Curso</a>
+                <a class="dropdown-item" href="#" onclick="gruposInscritosHistoricos(<?php echo isset($cuenta) ? $cuenta->usua_id_persona : '0'; ?>)">Históricos</a>
               </div>
             </li>
 
             <li id = "btn_profesor_grupos_publicados" class="nav-item">
                 <a id = "btn_profesor_grupos_publicados" class="nav-link" href="#" style="color:#FFFFFF" 
-                onclick="gruposPublicados(<?php echo isset($cuenta) ? $cuenta->pers_id_persona : '0'; ?>)">
+                onclick="gruposPublicados(<?php echo isset($cuenta) ? $cuenta->usua_id_persona : '0'; ?>)">
                   <i class="fas fa-chalkboard-teacher"></i>&nbsp; Cursos publicados</a>
             </li>
 
@@ -76,10 +76,10 @@
               </a>
               <div class="dropdown-menu dropdown-menu-down" aria-labelledby="navbarUser">
                 <a class="dropdown-item disabled" href="*"><?php echo isset($cuenta) ? $cuenta->rol_nombre : ""; ?></a>
-                <a class="dropdown-item" href="#" onclick="miCuenta(<?php echo isset($cuenta) ? $cuenta->usua_id_usuario : ""; ?>, <?php echo isset($cuenta) ? $cuenta->pers_id_persona : ""; ?>)" > Mi cuenta</a>
+                <a class="dropdown-item" href="#" onclick="miCuenta(<?php echo isset($cuenta) ? $cuenta->usua_id_usuario : ""; ?>, <?php echo isset($cuenta) ? $cuenta->usua_id_persona : ""; ?>)" > Mi cuenta</a>
                 <?php //? Cambiar contraseña, no visible ?>
                 <!--
-                <a class="dropdown-item" href="#" onclick="cambiarContrasena(<?php echo isset($cuenta) ? $cuenta->usua_id_usuario : ""; ?>, <?php echo isset($cuenta) ? $cuenta->pers_id_persona : ""; ?>)" >Cambiar contraseña</a>
+                <a class="dropdown-item" href="#" onclick="cambiarContrasena(<?php echo isset($cuenta) ? $cuenta->usua_id_usuario : ""; ?>, <?php echo isset($cuenta) ? $cuenta->usua_id_persona : ""; ?>)" >Cambiar contraseña</a>
                 -->
                 <a class="dropdown-item" href="../modulos/Cerrar_Sesion.php">Cerrar sesión</a>
               </div>

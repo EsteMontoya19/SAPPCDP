@@ -542,7 +542,7 @@ if (isset($_POST['persona']) && isset($_POST['id'])) {
                             <option value="0">Seleccione una opción</option>
                             <?php foreach ($arr_nombramientos as $nombramiento) { ?> 
 
-                            <option value="<?php echo isset($profesor) ? $nombramiento['nomb_id_nombramiento'] : $nombramiento['nomb_id_nombramiento']; ?>" <?php echo (isset($profesor) && $profesor->prof_id_nombramiento == $nombramiento['nomb_id_nombramiento']) ? "selected" : ""; ?>>
+                            <option value="<?php echo isset($profesor) ? $nombramiento['nomb_id_nombramiento'] : 0; ?>" <?php echo (isset($profesor) && $profesor->prof_id_nombramiento == $nombramiento['nomb_id_nombramiento']) ? "selected" : ""; ?>>
                               <?php echo($nombramiento['nomb_descripcion']); ?>
                             </option>
 

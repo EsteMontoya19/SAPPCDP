@@ -5,6 +5,24 @@
 class Busqueda
 {   
 
+    //? Da la información de un grupo presencial
+    function salonGrupo($grupo)
+    {
+        $SQL_Bus_Modalidades_Aprendizaje =
+        "SELECT salo_id_salon, salo_nombre, edif_id_edificio, edif_nombre
+            FROM Salon S, Grupo G, Edificio E
+            WHERE salo_id_salon = grup_id_salon AND edif_id_edificio = salo_id_edificio
+                AND grup_id_grupo = $grupo
+        ";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Bus_Modalidades_Aprendizaje);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerObjeto(0));
+    }
+
     function selectNombramientos()
     {
         $SQL_Bus_Plataformas =

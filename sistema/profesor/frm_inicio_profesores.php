@@ -74,7 +74,7 @@ if (isset($_POST['persona'])) {
                   <?php
                     if (isset($arr_grupos)) {
                         foreach ($arr_grupos as $grupo) {
-                            if ($grupo['usua_id_usuario'] != $id_profesor) {
+                            if ($grupo['grup_id_usuario'] != $id_profesor) {
                                 $sesion = $obj_Sesion->numSesionesGrupo($grupo['grup_id_grupo']);
                                 $sesionUno = $obj_Sesion->buscarMinSesionDM($grupo['grup_id_grupo']);?>
                       <tr>

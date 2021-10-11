@@ -5,6 +5,7 @@
     include('../clases/Sesion.php');
     include('../clases/PDF.php');
     include('../clases/Profesor.php');
+    include('../clases/Busqueda.php');
     include('../clases/Grupo.php');
     include('../clases/Plataforma.php');
      
@@ -19,14 +20,21 @@ if ($_GET['tipo'] == "comprobante") {
     $obj_Grupo = new Grupo();
     $obj_Plataforma = new Plataforma();
     $obj_Sesion = new Sesion();
+    $obj_Busqueda = new Busqueda();
 
     //? Variables con los datos de la consulta
     $profesor = $obj_Profesor->buscarProfesor($idPersona);
     $grupo = $obj_Grupo->buscarGrupo($idGrupo);
-    if (isset($grupo->plat_id_plataforma) || $grupo->plat_id_plataforma != "") {
-        $plataforma = $obj_Plataforma->buscarPlataforma($grupo->plat_id_plataforma);
+    if (isset($grupo->grup_id_plataforma) || $grupo->grup_id_plataforma != "") {
+        $plataforma = $obj_Plataforma->buscarPlataforma($grupo->grup_id_plataforma);
     } else {
         $plataforma = null;
+    }
+
+    if (!isset($grupo->grup_id_salon)) {
+        $salon = $obj_Busqueda->salonGrupo($idGrupo);
+    } else {
+        $salon = null;
     }
 
     //? Constructor
@@ -118,19 +126,19 @@ if ($_GET['tipo'] == "comprobante") {
     $pdf->Cell(0, 5, utf8_decode($grupo->pers_apellido_materno." ".$grupo->pers_apellido_paterno." ".$grupo->pers_nombre), 1, 1, "L", false);
 
 
-    if ($grupo->moap_id_modalidad == 1) {
+    if ($grupo->grup_id_modalidad == 1) {
         //TODO: Falta asignarles variables
         //! Preguntar si para la liberación del 27 se debe de incluir ya los presenciales.
         $pdf->SetFont("Times", "B", 12);
         $pdf->Cell(28, 5, utf8_decode("Edificio: "), 1, 0, "L", false);
         $pdf->SetFont("Times", "", 12);
-        $pdf->Cell(0, 5, utf8_decode("Por el momento no hay cursos preseciales"), 1, 1, "L", false);
+        $pdf->Cell(0, 5, utf8_decode(" ".$salon->edif_nombre), 1, 1, "L", false);
 
         $pdf->SetFont("Times", "B", 12);
         $pdf->Cell(28, 5, utf8_decode("Salón: "), 1, 0, "L", false);
         $pdf->SetFont("Times", "", 12);
-        $pdf->Cell(0, 5, utf8_decode("Por el momento no hay cursos preseciales"), 1, 1, "L", false);
-    } elseif ($grupo->moap_id_modalidad == 2) {
+        $pdf->Cell(0, 5, utf8_decode(" ".$salon->salo_nombre), 1, 1, "L", false);
+    } elseif ($grupo->grup_id_modalidad == 2) {
         $pdf->SetFont("Times", "B", 12);
         $pdf->Cell(28, 5, utf8_decode("Plataforma: "), 1, 0, "L", false);
         $pdf->SetFont("Times", "", 12);
@@ -150,7 +158,7 @@ if ($_GET['tipo'] == "comprobante") {
         $pdf->Cell(28, 5, utf8_decode("Clave acceso: "), 1, 0, "L", false);
         $pdf->SetFont("Times", "", 12);
         $pdf->Cell(0, 5, utf8_decode(" ".$grupo->grup_clave_acceso), 1, 1, "L", false);
-    } elseif ($grupo->moap_id_modalidad == 3) {
+    } elseif ($grupo->grup_id_modalidad == 3) {
         $pdf->SetFont("Times", "B", 12);
         $pdf->Cell(28, 5, utf8_decode("Plataforma: "), 1, 0, "L", false);
         $pdf->SetFont("Times", "", 12);
