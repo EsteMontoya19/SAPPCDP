@@ -72,11 +72,11 @@
                     $sesion = $obj_Sesion->numSesionesGrupo($idGrupo);
                     $sesionUno = $obj_Sesion->buscarMinSesion($idGrupo);
                     
-                    if($grupo['moap_id_modalidad'] == 1){
+                    if($grupo['grup_id_modalidad'] == 1){
                       $modalidad=$obj_Grupo->buscarDatosPresencial($idGrupo);
-                    } elseif ($grupo['moap_id_modalidad'] == 2) {
+                    } elseif ($grupo['grup_id_modalidad'] == 2) {
                       $modalidad=$obj_Grupo->buscarDatosEnLinea($idGrupo);
-                    } elseif ($grupo['moap_id_modalidad'] == 3) {
+                    } elseif ($grupo['grup_id_modalidad'] == 3) {
                       $modalidad=$obj_Grupo->buscarDatosAutogestivo($idGrupo);
                     }
                     ?>
@@ -88,7 +88,7 @@
                         <td><?php echo $sesion->numero;?></td>
                         <td><?php echo $grupo['esta_nombre'];?>
                         <td>
-                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupoInscrito(<?php echo $grupo['grup_id_grupo']?>,<?php echo $idPersona?>, <?php echo $grupo['moap_id_modalidad']?>)">
+                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupoInscrito(<?php echo $grupo['grup_id_grupo']?>,<?php echo $idPersona?>, <?php echo $grupo['grup_id_modalidad']?>)">
                             <i class="fas fa-search-plus"></i>
                           </button>
                           <!-- <button type="button" class="btn btn-primary btn-table" title="Comprobante" style="margin-top: 5px;">

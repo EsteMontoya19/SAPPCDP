@@ -607,8 +607,7 @@ class Grupo
     function buscarGrupoCompleto($id)
     {
         $SQL_Bus_Grupo =
-        "
-            SELECT GRUP_ID_GRUPO, GRUP_ID_CURSO, CURS_NOMBRE, CURS_TIPO, 
+        "SELECT GRUP_ID_GRUPO, GRUP_ID_CURSO, CURS_NOMBRE, CURS_TIPO, 
                     CURS_NIVEL, CURS_OBJETIVOS, CURS_REQ_TECNICOS, CURS_CONOCIMIENTOS, 
                     GRUP_ID_MODALIDAD, MOAP_NOMBRE, ESTA_NOMBRE, PERS_NOMBRE, 
                     PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO, GRUP_CUPO, 
