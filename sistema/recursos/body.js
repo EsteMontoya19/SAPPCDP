@@ -7,10 +7,13 @@
 //     }, 5000);
 // }
 
-if (document.getElementById('idRol').value == 4) {
-    window.onload = $('#container').load('../sistema/inicio/frm_grupos_inicio.php', { persona: document.getElementById('idPersona').value });
-} else {
-    window.onload = $('#container').load('../sistema/inicio/frm_inicio.php');
+if (document.getElementById('idRol') != null) {
+    if (document.getElementById('idRol').value == 4) {
+        window.onload = $('#container').load('../sistema/inicio/frm_grupos_inicio.php', { persona: document.getElementById('idPersona').value });
+    } else {
+        window.onload = $('#container').load('../sistema/inicio/frm_inicio.php');
+    }
+
 }
 
 //? Rutas

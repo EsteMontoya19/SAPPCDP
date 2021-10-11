@@ -241,8 +241,7 @@ class Grupo
     function buscarGrupo($id)
     {
         $SQL_Bus_Curso =
-        "   
-            SELECT GRUP_ID_GRUPO, USUA_ID_USUARIO, PERS_NOMBRE, 
+        " SELECT GRUP_ID_GRUPO, USUA_ID_USUARIO, PERS_NOMBRE, 
                     PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO, GRUP_ID_CURSO, 
                     CURS_NOMBRE, CURS_TIPO, CURS_NIVEL,  CURS_NUM_SESIONES,
                     GRUP_ID_PLATAFORMA, GRUP_URL, GRUP_ID_ACCESO, GRUP_CLAVE_ACCESO, 
@@ -349,8 +348,7 @@ class Grupo
     function buscarGruposProfesores()
     {
         $SQL_Bus_Cursos =
-        "
-            SELECT GRUP_ID_GRUPO, PEGR_ID_USUARIO, PERS_NOMBRE, PERS_APELLIDO_PATERNO, 
+        "SELECT GRUP_ID_GRUPO, PEGR_ID_USUARIO, PERS_NOMBRE, PERS_APELLIDO_PATERNO, 
                     PERS_APELLIDO_MATERNO, CURS_NOMBRE, CURS_TIPO, CURS_NIVEL, 
                     CURS_OBJETIVOS, GRUP_CUPO,  GRUP_NUM_INSCRITOS, GRUP_ID_MODALIDAD,
                     MOAP_NOMBRE, TO_CHAR(GRUP_INICIO_INSC, 'DD') DIAINI, 
@@ -359,7 +357,7 @@ class Grupo
                     TO_CHAR(TO_TIMESTAMP (TO_CHAR(GRUP_FIN_INSC, 'MM')::TEXT, 'MM'), 'TMMON') MESFIN
             FROM GRUPO G, PERSONAL_GRUPO P, USUARIO U,PERSONA PR, CURSO C, CALENDARIO CA, 
                 MODALIDAD_APRENDIZAJE M, ESTADO E 
-            WHERE GRUP_TIPO = 'PÚBLICO' 
+            WHERE GRUP_TIPO = 'Público' 
                 AND GRUP_ID_ESTADO = 3 
                 AND GRUP_PUBLICADO = TRUE 
                 AND USUA_ID_ROL = 2
