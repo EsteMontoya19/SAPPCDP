@@ -64,21 +64,24 @@ $tipo_pregunta_seleccionada = null;
 
                         <!-- Section: Respuesta -> Tipo -> Opción Múltiple-->
 
-                <div class="container">
-            
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-row clonar">
-                        <div class="form-group col-md-12 " id="respTipMultiple">
-                            <label for="">Inciso</label>
-                            <input type="text" class="form-control" name="nombre[]" />
-                            <span class="badge badge-pill badge-danger puntero ocultar">Eliminar</span>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-row clonar">
+                                        <div class="form-group col-md-12 " id="respTipMultiple">
+                                            <label for="">Inciso</label>
+                                            <!-- <input type="text" class="form-control" name="nombre[]" />
+                                            <span class="badge badge-pill badge-danger puntero ocultar">Eliminar</span> -->
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" placeholder="Inciso" >
+                                                <button class="btn btn-outline-danger puntero ocultar" type="button" id="button-addon2">Eliminar Inciso</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="contenedor"></div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div id="contenedor"></div>
-                </div>
-            </div>
-        </div>
 
                     </div>
 
@@ -111,7 +114,7 @@ $tipo_pregunta_seleccionada = null;
 
                         contenido.appendChild(clon).classList.remove('clonar');
 
-                        let remover_ocultar = contenido.lastChild.childNodes[1].querySelectorAll('span');
+                        let remover_ocultar = contenido.lastChild.childNodes[1].querySelectorAll('button');
                         remover_ocultar[0].classList.remove('ocultar');
                     });
 
