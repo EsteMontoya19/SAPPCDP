@@ -14,8 +14,9 @@ $(document).ready(function () {
         $('#container').load('../sistema/cuestionarios/frm_inicio_cuestionarios.php');
     });
 
-    document.getElementById('respTipMultiple').style.display = 'none';
     document.getElementById('preguntaGeneral').style.display = 'none';
+    document.getElementById('agregar').style.display = 'none';
+    document.getElementById('respTipMultiple').style.display = 'none';
 });
 
 function myFunction(chosen) {
@@ -26,11 +27,15 @@ function myFunction(chosen) {
 
     if (eleccion === 'Abierta') {
         document.getElementById('respTipMultiple').style.display = 'none';
+        document.getElementById('agregar').style.display = 'none';
     } else if (eleccion === 'Si y no') {
         document.getElementById('respTipMultiple').style.display = 'none';
+        document.getElementById('agregar').style.display = 'none';
     } else if (eleccion === 'Opción múltiple') {
         document.getElementById('respTipMultiple').style.display = '';
+        document.getElementById('agregar').style.display = '';
     } else if (eleccion === 'Seleccionar una opción') {
+        document.getElementById('agregar').style.display = 'none';
         document.getElementById('preguntaGeneral').style.display = 'none';
         document.getElementById('respTipMultiple').style.display = 'none';
     }
@@ -89,9 +94,4 @@ function cambioEstatus(id, estatus, nombre) {
     setTimeout(function () {
         $('#container').load('../sistema/cuestionarios/frm_inicio_cuestionarios.php');
     }, 1500);
-
-
-
-
-    
 }
