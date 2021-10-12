@@ -14,6 +14,12 @@ $(document).ready(function () {
         $('#container').load('../sistema/cuestionarios/frm_inicio_cuestionarios.php');
     });
 
+    // $('#button_detalles').click(function () {
+    //     $('html, body').animate({ scrollTop: 0 }, 0);
+    //     $('#container').load('../sistema/cuestionarios/frm_cuestionarios.php');
+    //     consultarPreguntaDirecto;
+    // });
+
     document.getElementById('preguntaGeneral').style.display = 'none';
     document.getElementById('agregar').style.display = 'none';
     document.getElementById('respTipMultiple').style.display = 'none';
@@ -95,54 +101,19 @@ function cambioEstatus(id, estatus, nombre) {
         $('#container').load('../sistema/cuestionarios/frm_inicio_cuestionarios.php');
     }, 1500);
 
-    //Boton 
-    function consultarPreguntaDirecto(id) {
-        var datos = {
-            id: id,
-            CRUD: 0,
-        };
-    
-        $.ajax({
-            data: datos,
-            type: 'POST',
-            url: '../sistema/cuestionarios/frm_cuestionarios.php',
-            success: function (data) {
-                $('html, body').animate({ scrollTop: 0 }, 0);
-                $('#container').html(data);
-            },
-        });
-    }
-    //Actualizar Pregunta
-    function actualizarPreguntaDirecto(id) {
-        var datos = {
-            id: id,
-            CRUD: 1,
-        };
-    
-        $.ajax({
-            data: datos,
-            type: 'POST',
-            url: '../sistema/cuestionarios/frm_cuestionarios.php',
-            success: function (data) {
-                $('html, body').animate({ scrollTop: 0 }, 0);
-                $('#container').html(data);
-            },
-        });
-    }
-    
     //Actualizar Pregunta
     $(document).ready(function () {
         $('#btn-actualizar-curso').click(function () {
             if (validarFormularioCurso()) {
                 datos = new FormData($('#form_cursos')[0]);
-    
+
                 $.ajax({
                     type: 'POST',
                     url: '../modulos/Control_Cuestionario.php',
                     data: datos,
                     contentType: false,
                     processData: false,
-    
+
                     success: function (respuesta) {
                         console.log(respuesta);
                         if (respuesta.endsWith('1')) {
@@ -162,5 +133,40 @@ function cambioEstatus(id, estatus, nombre) {
                 return false;
             }
         });
+    });
+}
+
+//Botón
+function consultarPreguntaDirecto(id) {
+    var datos = {
+        id: id,
+        CRUD: 0,
+    };
+
+    $.ajax({
+        data: datos,
+        type: 'POST',
+        url: '../sistema/cuestionarios/frm_cuestionarios.php',
+        success: function (data) {
+            $('html, body').animate({ scrollTop: 0 }, 0);
+            $('#container').html(data);
+        },
+    });
+}
+//Actualizar Pregunta
+function actualizarPreguntaDirecto(id) {
+    var datos = {
+        id: id,
+        CRUD: 1,
+    };
+
+    $.ajax({
+        data: datos,
+        type: 'POST',
+        url: '../sistema/cuestionarios/frm_cuestionarios.php',
+        success: function (data) {
+            $('html, body').animate({ scrollTop: 0 }, 0);
+            $('#container').html(data);
+        },
     });
 }

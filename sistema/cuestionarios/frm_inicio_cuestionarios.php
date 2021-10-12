@@ -74,11 +74,10 @@ $x = 0;
                                                 </div>
                                             </td>
                                             <td>
-                                            <button type="button" class="btn btn-info btn-table" title="Detalles"
-                                                onclick="consultarPreguntaDirecto(<?php echo $pregunta['preg_id_pregunta'] ?>)">
+                                            <button id="button_detalles" type="button" class="btn btn-info btn-table" title="Detalles" onclick="consultarPreguntaDirecto(<?php echo $pregunta['preg_id_pregunta'] ?>)">
                                                 <i class="fas fa-search-plus"></i>
                                             </button>
-                                            <button type="button" class="btn btn-primary btn-table" title="Editar"
+                                            <button id="button_editar" type="button" class="btn btn-primary btn-table" title="Editar"
                                                 onclick="actualizarPreguntaDirecto(<?php echo $pregunta['preg_id_pregunta'] ?>)">
                                                 <i class="fas fa-edit"></i>
                                             </button>
