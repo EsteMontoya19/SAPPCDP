@@ -95,41 +95,72 @@ function cambioEstatus(id, estatus, nombre) {
         $('#container').load('../sistema/cuestionarios/frm_inicio_cuestionarios.php');
     }, 1500);
 
-    $(document).ready(function () {
-        $('.sortable').sortable({
-            update: function (event, ui) {
-                $(this)
-                    .children()
-                    .each(function (index) {
-                        if ($(this).attr('data-position') != index + 1) {
-                            $(this)
-                                .attr('data-position', index + 1)
-                                .addClass('updated');
-                        }
-                    });
-                guardandoPosiciones();
-            },
-        });
-    });
-
-    function guardandoPosiciones() {
-        var positions = [];
-        $('.updated').each(function () {
-            positions.push([$(this).attr('data-index'), $(this).attr('data-position')]);
-            $(this).removeClass('updated');
-        });
-
+    //Boton 
+    function consultarPreguntaDirecto(id) {
+        var datos = {
+            id: id,
+            CRUD: 0,
+        };
+    
         $.ajax({
-            url: '../modulos/Control_Cuestionario.php',
-            method: 'POST',
-            dataType: 'text',
-            data: {
-                update: 1,
-                positions: positions,
-            },
-            success: function (response) {
-                console.log(response);
+            data: datos,
+            type: 'POST',
+            url: '../sistema/cuestionarios/frm_cuestionarios.php',
+            success: function (data) {
+                $('html, body').animate({ scrollTop: 0 }, 0);
+                $('#container').html(data);
             },
         });
     }
+    //Actualizar Pregunta
+    function actualizarPreguntaDirecto(id) {
+        var datos = {
+            id: id,
+            CRUD: 1,
+        };
+    
+        $.ajax({
+            data: datos,
+            type: 'POST',
+            url: '../sistema/cuestionarios/frm_cuestionarios.php',
+            success: function (data) {
+                $('html, body').animate({ scrollTop: 0 }, 0);
+                $('#container').html(data);
+            },
+        });
+    }
+    
+    //Actualizar Pregunta
+    $(document).ready(function () {
+        $('#btn-actualizar-curso').click(function () {
+            if (validarFormularioCurso()) {
+                datos = new FormData($('#form_cursos')[0]);
+    
+                $.ajax({
+                    type: 'POST',
+                    url: '../modulos/Control_Cuestionario.php',
+                    data: datos,
+                    contentType: false,
+                    processData: false,
+    
+                    success: function (respuesta) {
+                        console.log(respuesta);
+                        if (respuesta.endsWith('1')) {
+                            alertify.success('El registro se actualizó correctamente');
+                            setTimeout(function () {
+                                $('html, body').animate({ scrollTop: 0 }, 0);
+                                $('#container').load('../sistema/cuestionarios/frm_inicio_cuestionarios.php');
+                            }, 0);
+                        } else if (respuesta.endsWith('2')) {
+                            $('html, body').animate({ scrollTop: 0 }, 'slow');
+                            alertify.error('La pregunta ya ha sido respondida por al menos un profesor y puede se modificada.');
+                        } else {
+                            alertify.error('Hubo un problema al actualizar la pregunta');
+                        }
+                    },
+                });
+                return false;
+            }
+        });
+    });
 }

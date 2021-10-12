@@ -48,6 +48,7 @@ $x = 0;
                                 <tr>
                                     <th>ID</th>
                                     <th>Descripción</th>
+                                    <th>Tipo</th>
                                     <th>Lugar en la encuesta</th>
                                     <th>Estatus</th>
                                     <th>Opciones</th>
@@ -62,6 +63,7 @@ $x = 0;
                                             <?php $x++; ?>
                                             <td><?php echo $pregunta['preg_id_pregunta']; ?></td>
                                             <td><?php echo $pregunta['preg_descripcion']; ?></td>
+                                            <td><?php echo $pregunta['preg_tipo']; ?></td>
                                             <td><?php if ($pregunta['preg_orden'] == NULL || $pregunta['preg_activo'] != 't') {echo "-";} else {echo $pregunta['preg_orden'];} ?></td>
                                             <td>
                                                 <div class="custom-control custom-switch">
@@ -72,9 +74,14 @@ $x = 0;
                                                 </div>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-primary btn-table" title="Actualizar" onclick="actualizarCuestionario(<?php echo $pregunta['preg_id_pregunta'] ?>)">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
+                                            <button type="button" class="btn btn-info btn-table" title="Detalles"
+                                                onclick="consultarPreguntaDirecto(<?php echo $pregunta['preg_id_pregunta'] ?>)">
+                                                <i class="fas fa-search-plus"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-primary btn-table" title="Editar"
+                                                onclick="actualizarPreguntaDirecto(<?php echo $pregunta['preg_id_pregunta'] ?>)">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
                                             </td>
                                         </tr>
                                     <?php }

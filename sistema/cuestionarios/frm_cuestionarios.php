@@ -1,13 +1,24 @@
 <?php
 include('../../clases/BD.php');
-include('../../clases/Plataforma.php');
+include('../../clases/Pregunta.php');
+include('../../clases/Opcion.php');
+include('../../clases/Cuestionario.php');
 
 // TODO: Adaptar a Clase Cuestionario.
-$obj_plataforma = new Plataforma();
+$obj_Pregunta = new Pregunta();
+$obj_Opcion = new Opcion();
+$obj_Cuestionario = new Cuestionario();
 
 // Variables
-$tipos_de_preguntas = array('Abierta', 'Opción múltiple', 'Si y no', 'Si y no, con justificación');
+$tipos_de_preguntas = array('Abierta', 'Si/No', 'Si/No, con justificación', 'Acuerdo/Desacuerdo', 'Opción múltiple');
 $tipo_pregunta_seleccionada = null;
+
+if (isset($_POST['id'])) {
+    // Recuperar información de consulta
+    $pregunta = $obj_Pregunta->buscarPreguntaID($_POST['id']);
+    $tipo = $pregunta->preg_tipo;
+    $arr_Opciones = $obj_Cuestionario->buscarPROPIDPregunta($_POST['id']);
+}
 ?>
 
 <div id="wrapper">
@@ -22,6 +33,8 @@ $tipo_pregunta_seleccionada = null;
                 <?php if (isset($_POST['CRUD'])) { ?>
                     <?php if ($_POST['CRUD'] == 1) { ?>
                         <li class="breadcrumb-item active"><i class="fas fa-edit"></i>&nbsp; Actualizar registro</li>
+                    <?php } else { ?>
+                        <li class="breadcrumb-item active"><i class="fas fa-search-plus"></i>&nbsp; Consultar registro</li>
                     <?php }
                 } else { ?>
                     <li class="breadcrumb-item active"><i class="fas fa-folder-plus"></i>&nbsp; Nuevo registro</li>
@@ -32,60 +45,101 @@ $tipo_pregunta_seleccionada = null;
                 <hr>
             </p>
 
+            <!-- Formulario -->
+            <form name="form_preguntas" id="form_preguntas" method="POST">
+
+            <!-- Desactivar formulario INICIO en caso de no ser un registro-->
+            <?php if (isset($_POST['CRUD'])) { ?>
+                <?php if ($_POST['CRUD'] == 0) { ?>
+            <fieldset disabled>
+                <?php } ?>
+            <?php } ?>
+
             <!-- Inicio de Sección: Nueva pregunta -->
-            <div class="form-group">
-                <div class="card lg-12">
+                <div class="form-group">
+                    <div class="card lg-12">
 
-                    <!-- Header Nueva pregunta -->
-                    <div class="card-header">
-                        <i class="fas fa-id-card fa-lg"></i>
-                        <b>&nbsp;&nbsp;Nueva pregunta</b>
-                    </div>
+                        <!-- Header Nueva pregunta -->
+                        <div class="card-header">
+                            <i class="fas fa-id-card fa-lg"></i>
+                            <b>&nbsp;&nbsp;Nueva pregunta</b>
+                        </div>
 
-
-                    <div class="col-lg-12 form-row" style="margin-top: 15px;">
+                        <div class="col-lg-12 form-row" style="margin-top: 15px;">
                         <!-- Section: Tipo de pregunta -->
-                        <div class="col-lg-4 form-group">
-                            <label><b>Tipo de pregunta: *</b></label>
-                            <select onChange="myFunction(this.options[this.selectedIndex].value)"  required='required' class="custom-select" id="tipo_pregunta" name="tipo_pregunta1">
-                                <option>Seleccionar una opción</option>
-                                <option>Abierta</option>
-                                <option>Opción múltiple</option>
-                                <option>Si y no</option>
-                                <option>Si y no, con justificación</option>
-                            </select>
-                        </div>
+                            <div class="col-lg-4 form-group">
+                            
+                                <label><b>Tipo de pregunta: *</b></label>
+                                <select onChange="myFunction(this.options[this.selectedIndex].value)"  required='required' class="custom-select" id="tipo_pregunta" name="tipo_pregunta1">
+                                    <option>Seleccionar una opción</option>
+                                    <option <?php if (isset($pregunta) && $tipo == "Abierta") {
+                                        echo "selected"; }?> >Abierta</option>
+                                    <option <?php if (isset($pregunta) && $tipo == "Si/No") {
+                                        echo "selected"; }?> >Si/No</option>
+                                    <option <?php if (isset($pregunta) && $tipo == "Si/No, con justificación") {
+                                        echo "selected"; }?> >Si/No, con justificación</option>
+                                    <option <?php if (isset($pregunta) && $tipo == "Acuerdo/Desacuerdo") {
+                                        echo "selected"; }?> >Acuerdo/Desacuerdo</option>
+                                    <option <?php if (isset($pregunta) && $tipo == "Opción múltiple") {
+                                        echo "selected"; }?> >Opción múltiple</option>
+                                </select>
+                            </div>
 
-                        <!-- Section: Pregunta  -->
-                        <div class="col-lg-8 form-group" id='preguntaGeneral'>
-                            <label><b>Pregunta: *</b></label>
-                            <input required='required' class="form-control" id="pregunta" name="pregunta"></input>
-                        </div>
+                            <!-- Section: Pregunta  -->
+                            <div class="col-lg-8 form-group" id='preguntaGeneral'>
+                                <label><b>Pregunta: *</b></label>
+                                <input required='required' class="form-control" id="pregunta" name="pregunta"
+                                value="<?php echo isset($pregunta) ? $pregunta->preg_descripcion : ""; ?>" ></input>
+                            </div>
 
-                        <!-- Section: Respuesta -> Tipo -> Opción Múltiple-->
-
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-row clonar">
-                                        <div class="form-group col-md-12 " id="respTipMultiple">
-                                            <label for="">Inciso</label>
-                                            <!-- <input type="text" class="form-control" name="nombre[]" />
-                                            <span class="badge badge-pill badge-danger puntero ocultar">Eliminar</span> -->
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" placeholder="Inciso" >
-                                                <button class="btn btn-outline-danger puntero ocultar" type="button" id="button-addon2">Eliminar Inciso</button>
+                            <!-- Section: Respuesta -> Tipo -> Opción Múltiple-->
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-row clonar">
+                                        <?php if (isset($_POST['CRUD'])) { ?>
+                                            <div class="form-group col-md-12 " id="respTipMultiple" style="display: none;">
+                                        <?php }  else { ?>
+                                            <div class="form-group col-md-12 " id="respTipMultiple">
+                                        <?php } ?>
+                                                <label for="">Inciso</label>
+                                                <!-- <input type="text" class="form-control" name="nombre[]" />
+                                                <span class="badge badge-pill badge-danger puntero ocultar">Eliminar</span> -->
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" placeholder="Inciso" >
+                                                    <button class="btn btn-outline-danger puntero ocultar" type="button" id="button-addon2">Eliminar Inciso</button>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div id="contenedor"></div>
+                                        <?php if (isset($_POST['CRUD']) && isset($pregunta) && $tipo == 'Opción múltiple') { ?>
+                                            <div class="form-group col-md-12 " id="opcionMultiple">
+                                        <?php }  else { ?>
+                                            <div class="form-group col-md-12 " id="opcionMultiple" style="display: none;">
+                                        <?php } ?>
+                                                <label for="">Inciso</label>
+                                        <?php if (isset($_POST['CRUD']) && isset($arr_Opciones)) { 
+                                            foreach ($arr_Opciones as $opcion) {?>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" placeholder="Inciso" 
+                                                        value="<?php echo isset($opcion) ? $opcion->opci_descripcion : ""; ?>" >>
+                                                </div>
+                                        <?php }} ?>
+                                            </div>
                                     </div>
-                                    <div id="contenedor"></div>
                                 </div>
                             </div>
+
                         </div>
 
-                    </div>
+                    <!-- Desactivar formulario FIN -->
+                    <?php if (isset($_POST['CRUD'])) { ?>
+                            <?php if ($_POST['CRUD'] == 0) { ?>
+                    </fieldset>
+                            <?php } ?>
+                    <?php } ?>
 
-                
+            </form>
 
                     <!-- Botones -->
                     <div class="col-lg-12" style="text-align: center;">
