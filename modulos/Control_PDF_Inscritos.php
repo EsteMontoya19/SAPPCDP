@@ -135,7 +135,7 @@
     */
     //Si el modulo(% residuo) difiere de 0
     if(fmod($numSesiones,3.0) != 0){
-        $numeroUno = intdiv($numSesiones,3)+1;
+        $numeroUno = ((int)($numSesiones / 3))+1;
         $numeroDos = $numSesiones-(($numeroUno-1)*3);
         if($numSesiones>3){
             $numeroTres=3;
