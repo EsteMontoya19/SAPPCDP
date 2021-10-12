@@ -15,13 +15,14 @@ $(document).ready(function () {
     });
 
     document.getElementById('preguntaGeneral').style.display = 'none';
+    document.getElementById('agregar').style.display = 'none';
+    document.getElementById('respTipMultiple').style.display = 'none';
 });
 
 function myFunction(chosen) {
     var eleccion = $('#tipo_pregunta').val();
     if (eleccion != '') {
         document.getElementById('preguntaGeneral').style.display = '';
-        document.getElementById('agregar').style.display = '';
     }
 
     if (eleccion === 'Abierta') {

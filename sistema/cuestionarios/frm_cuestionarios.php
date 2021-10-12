@@ -57,7 +57,7 @@ $tipo_pregunta_seleccionada = null;
                         </div>
 
                         <!-- Section: Pregunta  -->
-                        <div class="col-lg-4 form-group" id='preguntaGeneral'>
+                        <div class="col-lg-8 form-group" id='preguntaGeneral'>
                             <label><b>Pregunta: *</b></label>
                             <input required='required' class="form-control" id="pregunta" name="pregunta"></input>
                         </div>
@@ -65,15 +65,11 @@ $tipo_pregunta_seleccionada = null;
                         <!-- Section: Respuesta -> Tipo -> Opción Múltiple-->
 
                 <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <button class="btn btn-primary" id="agregar">Agregar inciso</button>
-                </div>
-            </div>
+            
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-row clonar">
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-12 " id="respTipMultiple">
                             <label for="">Inciso</label>
                             <input type="text" class="form-control" name="nombre[]" />
                             <span class="badge badge-pill badge-danger puntero ocultar">Eliminar</span>
@@ -91,7 +87,7 @@ $tipo_pregunta_seleccionada = null;
                     <!-- Botones -->
                     <div class="col-lg-12" style="text-align: center;">
                         <button id="btn-regresar-cuestionario" type="button" class="btn btn-success btn-footer btn-regresar">Regresar</button>
-                        <!-- <button class="btn btn-primary" id="agregar">Agregar Inciso</button> -->
+                        <button class="btn btn-primary" id="agregar">Agregar Inciso</button>
                         <?php if (isset($_POST['CRUD'])) { ?>
                             <?php if ($_POST['CRUD'] == 1) { ?>
                                 <button id="btn-actualizar-cuestionario" type="button" class="btn btn-success btn-footer btn-aceptar">Actualizar</button>
@@ -105,6 +101,7 @@ $tipo_pregunta_seleccionada = null;
 
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
                 <script>
+                    // Variables
                     let agregar = document.getElementById('agregar');
                     let contenido = document.getElementById('contenedor');
                     agregar.addEventListener('click', (e) => {
