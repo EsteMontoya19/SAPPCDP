@@ -14,7 +14,6 @@ $(document).ready(function () {
         $('#container').load('../sistema/cuestionarios/frm_inicio_cuestionarios.php');
     });
 
-    document.getElementById('respTipMultiple').style.display = 'none';
     document.getElementById('preguntaGeneral').style.display = 'none';
 });
 
@@ -22,15 +21,20 @@ function myFunction(chosen) {
     var eleccion = $('#tipo_pregunta').val();
     if (eleccion != '') {
         document.getElementById('preguntaGeneral').style.display = '';
+        document.getElementById('agregar').style.display = '';
     }
 
     if (eleccion === 'Abierta') {
         document.getElementById('respTipMultiple').style.display = 'none';
+        document.getElementById('agregar').style.display = 'none';
     } else if (eleccion === 'Si y no') {
         document.getElementById('respTipMultiple').style.display = 'none';
+        document.getElementById('agregar').style.display = 'none';
     } else if (eleccion === 'Opción múltiple') {
         document.getElementById('respTipMultiple').style.display = '';
+        document.getElementById('agregar').style.display = '';
     } else if (eleccion === 'Seleccionar una opción') {
+        document.getElementById('agregar').style.display = 'none';
         document.getElementById('preguntaGeneral').style.display = 'none';
         document.getElementById('respTipMultiple').style.display = 'none';
     }
@@ -90,41 +94,43 @@ function cambioEstatus(id, estatus, nombre) {
         $('#container').load('../sistema/cuestionarios/frm_inicio_cuestionarios.php');
     }, 1500);
 
-
-
-
     // Movimiento de las cards de Ordenar preguntas
     $(document).ready(function () {
         $('.sortable').sortable({
             update: function (event, ui) {
-                $(this).children().each(function (index) {
-                     if ($(this).attr('data-position') != (index+1)) {
-                         $(this).attr('data-position', (index+1)).addClass('updated');
-                     }
-                });
- 
+                $(this)
+                    .children()
+                    .each(function (index) {
+                        if ($(this).attr('data-position') != index + 1) {
+                            $(this)
+                                .attr('data-position', index + 1)
+                                .addClass('updated');
+                        }
+                    });
+
                 guardandoPosiciones();
-            }
+            },
         });
-     });
- 
-     function guardandoPosiciones() {
-         var positions = [];
-         $('.updated').each(function () {
+    });
+
+    function guardandoPosiciones() {
+        var positions = [];
+        $('.updated').each(function () {
             positions.push([$(this).attr('data-index'), $(this).attr('data-position')]);
             $(this).removeClass('updated');
-         });
- 
-         $.ajax({
+        });
+
+        $.ajax({
             url: '../modulos/Control_Cuestionario.php',
             method: 'POST',
             dataType: 'text',
             data: {
                 update: 1,
-                positions: positions
-            }, success: function (response) {
-                 console.log(response);
-            }
-         });
-     }
+                positions: positions,
+            },
+            success: function (response) {
+                console.log(response);
+            },
+        });
+    }
 }

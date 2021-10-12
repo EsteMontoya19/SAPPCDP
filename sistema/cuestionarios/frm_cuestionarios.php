@@ -34,7 +34,7 @@ $tipo_pregunta_seleccionada = null;
 
             <!-- Inicio de Sección: Nueva pregunta -->
             <div class="form-group">
-                <div class="card lg-3">
+                <div class="card lg-12">
 
                     <!-- Header Nueva pregunta -->
                     <div class="card-header">
@@ -63,18 +63,35 @@ $tipo_pregunta_seleccionada = null;
                         </div>
 
                         <!-- Section: Respuesta -> Tipo -> Opción Múltiple-->
-                        <div class="col-lg-4 form-group" id='respTipMultiple'>
-                            <label><b>Insiso : *</b></label>
-                            <input required='required' class="form-control" id="respuesta_abierta" name="respuesta_abierta"></input>
-                        </div>
 
+                <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <button class="btn btn-primary" id="agregar">Agregar inciso</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-row clonar">
+                        <div class="form-group col-md-12">
+                            <label for="">Inciso</label>
+                            <input type="text" class="form-control" name="nombre[]" />
+                            <span class="badge badge-pill badge-danger puntero ocultar">Eliminar</span>
+                        </div>
+                    </div>
+                    <div id="contenedor"></div>
+                </div>
+            </div>
+        </div>
 
                     </div>
 
+                
 
                     <!-- Botones -->
                     <div class="col-lg-12" style="text-align: center;">
                         <button id="btn-regresar-cuestionario" type="button" class="btn btn-success btn-footer btn-regresar">Regresar</button>
+                        <!-- <button class="btn btn-primary" id="agregar">Agregar Inciso</button> -->
                         <?php if (isset($_POST['CRUD'])) { ?>
                             <?php if ($_POST['CRUD'] == 1) { ?>
                                 <button id="btn-actualizar-cuestionario" type="button" class="btn btn-success btn-footer btn-aceptar">Actualizar</button>
@@ -86,4 +103,28 @@ $tipo_pregunta_seleccionada = null;
 
                 </div>
 
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+                <script>
+                    let agregar = document.getElementById('agregar');
+                    let contenido = document.getElementById('contenedor');
+                    agregar.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        let clonado = document.querySelector('.clonar');
+                        let clon = clonado.cloneNode(true);
+
+                        contenido.appendChild(clon).classList.remove('clonar');
+
+                        let remover_ocultar = contenido.lastChild.childNodes[1].querySelectorAll('span');
+                        remover_ocultar[0].classList.remove('ocultar');
+                    });
+
+                    contenido.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (e.target.classList.contains('puntero')) {
+                            let contenedor = e.target.parentNode.parentNode;
+
+                            contenedor.parentNode.removeChild(contenedor);
+                        }
+                    });
+                </script>
                 <script src="../sistema/cuestionarios/control_cuestionarios.js"></script>
