@@ -81,13 +81,19 @@ $x = 0;
                                                 onclick="actualizarPreguntaDirecto(<?php echo $pregunta['preg_id_pregunta'] ?>)">
                                                 <i class="fas fa-edit"></i>
                                             </button>
+                                            <?php if ($pregunta['preg_activo'] == 'f') {?>
+                                                <button id="button_eliminar" type="button" class="btn btn-danger  btn-table" title="Eliminar"
+                                                    onclick="eliminarPreguntaDirecto(<?php echo $pregunta['preg_id_pregunta'] ?>, '<?php echo $pregunta['preg_tipo'] ?>', '<?php echo $pregunta['preg_descripcion'] ?>')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            <?php }?>
                                             </td>
                                         </tr>
                                     <?php }
                                 } ?>
                             </tbody>
                         </table>
-                        <p class="aviso-rojo">** Se puede eliminar una pregunta, siempre que no pertenezca al histórico.</p>
+                        <p class="aviso-rojo">     ** Se puede eliminar una pregunta, siempre que no pertenezca al histórico y se encuentre inactiva.</p>
                     </div>
                 </div>
             </div>

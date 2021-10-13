@@ -7,7 +7,7 @@ class Cuestionario {
     function agregarPROP($pregunta, $opcion)
     {
         $SQL_INS_PROP =
-        "INSERT INTO PREGUNTA_OPCION (PROP_ID_PREGUNTA_OPCION, PROP_ID_OPCION)
+        "INSERT INTO PREGUNTA_OPCION (PROP_ID_PREGUNTA, PROP_ID_OPCION)
 		   VALUES ($pregunta, $opcion);
 		";
 
@@ -76,7 +76,7 @@ class Cuestionario {
     {
         $SQL_DEL_PROP =
         "DELETE FROM PREGUNTA_OPCION
-         WHERE PROP_ID_PREGUNTA_OPCION = $id
+         WHERE PROP_ID_PREGUNTA = $id
         ";
 
         $bd = new BD();
@@ -113,7 +113,7 @@ class Cuestionario {
             FROM RESPUESTA, PREGUNTA_OPCION
             WHERE PROP_ID_PREGUNTA_OPCION = RESP_ID_PREGUNTA_OPCION AND PROP_ID_PREGUNTA = $id
         ";
-
+        
         $bd = new BD();
         $bd->abrirBD();
         $transaccion_1 = new Transaccion($bd->conexion);

@@ -182,19 +182,19 @@ class Pregunta
     }
 
     //Elimina una pregunta dado su ID
-    // TODO: Esto está raro xd revisar
     function eliminarPregunta($id)
     {
 
-        $SQL_DEL_CONSTANCIA =
+        $SQL_DEL_PREGUNTA =
         "
-            SELECT last_value FROM pregunta_preg_id_pregunta_seq;
+            DELETE FROM PREGUNTA 
+            WHERE PREG_ID_PREGUNTA  = $id
         ";
 
         $bd = new BD();
         $bd->abrirBD();
         $transaccion_1 = new Transaccion($bd->conexion);
-        $transaccion_1->enviarQuery($SQL_DEL_CONSTANCIA);
+        $transaccion_1->enviarQuery($SQL_DEL_PREGUNTA);
         $bd->cerrarBD();
     }
 }

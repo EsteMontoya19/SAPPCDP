@@ -60,7 +60,7 @@ function cambioEstatus(id, estatus, nombre) {
     var mensaje = '¿Esta seguro de cambiar el estatus de la pregunta ';
     mensaje = mensaje.concat(nombre);
     mensaje = mensaje.concat('?<br>');
-    if (estatus == 't') {
+    if (estatus == 'f') {
         mensaje = mensaje.concat('Esta acción no afectará el estado de los cuestionarios ya aplicados.');
     } else {
         mensaje = mensaje.concat('Esta acción no afectara los cuestionarios anteriores ya aplicados, solo impide que la pregunta sea utilizada en proximos cuestionarios.');
@@ -106,7 +106,7 @@ function cambioEstatus(id, estatus, nombre) {
 $(document).ready(function () {
     $('#btn-actualizar-cuestionario').click(function () {
         if (validarFormularioPregunta()) {
-            datos = new FormData($('#form_cestionarios')[0]);
+            datos = new FormData($('#form_preguntas')[0]);
 
             $.ajax({
                 type: 'POST',
@@ -140,7 +140,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('#btn-registrar-cuestionario').click(function () {
         if (validarFormularioCuestionario()) {
-            datos = new FormData($('#form_cuestionarios')[0]);
+            datos = new FormData($('#form_preguntas')[0]);
             $.ajax({
                 type: 'POST',
                 url: '../modulos/Control_Cuestionario.php',
@@ -201,6 +201,52 @@ function actualizarPreguntaDirecto(id) {
     });
 }
 
+//Elimina una pregunta
+function eliminarPreguntaDirecto(id, tipo, nombre) {
+    var mensaje = '¿Esta seguro de eliminar la pregunta ';
+    mensaje = mensaje.concat(nombre);
+    mensaje = mensaje.concat('?<br>');
+    mensaje = mensaje.concat('Esta acción no afectará el estado de los cuestionarios ya aplicados.');
+    
+    var titulo = 'Eliminar pregunta';
+    alertify.confirm(
+        titulo,
+        mensaje,
+        function () {
+            var dml = 'delete';
+            var datos = {
+                id: id,
+                dml: dml,
+                tipo: tipo,
+            };
+            $.ajax({
+                data: datos,
+                type: 'POST',
+                url: '../modulos/Control_Cuestionario.php',
+                success: function (respuesta) {
+                    console.log(respuesta);
+                    if (respuesta == 1) {
+                        alertify.success('Se eliminó la pregunta');
+                        setTimeout(function () {
+                            $('#container').load('../sistema/cuestionarios/frm_inicio_cuestionarios.php');
+                        }, 1500);
+                    } else if (respuesta == 2) {
+                        alertify.error('Esta pregunta ya ha sido respondida y forma parte del hisótico por lo que no puede eliminarse ni actualizarse');
+                    } else {
+                        alertify.error('Hubo un problema al eliminar la pregunta');
+                    } 
+                },
+            });
+        },
+        function () {
+            alertify.confirm().close();
+        }
+    );
+    setTimeout(function () {
+        $('#container').load('../sistema/cuestionarios/frm_inicio_cuestionarios.php');
+    }, 1500);
+}
+
 function validarFormularioCuestionario() {
     if ($('#tipo_pregunta').val() == '') {
         $('html, body').animate({ scrollTop: 0 }, 'slow');
@@ -215,27 +261,7 @@ function validarFormularioCuestionario() {
             return false;
         }
 
-        if (
-            $('#tipo_pregunta').val().includes('@') ||
-            $('#tipo_pregunta').val().includes('/') ||
-            $('#tipo_pregunta').val().includes('-') ||
-            $('#tipo_pregunta').val().includes('*') ||
-            $('#tipo_pregunta').val().includes('!') ||
-            $('#tipo_pregunta').val().includes('#') ||
-            $('#tipo_pregunta').val().includes('$') ||
-            $('#tipo_pregunta').val().includes('%') ||
-            $('#tipo_pregunta').val().includes('^') ||
-            $('#tipo_pregunta').val().includes('&') ||
-            $('#tipo_pregunta').val().includes('-') ||
-            $('#tipo_pregunta').val().includes('=') ||
-            $('#tipo_pregunta').val().includes('+') ||
-            $('#tipo_pregunta').val().includes(';')
-        ) {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-            document.getElementById('tipo_pregunta').focus();
-            alertify.error('La pregunta no debe incluir caracteres especiales @, /, *, -, !, #, $, %, ^, &, -, +, =, ;');
-            return false;
-        }
+        
     }
 
     if ($('#pregunta').val() == 0) {
@@ -248,43 +274,7 @@ function validarFormularioCuestionario() {
     //Debe validar que minimo sean dos opciones
 
 
-    for (var iCon = 1; iCon <= $('#opcion').val(); iCon++) {
-        if ($('#opcion').val() == '') {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-            document.getElementById('opcion').focus();
-            alertify.error('Se debe ingresar la descripción de la pregunta');
-            return false;
-        } else {
-            if ($('#opcion').val().length >= 300) {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('opcion').focus();
-                alertify.error('El nombre del curso debe tener máximo 300 caracteres');
-                return false;
-            }
     
-            if (
-                $('#opcion').val().includes('@') ||
-                $('#opcion').val().includes('/') ||
-                $('#opcion').val().includes('-') ||
-                $('#opcion').val().includes('*') ||
-                $('#opcion').val().includes('!') ||
-                $('#opcion').val().includes('#') ||
-                $('#opcion').val().includes('$') ||
-                $('#opcion').val().includes('%') ||
-                $('#opcion').val().includes('^') ||
-                $('#opcion').val().includes('&') ||
-                $('#opcion').val().includes('-') ||
-                $('#opcion').val().includes('=') ||
-                $('#opcion').val().includes('+') ||
-                $('#opcion').val().includes(';')
-            ) {
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-                document.getElementById('opcion').focus();
-                alertify.error('La pregunta no debe incluir caracteres especiales @, /, *, -, !, #, $, %, ^, &, -, +, =, ;');
-                return false;
-            }
-        }
-    }
 
     return true;
 
@@ -301,28 +291,6 @@ function validarFormularioPregunta() {
             $('html, body').animate({ scrollTop: 0 }, 'slow');
             document.getElementById('tipo_pregunta').focus();
             alertify.error('El nombre del curso debe tener máximo 300 caracteres');
-            return false;
-        }
-
-        if (
-            $('#tipo_pregunta').val().includes('@') ||
-            $('#tipo_pregunta').val().includes('/') ||
-            $('#tipo_pregunta').val().includes('-') ||
-            $('#tipo_pregunta').val().includes('*') ||
-            $('#tipo_pregunta').val().includes('!') ||
-            $('#tipo_pregunta').val().includes('#') ||
-            $('#tipo_pregunta').val().includes('$') ||
-            $('#tipo_pregunta').val().includes('%') ||
-            $('#tipo_pregunta').val().includes('^') ||
-            $('#tipo_pregunta').val().includes('&') ||
-            $('#tipo_pregunta').val().includes('-') ||
-            $('#tipo_pregunta').val().includes('=') ||
-            $('#tipo_pregunta').val().includes('+') ||
-            $('#tipo_pregunta').val().includes(';')
-        ) {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-            document.getElementById('tipo_pregunta').focus();
-            alertify.error('El nombre del curso no debe incluir caracteres especiales @, /, *, -, !, #, $, %, ^, &, -, +, =, ;');
             return false;
         }
     }

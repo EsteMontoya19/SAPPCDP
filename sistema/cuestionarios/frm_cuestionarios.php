@@ -127,14 +127,15 @@ if (isset($_POST['id'])) {
                                         <?php }  else { ?>
                                             <div class="form-group col-md-12 " id="opcionMultiple" style="display: none;">
                                         <?php } ?>
-                                                <label for="">Inciso</label>
-                                        <?php if (isset($_POST['CRUD']) && isset($arr_Opciones)) { 
+                                                <label for="">Incisos</label>
+                                        <?php if (isset($_POST['CRUD'])) { 
+                                            if (isset($arr_Opciones)) { 
                                             foreach ($arr_Opciones as $opcion) {?>
                                                 <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" placeholder="Inciso" 
-                                                        value="<?php echo isset($opcion) ? $opcion->opci_descripcion : ""; ?>" >>
+                                                    <input type="text" class="form-control" placeholder="Inciso" readonly
+                                                        value="<?php echo isset($opcion) ? $opcion['opci_descripcion'] : ""; ?>" >
                                                 </div>
-                                        <?php }} ?>
+                                        <?php }}} ?>
                                             </div>
                                     </div>
                                 </div>
@@ -149,8 +150,7 @@ if (isset($_POST['id'])) {
                     <input type="hidden" id="idPregunta" name="idPregunta" value="<?php echo $_POST['id'];?>">
                             <?php } 
                     } else { ?>
-                    <input type="hidden" name="dml" value="insert" />
-                    <input type="hidden" name="tipo" value="<?php echo $_POST['id'];?>" />
+                        <input type="hidden" name="dml" value="insert" />
                     <?php } ?>
                     
                     <!-- Desactivar formulario FIN -->

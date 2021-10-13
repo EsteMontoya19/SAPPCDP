@@ -11,24 +11,23 @@
 
     if($_POST['dml'] == 'insert')
     {
-        $pregunta = $_POST['preguntaGeneral'];
+        $pregunta = $_POST['pregunta'];
         $activo = 'FALSE';
-        $tipo = $_POST['tipo_pregunta'];
+        $tipo = $_POST['tipo_pregunta1'];
         $orden = 'NULL';
         
         $obj_Pregunta->agregarPregunta($pregunta, $activo, $orden, $tipo);
-        $ultimo = $obj_Pregunta->buscarUltimo();
-        $id = $ultimo->last_value;
+        $id = $obj_Pregunta->buscarUltimo();
 
-        if($tipo =='Abierta'){
+        if($tipo == 'Abierta'){
             $obj_Cuestionario->agregarPROP($id, 'NULL');
-        } elseif ($tipo =='Si/No'){
+        } elseif ($tipo == 'Si/No'){
             $obj_Cuestionario->agregarPROP($id, 1);
             $obj_Cuestionario->agregarPROP($id, 2);
-        } elseif ($tipo =='Si/No, con justificación'){
+        } elseif ($tipo == 'Si/No, con justificación'){
             $obj_Cuestionario->agregarPROP($id, 1);
             $obj_Cuestionario->agregarPROP($id, 2);
-        }elseif ($tipo =='Acuerdo/Desacuerdo'){
+        }elseif ($tipo == 'Acuerdo/Desacuerdo'){
             $obj_Cuestionario->agregarPROP($id, 3);
             $obj_Cuestionario->agregarPROP($id, 4);
             $obj_Cuestionario->agregarPROP($id, 5);
@@ -39,8 +38,7 @@
 
             for ($i=0; $i<sizeof($arr_Opciones); $i++) {
                 $obj_Opcion->agregarOpcion($arr_Opciones[$i]);
-                $ultimo = $obj_Opcion->buscarUltimo();
-                $idOpcion = $ultimo->last_value;
+                $idOpcion = $obj_Opcion->buscarUltimo();
                 $obj_Cuestionario->agregarPROP($id, $idOpcion);
             }
         }
@@ -50,8 +48,8 @@
     } 
     elseif ($_POST['dml'] == 'update')
     {
-        $id = $_POST['id'];
-        $pregunta = $_POST['preguntaConsulta'];
+        $id = $_POST['idPregunta'];
+        $pregunta = $_POST['PreguntaConsulta'];
 
         $registros = $obj_Cuestionario->buscarNumeroRespuestasIDPROP($id);
         
@@ -74,12 +72,12 @@
         //Si no hay ninguna respuesta se puede eliminar la pregunta
         if($registros->numero == 0){
             //Eliminar PROP
-            
             $arr_Opciones = $obj_Cuestionario->buscarPROPIDPregunta($id);
             $obj_Cuestionario->eliminarPROP($id);
 
             //Eliminar Opciones si es de tipo opción multiple
-            if ($tipo == 'Opción Multiple'){
+            if ($tipo == 'Opción múltiple'){
+                
                 foreach($arr_Opciones as $opcion){
                     $obj_Opcion->eliminarOpcion($opcion["prop_id_opcion"]);
                 }
