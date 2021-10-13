@@ -162,6 +162,12 @@
                                                                                                                } ?> style="margin-top: 5px;" onclick="verificarDescargasConstancias(<?php echo $grupo['grup_id_grupo']?>)">
                             <i class="fas fa-clipboard-check"></i>
                           </button>
+                          
+                          <button type="button" class="btn btn-outline-info btn-table" title="Resultados Cuestionario" 
+                            <?php if ($grupo['grup_estado'] != 'Finalizado') { ?> style="display: none;" <?php } ?> 
+                            style="margin-top: 5px;" onclick="resultadosCuestionario(<?php echo $grupo['grup_id_grupo']?>)">
+                            <i class="fas fa-chart-bar"></i>
+                          </button>
 
                         </div>
                         </div>

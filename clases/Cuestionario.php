@@ -105,7 +105,8 @@ class Cuestionario {
         return ($transaccion_1->traerRegistros(0));
     }
 
-    function buscarNumeroRespuestasIDPROP($id){
+    function buscarNumeroRespuestasIDPROP($id)
+    {
 
         $SQL_BUS_PROP = 
         "
@@ -122,6 +123,78 @@ class Cuestionario {
         $bd->cerrarBD();
         return ($transaccion_1->traerObjeto(0));
     }
+
+    //Busca el ID de las preguntas que se respondieron en un grupo
+    function buscarCuestionarioGrupo($id)
+    {
+
+        $SQL_BUS_CUESTIONARIO =
+        "
+            SELECT PREG_ID_PREGUNTA, PREG_DESCRIPCION, PREG_TIPO, COUNT(PREG_ID_PREGUNTA) CANTIDAD
+            FROM PREGUNTA, PREGUNTA_OPCION, RESPUESTA, INSCRIPCION
+            WHERE 	PROP_ID_PREGUNTA = PREG_ID_PREGUNTA
+                AND PROP_ID_PREGUNTA_OPCION = RESP_ID_PREGUNTA_OPCION
+                AND RESP_ID_INSCRIPCION = INSC_ID_INSCRIPCION
+                AND INSC_ID_GRUPO = $id
+            GROUP BY PREG_ID_PREGUNTA
+            ORDER BY PREG_ID_PREGUNTA
+        ";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_BUS_CUESTIONARIO);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerRegistros(0));
+    }
+
+    // Busca las respuestas que ha tenido una pregunta dado su ID
+    function buscarRespuestasPregunta($id, $idPregunta)
+    {
+
+        $SQL_BUS_PREGUNTA =
+        "
+            SELECT PROP_ID_OPCION, COUNT(PROP_ID_OPCION) CANTIDAD
+            FROM PREGUNTA, PREGUNTA_OPCION, RESPUESTA, INSCRIPCION
+            WHERE 	PROP_ID_PREGUNTA = PREG_ID_PREGUNTA
+                AND PROP_ID_PREGUNTA_OPCION = RESP_ID_PREGUNTA_OPCION
+                AND RESP_ID_INSCRIPCION = INSC_ID_INSCRIPCION
+                AND INSC_ID_GRUPO = $id
+                AND PREG_ID_PREGUNTA = $idPregunta
+            GROUP BY PROP_ID_OPCION
+            ORDER BY PROP_ID_OPCION
+        ";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_BUS_PREGUNTA);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerRegistros(0));
+    }
+
+    //bUSCA LAS RESPUESTAS ABIERTAS DADO UN ID DE PREGUNTA
+    function buscarResuestaTexto($id)
+    {
+        $SQL_BUS_RESPUESTA = 
+        "
+            SELECT RESP_TEXTO 
+            FROM RESPUESTA, PREGUNTA_OPCION
+            WHERE RESP_ID_PREGUNTA_OPCION = PROP_ID_PREGUNTA_OPCION
+                AND RESP_TEXTO IS NOT NULL
+                AND PROP_ID_PREGUNTA = $id
+            ORDER BY RESP_ID_INSCRIPCION
+        ";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_BUS_RESPUESTA);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerRegistros(0));
+    }
+
+
 }
 
 ?>
