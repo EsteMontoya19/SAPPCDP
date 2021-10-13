@@ -62,7 +62,7 @@ $x = 0;
                                         <tr>
                                             <?php $x++; ?>
                                             <td><?php echo $pregunta['preg_id_pregunta']; ?></td>
-                                            <td><?php echo $pregunta['preg_descripcion']; ?></td>
+                                            <td><small><?php echo $pregunta['preg_descripcion']; ?></small></td>
                                             <td><?php echo $pregunta['preg_tipo']; ?></td>
                                             <td><?php if ($pregunta['preg_orden'] == NULL || $pregunta['preg_activo'] != 't') {echo "-";} else {echo $pregunta['preg_orden'];} ?></td>
                                             <td>
@@ -87,6 +87,7 @@ $x = 0;
                                 } ?>
                             </tbody>
                         </table>
+                        <p class="aviso-rojo">** Se puede eliminar una pregunta, siempre que no pertenezca al histórico.</p>
                     </div>
                 </div>
             </div>

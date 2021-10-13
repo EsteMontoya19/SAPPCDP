@@ -70,17 +70,18 @@ if (isset($_POST['id'])) {
                             <div class="col-lg-4 form-group">
                             
                                 <label><b>Tipo de pregunta: *</b></label>
-                                <select onChange="myFunction(this.options[this.selectedIndex].value)"  required='required' class="custom-select" id="tipo_pregunta" name="tipo_pregunta1">
-                                    <option>Seleccionar una opción</option>
-                                    <option <?php if (isset($pregunta) && $tipo == "Abierta") {
+                                <select onChange="myFunction(this.options[this.selectedIndex].value)"  required='required' class="custom-select" id="tipo_pregunta" name="tipo_pregunta1" 
+                                <?php if (isset($_POST['CRUD'])) { echo "disabled"; }?> >Abierta</option> >
+                                    <option value = 0 >Seleccionar una opción</option>
+                                    <option value = "Abierta"  <?php if (isset($pregunta) && $tipo == "Abierta") {
                                         echo "selected"; }?> >Abierta</option>
-                                    <option <?php if (isset($pregunta) && $tipo == "Si/No") {
+                                    <option value = "Si/No" <?php if (isset($pregunta) && $tipo == "Si/No") {
                                         echo "selected"; }?> >Si/No</option>
-                                    <option <?php if (isset($pregunta) && $tipo == "Si/No, con justificación") {
+                                    <option value = "Si/No, con justificación" <?php if (isset($pregunta) && $tipo == "Si/No, con justificación") {
                                         echo "selected"; }?> >Si/No, con justificación</option>
-                                    <option <?php if (isset($pregunta) && $tipo == "Acuerdo/Desacuerdo") {
+                                    <option value = "Acuerdo/Desacuerdo" <?php if (isset($pregunta) && $tipo == "Acuerdo/Desacuerdo") {
                                         echo "selected"; }?> >Acuerdo/Desacuerdo</option>
-                                    <option <?php if (isset($pregunta) && $tipo == "Opción múltiple") {
+                                    <option value = "Opción múltiple" <?php if (isset($pregunta) && $tipo == "Opción múltiple") {
                                         echo "selected"; }?> >Opción múltiple</option>
                                 </select>
                             </div>
@@ -88,8 +89,17 @@ if (isset($_POST['id'])) {
                             <!-- Section: Pregunta  -->
                             <div class="col-lg-8 form-group" id='preguntaGeneral'>
                                 <label><b>Pregunta: *</b></label>
-                                <input required='required' class="form-control" id="pregunta" name="pregunta"
-                                value="<?php echo isset($pregunta) ? $pregunta->preg_descripcion : ""; ?>" ></input>
+                                <input required='required' class="form-control" id="pregunta" name="pregunta"></input>
+                            </div>
+                            
+                        <?php if (isset($_POST['CRUD'])) { ?>
+                            <div class="form-group col-md-12 " id="divPregunta" >
+                        <?php }  else { ?>
+                            <div class="form-group col-md-12 " id="divPregunta" style="display: none;">
+                        <?php } ?>
+                                <label><b>Pregunta: *</b></label>
+                                <input required='required' class="form-control" id="PreguntaConsulta" name="PreguntaConsulta"
+                                    value="<?php echo isset($pregunta) ? $pregunta->preg_descripcion : ""; ?>"></input>
                             </div>
 
                             <!-- Section: Respuesta -> Tipo -> Opción Múltiple-->
@@ -106,7 +116,7 @@ if (isset($_POST['id'])) {
                                                 <!-- <input type="text" class="form-control" name="nombre[]" />
                                                 <span class="badge badge-pill badge-danger puntero ocultar">Eliminar</span> -->
                                                 <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" placeholder="Inciso" >
+                                                    <input type="text" class="form-control" placeholder="Inciso" name="opcion[]" id="opcion[]">
                                                     <button class="btn btn-outline-danger puntero ocultar" type="button" id="button-addon2">Eliminar Inciso</button>
                                                 </div>
                                             </div>
@@ -131,7 +141,18 @@ if (isset($_POST['id'])) {
                             </div>
 
                         </div>
-
+                    
+                    <!-- ID e Instrucciones -->
+                    <?php if (isset($_POST['CRUD'])) { ?>
+                            <?php if ($_POST['CRUD'] == 1) { ?>
+                    <input type="hidden" name="dml" value="update" />
+                    <input type="hidden" id="idPregunta" name="idPregunta" value="<?php echo $_POST['id'];?>">
+                            <?php } 
+                    } else { ?>
+                    <input type="hidden" name="dml" value="insert" />
+                    <input type="hidden" name="tipo" value="<?php echo $_POST['id'];?>" />
+                    <?php } ?>
+                    
                     <!-- Desactivar formulario FIN -->
                     <?php if (isset($_POST['CRUD'])) { ?>
                             <?php if ($_POST['CRUD'] == 0) { ?>
@@ -141,6 +162,8 @@ if (isset($_POST['id'])) {
 
             </form>
 
+            <p class="aviso-rojo">* Solo se puede actualizar una pregunta, si no ha sido respondidad por un profesor.</p>
+            <p class="aviso-rojo">** No se puede cambiar el tipo de pregunta. Puede eliminar la pregunta y luego crear un nuevo registro.</p>
                     <!-- Botones -->
                     <div class="col-lg-12" style="text-align: center;">
                         <button id="btn-regresar-cuestionario" type="button" class="btn btn-success btn-footer btn-regresar">Regresar</button>

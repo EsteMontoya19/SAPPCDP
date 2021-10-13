@@ -4,12 +4,12 @@ class Pregunta
 {
     //Agrega una pregunta, con los atributos descripción y activo
     //! El valor nulo en la columna «preg_orden» de la relación «pregunta» viola la restricción de no nulo
-    function agregarPregunta($pregunta, $activo)
+    function agregarPregunta($pregunta, $activo, $orden, $tipo)
     {
         $SQL_INS_PREGUNTA =
         "
-            INSERT INTO PREGUNTA (PREG_DESCRIPCION, PREG_ACTIVO)
-			    VALUES ('$pregunta', '$activo');
+            INSERT INTO PREGUNTA (PREG_DESCRIPCION, PREG_ACTIVO, PREG_ORDEN, PREG_TIPO)
+			    VALUES ('$pregunta', '$activo', $orden, '$tipo');
 		";
 
         $bd = new BD();
@@ -26,6 +26,23 @@ class Pregunta
         "
             UPDATE PREGUNTA
             SET PREG_DESCRIPCION = '$pregunta', PREG_ORDEN = $orden
+            WHERE PREG_ID_PREGUNTA = $id
+		";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_UPD_PREGUNTA);
+        $bd->cerrarBD();
+    }
+
+    //Actualiza la descripción de una pregunta dado su ID
+    function actualizarDescripcionPregunta($id, $pregunta)
+    {
+        $SQL_UPD_PREGUNTA =
+        "
+            UPDATE PREGUNTA
+            SET PREG_DESCRIPCION = '$pregunta'
             WHERE PREG_ID_PREGUNTA = $id
 		";
 
@@ -93,7 +110,7 @@ class Pregunta
     {
         $SQL_BUS_PREGUNTA =
         "
-            SELECT PREG_ID_PREGUNTA, PREG_DESCRIPCION, PREG_ACTIVO, PREG ORDEN, PREG_TIPO
+            SELECT PREG_ID_PREGUNTA, PREG_DESCRIPCION, PREG_ACTIVO, PREG_ORDEN, PREG_TIPO
             FROM PREGUNTA
             WHERE PREG_ID_PREGUNTA = $id
 		";
@@ -145,6 +162,23 @@ class Pregunta
         $bd->cerrarBD();
 
         return $pregunta_Seq;
+    }
+
+    //Busca el maximo dentro del orden
+    function buscarUltimoOrden()
+    {
+        $SQL_BUS_PREGUNTA =
+        "
+            SELECT MAX(PREG_ORDEN) ultimo FROM PREGUNTA
+		";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_BUS_PREGUNTA);
+        $obj_Opcion = $transaccion_1->traerObjeto(0);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerObjeto(0));
     }
 
     //Elimina una pregunta dado su ID

@@ -100,41 +100,71 @@ function cambioEstatus(id, estatus, nombre) {
     setTimeout(function () {
         $('#container').load('../sistema/cuestionarios/frm_inicio_cuestionarios.php');
     }, 1500);
-
-    //Actualizar Pregunta
-    $(document).ready(function () {
-        $('#btn-actualizar-curso').click(function () {
-            if (validarFormularioCurso()) {
-                datos = new FormData($('#form_cursos')[0]);
-
-                $.ajax({
-                    type: 'POST',
-                    url: '../modulos/Control_Cuestionario.php',
-                    data: datos,
-                    contentType: false,
-                    processData: false,
-
-                    success: function (respuesta) {
-                        console.log(respuesta);
-                        if (respuesta.endsWith('1')) {
-                            alertify.success('El registro se actualizó correctamente');
-                            setTimeout(function () {
-                                $('html, body').animate({ scrollTop: 0 }, 0);
-                                $('#container').load('../sistema/cuestionarios/frm_inicio_cuestionarios.php');
-                            }, 0);
-                        } else if (respuesta.endsWith('2')) {
-                            $('html, body').animate({ scrollTop: 0 }, 'slow');
-                            alertify.error('La pregunta ya ha sido respondida por al menos un profesor y puede se modificada.');
-                        } else {
-                            alertify.error('Hubo un problema al actualizar la pregunta');
-                        }
-                    },
-                });
-                return false;
-            }
-        });
-    });
 }
+
+//Actualizar Pregunta
+$(document).ready(function () {
+    $('#btn-actualizar-cuestionario').click(function () {
+        if (validarFormularioPregunta()) {
+            datos = new FormData($('#form_cestionarios')[0]);
+
+            $.ajax({
+                type: 'POST',
+                url: '../modulos/Control_Cuestionario.php',
+                data: datos,
+                contentType: false,
+                processData: false,
+
+                success: function (respuesta) {
+                    console.log(respuesta);
+                    if (respuesta.endsWith('1')) {
+                        alertify.success('El registro se actualizó correctamente');
+                        setTimeout(function () {
+                            $('html, body').animate({ scrollTop: 0 }, 0);
+                            $('#container').load('../sistema/cuestionarios/frm_inicio_cuestionarios.php');
+                        }, 0);
+                    } else if (respuesta.endsWith('2')) {
+                        $('html, body').animate({ scrollTop: 0 }, 'slow');
+                        alertify.error('La pregunta ya ha sido respondida por al menos un profesor y puede se modificada.');
+                    } else {
+                        alertify.error('Hubo un problema al actualizar la pregunta');
+                    }
+                },
+            });
+            return false;
+        }
+    });
+});
+
+//Insertar Pregunta
+$(document).ready(function () {
+    $('#btn-registrar-cuestionario').click(function () {
+        if (validarFormularioCuestionario()) {
+            datos = new FormData($('#form_cuestionarios')[0]);
+            $.ajax({
+                type: 'POST',
+                url: '../modulos/Control_Cuestionario.php',
+                data: datos,
+                contentType: false,
+                processData: false,
+
+                success: function (respuesta) {
+                    console.log(respuesta);
+                    if (respuesta.endsWith('1')) {
+                        alertify.success('El registro se realizó correctamente');
+                        setTimeout(function () {
+                            $('html, body').animate({ scrollTop: 0 }, 0);
+                            $('#container').load('../cuestionarios/frm_inicio_cuestionarios.php');
+                        }, 1500);
+                    } else {
+                        alertify.error('Hubo un problema al registrar la pregunta');
+                    }
+                },
+            });
+            return false;
+        }
+    });
+});
 
 //Botón
 function consultarPreguntaDirecto(id) {
@@ -169,4 +199,134 @@ function actualizarPreguntaDirecto(id) {
             $('#container').html(data);
         },
     });
+}
+
+function validarFormularioCuestionario() {
+    if ($('#tipo_pregunta').val() == '') {
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+        document.getElementById('tipo_pregunta').focus();
+        alertify.error('Se debe ingresar la descripción de la pregunta');
+        return false;
+    } else {
+        if ($('#tipo_pregunta').val().length >= 300) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('tipo_pregunta').focus();
+            alertify.error('El nombre del curso debe tener máximo 300 caracteres');
+            return false;
+        }
+
+        if (
+            $('#tipo_pregunta').val().includes('@') ||
+            $('#tipo_pregunta').val().includes('/') ||
+            $('#tipo_pregunta').val().includes('-') ||
+            $('#tipo_pregunta').val().includes('*') ||
+            $('#tipo_pregunta').val().includes('!') ||
+            $('#tipo_pregunta').val().includes('#') ||
+            $('#tipo_pregunta').val().includes('$') ||
+            $('#tipo_pregunta').val().includes('%') ||
+            $('#tipo_pregunta').val().includes('^') ||
+            $('#tipo_pregunta').val().includes('&') ||
+            $('#tipo_pregunta').val().includes('-') ||
+            $('#tipo_pregunta').val().includes('=') ||
+            $('#tipo_pregunta').val().includes('+') ||
+            $('#tipo_pregunta').val().includes(';')
+        ) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('tipo_pregunta').focus();
+            alertify.error('La pregunta no debe incluir caracteres especiales @, /, *, -, !, #, $, %, ^, &, -, +, =, ;');
+            return false;
+        }
+    }
+
+    if ($('#pregunta').val() == 0) {
+        alertify.error('Debe seleccionar un tipo');
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+        document.getElementById('pregunta').focus();
+        return false;
+    }
+
+    //Debe validar que minimo sean dos opciones
+
+
+    for (var iCon = 1; iCon <= $('#opcion').val(); iCon++) {
+        if ($('#opcion').val() == '') {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('opcion').focus();
+            alertify.error('Se debe ingresar la descripción de la pregunta');
+            return false;
+        } else {
+            if ($('#opcion').val().length >= 300) {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('opcion').focus();
+                alertify.error('El nombre del curso debe tener máximo 300 caracteres');
+                return false;
+            }
+    
+            if (
+                $('#opcion').val().includes('@') ||
+                $('#opcion').val().includes('/') ||
+                $('#opcion').val().includes('-') ||
+                $('#opcion').val().includes('*') ||
+                $('#opcion').val().includes('!') ||
+                $('#opcion').val().includes('#') ||
+                $('#opcion').val().includes('$') ||
+                $('#opcion').val().includes('%') ||
+                $('#opcion').val().includes('^') ||
+                $('#opcion').val().includes('&') ||
+                $('#opcion').val().includes('-') ||
+                $('#opcion').val().includes('=') ||
+                $('#opcion').val().includes('+') ||
+                $('#opcion').val().includes(';')
+            ) {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('opcion').focus();
+                alertify.error('La pregunta no debe incluir caracteres especiales @, /, *, -, !, #, $, %, ^, &, -, +, =, ;');
+                return false;
+            }
+        }
+    }
+
+    return true;
+
+}
+
+function validarFormularioPregunta() {
+    if ($('#tipo_pregunta').val() == '') {
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+        document.getElementById('tipo_pregunta').focus();
+        alertify.error('Se debe ingresar la descripción de la pregunta');
+        return false;
+    } else {
+        if ($('#tipo_pregunta').val().length >= 300) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('tipo_pregunta').focus();
+            alertify.error('El nombre del curso debe tener máximo 300 caracteres');
+            return false;
+        }
+
+        if (
+            $('#tipo_pregunta').val().includes('@') ||
+            $('#tipo_pregunta').val().includes('/') ||
+            $('#tipo_pregunta').val().includes('-') ||
+            $('#tipo_pregunta').val().includes('*') ||
+            $('#tipo_pregunta').val().includes('!') ||
+            $('#tipo_pregunta').val().includes('#') ||
+            $('#tipo_pregunta').val().includes('$') ||
+            $('#tipo_pregunta').val().includes('%') ||
+            $('#tipo_pregunta').val().includes('^') ||
+            $('#tipo_pregunta').val().includes('&') ||
+            $('#tipo_pregunta').val().includes('-') ||
+            $('#tipo_pregunta').val().includes('=') ||
+            $('#tipo_pregunta').val().includes('+') ||
+            $('#tipo_pregunta').val().includes(';')
+        ) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('tipo_pregunta').focus();
+            alertify.error('El nombre del curso no debe incluir caracteres especiales @, /, *, -, !, #, $, %, ^, &, -, +, =, ;');
+            return false;
+        }
+    }
+
+    return true;
+
 }

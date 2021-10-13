@@ -104,6 +104,24 @@ class Cuestionario {
         $bd->cerrarBD();
         return ($transaccion_1->traerRegistros(0));
     }
+
+    function buscarNumeroRespuestasIDPROP($id){
+
+        $SQL_BUS_PROP = 
+        "
+            SELECT COUNT(*) numero
+            FROM RESPUESTA, PREGUNTA_OPCION
+            WHERE PROP_ID_PREGUNTA_OPCION = RESP_ID_PREGUNTA_OPCION AND PROP_ID_PREGUNTA = $id
+        ";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_BUS_PROP);
+        $obj_Evaluacion = $transaccion_1->traerObjeto(0);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerObjeto(0));
+    }
 }
 
 ?>
