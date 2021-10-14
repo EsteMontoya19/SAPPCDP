@@ -104,7 +104,6 @@
                 <a class="dropdown-item" type="button"  id="btn_plataforma">Plataforma</a>
                 <a class="dropdown-item" type="button"  id="btn_calendario">Calendario</a>
                 <a class="dropdown-item" type="button"  id="btn_coordinacion">Coordinacion</a>
-                <a class="dropdown-item" type="button"  id="btn_cuestionarios">Cuestionarios</a>
                 <a class="dropdown-item" type="button"  id="btn_nombramiento">Nombramiento</a>
               </div>
             </li>
