@@ -353,4 +353,14 @@ INSERT INTO Asistencia (ASIS_ID_SESION, ASIS_ID_INSCRIPCION, ASIS_PRESENTE) VALU
         (10, null),
         (11, null);
 
+    INSERT INTO RESPUESTA (RESP_ID_INSCRIPCION, RESP_ID_PREGUNTA_OPCION, RESP_TEXTO) VALUES
+        (34,1,NULL),(34,3,NULL),(34,5,NULL),(34,9,NULL),(34,13,NULL),(34,17,NULL),
+        (34,21,'Texto de respuesta 1 para pregunta 7'),(34,23,'Texto de respuesta 1 para pregunta 8'),
+        (34,26,'Texto de respuesta 1 para pregunta 9'),(34,27,'Texto de respuesta 1 para pregunta 10'),
+        (34,28,'Texto de respuesta 1 para pregunta 11'),
+        (35,1,NULL),(35,4,NULL),(35,6,NULL),(35,9,NULL),(35,14,NULL),(35,18,NULL),
+        (35,21,'Texto de respuesta 2 para pregunta 7'),(35,24,'Texto de respuesta 2 para pregunta 8'),
+        (35,26,'Texto de respuesta 2 para pregunta 9'),(35,27,'Texto de respuesta 2 para pregunta 10'),
+        (35,28,'Texto de respuesta 2 para pregunta 11'); 
+
 

@@ -521,7 +521,7 @@ PLAT_ID_PLATAFORMA
 create table PREGUNTA (
    PREG_ID_PREGUNTA     SERIAL               not null,
    PREG_DESCRIPCION     VARCHAR(300)         not null,
-   PREG_ORDEN           INT4                 not null,
+   PREG_ORDEN           INT4                 null,
    PREG_ACTIVO          BOOL                 not null,
    PREG_TIPO            VARCHAR(50)          not null,
    constraint PK_PREGUNTA primary key (PREG_ID_PREGUNTA)
@@ -715,7 +715,7 @@ create table RESPUESTA (
    RESP_ID_RESPUESTA    SERIAL               not null,
    RESP_ID_INSCRIPCION  INT4                 null,
    RESP_ID_PREGUNTA_OPCION INT4                 null,
-   RESP_TEXTO           VARCHAR(50)          not null,
+   RESP_TEXTO           VARCHAR(500)          null,
    constraint PK_RESPUESTA primary key (RESP_ID_RESPUESTA)
 );
 
