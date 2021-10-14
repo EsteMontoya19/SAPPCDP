@@ -164,31 +164,32 @@ class Cuestionario {
 
     //? Registra una respuesta, primero en pregunta opcion y despues directo en la tabla de respuesta
     function registrarRespuesta ($inscripcion, $pregunta, $opcion, $texto) {
+
+        if($opcion == "null" ) {
+
         $SQL_BUS_RESPUESTA =
-            "INSERT INTO Pregunta_Opcion (prop_id_pregunta, prop_id_opcion)
-                VALUES ($pregunta, $opcion)
+            "SELECT prop_id_pregunta_opcion, prop_id_pregunta, prop_id_opcion 
+            FROM pregunta_opcion
+            WHERE prop_id_pregunta = $pregunta AND prop_id_opcion is null
             ";
+        } else {
+            $SQL_BUS_RESPUESTA =
+                "SELECT prop_id_pregunta_opcion, prop_id_pregunta, prop_id_opcion 
+                FROM pregunta_opcion
+                WHERE prop_id_pregunta = $pregunta AND prop_id_opcion = $opcion
+                ";
+        }
 
         $bd = new BD();
         $bd->abrirBD();
         $transaccion_1 = new Transaccion($bd->conexion);
         $transaccion_1->enviarQuery($SQL_BUS_RESPUESTA);
-        $bd->cerrarBD();
-
-        $SQL_BUS_RESPUESTA =
-            "SELECT last_value FROM pregunta_opcion_prop_id_pregunta_opcion_seq;
-            ";
-
-        $bd = new BD();
-        $bd->abrirBD();
-        $transaccion_1 = new Transaccion($bd->conexion);
-        $transaccion_1->enviarQuery($SQL_BUS_RESPUESTA);
-        $ultimoPROP = $transaccion_1->traerObjeto(0)->last_value;
+        $opcionPregunta = $transaccion_1->traerObjeto(0)->prop_id_pregunta_opcion;
         $bd->cerrarBD();
         
         $SQL_BUS_RESPUESTA =
             "INSERT INTO Respuesta (resp_id_inscripcion, resp_id_pregunta_opcion, resp_texto) 
-                VALUES ($inscripcion , $ultimoPROP, '$texto') ;
+                VALUES ($inscripcion , $opcionPregunta, '$texto') ;
 
             ";
 

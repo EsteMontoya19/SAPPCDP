@@ -33,11 +33,10 @@
 
                 case 'Si/No, con justificación':
                     if(isset($_POST[$pregunta['preg_id_pregunta']."_SiNoJ"])) {
-                        $obj_Cuestionario->registrarRespuesta($_POST['inscripcion'], $pregunta['preg_id_pregunta'],$_POST[$pregunta['preg_id_pregunta']."_SiNoJ"], "null");
+                        $obj_Cuestionario->registrarRespuesta($_POST['inscripcion'], $pregunta['preg_id_pregunta'],$_POST[$pregunta['preg_id_pregunta']."_SiNoJ"], $_POST[$pregunta['preg_id_pregunta']."Justificacion"]);
                     } else {
                         exit("3");
                     }
-                    $obj_Cuestionario->registrarRespuesta($_POST['inscripcion'], $pregunta['preg_id_pregunta'], "null", $_POST[$pregunta['preg_id_pregunta']."Justificacion"]);
                 break;
 
                 case 'Opción Múltiple':
