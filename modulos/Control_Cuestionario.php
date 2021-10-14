@@ -9,8 +9,64 @@
     $obj_Opcion = new Opcion();
     $obj_Cuestionario = new Cuestionario();
 
-    if($_POST['dml'] == 'insert')
-    {
+    if($_POST['dml'] == 'respuestas') {
+        $cuestionario = $obj_Cuestionario->buscarPreguntasCuestionario();
+
+        foreach ($cuestionario as $iCont => $pregunta) {
+
+            switch ($pregunta['preg_tipo']) {
+                case 'Si/No':
+                    if(isset($_POST[$pregunta['preg_id_pregunta']."_SiNo"])) {
+                        $obj_Cuestionario->registrarRespuesta($_POST['inscripcion'], $pregunta['preg_id_pregunta'],$_POST[$pregunta['preg_id_pregunta']."_SiNo"], "null");
+                    } else {
+                        exit("3");
+                    }
+                break;
+
+                case 'Acuerdo/Desacuerdo':
+                    if(isset($_POST[$pregunta['preg_id_pregunta']."_AcueDesa"])) {
+                        $obj_Cuestionario->registrarRespuesta($_POST['inscripcion'], $pregunta['preg_id_pregunta'],$_POST[$pregunta['preg_id_pregunta']."_AcueDesa"], "null");
+                    } else {
+                        exit("3");
+                    }
+                break;
+
+                case 'Si/No, con justificación':
+                    if(isset($_POST[$pregunta['preg_id_pregunta']."_SiNoJ"])) {
+                        $obj_Cuestionario->registrarRespuesta($_POST['inscripcion'], $pregunta['preg_id_pregunta'],$_POST[$pregunta['preg_id_pregunta']."_SiNoJ"], "null");
+                    } else {
+                        exit("3");
+                    }
+                    $obj_Cuestionario->registrarRespuesta($_POST['inscripcion'], $pregunta['preg_id_pregunta'], "null", $_POST[$pregunta['preg_id_pregunta']."Justificacion"]);
+                break;
+
+                case 'Opción Múltiple':
+                    $arr_opciones = $obj_Cuestionario->buscarOpcionesPregunta($pregunta['preg_id_pregunta']);
+                        if(isset($_POST[$pregunta['preg_id_pregunta']."_multiple"])) {
+                            $obj_Cuestionario->registrarRespuesta($_POST['inscripcion'], $pregunta['preg_id_pregunta'],$_POST[$pregunta['preg_id_pregunta']."_multiple"], "null");
+                        } else {
+                            exit("3");
+                    }
+
+                break;
+
+                case 'Abierta':                    
+                    if(isset($_POST[$pregunta['preg_id_pregunta']])) {
+                        $obj_Cuestionario->registrarRespuesta($_POST['inscripcion'], $pregunta['preg_id_pregunta'],"null", $_POST[$pregunta['preg_id_pregunta']]);
+                    } else {
+                        exit("3");
+                    }
+
+                break;
+                
+                default:
+                    exit("2");
+                break;
+            }            
+        }
+        exit("1");
+    } 
+    else if($_POST['dml'] == 'insert') {
         $pregunta = $_POST['pregunta'];
         $activo = 'FALSE';
         $tipo = $_POST['tipo_pregunta1'];

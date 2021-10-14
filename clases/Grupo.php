@@ -426,10 +426,9 @@ class Grupo
     function gruposInscritosxProfesorHistoricos($idProfesor)
     {
         $SQL_Act_Curso =
-        " 
-            SELECT GRUP_ID_GRUPO, GRUP_ID_MODALIDAD, MOAP_NOMBRE, 
+        " SELECT GRUP_ID_GRUPO, GRUP_ID_MODALIDAD, MOAP_NOMBRE, 
                     INSC_ID_CONSTANCIA, CURS_NOMBRE, CALE_SEMESTRE, 
-                    ESTA_NOMBRE, INSC_ACTIVO, CURS_NIVEL, CURS_TIPO
+                    ESTA_NOMBRE, INSC_ACTIVO, CURS_NIVEL, CURS_TIPO, INSC_ID_INSCRIPCION
             FROM INSCRIPCION I, GRUPO G, CURSO C, CALENDARIO CA, 
                 MODALIDAD_APRENDIZAJE M, ESTADO E
             WHERE INSC_ID_PROFESOR = $idProfesor

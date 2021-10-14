@@ -47,7 +47,6 @@ class Cuestionario {
         $bd->abrirBD();
         $transaccion_1 = new Transaccion($bd->conexion);
         $transaccion_1->enviarQuery($SQL_BUS_PROP);
-        $obj_Evaluacion = $transaccion_1->traerObjeto(0);
         $bd->cerrarBD();
         return ($transaccion_1->traerObjeto(0));
     }
@@ -56,8 +55,7 @@ class Cuestionario {
     function buscarPROPIDPregunta($id)
     {
         $SQL_BUS_PROP =
-        "
-            SELECT PROP_ID_PREGUNTA_OPCION, PROP_ID_PREGUNTA, PROP_ID_OPCION, OPCI_DESCRIPCION
+        "SELECT PROP_ID_PREGUNTA_OPCION, PROP_ID_PREGUNTA, PROP_ID_OPCION, OPCI_DESCRIPCION
             FROM PREGUNTA_OPCION, OPCION
             WHERE PROP_ID_OPCION = OPCI_ID_OPCION AND PROP_ID_PREGUNTA = $id
             ORDER BY PROP_ID_PREGUNTA_OPCION ASC
@@ -105,6 +103,24 @@ class Cuestionario {
         return ($transaccion_1->traerRegistros(0));
     }
 
+    //? Busca las respuesta de opción multiple registradas en una pregunta
+    function buscarOpcionesPregunta($pregunta) {
+        $SQL_BUS_PROP =
+        "SELECT prop_id_opcion, prop_id_pregunta, opci_descripcion
+         FROM Pregunta_Opcion, Opcion
+         WHERE prop_id_opcion = opci_id_opcion AND prop_id_pregunta = $pregunta
+        ";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_BUS_PROP);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerRegistros(0));
+    }
+
+        
+
     function buscarNumeroRespuestasIDPROP($id)
     {
 
@@ -119,7 +135,6 @@ class Cuestionario {
         $bd->abrirBD();
         $transaccion_1 = new Transaccion($bd->conexion);
         $transaccion_1->enviarQuery($SQL_BUS_PROP);
-        $obj_Evaluacion = $transaccion_1->traerObjeto(0);
         $bd->cerrarBD();
         return ($transaccion_1->traerObjeto(0));
     }
@@ -129,8 +144,7 @@ class Cuestionario {
     {
 
         $SQL_BUS_CUESTIONARIO =
-        "
-            SELECT PREG_ID_PREGUNTA, PREG_DESCRIPCION, PREG_TIPO, COUNT(PREG_ID_PREGUNTA) CANTIDAD
+        "SELECT PREG_ID_PREGUNTA, PREG_DESCRIPCION, PREG_TIPO, COUNT(PREG_ID_PREGUNTA) CANTIDAD
             FROM PREGUNTA, PREGUNTA_OPCION, RESPUESTA, INSCRIPCION
             WHERE 	PROP_ID_PREGUNTA = PREG_ID_PREGUNTA
                 AND PROP_ID_PREGUNTA_OPCION = RESP_ID_PREGUNTA_OPCION
@@ -148,13 +162,49 @@ class Cuestionario {
         return ($transaccion_1->traerRegistros(0));
     }
 
-    // Busca las respuestas que ha tenido una pregunta dado su ID
+    //? Registra una respuesta, primero en pregunta opcion y despues directo en la tabla de respuesta
+    function registrarRespuesta ($inscripcion, $pregunta, $opcion, $texto) {
+        $SQL_BUS_RESPUESTA =
+            "INSERT INTO Pregunta_Opcion (prop_id_pregunta, prop_id_opcion)
+                VALUES ($pregunta, $opcion)
+            ";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_BUS_RESPUESTA);
+        $bd->cerrarBD();
+
+        $SQL_BUS_RESPUESTA =
+            "SELECT last_value FROM pregunta_opcion_prop_id_pregunta_opcion_seq;
+            ";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_BUS_RESPUESTA);
+        $ultimoPROP = $transaccion_1->traerObjeto(0)->last_value;
+        $bd->cerrarBD();
+        
+        $SQL_BUS_RESPUESTA =
+            "INSERT INTO Respuesta (resp_id_inscripcion, resp_id_pregunta_opcion, resp_texto) 
+                VALUES ($inscripcion , $ultimoPROP, '$texto') ;
+
+            ";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_BUS_RESPUESTA);
+        $bd->cerrarBD();
+    }
+
+    //? Busca las respuestas que ha tenido una pregunta dado su ID
     function buscarRespuestasPregunta($id, $idPregunta)
     {
 
         $SQL_BUS_PREGUNTA =
-        "
-            SELECT PROP_ID_OPCION, COUNT(PROP_ID_OPCION) CANTIDAD
+        "SELECT PROP_ID_OPCION, COUNT(PROP_ID_OPCION) CANTIDAD
             FROM PREGUNTA, PREGUNTA_OPCION, RESPUESTA, INSCRIPCION
             WHERE 	PROP_ID_PREGUNTA = PREG_ID_PREGUNTA
                 AND PROP_ID_PREGUNTA_OPCION = RESP_ID_PREGUNTA_OPCION
@@ -168,17 +218,17 @@ class Cuestionario {
         $bd = new BD();
         $bd->abrirBD();
         $transaccion_1 = new Transaccion($bd->conexion);
+        
         $transaccion_1->enviarQuery($SQL_BUS_PREGUNTA);
         $bd->cerrarBD();
         return ($transaccion_1->traerRegistros(0));
     }
 
-    //bUSCA LAS RESPUESTAS ABIERTAS DADO UN ID DE PREGUNTA
+    //? BUSCA LAS RESPUESTAS ABIERTAS DADO UN ID DE PREGUNTA
     function buscarResuestaTexto($id)
     {
         $SQL_BUS_RESPUESTA = 
-        "
-            SELECT RESP_TEXTO 
+        "SELECT RESP_TEXTO 
             FROM RESPUESTA, PREGUNTA_OPCION
             WHERE RESP_ID_PREGUNTA_OPCION = PROP_ID_PREGUNTA_OPCION
                 AND RESP_TEXTO IS NOT NULL
@@ -191,6 +241,7 @@ class Cuestionario {
         $transaccion_1 = new Transaccion($bd->conexion);
         $transaccion_1->enviarQuery($SQL_BUS_RESPUESTA);
         $bd->cerrarBD();
+
         return ($transaccion_1->traerRegistros(0));
     }
 

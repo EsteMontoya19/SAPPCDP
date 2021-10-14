@@ -74,7 +74,7 @@ if (isset($_POST['persona'])) {
                   <?php
                     if (isset($arr_grupos)) {
                         foreach ($arr_grupos as $grupo) {
-                            if ($grupo['grup_id_usuario'] != $id_profesor) {
+                            if ($grupo['pegr_id_usuario'] != $id_profesor) {
                                 $sesion = $obj_Sesion->numSesionesGrupo($grupo['grup_id_grupo']);
                                 $sesionUno = $obj_Sesion->buscarMinSesionDM($grupo['grup_id_grupo']);?>
                       <tr>
@@ -89,7 +89,7 @@ if (isset($_POST['persona'])) {
                         <td><?php echo $sesionUno->dia.'-'.$sesionUno->mes;?></td>
                         <td>
 
-                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupo(<?php echo $grupo['grup_id_grupo']?>, <?php echo $idPersona?>, <?php echo $grupo['moap_id_modalidad']?>)">
+                          <button type="button" class="btn btn-info btn-table" title="Detalles" style="margin-top: 5px;" onclick="consultarGrupo(<?php echo $grupo['grup_id_grupo']?>, <?php echo $idPersona?>, <?php echo $grupo['grup_id_modalidad']?>)">
                             <i class="fas fa-search-plus"></i>
                           </button>
                         </td>

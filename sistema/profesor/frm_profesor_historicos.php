@@ -94,27 +94,32 @@
                           <!-- <button type="button" class="btn btn-primary btn-table" title="Comprobante" style="margin-top: 5px;">
                             <i class="fas fa-list-alt"></i>
                           </button>
-                          <button type="button" class="btn btn-danger btn-table" title="Constancia" <?php if ($grupo['cons_id_constancias'] == Null) {?> style="display: none;" <?php } ?> style="margin-top: 5px;background: #20560a">
+                          <button type="button" class="btn btn-danger btn-table" title="Constancia" <?php if ($grupo['insc_id_constancia'] == Null) {?> style="display: none;" <?php } ?> style="margin-top: 5px;background: #20560a">
                             <i class="fas fa-file"></i>
                           </button> -->
                         </td>
                         <td>
-                        <div class="col-12 text-center negritas">
-                          <a id="Solicitud_Evaluacion"  onClick='formularioEvaluacion()' class="d-block small" href="#" style="color:#126E82" type="button" data-toggle="modal"
-                          data-target="#exampleModal" >Descargar Constancias</a>
-                        </div>
 
-                          <!-- <?php if($grupo['insc_activo'] == 't'){ ?>
+                          <?php if($grupo['insc_activo'] == 't'){ ?>
                             <?php if ($grupo['esta_nombre'] == 'Finalizado') {
-                              if($grupo['cons_id_constancias'] == '') { 
+                              if($grupo['insc_id_constancia'] == '') { 
                                 echo "Pendiente carga de constancia";
                               } else {
-                                $constancia = $obj_Busqueda->selectConstanciaID($grupo['cons_id_constancias']); 
+                                $constancia = $obj_Busqueda->selectConstanciaID($grupo['insc_id_constancia']); 
                                 if (isset($constancia)) { 
-                                  if ($constancia->cons_estado == 'Disponible') {?>
-                            <a id="btn-constancia" href="<?php echo $constancia->cons_url ?>" download
-                            class="btn btn-descarga" onclick="descargaConstancia(<?php echo $constancia->cons_id_constancias ?>)" role="button"><i class="fas fa-file-download"
-                            style="padding-right: 10px;"></i>Descargar Constancia</a>
+                                  if ($constancia->cons_estado == 'Disponible') {
+                                    if(!isset($constancia->cons_descargada) ||$constancia->cons_descargada == "f") {?>
+                                   
+
+                                      <a id="Solicitud_Evaluacion"  onClick='formularioEvaluacion(<?php echo ($grupo['insc_id_constancia']) ?>)' class="d-block small btn btn-descarga" href="#" data-toggle="modal" data-target="#exampleModal" role="button">
+                                          <i class="fas fa-file-download" style="padding-right: 10px;"></i>Descargar Constancia</a>
+                                    </div>
+                                  <?php } else {?>
+                                    <a id="btn-constancia" href="<?php echo $constancia->cons_url ?>" download
+                                      class="btn btn-descarga" onclick="descargaConstancia(<?php echo $constancia->cons_id_constancia ?>)" role="button"><i class="fas fa-file-download"
+                                      style="padding-right: 10px;"></i>Descargar Constancia</a>
+                                  <?php } ?>
+                            
                             <?php } elseif ($constancia->cons_estado == 'No aplica') { 
                                     echo ('<p class = aviso-azul>No Aplica</p>');
                                   }elseif ($constancia->cons_estado == 'No disponible') { 
@@ -129,7 +134,7 @@
                             }?>
                           <?php } else {
                               echo ('<p class = aviso-azul>Inscripción Cancelada</p>');
-                           } ?> -->
+                           } ?>
                         </td>
                       </tr>
                   <?php } } ?>
@@ -165,9 +170,10 @@
             </div>
           </div>
         </div>
+        
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary btn-regresar" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary btn-aceptar" id = "btn-registrar-profesor">Registrar</button>
+          <button type="button" class="btn btn-primary btn-aceptar" id = "btn-registrar-evaluacion">Registrar respuesta</button>
         </div>
       </div>
     </div>

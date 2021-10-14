@@ -7,11 +7,44 @@ $(document).ready(function () {
         $('html, body').animate({ scrollTop: 0 }, 0);
         location.reload();
     });
+
+    $('#btn-registrar-evaluacion').click(function () {
+        if (validarRespuestas()) {
+            datos = $('#form_cuestionario').serialize();
+            $.ajax({
+                type: 'POST',
+                url: '../modulos/Control_Cuestionario.php',
+                data: datos,
+                success: function (respuesta) {
+                    console.log(respuesta);
+                    if (respuesta.endsWith('1')) {
+                        alertify.success('El registro se realizó correctamente');
+                        setTimeout(function () {
+                            $('html, body').animate({ scrollTop: 0 }, 0);
+                            //$('#container').load('../sistema/usuarios/frm_inicio_usuarios.php');
+                        }, 1500);
+                    } else if (respuesta.endsWith('2')) {
+                        alertify.error('Ocurrio un error con el tipo de una pregunta');
+                        setTimeout(function () {
+                            $('html, body').animate({ scrollTop: 0 }, 0);
+                            //$('#container').load('../sistema/usuarios/frm_inicio_usuarios.php');
+                        }, 1500);
+                    } else if (respuesta.endsWith('3')) {
+                        alertify.error('No se ha contestado todo el cuestionario.');
+                        setTimeout(function () {
+                            $('html, body').animate({ scrollTop: 0 }, 0);
+                            //$('#container').load('../sistema/usuarios/frm_inicio_usuarios.php');
+                        }, 1500);
+                    }
+                }
+            });
+        }
+    });
 });
 
-function formularioEvaluacion() {
-    $('#EvaluacionCurso').load('../sistema/cuestionarios/frm_evaluacion_curso.php');
-    //$('#container').load('../usuario/frm_autoregistro.php');
+
+function formularioEvaluacion(inscripcion) {
+    $('#EvaluacionCurso').load('../sistema/cuestionarios/frm_evaluacion_curso.php', { inscripcion: inscripcion });
 }
 
 function descargaConstancia (id) {
@@ -249,4 +282,9 @@ function cancelarInscripcion(grupo, profesor, fecha, hora, nombre, tipo, nivel) 
     } else {
         alertify.error('Lo siento no puedes cancelar una inscripción después de que ha comenzado la primer sesión del grupo al que te inscribiste');
     }
+}
+
+function validarRespuestas () {
+    alert("Validada");
+    return true;
 }

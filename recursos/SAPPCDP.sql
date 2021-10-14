@@ -71,7 +71,7 @@ create table CONSTANCIA (
    CONS_ESTADO          VARCHAR(15)          not null,
    CONS_FECHA           DATE                 null,
    CONS_HORA            TIME WITHOUT TIME ZONE null,
-   CONS_DESCARGADA      BOOL                 null,
+   CONS_DESCARGADA      BOOL                 default FALSE,
    constraint PK_CONSTANCIA primary key (CONS_ID_CONSTANCIA)
 );
 
