@@ -36,7 +36,7 @@
             <div class="form-group">
                 <div class="card lg-12">
                     <div class="card-header">
-                        <i class="fas fa-id-card fa-lg"></i> 
+                        <i class="fas fa-question fa-lg"></i> 
                         <b>&nbsp;&nbsp;Pregunta: 
                             <?php echo $pregunta['preg_descripcion'];?>
                         </b>
@@ -53,14 +53,15 @@
                     <?php $arr_Opciones = $obj_Cuestionario->buscarRespuestasPregunta($id, $pregunta['preg_id_pregunta']); 
                         if (isset($arr_Opciones)){ 
                             foreach ($arr_Opciones as $opcion){
-                                $opcionDescripcion = $obj_Opcion->buscarOpcionID($opcion['prop_id_opcion']);
-                                $porcentaje = ($opcion['cantidad']*100) / $pregunta['cantidad']; ?>
+                                if($pregunta['preg_tipo'] != 'Abierta'){
+                                    $opcionDescripcion = $obj_Opcion->buscarOpcionID($opcion['prop_id_opcion']);
+                                    $porcentaje = ($opcion['cantidad']*100) / $pregunta['cantidad']; ?>
                             <tr>
-                                <td><?php echo $opcionDescripcion->opci_descripcion; ?></td>
+                                <td><?php echo isset($opcionDescripcion) ? $opcionDescripcion->opci_descripcion : ''; ?></td>
                                 <td><?php echo $opcion['cantidad']; ?></td>
-                                <td><?php echo $porcentaje; ?></td>
+                                <td><?php echo $porcentaje.' %'; ?></td>
                             </tr>
-                    <?php }} ?>
+                    <?php }}} ?>
                             <tr>
                                 <td><?php echo $pregunta['preg_tipo']; ?></td>
                                 <td><?php echo $pregunta['cantidad']; ?></td>
@@ -70,12 +71,12 @@
                     </table>
                 <?php if ($pregunta['preg_tipo'] != 'Si/No, con justificación' && $pregunta['preg_tipo'] != 'Abierta') {?>
                     <div class="col-lg-12 form-row" style="margin-top: 15px;" style="display: none;">
-                <?php } else { ?> 
-                    $arr_RespuestasTexto = $obj_Cuestionario->buscarResuestaTexto($id); 
+                <?php } else { 
+                    $arr_RespuestasTexto = $obj_Cuestionario->buscarResuestaTexto($pregunta['preg_id_pregunta']); ?> 
                     <div class="col-lg-12 form-row" style="margin-top: 15px;">
                     <?php foreach($arr_RespuestasTexto as $texto) {?>
                         <div class="col-lg-12 form-group">
-                            <textarea type="text" class="form-control">
+                            <textarea type="text" class="form-control" readonly>
                                 <?php echo $texto['resp_texto']; ?>
                             </textarea>
                         </div>
@@ -84,6 +85,9 @@
                 <?php }?>
                 </div>
             </div>
+            <p>
+                <hr>
+            </p>
         <?php } } ?>
         </div>
     </div>
