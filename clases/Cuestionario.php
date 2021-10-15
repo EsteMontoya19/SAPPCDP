@@ -226,14 +226,66 @@ class Cuestionario {
     }
 
     //? BUSCA LAS RESPUESTAS ABIERTAS DADO UN ID DE PREGUNTA
-    function buscarResuestaTexto($id)
+    function buscarRespuestaTexto($idGrupo, $idPregunta)
     {
         $SQL_BUS_RESPUESTA = 
-        "SELECT RESP_TEXTO 
-            FROM RESPUESTA, PREGUNTA_OPCION
+        "
+            SELECT RESP_TEXTO 
+            FROM RESPUESTA, PREGUNTA_OPCION, INSCRIPCION
             WHERE RESP_ID_PREGUNTA_OPCION = PROP_ID_PREGUNTA_OPCION
+                AND RESP_ID_INSCRIPCION = INSC_ID_INSCRIPCION
                 AND RESP_TEXTO IS NOT NULL
-                AND PROP_ID_PREGUNTA = $id
+                AND PROP_ID_PREGUNTA = $idPregunta
+                AND INSC_ID_GRUPO = $idGrupo
+            ORDER BY RESP_ID_INSCRIPCION
+        ";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_BUS_RESPUESTA);
+        $bd->cerrarBD();
+
+        return ($transaccion_1->traerRegistros(0));
+    }
+
+    //? BUSCA LAS RESPUESTAS ABIERTAS DADO UN ID DE PREGUNTA
+    function buscarRespuestaTextoSi($idGrupo, $idPregunta)
+    {
+        $SQL_BUS_RESPUESTA = 
+        "
+            SELECT RESP_TEXTO 
+            FROM RESPUESTA, PREGUNTA_OPCION, INSCRIPCION
+            WHERE RESP_ID_PREGUNTA_OPCION = PROP_ID_PREGUNTA_OPCION
+                AND RESP_ID_INSCRIPCION = INSC_ID_INSCRIPCION
+                AND RESP_TEXTO IS NOT NULL
+                AND PROP_ID_OPCION = 1
+                AND PROP_ID_PREGUNTA = $idPregunta
+                AND INSC_ID_GRUPO = $idGrupo
+            ORDER BY RESP_ID_INSCRIPCION
+        ";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_BUS_RESPUESTA);
+        $bd->cerrarBD();
+
+        return ($transaccion_1->traerRegistros(0));
+    }
+
+    function buscarRespuestaTextoNo($idGrupo, $idPregunta)
+    {
+        $SQL_BUS_RESPUESTA = 
+        "
+            SELECT RESP_TEXTO 
+            FROM RESPUESTA, PREGUNTA_OPCION, INSCRIPCION
+            WHERE RESP_ID_PREGUNTA_OPCION = PROP_ID_PREGUNTA_OPCION
+                AND RESP_ID_INSCRIPCION = INSC_ID_INSCRIPCION
+                AND RESP_TEXTO IS NOT NULL
+                AND PROP_ID_OPCION = 2
+                AND PROP_ID_PREGUNTA = $idPregunta
+                AND INSC_ID_GRUPO = $idGrupo
             ORDER BY RESP_ID_INSCRIPCION
         ";
 

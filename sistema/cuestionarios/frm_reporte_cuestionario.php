@@ -71,16 +71,42 @@
                     </table>
                 <?php if ($pregunta['preg_tipo'] != 'Si/No, con justificación' && $pregunta['preg_tipo'] != 'Abierta') {?>
                     <div class="col-lg-12 form-row" style="margin-top: 15px;" style="display: none;">
-                <?php } else { 
-                    $arr_RespuestasTexto = $obj_Cuestionario->buscarResuestaTexto($pregunta['preg_id_pregunta']); ?> 
+                <?php } else { ?> 
                     <div class="col-lg-12 form-row" style="margin-top: 15px;">
-                    <?php foreach($arr_RespuestasTexto as $texto) {?>
+                    <?php if ($pregunta['preg_tipo'] == 'Abierta'){
+                        $arr_RespuestasTexto = $obj_Cuestionario->buscarRespuestaTexto($id, $pregunta['preg_id_pregunta']);
+                        if(isset($arr_RespuestasTexto)){ ?>
+                            <label><b>Respuesta(s): </b></label>
+                        <?php foreach($arr_RespuestasTexto as $texto) {?>
                         <div class="col-lg-12 form-group">
                             <textarea type="text" class="form-control" readonly>
                                 <?php echo $texto['resp_texto']; ?>
                             </textarea>
                         </div>
-                        <?php }?>
+                        <?php }}?>
+                    <?php } elseif($pregunta['preg_tipo'] == 'Si/No, con justificación'){
+                        $arr_RespuestasTextoSi = $obj_Cuestionario->buscarRespuestaTextoSi($id, $pregunta['preg_id_pregunta']);
+                        $arr_RespuestasTextoNo = $obj_Cuestionario->buscarRespuestaTextoNo($id, $pregunta['preg_id_pregunta']);
+                        if(isset($arr_RespuestasTextoSi)){ ?>
+                        <label><b>Justificación, Respuesta Si: </b></label>
+                        <?php foreach($arr_RespuestasTextoSi as $texto) {?>
+                            <div class="col-lg-12 form-group">
+                                <textarea type="text" class="form-control" readonly>
+                                    <?php echo $texto['resp_texto']; ?>
+                                </textarea>
+                            </div>
+                        <?php }} ?>
+                            
+                        <?php if(isset($arr_RespuestasTextoNo)){?>
+                        <label><b>Justificación, Respuesta No: </b></label>
+                        <?php foreach($arr_RespuestasTextoNo as $texto) {?>
+                            <div class="col-lg-12 form-group">
+                                <textarea type="text" class="form-control" readonly>
+                                    <?php echo $texto['resp_texto']; ?>
+                                </textarea>
+                            </div>
+                        <?php }}?>
+                    <?php }?>
                     </div>
                 <?php }?>
                 </div>
