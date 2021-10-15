@@ -109,13 +109,11 @@
                                 if (isset($constancia)) { 
                                   if ($constancia->cons_estado == 'Disponible') {
                                     if(!isset($constancia->cons_descargada) ||$constancia->cons_descargada == "f") {?>
-                                   
-
-                                      <a id="Solicitud_Evaluacion"  onClick='formularioEvaluacion(<?php echo ($grupo['insc_id_constancia']) ?>)' class="d-block small btn btn-descarga" href="#" data-toggle="modal" data-target="#exampleModal" role="button">
+                                      <a id="Solicitud_Evaluacion"  onClick='formularioEvaluacion(<?php echo ($grupo['insc_id_inscripcion']) ?>)' class="d-block small btn btn-descarga" href="#" data-toggle="modal" data-target="#exampleModal" role="button">
                                           <i class="fas fa-file-download" style="padding-right: 10px;"></i>Descargar Constancia</a>
                                     </div>
                                   <?php } else {?>
-                                    <a id="btn-constancia" href="<?php echo $constancia->cons_url ?>" download
+                                    <a id="btn-constancia" href="<?php echo isset($constancia->cons_url) ? $constancia->cons_url : "Error al descargar la constancia." ?>" download
                                       class="btn btn-descarga" onclick="descargaConstancia(<?php echo $constancia->cons_id_constancia ?>)" role="button"><i class="fas fa-file-download"
                                       style="padding-right: 10px;"></i>Descargar Constancia</a>
                                   <?php } ?>

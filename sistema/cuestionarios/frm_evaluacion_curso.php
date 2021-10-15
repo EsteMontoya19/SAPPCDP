@@ -2,12 +2,21 @@
 // Clases
 include('../../clases/BD.php');
 include('../../clases/Busqueda.php');
+include('../../clases/Inscripcion.php');
+include('../../clases/Constancias.php');
 include('../../clases/Cuestionario.php');
 
 // Catálogos
 $obj_Busqueda = new Busqueda();
+$obj_Inscripcion = new Inscripcion();
 $obj_Cuestionario = new Cuestionario();
+$obj_Constancia = new Constancias();
+
 $arr_cuestionario = $obj_Cuestionario->buscarPreguntasCuestionario();
+
+$inscripcion = $obj_Inscripcion->buscarInscripcionId($_POST['inscripcion']);
+$constancia = $inscripcion->insc_id_constancia;
+$url = $obj_Constancia->buscarConstanciaId($constancia)->cons_url;
 ?>
 
 
@@ -24,13 +33,13 @@ $arr_cuestionario = $obj_Cuestionario->buscarPreguntasCuestionario();
                         case "Si/No": ?>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label" for="<?php echo($pregunta['preg_id_pregunta']); ?>_SiNo">
-                                    <input type="radio" class="form-check-input" id="<?php echo($pregunta['preg_id_pregunta']); ?>_Si" name="<?php echo($pregunta['preg_id_pregunta']); ?>_SiNo" value=1 require>Sí
+                                    <input type="radio" class="form-check-input" id="<?php echo($pregunta['preg_id_pregunta']); ?>_Si" name="<?php echo($pregunta['preg_id_pregunta']); ?>_SiNo" value=1 required>Sí
                                 </label>
                             </div>
                             <br>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label" for="<?php echo($pregunta['preg_id_pregunta']); ?>_SiNo">
-                                    <input type="radio" class="form-check-input" id="<?php echo($pregunta['preg_id_pregunta']); ?>_No" name="<?php echo($pregunta['preg_id_pregunta']); ?>_SiNo" value=2 require>No
+                                    <input type="radio" class="form-check-input" id="<?php echo($pregunta['preg_id_pregunta']); ?>_No" name="<?php echo($pregunta['preg_id_pregunta']); ?>_SiNo" value=2 required>No
                                 </label>
                             </div>
                         <?php break; 
@@ -55,7 +64,7 @@ $arr_cuestionario = $obj_Cuestionario->buscarPreguntasCuestionario();
                                 </div>
                                 <div class="col-lg-10 col-md-12 form-group">
                                 <p for="id=<?php echo($pregunta['preg_id_pregunta'].'Justificacion'); ?>">Justifique su respuesta:</p>
-                                    <textarea class="form-control" id="<?php echo($pregunta['preg_id_pregunta'].'Justificacion'); ?>" name ="<?php echo($pregunta['preg_id_pregunta'].'Justificacion'); ?>" require></textarea>
+                                    <textarea class="form-control" id="<?php echo($pregunta['preg_id_pregunta'].'Justificacion'); ?>" name ="<?php echo($pregunta['preg_id_pregunta'].'Justificacion'); ?>" required></textarea>
                                 </div>
                             </div>
 
@@ -103,7 +112,8 @@ $arr_cuestionario = $obj_Cuestionario->buscarPreguntasCuestionario();
             </div>
         <?php } ?>
         <input id ="dml" name="dml" type="hidden" value="respuestas">
-        <input id ="inscripcion" name="inscripcion" type="hidden" value="<?php  echo($_POST['inscripcion']); ?>">
+        <input id ="constancia" name="constancia" type="hidden" value="<?php  echo($constancia); ?>">
+        <input id ="url" name="url" type="hidden" value="<?php  echo($url) ?>">
     <?php } else {
         echo("No hay cuestionario de evaluación de grupos registrado")   ;
     }?>

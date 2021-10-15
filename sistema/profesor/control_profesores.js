@@ -9,36 +9,38 @@ $(document).ready(function () {
     });
 
     $('#btn-registrar-evaluacion').click(function () {
-        if (validarRespuestas()) {
-            datos = $('#form_cuestionario').serialize();
-            $.ajax({
-                type: 'POST',
-                url: '../modulos/Control_Cuestionario.php',
-                data: datos,
-                success: function (respuesta) {
-                    console.log(respuesta);
-                    if (respuesta.endsWith('1')) {
-                        alertify.success('El registro se realizó correctamente');
-                        setTimeout(function () {
-                            $('html, body').animate({ scrollTop: 0 }, 0);
-                            //$('#container').load('../sistema/usuarios/frm_inicio_usuarios.php');
-                        }, 1500);
-                    } else if (respuesta.endsWith('2')) {
-                        alertify.error('Ocurrio un error con el tipo de una pregunta');
-                        setTimeout(function () {
-                            $('html, body').animate({ scrollTop: 0 }, 0);
-                            //$('#container').load('../sistema/usuarios/frm_inicio_usuarios.php');
-                        }, 1500);
-                    } else if (respuesta.endsWith('3')) {
-                        alertify.error('No se ha contestado todo el cuestionario.');
-                        setTimeout(function () {
-                            $('html, body').animate({ scrollTop: 0 }, 0);
-                            //$('#container').load('../sistema/usuarios/frm_inicio_usuarios.php');
-                        }, 1500);
-                    }
+        $('#btn-registrar-evaluacion').prop('disabled', true);
+        datos = $('#form_cuestionario').serialize();
+        $.ajax({
+            type: 'POST',
+            url: '../modulos/Control_Cuestionario.php',
+            data: datos,
+            success: function (respuesta) {
+                console.log(respuesta);
+                if (respuesta.endsWith('1')) {
+                    alertify.success('El registro se realizó correctamente');
+                    var link = document.createElement("a");
+                    link.setAttribute('download', '');
+                    link.href = $("#url").val();
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    descargaConstancia($("#constancia").val());
+                    setTimeout(function () {
+                        location.reload();
+                    }, 2500);
+
+                } else if (respuesta.endsWith('2')) {
+                    alertify.error('Ocurrio un error con el tipo de una pregunta');
+                } else if (respuesta.endsWith('3')) {
+                    alertify.error('No se ha contestado todo el cuestionario.');
+                } else {
+                    alertify.error(respuesta);
                 }
-            });
-        }
+                $('#btn-registrar-evaluacion').prop('disabled', false);
+            }
+        });
+        
     });
 });
 
@@ -181,12 +183,10 @@ function inscribirGrupo(grupo, inscritos, cupo, persona, nombre, tipo, nivel) {
 }
 
 function listaInscritos(idGrupo, tipoLista) {
-    alert('entra');
     var datos = {
         idGrupo: idGrupo,
         tipoLista: tipoLista,
     };
-    alert(tipoLista);
     $.ajax({
         data: datos,
         type: 'POST',

@@ -63,10 +63,27 @@
         function buscarInscripcion($grupo, $profesor)
         {
             $SQL_Bus_Inscripcion =
-			"
-                SELECT INSC_ID_INSCRIPCION, INSC_ID_CONSTANCIA, INSC_ID_GRUPO, INSC_ID_PROFESOR, INSC_ACTIVO
+			"SELECT INSC_ID_INSCRIPCION, INSC_ID_CONSTANCIA, INSC_ID_GRUPO, INSC_ID_PROFESOR, INSC_ACTIVO
                 FROM INSCRIPCION
                 WHERE INSC_ID_GRUPO = $grupo AND INSC_ID_PROFESOR = $profesor
+            ";
+
+			$bd = new BD();
+			$bd->abrirBD();
+			$transaccion_1 = new Transaccion($bd->conexion);
+			$transaccion_1->enviarQuery($SQL_Bus_Inscripcion);
+			$obj_Inscripcion = $transaccion_1->traerObjeto(0);
+			$bd->cerrarBD();
+			return $obj_Inscripcion;
+        }
+
+        //? Busca todos los valores de una inscripcion mediante su id
+        function buscarInscripcionId($inscripcion)
+        {
+            $SQL_Bus_Inscripcion =
+			"SELECT INSC_ID_INSCRIPCION, INSC_ID_CONSTANCIA, INSC_ID_GRUPO, INSC_ID_PROFESOR, INSC_ACTIVO
+                FROM INSCRIPCION
+                WHERE INSC_ID_INSCRIPCION = $inscripcion;
             ";
 
 			$bd = new BD();

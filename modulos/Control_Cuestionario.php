@@ -12,6 +12,78 @@
     if($_POST['dml'] == 'respuestas') {
         $cuestionario = $obj_Cuestionario->buscarPreguntasCuestionario();
 
+        //? Primero hacemos una iteración al arreglo de cuestionarios para verificar que todo haya sido
+        //? contestado y en caso contrario manda una alerta notificando la pregunta que no se ha respondido.
+        //? Se realizan aqui las validaciones debido que al ser un cuestionaruo dinamico es dificil que tipo
+        //? y cuantas preguntas se utilizaran en el futuro.
+        foreach ($cuestionario as $iCont => $pregunta) {
+
+            switch ($pregunta['preg_tipo']) {
+                case 'Si/No':
+                    if(!isset($_POST[$pregunta['preg_id_pregunta']."_SiNo"])) {
+                        exit("No se respondio la pregunta ".$pregunta['preg_orden']. ".");
+                    }
+                break;
+
+                case 'Acuerdo/Desacuerdo':
+                    if(!isset($_POST[$pregunta['preg_id_pregunta']."_AcueDesa"])) {
+                        exit("No se respondio la pregunta ".$pregunta['preg_orden']. ".");
+                    }
+                break;
+
+                case 'Si/No, con justificación':
+                    if(!isset($_POST[$pregunta['preg_id_pregunta']."_SiNoJ"])) {
+                        exit("Pregunta ".$pregunta['preg_orden']. ".");
+                    } else if(!isset($_POST[$pregunta['preg_id_pregunta']."Justificacion"])) {
+                        exit("Justificación de la pregunta ".$pregunta['preg_orden']. ".");
+
+                    } else {
+                         $arr_NoPermitidos = array ("/", "*", "@", "<", ">", "+", "-", "_", "$", "%", "&", "!", "|", "¬", '°');
+                        foreach ($arr_NoPermitidos as $iCont => $caracter) {
+                            if(strpos($_POST[$pregunta['preg_id_pregunta']."Justificacion"], $caracter)) {
+                                exit("La justificación de la pregunta ".$pregunta['preg_orden']. " contiene caracteres no permitidos.");
+                            }
+                            
+                        }
+                        $extension = strlen($_POST[$pregunta['preg_id_pregunta']."Justificacion"]);
+                        if($extension > 500) {
+                            exit("El máximo de caracteres para la pregunta " . $pregunta['preg_orden'] . " es de 500 caractéres.");
+                        }
+                        
+
+                    }
+                break;
+
+                case 'Opción Múltiple':
+                    if(!isset($_POST[$pregunta['preg_id_pregunta']."_multiple"])) {
+                        exit("No se respondio la pregunta ".$pregunta['preg_orden']. ".");
+                    } 
+                break;
+
+                case 'Abierta':                    
+                    if(!isset($_POST[$pregunta['preg_id_pregunta']])) {
+                        exit("No se respondio la pregunta ".$pregunta['preg_orden']. ".");
+                    } else {
+                        $arr_NoPermitidos = array ("/", "*", "@", "<", ">", "+", "-", "_", "$", "%", "&", "!", "|", "¬", '°');
+                        foreach ($arr_NoPermitidos as $iCont => $caracter) {
+                            if(strpos($_POST[$pregunta['preg_id_pregunta']], $caracter)) {
+                                exit("La respuesta de la pregunta ".$pregunta['preg_orden']. " contiene caracteres no permitidos.");
+                            }
+                            
+                        }
+                        $extension = strlen($_POST[$pregunta['preg_id_pregunta']]);
+                        if($extension > 500) {
+                            exit("El máximo de caracteres para la justificación de la pregunta " . $pregunta['preg_orden'] . " es de 500 caractéres.");
+                        }
+                    }
+                break;
+                
+                default:
+                    exit("2");
+                break;
+            }
+        }
+        
         foreach ($cuestionario as $iCont => $pregunta) {
 
             switch ($pregunta['preg_tipo']) {
@@ -40,22 +112,15 @@
                 break;
 
                 case 'Opción Múltiple':
-                    $arr_opciones = $obj_Cuestionario->buscarOpcionesPregunta($pregunta['preg_id_pregunta']);
-                        if(isset($_POST[$pregunta['preg_id_pregunta']."_multiple"])) {
-                            $obj_Cuestionario->registrarRespuesta($_POST['inscripcion'], $pregunta['preg_id_pregunta'],$_POST[$pregunta['preg_id_pregunta']."_multiple"], "null");
-                        } else {
-                            exit("3");
-                    }
-
+                    if(isset($_POST[$pregunta['preg_id_pregunta']."_multiple"])) {
+                        $obj_Cuestionario->registrarRespuesta($_POST['inscripcion'], $pregunta['preg_id_pregunta'],$_POST[$pregunta['preg_id_pregunta']."_multiple"], "null");
+                    } 
                 break;
 
                 case 'Abierta':                    
                     if(isset($_POST[$pregunta['preg_id_pregunta']])) {
                         $obj_Cuestionario->registrarRespuesta($_POST['inscripcion'], $pregunta['preg_id_pregunta'],"null", $_POST[$pregunta['preg_id_pregunta']]);
-                    } else {
-                        exit("3");
                     }
-
                 break;
                 
                 default:

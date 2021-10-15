@@ -156,6 +156,21 @@ class constancias
         $bd->cerrarBD();
         return ($transaccion_1->traerRegistros(0));
     }
+    public function buscarConstanciaId($constancia)
+    {
+        $SQL_Ins_Horario =
+        "SELECT cons_id_constancia, cons_url, cons_estado, cons_fecha, cons_hora, cons_descargada
+         FROM Constancia
+         WHERE cons_id_constancia = $constancia;
+         ";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Ins_Horario);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerObjeto(0));
+    }
 
     public function consultarConstanciaModeradores($fechaInicio, $fechaFin)
     {
