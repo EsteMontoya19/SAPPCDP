@@ -1,3 +1,6 @@
+// Variables
+$crud;
+
 $(document).ready(function () {
     $('#btn-inicio').click(function () {
         $('html, body').animate({ scrollTop: 0 }, 0);
@@ -128,7 +131,7 @@ function validarFormularioGrupo() {
                     alertify.error('El ID de la reunion solo puede tener números');
                     return false;
                 }
-            } 
+            }
 
             /*Se quita la validación para que no sea obligatorio agregar una clave de acceso
             Código para hacerlo obligatorio:
@@ -139,37 +142,37 @@ function validarFormularioGrupo() {
                 return false;
             }
             */
-        } else if ($('#GrupoModalidad').val() == '1'){
-                /*//! Bloque temporal de cursos preseciales por pandemia
+        } else if ($('#GrupoModalidad').val() == '1') {
+            /*//! Bloque temporal de cursos preseciales por pandemia
                 alertify.error('Por el momento no se pueden registrar grupos para clases prescenciales.');
                 return false;*/
-                if ($('#GrupoCupo').val() == '') {
+            if ($('#GrupoCupo').val() == '') {
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('GrupoCupo').focus();
+                alertify.error('Debe ingresar el cupo del grupo');
+                return false;
+            } else {
+                if ($('#GrupoCupo').val() <= 10) {
                     $('html, body').animate({ scrollTop: 0 }, 'slow');
                     document.getElementById('GrupoCupo').focus();
-                    alertify.error('Debe ingresar el cupo del grupo');
+                    alertify.error('Debe ingresar un cupo del grupo mayor a 10 para los grupos Presenciales');
                     return false;
                 } else {
-                    if ($('#GrupoCupo').val() <= 10) {
+                    if ($('#GrupoCupo').val() > 30) {
                         $('html, body').animate({ scrollTop: 0 }, 'slow');
                         document.getElementById('GrupoCupo').focus();
-                        alertify.error('Debe ingresar un cupo del grupo mayor a 10 para los grupos Presenciales');
+                        alertify.error('Debe asignar un cupo de grupo máximo de 30 para los grupos Presenciales');
                         return false;
-                    } else {
-                        if ($('#GrupoCupo').val() > 30) {
-                            $('html, body').animate({ scrollTop: 0 }, 'slow');
-                            document.getElementById('GrupoCupo').focus();
-                            alertify.error('Debe asignar un cupo de grupo máximo de 30 para los grupos Presenciales');
-                            return false;
-                        }
                     }
                 }
+            }
 
-                if ($('#ID_Salon').val() == 0) {
-                    $('html, body').animate({ scrollTop: 100 }, 'slow');
-                    document.getElementById('ID_Salon').focus();
-                    alertify.error('Debe ingresar el salon en el que se impartirá la clase');
-                    return false;
-                }
+            if ($('#ID_Salon').val() == 0) {
+                $('html, body').animate({ scrollTop: 100 }, 'slow');
+                document.getElementById('ID_Salon').focus();
+                alertify.error('Debe ingresar el salon en el que se impartirá la clase');
+                return false;
+            }
         } else {
             if ($('#GrupoCupo').val() == '') {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
@@ -191,7 +194,7 @@ function validarFormularioGrupo() {
                     }
                 }
             }
-            
+
             if ($('#URL_Plataforma').val() == '') {
                 $('html, body').animate({ scrollTop: 200 }, 'slow');
                 document.getElementById('URL_Plataforma').focus();
@@ -213,7 +216,7 @@ function validarFormularioGrupo() {
         //Crea una nueva variable con estos valores, se agrega el +1 porque de lo contrario el valor es un día menor al ingresado en el input
         var objFecha2 = new Date(objFecha.getFullYear(), objFecha.getMonth(), objFecha.getDate() + 1);
         //Valida que la fecha ingresada en el periodo de inscripción sea minimamente igual al dia en que se registra el grupo.
-        if (objFecha2 < objFechaHoy) {
+        if (objFecha2 < objFechaHoy && $crud != 1) {
             $('html, body').animate({ scrollTop: 200 }, 'slow');
             document.getElementById('GrupoInicioInscripcion').focus();
             alertify.error('La fecha de inicio para el periodo de inscripciones al grupo debe ser minimo el día en que se registra el grupo');
@@ -235,10 +238,8 @@ function validarFormularioGrupo() {
         return false;
     }
 
-    
     //Validaciones para las sesiones ingresadas acorde al grupo
     for (var iCon = 1; iCon <= $('#numSesiones').val(); iCon++) {
-        
         if ($('#SesionFecha' + iCon).val() == '') {
             $('html, body').animate({ scrollTop: 300 }, 'slow');
             document.getElementById('SesionFecha' + iCon).focus();
@@ -285,17 +286,17 @@ function validarFormularioGrupo() {
                 var objFecha3 = new Date(stringFecha);
                 /*Después se asignan los valores con la hora de inicio para validar que no pueda ser menor a las 7:00 am 
                 y no haya sesiones en horario inválido*/
-                stringFecha =  $('#SesionFecha' + iCon).val() + ' ' + $('#SesionHoraInicio' + iCon).val();
+                stringFecha = $('#SesionFecha' + iCon).val() + ' ' + $('#SesionHoraInicio' + iCon).val();
                 var objFecha4 = new Date(stringFecha);
-                
+
                 //Aqui se compara que la sesion en la hora de inicio no sea mayor a las 7:00 am, de lo contrario manda error
-                if(objFecha3 > objFecha4){
+                if (objFecha3 > objFecha4) {
                     document.getElementById('SesionHoraInicio' + iCon).focus();
                     alertify.error('El horario de inicio de la sesión ' + iCon + ' no puede ser menor a las 7:00 am');
                     return false;
                 }
             }
-    
+
             if ($('#SesionHoraFin' + iCon).val() == '') {
                 $('html, body').animate({ scrollTop: 300 }, 'slow');
                 document.getElementById('SesionHoraFin' + iCon).focus();
@@ -308,19 +309,19 @@ function validarFormularioGrupo() {
                 var objFecha3 = new Date(stringFecha);
                 /*Después se asignan los valores con la hora de fin para validar que no pueda ser mayor a las 10:00 pm 
                 y no haya sesiones en horario inválido*/
-                stringFecha =  $('#SesionFecha' + iCon).val() + ' ' + $('#SesionHoraFin' + iCon).val();
+                stringFecha = $('#SesionFecha' + iCon).val() + ' ' + $('#SesionHoraFin' + iCon).val();
                 var objFecha4 = new Date(stringFecha);
-                
+
                 //Aqui se compara que la sesion en la hora de termino no sea mayor a las 10:00 pm, de lo contrario manda error
-                if(objFecha3 < objFecha4){
+                if (objFecha3 < objFecha4) {
                     document.getElementById('SesionHoraFin' + iCon).focus();
                     alertify.error('El horario de término de la sesión ' + iCon + ' no puede ser mayor a las 10:00 pm');
                     return false;
                 }
             }
-            
+
             //Valida que la hora de termino no pueda ser menor que la de inicio
-            if ($('#SesionHoraInicio' + iCon).val() >= $('#SesionHoraFin' + iCon).val() ) {
+            if ($('#SesionHoraInicio' + iCon).val() >= $('#SesionHoraFin' + iCon).val()) {
                 $('html, body').animate({ scrollTop: 300 }, 'slow');
                 document.getElementById('SesionHoraFin' + iCon).focus();
                 alertify.error('El horario de termino de la sesión ' + iCon + ' no puede ser menor ni igual al horario de inicio de la sesión.');
@@ -329,12 +330,12 @@ function validarFormularioGrupo() {
 
             //Valida que la fecha de la sesión se encuentre dentro del periodo del moderador asignado
             if ($('#ID_Moderador').val() > 0) {
-                if($('#modeFechaInicio').val() > $('#SesionFecha'+iCon).val()) {
+                if ($('#modeFechaInicio').val() > $('#SesionFecha' + iCon).val()) {
                     document.getElementById('ID_Moderador').focus();
                     alertify.error('La fecha de inicio del periodo de servicio del moderador comienza después de la fecha de la sesión ' + iCon);
                     return false;
                 }
-                if($('#modeFechaFin').val() < $('#SesionFecha'+iCon).val()) {
+                if ($('#modeFechaFin').val() < $('#SesionFecha' + iCon).val()) {
                     document.getElementById('ID_Moderador').focus();
                     alertify.error('La fecha de fin del periodo de servicio del moderador concluye antes de la fecha de la sesión ' + iCon);
                     return false;
@@ -344,9 +345,10 @@ function validarFormularioGrupo() {
                 /*Se reutiliza variable objFecha2 porque ya está preparado para obtener el índice del día 
                  de la sesión que se está verificando (1-6)*/
                 var stringDias = '' + objFecha2.getDay();
-                if($('#modeDias').val().includes(stringDias)){} else {
+                if ($('#modeDias').val().includes(stringDias)) {
+                } else {
                     var stringDiaNoDisponible = '';
-                    switch(stringDias) {
+                    switch (stringDias) {
                         case '1':
                             stringDiaNoDisponible = 'Lunes';
                             break;
@@ -365,41 +367,38 @@ function validarFormularioGrupo() {
                         case '6':
                             stringDiaNoDisponible = 'Sábado';
                             break;
-
                     }
                     document.getElementById('ID_Moderador').focus();
-                    alertify.error("El moderador que asigno no se encuentra disponible el día " + stringDiaNoDisponible + ' en que se da la sesión ' + iCon);
+                    alertify.error('El moderador que asigno no se encuentra disponible el día ' + stringDiaNoDisponible + ' en que se da la sesión ' + iCon);
                     return false;
                 }
 
                 //Se valida que la hora en que se asigna la sesión se encuentra dentro del horario del moderador
                 //Preparación de variables para las fechas con los datos de la sesión
-                stringFecha =  $('#SesionFecha' + iCon).val() + ' ' + $('#SesionHoraInicio' + iCon).val();
-                objFecha3 = new Date(stringFecha)
-                
-                stringFecha =  $('#SesionFecha' + iCon).val() + ' ' + $('#SesionHoraFin' + iCon).val();
+                stringFecha = $('#SesionFecha' + iCon).val() + ' ' + $('#SesionHoraInicio' + iCon).val();
+                objFecha3 = new Date(stringFecha);
+
+                stringFecha = $('#SesionFecha' + iCon).val() + ' ' + $('#SesionHoraFin' + iCon).val();
                 objFecha4 = new Date(stringFecha);
-                
+
                 stringFecha = $('#SesionFecha' + iCon).val() + ' ' + $('#modeHoraInicio').val();
                 var objFecha5 = new Date(stringFecha);
-                
+
                 stringFecha = $('#SesionFecha' + iCon).val() + ' ' + $('#modeHoraFin').val();
                 var objFecha6 = new Date(stringFecha);
-                if(objFecha3 < objFecha5){
+                if (objFecha3 < objFecha5) {
                     document.getElementById('ID_Moderador').focus();
-                    alertify.error("El moderador que has seleccionado para el grupo no se encuentra disponible en dicho horario, su horario comienza a las " + $('#modeHoraInicio').val());
+                    alertify.error('El moderador que has seleccionado para el grupo no se encuentra disponible en dicho horario, su horario comienza a las ' + $('#modeHoraInicio').val());
                     return false;
                 }
 
-                if(objFecha4 > objFecha6){
+                if (objFecha4 > objFecha6) {
                     document.getElementById('ID_Moderador').focus();
-                    alertify.error("El moderador que has seleccionado para el grupo no se encuentra disponible en dicho horario, su horario concluye a las " + $('#modeHoraFin').val());
+                    alertify.error('El moderador que has seleccionado para el grupo no se encuentra disponible en dicho horario, su horario concluye a las ' + $('#modeHoraFin').val());
                     return false;
                 }
             }
-    
         }
-
     }
 
     return true;
@@ -478,7 +477,7 @@ function ocultarDiaUPD(x) {
 // Eliminar horario
 
 function eliminarHorario(id, grupo) {
-    var mensaje = '¿Esta seguro de elimnar el horario?';
+    var mensaje = '¿Esta seguro de eliminar el horario?';
 
     var titulo = 'Eliminar horario'.bold();
     alertify.confirm(
@@ -540,13 +539,13 @@ $(document).ready(function () {
                             $('html, body').animate({ scrollTop: 0 }, 0);
                             $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
                         }, 1500);
-                    } else if (respuesta == 2){
+                    } else if (respuesta == 2) {
                         alertify.error('No se puede publicar un curso con estado Cancelado o Finalizado');
-                    } else if (respuesta == 3){
+                    } else if (respuesta == 3) {
                         alertify.error('No se puede registrar un grupo con sesiones en dias inhabiles o festivos');
-                    } else if (respuesta == 4){
+                    } else if (respuesta == 4) {
                         alertify.error('No se puede registrar un grupo con sesiones en el periodo de vacaciones administrativas');
-                    } else if (respuesta == 5){
+                    } else if (respuesta == 5) {
                         alertify.error('No se puede registrar un grupo con sesiones en asueto academico');
                     } else {
                         $('html, body').animate({ scrollTop: 0 }, 0);
@@ -567,6 +566,8 @@ function actualizarGrupo(id) {
         CRUD: 1,
     };
 
+    $crud = datos.CRUD;
+
     $.ajax({
         data: datos,
         type: 'POST',
@@ -578,7 +579,7 @@ function actualizarGrupo(id) {
     });
 }
 
-function asistenciaGrupo (grupo) {
+function asistenciaGrupo(grupo) {
     var datos = {
         grupo: grupo,
     };
@@ -594,7 +595,7 @@ function asistenciaGrupo (grupo) {
     });
 }
 
-function registrarConstancias(grupo){
+function registrarConstancias(grupo) {
     var datos = {
         grupo: grupo,
     };
@@ -610,7 +611,7 @@ function registrarConstancias(grupo){
     });
 }
 
-function resultadosCuestionario(grupo){
+function resultadosCuestionario(grupo) {
     var datos = {
         grupo: grupo,
     };
@@ -642,7 +643,7 @@ $(document).ready(function () {
                             $('html, body').animate({ scrollTop: 0 }, 0);
                             $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
                         }, 0);
-                    } else if (respuesta == 2){
+                    } else if (respuesta == 2) {
                         alertify.error('Llegué hasta aquí');
                     } else {
                         alertify.error('Hubo un problema al actualizar al grupo' + respuesta);
@@ -657,7 +658,7 @@ $(document).ready(function () {
 // Eliminar grupo
 
 function eliminarGrupo(id) {
-    var mensaje = '¿Esta seguro de elimnar el grupo ';
+    var mensaje = '¿Esta seguro de eliminar el grupo ';
     mensaje = mensaje.concat(id);
     mensaje = mensaje.concat('?');
 
@@ -867,7 +868,7 @@ function cambioPublicacion(id, estatus, nombreCurso, modalidad) {
                         alertify.error('El grupo debe tener un Profesor asignado.');
                     } else if (respuesta == 4) {
                         alertify.error('Un grupo Finalizado ya no se puede publicar de nuevo');
-                    }  else if (respuesta == 5) {
+                    } else if (respuesta == 5) {
                         alertify.error('Un grupo Cancelado ya no se puede publicar de nuevo');
                     } else {
                         alertify.error('Hubo un problema al registrar el grupo.');
@@ -922,7 +923,7 @@ function Publicar(id, estatus) {
     );
 }
 
-function verificarDescargasConstancias (grupo) {
+function verificarDescargasConstancias(grupo) {
     var datos = {
         grupo: grupo,
     };
@@ -938,7 +939,6 @@ function verificarDescargasConstancias (grupo) {
     });
 }
 
-
 // Tabla dinámica
 $(document).ready(function () {
     $('#tabla_grupos').DataTable({
@@ -946,7 +946,7 @@ $(document).ready(function () {
             url: '//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json',
         },
         pageLength: 10,
-        order: [ 0, 'desc' ],
+        order: [0, 'desc'],
         lengthMenu: [
             [5, 10, 20, 50, -1],
             [5, 10, 20, 50, 'Todos'],
@@ -1006,15 +1006,15 @@ Actualiza los datos del moderador automaticamente para que cuando se hace el reg
 o se realiza la actualización se pueda validar que el moderador asignado está en 
 servicio en las horas del grupo asignado
 */
-$(document).on('change', '#ID_Moderador', function buscarHorarioModerador(){
+$(document).on('change', '#ID_Moderador', function buscarHorarioModerador() {
     var dml = 'horarioModerador';
     var idModerador = document.getElementById('ID_Moderador').value;
 
     //Solo deberá hacerse para el caso en que se selecciona un moderador
-    if (idModerador > 0){
+    if (idModerador > 0) {
         var datos = {
             idModerador: idModerador,
-            dml: dml
+            dml: dml,
         };
 
         $.ajax({
@@ -1022,15 +1022,15 @@ $(document).on('change', '#ID_Moderador', function buscarHorarioModerador(){
             type: 'POST',
             dataType: 'json',
             url: '../modulos/Control_Grupo.php',
-            success: function (respuesta){
-                if (respuesta.estado == 'Encontrado'){
+            success: function (respuesta) {
+                if (respuesta.estado == 'Encontrado') {
                     $('#modeFechaInicio').val(respuesta.fechaInicio);
                     $('#modeFechaFin').val(respuesta.fechaFin);
                     $('#modeHoraInicio').val(respuesta.horaInicio);
                     $('#modeHoraFin').val(respuesta.horaFin);
                     $('#modeHoraFin').val(respuesta.horaFin);
                     $('#modeDias').val(respuesta.dias);
-                } else if (respuesta.estado == 'Nulo'){
+                } else if (respuesta.estado == 'Nulo') {
                     alertify.error('No se encontro el horario del moderador');
                 }
             },
