@@ -90,7 +90,10 @@ $x = 0;
                 update: 1,
                 positions: positions
             }, success: function (response) {
-                 console.log(response);
+                console.log(response);
+                setTimeout(function () {
+                    $('#container').load('../sistema/cuestionarios/frm_ordenar_preguntas.php');
+                }, 1500);
             }
          });
      }
