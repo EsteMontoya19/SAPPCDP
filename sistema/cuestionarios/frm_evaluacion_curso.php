@@ -68,33 +68,7 @@ $url = $obj_Constancia->buscarConstanciaId($constancia)->cons_url;
                                 </div>
                             </div>
 
-                       <?php break; 
-                       
-                       case "Acuerdo/Desacuerdo": ?>
-                            <div class="form-check form-check-inline">
-                                <label class="form-check-label" for="<?php echo($pregunta['preg_id_pregunta']); ?>_AcueDesa">
-                                    <input type="radio" class="form-check-input" id="<?php echo($pregunta['preg_id_pregunta']); ?>_AcueDesa3" name="<?php echo($pregunta['preg_id_pregunta']); ?>_AcueDesa" value=3 >Totalmente de acuerdo
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <label class="form-check-label" for="<?php echo($pregunta['preg_id_pregunta']); ?>_AcueDesa">
-                                    <input type="radio" class="form-check-input" id="<?php echo($pregunta['preg_id_pregunta']); ?>_AcueDesa4" name="<?php echo($pregunta['preg_id_pregunta']); ?>_AcueDesa" value=4 >De acuerdo
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <label class="form-check-label" for="<?php echo($pregunta['preg_id_pregunta']); ?>_AcueDesa">
-                                    <input type="radio" class="form-check-input" id="<?php echo($pregunta['preg_id_pregunta']); ?>_AcueDesa5" name="<?php echo($pregunta['preg_id_pregunta']); ?>_AcueDesa" value=5 >En desacuerdo
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <label class="form-check-label" for="<?php echo($pregunta['preg_id_pregunta']); ?>_AcueDesa">
-                                    <input type="radio" class="form-check-input" id="<?php echo($pregunta['preg_id_pregunta']); ?>_AcueDesa6" name="<?php echo($pregunta['preg_id_pregunta']); ?>_AcueDesa" value=6 >Totalmente en desacuerdo
-                                </label>
-                            </div>
-
-
-
-                        <?php break; 
+                       <?php break;
 
                         case "Opción Múltiple": 
                             $arr_opciones = $obj_Cuestionario->buscarOpcionesPregunta($pregunta['preg_id_pregunta']);

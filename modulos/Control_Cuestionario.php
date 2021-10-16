@@ -24,12 +24,6 @@ if ($_POST['dml'] == 'respuestas') {
                 }
                 break;
 
-            case 'Acuerdo/Desacuerdo':
-                if (!isset($_POST[$pregunta['preg_id_pregunta']."_AcueDesa"])) {
-                    exit("No se respondio la pregunta ".$pregunta['preg_orden']. ".");
-                }
-                break;
-
             case 'Si/No, con justificación':
                 if (!isset($_POST[$pregunta['preg_id_pregunta']."_SiNoJ"])) {
                     exit("Pregunta ".$pregunta['preg_orden']. ".");
@@ -88,14 +82,6 @@ if ($_POST['dml'] == 'respuestas') {
                 }
                 break;
 
-            case 'Acuerdo/Desacuerdo':
-                if (isset($_POST[$pregunta['preg_id_pregunta']."_AcueDesa"])) {
-                    $obj_Cuestionario->registrarRespuesta($_POST['inscripcion'], $pregunta['preg_id_pregunta'], $_POST[$pregunta['preg_id_pregunta']."_AcueDesa"], "null");
-                } else {
-                    exit("3");
-                }
-                break;
-
             case 'Si/No, con justificación':
                 if (isset($_POST[$pregunta['preg_id_pregunta']."_SiNoJ"])) {
                     $obj_Cuestionario->registrarRespuesta($_POST['inscripcion'], $pregunta['preg_id_pregunta'], $_POST[$pregunta['preg_id_pregunta']."_SiNoJ"], $_POST[$pregunta['preg_id_pregunta']."Justificacion"]);
@@ -139,11 +125,6 @@ if ($_POST['dml'] == 'respuestas') {
     } elseif ($tipo == 'Si/No, con justificación') {
         $obj_Cuestionario->agregarPROP($id, 1);
         $obj_Cuestionario->agregarPROP($id, 2);
-    } elseif ($tipo == 'Acuerdo/Desacuerdo') {
-        $obj_Cuestionario->agregarPROP($id, 3);
-        $obj_Cuestionario->agregarPROP($id, 4);
-        $obj_Cuestionario->agregarPROP($id, 5);
-        $obj_Cuestionario->agregarPROP($id, 6);
     } elseif ($tipo == "Opción múltiple") {
         //Se registran las opciones
         $arr_Opciones = $_POST['opcion'];

@@ -10,7 +10,7 @@ $obj_Opcion = new Opcion();
 $obj_Cuestionario = new Cuestionario();
 
 // Variables
-$tipos_de_preguntas = array('Abierta', 'Si/No', 'Si/No, con justificación', 'Acuerdo/Desacuerdo', 'Opción múltiple');
+$tipos_de_preguntas = array('Abierta', 'Si/No', 'Si/No, con justificación', 'Opción múltiple');
 $tipo_pregunta_seleccionada = null;
 
 if (isset($_POST['id'])) {
@@ -79,8 +79,6 @@ if (isset($_POST['id'])) {
                                         echo "selected"; }?> >Si/No</option>
                                     <option value = "Si/No, con justificación" <?php if (isset($pregunta) && $tipo == "Si/No, con justificación") {
                                         echo "selected"; }?> >Si/No, con justificación</option>
-                                    <option value = "Acuerdo/Desacuerdo" <?php if (isset($pregunta) && $tipo == "Acuerdo/Desacuerdo") {
-                                        echo "selected"; }?> >Acuerdo/Desacuerdo</option>
                                     <option value = "Opción múltiple" <?php if (isset($pregunta) && $tipo == "Opción múltiple") {
                                         echo "selected"; }?> >Opción múltiple</option>
                                 </select>
