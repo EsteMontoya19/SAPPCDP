@@ -148,7 +148,7 @@ if (isset($_POST['id'])) {
                             <?php if ($_POST['CRUD'] == 1) { ?>
                     <input type="hidden" name="dml" value="update" />
                     <input type="hidden" id="idPregunta" name="idPregunta" value="<?php echo $_POST['id'];?>">
-                            <?php } 
+                            <?php }
                     } else { ?>
                         <input type="hidden" name="dml" value="insert" />
                     <?php } ?>
@@ -162,7 +162,7 @@ if (isset($_POST['id'])) {
 
             </form>
 
-            <p class="aviso-rojo">* Solo se puede actualizar una pregunta, si no ha sido respondidad por un profesor.</p>
+            <p class="aviso-rojo">* Sólo se puede actualizar una pregunta, si no ha sido respondida por un profesor.</p>
             <p class="aviso-rojo">** No se puede cambiar el tipo de pregunta. Puede eliminar la pregunta y luego crear un nuevo registro.</p>
                     <!-- Botones -->
                     <div class="col-lg-12" style="text-align: center;">

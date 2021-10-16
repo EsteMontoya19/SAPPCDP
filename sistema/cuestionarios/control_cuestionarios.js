@@ -30,7 +30,6 @@ function myFunction(chosen) {
     if (eleccion != '') {
         document.getElementById('preguntaGeneral').style.display = '';
     }
-
     if (eleccion === 'Abierta') {
         document.getElementById('respTipMultiple').style.display = 'none';
         document.getElementById('agregar').style.display = 'none';
@@ -207,7 +206,7 @@ function eliminarPreguntaDirecto(id, tipo, nombre) {
     mensaje = mensaje.concat(nombre);
     mensaje = mensaje.concat('?<br>');
     mensaje = mensaje.concat('Esta acción no afectará el estado de los cuestionarios ya aplicados.');
-    
+
     var titulo = 'Eliminar pregunta';
     alertify.confirm(
         titulo,
@@ -234,7 +233,7 @@ function eliminarPreguntaDirecto(id, tipo, nombre) {
                         alertify.error('Esta pregunta ya ha sido respondida y forma parte del hisótico por lo que no puede eliminarse ni actualizarse');
                     } else {
                         alertify.error('Hubo un problema al eliminar la pregunta');
-                    } 
+                    }
                 },
             });
         },
@@ -260,8 +259,6 @@ function validarFormularioCuestionario() {
             alertify.error('El nombre del curso debe tener máximo 300 caracteres');
             return false;
         }
-
-        
     }
 
     if ($('#pregunta').val() == 0) {
@@ -273,11 +270,7 @@ function validarFormularioCuestionario() {
 
     //Debe validar que minimo sean dos opciones
 
-
-    
-
     return true;
-
 }
 
 function validarFormularioPregunta() {
@@ -296,5 +289,4 @@ function validarFormularioPregunta() {
     }
 
     return true;
-
 }
