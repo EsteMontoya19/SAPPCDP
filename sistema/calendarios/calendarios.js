@@ -1,70 +1,68 @@
 //? Enlace a los formularios y campos dinamicos
 var i = 0;
 $(document).ready(function () {
-  //? Esta variable sirve para los campos dinamicos
-  if (typeof($('#diasActualizacion').val()) != 'undefined') {
-      i = $('#diasActualizacion').val();
-  } else{
-    i=0;
-        
-  }
-    
-  $("#btn-registro-calendarios").click(function () {
-    $("#container").load("../sistema/calendarios/frm_calendarios.php");
-    $("html, body").animate({ scrollTop: 0 }, "slow");
-  });
-  $("#boton-regresar").click(function () {
-    $("#container").load("../sistema/calendarios/frm_inicio_calendarios.php");
-  });
+    //? Esta variable sirve para los campos dinamicos
+    if (typeof $('#diasActualizacion').val() != 'undefined') {
+        i = $('#diasActualizacion').val();
+    } else {
+        i = 0;
+    }
 
-  
-  $('#add').click(function(){
-      i++;
-      $('#dynamic_field').append('<tr id="row'+i+'"> <td> <input type="date" class="form-control" placeholder="0" id="diaFestivo'+i+'" name="diaFestivo'+i+'" value=""></td></tr>');
-  });
+    $('#btn-registro-calendarios').click(function () {
+        $('#container').load('../sistema/calendarios/frm_calendarios.php');
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+    });
+    $('#boton-regresar').click(function () {
+        $('#container').load('../sistema/calendarios/frm_inicio_calendarios.php');
+    });
 
-  $(document).on('click', '.btn_remove', function(){
-      $('#row'+i+'').remove();
-      if(i > 0 ) {
-          i--;
-      }
-  });
+    $('#add').click(function () {
+        i++;
+        $('#dynamic_field').append('<tr id="row' + i + '"> <td> <input type="date" class="form-control" placeholder="0" id="diaFestivo' + i + '" name="diaFestivo' + i + '" value=""></td></tr>');
+    });
 
-   //Tabla inicio dinamica
- $('#tabla_calendarios').DataTable({
-    language: {
-        url: '//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json',
-    },
-    pageLength: 10,
-    lengthMenu: [
-        [5, 10, 20, -1],
-        [5, 10, 20, 'Todos'],
-    ],
-  });
+    $('#remove').click(function () {
+        if (i > 0) {
+            i--;
+        }
+        $('#row' + (i + 1)).remove();
+    });
+
+    //Tabla inicio dinamica
+    $('#tabla_calendarios').DataTable({
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json',
+        },
+        pageLength: 10,
+        lengthMenu: [
+            [5, 10, 20, -1],
+            [5, 10, 20, 'Todos'],
+        ],
+    });
 });
 
 //? Botones del DML
 $(document).ready(function () {
     $('#boton-registrar').click(function () {
         if (validarFormulario()) {
-            datos =$('#form_calendario').serialize();
+            datos = $('#form_calendario').serialize();
             $.ajax({
                 type: 'POST',
                 url: '../modulos/Control_Calendario.php',
                 data: datos,
- 
+
                 success: function (respuesta) {
                     console.log(respuesta);
-                      if (respuesta.endsWith('1')) {
+                    if (respuesta.endsWith('1')) {
                         alertify.success('El registro se realizó correctamente');
                         setTimeout(function () {
                             $('html, body').animate({ scrollTop: 0 }, 0);
                             $('#container').load('../sistema/calendarios/frm_inicio_calendarios.php');
                         }, 1500);
-                      } else if (respuesta.endsWith('2')) {
-                          $('html, body').animate({ scrollTop: 0 }, 'slow');
-                          alertify.error('Ya existe una plataforma con ese nombre');
-                      } else {
+                    } else if (respuesta.endsWith('2')) {
+                        $('html, body').animate({ scrollTop: 0 }, 'slow');
+                        alertify.error('Ya existe una plataforma con ese nombre');
+                    } else {
                         alertify.error('No econtrado');
                     }
                 },
@@ -75,7 +73,7 @@ $(document).ready(function () {
 
     $('#boton-actualizar').click(function () {
         if (validarFormulario()) {
-            datos =$('#form_calendario').serialize();
+            datos = $('#form_calendario').serialize();
             $.ajax({
                 type: 'POST',
                 url: '../modulos/Control_Calendario.php',
@@ -89,7 +87,7 @@ $(document).ready(function () {
                             $('html, body').animate({ scrollTop: 0 }, 0);
                             $('#container').load('../sistema/calendarios/frm_inicio_calendarios.php');
                         }, 1500);
-                    }  else {
+                    } else {
                         alertify.error('Ocurrio un error');
                     }
                 },
@@ -99,7 +97,7 @@ $(document).ready(function () {
     });
 });
 
-//? Funciones generales 
+//? Funciones generales
 
 function actualizarCalendario(id) {
     var datos = {
@@ -122,7 +120,7 @@ function consultarCalendario(id) {
         id: id,
         CRUD: 1,
     };
-    
+
     $.ajax({
         data: datos,
         type: 'POST',
@@ -134,26 +132,21 @@ function consultarCalendario(id) {
     });
 }
 
-
-
-
 function cambioEstatus(id, estatus, semestre) {
     var titulo = 'Cambio de estatus del Calendario';
 
-    if(estatus != "t") {
-      var mensaje = '¿Está seguro de cambiar el estatus del calendario del semestre ';
-      mensaje = mensaje.concat(semestre);
-      mensaje = mensaje.concat(' ');
-      mensaje = mensaje.concat('?');
-      mensaje = mensaje.concat('<br>');
-      mensaje = mensaje.concat('El estatus del calendario actual se desactivara.');
-
+    if (estatus != 't') {
+        var mensaje = '¿Está seguro de cambiar el estatus del calendario del semestre ';
+        mensaje = mensaje.concat(semestre);
+        mensaje = mensaje.concat(' ');
+        mensaje = mensaje.concat('?');
+        mensaje = mensaje.concat('<br>');
+        mensaje = mensaje.concat('El estatus del calendario actual se desactivara.');
     } else {
         var mensaje = '¿Está seguro de cambiar el estatus del calendario del semestre ';
         mensaje = mensaje.concat(semestre);
         mensaje = mensaje.concat(' ');
         mensaje = mensaje.concat('?');
-
     }
     alertify.confirm(
         titulo,
@@ -189,12 +182,12 @@ function cambioEstatus(id, estatus, semestre) {
             alertify.confirm().close();
         }
     );
-  setTimeout(function () {
-      $('#container').load('../sistema/calendarios/frm_inicio_calendarios.php');
-  }, 1500);
+    setTimeout(function () {
+        $('#container').load('../sistema/calendarios/frm_inicio_calendarios.php');
+    }, 1500);
 }
 
-function validarFormulario () {
+function validarFormulario() {
     //Validación del nombre del semestre
     if ($('#NombreSem').val() == '') {
         $('html, body').animate({ scrollTop: 0 }, 'slow');
@@ -323,7 +316,7 @@ function validarFormulario () {
     }
 
     //valida que los dias festivos agregados no estén vacíos
-    for (var iCon = 0; iCon <= i; iCon++){
+    for (var iCon = 0; iCon <= i; iCon++) {
         if ($('#diaFestivo' + iCon).val() == '') {
             $('html, body').animate({ scrollTop: 300 }, 'slow');
             document.getElementById('diaFestivo' + iCon).focus();
