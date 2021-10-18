@@ -1,6 +1,3 @@
-// Variables
-$crud;
-
 $(document).ready(function () {
     $('#btn-inicio').click(function () {
         $('html, body').animate({ scrollTop: 0 }, 0);
@@ -26,6 +23,10 @@ $(document).ready(function () {
         $('#container').load('../sistema/frm_inicio.php');
     });
 });
+
+// Variables
+var crud;
+
 // Validar el formulario
 
 function validarFormularioGrupo() {
@@ -216,7 +217,7 @@ function validarFormularioGrupo() {
         //Crea una nueva variable con estos valores, se agrega el +1 porque de lo contrario el valor es un día menor al ingresado en el input
         var objFecha2 = new Date(objFecha.getFullYear(), objFecha.getMonth(), objFecha.getDate() + 1);
         //Valida que la fecha ingresada en el periodo de inscripción sea minimamente igual al dia en que se registra el grupo.
-        if (objFecha2 < objFechaHoy && $crud != 1) {
+        if (objFecha2 < objFechaHoy && crud != 1) {
             $('html, body').animate({ scrollTop: 200 }, 'slow');
             document.getElementById('GrupoInicioInscripcion').focus();
             alertify.error('La fecha de inicio para el periodo de inscripciones al grupo debe ser minimo el día en que se registra el grupo');
@@ -566,7 +567,7 @@ function actualizarGrupo(id) {
         CRUD: 1,
     };
 
-    $crud = datos.CRUD;
+    crud = datos.CRUD;
 
     $.ajax({
         data: datos,
