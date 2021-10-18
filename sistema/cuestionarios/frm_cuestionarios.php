@@ -270,10 +270,13 @@ if (isset($_POST['id'])) {
                     <?php } ?>
 
             </form>
-
+            <?php if (isset($_POST['CRUD'])) { ?>
+                <?php if ($_POST['CRUD'] == 1) { ?>
             <p class="aviso-rojo">* Sólo se puede actualizar una pregunta, si no ha sido respondida por un profesor.</p>
             <p class="aviso-rojo">** No se puede cambiar el tipo de pregunta. Puede eliminar la pregunta y luego crear
                 un nuevo registro.</p>
+                <?php } ?>
+            <?php } ?>
             <!-- Botones -->
             <div class="col-lg-12" style="text-align: center;">
                 <button id="btn-regresar-cuestionario" type="button"
