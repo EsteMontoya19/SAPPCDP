@@ -1,3 +1,6 @@
+//? Enlace a los formularios y campos dinamicos
+var inciso = 0;
+
 $(document).ready(function () {
     $('#btn-registro-cuestionario').click(function () {
         $('#container').load('../sistema/cuestionarios/frm_cuestionarios.php');
@@ -20,9 +23,27 @@ $(document).ready(function () {
     //     consultarPreguntaDirecto;
     // });
 
+    //? Esta variable sirve para los campos dinamicos
+    if (typeof $('#diasActualizacion').val() != 'undefined') {
+        inciso = $('#diasActualizacion').val();
+    } else {
+        inciso = 0;
+    }
+
+    $('#add').click(function () {
+        inciso++;
+        $('#dynamic_field').append('<tr id="row' + inciso + '"> <td> <input type="text" class="form-control" id="opcion' + inciso + '" name="opcion' + inciso + '" value=""></td></tr>');
+    });
+
+    $('#remove').click(function () {
+        if (inciso > 0) {
+            inciso--;
+        }
+        $('#row' + (inciso + 1)).remove();
+    });
+
+    document.getElementById('respuestaMultiple').style.display = 'none';
     document.getElementById('preguntaGeneral').style.display = 'none';
-    document.getElementById('agregar').style.display = 'none';
-    document.getElementById('respTipMultiple').style.display = 'none';
 });
 
 function myFunction(chosen) {
@@ -31,18 +52,17 @@ function myFunction(chosen) {
         document.getElementById('preguntaGeneral').style.display = '';
     }
     if (eleccion === 'Abierta') {
-        document.getElementById('respTipMultiple').style.display = 'none';
+        document.getElementById('respuestaMultiple').style.display = 'none';
         document.getElementById('agregar').style.display = 'none';
     } else if (eleccion === 'Si y no') {
-        document.getElementById('respTipMultiple').style.display = 'none';
+        document.getElementById('respuestaMultiple').style.display = 'none';
         document.getElementById('agregar').style.display = 'none';
     } else if (eleccion === 'Opción múltiple') {
-        document.getElementById('respTipMultiple').style.display = '';
+        document.getElementById('respuestaMultiple').style.display = '';
         document.getElementById('agregar').style.display = '';
     } else if (eleccion === 'Seleccionar una opción') {
-        document.getElementById('agregar').style.display = 'none';
         document.getElementById('preguntaGeneral').style.display = 'none';
-        document.getElementById('respTipMultiple').style.display = 'none';
+        document.getElementById('respuestaMultiple').style.display = 'none';
     }
 }
 
