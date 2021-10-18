@@ -143,13 +143,20 @@ if (isset($_POST['id'])) {
                                                     <td>
                                                         <!-- Input del día festivo -->
                                                         <input type="text" class="form-control" id="opcion0"
-                                                            name="opcion0" value="">
+                                                            name="opcion0" value="" placeholder="Opcion 1">
                                                     </td>
                                                     <td>
                                                         <button type="button" name="add" id="add"
                                                             class="btn btn-success">Agregar Inciso</button>
                                                         <button type="button" name="remove" id="remove"
                                                             class="btn btn-danger btn_remove">Eliminar Inciso</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <!-- Input del día festivo -->
+                                                        <input type="text" class="form-control" id="opcion1"
+                                                            name="opcion1" value="" placeholder="Opcion 2">
                                                     </td>
                                                 </tr>
                                             </table>
