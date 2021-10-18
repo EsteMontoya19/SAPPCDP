@@ -87,7 +87,8 @@ $url = $obj_Constancia->buscarConstanciaId($constancia)->cons_url;
         <?php } ?>
         <input id ="dml" name="dml" type="hidden" value="respuestas">
         <input id ="constancia" name="constancia" type="hidden" value="<?php  echo($constancia); ?>">
-        <input id ="url" name="url" type="hidden" value="<?php  echo($url) ?>">
+        <input id ="inscripcion" name="inscripcion" type="hidden" value="<?php  echo($_POST['inscripcion']); ?>">
+        <input id ="url" name="url" type="hidden" value="<?php echo( isset ($url) ? $url : 'null')?>">
     <?php } else {
         echo("No hay cuestionario de evaluación de grupos registrado")   ;
     }?>

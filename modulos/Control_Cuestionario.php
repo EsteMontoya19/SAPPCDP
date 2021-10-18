@@ -71,7 +71,7 @@ if ($_POST['dml'] == 'respuestas') {
             break;
         }
     }
-        
+     //* Apartir de este punto se realiza el registro de las respuestas proporcionadas   
     foreach ($cuestionario as $iCont => $pregunta) {
         switch ($pregunta['preg_tipo']) {
             case 'Si/No':
