@@ -27,7 +27,7 @@ $url = $obj_Constancia->buscarConstanciaId($constancia)->cons_url;
             <div class="form-group row">
 
                 <div class="col-lg-12 form-group">
-                    <label for="<?php echo($pregunta['preg_id_pregunta']); ?>" class="col-lg-12 col-form-label"><?php echo($pregunta['preg_orden'].".- ".$pregunta['preg_descripcion']); ?></label>
+                    <label for="<?php echo($pregunta['preg_id_pregunta']); ?>" class="col-lg-12 col-form-label"><?php echo($pregunta['preg_orden'].".- ".$pregunta['preg_descripcion']. " *"); ?></label>
 
                     <?php switch ($pregunta['preg_tipo']) { 
                         case "Si/No": ?>
