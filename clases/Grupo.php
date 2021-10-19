@@ -149,7 +149,7 @@ class Grupo
                 AND INSC_ID_PROFESOR = PROF_ID_PROFESOR 
                 AND PROF_ID_PERSONA = PERS_ID_PERSONA
                 AND INSC_ACTIVO = TRUE 
-            ORDER BY UNACCENT(PERS_APELLIDO_PATERNO)
+                ORDER BY UNACCENT(PERS_APELLIDO_PATERNO), UNACCENT(PERS_APELLIDO_MATERNO), UNACCENT(PERS_NOMBRE);
         ";
 
         $bd = new BD();
@@ -739,15 +739,14 @@ class Grupo
     function buscarInscripcionesxGrupo($ID)
     {
         $SQL_Bus_Cursos =
-        "
-            SELECT INSC_ID_INSCRIPCION, PERS_APELLIDO_PATERNO, 
+        "SELECT INSC_ID_INSCRIPCION, PERS_APELLIDO_PATERNO, 
                     PERS_APELLIDO_MATERNO, PERS_NOMBRE, PERS_CORREO
             FROM INSCRIPCION, PROFESOR, PERSONA
             WHERE INSC_ID_PROFESOR = PROF_ID_PROFESOR 
                 AND PROF_ID_PERSONA = PERS_ID_PERSONA 
                 AND INSC_ID_GRUPO = $ID 
                 AND INSC_ACTIVO = TRUE
-            ORDER BY PERS_APELLIDO_PATERNO ASC;
+                ORDER BY UNACCENT(PERS_APELLIDO_PATERNO), UNACCENT(PERS_APELLIDO_MATERNO), UNACCENT(PERS_NOMBRE);
         ";
 
         $bd = new BD();
