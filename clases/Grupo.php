@@ -5,8 +5,7 @@ class Grupo
     //? Trea los datos necesario para mostrar los cursos privados qie se encuentran Pendientes
     function buscarGruposPrivados () {
         $SQL_GRUPO = 
-        "
-            SELECT GRUP_ID_GRUPO, CURS_NOMBRE, CURS_TIPO, CURS_NIVEL, 
+        "SELECT GRUP_ID_GRUPO, CURS_NOMBRE, CURS_TIPO, CURS_NIVEL, 
                     GRUP_ID_CURSO, GRUP_ID_PLATAFORMA, GRUP_ID_CALENDARIO, 
                     GRUP_ID_SALON, GRUP_ID_ESTADO, GRUP_ID_MODALIDAD, GRUP_URL, 
                     GRUP_ID_ACCESO, GRUP_CLAVE_ACCESO, GRUP_CUPO, 
@@ -28,8 +27,7 @@ class Grupo
     //? Se utiliza para cambiar el estado de manera automatica
     function cambiarEstadoGrupo ($grupo, $estado) {
         $SQL_Bus_Grupo =
-        "
-            UPDATE GRUPO
+        "UPDATE GRUPO
             SET GRUP_ID_ESTADO = $estado
             WHERE GRUP_ID_GRUPO = $grupo;
         ";
@@ -44,8 +42,7 @@ class Grupo
     //Busca datos del instructor
     function buscarDatosInstructorGrupo ($grupo) {
         $SQL_Bus_Grupo =
-        "
-            SELECT PERS_ID_PERSONA, PERS_NOMBRE, PERS_APELLIDO_PATERNO, 
+        "SELECT PERS_ID_PERSONA, PERS_NOMBRE, PERS_APELLIDO_PATERNO, 
                     PERS_APELLIDO_MATERNO, PERS_CORREO, PERS_TELEFONO, 
                     PERS_RFC, PROF_SEMBLANZA
             FROM GRUPO, PERSONAL_GRUPO, USUARIO, PERSONA, PROFESOR PR
@@ -68,8 +65,7 @@ class Grupo
     //? Busca el moderador asignado para un grupo
     function buscarModeradorGrupo ($grupo) {
         $SQL_Bus_Grupo =
-        "
-            SELECT USUA_ID_USUARIO, PERS_ID_PERSONA, PEGR_ID_GRUPO, 
+        "SELECT USUA_ID_USUARIO, PERS_ID_PERSONA, PEGR_ID_GRUPO, 
                     PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
             FROM PERSONAL_GRUPO, USUARIO, PERSONA
             WHERE PEGR_ID_USUARIO = USUA_ID_USUARIO  
@@ -91,8 +87,7 @@ class Grupo
     function agregarGrupo($curso,$salon,$plataforma,$url,$acceso,$clave,$cupo,$estado,
                         $activo,$modalidad,$tipo_grupo,$inicio_insc,$fin_insc) {
         $SQL_Ins_Grupo =
-        "   
-            INSERT INTO GRUPO (GRUP_ID_CURSO, GRUP_ID_SALON, GRUP_ID_CALENDARIO, 
+        "INSERT INTO GRUPO (GRUP_ID_CURSO, GRUP_ID_SALON, GRUP_ID_CALENDARIO, 
                     GRUP_ID_PLATAFORMA, GRUP_URL, GRUP_ID_ACCESO, GRUP_CLAVE_ACCESO,  
                     GRUP_CUPO, GRUP_ID_ESTADO, GRUP_PUBLICADO, GRUP_ID_MODALIDAD, 
                     GRUP_TIPO, GRUP_INICIO_INSC, GRUP_FIN_INSC)
@@ -115,8 +110,7 @@ class Grupo
     El estado debe mandar el ID, el instructor y moderador se actualizan en otro método de personal_grupo*/
     function actualizarGrupo($grupo, $tipo_grupo, $estado, $cupo, $inicio_insc, $fin_insc, $salon, $plataforma, $url, $acceso, $clave) {
         $SQL_Actua_Grupo =
-        "   
-            UPDATE GRUPO
+        "UPDATE GRUPO
             SET GRUP_TIPO = '$tipo_grupo', 
                 GRUP_ID_ESTADO = '$estado',
                 GRUP_CUPO = $cupo, 
@@ -276,8 +270,7 @@ class Grupo
     function buscarTodosGrupos()
     {
         $SQL_Bus_Cursos =
-        "   
-            SELECT DISTINCT GRUP_ID_GRUPO, PEGR_ID_USUARIO, PERS_NOMBRE, 
+        "SELECT DISTINCT GRUP_ID_GRUPO, PEGR_ID_USUARIO, PERS_NOMBRE, 
                     PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO,
                     GRUP_ID_CURSO, CURS_NOMBRE, GRUP_NUM_INSCRITOS,
                     GRUP_ID_PLATAFORMA, GRUP_URL, GRUP_ID_ACCESO, GRUP_CLAVE_ACCESO, 
@@ -308,8 +301,7 @@ class Grupo
     function buscarTodosGruposAsignados($idUsuario)
     {
         $SQL_Bus_Cursos =
-        "   
-            SELECT GRUP_ID_GRUPO, PEGR_ID_USUARIO, PERS_NOMBRE, 
+        "SELECT GRUP_ID_GRUPO, PEGR_ID_USUARIO, PERS_NOMBRE, 
                     PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO,
                     GRUP_ID_CURSO, CURS_NOMBRE, GRUP_NUM_INSCRITOS,
                     GRUP_ID_PLATAFORMA, GRUP_URL, GRUP_ID_ACCESO, 
@@ -381,8 +373,7 @@ class Grupo
     function cambiarEstatus($id, $activo)
     {
         $SQL_Act_Curso =
-        "   
-            UPDATE GRUPO
+        "UPDATE GRUPO
             SET GRUP_PUBLICADO = $activo
             WHERE GRUP_ID_GRUPO = $id;
         ";
@@ -398,8 +389,7 @@ class Grupo
     function gruposInscritosxProfesor($idProfesor)
     {
         $SQL_Act_Curso =
-        " 
-            SELECT GRUP_ID_GRUPO, GRUP_ID_MODALIDAD, MOAP_NOMBRE, CURS_NOMBRE, 
+        "SELECT GRUP_ID_GRUPO, GRUP_ID_MODALIDAD, MOAP_NOMBRE, CURS_NOMBRE, 
                     CALE_SEMESTRE, ESTA_NOMBRE, INSC_ACTIVO, CURS_NIVEL, CURS_TIPO
             FROM INSCRIPCION, GRUPO, CURSO, CALENDARIO, MODALIDAD_APRENDIZAJE, ESTADO
             WHERE INSC_ID_PROFESOR = $idProfesor
@@ -451,8 +441,7 @@ class Grupo
     function gruposInscritosActivosxProfesor($idProfesor)
     {
         $SQL_Act_Curso =
-        "   
-            SELECT INSC_ID_PROFESOR, INSC_ID_GRUPO
+        "SELECT INSC_ID_PROFESOR, INSC_ID_GRUPO
             FROM INSCRIPCION, GRUPO, CURSO, CALENDARIO
             WHERE INSC_ID_PROFESOR = $idProfesor
                 AND INSC_ID_GRUPO = GRUP_ID_GRUPO 
@@ -475,8 +464,7 @@ class Grupo
     function buscarDatosAutogestivo($id)
     {
         $SQL_Bus_Grupo =
-        "  
-            SELECT GRUP_URL
+        "SELECT GRUP_URL
             FROM GRUPO 
             WHERE GRUP_ID_MODALIDAD = 3  
                 AND GRUP_ID_GRUPO=$id;
@@ -496,8 +484,7 @@ class Grupo
     function buscarDatosEnLinea($id)
     {
         $SQL_Bus_Grupo =
-        "  
-            SELECT PLAT_NOMBRE, GRUP_URL, GRUP_ID_ACCESO, GRUP_CLAVE_ACCESO
+        "SELECT PLAT_NOMBRE, GRUP_URL, GRUP_ID_ACCESO, GRUP_CLAVE_ACCESO
             FROM GRUPO, PLATAFORMA
             WHERE GRUP_ID_PLATAFORMA=PLAT_ID_PLATAFORMA 
                 AND GRUP_ID_MODALIDAD = 2  
@@ -517,8 +504,7 @@ class Grupo
     function buscarDatosPresencial($id)
     {
         $SQL_Bus_Grupo =
-        "   
-            SELECT GRUP_ID_MODALIDAD, SALO_NOMBRE, EDIF_NOMBRE 
+        "SELECT GRUP_ID_MODALIDAD, SALO_NOMBRE, EDIF_NOMBRE 
             FROM GRUPO G, SALON S, EDIFICIO E
             WHERE GRUP_ID_SALON=SALO_ID_SALON 
                 AND SALO_ID_EDIFICIO = EDIF_ID_EDIFICIO 
@@ -539,8 +525,7 @@ class Grupo
     function eliminarGrupo($grupo)
     {
         $SQL_Eli_Grupo =
-        " 
-            DELETE FROM GRUPO
+        "DELETE FROM GRUPO
             WHERE GRUP_ID_GRUPO = $grupo;
         ";
 
@@ -556,8 +541,7 @@ class Grupo
     {
         $bd = new BD();
         $SQL_Bus_Grupo_Seq =
-        "
-            SELECT last_value 
+        "SELECT last_value 
             FROM grupo_grup_id_grupo_seq;
         ";
         //posible alternativa de solución para la tabla. SELECT last_value(grup_id_grupo) Over (partition by grup_id_grupo order by grup_id_grupo DESC) FROM grupo
@@ -576,8 +560,7 @@ class Grupo
     function buscarSoloGrupo($id)
     {
         $SQL_Bus_SoloGrupo =
-        "
-            SELECT GRUP_ID_GRUPO, GRUP_ID_CURSO, GRUP_ID_SALON, GRUP_ID_PLATAFORMA, 
+        "SELECT GRUP_ID_GRUPO, GRUP_ID_CURSO, GRUP_ID_SALON, GRUP_ID_PLATAFORMA, 
                     GRUP_ID_CALENDARIO, GRUP_URL, GRUP_ID_ACCESO, GRUP_CLAVE_ACCESO,  
                     GRUP_CUPO, GRUP_ID_ESTADO, GRUP_PUBLICADO, GRUP_ID_MODALIDAD, 
                     GRUP_TIPO, GRUP_INICIO_INSC, GRUP_FIN_INSC, GRUP_NUM_INSCRITOS,
@@ -662,8 +645,7 @@ class Grupo
     function idUsuarioModeradorGrupo($id)
     {
         $SQL_Bus_Grupo =
-        "
-            SELECT PEGR_ID_USUARIO
+        "SELECT PEGR_ID_USUARIO
             FROM PERSONAL_GRUPO, USUARIO
             WHERE PEGR_ID_USUARIO = USUA_ID_USUARIO 
                 AND USUA_ID_ROL = 3
@@ -684,8 +666,7 @@ class Grupo
     function buscarGruposImpartidosxInstructor($id)
     {
         $SQL_Bus_Grupos =
-        "
-            SELECT GRUP_ID_GRUPO, GRUP_PUBLICADO, MOAP_ID_MODALIDAD, MOAP_NOMBRE,
+        "SELECT GRUP_ID_GRUPO, GRUP_PUBLICADO, MOAP_ID_MODALIDAD, MOAP_NOMBRE,
                     CURS_NOMBRE, CALE_SEMESTRE, GRUP_NUM_INSCRITOS, ESTA_NOMBRE
             FROM PERSONAL_GRUPO P, GRUPO G, CURSO C, MODALIDAD_APRENDIZAJE M, 
                 CALENDARIO CA, ESTADO E
@@ -711,8 +692,7 @@ class Grupo
     function buscarGruposImpartidosxInstructorHistoricos($id)
     {
         $SQL_Bus_Grupos =
-        "
-            SELECT GRUP_ID_GRUPO, GRUP_PUBLICADO, MOAP_ID_MODALIDAD, 
+        "SELECT GRUP_ID_GRUPO, GRUP_PUBLICADO, MOAP_ID_MODALIDAD, 
                     MOAP_NOMBRE, CURS_NOMBRE, CALE_SEMESTRE, 
                     GRUP_NUM_INSCRITOS, ESTA_NOMBRE, PEGR_ID_CONSTANCIA
             FROM PERSONAL_GRUPO, GRUPO, CURSO, MODALIDAD_APRENDIZAJE, 

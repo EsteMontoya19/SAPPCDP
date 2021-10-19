@@ -13,6 +13,9 @@ $(document).ready(function () {
         $('html, body').animate({ scrollTop: 0 }, 0);
         $('#container').load('../sistema/cuestionarios/frm_inicio_cuestionarios.php');
     });
+    $('#btn-regresar-grupos').click(function () {
+        $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
+    });
 
     // $('#button_detalles').click(function () {
     //     $('html, body').animate({ scrollTop: 0 }, 0);

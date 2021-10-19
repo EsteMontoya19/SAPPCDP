@@ -118,5 +118,8 @@
         </div>
     </div>
 </div>
+<div class="col-lg-12" style="text-align: center;">
+  <button id = "btn-regresar-grupos" type="button" class="btn btn-success btn-footer">Regresar</button>
+</div>
 
-<script src="../sistema/grupos/control_cuestionarios.js"></script>
+<script src="../sistema/cuestionarios/control_cuestionarios.js"></script>
