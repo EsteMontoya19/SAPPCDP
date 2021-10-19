@@ -77,7 +77,12 @@
 }
 
 .derecho {
+    text-align: right;
+    margin-bottom: 1%;
+}
+.izquierda {
     text-align: left;
+    align-items: left;
     margin-bottom: 1%;
 }
 

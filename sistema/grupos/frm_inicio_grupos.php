@@ -93,8 +93,8 @@
                       <!-- //Section: Columna de opciones. -->
                       <td >
 
-                        <div align="right" >
-                          <div align='left' style="width: 80%;">
+                        <div>
+                          <div class ="izquierda" >
                       
                             <button type="button" class="btn btn-primary btn-table" title="Actualizar" <?php if ($grupo['grup_publicado'] == 't' || $grupo['grup_estado'] == 'Finalizado'  || $grupo['grup_estado'] == 'Cancelado') {
                                 ?> style="display: none;" 

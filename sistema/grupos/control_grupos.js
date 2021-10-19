@@ -1,5 +1,5 @@
 // Variables
-$crud;
+var crud;
 
 $(document).ready(function () {
     $('#btn-inicio').click(function () {

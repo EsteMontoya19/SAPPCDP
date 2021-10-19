@@ -9,6 +9,11 @@ $(document).ready(function () {
         $('#container').load('../sistema/asistencia/frm_asistencia.php');
         $('html, body').animate({ scrollTop: 0 }, 'slow');
     });
+    
+    $('#tabla_asistencia_next').click(function () {
+        alert("Siguiente");
+    });
+
     $('#btn-regresar-constancia').click(function () {
         $('#container').load('../sistema/grupos/frm_inicio_grupos.php');
         // $('html, body').animate({ scrollTop: 0 }, 'slow');
@@ -47,11 +52,11 @@ $(document).ready(function () {
         language: {
             url: '//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json',
         },
-        pageLength: 10,
-        order: [0, 'desc'],
+        pageLength: 1000,
+        order: [],
         lengthMenu: [
-            [5, 10, 20, -1],
-            [5, 10, 20, 'Todos'],
+            [20, 50, 100, -1],
+            [20, 50, 100, 'Todos'],
         ],
     });
 });

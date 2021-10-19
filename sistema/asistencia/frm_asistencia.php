@@ -152,9 +152,14 @@
                 <?php
                 if (isset($inscritos)) {
                     foreach ($inscritos as $inscrito) { ?>
+                    
                     <tr>
                       <td><?php echo($inscrito['prof_id_profesor']); ?></td>
-                      <td><?php echo($inscrito['nombre']); ?></td>
+                        <td>
+                          <div class = "izquierda" >
+                            <?php echo($inscrito['nombre']); ?>
+                          </div>
+                        </td>
 
                         <?php
                         foreach ($sesiones as $iCont => $sesion) {  ?>

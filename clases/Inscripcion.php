@@ -5,8 +5,7 @@
         //? Agrega una observación la cual se describe en la toma de asistencias
         function agregarObservaciones ($inscripcion , $observacion) {
             $SQL_Ins_Ins =
-            "
-                UPDATE INSCRIPCION
+            "UPDATE INSCRIPCION
                 SET INSC_OBSERVACION = '$observacion'
                 WHERE INSC_ID_INSCRIPCION = $inscripcion;
             ";
@@ -23,8 +22,7 @@
         {
             /*Se modifico esta función borrando la sub-consulta para hacer más eficiente el programa y ahorrarse esa sub-consulta por cada ejecución de la función*/
             $SQL_Ins_Ins =
-            "
-                INSERT INTO INSCRIPCION(INSC_ID_GRUPO, INSC_ID_PROFESOR, INSC_ACTIVO, INSC_ID_CONSTANCIA)
+            "INSERT INTO INSCRIPCION(INSC_ID_GRUPO, INSC_ID_PROFESOR, INSC_ACTIVO, INSC_ID_CONSTANCIA)
                 VALUES ($grupo, $profesor, true, $constancia);
 
                 UPDATE GRUPO
@@ -99,8 +97,7 @@
         function buscarVigenciaInscripcion($grupo)
         {
             $SQL_Bus_Inscripcion =
-			"
-                SELECT *
+			"SELECT *
                 FROM GRUPO
                 WHERE GRUP_ID_GRUPO = $grupo AND CURRENT_DATE >= GRUP_INICIO_INSC AND CURRENT_DATE <= GRUP_FIN_INSC
             ";
@@ -118,8 +115,7 @@
         function cancelarInscripcion($grupo, $profesor)
         {
             $SQL_Canc_Insc = 
-            "
-                UPDATE INSCRIPCION
+            "UPDATE INSCRIPCION
                 SET INSC_ACTIVO = FALSE
                 WHERE INSC_ID_GRUPO = $grupo AND INSC_ID_PROFESOR = $profesor;
                             

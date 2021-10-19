@@ -140,8 +140,7 @@ class Grupo
     //Busca los correos de los profesores inscritos a un grupo.
     function buscarCorreosDeParticipantes($grupo) {
         $SQL_Bus_Cursos =
-        "
-            SELECT (PERS_APELLIDO_PATERNO || ' ' || PERS_APELLIDO_MATERNO || ' ' || PERS_NOMBRE) AS NOMBRE , 
+        "SELECT (PERS_APELLIDO_PATERNO || ' ' || PERS_APELLIDO_MATERNO || ' ' || PERS_NOMBRE) AS NOMBRE , 
                     PERS_CORREO, PROF_ID_PROFESOR, PERS_ID_PERSONA, 
                     INSC_ID_INSCRIPCION, INSC_OBSERVACION, INSC_ID_CONSTANCIA
             FROM PERSONA, INSCRIPCION, GRUPO, PROFESOR
@@ -149,7 +148,8 @@ class Grupo
                 AND INSC_ID_GRUPO = GRUP_ID_GRUPO 
                 AND INSC_ID_PROFESOR = PROF_ID_PROFESOR 
                 AND PROF_ID_PERSONA = PERS_ID_PERSONA
-                AND INSC_ACTIVO = TRUE ORDER BY NOMBRE
+                AND INSC_ACTIVO = TRUE 
+            ORDER BY UNACCENT(PERS_APELLIDO_PATERNO)
         ";
 
         $bd = new BD();
@@ -162,8 +162,7 @@ class Grupo
 
     function buscarNoAcreedoresConstancia($idGrupo) {
         $SQL_Acreedor_Constancia =
-        "
-            SELECT (PERS_APELLIDO_PATERNO || ' ' || PERS_APELLIDO_MATERNO || ' ' || PERS_NOMBRE) AS NOMBRE, 
+        "SELECT (PERS_APELLIDO_PATERNO || ' ' || PERS_APELLIDO_MATERNO || ' ' || PERS_NOMBRE) AS NOMBRE, 
                     PROF_ID_PROFESOR, PERS_ID_PERSONA, 
                     INSC_ID_INSCRIPCION, CONS_ID_CONSTANCIA
             FROM INSCRIPCION, PROFESOR, PERSONA, CONSTANCIA
@@ -171,14 +170,14 @@ class Grupo
                 AND PERS_ID_PERSONA = PROF_ID_PERSONA
                 AND CONS_ID_CONSTANCIA = INSC_ID_CONSTANCIA
                 AND INSC_ACTIVO = TRUE
-                AND INSC_ID_GRUPO = 11
+                AND INSC_ID_GRUPO = $idGrupo
                 AND INSC_ID_INSCRIPCION NOT IN (SELECT DISTINCT INSC_ID_INSCRIPCION
                                                 FROM PERSONA, PROFESOR, INSCRIPCION, ASISTENCIA, CONSTANCIA
                                                 WHERE PERS_ID_PERSONA = PROF_ID_PERSONA
                                                     AND CONS_ID_CONSTANCIA = INSC_ID_CONSTANCIA
                                                     AND INSC_ID_PROFESOR = PROF_ID_PROFESOR
                                                     AND INSC_ID_INSCRIPCION = ASIS_ID_INSCRIPCION
-                                                    AND INSC_ID_GRUPO = 11
+                                                    AND INSC_ID_GRUPO = $idGrupo
                                                     AND INSC_ACTIVO = TRUE
                                                     AND PERS_ID_PERSONA NOT IN (SELECT PERS_ID_PERSONA
                                                                                 FROM PERSONA, PROFESOR, INSCRIPCION, ASISTENCIA, SESION
@@ -187,7 +186,7 @@ class Grupo
                                                                                     AND INSC_ID_INSCRIPCION = ASIS_ID_INSCRIPCION
                                                                                     AND SESI_ID_SESION = ASIS_ID_SESION
                                                                                     AND INSC_ACTIVO = TRUE
-                                                                                    AND INSC_ID_GRUPO = 11
+                                                                                    AND INSC_ID_GRUPO = $idGrupo
                                                                                     AND ASIS_PRESENTE = FALSE
                                                                                 GROUP BY PERS_ID_PERSONA, 
                                                                                         PERS_NOMBRE, 
@@ -206,8 +205,7 @@ class Grupo
 
     function buscarAcreedorConstancia($idGrupo){
         $SQL_Acreedor_Constancia =
-        "
-            SELECT DISTINCT (PERS_APELLIDO_PATERNO || ' ' || PERS_APELLIDO_MATERNO || ' ' || PERS_NOMBRE) AS NOMBRE, 
+        "SELECT DISTINCT (PERS_APELLIDO_PATERNO || ' ' || PERS_APELLIDO_MATERNO || ' ' || PERS_NOMBRE) AS NOMBRE, 
                     PROF_ID_PROFESOR, PERS_ID_PERSONA, INSC_ID_INSCRIPCION, CONS_ID_CONSTANCIA 
             FROM PERSONA, PROFESOR, INSCRIPCION, ASISTENCIA, CONSTANCIA 
             WHERE PERS_ID_PERSONA = PROF_ID_PERSONA
