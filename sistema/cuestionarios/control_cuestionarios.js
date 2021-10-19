@@ -1,3 +1,6 @@
+//? Enlace a los formularios y campos dinamicos
+var inciso = 1;
+
 $(document).ready(function () {
     $('#btn-registro-cuestionario').click(function () {
         $('#container').load('../sistema/cuestionarios/frm_cuestionarios.php');
@@ -23,9 +26,31 @@ $(document).ready(function () {
     //     consultarPreguntaDirecto;
     // });
 
+    //? Esta variable sirve para los campos dinamicos
+    if (typeof $('#diasActualizacion').val() != 'undefined') {
+        inciso = $('#diasActualizacion').val();
+    } else {
+        inciso = 1;
+    }
+
+    $('#add').click(function () {
+        if(inciso == 6) {
+            alertify.error("No se pueden generar más de 7 opciones para una pregunta");
+        } else {
+            inciso++;
+            $('#dynamic_field').append('<tr id="row' + inciso + '"> <td> <input type="text" class="form-control" id="opcion' + inciso + '" name="opcion' + inciso + '" value="" placeholder="Opcion  '+ (inciso + 1) + '" td></tr>');
+        }
+    });
+
+    $('#remove').click(function () {
+        if (inciso > 1) {
+            inciso--;
+        }
+        $('#row' + (inciso + 1)).remove();
+    });
+
+    document.getElementById('respuestaMultiple').style.display = 'none';
     document.getElementById('preguntaGeneral').style.display = 'none';
-    document.getElementById('agregar').style.display = 'none';
-    document.getElementById('respTipMultiple').style.display = 'none';
 });
 
 function myFunction(chosen) {
@@ -34,18 +59,17 @@ function myFunction(chosen) {
         document.getElementById('preguntaGeneral').style.display = '';
     }
     if (eleccion === 'Abierta') {
-        document.getElementById('respTipMultiple').style.display = 'none';
+        document.getElementById('respuestaMultiple').style.display = 'none';
         document.getElementById('agregar').style.display = 'none';
     } else if (eleccion === 'Si y no') {
-        document.getElementById('respTipMultiple').style.display = 'none';
+        document.getElementById('respuestaMultiple').style.display = 'none';
         document.getElementById('agregar').style.display = 'none';
     } else if (eleccion === 'Opción múltiple') {
-        document.getElementById('respTipMultiple').style.display = '';
+        document.getElementById('respuestaMultiple').style.display = '';
         document.getElementById('agregar').style.display = '';
     } else if (eleccion === 'Seleccionar una opción') {
-        document.getElementById('agregar').style.display = 'none';
         document.getElementById('preguntaGeneral').style.display = 'none';
-        document.getElementById('respTipMultiple').style.display = 'none';
+        document.getElementById('respuestaMultiple').style.display = 'none';
     }
 }
 
@@ -265,10 +289,32 @@ function validarFormularioCuestionario() {
     }
 
     if ($('#pregunta').val() == 0) {
-        alertify.error('Debe seleccionar un tipo');
+        alertify.error('Debe ingresar una pregunta');
         $('html, body').animate({ scrollTop: 0 }, 'slow');
         document.getElementById('pregunta').focus();
         return false;
+    }
+    if ($('#opcion0').val() == '' || typeof($('#opcion0').val()) == 'undefined' || $('#opcion0').val() == ' ') {
+        alertify.error('Debe ingresar al menos 2 opciones.');
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+        document.getElementById('opcion0').focus();
+        return false;
+    }
+
+    if ($('#opcion1').val() == '' || typeof($('#opcion1').val()) == 'undefined' || $('#opcion1').val() == ' ') {
+        alertify.error('Debe ingresar al menos 2 opciones.');
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+        document.getElementById('opcion1').focus();
+        return false;
+    }
+    for (let iCont = 2; typeof($('#opcion' + iCont).val()) != 'undefined' ; iCont++) {
+        if ($('#opcion' + iCont).val() == '' ||  $('#opcion'  + iCont).val() == ' ') {
+            alertify.error('Debe ingresar al menos 2 opciones.');
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('opcion'  + iCont).focus();
+            return false;
+        }
+        
     }
 
     //Debe validar que minimo sean dos opciones

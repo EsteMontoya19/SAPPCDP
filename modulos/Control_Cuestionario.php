@@ -127,10 +127,8 @@ if ($_POST['dml'] == 'respuestas') {
         $obj_Cuestionario->agregarPROP($id, 2);
     } elseif ($tipo == "Opción múltiple") {
         //Se registran las opciones
-        $arr_Opciones = $_POST['opcion'];
-
-        for ($i=0; $i<sizeof($arr_Opciones); $i++) {
-            $obj_Opcion->agregarOpcion($arr_Opciones[$i]);
+        for ($i=0; isset($_POST['opcion'.$i]) ; $i++) { 
+            $obj_Opcion->agregarOpcion($_POST['opcion'.$i]);
             $idOpcion = $obj_Opcion->buscarUltimo();
             $obj_Cuestionario->agregarPROP($id, $idOpcion);
         }
