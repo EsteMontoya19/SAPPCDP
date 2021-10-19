@@ -4,11 +4,13 @@
   include('../../clases/Sesion.php');
   include('../../clases/Profesor.php');
   include('../../clases/Busqueda.php');
+  include('../../clases/Constancias.php');
 
   $obj_Grupo = new Grupo();
   $obj_Sesion = new Sesion();
   $obj_Profesor = new Profesor();
   $obj_Busqueda = new Busqueda();
+  $obj_Constancia = new Constancias();
 
   $arr_grupos = null;
 
@@ -81,7 +83,7 @@
                     }
                     ?>
                       <tr>
-                        <td><?php echo $grupo['grup_id_grupo'];?></td>
+                        <td><?php echo $grupo['insc_id_inscripcion'];?></td>
                         <td><?php echo $grupo['cale_semestre'];?></td>
                         <td><?php echo $grupo['curs_nombre'];?></td>
                         <td><?php echo $grupo['moap_nombre'];?></td>
@@ -102,31 +104,36 @@
 
                           <?php if($grupo['insc_activo'] == 't'){ ?>
                             <?php if ($grupo['esta_nombre'] == 'Finalizado') {
-                              if($grupo['insc_id_constancia'] == '') { 
-                                echo "Pendiente carga de constancia";
-                              } else {
-                                $constancia = $obj_Busqueda->selectConstanciaID($grupo['insc_id_constancia']); 
-                                if (isset($constancia)) { 
-                                  if ($constancia->cons_estado == 'Disponible') {
-                                    if(!isset($constancia->cons_descargada) ||$constancia->cons_descargada == "f") {?>
-                                      <a id="Solicitud_Evaluacion"  onClick='formularioEvaluacion(<?php echo ($grupo['insc_id_inscripcion']) ?>)' class="d-block small btn btn-descarga" href="#" data-toggle="modal" data-target="#exampleModal" role="button">
-                                          <i class="fas fa-file-download" style="padding-right: 10px;"></i>Descargar Constancia</a>
-                                    </div>
-                                  <?php } else {?>
-                                    <a id="btn-constancia" href="<?php echo isset($constancia->cons_url) ? $constancia->cons_url : "Error al descargar la constancia." ?>" download
-                                      class="btn btn-descarga" onclick="descargaConstancia(<?php echo $constancia->cons_id_constancia ?>)" role="button"><i class="fas fa-file-download"
-                                      style="padding-right: 10px;"></i>Descargar Constancia</a>
-                                  <?php } ?>
-                            
-                            <?php } elseif ($constancia->cons_estado == 'No aplica') { 
-                                    echo ('<p class = aviso-azul>No Aplica</p>');
-                                  }elseif ($constancia->cons_estado == 'No disponible') { 
-                                    echo ('<p class = aviso-azul>Constancia no disponible</p>');
-                                  } else {
-                                    echo ($constancia->cons_estado);
-                                  }
+                              $resultadoInscripcion = $obj_Constancia->buscarRespuestasInscripcion($grupo['insc_id_inscripcion']);
+                              //? Primero se solicita resolver la evaluación del curso, este o no este aún disponible la constancia.
+                              if(isset($resultadoInscripcion)) {
+                                //? Si la constancia aún no se ha cargado.
+                                if($grupo['insc_id_constancia'] == '') { 
+                                  echo "Pendiente carga de constancia";
+                                } else {
+                                  //? Se busca el ID de la constancia asociada a la inscripción.
+                                  $constancia = $obj_Busqueda->selectConstanciaID($grupo['insc_id_constancia']); 
+                                  if (isset($constancia)) {
+                                    //? Si la constancia ya esta cargada 
+                                    if ($constancia->cons_estado == 'Disponible') { ?>
+                                      <a id="btn-constancia" href="<?php echo isset($constancia->cons_url) ? $constancia->cons_url : "Error al descargar la constancia." ?>" download
+                                        class="btn btn-descarga" onclick="descargaConstancia(<?php echo $constancia->cons_id_constancia ?>)" role="button"><i class="fas fa-file-download"
+                                        style="padding-right: 10px;"></i>Descargar Constancia</a>
+                                    
+                              <?php } elseif ($constancia->cons_estado == 'No aplica') { 
+                                      echo ('<p class = aviso-azul>No Aplica</p>');
+                                    }elseif ($constancia->cons_estado == 'No disponible') { 
+                                      echo ('<p class = aviso-azul>Constancia no disponible</p>');
+                                    } else {
+                                      echo ($constancia->cons_estado);
+                                    }
+                                  } 
                                 } 
-                              } 
+                              } else { ?>
+                                <a id="Solicitud_Evaluacion"  onClick='formularioEvaluacion(<?php echo ($grupo['insc_id_inscripcion']) ?>)' class="d-block small btn btn-evaluacion" href="#" data-toggle="modal" data-target="#exampleModal" role="button">
+                                  <i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Responder evaluación</a>
+                                </div> <?php 
+                              }
                             } else {
                               echo ('<p class = aviso-rojo>No aplica a grupos cancelados</p>');
                             }?>

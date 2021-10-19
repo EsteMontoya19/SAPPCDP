@@ -43,6 +43,17 @@
     background-color: #4fd3d8;
     border-color: #004c94;
 }
+.btn-evaluacion {
+    color: #fff;
+    background-color: #1e9400;
+    border-color: #4d8b50;
+}
+
+.btn-evaluacionhover {
+    color: #fff;
+    background-color: #4d8b50;
+    border-color: #1e9400;
+}
 .btn-aceptar {
     color: #fff;
     background-color: #004c94;

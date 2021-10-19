@@ -3,6 +3,22 @@
 //? Clase actualizada a las reglas de los prefijos 05/10/21
 class constancias
 {
+    //? Nos permite saber si un usuario a contestado una encuesta
+    function buscarRespuestasInscripcion($inscripcion)
+    {
+        $bd = new BD();
+        $SQL_BUS_CONSTANCIA =
+        "SELECT * 
+        FROM Respuesta 
+        WHERE resp_id_inscripcion = $inscripcion";
+
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_BUS_CONSTANCIA);
+        $bd->cerrarBD();
+
+        return $transaccion_1->traerRegistros();
+    }
     
     function eliminarConstancia($constancia)
     {

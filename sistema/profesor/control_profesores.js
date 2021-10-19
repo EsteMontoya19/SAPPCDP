@@ -19,13 +19,16 @@ $(document).ready(function () {
                 console.log(respuesta);
                 if (respuesta.endsWith('1')) {
                     alertify.success('El registro se realizó correctamente');
-                    var link = document.createElement("a");
-                    link.setAttribute('download', '');
-                    link.href = $("#url").val();
-                    document.body.appendChild(link);
-                    link.click();
-                    link.remove();
-                    descargaConstancia($("#constancia").val());
+                    if ($("#url").val() != "null" ) {
+                        var link = document.createElement("a");
+                        link.setAttribute('download', '');
+                        link.href = $("#url").val();
+                        document.body.appendChild(link);
+                        link.click();
+                        link.remove();
+                        descargaConstancia($("#constancia").val());
+
+                    }
                     setTimeout(function () {
                         location.reload();
                     }, 2500);
