@@ -34,11 +34,11 @@ $(document).ready(function () {
     }
 
     $('#add').click(function () {
-        if(inciso == 6) {
-            alertify.error("No se pueden generar más de 7 opciones para una pregunta");
+        if (inciso == 6) {
+            alertify.error('No se pueden generar más de 7 opciones para una pregunta');
         } else {
             inciso++;
-            $('#dynamic_field').append('<tr id="row' + inciso + '"> <td> <input type="text" class="form-control" id="opcion' + inciso + '" name="opcion' + inciso + '" value="" placeholder="Opcion  '+ (inciso + 1) + '" td></tr>');
+            $('#dynamic_field').append('<tr id="row' + inciso + '"> <td> <input type="text" class="form-control" id="opcion' + inciso + '" name="opcion' + inciso + '" value="" placeholder="Opcion  ' + (inciso + 1) + '" td></tr>');
         }
     });
 
@@ -61,7 +61,10 @@ function myFunction(chosen) {
     if (eleccion === 'Abierta') {
         document.getElementById('respuestaMultiple').style.display = 'none';
         document.getElementById('agregar').style.display = 'none';
-    } else if (eleccion === 'Si y no') {
+    } else if (eleccion === 'Si/No') {
+        document.getElementById('respuestaMultiple').style.display = 'none';
+        document.getElementById('agregar').style.display = 'none';
+    } else if (eleccion === 'Si/No, con justificación') {
         document.getElementById('respuestaMultiple').style.display = 'none';
         document.getElementById('agregar').style.display = 'none';
     } else if (eleccion === 'Opción múltiple') {
@@ -257,7 +260,7 @@ function eliminarPreguntaDirecto(id, tipo, nombre) {
                             $('#container').load('../sistema/cuestionarios/frm_inicio_cuestionarios.php');
                         }, 1500);
                     } else if (respuesta == 2) {
-                        alertify.error('Esta pregunta ya ha sido respondida y forma parte del hisótico por lo que no puede eliminarse ni actualizarse');
+                        alertify.error('Esta pregunta ya ha sido respondida y forma parte del histórico por lo que no puede eliminarse ni actualizarse');
                     } else {
                         alertify.error('Hubo un problema al eliminar la pregunta');
                     }
@@ -294,27 +297,29 @@ function validarFormularioCuestionario() {
         document.getElementById('pregunta').focus();
         return false;
     }
-    if ($('#opcion0').val() == '' || typeof($('#opcion0').val()) == 'undefined' || $('#opcion0').val() == ' ') {
-        alertify.error('Debe ingresar al menos 2 opciones.');
-        $('html, body').animate({ scrollTop: 0 }, 'slow');
-        document.getElementById('opcion0').focus();
-        return false;
-    }
 
-    if ($('#opcion1').val() == '' || typeof($('#opcion1').val()) == 'undefined' || $('#opcion1').val() == ' ') {
-        alertify.error('Debe ingresar al menos 2 opciones.');
-        $('html, body').animate({ scrollTop: 0 }, 'slow');
-        document.getElementById('opcion1').focus();
-        return false;
-    }
-    for (let iCont = 2; typeof($('#opcion' + iCont).val()) != 'undefined' ; iCont++) {
-        if ($('#opcion' + iCont).val() == '' ||  $('#opcion'  + iCont).val() == ' ') {
+    if ($('#tipo_pregunta').val() === 'Opción múltiple') {
+        if ($('#opcion0').val() == '' || typeof $('#opcion0').val() == 'undefined' || $('#opcion0').val() == ' ') {
             alertify.error('Debe ingresar al menos 2 opciones.');
             $('html, body').animate({ scrollTop: 0 }, 'slow');
-            document.getElementById('opcion'  + iCont).focus();
+            document.getElementById('opcion0').focus();
             return false;
         }
-        
+
+        if ($('#opcion1').val() == '' || typeof $('#opcion1').val() == 'undefined' || $('#opcion1').val() == ' ') {
+            alertify.error('Debe ingresar al menos 2 opciones.');
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            document.getElementById('opcion1').focus();
+            return false;
+        }
+        for (let iCont = 2; typeof $('#opcion' + iCont).val() != 'undefined'; iCont++) {
+            if ($('#opcion' + iCont).val() == '' || $('#opcion' + iCont).val() == ' ') {
+                alertify.error('Debe ingresar al menos 2 opciones.');
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+                document.getElementById('opcion' + iCont).focus();
+                return false;
+            }
+        }
     }
 
     //Debe validar que minimo sean dos opciones
