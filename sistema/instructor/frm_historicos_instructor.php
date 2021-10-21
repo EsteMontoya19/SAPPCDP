@@ -12,13 +12,13 @@
 
   $arr_grupos = null;
   
-  if (isset($_POST['persona'])){
+if (isset($_POST['persona'])) {
     $idPersona = $_POST['persona'];
     $profesor = $obj_Profesor->buscarInstructorxPersona($idPersona);
-    if(isset($profesor)){
-      $arr_grupos = $obj_Grupo->buscarGruposImpartidosxInstructorHistoricos($profesor->usua_id_usuario);
+    if (isset($profesor)) {
+        $arr_grupos = $obj_Grupo->buscarGruposImpartidosxInstructorHistoricos($profesor->usua_id_usuario);
     }
-  } 
+}
 
             
 ?>
@@ -64,10 +64,10 @@
                 <tbody>
                 <?php
                 if (isset($arr_grupos)) {
-                  foreach ($arr_grupos as $grupo) {
-                    $idGrupo = $grupo['grup_id_grupo'];
-                    $sesion = $obj_Sesion->numSesionesGrupo($idGrupo);
-                    ?>
+                    foreach ($arr_grupos as $grupo) {
+                        $idGrupo = $grupo['grup_id_grupo'];
+                        $sesion = $obj_Sesion->numSesionesGrupo($idGrupo);
+                        ?>
                       <tr>
                         <td><?php echo $grupo['grup_id_grupo'];?></td>
                         <td><?php echo $grupo['cale_semestre'];?></td>
@@ -81,29 +81,30 @@
                           </button>
                         </td>
                         <td><?php if ($grupo['esta_nombre'] == 'Finalizado') {
-                              if($grupo['cons_id_constancias'] == '') { 
+                            if ($grupo['pegr_id_constancia'] == '') {
                                 echo "Pendiente carga de constancia";
-                              } else {
-                                $constancia = $obj_Busqueda->selectConstanciaID($grupo['cons_id_constancias']); 
-                                if (isset($constancia)) { 
-                                  if ($constancia->cons_estado == 'Disponible') {?>
-                            <a id="btn-constancia" href="<?php echo $constancia->cons_url ?>" download
-                            class="btn btn-descarga" onclick="descargaConstancia(<?php echo $constancia->cons_id_constancias ?>)" role="button"><i class="fas fa-file-download"
-                            style="padding-right: 10px;"></i>Descargar Constancia</a>
-                            <?php } elseif ($constancia->cons_estado == 'No aplica') { 
-                                    echo ('<p class = aviso-azul>No Aplica</p>');
-                                  }elseif ($constancia->cons_estado == 'No disponible') { 
-                                    echo ('<p class = aviso-azul>Constancia no disponible</p>');
-                                  } else {
-                                    echo ($constancia->cons_estado);
-                                  }
-                                } 
-                              } 
                             } else {
-                              echo ('<p class = aviso-rojo>No aplica a grupos cancelados</p>');
+                                $constancia = $obj_Busqueda->selectConstanciaID($grupo['pegr_id_constancia']);
+                                if (isset($constancia)) {
+                                    if ($constancia->cons_estado == 'Disponible') {?>
+                            <a id="btn-constancia" href="<?php echo $constancia->cons_url ?>" download
+                            class="btn btn-descarga" onclick="descargaConstancia(<?php echo $constancia->pegr_id_constancia ?>)" role="button"><i class="fas fa-file-download"
+                            style="padding-right: 10px;"></i>Descargar Constancia</a>
+                                    <?php } elseif ($constancia->cons_estado == 'No aplica') {
+                                        echo ('<p class = aviso-azul>No Aplica</p>');
+                                    } elseif ($constancia->cons_estado == 'No disponible') {
+                                        echo ('<p class = aviso-azul>Constancia no disponible</p>');
+                                    } else {
+                                        echo ($constancia->cons_estado);
+                                    }
+                                }
+                            }
+                            } else {
+                                echo ('<p class = aviso-rojo>No aplica a grupos cancelados</p>');
                             }?></td>
                       </tr>
-                  <?php } } ?>
+                    <?php }
+                } ?>
                 </tbody>
               </table>
             </div>
