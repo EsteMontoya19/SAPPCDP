@@ -3,7 +3,7 @@ include('../../clases/BD.php');
 include('../../clases/Pregunta.php');
 
 $obj_Pregunta = new Pregunta();
-$arr_Preguntas = $obj_Pregunta->buscarPreguntas(); 
+$arr_Preguntas = $obj_Pregunta->buscarPreguntas();
 
 $x = 0;
 
@@ -57,19 +57,23 @@ $x = 0;
                             <tbody>
                                 <?php
                                 if (isset($arr_Preguntas)) {
-                                    foreach ($arr_Preguntas as $pregunta) { 
+                                    foreach ($arr_Preguntas as $pregunta) {
                                         ?>
                                         <tr>
                                             <?php $x++; ?>
                                             <td><?php echo $pregunta['preg_id_pregunta']; ?></td>
                                             <td><small><?php echo $pregunta['preg_descripcion']; ?></small></td>
                                             <td><?php echo $pregunta['preg_tipo']; ?></td>
-                                            <td><?php if ($pregunta['preg_orden'] == NULL || $pregunta['preg_activo'] != 't') {echo "-";} else {echo $pregunta['preg_orden'];} ?></td>
+                                            <td><?php if ($pregunta['preg_orden'] == null || $pregunta['preg_activo'] != 't') {
+                                                echo "-";
+                                                } else {
+                                                    echo $pregunta['preg_orden'];
+                                                } ?></td>
                                             <td>
                                                 <div class="custom-control custom-switch">
                                                     <input type="checkbox" class="custom-control-input" id="estatusCuestionario<?php echo $x ?>" <?php if ($pregunta['preg_activo'] == 't') {
                                                         ?> checked <?php
-                                                                                                                             } ?> onclick="cambioEstatus(<?php echo $pregunta['preg_id_pregunta']; ?> , '<?php echo $pregunta['preg_activo']; ?>', '<?php echo $pregunta['preg_descripcion']; ?>')">
+                                                                                                                               } ?> onclick="cambioEstatus(<?php echo $pregunta['preg_id_pregunta']; ?> , '<?php echo $pregunta['preg_activo']; ?>', '<?php echo $pregunta['preg_descripcion']; ?>')">
                                                     <label class="custom-control-label" for="estatusCuestionario<?php echo $x ?>"></label>
                                                 </div>
                                             </td>

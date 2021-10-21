@@ -49,7 +49,7 @@ $(document).ready(function () {
         $('#row' + (inciso + 1)).remove();
     });
 
-    document.getElementById('respuestaMultiple').style.display = 'none';
+    // document.getElementById('respuestaMultiple').style.display = 'none';
     document.getElementById('preguntaGeneral').style.display = 'none';
 });
 
@@ -60,6 +60,7 @@ function myFunction(chosen) {
     }
     if (eleccion === 'Abierta') {
         document.getElementById('respuestaMultiple').style.display = 'none';
+
         document.getElementById('agregar').style.display = 'none';
     } else if (eleccion === 'Si/No') {
         document.getElementById('respuestaMultiple').style.display = 'none';
@@ -68,7 +69,8 @@ function myFunction(chosen) {
         document.getElementById('respuestaMultiple').style.display = 'none';
         document.getElementById('agregar').style.display = 'none';
     } else if (eleccion === 'Opción múltiple') {
-        document.getElementById('respuestaMultiple').style.display = '';
+        // document.getElementById('respuestaMultiple').style.display = '';
+        $('#respuestaMultiple').show();
         document.getElementById('agregar').style.display = '';
     } else if (eleccion === 'Seleccionar una opción') {
         document.getElementById('preguntaGeneral').style.display = 'none';

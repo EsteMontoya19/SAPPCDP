@@ -71,7 +71,7 @@ if ($_POST['dml'] == 'respuestas') {
             break;
         }
     }
-     //* Apartir de este punto se realiza el registro de las respuestas proporcionadas   
+     //* Apartir de este punto se realiza el registro de las respuestas proporcionadas
     foreach ($cuestionario as $iCont => $pregunta) {
         switch ($pregunta['preg_tipo']) {
             case 'Si/No':
@@ -127,7 +127,7 @@ if ($_POST['dml'] == 'respuestas') {
         $obj_Cuestionario->agregarPROP($id, 2);
     } elseif ($tipo == "Opción múltiple") {
         //Se registran las opciones
-        for ($i=0; isset($_POST['opcion'.$i]) ; $i++) { 
+        for ($i=0; isset($_POST['opcion'.$i]); $i++) {
             $obj_Opcion->agregarOpcion($_POST['opcion'.$i]);
             $idOpcion = $obj_Opcion->buscarUltimo();
             $obj_Cuestionario->agregarPROP($id, $idOpcion);
@@ -138,6 +138,7 @@ if ($_POST['dml'] == 'respuestas') {
 } elseif ($_POST['dml'] == 'update') {
     $id = $_POST['idPregunta'];
     $pregunta = $_POST['PreguntaConsulta'];
+    echo '<script>alert(Llego); </script>';
 
     $registros = $obj_Cuestionario->buscarNumeroRespuestasIDPROP($id);
         

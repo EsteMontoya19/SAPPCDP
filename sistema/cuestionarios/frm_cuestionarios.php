@@ -72,9 +72,9 @@ if (isset($_POST['id'])) {
                                     <label><b>Tipo de pregunta: *</b></label>
                                     <select onChange="myFunction(this.options[this.selectedIndex].value)"
                                         required='required' class="custom-select" id="tipo_pregunta"
-                                        name="tipo_pregunta1" <?php if (isset($_POST['CRUD'])) {
+                                        name="tipo_pregunta" <?php if (isset($_POST['CRUD'])) {
                                             echo "disabled" ;
-                                                              }?>
+                                                             }?>
                                         >Abierta</option> >
                                         <option value=0>Seleccionar una opción</option>
                                         <option value="Abierta" <?php if (isset($pregunta) && $tipo=="Abierta") {
@@ -88,10 +88,10 @@ if (isset($_POST['id'])) {
                                                                   echo "selected" ;
                                                                                  }?> >Si/No, con
                                             justificación</option>
-                                        <option value="Opción múltiple" <?php if (isset($pregunta) &&
-                                            $tipo=="Opción múltiple") {
-                                                                                     echo "selected" ;
-                                                                        }?> >Opción múltiple</option>
+                                        <option value="Opción múltiple" <?php
+                                        if (isset($pregunta) && $tipo=="Opción múltiple") {
+                                            echo "selected" ;
+                                        }?> >Opción múltiple</option>
                                     </select>
                                 </div>
 
@@ -131,8 +131,11 @@ if (isset($_POST['id'])) {
 
 
                                     <!-- Section: Respuesta -> Tipo -> Opción Múltiple-->
-                                    <!-- TODO: Crear id hidden -->
-                                    <div class="container" id="respuestaMultiple">
+                                    <div class="container" id="respuestaMultiple" style=" display: <?php if ($tipo=="Opción múltiple") {
+                                        echo 'block;';
+                                                                                                   } else {
+                                                                                                       echo 'none';
+                                                                                                   }?>" >
                                         <?php
 
                                         if (!isset($_POST['CRUD'])) { ?>
@@ -141,7 +144,6 @@ if (isset($_POST['id'])) {
                                             <table class="table table-bordered" id="dynamic_field">
                                                 <tr>
                                                     <td>
-                                                        <!-- Input del día festivo -->
                                                         <input type="text" class="form-control" id="opcion0"
                                                             name="opcion0" value="" placeholder="Opcion 1">
                                                     </td>
@@ -154,58 +156,46 @@ if (isset($_POST['id'])) {
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <!-- Input del día festivo -->
                                                         <input type="text" class="form-control" id="opcion1"
                                                             name="opcion1" value="" placeholder="Opcion 2">
                                                     </td>
                                                 </tr>
                                             </table>
                                         </div>
-                                        <?php } elseif ($_POST['CRUD'] == 2) {
-                                            if (isset($arr_Inhabiles)) { ?>
+                                        <?php } elseif ($_POST['CRUD'] == 0) {
+                                            if (isset($arr_Opciones)) {
+                                                ?>
                                         <div class="col-lg-12 form-row">
                                             <table class="table table-bordered" id="dynamic_field">
 
                                                 <div class="col-lg-8 form-group">
                                                 </div>
 
-                                                <div class="col-lg-4 form-group">
-                                                    <tr>
-                                                        <td>
-                                                            <button type="button" name="add" id="add"
-                                                                class="btn btn-success">Agregar dia</button>
-                                                            <button type="button" name="remove"
-                                                                class="btn btn-danger btn_remove">Eliminar dia</button>
-                                                        </td>
-                                                    </tr>
-                                                </div>
-                                                <input type="hidden" id="diasActualizacion"
-                                                    value="<?php echo(count($arr_Inhabiles)); ?>">
-                                                        <?php foreach ($arr_Inhabiles as $iCont => $diaInhabil) { ?>
-                                                <tr id="row<?php echo ($iCont + 1); ?>">
-                                                    <td><input type="date" class="form-control" placeholder="0"
-                                                            id="diaFestivo<?php echo (($iCont + 1)); ?>"
-                                                            name="diaFestivo<?php echo (($iCont + 1)); ?>"
-                                                            value="<?php echo ($diaInhabil['dife_fecha']); ?>" <?php
-                                                            echo($habilitado); ?>> </td>
+                                                <?php foreach ($arr_Opciones as $iCont => $opcion) { ?>
+                                                <tr id="row<?php echo ($iCont); ?>">
+                                                    <td><input type="text" class="form-control" placeholder="0"
+                                                            id="opcion<?php echo ($iCont ); ?>"
+                                                            name="opcion<?php echo ($iCont ); ?>"
+                                                            value="<?php echo ($opcion['opci_descripcion']); ?>"> </td>
                                                 </tr>
-                                                        <?php } ?>
+                                                <?php } ?>
                                             </table>
                                         </div>
                                             <?php }
                                         } elseif ($_POST['CRUD'] == 1) {
-                                            $fp = fopen('datos.txt', 'w');
-                                            fwrite($fp, $arr_Opciones);
-                                            fclose($fp);
-                                            foreach ($arr_Opciones as $opcion => $diaInhabil) { ?>
-                                        <tr id="row<?php echo ($opcion + 1); ?>">
+                                            foreach ($arr_Opciones as $iCont => $opcion) {
+                                                ?>
+                                        <tr id="row<?php echo ($iCont); ?>">
                                             <br>
-                                            <td><input type="date" class="form-control" placeholder="0"
-                                                    id="diaFestivo<?php echo (($opcion + 1)); ?>"
-                                                    name="diaFestivo<?php echo (($opcion + 1)); ?>"
-                                                    value="<?php echo ($diaInhabil['opci_descripcion']); ?>" <?php
-                                                    echo($habilitado); ?>> </td>
+                                            <td>
+                                                <input type="text" class="form-control" placeholder="Opcion <?php echo ($iCont); ?>"
+                                                    id="opcion<?php echo ($iCont); ?>"
+                                                    name="opcion<?php echo ($iCont); ?>"
+                                                    value="<?php echo ($opcion['opci_descripcion']); ?>">
+                                            </td>
                                         </tr>
+                                        <div class="col-lg-8 form-group">
+                                                </div>
                                             <?php } ?>
                                         <?php } ?>
                                     </div>
@@ -215,10 +205,10 @@ if (isset($_POST['id'])) {
                                 if (!isset($_POST['CRUD'])) { ?>
                                 <input type="hidden" id="dml" name="dml" value="insert">
                                                     <?php
-                                } elseif (isset($_POST['CRUD']) && $_POST['CRUD'] == 2) { ?>
+                                } elseif (isset($_POST['CRUD']) && $_POST['CRUD'] == 1) { ?>
                                 <input type="hidden" id="dml" name="dml" value="update">
                                 <input type="hidden" id="id" name="id"
-                                    value="<?php echo ($calendario->cale_id_calendario); ?>">
+                                    value="<?php echo ($pregunta->preg_id_pregunta); ?>">
                                 <?php }?>
                             </div>
                         </div>
