@@ -136,7 +136,7 @@ if ($_POST['dml'] == 'respuestas') {
 
     exit("1");
 } elseif ($_POST['dml'] == 'update') {
-    $id = $_POST['idPregunta'];
+    $id = $_POST['id'];
     $pregunta = $_POST['PreguntaConsulta'];
     echo '<script>alert(Llego); </script>';
 

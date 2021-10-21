@@ -131,8 +131,12 @@ if (isset($_POST['id'])) {
 
 
                                     <!-- Section: Respuesta -> Tipo -> Opción Múltiple-->
-                                    <div class="container" id="respuestaMultiple" style=" display: <?php if ($tipo=="Opción múltiple") {
-                                        echo 'block;';
+                                    <div class="container" id="respuestaMultiple" style=" display: <?php if (isset($_POST['id'])) {
+                                        if ($tipo=="Opción múltiple") {
+                                            echo 'block;';
+                                        } else {
+                                            echo 'none';
+                                        }
                                                                                                    } else {
                                                                                                        echo 'none';
                                                                                                    }?>" >
@@ -187,8 +191,9 @@ if (isset($_POST['id'])) {
                                                 ?>
                                         <tr id="row<?php echo ($iCont); ?>">
                                             <br>
+                                            
                                             <td>
-                                                <input type="text" class="form-control" placeholder="Opcion <?php echo ($iCont); ?>"
+                                                <input readonly='readonly'  type="text" class="form-control" placeholder="Opcion <?php echo ($iCont); ?>"
                                                     id="opcion<?php echo ($iCont); ?>"
                                                     name="opcion<?php echo ($iCont); ?>"
                                                     value="<?php echo ($opcion['opci_descripcion']); ?>">
@@ -270,7 +275,7 @@ if (isset($_POST['id'])) {
             <?php if (isset($_POST['CRUD'])) { ?>
                 <?php if ($_POST['CRUD'] == 1) { ?>
             <p class="aviso-rojo">* Sólo se puede actualizar una pregunta, si no ha sido respondida por un profesor.</p>
-            <p class="aviso-rojo">** No se puede cambiar el tipo de pregunta. Puede eliminar la pregunta y luego crear
+            <p class="aviso-rojo">** No se puede cambiar el tipo de pregunta ni las opciones. Puede eliminar la pregunta y luego crear
                 un nuevo registro.</p>
                 <?php } ?>
             <?php } ?>
