@@ -54,6 +54,9 @@ $(document).ready(function () {
     $('#btn_reportes').click(function () {
         $('#container').load('../sistema/reportes/frm_inicio_reportes.php');
     });
+    $('#btn_correo').click(function () {
+        $('#container').load('../sistema/correo/frm_correo.php');
+    });
 
     $('#btn_usuarios').click(function () {
         $('#container').load('../sistema/usuarios/frm_inicio_usuarios.php');

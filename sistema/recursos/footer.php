@@ -7,6 +7,7 @@
 
     <!-- JQuery -->
     <script src="../recursos/js/jquery-3.4.1.js"></script>
+    <script src="../recursos/js/jquery-ui.min.js"></script>
 
     <!-- DropItemps -->
     <script src="../recursos/js/bootstrap.bundle.js"></script>

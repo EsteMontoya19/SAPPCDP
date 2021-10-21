@@ -2,6 +2,35 @@
 //? Clase verificada en la BD 04/10/2021
 class Grupo
 {
+    //? Funcion que ayuda el autocompletado
+    function buscarGruposIndicio ($pista) {
+        
+        if(is_numeric($pista)) {
+            $SQL_GRUPO = 
+            "SELECT grup_id_grupo, grup_id_curso, grup_inicio_insc, curs_tipo, curs_nombre, curs_nivel
+            FROM Grupo, Curso
+            WHERE grup_id_curso = curs_id_curso AND grup_id_grupo = $pista 
+            FETCH FIRST 5 ROWS ONLY
+            ";
+
+        } else {
+            $SQL_GRUPO = 
+            "SELECT grup_id_grupo, grup_id_curso, grup_inicio_insc, curs_tipo, curs_nombre, curs_nivel
+            FROM Grupo, Curso
+            WHERE grup_id_curso = curs_id_curso AND 
+                 UPPER (curs_nombre) LIKE UPPER('%$pista%')
+            FETCH FIRST 5 ROWS ONLY
+            ";
+        }
+        
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_GRUPO);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerRegistros(0));
+    }
+
     //? Trea los datos necesario para mostrar los cursos privados qie se encuentran Pendientes
     function buscarGruposPrivados () {
         $SQL_GRUPO = 
@@ -744,8 +773,7 @@ class Grupo
     function buscarNombreCursoxGrupo($ID)
     {
         $SQL_Bus_Curso =
-        "   
-            SELECT CURS_NOMBRE, CURS_NIVEL, GRUP_ID_ESTADO, CURS_TIPO, 
+        "SELECT CURS_NOMBRE, CURS_NIVEL, GRUP_ID_ESTADO, CURS_TIPO, 
                     PEGR_ID_USUARIO, GRUP_ID_PLATAFORMA, GRUP_ID_SALON, 
                     MOAP_ID_MODALIDAD, MOAP_NOMBRE, 
                     (SELECT PEGR_ID_USUARIO
