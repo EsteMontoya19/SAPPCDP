@@ -55,7 +55,7 @@ $Grupo = $obj_Grupo->grup_id_grupo = null;
                             <div class="col-lg-12 form-row" style="margin-top: 15px;">
                                 <div class="col-lg-6 form-group">
                                     <label for ="fechaInicio"><b>Fecha de inicio:</b></label>
-                                    <input type="date" class="form-control" id="mesConstancia" name="fechaDeInicio">
+                                    <input type="date" class="form-control" id="mesConstancia" name="fechaDeInicio" required>
                                 </div>
                                 <div class="col-lg-6 form-group">
                                     <label for ="fechaFin"><b>Fecha de término:</b></label>
@@ -74,5 +74,25 @@ $Grupo = $obj_Grupo->grup_id_grupo = null;
     </div>
     <!-- Botones -->
 
+<script>
+function validarFormulario (){
+const fechaInicio = document.getElementsByName('fechaDeInicio').val();
+alert(fechaInicio);
+}
 
+$(document).ready(function () {
+    var objFecha = new Date();
+    const objFechaHoy = new Date(objFecha.getFullYear(), objFecha.getMonth(), objFecha.getDate());
+    
+    $('#btn-consultar-reporte').click(function () {
+        if($('#mesConstancia').val == ''){
+            $('html, body').animate({ scrollTop: 200 }, 'slow');
+            document.getElementById('GrupoInicioInscripcion').focus();
+            alertify.error('El campo de Fecha de inicio no puede estar vacío');
+            return false;
+        }
+        alert(fechaInicio);
+    })
+});
+</script>
     <script src="../reportes/control_reportes.js"></script>
