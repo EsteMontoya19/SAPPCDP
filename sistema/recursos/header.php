@@ -26,6 +26,9 @@
       <link rel="stylesheet" type="text/css" href="../recursos/alertify/css/themes/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../recursos/alertify/css/themes/bootstrap.rtl.css">
 
+    <!-- JQuery Ui (Auto completado) -->
+    <link href="../recursos/css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+
     <!-- Bootstrap 4 -->
     <link href="../recursos/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="../recursos/css/bootstrap.css.map" rel="stylesheet" type="text/css">
@@ -91,6 +94,10 @@
 
             <li id="btn_reportes" class="nav-item">
                 <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fa fa-file-alt"></i>&nbsp; Reportes</a>
+            </li>
+
+            <li id="btn_correo" class="nav-item">
+                <a class="nav-link" href="#" style="color:#FFFFFF"><i class="fas fa-envelope"></i></i>&nbsp; Correo</a>
             </li>
 
             <li class="nav-item dropdown">
