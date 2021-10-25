@@ -29,7 +29,8 @@ if(isset($_POST['mensaje'])) {
                 fwrite($mensajes, "Mensaje: ".$mensaje.PHP_EOL);
                 fwrite($mensajes, " ".PHP_EOL);
                 fclose($mensajes);
-
+                
+                mail($inscrito['pers_correo'], $asunto, $mensaje, "From: ".$remitente . "\r\n" ."Reply-To: ".$remitente);
             }
         }
         exit("1");

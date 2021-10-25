@@ -823,7 +823,6 @@ function validarFormularioUsuario() {
             alertify.error('Debe seleccionar al menos una coordinación en la que participe.');
             return false;
         }
-
          if ($("#nombramiento").val() == "0") {
             $("html, body").animate({ scrollTop: 900 }, "slow");
             document.getElementById("nombramiento").focus();

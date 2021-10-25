@@ -53,11 +53,11 @@ $(document).ready(function () {
             url: '//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json',
         },
         pageLength: 1000,
-        order: [],
-        lengthMenu: [
-            [20, 50, 100, -1],
-            [20, 50, 100, 'Todos'],
-        ],
+        ordering: false,
+        lengthMenu: false,
+        lengthChange: false,
+        
+
     });
 });
 

@@ -137,7 +137,8 @@
             <table class="table table-condensed table-hover" id="tabla_asistencia" width="100%" cellspacing="0">
               <thead class="thead-dark"> 
                 <tr>
-                  <th>ID</th>
+                  <!-- <th>Inscripción</th> -->
+                  <th>Número de lista</th>
                   <th>Nombre del alumno</th>
                   <?php
                     foreach ($sesiones as $key => $valor) {
@@ -151,10 +152,12 @@
               <tbody>
                 <?php
                 if (isset($inscritos)) {
+                    $x = 1;
                     foreach ($inscritos as $inscrito) { ?>
                     
                     <tr>
-                      <td><?php echo($inscrito['prof_id_profesor']); ?></td>
+                      <!-- <td><?php echo($inscrito['insc_id_inscripcion']); ?></td> -->
+                      <td><?php echo($x); $x++?></td>
                         <td>
                           <div class = "izquierda" >
                             <?php echo($inscrito['nombre']); ?>
