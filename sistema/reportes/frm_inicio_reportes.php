@@ -44,7 +44,7 @@ $Grupo = $obj_Grupo->grup_id_grupo = null;
                 </p>
 
                 <!-- Formulario -->
-                <form name="form_grupo" action='../sistema/reportes/generar_reportes.php' id="form_grupo" method="GET">
+                <form name="form_grupo" action='../sistema/reportes/generar_reportes.php' id="form_grupo" method="POST">
                     <!-- Section: Datos de constancia -->
                     <div class="form-group">
                         <div class="card lg-12">
@@ -74,25 +74,4 @@ $Grupo = $obj_Grupo->grup_id_grupo = null;
     </div>
     <!-- Botones -->
 
-<script>
-function validarFormulario (){
-const fechaInicio = document.getElementsByName('fechaDeInicio').val();
-alert(fechaInicio);
-}
-
-$(document).ready(function () {
-    var objFecha = new Date();
-    const objFechaHoy = new Date(objFecha.getFullYear(), objFecha.getMonth(), objFecha.getDate());
-    
-    $('#btn-consultar-reporte').click(function () {
-        if($('#mesConstancia').val == ''){
-            $('html, body').animate({ scrollTop: 200 }, 'slow');
-            document.getElementById('GrupoInicioInscripcion').focus();
-            alertify.error('El campo de Fecha de inicio no puede estar vacío');
-            return false;
-        }
-        alert(fechaInicio);
-    })
-});
-</script>
     <script src="../reportes/control_reportes.js"></script>

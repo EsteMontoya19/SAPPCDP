@@ -9,11 +9,15 @@
 
     // Variables
     $objReporte = new Reporte();
-    $fechaInicio= $_GET ['fechaDeInicio'];
-    $fechaFin= $_GET ['fechaDeFin'];
+    $fechaInicio= $_POST['fechaDeInicio'];
+    $fechaFin= $_POST['fechaDeFin'];
     $arr_Profesores = $objReporte ->buscarCursosTomados($fechaInicio, $fechaFin);
+    $file = fopen('registro.txt', 'w');
+    fwrite($file, 'Fecha Inicio: '.$fechaInicio.PHP_EOL);
+    fwrite($file, 'Fecha Fin: '.$fechaFin.PHP_EOL);
+    fclose($file);
     $arr_meses= array(
-    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
     'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre',
     'Noviembre', 'Diciembre');
 
