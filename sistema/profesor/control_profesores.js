@@ -37,7 +37,9 @@ $(document).ready(function () {
                     alertify.error('Ocurrio un error con el tipo de una pregunta');
                 } else if (respuesta.endsWith('3')) {
                     alertify.error('No se ha contestado todo el cuestionario.');
-                } else {
+                } else if (respuesta.endsWith('4')){
+                    alertify.error("No existe un cuestionario registrado, espera a que registren uno.");
+                }else {
                     alertify.error(respuesta);
                 }
                 $('#btn-registrar-evaluacion').prop('disabled', false);

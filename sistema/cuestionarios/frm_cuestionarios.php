@@ -261,7 +261,7 @@ if (isset($_POST['id'])) {
                     <input type="hidden" id="idPregunta" name="idPregunta" value="<?php echo $_POST['id'];?>">
                         <?php }
                     } else { ?>
-                    <input type="hidden" name="dml" value="insert" />
+                        <input type="hidden" name="dml" value="insert" />
                     <?php } ?>
 
                     <!-- Desactivar formulario FIN -->

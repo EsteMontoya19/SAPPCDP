@@ -205,6 +205,9 @@ if ($_POST['dml'] == 'respuestas') {
     }
 
     exit("1");
+} elseif ($_POST['dml'] == 'sinRegistro') { 
+    exit('4');
+
 } elseif (isset($_POST['update'])) {
     foreach ($_POST['positions'] as $position) {
         $index = $position[0];

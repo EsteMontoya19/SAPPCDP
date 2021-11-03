@@ -272,8 +272,7 @@ class Moderador
     function buscarModeradorIDUsuario($id)
     {
       $SQL_Bus_Moderador =
-      "	
-        SELECT PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
+      "	SELECT PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO, USUA_ID_USUARIO
         FROM USUARIO, PERSONA 
         WHERE USUA_ID_PERSONA = PERS_ID_PERSONA 
           AND USUA_ID_ROL = 3 
@@ -284,7 +283,6 @@ class Moderador
             $bd->abrirBD();
             $transaccion_1 = new Transaccion($bd->conexion);
             $transaccion_1->enviarQuery($SQL_Bus_Moderador);
-            $obj_Usuario = $transaccion_1->traerObjeto(0);
             $bd->cerrarBD();
             return ($transaccion_1->traerObjeto(0));
     }

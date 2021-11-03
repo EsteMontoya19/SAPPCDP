@@ -39,7 +39,7 @@ if (isset($_POST['id'])) {
     $personal = $obj_Grupo->idUsuarioModeradorGrupo($idGrupo);
     $Curso1=$obj_Curso->buscarCurso($Grupo->grup_id_curso);
     if (isset($personal)) {
-        $moderador = $obj_Moderador->buscarModeradorIDUsuario($personal->usua_id_usuario);
+        $moderador = $obj_Moderador->buscarModeradorIDUsuario($personal->pegr_id_usuario);
     } else {
         $moderador = null;
     }
