@@ -25,28 +25,27 @@
   $asistencias = $obj_Asistencias->buscarAsistenciasGrupo($_POST['idGrupo']);
   $sesiones = $obj_Sesion->buscarSesionesIDGrupo($_POST['idGrupo']);
   
-  if(isset($asistencias)) {
+if (isset($asistencias)) {
     $obj_Asistencias->eliminarAsistencia($_POST['idGrupo']);
-  }
+}
     $inscritos = $obj_Grupo->buscarCorreosDeParticipantes($_POST['idGrupo']);
 
     //? Si no hay inscritos salimos ya de la función
-    if (!isset($inscritos) || count($inscritos) == 0) {
-      exit("2");
-    } else {
-      //? Recorremos a los inscritos
-      foreach ($inscritos as $iCont => $inscrito) {
+if (!isset($inscritos) || count($inscritos) == 0) {
+    exit("2");
+} else {
+  //? Recorremos a los inscritos
+    foreach ($inscritos as $iCont => $inscrito) {
         //? Obtenemos los datos de la inscripción
-        $inscripcion = $obj_Inscripcion->buscarInscripcion($_POST['idGrupo'] , $inscrito['prof_id_profesor']);
+        $inscripcion = $obj_Inscripcion->buscarInscripcion($_POST['idGrupo'], $inscrito['prof_id_profesor']);
         
-        $obj_Inscripcion -> agregarObservaciones($inscripcion->insc_id_inscripcion , $_POST['observacion_'. $inscripcion->insc_id_inscripcion]);
+        $obj_Inscripcion -> agregarObservaciones($inscripcion->insc_id_inscripcion, $_POST['observacion_'. $inscripcion->insc_id_inscripcion]);
         
         //? Creamos asistencia para cada sesion
         foreach ($sesiones as $jCont => $sesion) {
-          $checkbox = $inscripcion->insc_id_inscripcion . "_asistencia_" . ($jCont + 1);
-          $obj_Asistencias->agregarAsistencia($sesion['sesi_id_sesion'], $inscripcion->insc_id_inscripcion, isset($_POST[$checkbox]) ? $_POST[$checkbox] : null);
+            $checkbox = $inscripcion->insc_id_inscripcion . "_asistencia_" . ($jCont + 1);
+            $obj_Asistencias->agregarAsistencia($sesion['sesi_id_sesion'], $inscripcion->insc_id_inscripcion, isset($_POST[$checkbox]) ? $_POST[$checkbox] : null);
         }
-      }
-      exit("1");
     }
-?>
+        exit("1");
+}

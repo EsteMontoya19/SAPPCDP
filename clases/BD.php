@@ -15,7 +15,7 @@ class BD
     public $conexion;
     public $cadena_conexion;
 
-    function __construct($strBD = "")
+    public function __construct($strBD = "")
     {
         //    require('../include/Configuracion.php');
 
@@ -27,7 +27,7 @@ class BD
         $this->cadena_conexion = "host=". $this->servidor ." port=". $this->puerto ." dbname=". $this->bd ." user=". $this->usuario ." password=". $this->password;
     }
 
-    function abrirBD()
+    public function abrirBD()
     {
         if ($this->conexion = pg_connect($this->cadena_conexion)) {
             return $this->conexion;
@@ -36,7 +36,7 @@ class BD
         }
     }
 
-    function cerrarBD()
+    public function cerrarBD()
     {
         pg_close($this->conexion);
     }

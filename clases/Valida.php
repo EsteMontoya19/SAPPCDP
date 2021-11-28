@@ -1,5 +1,5 @@
 <?php
-//! Daré fé de que esto no requiere revisarlo a fondo :'v 
+//! Daré fé de que esto no requiere revisarlo a fondo :'v
 
   // Constantes para definir los estándares
 

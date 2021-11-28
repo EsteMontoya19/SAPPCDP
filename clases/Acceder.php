@@ -1,8 +1,8 @@
 <?php
-namespace clases;
+// namespace clases;
 
-use BD;
-use Transaccion;
+// use BD;
+// use Transaccion;
 
 include('BD.php');
 

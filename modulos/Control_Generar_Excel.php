@@ -135,7 +135,7 @@ foreach ($arr_sesiones as $sesion) {
             $asistencia = $obj_Asistencia->buscarAsistenciaSesion($sesion['sesi_id_sesion'], $inscrito['insc_id_inscripcion']);
             if (isset($asistencia)) {
                 if ($asistencia->asis_presente =='t') {
-                    //? Si estuvo presente marcamos la casilla sino, se queda despintada
+                    //? Si estuvo presente marcamos la casilla si no, se queda despintada
                     $documento->getActiveSheet()->getStyleByColumnAndRow($iCont+4, $k)->getFill()->setFillType(
                         \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
                     )->getStartColor()->setARGB('C9E4C5');

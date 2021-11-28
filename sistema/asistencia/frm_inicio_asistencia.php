@@ -48,7 +48,7 @@
                     <th>Estado</th>
                     <th>Profesor</th>
                     <th>Opciones</th>
-                    <?php if(isset($esProfesor)) { ?>
+                    <?php if (isset($esProfesor)) { ?>
                     <th>Constancia</th>
                     <?php } ?>
                   </tr>
@@ -72,33 +72,37 @@
                         </button>
                         </div>
                       </td>
-                      <?php if(isset($esProfesor)) { ?>
+                        <?php if (isset($esProfesor)) { ?>
                       <td>
-                          <?php if($grupo['grup_estado'] == 'Finalizado') {
-                          $constancia = $obj_Busqueda->buscarConstanciaPersonal($_POST['idUsuario'], $grupo['grup_id_grupo']);
-                          if(isset($constancia)){
-                            if (isset($constancia)) { 
-                              if ($constancia->cons_estado == 'Disponible') {?>
+                            <?php if ($grupo['grup_estado'] == 'Finalizado') {
+                                $constancia = $obj_Busqueda->buscarConstanciaPersonal($_POST['idUsuario'], $grupo['grup_id_grupo']);
+                                if (isset($constancia)) {
+                                    if (isset($constancia)) {
+                                        if ($constancia->cons_estado == 'Disponible') {?>
                                 <a id="btn-constancia" href="<?php echo $constancia->cons_url ?>" download
                                 class="btn btn-descarga" onclick="descargaConstancia(<?php echo $constancia->cons_id_constancias ?>)" role="button"><i class="fas fa-file-download"
                                 style="padding-right: 10px;"></i>Descargar Constancia</a>
-                              <?php 
-                              } elseif ($constancia->cons_estado == 'No aplica') { 
-                                echo ('<p class = aviso-azul>No Aplica</p>');
-                              }elseif ($constancia->cons_estado == 'No disponible') { 
-                                echo ('<p class = aviso-azul>Constancia no disponible</p>');
-                              } else {
-                                echo ($constancia->cons_estado);
-                              }
-                          }
-                        ?>
-                      <?php } } elseif ($grupo['grup_estado'] == 'Cancelado') {
-                        echo ('<p class = aviso-rojo>No aplica a grupos cancelados</p>');
-                        } else { echo "Pendiente"; } ?>
+                                                  <?php
+                                        } elseif ($constancia->cons_estado == 'No aplica') {
+                                                echo ('<p class = aviso-azul>No Aplica</p>');
+                                        } elseif ($constancia->cons_estado == 'No disponible') {
+                                            echo ('<p class = aviso-azul>Constancia no disponible</p>');
+                                        } else {
+                                            echo ($constancia->cons_estado);
+                                        }
+                                    }
+                                    ?>
+                                <?php }
+                            } elseif ($grupo['grup_estado'] == 'Cancelado') {
+                                echo ('<p class = aviso-rojo>No aplica a grupos cancelados</p>');
+                            } else {
+                                echo "Pendiente";
+                            } ?>
                       </td>
                     </tr>
-                    <?php }
-                } }?>
+                        <?php }
+                    }
+                }?>
 
                 </tbody>
               </table>

@@ -8,17 +8,17 @@
 <input id = "idRol" type="hidden" name="dml" value='<?php echo($cuenta->rol_id_rol);?>'>
 
 <!-- Archivo para cargar el header y referencias -->
-<?php 
+<?php
 if ($cuenta->rol_id_rol==1) {
-	include_once '../sistema/recursos/header.php';
-}elseif($cuenta->rol_id_rol==2){
-  include_once '../sistema/recursos/header-instructor.php';
-}elseif($cuenta->rol_id_rol==3){
-	include_once '../sistema/recursos/header-monitor.php';
-}else{
-	include_once '../sistema/recursos/header-profesor.php';
+    include_once '../sistema/recursos/header.php';
+} elseif ($cuenta->rol_id_rol==2) {
+    include_once '../sistema/recursos/header-instructor.php';
+} elseif ($cuenta->rol_id_rol==3) {
+    include_once '../sistema/recursos/header-monitor.php';
+} else {
+    include_once '../sistema/recursos/header-profesor.php';
 }
-  ?>
+?>
   <section id="container">
     
   </section>
