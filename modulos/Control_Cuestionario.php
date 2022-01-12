@@ -43,7 +43,7 @@ if ($_POST['dml'] == 'respuestas') {
                 }
                 break;
 
-            case 'Opción Múltiple':
+            case 'Opción múltiple':
                 if (!isset($_POST[$pregunta['preg_id_pregunta']."_multiple"])) {
                     exit("No se respondio la pregunta ".$pregunta['preg_orden']. ".");
                 }
@@ -90,7 +90,7 @@ if ($_POST['dml'] == 'respuestas') {
                 }
                 break;
 
-            case 'Opción Múltiple':
+            case 'Opción múltiple':
                 if (isset($_POST[$pregunta['preg_id_pregunta']."_multiple"])) {
                     $obj_Cuestionario->registrarRespuesta($_POST['inscripcion'], $pregunta['preg_id_pregunta'], $_POST[$pregunta['preg_id_pregunta']."_multiple"], "null");
                 }
@@ -111,7 +111,7 @@ if ($_POST['dml'] == 'respuestas') {
 } elseif ($_POST['dml'] == 'insert') {
     $pregunta = $_POST['pregunta'];
     $activo = 'FALSE';
-    $tipo = $_POST['tipo_pregunta1'];
+    $tipo = $_POST['tipo_pregunta'];
     $orden = 'NULL';
         
     $obj_Pregunta->agregarPregunta($pregunta, $activo, $orden, $tipo);
