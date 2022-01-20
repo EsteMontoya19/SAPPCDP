@@ -130,7 +130,7 @@ if (isset($_POST['id'])) {
 
 
 
-                                    <!-- Section: Respuesta -> Tipo -> Opción Múltiple-->
+                                    <!-- Section: Respuesta -> Tipo -> Opción múltiple-->
                                     <div class="container" id="respuestaMultiple" style=" display: <?php if (isset($_POST['id'])) {
                                         if ($tipo=="Opción múltiple") {
                                             echo 'block;';

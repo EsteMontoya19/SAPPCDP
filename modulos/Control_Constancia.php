@@ -365,7 +365,7 @@ if($_POST['dml'] == 'insert'){
                         $rutaDirectorio = "../recursos/PDF/Constancias/Instructores/AsignadasManualmente/";
                         if(file_exists($rutaDirectorio)){
                             //se crea el nuevo nombre del archivo
-                            $nuevoNombre = $datosInstructor->pers_apellido_paterno."_".$datosInstructor->pers_apellido_materno."_".$datosInstructor->pers_nombre."_".$datosInstructor->cons_id_constancia.".pdf";
+                            $nuevoNombre = $datosInstructor->pers_apellido_paterno."_".$datosInstructor->pers_apellido_materno."_".$datosInstructor->pers_nombre."_".$datosInstructor->pegr_id_constancia.".pdf";
                             $rutaTemporal = $_FILES['constanciaInstructor']['tmp_name'];//Se guarda la ruta temporal de la nueva constancia
                             move_uploaded_file($rutaTemporal,$rutaDirectorio.$nuevoNombre);//Se mueve el archivo a la ruta de la constancia
                             $obj_Constancia->cargarConstancia($datosInstructor->pegr_id_constancia, $rutaDirectorio.$nuevoNombre);

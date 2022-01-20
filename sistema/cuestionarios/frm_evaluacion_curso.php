@@ -70,7 +70,7 @@ $url = $obj_Constancia->buscarConstanciaId($constancia)->cons_url;
 
                        <?php break;
 
-                        case "Opción Múltiple": 
+                        case "Opción múltiple": 
                             $arr_opciones = $obj_Cuestionario->buscarOpcionesPregunta($pregunta['preg_id_pregunta']);
                             foreach ($arr_opciones as $iCont => $opcion) { ?>
                                 <div class="form-check form-check-inline">
