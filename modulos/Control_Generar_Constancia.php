@@ -81,29 +81,29 @@
 
         // Section: Datos de la hoja.
         $hoja -> setCellValueByColumnAndRow(1, $k+2, $nombrePersona);
-        $hoja -> setCellValueByColumnAndRow(2, $k+2, $curso->curs_tipo." ".$curso->curs_nombre);
+        $hoja -> setCellValueByColumnAndRow(2, $k+2, $curso->curs_tipo." "."\"".$curso->curs_nombre."\"");
 
 
         // Definition aquí comprobaremos cuatro puntos clave.
         if (sizeof($arr_periodo_del_curso)==1) {
             //* Sólo tiene una sesión.
             if ($horasTotales > 1) {
-                $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea ".$curso->curs_nombre." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido el ".$diaInicio." de ".$mesFin." con una duración de ".$horasTotales.' '."horas.");
+                $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea "."\"".$curso->curs_nombre."\""." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido el ".$diaInicio." de ".$mesFin." con una duración de ".$horasTotales.' '."horas.");
             } else {
-                $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea ".$curso->curs_nombre." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido el ".$diaInicio." de ".$mesFin." con una duración de ".$horasTotales.' '."hora.");
+                $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea "."\"".$curso->curs_nombre."\""." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido el ".$diaInicio." de ".$mesFin." con una duración de ".$horasTotales.' '."hora.");
             }
             $hoja -> setCellValueByColumnAndRow(4, $k+2, $diaInicio." de ".$mesFin);
         } elseif (sizeof($arr_periodo_del_curso) > 1 && $mesInicio==$mesFin) {
             //* Tiene más de una sesión y ambas son el mismo mes.
-            $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea ".$curso->curs_nombre." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido del ".$diaInicio." al ".$diaFin." de ".$mesFin." con una duración de ".$horasTotales.' '."horas.");
+            $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea "."\"".$curso->curs_nombre."\""." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido del ".$diaInicio." al ".$diaFin." de ".$mesFin." con una duración de ".$horasTotales.' '."horas.");
             $hoja -> setCellValueByColumnAndRow(4, $k+2, "Del ".$diaInicio." al ".$diaFin." de ".$mesFin);
         } elseif (sizeof($arr_periodo_del_curso) >1 && $mesInicio != $mesFin && $anioInicio == $anioFin) {
             //* Tiene más de una sesión y no son el mismo mes.
-            $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea ".$curso->curs_nombre." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido del ".$diaInicio." de ".$mesInicio." al ".$diaFin." de ".$mesFin." con una duración de ".$horasTotales.' '."horas.");
+            $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea "."\"".$curso->curs_nombre."\""." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido del ".$diaInicio." de ".$mesInicio." al ".$diaFin." de ".$mesFin." con una duración de ".$horasTotales.' '."horas.");
             $hoja -> setCellValueByColumnAndRow(4, $k+2, "Del ".$diaInicio." de ".$mesInicio." al ".$diaFin." de ".$mesFin);
         } elseif (sizeof($arr_periodo_del_curso) >1 && $anioInicio != $anioFin) {
             //* No es el mismo año.
-            $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea ".$curso->curs_nombre." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido del ".$diaInicio." de ".$mesInicio." del ".$anioInicio." al ".$diaFin." de ".$mesFin." del ".$anioFin." con una duración de ".$horasTotales.' '."horas.");
+            $hoja -> setCellValueByColumnAndRow(3, $k+2, "Por su participación en el ".$curso->curs_tipo." en línea "."\"".$curso->curs_nombre."\""." en el marco del Programa Permanente de Capacitación a Distancia para Profesores de la FCA, impartido del ".$diaInicio." de ".$mesInicio." del ".$anioInicio." al ".$diaFin." de ".$mesFin." del ".$anioFin." con una duración de ".$horasTotales.' '."horas.");
             $hoja -> setCellValueByColumnAndRow(4, $k+2, "Del ".$diaInicio." de ".$mesInicio." del ".$anioInicio." al ".$diaFin." de ".$mesFin."del".$anioFin);
         }
 

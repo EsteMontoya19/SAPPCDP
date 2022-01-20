@@ -111,7 +111,7 @@ if ($_POST['dml'] == 'respuestas') {
 } elseif ($_POST['dml'] == 'insert') {
     $pregunta = $_POST['pregunta'];
     $activo = 'FALSE';
-    $tipo = $_POST['tipo_pregunta1'];
+    $tipo = $_POST['tipo_pregunta'];
     $orden = 'NULL';
         
     $obj_Pregunta->agregarPregunta($pregunta, $activo, $orden, $tipo);
@@ -205,16 +205,14 @@ if ($_POST['dml'] == 'respuestas') {
     }
 
     exit("1");
-} elseif ($_POST['dml'] == 'sinRegistro') { 
+} elseif ($_POST['dml'] == 'sinRegistro') {
     exit('4');
-
 } elseif (isset($_POST['update'])) {
     foreach ($_POST['positions'] as $position) {
         $index = $position[0];
         $newPosition = $position[1];
         $result = $obj_Pregunta->actualizarOrdenPregunta($index, $newPosition);
     }
-        
     exit('1');
 } else {
     exit("0");

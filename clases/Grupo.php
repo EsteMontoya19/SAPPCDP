@@ -3,18 +3,18 @@
 class Grupo
 {
     //? Funcion que ayuda el autocompletado
-    function buscarGruposIndicio ($pista) {
+    function buscarGruposIndicio($pista)
+    {
         
-        if(is_numeric($pista)) {
-            $SQL_GRUPO = 
+        if (is_numeric($pista)) {
+            $SQL_GRUPO =
             "SELECT grup_id_grupo, grup_id_curso, grup_inicio_insc, curs_tipo, curs_nombre, curs_nivel
             FROM Grupo, Curso
             WHERE grup_id_curso = curs_id_curso AND grup_id_grupo = $pista 
             FETCH FIRST 5 ROWS ONLY
             ";
-
         } else {
-            $SQL_GRUPO = 
+            $SQL_GRUPO =
             "SELECT grup_id_grupo, grup_id_curso, grup_inicio_insc, curs_tipo, curs_nombre, curs_nivel
             FROM Grupo, Curso
             WHERE grup_id_curso = curs_id_curso AND 
@@ -32,8 +32,9 @@ class Grupo
     }
 
     //? Trea los datos necesario para mostrar los cursos privados qie se encuentran Pendientes
-    function buscarGruposPrivados () {
-        $SQL_GRUPO = 
+    function buscarGruposPrivados()
+    {
+        $SQL_GRUPO =
         "SELECT GRUP_ID_GRUPO, CURS_NOMBRE, CURS_TIPO, CURS_NIVEL, 
                     GRUP_ID_CURSO, GRUP_ID_PLATAFORMA, GRUP_ID_CALENDARIO, 
                     GRUP_ID_SALON, GRUP_ID_ESTADO, GRUP_ID_MODALIDAD, GRUP_URL, 
@@ -54,7 +55,8 @@ class Grupo
         return ($transaccion_1->traerRegistros(0));
     }
     //? Se utiliza para cambiar el estado de manera automatica
-    function cambiarEstadoGrupo ($grupo, $estado) {
+    function cambiarEstadoGrupo($grupo, $estado)
+    {
         $SQL_Bus_Grupo =
         "UPDATE GRUPO
             SET GRUP_ID_ESTADO = $estado
@@ -69,7 +71,8 @@ class Grupo
     }
 
     //Busca datos del instructor
-    function buscarDatosInstructorGrupo ($grupo) {
+    function buscarDatosInstructorGrupo($grupo)
+    {
         $SQL_Bus_Grupo =
         "SELECT PERS_ID_PERSONA, PERS_NOMBRE, PERS_APELLIDO_PATERNO, 
                     PERS_APELLIDO_MATERNO, PERS_CORREO, PERS_TELEFONO, 
@@ -88,11 +91,11 @@ class Grupo
         $transaccion_1->enviarQuery($SQL_Bus_Grupo);
         $bd->cerrarBD();
         return ($transaccion_1->traerObjeto(0));
-
     }
 
     //? Busca el moderador asignado para un grupo
-    function buscarModeradorGrupo ($grupo) {
+    function buscarModeradorGrupo($grupo)
+    {
         $SQL_Bus_Grupo =
         "SELECT USUA_ID_USUARIO, PERS_ID_PERSONA, PEGR_ID_GRUPO, 
                     PERS_NOMBRE, PERS_APELLIDO_PATERNO, PERS_APELLIDO_MATERNO
@@ -108,13 +111,25 @@ class Grupo
         $transaccion_1->enviarQuery($SQL_Bus_Grupo);
         $bd->cerrarBD();
         return ($transaccion_1->traerObjeto(0));
-
     }
 
     //Permite agregar cualquier tipo de grupo
     /*No agrega el instructor ni moderador en este método, en el caso de estado y modalidad ahora manda ID*/
-    function agregarGrupo($curso,$salon,$plataforma,$url,$acceso,$clave,$cupo,$estado,
-                        $activo,$modalidad,$tipo_grupo,$inicio_insc,$fin_insc) {
+    function agregarGrupo(
+        $curso,
+        $salon,
+        $plataforma,
+        $url,
+        $acceso,
+        $clave,
+        $cupo,
+        $estado,
+        $activo,
+        $modalidad,
+        $tipo_grupo,
+        $inicio_insc,
+        $fin_insc
+    ) {
         $SQL_Ins_Grupo =
         "INSERT INTO GRUPO (GRUP_ID_CURSO, GRUP_ID_SALON, GRUP_ID_CALENDARIO, 
                     GRUP_ID_PLATAFORMA, GRUP_URL, GRUP_ID_ACCESO, GRUP_CLAVE_ACCESO,  
@@ -137,7 +152,8 @@ class Grupo
     //Permite Actualizar Cualquier tipo de grupo
     /*No actualiza curs_id_cursos, grup_modalidad, grup_activo ni cale_id_calendario. Por los requerimientos del sistema.
     El estado debe mandar el ID, el instructor y moderador se actualizan en otro método de personal_grupo*/
-    function actualizarGrupo($grupo, $tipo_grupo, $estado, $cupo, $inicio_insc, $fin_insc, $salon, $plataforma, $url, $acceso, $clave) {
+    function actualizarGrupo($grupo, $tipo_grupo, $estado, $cupo, $inicio_insc, $fin_insc, $salon, $plataforma, $url, $acceso, $clave)
+    {
         $SQL_Actua_Grupo =
         "UPDATE GRUPO
             SET GRUP_TIPO = '$tipo_grupo', 
@@ -161,7 +177,8 @@ class Grupo
     }
 
     //Busca los correos de los profesores inscritos a un grupo.
-    function buscarCorreosDeParticipantes($grupo) {
+    function buscarCorreosDeParticipantes($grupo)
+    {
         $SQL_Bus_Cursos =
         "SELECT (PERS_APELLIDO_PATERNO || ' ' || PERS_APELLIDO_MATERNO || ' ' || PERS_NOMBRE) AS NOMBRE , 
                     PERS_CORREO, PROF_ID_PROFESOR, PERS_ID_PERSONA, 
@@ -183,7 +200,8 @@ class Grupo
         return ($transaccion_1->traerRegistros());
     }
 
-    function buscarNoAcreedoresConstancia($idGrupo) {
+    function buscarNoAcreedoresConstancia($idGrupo)
+    {
         $SQL_Acreedor_Constancia =
         "SELECT (PERS_APELLIDO_PATERNO || ' ' || PERS_APELLIDO_MATERNO || ' ' || PERS_NOMBRE) AS NOMBRE, 
                     PROF_ID_PROFESOR, PERS_ID_PERSONA, 
@@ -226,9 +244,10 @@ class Grupo
         return ($transaccion_1->traerRegistros(0));
     }
 
-    function buscarAcreedorConstancia($idGrupo){
+    function buscarAcreedorConstancia($idGrupo)
+    {
         $SQL_Acreedor_Constancia =
-        "SELECT DISTINCT (PERS_APELLIDO_PATERNO || ' ' || PERS_APELLIDO_MATERNO || ' ' || PERS_NOMBRE) AS NOMBRE, 
+        "SELECT DISTINCT ( PERS_NOMBRE || ' ' || PERS_APELLIDO_PATERNO || ' ' || PERS_APELLIDO_MATERNO ) AS NOMBRE, UNACCENT(PERS_APELLIDO_PATERNO),
                     PROF_ID_PROFESOR, PERS_ID_PERSONA, INSC_ID_INSCRIPCION, CONS_ID_CONSTANCIA 
             FROM PERSONA, PROFESOR, INSCRIPCION, ASISTENCIA, CONSTANCIA 
             WHERE PERS_ID_PERSONA = PROF_ID_PERSONA
@@ -247,7 +266,8 @@ class Grupo
                                         AND INSC_ID_GRUPO = $idGrupo
                                         AND ASIS_PRESENTE = FALSE
                                         GROUP BY PERS_ID_PERSONA, PERS_NOMBRE, PERS_APELLIDO_PATERNO, 
-                                                PERS_APELLIDO_MATERNO, ASIS_PRESENTE);
+                                                PERS_APELLIDO_MATERNO, ASIS_PRESENTE)
+            ORDER BY UNACCENT(PERS_APELLIDO_PATERNO);
 		";
 
         $bd = new BD();
@@ -798,5 +818,4 @@ class Grupo
         $bd->cerrarBD();
         return ($transaccion_1->traerObjeto(0));
     }
-
 }

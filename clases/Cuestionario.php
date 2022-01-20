@@ -1,6 +1,7 @@
 <?php
 
-class Cuestionario {
+class Cuestionario
+{
 
     //? Agregar una pregunta y su respuesta
     //PROP_ID_PREGUNTA_OPCION, PREG_ID_PREGUNTA, OPCI_ID_OPCION, PROP_TIPO
@@ -104,7 +105,8 @@ class Cuestionario {
     }
 
     //? Busca las respuesta de opción multiple registradas en una pregunta
-    function buscarOpcionesPregunta($pregunta) {
+    function buscarOpcionesPregunta($pregunta)
+    {
         $SQL_BUS_PROP =
         "SELECT prop_id_opcion, prop_id_pregunta, opci_descripcion
          FROM Pregunta_Opcion, Opcion
@@ -124,7 +126,7 @@ class Cuestionario {
     function buscarNumeroRespuestasIDPROP($id)
     {
 
-        $SQL_BUS_PROP = 
+        $SQL_BUS_PROP =
         "
             SELECT COUNT(*) numero
             FROM RESPUESTA, PREGUNTA_OPCION
@@ -163,11 +165,11 @@ class Cuestionario {
     }
 
     //? Registra una respuesta, primero en pregunta opcion y despues directo en la tabla de respuesta
-    function registrarRespuesta ($inscripcion, $pregunta, $opcion, $texto) {
+    function registrarRespuesta($inscripcion, $pregunta, $opcion, $texto)
+    {
 
-        if($opcion == "null" ) {
-
-        $SQL_BUS_RESPUESTA =
+        if ($opcion == "null") {
+            $SQL_BUS_RESPUESTA =
             "SELECT prop_id_pregunta_opcion, prop_id_pregunta, prop_id_opcion 
             FROM pregunta_opcion
             WHERE prop_id_pregunta = $pregunta AND prop_id_opcion is null
@@ -228,7 +230,7 @@ class Cuestionario {
     //? BUSCA LAS RESPUESTAS ABIERTAS DADO UN ID DE PREGUNTA
     function buscarRespuestaTexto($idGrupo, $idPregunta)
     {
-        $SQL_BUS_RESPUESTA = 
+        $SQL_BUS_RESPUESTA =
         "
             SELECT RESP_TEXTO 
             FROM RESPUESTA, PREGUNTA_OPCION, INSCRIPCION
@@ -252,7 +254,7 @@ class Cuestionario {
     //? BUSCA LAS RESPUESTAS ABIERTAS DADO UN ID DE PREGUNTA
     function buscarRespuestaTextoSi($idGrupo, $idPregunta)
     {
-        $SQL_BUS_RESPUESTA = 
+        $SQL_BUS_RESPUESTA =
         "
             SELECT RESP_TEXTO 
             FROM RESPUESTA, PREGUNTA_OPCION, INSCRIPCION
@@ -276,7 +278,7 @@ class Cuestionario {
 
     function buscarRespuestaTextoNo($idGrupo, $idPregunta)
     {
-        $SQL_BUS_RESPUESTA = 
+        $SQL_BUS_RESPUESTA =
         "
             SELECT RESP_TEXTO 
             FROM RESPUESTA, PREGUNTA_OPCION, INSCRIPCION
@@ -297,8 +299,4 @@ class Cuestionario {
 
         return ($transaccion_1->traerRegistros(0));
     }
-
-
 }
-
-?>

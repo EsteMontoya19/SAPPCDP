@@ -36,7 +36,7 @@ $url = $obj_Constancia->buscarConstanciaId($constancia)->cons_url;
                                     <input type="radio" class="form-check-input" id="<?php echo($pregunta['preg_id_pregunta']); ?>_Si" name="<?php echo($pregunta['preg_id_pregunta']); ?>_SiNo" value=1 required>Sí
                                 </label>
                             </div>
-                            <br>
+                        
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label" for="<?php echo($pregunta['preg_id_pregunta']); ?>_SiNo">
                                     <input type="radio" class="form-check-input" id="<?php echo($pregunta['preg_id_pregunta']); ?>_No" name="<?php echo($pregunta['preg_id_pregunta']); ?>_SiNo" value=2 required>No
@@ -49,7 +49,7 @@ $url = $obj_Constancia->buscarConstanciaId($constancia)->cons_url;
                         <?php break; 
                         
                         case "Si/No, con justificación": ?> 
-                            <div class="col-lg-12 form-row" style="margin-top: 15px;">
+                            <div class="col-lg-12 form-check-inline" style="margin-top: 15px;">
                                 <div class="col-lg-2 col-md-12 form-group">
                                     <div class="form-check form-check-inline">
                                         <label class="form-check-label" for="<?php echo($pregunta['preg_id_pregunta']); ?>_SiNoJ">
@@ -62,10 +62,10 @@ $url = $obj_Constancia->buscarConstanciaId($constancia)->cons_url;
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-lg-10 col-md-12 form-group">
+                                <!-- <div class="col-lg-10 col-md-12 form-group"> -->
                                 <p for="id=<?php echo($pregunta['preg_id_pregunta'].'Justificacion'); ?>">Justifique su respuesta:</p>
                                     <textarea class="form-control" id="<?php echo($pregunta['preg_id_pregunta'].'Justificacion'); ?>" name ="<?php echo($pregunta['preg_id_pregunta'].'Justificacion'); ?>" required></textarea>
-                                </div>
+                                <!-- </div> -->
                             </div>
 
                        <?php break;
