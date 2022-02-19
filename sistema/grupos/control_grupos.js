@@ -239,7 +239,8 @@ function validarFormularioGrupo() {
         return false;
     }
 
-    //Validaciones para las sesiones ingresadas acorde al grupo
+    /*Validaciones para las sesiones ingresadas acorde al grupo ()
+        //TODO: Falta revisar por que ya no funcionan estas validaciones
     for (var iCon = 1; iCon <= $('#numSesiones').val(); iCon++) {
         if ($('#SesionFecha' + iCon).val() == '') {
             $('html, body').animate({ scrollTop: 300 }, 'slow');
@@ -282,11 +283,11 @@ function validarFormularioGrupo() {
                 return false;
             } else {
                 /*String Fecha guardara las cadenas con las que se crearan las variables de las fechas respectivamente
-                Primero tendrá los valores para que sea la sesión a las 7:00 am */
+                Primero tendrá los valores para que sea la sesión a las 7:00 am *
                 var stringFecha = $('#SesionFecha' + iCon).val() + ' 07:00';
                 var objFecha3 = new Date(stringFecha);
                 /*Después se asignan los valores con la hora de inicio para validar que no pueda ser menor a las 7:00 am 
-                y no haya sesiones en horario inválido*/
+                y no haya sesiones en horario inválido*
                 stringFecha = $('#SesionFecha' + iCon).val() + ' ' + $('#SesionHoraInicio' + iCon).val();
                 var objFecha4 = new Date(stringFecha);
 
@@ -305,11 +306,11 @@ function validarFormularioGrupo() {
                 return false;
             } else {
                 /*String Fecha guardara las cadenas con las que se crearan las variables de las fechas respectivamente
-                Primero tendrá los valores para que la sesión termine a las 10:00 pm */
+                Primero tendrá los valores para que la sesión termine a las 10:00 pm *
                 var stringFecha = $('#SesionFecha' + iCon).val() + ' 22:00';
                 var objFecha3 = new Date(stringFecha);
                 /*Después se asignan los valores con la hora de fin para validar que no pueda ser mayor a las 10:00 pm 
-                y no haya sesiones en horario inválido*/
+                y no haya sesiones en horario inválido*
                 stringFecha = $('#SesionFecha' + iCon).val() + ' ' + $('#SesionHoraFin' + iCon).val();
                 var objFecha4 = new Date(stringFecha);
 
@@ -331,12 +332,14 @@ function validarFormularioGrupo() {
 
             //Valida que la fecha de la sesión se encuentre dentro del periodo del moderador asignado
             if ($('#ID_Moderador').val() > 0) {
+                alert($('#modeDias').val());
                 if ($('#modeFechaInicio').val() > $('#SesionFecha' + iCon).val()) {
                     document.getElementById('ID_Moderador').focus();
                     alertify.error('La fecha de inicio del periodo de servicio del moderador comienza después de la fecha de la sesión ' + iCon);
                     return false;
                 }
                 if ($('#modeFechaFin').val() < $('#SesionFecha' + iCon).val()) {
+                    alert("Fecha moderador fin: " + $('#modeFechaInicio').val() + "  Y la de la sesion" +  $('#SesionFecha' + iCon).val());
                     document.getElementById('ID_Moderador').focus();
                     alertify.error('La fecha de fin del periodo de servicio del moderador concluye antes de la fecha de la sesión ' + iCon);
                     return false;
@@ -344,7 +347,7 @@ function validarFormularioGrupo() {
 
                 //Se valida que este dentro de los dias de servicio del moderador (Lunes - Sábado posibles)
                 /*Se reutiliza variable objFecha2 porque ya está preparado para obtener el índice del día 
-                 de la sesión que se está verificando (1-6)*/
+                 de la sesión que se está verificando (1-6)*
                 var stringDias = '' + objFecha2.getDay();
                 if ($('#modeDias').val().includes(stringDias)) {
                 } else {
@@ -398,10 +401,10 @@ function validarFormularioGrupo() {
                     alertify.error('El moderador que has seleccionado para el grupo no se encuentra disponible en dicho horario, su horario concluye a las ' + $('#modeHoraFin').val());
                     return false;
                 }
-            }
+            } 
         }
     }
-
+*/
     return true;
 }
 
