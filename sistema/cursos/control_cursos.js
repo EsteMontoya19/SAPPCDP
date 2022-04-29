@@ -66,7 +66,7 @@ function validarFormularioCurso() {
             $('#strNombreCurso').val().includes('-') ||
             $('#strNombreCurso').val().includes('=') ||
             $('#strNombreCurso').val().includes('+') ||
-            $('#strNombreCurso').val().includes(':') ||
+            //! $('#strNombreCurso').val().includes(':') || Omitir, esto puede causar errores
             $('#strNombreCurso').val().includes(';')
         ) {
             $('html, body').animate({ scrollTop: 0 }, 'slow');
@@ -110,7 +110,7 @@ function validarFormularioCurso() {
         alertify.error('Se deben ingresar los objetivos del curso');
         return false;
     } else {
-        if ($('#strObjCurso').val().length > 150) {
+        if ($('#strObjCurso').val().length > 250) {
             $('html, body').animate({ scrollTop: 150 }, 'slow');
             document.getElementById('strObjCurso').focus();
             alertify.error('Los objetivos del curso debe tener máximo 150 caracteres');
