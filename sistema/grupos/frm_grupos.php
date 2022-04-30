@@ -512,7 +512,7 @@ if (isset($_POST['id'])) {
                         $dias = $obj_Busqueda->buscarDiasModerador($moderador->mode_id_moderador);
                         $cadenaDias = '';
                         foreach ($dias as $dia) {
-                            $cadenaDias .= $dia['dia_id_dia'];
+                            $cadenaDias .= $dia['modi_id_dia'];
                             $cadenaDias .= '-';
                         }
                         ?>

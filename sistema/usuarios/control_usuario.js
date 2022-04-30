@@ -311,7 +311,7 @@ function cambioEstatus(id, estatus, nombre, apellido, rol) {
 //? Evita al Coordinador escribir la contraseña cuando se crea un Profesor
 function AsignarContrasena() {
     var extension = document.getElementById('strContrasenia01').value;
-    if (extension.length < 6) {
+    if (extension.length < 13) {
         document.getElementById('strContrasenia01').value = document.getElementById('strRFC').value;
         document.getElementById('strContrasenia02').value = document.getElementById('strRFC').value;
     }
@@ -881,8 +881,8 @@ $(document).on('change', '#intUsuarioRol', function mostrarCamposPorRol() {
     const MODERADOR = 3;
     const PROFESOR = 4;
 
-    document.getElementById('strContrasenia01').value = $('#strRFC').val().substr(0, 6);
-    document.getElementById('strContrasenia02').value = $('#strRFC').val().substr(0, 6);
+    document.getElementById('strContrasenia01').value = $('#strRFC').val().substr(0, 13);
+    document.getElementById('strContrasenia02').value = $('#strRFC').val().substr(0, 13);
 
     var tipo_evento = $('#intUsuarioRol').val();
     if (tipo_evento.startsWith(ADMINISTRADOR)) {
