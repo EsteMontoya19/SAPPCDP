@@ -30,7 +30,7 @@ $('input[type="file"]').on('change', function () {
         if (ext == 'pdf') {
             if ($(this)[0].files[0].size > 1000000) {
                 $(this).val('');
-                alertify.error('El temario debe tener un peso maximo de 1 MB.');
+                alertify.error('El temario debe tener un peso máximo de 1 MB.');
             }
         } else {
             $(this).val('');
@@ -125,7 +125,7 @@ function validarFormularioCurso() {
         return false;
     } else {
         if ($('#strNumeroSesiones').val() < 1) {
-            alertify.error('El número de sesiones debe ser minimo 1');
+            alertify.error('El número de sesiones debe ser mínimo 1');
             $('html, body').animate({ scrollTop: 150 }, 'slow');
             document.getElementById('strNumeroSesiones').focus();
             return false;
@@ -135,7 +135,7 @@ function validarFormularioCurso() {
         } else {
             $('html, body').animate({ scrollTop: 100 }, 'slow');
             document.getElementById('strNumeroSesiones').focus();
-            alertify.error('Las sesiones solo pueden ser númericas');
+            alertify.error('Las sesiones solo pueden ser numéricas');
             return false;
         }
     }
