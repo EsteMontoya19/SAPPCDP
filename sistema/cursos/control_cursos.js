@@ -90,8 +90,8 @@ function validarFormularioCurso() {
         return false;
     }
 
-    if ($('#strReqTec').val().length > 250) {
-        alertify.error('El campo de requisitos técnicos debe ser de máximo 150 caracteres');
+    if ($('#strReqTec').val().length > 500) {
+        alertify.error('El campo de requisitos técnicos debe ser de máximo 500 caracteres');
         $('html, body').animate({ scrollTop: 250 }, 'slow');
         document.getElementById('strReqTec').focus();
         return false;
