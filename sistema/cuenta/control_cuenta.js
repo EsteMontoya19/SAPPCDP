@@ -83,8 +83,8 @@ $(document).ready(function () {
                         alertify.success('El registro se actualizó correctamente');
                         setTimeout(function () {
                             $('html, body').animate({ scrollTop: 0 }, 0);
-                            //! Esta linea contiene errores lógicos que perjudican la seguridad
-                            // $('#container').load('../sistema/usuarios/frm_inicio_usuarios.php');
+                            //* Esta linea contiene soluciones a errores lógicos que perjudican la integridad del sistema
+                            // $('#container').load('../sistema/cuenta/frm_mi_cuenta.php');
                             location.reload();
                         }, 0);
                     } else if (respuesta.endsWith('2')) {
