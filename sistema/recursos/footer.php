@@ -2,7 +2,7 @@
     <footer class="py-1 bg-blue">
       <div class="navbar navbar-fixed-bottom">
         <p style="font-size: 12px;"  class="m-1 text-center text-white smaller">© 2021 Copyright &copy; Esta página puede ser reproducida con fines no lucrativos, siempre y cuando no se mutile, se cite la fuente completa y su dirección electrónica. De otra forma requiere permiso previo por escrito de la institución. <A HREF="https://www.fca.unam.mx/docs/aviso_privacidad.pdf">AVISO DE PRIVACIDAD. </A> Sitio web administrado por el Centro de Informática de la Facultad de Contaduría y Administración (CIFCA). 
-          <a href= "#" onclick = "alertify.alert('Elaborado por: ', 'Alcántara Chávez Samuel <br>Fuentez Aguilar Karen <br>Gutiérrez Castro Luis Antonio <br>Montoya Maya Esteban', function(){ alertify.success('Aceptar'); });"> Créditos</a>
+          <a href= "#" onclick = "alertify.alert('Créditos: ', '<center><br><br>Mtro. Tomás Humberto Rubio Pérez <br><strong>Director</strong> <br><br>Dr. Armando Tomé Gonzáles<br><strong>Secretario General</strong><br><br>Mtro. Balfred Santaella Hinojosa<br><strong>Jefe del centro de informatica</strong><br><br>Esteban Montoya Maya<br><strong>Desarrollador</strong><br><br>Samuel Alcántara Chávez<br><strong>Desarrollador</strong><br><br>Karen Fuentez Aguilar<br><strong>Desarrollador</strong><br><br>Luis Antonio Gutiérrez Castro<br><strong>Desarrollador</strong><br><br></center>', function(){ alertify.success('Aceptar'); });"> Créditos</a>
         </p>
       </div>
     </footer>
