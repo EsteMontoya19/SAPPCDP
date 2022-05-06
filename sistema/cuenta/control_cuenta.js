@@ -1,6 +1,5 @@
 //? Acciones relacionadas con presionar los botones
 $(document).ready(function () {
-    
     //Acciones del breadcrumb
     $('#btn-validacion-contrasena').click(function () {
         $('html, body').animate({ scrollTop: 0 }, 0);
@@ -18,20 +17,20 @@ $(document).ready(function () {
         $('html, body').animate({ scrollTop: 0 }, 0);
         location.reload();
     });
-    
+
     //Acciones del botón  de comprobar de Cambiar contraseñas
     $('#btn-comprobar-usuario').click(function () {
         if (validarFormularioAcceso()) {
             datos = $('#validacion_acceso').serialize();
             //console.log(datos); Solo muestra los datos en consola
-    
+
             $.ajax({
                 data: datos,
                 type: 'POST',
                 url: '../modulos/Control_Cuenta.php',
                 success: function (respuesta) {
-                    if(respuesta == 1) {
-                        $('#container').load('../sistema/cuenta/frm_contrasena.php', {persona: $('#idPersona').val() , id: $('#idUsuario').val()});
+                    if (respuesta == 1) {
+                        $('#container').load('../sistema/cuenta/frm_contrasena.php', { persona: $('#idPersona').val(), id: $('#idUsuario').val() });
                     } else {
                         alertify.error('El usuario o contraseña no son correctos, por favor verifíquelos.');
                     }
@@ -84,14 +83,15 @@ $(document).ready(function () {
                         alertify.success('El registro se actualizó correctamente');
                         setTimeout(function () {
                             $('html, body').animate({ scrollTop: 0 }, 0);
-                            $('#container').load('../sistema/usuarios/frm_inicio_usuarios.php');
+                            //* Esta linea contiene soluciones a errores lógicos que perjudican la integridad del sistema
+                            // $('#container').load('../sistema/cuenta/frm_mi_cuenta.php');
+                            location.reload();
                         }, 0);
                     } else if (respuesta.endsWith('2')) {
                         $('html, body').animate({ scrollTop: 200 }, 'slow');
                         document.getElementById('strNombreUsuario').focus();
                         alertify.error('El nombre de usuario ya existe');
-
-                    } else if(respuesta.endsWith('10')) {
+                    } else if (respuesta.endsWith('10')) {
                         alertify.success('El registro se actualizó correctamente');
                         setTimeout(function () {
                             $('html, body').animate({ scrollTop: 0 }, 0);
@@ -110,9 +110,7 @@ $(document).ready(function () {
     $('#btn-regresar-usuario').click(function () {
         location.reload();
     });
-
 });
-
 
 //? Funciones que se utilizan en las acciones
 // Validar el formulario alumnos
@@ -179,7 +177,6 @@ function validarFormularioUsuario() {
             return false;
         }
     }
-
 
     if ($('#strUsuarioCorreo').val() == '') {
         $('html, body').animate({ scrollTop: 100 }, 'slow');
@@ -487,7 +484,6 @@ function validarFormularioContrasena() {
         }
     }
 
-
     if ($('#hideRol').val() == 0) {
         alertify.error('Debe seleccionar un rol de usuario');
         $('html, body').animate({ scrollTop: 200 }, 'slow');
@@ -576,12 +572,12 @@ function validarFormularioAcceso() {
 function hideOrShowPassword() {
     var x = document.getElementById('strContrasena');
     if (x.type === 'password') {
-      x.type = 'text';
+        x.type = 'text';
     } else {
-      x.type = 'password';
+        x.type = 'password';
     }
-  }
-  
+}
+
 // Mostrar o ocultar contraseña de la comprobación en cambio de contraseña
 function hideOrShowPassword1() {
     var password1, check;
