@@ -104,7 +104,7 @@ class constancias
     {
         $bd = new BD();
         $SQL_BUS_CONSTANCIA =
-        "SELECT last_value FROM constancia_cons_id_constancias_seq; ";
+        "SELECT last_value FROM constancia_cons_id_constancia_seq; ";
 
         $bd->abrirBD();
         $transaccion_1 = new Transaccion($bd->conexion);

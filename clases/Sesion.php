@@ -125,6 +125,29 @@ class Sesion
         return ($transaccion_1->traerObjeto(0));
     }
 
+    //Buscar la fecha y hora de la última sesión de un grupo
+    function buscarMaxSesion($idGrupo)
+    {
+        $SQL_Bus_Sesion =
+        "SELECT to_char(sesi_fecha, 'DD-MM-YYYY') fecha, to_char(sesi_hora_inicio, 'HH:MM') hora_ini, to_char(sesi_hora_fin, 'HH:MM') hora_fin
+            FROM sesion
+            WHERE sesi_id_sesion = (
+                SELECT MAX(sesi_id_sesion) sesi_id_sesion
+                FROM sesion
+                WHERE sesi_id_grupo = $idGrupo
+                )
+			";
+
+        $bd = new BD();
+        $bd->abrirBD();
+        $transaccion_1 = new Transaccion($bd->conexion);
+        $transaccion_1->enviarQuery($SQL_Bus_Sesion);
+        $bd->cerrarBD();
+        return ($transaccion_1->traerObjeto(0));
+    }
+
+
+
     //Buscar día y mes de la primer sesión de un grupo
     function buscarMinSesionDM($idGrupo)
     {

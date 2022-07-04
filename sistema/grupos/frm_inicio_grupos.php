@@ -1,10 +1,12 @@
 <?php
   include('../../clases/BD.php');
   include('../../clases/Grupo.php');
+  include('../../clases/Sesion.php');
   
   $obj_Grupo = new Grupo();
   $arr_grupos = $obj_Grupo ->buscarTodosGrupos();
   $activo = 0;
+  $obj_Sesion = new Sesion();
 
 ?>
 
@@ -57,7 +59,8 @@
                 <tbody>
                 <?php
                 if (isset($arr_grupos)) {
-                    foreach ($arr_grupos as $grupo) { ?>
+                    foreach ($arr_grupos as $grupo) { 
+                    ?>
                     <tr>
                         <?php $activo++; ?>
                       <td><?php echo $grupo['grup_id_grupo'];?></td>

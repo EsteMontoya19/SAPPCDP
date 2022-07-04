@@ -148,13 +148,16 @@ if($_POST['dml'] == 'insert'){
                 if(file_exists("../recursos/PDF/Constancias/Instructores/".$fechaInicio."/")) {
                 
                     $obj_Constancia->eliminarDirectorio("../recursos/PDF/Constancias/Instructores/".$fechaInicio."/");
+                }  else {
+                    //? Por acdaptación en el servidor se crea la carpeta
+                    mkdir($direccion);
                 }
 
                 //? Extrae los archivos pero nombra la carpeta como el .zip
-                $zip->extractTo("../recursos/PDF/Constancias/Instructores/");
+                $zip->extractTo($direccion);
 
-                //? Se renombra la carpeta con el id del grupo
-                rename($direccionTemporal, $direccion);
+                //? Desde el inicio se manda el nombre que debe de usar
+                //rename($direccionTemporal, $direccion);
                 $zip->close();
 
                 //? Se crea un arreglo con los archivos de la carpeta
@@ -178,104 +181,83 @@ if($_POST['dml'] == 'insert'){
                     $obj_Constancia->cargarConstancia($acreedor['pegr_id_constancia'], $direccion.$files[$iCont + 2]);
                     
                 }
-
-                //? Asignamos el No aplica constancia a los no acreedores
-                /*foreach ($arr_NoAcreedores as $iCont => $noAcreedor) {
-                    $obj_Constancia->negarConstancia($noAcreedor['cons_id_constancia']);
-                    
-                }*/
-                
-                
-                
-                
-                /*
-
-                    Asignación para Instructores
-                
-                
-                */
-                
-                
-                
-                
-                
-                
-                
-                //? Validamos que si hayan subido algo y no este todo en blanco.
-                if (isset($_FILES['constanciasModerador']['name']) && $_FILES['constanciasModerador']['name'] != '') {
-                    $nombreArchivo = $_FILES['constanciasModerador']['name'];
-
-                    //? Comprobamos que la extensión sea .zip
-                    if(substr($nombreArchivo, -4) == ".zip") {
-                        
-                        $zip=new ZipArchive();
-                        //? Guardamos la direccion de la carpeta donde se descomprimira todo
-                        $direccion = "../recursos/PDF/Constancias/Moderadores/".$fechaInicio."/"; // Falta asignar un serial a la carpeta
-
-                        //? Existe la dirección temporal?
-                        if($zip->open($_FILES['constanciasModerador']['tmp_name'])===TRUE) {
-                            
-                            $direccionTemporal = "../recursos/PDF/Constancias/Moderadores/".substr($nombreArchivo, 0 , -4)."/";
-
-                            //? Si ya existe una carpeta con el id del grupo elimina para sobrescribir
-                            if(file_exists("../recursos/PDF/Constancias/Moderadores/".$fechaInicio."/")) {
-                            
-                                $obj_Constancia->eliminarDirectorio("../recursos/PDF/Constancias/Moderadores/".$fechaInicio."/");
-                            }
-
-                            //? Extrae los archivos pero nombra la carpeta como el .zip
-                            $zip->extractTo("../recursos/PDF/Constancias/Moderadores/");
-
-                            //? Se renombra la carpeta con el id del grupo
-                            rename($direccionTemporal, $direccion);
-                            $zip->close();
-
-                            //? Se crea un arreglo con los archivos de la carpeta
-                            $files = scandir($direccion); //Por default se ordena asc y empieza apartir del [2] las direcciones de archivos
-                            
-                            //? Se renombran los archivo con el formato de dos digitos 00
-                            foreach($files as $nombre){
-                                $obj_Constancia->renombrarConstancia($nombre, $direccion);
-                            }
-                            //? Se guardan los nuevos nombres de archivos en un arreglo 
-                            $files= scandir($direccion);
-
-                            //? Validación solicitada por la Coordinadora del programa en la reunión del 17/08/2021
-                            if (count($arr_Moderadores) != count($files) - 2) {
-                                $obj_Constancia->eliminarDirectorio("../recursos/PDF/Constancias/Moderadores/".$fechaInicio."/");
-                                exit("5");
-                            }
-                            
-                            //? Asignamos las constancias a los Moderadores
-                            foreach ($arr_Moderadores as $iCont => $acreedor) {
-                                $obj_Constancia->cargarConstancia($acreedor['pegr_id_constancia'], $direccion.$files[$iCont + 2]);
-                                
-                            }
-
-                            //? Asignamos el No aplica constancia a los no acreedores
-                            /*foreach ($arr_NoAcreedores as $iCont => $noAcreedor) {
-                                $obj_Constancia->negarConstancia($noAcreedor['cons_id_constancia']);
-                                
-                            }*/
-
-
-                            
-                            exit("1");
-                        }
-
-                    } else {
-                        exit("3");
-                    }
-                } else {
-                    exit("1");
-                }
             }
+
+            exit("1");
 
         } else {
             exit("3");
         }
     } else {
-        exit("2");
+
+        //? Validamos que si hayan subido algo y no este todo en blanco.
+        if (isset($_FILES['constanciasModerador']['name']) && $_FILES['constanciasModerador']['name'] != '') {
+            $nombreArchivo = $_FILES['constanciasModerador']['name'];
+
+            //? Comprobamos que la extensión sea .zip
+            if(substr($nombreArchivo, -4) == ".zip") {
+                
+                $zip=new ZipArchive();
+                //? Guardamos la direccion de la carpeta donde se descomprimira todo
+                $direccion = "../recursos/PDF/Constancias/Moderadores/".$fechaInicio."/"; // Falta asignar un serial a la carpeta
+
+                //? Existe la dirección temporal?
+                if($zip->open($_FILES['constanciasModerador']['tmp_name'])===TRUE) {
+                    
+                    $direccionTemporal = "../recursos/PDF/Constancias/Moderadores/".substr($nombreArchivo, 0 , -4)."/";
+
+                    //? Si ya existe una carpeta con el id del grupo elimina para sobrescribir
+                    if(file_exists("../recursos/PDF/Constancias/Moderadores/".$fechaInicio."/")) {
+                        $obj_Constancia->eliminarDirectorio("../recursos/PDF/Constancias/Moderadores/".$fechaInicio."/");
+                    } else {
+                        //? Por acdaptación en el servidor se crea la carpeta
+                        mkdir($direccion);
+                    }
+
+                    //? Extrae los archivos pero nombra la carpeta como el .zip
+                    $zip->extractTo("../recursos/PDF/Constancias/Moderadores/".$fechaInicio."/");
+
+                    $zip->close();
+
+                    //? Se crea un arreglo con los archivos de la carpeta
+                    $files = scandir($direccion); //Por default se ordena asc y empieza apartir del [2] las direcciones de archivos
+                    
+                    //? Se renombran los archivo con el formato de dos digitos 00
+                    foreach($files as $nombre){
+                        $obj_Constancia->renombrarConstancia($nombre, $direccion);
+                    }
+                    //? Se guardan los nuevos nombres de archivos en un arreglo 
+                    $files= scandir($direccion);
+
+                    //? Validación solicitada por la Coordinadora del programa en la reunión del 17/08/2021
+                    if (count($arr_Moderadores) != count($files) - 2) {
+                        $obj_Constancia->eliminarDirectorio("../recursos/PDF/Constancias/Moderadores/".$fechaInicio."/");
+                        exit("5");
+                    }
+                    
+                    //? Asignamos las constancias a los Moderadores
+                    foreach ($arr_Moderadores as $iCont => $acreedor) {
+                        $obj_Constancia->cargarConstancia($acreedor['pegr_id_constancia'], $direccion.$files[$iCont + 2]);
+                        
+                    }
+
+                    //? Asignamos el No aplica constancia a los no acreedores
+                    /*foreach ($arr_NoAcreedores as $iCont => $noAcreedor) {
+                        $obj_Constancia->negarConstancia($noAcreedor['cons_id_constancia']);
+                        
+                    }*/
+
+
+                    
+                    exit("1");
+                }
+
+            } else {
+                exit("3");
+            }
+        } else {
+            exit("2");
+        }
     }
 
     exit("4");
